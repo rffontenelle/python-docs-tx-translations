@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  #schedule:
+  #  - cron: '0 4,16 * * *'
+
+permissions:
+  contents: read
+
+env:
+  TX_CLI_VERSION: '1.4.1'
+  PYTHON_NEWEST: '3.10'      # Latest Python version being translated
+  TX_PROJECT: python-newest  # Project name for the latest python version
+
+jobs:
+  update:
+    strategy:
+      fail-fast: false
+      matrix:
+        cpython_version: ['2.7', '3.6', '3.7', '3.8', '3.9', '3.10']
+        # must match existent projects in Transifex
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check out ${{ github.repository }}
+        uses: actions/checkout@v3
+
+      - name: Check out CPython
+        uses: actions/checkout@v3
+        with:
+          repository: python/cpython
+          persist-credentials: false
+          ref: ${{ matrix.cpython_version }}
+          path: cpython
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+          cache-dependency-path: '**/requirements*.txt'
+
+      - name: Install Transifex CLI
+        run: |
+          curl -o- https://raw.githubusercontent.com/transifex/cli/v${{ env.TX_CLI_VERSION }}/install.sh | bash
+        working-directory: /usr/local/bin
+
+      - name: Install dependencies
+        run: |
+          sudo apt update -y && sudo apt install gettext -y
+          pip3 install --upgrade pip
+          pip3 install -r requirements.txt
+
+      - name: Set TX_PROJECT env value if python version is not python-newest  
+        if: ${{ matrix.cpython_version}} != ${{ env.PYTHON_NEWEST }}
+        shell: bash
+        run: |
+          ver=$(echo ${{ matrix.cpython_version}} | sed 's|\.||')
+          echo "TX_PROJECT=python-$ver" >> $GITHUB_ENV
+
+      - name: Update source strings in Transifex
+        run: |
+          sh scripts/update.sh
+        env:
+          TX_TOKEN: ${{ secrets.TX_TOKEN }}
+          TX_PROJECT: ${{ env.TX_PROJECT }}
