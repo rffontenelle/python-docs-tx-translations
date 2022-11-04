@@ -25,5 +25,5 @@ sphinx-intl create-txconfig
 sphinx-intl update-txconfig-resources -p pot -d . --transifex-organization-name python-doc --transifex-project-name "$TX_PROJECT"
 
 if [ "$CI" = true ]; then
-    echo 'tx push --source --skip'
+    tx push --source --skip
 fi
