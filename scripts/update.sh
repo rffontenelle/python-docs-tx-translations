@@ -26,4 +26,4 @@ sphinx-intl update-txconfig-resources -p pot -d . --transifex-organization-name 
 
 if [ "$CI" = true ]; then
     echo 'tx push --source --skip'
-else
+fi
