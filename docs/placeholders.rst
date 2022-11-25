@@ -19,6 +19,23 @@ Some notes:
       custom placeholder that starts and ends with \``. Removing this custom placeholder ceases the issue, but it
       disables custom placeholders for all literal expressions.
 
+Get a list of potential placeholders
+------------------------------------
+
+One way to create a list of placeholders is to navigate through a bunch of translation files (po file) or translation
+templates (pot files) with the proper regular expression pattern.
+
+    **NOTE:** The commands below are set to be run from the root directory of a language team's repository, or from CPython's Docs directory after generating pot files.
+
+To list two-part roles (e.g. :py:data:\`) and then one-part roles (e.g. :class:\`), each output ordered by number of occurence:
+
+.. code-block:: shell
+   
+   grep -R '^msgid ' | grep -Poh '(\s\")?:[\w]+:[\w]+:`[\w\.-_\s~]+([\s]+<[\w\.-_]+>)?`' | sed 's| ":|:|' | cut -d\` -f1 | sort | uniq -c | sort -grk 1
+   grep -R '^msgid ' | grep -Poh '(\s\")?:[\w]+:`[\w\.-_\s~]+([\s]+<[\w\.-_]+>)?`' | sed 's| ":|:|' | cut -d\` -f1 | sort | uniq -c | sort -grk 1
+
+I split in two commands because two-part roles must be added as custom placeholder before one-part roles (explained below), hence this command helps making sure the priority is correct for copy and pasting into custom placeholders.
+
 Current Custom Placeholders
 ---------------------------
 
