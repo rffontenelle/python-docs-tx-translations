@@ -1,9 +1,6 @@
-======================
-Maintenance procedures
-======================
-
-Steps to bump python-newest to latest Python release
-----------------------------------------------------
+====================================================
+Bumping python-newest to latest Python release
+====================================================
 
 1. Back up current translations:
 
