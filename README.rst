@@ -13,12 +13,12 @@ Source strings are updated using continuous integration workflow under *.github/
 - Run for releases in beta, stable and security-fixes (not EOL) status
 - It DOES NOT download translations nor update the published translated documentation
 
-See MAINTENANCE_ for documented procedures.
+See docs_ directory for information regarding this project maintenance.
 
 See Translating_ in Python Developer's Guide for more information.
 
 .. _Python: https://www.python.org
 .. _python-doc: https://www.transifex.com/python-doc
 .. _Transifex: https://www.transifex.com
-.. _MAINTENANCE: https://github.com/rffontenelle/docspush-transifex/blob/main/MAINTENANCE.rst
+.. _docs: https://github.com/rffontenelle/docspush-transifex/blob/main/docs/
 .. _Translating: https://devguide.python.org/documentation/translating/
