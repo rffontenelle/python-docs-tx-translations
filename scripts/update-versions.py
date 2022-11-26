@@ -23,13 +23,12 @@ def get_from_devguide():
     """
     url = 'https://raw.githubusercontent.com/python/devguide/main/include/branches.csv'
     
-    response = requests.get(url)
-    if response.status_code != 200:
+    r = requests.get(url, allow_redirects=True)
+    if r.status_code != 200:
         sys.exit(f'ERROR: Unable to collect Python versions, connection failed with: {url}')
         return None
     
-    wrapper = io.TextIOWrapper(io.BufferedReader(io.BytesIO(response.content)))
-    reader = csv.DictReader(wrapper)
+    reader = csv.DictReader(r.content.decode(r.apparent_encoding).splitlines(), delimiter = ',')
     
     branches = []
     for row in reader:
@@ -52,12 +51,12 @@ def get_latest_version():
     # Match occurences like "3.11.0", "3.12.0a2", etc.
     pattern = 'Python 3\.[\d]+\.[\d]+((a|rc|b])[\d]+)?'
     
-    response = requests.get(url)
-    if response.status_code != 200:
+    r = requests.get(url)
+    if r.status_code != 200:
         warning(f'WARNING: Unable to collect data from: {url}')
         return None
     
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = BeautifulSoup(r.text, 'html.parser')
     
     latest = ''
     for item in soup.find_all('a'):
