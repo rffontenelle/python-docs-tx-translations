@@ -1,0 +1,55 @@
+name: Update versions
+
+on:
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out ${{ github.repository }}
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+          cache-dependency-path: '**/requirements*.txt'
+
+      - name: Install dependencies
+        run: |
+          pip3 install --upgrade pip
+          pip3 install requests packaging
+
+      - name: Update versions.txt file
+        run: |
+          python3 scripts/update-versions.py
+
+      - name: Commit changes to a new branch 
+        if: success()
+        uses: devops-infra/action-commit-push@v0.9.2
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          commit_prefix: "[AUTO]"
+          commit_message: "Update versions.txt"
+          force: false
+          target_branch: update/version
+
+      - name: Create pull request 
+        if: success()
+        uses: devops-infra/action-commit-push@v0.5.3
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          source_branch: update/version
+          target_branch: main
+          title: Update versions.txt
+          body: "Changes have been detected to watched Python versions. Please review."
+          assignee: rffontenelle
+          get_diff: true
