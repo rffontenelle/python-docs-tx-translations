@@ -2,8 +2,8 @@
 docspush-transifex
 ==================
 
-.. image:: https://github.com/rffontenelle/docspush-transifex/actions/workflows/update.yml/badge.svg
-   :target: https://github.com/rffontenelle/docspush-transifex/actions/workflows/update.yml
+.. image:: https://github.com/rffontenelle/docspush-transifex/actions/workflows/ci.yml/badge.svg
+   :target: https://github.com/rffontenelle/docspush-transifex/actions/workflows/ci.yml
 
 Scripts and procedures for maintaining Python_ documentation translation infrastructure under python-doc_ organization in Transifex_.
 
