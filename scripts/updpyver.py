@@ -85,3 +85,5 @@ if latest:
 
 with open(versions_file, 'w') as f:
     f.write(f"{versions}\n")
+
+print('Contents stored:\n' + versions)
