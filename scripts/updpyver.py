@@ -3,14 +3,16 @@
 
 from bs4 import BeautifulSoup
 from packaging.version import parse
+from pathlib import Path
 import csv
 import io
 import re
 import requests
 import sys
 
-
-versions_file = '.github/versions.txt'
+script_path = Path(__file__)
+rootdir = script_path.parent.parent.absolute()
+versions_file = str(rootdir) + '/.github/versions.txt'
 
 def warning(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
@@ -86,4 +88,4 @@ if latest:
 with open(versions_file, 'w') as f:
     f.write(f"{versions}\n")
 
-print('Contents stored:\n' + versions)
+print('Contents stored:\n', "\n ".join(map(str, versions)))
