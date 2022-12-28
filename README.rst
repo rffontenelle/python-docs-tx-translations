@@ -9,7 +9,7 @@ Scripts and procedures for maintaining Python_ documentation translation infrast
 
 Source strings are updated using continuous integration workflow under *.github/workflows*. Details:
 
-- Run every 12h
+- Run weekly
 - Run for releases in beta, stable and security-fixes (not EOL) status
 - It DOES NOT download translations nor update the published translated documentation
 
