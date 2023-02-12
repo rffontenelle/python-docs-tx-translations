@@ -15,10 +15,6 @@ rootdir = script_path.parent.parent.absolute()
 versions_file = str(rootdir) + '/.github/versions.txt'
 
 
-def warning(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
-
-
 def get_from_devguide() -> list:
     """
     Returns a list of bug-fix and security-fix releases from a devguide's JSON,
@@ -54,17 +50,13 @@ def get_latest_version() -> str:
     Returns:
         str: The latestlatest beta or release candidate version of Python. If no version is found, or
              if the latest version is either alpha or stable, returns `None`.
-
-    Raises:
-        WARNING: If the function is unable to collect data from the Python website.
     """
     url = 'https://www.python.org/downloads/source/'
     pattern = 'Python 3\.[\d]+\.[\d]+((a|rc|b])[\d]+)?'
     
     r = requests.get(url, allow_redirects=True)
     if r.status_code != 200:
-        warning(f'WARNING: Unable to collect data from: {url}')
-        return None
+        sys.exit(f'ERROR: Unable to collect data from: {url}')
     
     soup = BeautifulSoup(r.text, 'html.parser')
     
