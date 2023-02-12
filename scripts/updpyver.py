@@ -30,12 +30,13 @@ def get_from_devguide():
     r = requests.get(url, allow_redirects=True)
     if r.status_code != 200:
         sys.exit(f'ERROR: Unable to collect Python versions, connection failed with: {url}')
-        return None
-    
-    data = json.loads(r.content.decode(r.apparent_encoding))
-    branches = [k for k, v in data.items() if v['status'] in ['bugfix', 'security']]
-    
-    return branches
+
+    try:
+        data = json.loads(r.content.decode(r.apparent_encoding))
+        versions = [k for k, v in data.items() if v['status'] in ['bugfix', 'security']]
+        return versions
+    except JSONDecodeError:
+        sys.exit("ERROR: Unable to parse response as a JSON object")
 
 
 def get_latest_version():
