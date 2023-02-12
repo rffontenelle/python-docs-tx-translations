@@ -59,16 +59,14 @@ def get_latest_version():
     
     soup = BeautifulSoup(r.text, 'html.parser')
     
-    latest = ''
+    versions = []
     for item in soup.find_all('a'):
-        m = re.match(pattern,item.get_text())
+        m = re.match(pattern, item.get_text())
         if m:
-            current_version = m.group().split(' ')[1]
-            if not latest:
-                latest = current_version
-            else:
-                if parse(current_version) > parse(latest):
-                    latest = current_version
+            version = m.group().split(' ')[1]
+            versions.append(version)
+    
+    latest = max(versions, default=None, key=lambda v: parse(v))
     
     if parse(latest).pre and parse(latest).pre[0] in ['b', 'rc']:
         return latest
