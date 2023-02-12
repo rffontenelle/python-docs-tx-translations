@@ -19,11 +19,16 @@ def warning(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 
-def get_from_devguide():
+def get_from_devguide() -> list:
     """
-    Returns a list of released versions.
-    Extract bug-fix and security-fix releases from a devguide's JSON,
-    which is used by version.rst for https://devguide.python.org/versions/
+    Returns a list of bug-fix and security-fix releases from a devguide's JSON,
+    which is used to generate info on version.rst for https://devguide.python.org/versions/.
+    
+    Returns:
+        A list containing the versions.
+    
+    Raises:
+        JSONDecodeError: If an error occurs when parsing the data as JSON.
     """
     url = 'https://raw.githubusercontent.com/python/devguide/main/include/release-cycle.json'
     
@@ -39,20 +44,24 @@ def get_from_devguide():
         sys.exit("ERROR: Unable to parse response as a JSON object")
 
 
-def get_latest_version():
+def get_latest_version() -> str:
     """
-    Return the latest development Python version.
-    Browse the Download page from Python website looking for versions,
-    and filter the content to get only the latest. If the latest version is
-    alpha or stable version, then return an empty string because we do not
-    want alpha version and stable ones are already listed in devguide.
+    Returns the latest beta or release candidate version of Python.
+
+    This function scrapes the Python download page to gather version information and selects the latest one.
+    Versions that are either alpha or stable are excluded from the results.
+    
+    Returns:
+        str: The latestlatest beta or release candidate version of Python. If no version is found, or
+             if the latest version is either alpha or stable, returns `None`.
+
+    Raises:
+        WARNING: If the function is unable to collect data from the Python website.
     """
     url = 'https://www.python.org/downloads/source/'
-    
-    # Match occurences like "3.11.0", "3.12.0a2", etc.
     pattern = 'Python 3\.[\d]+\.[\d]+((a|rc|b])[\d]+)?'
     
-    r = requests.get(url)
+    r = requests.get(url, allow_redirects=True)
     if r.status_code != 200:
         warning(f'WARNING: Unable to collect data from: {url}')
         return None
@@ -66,7 +75,7 @@ def get_latest_version():
             version = m.group().split(' ')[1]
             versions.append(version)
     
-    latest = max(versions, default=None, key=lambda v: parse(v))
+    latest = max(versions, default=None, key=lambda v: parse(v)) if versions else None
     
     if parse(latest).pre and parse(latest).pre[0] in ['b', 'rc']:
         return latest
