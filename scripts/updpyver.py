@@ -4,8 +4,8 @@
 from bs4 import BeautifulSoup
 from packaging.version import parse
 from pathlib import Path
-import csv
 import io
+import json
 import re
 import requests
 import sys
@@ -14,28 +14,26 @@ script_path = Path(__file__)
 rootdir = script_path.parent.parent.absolute()
 versions_file = str(rootdir) + '/.github/versions.txt'
 
+
 def warning(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
+
 
 def get_from_devguide():
     """
     Returns a list of released versions.
-    Extract bug-fix and security-fix releases from a devguide's CSV,
+    Extract bug-fix and security-fix releases from a devguide's JSON,
     which is used by version.rst for https://devguide.python.org/versions/
     """
-    url = 'https://raw.githubusercontent.com/python/devguide/main/include/branches.csv'
+    url = 'https://raw.githubusercontent.com/python/devguide/main/include/release-cycle.json'
     
     r = requests.get(url, allow_redirects=True)
     if r.status_code != 200:
         sys.exit(f'ERROR: Unable to collect Python versions, connection failed with: {url}')
         return None
     
-    reader = csv.DictReader(r.content.decode(r.apparent_encoding).splitlines(), delimiter = ',')
-    
-    branches = []
-    for row in reader:
-        if row['Status'] in ['bugfix', 'security']:
-            branches.append((row['Branch']))
+    data = json.loads(r.content.decode(r.apparent_encoding))
+    branches = [k for k, v in data.items() if v['status'] in ['bugfix', 'security']]
     
     return branches
 
