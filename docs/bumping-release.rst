@@ -2,6 +2,8 @@
 Bumping python-newest to latest Python release
 ====================================================
 
+This document aims to list the steps required for updating version of the 'Python' project (slug 'python-newest) in python-doc organization in Transifex.
+
 1. Back up current translations:
 
     #. Run ``sh scripts/update.sh`` to set up the environment, if not done already;
