@@ -40,7 +40,7 @@ To list Sphinx variables (e.g. \|version\|):
 
 .. code-block:: shell
 
-   grep -ERI '[^a-zA-Z]\|[a-zA-Z]+\|[^a-zA-Z]' | grep -Eo '\|[a-zA-Z]+\|' | sort -u
+   grep -ERI '[^a-zA-Z]\|[a-zA-Z]+\|[^a-zA-Z]' | grep -Eo '\|[a-zA-Z]+\|_?' | sort -u
 
 The above command find occurrences of text within pipes excluding text outside the pip, and then use '-o' flag to match-only the wanted content. Finally, it sorts excluding duplicated occurrences. This should give you only the Sphinx variables.
 
