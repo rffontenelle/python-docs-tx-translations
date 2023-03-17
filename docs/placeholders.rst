@@ -36,7 +36,7 @@ To list two-part roles (e.g. :py:data:\`) and then one-part roles (e.g. :class:\
 
 I split in two commands because two-part roles must be added as custom placeholder before one-part roles (explained below), hence this command helps making sure the priority is correct for copy and pasting into custom placeholders.
 
-To list Sphinx variables (e.g. |version|):
+To list Sphinx variables (e.g. \|version\|):
 
 .. code-block:: shell
 
@@ -47,7 +47,7 @@ The above command find occurrences of text within pipes excluding text outside t
 Current Custom Placeholders
 ---------------------------
 
-This is the list of roles currently set in python-doc organization in Transifex.
+This is the list of roles and variables currently set in python-doc organization in Transifex.
 
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | Starts with   | Ends with    | Allows whitespace   | Note                                                               |
