@@ -25,7 +25,7 @@ Get a list of potential placeholders
 One way to create a list of placeholders is to navigate through a bunch of translation files (po file) or translation
 templates (pot files) with the proper regular expression pattern.
 
-    **NOTE:** The commands below are set to be run from the root directory of a language team's repository, or from CPython's Docs directory after generating pot files.
+    **NOTE:** The commands below are set to be run from the root directory of a language team's repository, or from CPython's Docs directory after generating pot files (directory cpython/Doc/locales/pot).
 
 To list two-part roles (e.g. :py:data:\`) and then one-part roles (e.g. :class:\`), each output ordered by number of occurence:
 
@@ -35,6 +35,14 @@ To list two-part roles (e.g. :py:data:\`) and then one-part roles (e.g. :class:\
    grep -R '^msgid ' | grep -Poh '(\s\")?:[\w]+:`[\w\.-_\s~]+([\s]+<[\w\.-_]+>)?`' | sed 's| ":|:|' | cut -d\` -f1 | sort | uniq -c | sort -grk 1
 
 I split in two commands because two-part roles must be added as custom placeholder before one-part roles (explained below), hence this command helps making sure the priority is correct for copy and pasting into custom placeholders.
+
+To list Sphinx variables (e.g. |version|):
+
+.. code-block:: shell
+
+   grep -ERI '[^a-zA-Z]\|[a-zA-Z]+\|[^a-zA-Z]' | grep -Eo '\|[a-zA-Z]+\|' | sort -u
+
+The above command find occurrences of text within pipes excluding text outside the pip, and then use '-o' flag to match-only the wanted content. Finally, it sorts excluding duplicated occurrences. This should give you only the Sphinx variables.
 
 Current Custom Placeholders
 ---------------------------
@@ -170,4 +178,19 @@ This is the list of roles currently set in python-doc organization in Transifex.
 | \``-          | \``          | no                  | This is literal role to match single-dash command-line options.    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | \``           | \``          | yes                 | This matches all literals, and spaces should be allowed.           |
++---------------+--------------+---------------------+--------------------------------------------------------------------+
+| \|nbs         | \|           | no                  | Here start Sphinx variables.                                       |
+|               |              |                     | This is for '\|nbsp\|'.                                            |
+|               |              |                     | Since Transifex doesn't allow adding the whole variable as         |
+|               |              |                     | placeholder, I omit the last character of the variable as a        |
+|               |              |                     | workaround                                                         |
++---------------+--------------+---------------------+--------------------------------------------------------------------+
+| \|releas      | \|           | no                  | This is for '\|release\|'                                          |
++---------------+--------------+---------------------+--------------------------------------------------------------------+
+| \|toda        | \|           | no                  | This is for '\|today\|'                                            |
++---------------+--------------+---------------------+--------------------------------------------------------------------+
+| \|tzdat       | \|_          | no                  | This is for '\|tzdata\|_'. This variable is used as a URL, hence   |
+|               |              |                     | the trailing '_'                                                   |
++---------------+--------------+---------------------+--------------------------------------------------------------------+
+| \|versio      | \|           | no                  | This is for '\|version\|'                                          |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
