@@ -194,3 +194,7 @@ This is the list of roles and variables currently set in python-doc organization
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | \|versio      | \|           | no                  | This is for '\|version\|'                                          |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
+| :samp:\`      | \`           | yes                 | Inserted later, out-of-order, this role normally present shell     |
+|               |              |                     | commands and as such normally includes whitespaces. It may include |
+|               |              |                     | pseudo-variables that should be translated.                        |
++---------------+--------------+---------------------+--------------------------------------------------------------------+
