@@ -60,9 +60,27 @@ jobs:
           ver=$(echo ${{ matrix.cpython_version }} | sed 's|\.||')
           echo "TX_PROJECT=python-$ver" >> $GITHUB_ENV
 
-      - name: Update source strings in Transifex
+        # required for generating .tx/config
+      - name: Generate POT files
         run: |
-          sh scripts/update.sh $TX_PROJECT
+          sphinx-build \
+            -E -b gettext -D gettext_compact=0 \
+            -d build/.doctrees . locales/pot
+        working-directory: cpython/Doc
+
+      - name: Generate Transifex configuration file (.tx/config)
+        run: |
+          sphinx-intl create-txconfig
+          sphinx-intl update-txconfig-resources \
+            --pot-dir pot \
+            --locale-dir . \
+            --transifex-organization-name python-doc \
+            --transifex-project-name ${{ env.TX_PROJECT }}
+        working-directory: cpython/Doc/locales
+
+      - name: Push source strings to Transifex
+        run: |
+          tx push --source --skip
         env:
           TX_TOKEN: ${{ secrets.TX_TOKEN }}
-          TX_PROJECT: ${{ env.TX_PROJECT }}
+        working-directory: cpython/Doc/locales
