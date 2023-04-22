@@ -179,20 +179,20 @@ This is the list of roles and variables currently set in python-doc organization
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | \``           | \``          | yes                 | This matches all literals, and spaces should be allowed.           |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
-| \|nbs         | \|           | no                  | Here start Sphinx variables.                                       |
+| \|nbsp\|      | \|           | no                  | Here start Sphinx variables.                                       |
 |               |              |                     | This is for '\|nbsp\|'.                                            |
 |               |              |                     | Since Transifex doesn't allow adding the whole variable as         |
 |               |              |                     | placeholder, I omit the last character of the variable as a        |
 |               |              |                     | workaround                                                         |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
-| \|releas      | \|           | no                  | This is for '\|release\|'                                          |
+| \|release|    | \|           | no                  | This is for '\|release\|'                                          |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
-| \|toda        | \|           | no                  | This is for '\|today\|'                                            |
+| \|today\|     | \|           | no                  | This is for '\|today\|'                                            |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
-| \|tzdat       | \|_          | no                  | This is for '\|tzdata\|_'. This variable is used as a URL, hence   |
+| \|tzdata\|    | \|_          | no                  | This is for '\|tzdata\|_'. This variable is used as a URL, hence   |
 |               |              |                     | the trailing '_'                                                   |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
-| \|versio      | \|           | no                  | This is for '\|version\|'                                          |
+| \|versio\|    | \|           | no                  | This is for '\|version\|'                                          |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | :samp:\`      | \`           | yes                 | Inserted later, out-of-order, this role normally present shell     |
 |               |              |                     | commands and as such normally includes whitespaces. It may include |
