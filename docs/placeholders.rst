@@ -171,11 +171,17 @@ This is the list of roles and variables currently set in python-doc organization
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | :option:\-`   | \`           | no                  |                                                                    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
-| \``--         | \``          | no                  | This is literal role to match double-dash command-line options.    |
+| :samp:\`      | \`           | yes                 | This role normally presents shell commands and as such normally    |
+|               |              |                     | includes whitespaces. It possible includes pseudo-variables that   |
+|               |              |                     | should be translated.                                              |
++---------------+--------------+---------------------+--------------------------------------------------------------------+
+| :token:\`     | \`           | no                  |                                                                    |
++---------------+--------------+---------------------+--------------------------------------------------------------------+
+| \``--         | \``          | yes                 | This is literal role to match double-dash command-line options.    |
 |               |              |                     | Must come before single-dash one because Transifex placeholders    |
 |               |              |                     | are detected according to their order.                             |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
-| \``-          | \``          | no                  | This is literal role to match single-dash command-line options.    |
+| \``-          | \``          | yes                 | This is literal role to match single-dash command-line options.    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | \``           | \``          | yes                 | This matches all literals, and spaces should be allowed.           |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
@@ -193,8 +199,4 @@ This is the list of roles and variables currently set in python-doc organization
 |               |              |                     | the trailing '_'                                                   |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | \|versio      | \|           | no                  | This is for '\|version\|'                                          |
-+---------------+--------------+---------------------+--------------------------------------------------------------------+
-| :samp:\`      | \`           | yes                 | Inserted later, out-of-order, this role normally present shell     |
-|               |              |                     | commands and as such normally includes whitespaces. It may include |
-|               |              |                     | pseudo-variables that should be translated.                        |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
