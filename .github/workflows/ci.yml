@@ -50,12 +50,14 @@ jobs:
         with:
           python-version: '3.9'
           cache: 'pip'
-          cache-dependency-path: '**/requirements*.txt'
+          cache-dependency-path: |
+            "requirements/*.txt'
+            cpython/Doc/requirements.txt
 
       - name: Install Transifex CLI
+        working-directory: /usr/local/bin
         run: |
           curl -o- https://raw.githubusercontent.com/transifex/cli/master/install.sh | bash -s -- v${{ env.TX_CLI_VERSION }}
-        working-directory: /usr/local/bin
 
       - name: Install dependencies
         run: |
@@ -72,13 +74,14 @@ jobs:
 
         # required for generating .tx/config
       - name: Generate POT files
+        working-directory: cpython/Doc
         run: |
           sphinx-build \
             -E -b gettext -D gettext_compact=0 \
             -d build/.doctrees . locales/pot
-        working-directory: cpython/Doc
 
       - name: Generate Transifex configuration file (.tx/config)
+        working-directory: cpython/Doc/locales
         run: |
           sphinx-intl create-txconfig
           sphinx-intl update-txconfig-resources \
@@ -86,11 +89,10 @@ jobs:
             --locale-dir . \
             --transifex-organization-name python-doc \
             --transifex-project-name ${{ env.TX_PROJECT }}
-        working-directory: cpython/Doc/locales
 
       - name: Push source strings to Transifex
+        working-directory: cpython/Doc/locales
         run: |
           tx push --source --skip
         env:
           TX_TOKEN: ${{ secrets.TX_TOKEN }}
-        working-directory: cpython/Doc/locales
