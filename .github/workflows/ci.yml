@@ -1,6 +1,8 @@
 name: CI
 
 on:
+  push:
+  pull_request:
   workflow_dispatch:
   schedule:
     - cron: '0 14 * * 5'
@@ -91,6 +93,7 @@ jobs:
             --transifex-project-name ${{ env.TX_PROJECT }}
 
       - name: Push source strings to Transifex
+        if: ${{ !contains(fromJSON('["push", "pull_request"]'), github.event_name) }}
         working-directory: cpython/Doc/locales
         run: |
           tx push --source --skip
