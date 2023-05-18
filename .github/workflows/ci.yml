@@ -14,16 +14,26 @@ env:
   TX_PROJECT: python-newest  # Project name for the latest python version
 
 jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.version.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: version
+        run: echo "matrix=$(cat .github/versions.txt)" >> $GITHUB_OUTPUT
+  
   update:
+    runs-on: ubuntu-latest
+    needs: trigger
     strategy:
       max-parallel: 1
       fail-fast: false
       matrix:
-        cpython_version: ['3.11', '3.10', '3.9', '3.8', '3.7']
+        cpython_version: ${{fromJson(needs.trigger.outputs.matrix)}}
         # must match existent projects in Transifex
-    runs-on: ubuntu-latest
+    
     steps:
-
       - name: Check out ${{ github.repository }}
         uses: actions/checkout@v3
 
