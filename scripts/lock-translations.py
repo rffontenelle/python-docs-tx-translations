@@ -53,9 +53,8 @@ def get_unused_resources(remote_resources, local_resources):
                 )
                 current_time = dateutil.utils.today().replace(tzinfo=dateutil.tz.UTC)
                 
-                #TODO: double-check the above comparison before enabling deletion                
+                #TODO: double-check the above comparison before enabling deletion
                 delete_status = (current_time - last_update).days >= 3
-                print(f"delete_status: {delete_status}")
                 if delete_status:
                     #resource.delete()
                     print(f"would delete {resource.slug}")
