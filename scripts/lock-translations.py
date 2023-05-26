@@ -16,7 +16,7 @@ def get_local_resources(tx_config, project):
     config.read(tx_config)
     
     try:
-      project in re.search('p:[\w-]+:', config.sections()[1]).group(0)
+      project in re.search('p:python-[\w]+:', config.sections()[1]).group(0)
     except:
       print(f"Invalid Transifex configuration file for project '{project}'")
       exit(1)
@@ -69,24 +69,11 @@ def get_unused_resources(remote_resources, local_resources):
 
 def lock_resources(unused_resources):
     """Lock resources considered as unused, so they can be considered for deletion"""
-    #err = False
-    for slug in unused_resources:
-        resource = unused_resources[slug]
+    for resource in unused_resources.values():
         print(f"Locking {resource.slug}... ")
         resource.attributes['accept_translations'] = False
         resource.save('accept_translations')
-        
     # TODO: Implement error handling
-        #if response.status_code != 200:
-        #    print("Error locking resource:", response, resource)
-        #    print(response.content)
-        #    err = True
-        #else:
-        #    print("Successfully locked resource:", resource)
-    
-    #if err:
-    #    print("Script exited with problems!")
-    #    exit(1)
 
 
 def main():
@@ -115,8 +102,6 @@ def main():
     if len(unused_resources) == 0:
         print("All resources are locked or in use!")
     else:
-        for resource in unused_resources:
-            print("Unused resource:", resource)
         lock_resources(unused_resources)
 
 
