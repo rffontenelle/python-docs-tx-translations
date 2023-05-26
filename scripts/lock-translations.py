@@ -70,7 +70,8 @@ def get_unused_resources(remote_resources, local_resources):
 def lock_resources(unused_resources):
     """Lock resources considered as unused, so they can be considered for deletion"""
     #err = False
-    for resource in unused_resources:
+    for slug in unused_resources:
+        resource = unused_resources[slug]
         print(f"Locking {resource.slug}... ")
         resource.attributes['accept_translations'] = False
         resource.save('accept_translations')
