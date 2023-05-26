@@ -58,7 +58,7 @@ def get_unused_resources(remote_resources, local_resources):
                 print(f"delete_status: {delete_status}")
                 if delete_status:
                     #resource.delete()
-                    print("would delete")
+                    print(f"would delete {resource.slug}")
                 
                 continue
             
@@ -71,8 +71,8 @@ def lock_resources(unused_resources):
     """Lock resources considered as unused, so they can be considered for deletion"""
     err = False
     for resource in unused_resources:
-        print(f'would lock resource {resource.slug}')
-        #resource.change('accept_translations', False)
+        resource.attributes['accept_translations'] = False
+        resource.save('accept_translations')
         
     # TODO: Implement error handling
         #if response.status_code != 200:
