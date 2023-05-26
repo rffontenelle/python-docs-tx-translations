@@ -52,7 +52,7 @@ def get_latest_version() -> str:
              if the latest version is either alpha or stable, returns `None`.
     """
     url = 'https://www.python.org/downloads/source/'
-    pattern = 'Python 3\.[\d]+\.[\d]+((a|rc|b])[\d]+)?'
+    pattern = 'Python 3\.[\d]+\.[\d]+((rc|b)[\d]+)? '
     
     r = requests.get(url, allow_redirects=True)
     if r.status_code != 200:
