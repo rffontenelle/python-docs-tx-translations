@@ -90,11 +90,7 @@ jobs:
         working-directory: cpython/Doc/locales
         run: |
           sphinx-intl create-txconfig
-          sphinx-intl update-txconfig-resources \
-            --pot-dir pot \
-            --locale-dir . \
-            --transifex-organization-name python-doc \
-            --transifex-project-name ${{ env.TX_PROJECT }}
+          sphinx-intl update-txconfig-resources --pot-dir pot --locale-dir . --transifex-organization-name python-doc --transifex-project-name ${{ env.TX_PROJECT }}
 
       - name: Push source strings to Transifex
         if: ${{ !contains(fromJSON('["push", "pull_request"]'), github.event_name) ||
@@ -107,8 +103,6 @@ jobs:
 
       - name: Lock unused translations
         run: |
-          python3 scripts/lock-translations.py \
-            cpython/Doc/locales/.tx/config \
-            ${{ env.TX_PROJECT }}
+          python3 scripts/lock-translations.py cpython/Doc/locales/.tx/config ${{ env.TX_PROJECT }}
         env:
           TX_TOKEN: ${{ secrets.TX_TOKEN }}
