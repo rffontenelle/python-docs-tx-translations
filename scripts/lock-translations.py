@@ -6,7 +6,7 @@ import argparse
 import configparser
 import dateutil.parser
 import dateutil.utils
-import datetime
+from datetime import datetime
 from transifex.api import transifex_api
 
 
