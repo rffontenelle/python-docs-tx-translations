@@ -18,7 +18,7 @@ def get_local_resources(tx_config, project):
     try:
       project in re.search('p:python-[\w]+:', config.sections()[1]).group(0)
     except:
-      print(f"Invalid Transifex configuration file for project '{project}'")
+      print(f"ERROR: Invalid Transifex configuration file for project '{project}'")
       exit(1)
     
     resources = []
@@ -52,7 +52,7 @@ def get_unused_resources(remote_resources, local_resources):
                 current_time = datetime.now().replace(tzinfo=dateutil.tz.UTC)
                 delete_status = (current_time - last_update).days >= 3
                 if delete_status:
-                    print(f"Locked for 3 days, deleting {resource.slug}... ")
+                    print(f"NOTICE: Locked for 3 days, deleting {resource.slug}... ")
                     resource.delete()
                 
                 continue
@@ -65,7 +65,7 @@ def get_unused_resources(remote_resources, local_resources):
 def lock_resources(unused_resources):
     """Lock resources considered as unused, so they can be considered for deletion"""
     for resource in unused_resources.values():
-        print(f"Locking {resource.slug}... ")
+        print(f"NOTICE: Locking {resource.slug}... ")
         resource.attributes['accept_translations'] = False
         resource.save('accept_translations')
     # TODO: Implement error handling
