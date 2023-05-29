@@ -97,7 +97,8 @@ jobs:
             --transifex-project-name ${{ env.TX_PROJECT }}
 
       - name: Push source strings to Transifex
-        if: ${{ !contains(fromJSON('["push", "pull_request"]'), github.event_name) }}
+        if: ${{ !contains(fromJSON('["push", "pull_request"]'), github.event_name) ||
+              (github.event_name == 'workflow_dispatch' && github.base_ref != 'main') }}
         working-directory: cpython/Doc/locales
         run: |
           tx push --source --skip
