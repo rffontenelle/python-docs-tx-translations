@@ -50,13 +50,10 @@ def get_unused_resources(remote_resources, local_resources):
             if not resource.accept_translations:
                 last_update = dateutil.parser.parse(resource.datetime_modified)
                 current_time = datetime.now().replace(tzinfo=dateutil.tz.UTC)
-                
-                #TODO: double-check the above comparison before enabling deletion
                 delete_status = (current_time - last_update).days >= 3
-                print(f'{resource.slug}: {current_time} - {last_update} = {delete_status}')
                 if delete_status:
-                    #resource.delete()
-                    print(f"would delete {resource.slug}")
+                    print(f"Locked for 3 days, deleting {resource.slug}... ")
+                    resource.delete()
                 
                 continue
             
