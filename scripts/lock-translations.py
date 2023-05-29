@@ -6,7 +6,7 @@ import argparse
 import configparser
 import dateutil.parser
 import dateutil.utils
-import dateutil
+import datetime
 from transifex.api import transifex_api
 
 
@@ -48,10 +48,8 @@ def get_unused_resources(remote_resources, local_resources):
     for resource in remote_resources:
         if resource.slug not in local_resources: 
             if not resource.accept_translations:
-                last_update = dateutil.parser.parse(
-                    resource.datetime_modified
-                )
-                current_time = dateutil.utils.today().replace(tzinfo=dateutil.tz.UTC)
+                last_update = dateutil.parser.parse(resource.datetime_modified)
+                current_time = datetime.now().replace(tzinfo=dateutil.tz.UTC)
                 
                 #TODO: double-check the above comparison before enabling deletion
                 delete_status = (current_time - last_update).days >= 3
