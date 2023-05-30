@@ -52,7 +52,7 @@ def get_unused_resources(remote_resources, local_resources):
                 current_time = datetime.now().replace(tzinfo=dateutil.tz.UTC)
                 delete_status = (current_time - last_update).days >= 3
                 if delete_status:
-                    print(f"NOTICE: Locked for 3 days, deleting {resource.slug}... ")
+                    print(f"WARNING: Deleting {resource.slug}, locked for 3 days or more.")
                     resource.delete()
                 
                 continue
@@ -65,7 +65,7 @@ def get_unused_resources(remote_resources, local_resources):
 def lock_resources(unused_resources):
     """Lock resources considered as unused, so they can be considered for deletion"""
     for resource in unused_resources.values():
-        print(f"NOTICE: Locking {resource.slug}... ")
+        print(f"WARNING: Locking {resource.slug}... ")
         resource.attributes['accept_translations'] = False
         resource.save('accept_translations')
     # TODO: Implement error handling
