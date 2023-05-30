@@ -18,6 +18,7 @@ def printmsg(type, message):
         type = type.upper()
         print(f'{type}: {message}')
 
+        
 def get_local_resources(tx_config, project):
     """Read resources in .tx/config and returns a list of resource slug"""
     config = configparser.ConfigParser()
