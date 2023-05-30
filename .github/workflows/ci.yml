@@ -2,7 +2,11 @@ name: CI
 
 on:
   push:
+    branches:
+      - 'main'
   pull_request:
+    branches:
+      - 'main'
   workflow_dispatch:
   schedule:
     - cron: '0 14 * * 5'
@@ -65,7 +69,7 @@ jobs:
         run: |
           sudo apt update -y && sudo apt install gettext -y
           pip3 install --upgrade pip
-          pip3 install -r requirements/requirements-ci.txt
+          pip3 install -r requirements/requirements-ci.txt -r cpython/Doc/requirements.txt
 
       - name: Change Transifex project name if Python version != python-newest
         if: ${{ matrix.cpython_version != env.PYTHON_NEWEST }}
@@ -78,24 +82,25 @@ jobs:
       - name: Generate POT files
         working-directory: cpython/Doc
         run: |
-          sphinx-build \
-            -E -b gettext -D gettext_compact=0 \
-            -d build/.doctrees . locales/pot
+          sphinx-build -E -b gettext -D gettext_compact=0 -d build/.doctrees . locales/pot
 
       - name: Generate Transifex configuration file (.tx/config)
         working-directory: cpython/Doc/locales
         run: |
           sphinx-intl create-txconfig
-          sphinx-intl update-txconfig-resources \
-            --pot-dir pot \
-            --locale-dir . \
-            --transifex-organization-name python-doc \
-            --transifex-project-name ${{ env.TX_PROJECT }}
+          sphinx-intl update-txconfig-resources --pot-dir pot --locale-dir . --transifex-organization-name python-doc --transifex-project-name ${{ env.TX_PROJECT }}
 
       - name: Push source strings to Transifex
-        if: ${{ !contains(fromJSON('["push", "pull_request"]'), github.event_name) }}
+        if: ${{ !contains(fromJSON('["push", "pull_request"]'), github.event_name) ||
+              (github.event_name == 'workflow_dispatch' && github.base_ref != 'main') }}
         working-directory: cpython/Doc/locales
         run: |
           tx push --source --skip
+        env:
+          TX_TOKEN: ${{ secrets.TX_TOKEN }}
+
+      - name: Lock unused translations
+        run: |
+          python3 scripts/lock-translations.py cpython/Doc/locales/.tx/config ${{ env.TX_PROJECT }}
         env:
           TX_TOKEN: ${{ secrets.TX_TOKEN }}
