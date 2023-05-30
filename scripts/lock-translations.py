@@ -9,6 +9,14 @@ import dateutil.utils
 from datetime import datetime
 from transifex.api import transifex_api
 
+def printmsg(type, message):
+    """Format message in case it is being run in GitHub Actions"""
+    if CI in os.environ:
+        type = type.lower()
+        print(f'::{type}::{message}')
+    else
+        type = type.upper()
+        print(f'{type}: {message}')
 
 def get_local_resources(tx_config, project):
     """Read resources in .tx/config and returns a list of resource slug"""
@@ -18,7 +26,7 @@ def get_local_resources(tx_config, project):
     try:
       project in re.search('p:python-[\w]+:', config.sections()[1]).group(0)
     except:
-      print(f"ERROR: Invalid Transifex configuration file for project '{project}'")
+      printmsg("error", f"Invalid Transifex configuration file for project '{project}'")
       exit(1)
     
     resources = []
@@ -52,7 +60,7 @@ def get_unused_resources(remote_resources, local_resources):
                 current_time = datetime.now().replace(tzinfo=dateutil.tz.UTC)
                 delete_status = (current_time - last_update).days >= 3
                 if delete_status:
-                    print(f"WARNING: Deleting {resource.slug}, locked for 3 days or more.")
+                    printmsg("warning", f"Deleting {resource.slug}, locked for 3 days or more.")
                     resource.delete()
                 
                 continue
@@ -65,7 +73,7 @@ def get_unused_resources(remote_resources, local_resources):
 def lock_resources(unused_resources):
     """Lock resources considered as unused, so they can be considered for deletion"""
     for resource in unused_resources.values():
-        print(f"WARNING: Locking {resource.slug}... ")
+        printmsg("warning", f"Locking {resource.slug}... ")
         resource.attributes['accept_translations'] = False
         resource.save('accept_translations')
     # TODO: Implement error handling
