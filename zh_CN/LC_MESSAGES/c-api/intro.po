@@ -1,0 +1,1108 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2001-2023, Python Software Foundation
+# This file is distributed under the same license as the Python package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# ww song <sww4718168@gmail.com>, 2021
+# Tony Tong <firfly.net@qq.com>, 2021
+# ppcfish <ppcfish@gmail.com>, 2021
+# Jiuh-star <jiuh.star@gmail.com>, 2021
+# jaystone776 <1732865113@qq.com>, 2022
+# Dai Xu <daixu61@hotmail.com>, 2023
+# WH-2099 <wh2099@outlook.com>, 2023
+# Freesand Leo <yuqinju@163.com>, 2023
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Python 3.12\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-26 14:12+0000\n"
+"PO-Revision-Date: 2021-06-28 00:49+0000\n"
+"Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
+"Language-Team: Chinese (China) (https://app.transifex.com/python-doc/teams/5390/zh_CN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../c-api/intro.rst:8
+msgid "Introduction"
+msgstr "概述"
+
+#: ../../c-api/intro.rst:10
+msgid ""
+"The Application Programmer's Interface to Python gives C and C++ programmers"
+" access to the Python interpreter at a variety of levels.  The API is "
+"equally usable from C++, but for brevity it is generally referred to as the "
+"Python/C API.  There are two fundamentally different reasons for using the "
+"Python/C API. The first reason is to write *extension modules* for specific "
+"purposes; these are C modules that extend the Python interpreter.  This is "
+"probably the most common use.  The second reason is to use Python as a "
+"component in a larger application; this technique is generally referred to "
+"as :dfn:`embedding` Python in an application."
+msgstr ""
+"Python 的应用编程接口（API）使得 C 和 C++ 程序员可以在多个层级上访问 Python 解释器。该 API 在 C++ "
+"中同样可用，但为简化描述，通常将其称为 Python/C API。使用 Python/C API 有两个基本的理由。第一个理由是为了特定目的而编写 "
+"*扩展模块*；它们是扩展 Python 解释器功能的 C 模块。这可能是最常见的使用场景。第二个理由是将 Python "
+"用作更大规模应用的组件；这种技巧通常被称为在一个应用中 :dfn:`embedding` Python。"
+
+#: ../../c-api/intro.rst:20
+msgid ""
+"Writing an extension module is a relatively well-understood process, where a"
+" \"cookbook\" approach works well.  There are several tools that automate "
+"the process to some extent.  While people have embedded Python in other "
+"applications since its early existence, the process of embedding Python is "
+"less straightforward than writing an extension."
+msgstr ""
+"编写扩展模块的过程相对来说更易于理解，可以通过“菜谱”的形式分步骤介绍。使用某些工具可在一定程度上自动化这一过程。虽然人们在其他应用中嵌入 Python"
+" 的做法早已有之，但嵌入 Python 的过程没有编写扩展模块那样方便直观。"
+
+#: ../../c-api/intro.rst:26
+msgid ""
+"Many API functions are useful independent of whether you're embedding  or "
+"extending Python; moreover, most applications that embed Python  will need "
+"to provide a custom extension as well, so it's probably a  good idea to "
+"become familiar with writing an extension before  attempting to embed Python"
+" in a real application."
+msgstr ""
+"许多 API 函数在你嵌入或是扩展 Python 这两种场景下都能发挥作用；此外，大多数嵌入 Python "
+"的应用程序也需要提供自定义扩展，因此在尝试在实际应用中嵌入 Python 之前先熟悉编写扩展应该会是个好主意。"
+
+#: ../../c-api/intro.rst:34
+msgid "Coding standards"
+msgstr "代码标准"
+
+#: ../../c-api/intro.rst:36
+msgid ""
+"If you're writing C code for inclusion in CPython, you **must** follow the "
+"guidelines and standards defined in :PEP:`7`.  These guidelines apply "
+"regardless of the version of Python you are contributing to.  Following "
+"these conventions is not necessary for your own third party extension "
+"modules, unless you eventually expect to contribute them to Python."
+msgstr ""
+"如果你想要编写可包含于 CPython 的 C 代码，你 **必须** 遵循在 :PEP:`7` "
+"中定义的指导原则和标准。这些指导原则适用于任何你所要扩展的 Python 版本。在编写你自己的第三方扩展模块时可以不必遵循这些规范，除非你准备在日后向 "
+"Python 贡献这些模块。"
+
+#: ../../c-api/intro.rst:46
+msgid "Include Files"
+msgstr "包含文件"
+
+#: ../../c-api/intro.rst:48
+msgid ""
+"All function, type and macro definitions needed to use the Python/C API are "
+"included in your code by the following line::"
+msgstr "使用 Python/C API 所需要的全部函数、类型和宏定义可通过下面这行语句包含到你的代码之中："
+
+#: ../../c-api/intro.rst:54
+msgid ""
+"This implies inclusion of the following standard headers: ``<stdio.h>``, "
+"``<string.h>``, ``<errno.h>``, ``<limits.h>``, ``<assert.h>`` and "
+"``<stdlib.h>`` (if available)."
+msgstr ""
+"这意味着包含以下标准头文件：\\ ``<stdio.h>``\\ ，\\ ``<string.h>``\\ ，\\ ``<errno.h>``\\ "
+"，\\ ``<limits.h>``\\ ，\\ ``<assert.h>`` 和 ``<stdlib.h>``\\ （如果可用）。"
+
+#: ../../c-api/intro.rst:60
+msgid ""
+"Since Python may define some pre-processor definitions which affect the "
+"standard headers on some systems, you *must* include :file:`Python.h` before"
+" any standard headers are included."
+msgstr ""
+"由于 Python 可能会定义一些能在某些系统上影响标准头文件的预处理器定义，因此在包含任何标准头文件之前，你 *必须* 先包含 "
+":file:`Python.h`。"
+
+#: ../../c-api/intro.rst:64
+msgid ""
+"It is recommended to always define ``PY_SSIZE_T_CLEAN`` before including "
+"``Python.h``.  See :ref:`arg-parsing` for a description of this macro."
+msgstr ""
+"推荐总是在 ``Python.h`` 前定义 ``PY_SSIZE_T_CLEAN`` 。查看 :ref:`arg-parsing` "
+"来了解这个宏的更多内容。"
+
+#: ../../c-api/intro.rst:67
+msgid ""
+"All user visible names defined by Python.h (except those defined by the "
+"included standard headers) have one of the prefixes ``Py`` or ``_Py``.  "
+"Names beginning with ``_Py`` are for internal use by the Python "
+"implementation and should not be used by extension writers. Structure member"
+" names do not have a reserved prefix."
+msgstr ""
+"Python.h 所定义的全部用户可见名称（由包含的标准头文件所定义的除外）都带有前缀 ``Py`` 或者 ``_Py``。以 ``_Py`` "
+"打头的名称是供 Python 实现内部使用的，不应被扩展编写者使用。结构成员名称没有保留前缀。"
+
+#: ../../c-api/intro.rst:74
+msgid ""
+"User code should never define names that begin with ``Py`` or ``_Py``. This "
+"confuses the reader, and jeopardizes the portability of the user code to "
+"future Python versions, which may define additional names beginning with one"
+" of these prefixes."
+msgstr ""
+"用户代码永远不应该定义以 ``Py`` 或 ``_Py`` "
+"开头的名称。这会使读者感到困惑，并危及用户代码对未来Python版本的可移植性，这些版本可能会定义以这些前缀之一开头的其他名称。"
+
+#: ../../c-api/intro.rst:79
+msgid ""
+"The header files are typically installed with Python.  On Unix, these  are "
+"located in the directories :file:`{prefix}/include/pythonversion/` and "
+":file:`{exec_prefix}/include/pythonversion/`, where :option:`prefix "
+"<--prefix>` and :option:`exec_prefix <--exec-prefix>` are defined by the "
+"corresponding parameters to Python's :program:`configure` script and "
+"*version* is ``'%d.%d' % sys.version_info[:2]``.  On Windows, the headers "
+"are installed in :file:`{prefix}/include`, where ``prefix`` is the "
+"installation directory specified to the installer."
+msgstr ""
+"头文件通常会与 Python 一起安装。 在 Unix 上，它们位于 :file:`{prefix}/include/pythonversion/` 和"
+" :file:`{exec_prefix}/include/pythonversion/` 目录，其中 :option:`prefix "
+"<--prefix>` 和 :option:`exec_prefix <--exec-prefix>` 是由向 Python 的 "
+":program:`configure` 脚本传入的对应形参定义，而 *version* 则为 ``'%d.%d' % "
+"sys.version_info[:2]``。 在 Windows 上，头文件安装于 :file:`{prefix}/include`，其中 "
+"``prefix`` 是为安装程序指定的安装目录。"
+
+#: ../../c-api/intro.rst:88
+msgid ""
+"To include the headers, place both directories (if different) on your "
+"compiler's search path for includes.  Do *not* place the parent directories "
+"on the search path and then use ``#include <pythonX.Y/Python.h>``; this will"
+" break on multi-platform builds since the platform independent headers under"
+" :option:`prefix <--prefix>` include the platform specific headers from "
+":option:`exec_prefix <--exec-prefix>`."
+msgstr ""
+"要包括这些头文件，请将两个目录（如果不同）都放到你所用编译器用于包括头文件的搜索目录中。 请 *不要* 将父目录放入搜索路径然后使用 "
+"``#include <pythonX.Y/Python.h>``；这将使得多平台编译不可用，因为 :option:`prefix "
+"<--prefix>` 下与平台无关的头文件包括了来自 :option:`exec_prefix <--exec-prefix>` 的平台专属头文件。"
+
+#: ../../c-api/intro.rst:95
+msgid ""
+"C++ users should note that although the API is defined entirely using C, the"
+" header files properly declare the entry points to be ``extern \"C\"``. As a"
+" result, there is no need to do anything special to use the API from C++."
+msgstr ""
+"C++ 用户应该注意，尽管 API 是完全使用 C 来定义的，但头文件正确地将入口点声明为 ``extern \"C\"``，因此 API 在 C++ "
+"中使用此 API 不必再做任何特殊处理。"
+
+#: ../../c-api/intro.rst:101
+msgid "Useful macros"
+msgstr "有用的宏"
+
+#: ../../c-api/intro.rst:103
+msgid ""
+"Several useful macros are defined in the Python header files.  Many are "
+"defined closer to where they are useful (e.g. :c:macro:`Py_RETURN_NONE`). "
+"Others of a more general utility are defined here.  This is not necessarily "
+"a complete listing."
+msgstr ""
+"Python 头文件中定义了一些有用的宏。许多是在靠近它们被使用的地方定义的（例如 "
+":c:macro:`Py_RETURN_NONE`）。其他更为通用的则定义在这里。这里所显示的并不是一个完整的列表。"
+
+#: ../../c-api/intro.rst:110
+msgid "Return the absolute value of ``x``."
+msgstr "返回 ``x`` 的绝对值。"
+
+#: ../../c-api/intro.rst:116
+msgid ""
+"Ask the compiler to always inline a static inline function. The compiler can"
+" ignore it and decides to not inline the function."
+msgstr "让编译器始终内联静态的内联函数。 编译器可以忽略它并决定不内联该函数。"
+
+#: ../../c-api/intro.rst:119
+msgid ""
+"It can be used to inline performance critical static inline functions when "
+"building Python in debug mode with function inlining disabled. For example, "
+"MSC disables function inlining when building in debug mode."
+msgstr ""
+"它可被用来在禁用函数内联的调试模式下构建 Python 时内联严重影响性能的静态内联函数。 例如，MSC 在调试模式下构建时就禁用了函数内联。"
+
+#: ../../c-api/intro.rst:123
+msgid ""
+"Marking blindly a static inline function with Py_ALWAYS_INLINE can result in"
+" worse performances (due to increased code size for example). The compiler "
+"is usually smarter than the developer for the cost/benefit analysis."
+msgstr ""
+"随意使用 Py_ALWAYS_INLINE 标记内联函数可能导致极差的性能（例如由于增加了代码量）。 对于成本/收益分析来说计算机通常都比开发者更聪明。"
+
+#: ../../c-api/intro.rst:127
+msgid ""
+"If Python is :ref:`built in debug mode <debug-build>` (if the ``Py_DEBUG`` "
+"macro is defined), the :c:macro:`Py_ALWAYS_INLINE` macro does nothing."
+msgstr ""
+"如果 Python 是 :ref:`在调试模式下构建 <debug-build>` (即定义了 ``Py_DEBUG`` 宏)，则 "
+":c:macro:`Py_ALWAYS_INLINE` 宏将不做任何事情。"
+
+#: ../../c-api/intro.rst:130
+msgid "It must be specified before the function return type. Usage::"
+msgstr "它必须在函数返回类型之前指明。 用法::"
+
+#: ../../c-api/intro.rst:138
+msgid ""
+"Argument must be a character or an integer in the range [-128, 127] or [0, "
+"255].  This macro returns ``c`` cast to an ``unsigned char``."
+msgstr ""
+"参数必须为 [-128, 127] 或 [0, 255] 范围内的字符或整数类型。这个宏将 ``c`` 强制转换为 ``unsigned char`` "
+"返回。"
+
+#: ../../c-api/intro.rst:143
+msgid ""
+"Use this for deprecated declarations.  The macro must be placed before the "
+"symbol name."
+msgstr "弃用声明。该宏必须放置在符号名称前。"
+
+#: ../../c-api/intro.rst:146 ../../c-api/intro.rst:232
+#: ../../c-api/intro.rst:250
+msgid "Example::"
+msgstr "示例::"
+
+#: ../../c-api/intro.rst:150
+msgid "MSVC support was added."
+msgstr "添加了 MSVC 支持。"
+
+#: ../../c-api/intro.rst:155
+msgid ""
+"Like ``getenv(s)``, but returns ``NULL`` if :option:`-E` was passed on the "
+"command line (see :c:member:`PyConfig.use_environment`)."
+msgstr ""
+"与 ``getenv(s)`` 类似，但是如果从命令行传入了 :option:`-E` 则返回 ``NULL`` (参见 "
+":c:member:`PyConfig.use_environment`)。"
+
+#: ../../c-api/intro.rst:160
+msgid "Return the maximum value between ``x`` and ``y``."
+msgstr "返回 ``x`` 和 ``y`` 当中的最大值。"
+
+#: ../../c-api/intro.rst:166
+msgid "Return the size of a structure (``type``) ``member`` in bytes."
+msgstr "返回结构 (``type``) ``member`` 的大小，以字节表示。"
+
+#: ../../c-api/intro.rst:172
+msgid "Return the minimum value between ``x`` and ``y``."
+msgstr "返回 ``x`` 和 ``y`` 当中的最小值。"
+
+#: ../../c-api/intro.rst:178
+msgid ""
+"Disable inlining on a function. For example, it reduces the C stack "
+"consumption: useful on LTO+PGO builds which heavily inline code (see "
+":issue:`33720`)."
+msgstr "启用内联某个函数。 例如，它会减少 C 栈消耗：适用于大量内联代码的 LTO+PGO 编译版 (参见 :issue:`33720`)。"
+
+#: ../../c-api/intro.rst:182
+msgid "Usage::"
+msgstr "用法："
+
+#: ../../c-api/intro.rst:190
+msgid ""
+"Convert ``x`` to a C string.  E.g. ``Py_STRINGIFY(123)`` returns "
+"``\"123\"``."
+msgstr "将 ``x`` 转换为 C 字符串。例如 ``Py_STRINGIFY(123)`` 返回 ``\"123\"``。"
+
+#: ../../c-api/intro.rst:197
+msgid ""
+"Use this when you have a code path that cannot be reached by design. For "
+"example, in the ``default:`` clause in a ``switch`` statement for which all "
+"possible values are covered in ``case`` statements.  Use this in places "
+"where you might be tempted to put an ``assert(0)`` or ``abort()`` call."
+msgstr ""
+"这个可以在你有一个设计上无法到达的代码路径时使用。例如，当一个 ``switch`` 语句中所有可能的值都已被 ``case`` "
+"子句覆盖了，就可将其用在 ``default:`` 子句中。当你非常想在某个位置放一个 ``assert(0)`` 或 ``abort()`` "
+"调用时也可以用这个。"
+
+#: ../../c-api/intro.rst:202
+msgid ""
+"In release mode, the macro helps the compiler to optimize the code, and "
+"avoids a warning about unreachable code.  For example, the macro is "
+"implemented with ``__builtin_unreachable()`` on GCC in release mode."
+msgstr ""
+"在 release 模式下，该宏帮助编译器优化代码，并避免发出不可到达代码的警告。例如，在 GCC 的 release 模式下，该宏使用 "
+"``__builtin_unreachable()`` 实现。"
+
+#: ../../c-api/intro.rst:206
+msgid ""
+"A use for ``Py_UNREACHABLE()`` is following a call a function that never "
+"returns but that is not declared :c:macro:`_Py_NO_RETURN`."
+msgstr ""
+"``Py_UNREACHABLE()`` 的一个用法是调用一个不会返回，但却没有声明 :c:macro:`_Py_NO_RETURN` 的函数之后。"
+
+#: ../../c-api/intro.rst:209
+msgid ""
+"If a code path is very unlikely code but can be reached under exceptional "
+"case, this macro must not be used.  For example, under low memory condition "
+"or if a system call returns a value out of the expected range.  In this "
+"case, it's better to report the error to the caller.  If the error cannot be"
+" reported to caller, :c:func:`Py_FatalError` can be used."
+msgstr ""
+"如果一个代码路径不太可能是正常代码，但在特殊情况下可以到达，就不能使用该宏。例如，在低内存条件下，或者一个系统调用返回超出预期范围值，诸如此类，最好将错误报告给调用者。如果无法将错误报告给调用者，可以使用"
+" :c:func:`Py_FatalError` 。"
+
+#: ../../c-api/intro.rst:219
+msgid ""
+"Use this for unused arguments in a function definition to silence compiler "
+"warnings. Example: ``int func(int a, int Py_UNUSED(b)) { return a; }``."
+msgstr ""
+"用于函数定义中未使用的参数，从而消除编译器警告。例如： ``int func(int a, int Py_UNUSED(b)) { return a; "
+"}`` 。"
+
+#: ../../c-api/intro.rst:226
+msgid ""
+"Creates a variable with name ``name`` that can be used in docstrings. If "
+"Python is built without docstrings, the value will be empty."
+msgstr "创建一个可以在文档字符串中使用的，名字为 ``name`` 的变量。如果不和文档字符串一起构建 Python，该值将为空。"
+
+#: ../../c-api/intro.rst:229
+msgid ""
+"Use :c:macro:`PyDoc_STRVAR` for docstrings to support building Python "
+"without docstrings, as specified in :pep:`7`."
+msgstr ""
+"如 :pep:`7` 所述，使用 :c:macro:`PyDoc_STRVAR` 作为文档字符串，以支持不和文档字符串一起构建 Python 的情况。"
+
+#: ../../c-api/intro.rst:244
+msgid ""
+"Creates a docstring for the given input string or an empty string if "
+"docstrings are disabled."
+msgstr "为给定的字符串输入创建一个文档字符串，或者当文档字符串被禁用时，创建一个空字符串。"
+
+#: ../../c-api/intro.rst:247
+msgid ""
+"Use :c:macro:`PyDoc_STR` in specifying docstrings to support building Python"
+" without docstrings, as specified in :pep:`7`."
+msgstr ""
+"如 :pep:`7` 所述，使用 :c:macro:`PyDoc_STR` 指定文档字符串，以支持不和文档字符串一起构建 Python 的情况。"
+
+#: ../../c-api/intro.rst:262
+msgid "Objects, Types and Reference Counts"
+msgstr "对象、类型和引用计数"
+
+#: ../../c-api/intro.rst:266
+msgid ""
+"Most Python/C API functions have one or more arguments as well as a return "
+"value of type :c:expr:`PyObject*`.  This type is a pointer to an opaque data"
+" type representing an arbitrary Python object.  Since all Python object "
+"types are treated the same way by the Python language in most situations "
+"(e.g., assignments, scope rules, and argument passing), it is only fitting "
+"that they should be represented by a single C type.  Almost all Python "
+"objects live on the heap: you never declare an automatic or static variable "
+"of type :c:type:`PyObject`, only pointer variables of type "
+":c:expr:`PyObject*` can  be declared.  The sole exception are the type "
+"objects; since these must never be deallocated, they are typically static "
+":c:type:`PyTypeObject` objects."
+msgstr ""
+"多数 Python/C API 函数都有一个或多个参数以及一个 :c:expr:`PyObject*` 类型的返回值。 这种类型是指向任意 Python"
+" 对象的不透明数据类型的指针。 由于所有 Python 对象类型在大多数情况下都被 Python "
+"语言用相同的方式处理（例如，赋值、作用域规则和参数传递等），因此用单个 C 类型来表示它们是很适宜的。 几乎所有 Python "
+"对象都存在于堆中：你不可声明一个类型为 :c:type:`PyObject` 的自动或静态的变量，只能声明类型为 :c:expr:`PyObject*`"
+" 的指针变量。 唯一的例外是 type 对象；因为这种对象永远不能被释放，所以它们通常都是静态的 :c:type:`PyTypeObject` 对象。"
+
+#: ../../c-api/intro.rst:277
+msgid ""
+"All Python objects (even Python integers) have a :dfn:`type` and a "
+":dfn:`reference count`.  An object's type determines what kind of object it "
+"is (e.g., an integer, a list, or a user-defined function; there are many "
+"more as explained in :ref:`types`).  For each of the well-known types there "
+"is a macro to check whether an object is of that type; for instance, "
+"``PyList_Check(a)`` is true if (and only if) the object pointed to by *a* is"
+" a Python list."
+msgstr ""
+"所有 Python 对象（甚至 Python 整数）都有一个 :dfn:`type` 和一个 :dfn:`reference "
+"count`。对象的类型确定它是什么类型的对象（例如整数、列表或用户定义函数；还有更多，如 :ref:`types` "
+"中所述）。对于每个众所周知的类型，都有一个宏来检查对象是否属于该类型；例如，当（且仅当） *a* 所指的对象是 Python 列表时 "
+"``PyList_Check(a)`` 为真。"
+
+#: ../../c-api/intro.rst:288
+msgid "Reference Counts"
+msgstr "引用计数"
+
+#: ../../c-api/intro.rst:290
+msgid ""
+"The reference count is important because today's computers have a  finite "
+"(and often severely limited) memory size; it counts how many  different "
+"places there are that have a reference to an object.  Such a  place could be"
+" another object, or a global (or static) C variable, or  a local variable in"
+" some C function. When an object's reference count  becomes zero, the object"
+" is deallocated.  If it contains references to  other objects, their "
+"reference count is decremented. Those other  objects may be deallocated in "
+"turn, if this decrement makes their reference count become zero, and so on."
+"  (There's an obvious problem  with objects that reference each other here; "
+"for now, the solution is  \"don't do that.\")"
+msgstr ""
+"引用计数非常重要，因为现代计算机内存（通常十分）有限；它计算有多少不同的地方引用同一个对象。这样的地方可以是某个对象，或者是某个全局（或静态）C "
+"变量，亦或是某个 C 函数的局部变量。当一个对象的引用计数变为 "
+"0，释放该对象。如果这个已释放的对象包含其它对象的引用计数，则递减这些对象的引用计数。如果这些对象的引用计数减少为零，则可以依次释放这些对象，依此类推。（这里有一个很明显的问题——对象之间相互引用；目前，解决方案是“不要那样做”。）"
+
+#: ../../c-api/intro.rst:305
+msgid ""
+"Reference counts are always manipulated explicitly.  The normal way is  to "
+"use the macro :c:func:`Py_INCREF` to increment an object's reference count "
+"by one, and :c:func:`Py_DECREF` to decrement it by   one.  The "
+":c:func:`Py_DECREF` macro is considerably more complex than the incref one, "
+"since it must check whether the reference count becomes zero and then cause "
+"the object's deallocator to be called. The deallocator is a function pointer"
+" contained in the object's type structure.  The type-specific deallocator "
+"takes care of decrementing the reference counts for other objects contained "
+"in the object if this is a compound object type, such as a list, as well as "
+"performing any additional finalization that's needed.  There's no chance "
+"that the reference count can overflow; at least as many bits are used to "
+"hold the reference count as there are distinct memory locations in virtual "
+"memory (assuming ``sizeof(Py_ssize_t) >= sizeof(void*)``). Thus, the "
+"reference count increment is a simple operation."
+msgstr ""
+"总是显式操作引用计数。通常的方法是使用宏 :c:func:`Py_INCREF` 来增加一个对象的引用计数，使用宏 "
+":c:func:`Py_DECREF` 来减少一个对象的引用计数。宏 :c:func:`Py_DECREF` "
+"必须检查引用计数是否为零，然后调用对象的释放器， 因此它比 incref "
+"宏复杂得多。释放器是一个包含在对象类型结构中的函数指针。如果对象是复合对象类型（例如列表），则类型特定的释放器负责递减包含在对象中的其他对象的引用计数，并执行所需的终结。引用计数不会溢出，至少用与虚拟内存中不同内存位置一样多的位用于保存引用计数（即"
+" ``sizeof(Py_ssize_t) >= sizeof(void*)`` ）。因此，引用计数递增是一个简单的操作。"
+
+#: ../../c-api/intro.rst:319
+msgid ""
+"It is not necessary to increment an object's reference count for every  "
+"local variable that contains a pointer to an object.  In theory, the  "
+"object's reference count goes up by one when the variable is made to  point "
+"to it and it goes down by one when the variable goes out of  scope.  "
+"However, these two cancel each other out, so at the end the  reference count"
+" hasn't changed.  The only real reason to use the  reference count is to "
+"prevent the object from being deallocated as  long as our variable is "
+"pointing to it.  If we know that there is at  least one other reference to "
+"the object that lives at least as long as our variable, there is no need to "
+"increment the reference count  temporarily. An important situation where "
+"this arises is in objects  that are passed as arguments to C functions in an"
+" extension module  that are called from Python; the call mechanism "
+"guarantees to hold a  reference to every argument for the duration of the "
+"call."
+msgstr ""
+"没有必要为每个包含指向对象的指针的局部变量增加对象的引用计数。理论上，当变量指向对象时，对象的引用计数增加 1 ，当变量超出范围时，对象的引用计数减少 "
+"1 "
+"。但是，这两者相互抵消，所以最后引用计数没有改变。使用引用计数的唯一真正原因是只要我们的变量指向它，就可以防止对象被释放。如果知道至少有一个对该对象的其他引用存活时间至少和我们的变量一样长，则没必要临时增加引用计数。一个典型的情形是，对象作为参数从"
+" Python 中传递给被调用的扩展模块中的 C 函数时，调用机制会保证在调用期间持有对所有参数的引用。"
+
+#: ../../c-api/intro.rst:333
+msgid ""
+"However, a common pitfall is to extract an object from a list and hold on to"
+" it for a while without incrementing its reference count. Some other "
+"operation might conceivably remove the object from the list, decrementing "
+"its reference count and possibly deallocating it. The real danger is that "
+"innocent-looking operations may invoke arbitrary Python code which could do "
+"this; there is a code path which allows control to flow back to the user "
+"from a :c:func:`Py_DECREF`, so almost any operation is potentially "
+"dangerous."
+msgstr ""
+"但是，有一个常见的陷阱是从列表中提取一个对象，并将其持有一段时间，而不增加其引用计数。某些操作可能会从列表中删除某个对象，减少其引用计数，并有可能重新分配这个对象。真正的危险是，这个看似无害的操作可能会调用任意"
+" Python 代码——也许有一个代码路径允许控制流从 :c:func:`Py_DECREF` 回到用户，因此在复合对象上的操作都存在潜在的风险。"
+
+#: ../../c-api/intro.rst:341
+msgid ""
+"A safe approach is to always use the generic operations (functions  whose "
+"name begins with ``PyObject_``, ``PyNumber_``, ``PySequence_`` or "
+"``PyMapping_``). These operations always increment the reference count of "
+"the object they return. This leaves the caller with the responsibility to "
+"call :c:func:`Py_DECREF` when they are done with the result; this soon "
+"becomes second nature."
+msgstr ""
+"一个安全的方式是始终使用泛型操作（名称以 ``PyObject_`` ， ``PyNumber_`` ， ``PySequence_`` 或 "
+"``PyMapping_`` 开头的函数）。这些操作总是增加它们返回的对象的引用计数。这让调用者有责任在获得结果后调用 "
+":c:func:`Py_DECREF` 。习惯这种方式很简单。"
+
+#: ../../c-api/intro.rst:351
+msgid "Reference Count Details"
+msgstr "引用计数细节"
+
+#: ../../c-api/intro.rst:353
+msgid ""
+"The reference count behavior of functions in the Python/C API is best  "
+"explained in terms of *ownership of references*.  Ownership pertains to "
+"references, never to objects (objects are not owned: they are always "
+"shared).  \"Owning a reference\" means being responsible for calling "
+"Py_DECREF on it when the reference is no longer needed.  Ownership can also "
+"be transferred, meaning that the code that receives ownership of the "
+"reference then becomes responsible for eventually decref'ing it by calling "
+":c:func:`Py_DECREF` or :c:func:`Py_XDECREF` when it's no longer needed---or "
+"passing on this responsibility (usually to its caller). When a function "
+"passes ownership of a reference on to its caller, the caller is said to "
+"receive a *new* reference.  When no ownership is transferred, the caller is "
+"said to *borrow* the reference. Nothing needs to be done for a "
+":term:`borrowed reference`."
+msgstr ""
+"Python/C API 中函数引用计数行为最好是通过 *引用所有权* 来解释。 所有权是关联到引用，而不是对象（对象没有所有权：它们总是会被共享）。 "
+"“获得引用所有权”意味着当不再需要该引用时必须在其上调用 Py_DECREF。 "
+"所有权也可以被转移，这意味着接受该引用所有权的代码当不再需要该引用时必须通过调用 :c:func:`Py_DECREF` 或 "
+":c:func:`Py_XDECREF` 来最终撤销引用 --- 或是将这个责任转移出去（通常是转给其调用方）。 "
+"当一个函数将引用所有权转给其调用方时，则称调用方收到了一个 *新的* 引用。 当所有权未被转移时，则称调用方 *借入* 该引用。 对于 "
+":term:`borrowed reference` 来说不需任何额外操作。"
+
+#: ../../c-api/intro.rst:366
+msgid ""
+"Conversely, when a calling function passes in a reference to an  object, "
+"there are two possibilities: the function *steals* a  reference to the "
+"object, or it does not.  *Stealing a reference* means that when you pass a "
+"reference to a function, that function assumes that it now owns that "
+"reference, and you are not responsible for it any longer."
+msgstr ""
+"相反地，当调用方函数传入一个对象的引用时，存在两种可能：该函数 *窃取* 了一个对象的引用，或是没有窃取。 *窃取引用* "
+"意味着当你向一个函数传入引用时，该函数会假定它拥有该引用，而你将不再对它负有责任。"
+
+#: ../../c-api/intro.rst:376
+msgid ""
+"Few functions steal references; the two notable exceptions are "
+":c:func:`PyList_SetItem` and :c:func:`PyTuple_SetItem`, which  steal a "
+"reference to the item (but not to the tuple or list into which the item is "
+"put!).  These functions were designed to steal a reference because of a "
+"common idiom for populating a tuple or list with newly created objects; for "
+"example, the code to create the tuple ``(1, 2, \"three\")`` could look like "
+"this (forgetting about error handling for the moment; a better way to code "
+"this is shown below)::"
+msgstr ""
+"很少有函数会窃取引用；两个重要的例外是 :c:func:`PyList_SetItem` 和 "
+":c:func:`PyTuple_SetItem`，它们会窃取对条目的引用（但不是条目所在的元组或列表！）。 "
+"这些函数被设计为会窃取引用是因为在使用新创建的对象来填充元组或列表时有一个通常的惯例；例如，创建元组 ``(1, 2, \"three\")`` "
+"的代码看起来可以是这样的（暂时不要管错误处理；下面会显示更好的代码编写方式）::"
+
+#: ../../c-api/intro.rst:391
+msgid ""
+"Here, :c:func:`PyLong_FromLong` returns a new reference which is immediately"
+" stolen by :c:func:`PyTuple_SetItem`.  When you want to keep using an object"
+" although the reference to it will be stolen, use :c:func:`Py_INCREF` to "
+"grab another reference before calling the reference-stealing function."
+msgstr ""
+"在这里，:c:func:`PyLong_FromLong` 返回了一个新的引用并且它立即被 :c:func:`PyTuple_SetItem` 所窃取。"
+" 当你想要继续使用一个对象而对它的引用将被窃取时，请在调用窃取引用的函数之前使用 :c:func:`Py_INCREF` 来抓取另一个引用。"
+
+#: ../../c-api/intro.rst:396
+msgid ""
+"Incidentally, :c:func:`PyTuple_SetItem` is the *only* way to set tuple "
+"items; :c:func:`PySequence_SetItem` and :c:func:`PyObject_SetItem` refuse to"
+" do this since tuples are an immutable data type.  You should only use "
+":c:func:`PyTuple_SetItem` for tuples that you are creating yourself."
+msgstr ""
+"顺便提一下，:c:func:`PyTuple_SetItem` 是设置元组条目的 *唯一* "
+"方式；:c:func:`PySequence_SetItem` 和 :c:func:`PyObject_SetItem` "
+"会拒绝这样做因为元组是不可变数据类型。 你应当只对你自己创建的元组使用 :c:func:`PyTuple_SetItem`。"
+
+#: ../../c-api/intro.rst:401
+msgid ""
+"Equivalent code for populating a list can be written using "
+":c:func:`PyList_New` and :c:func:`PyList_SetItem`."
+msgstr "等价于填充一个列表的代码可以使用 :c:func:`PyList_New` 和 :c:func:`PyList_SetItem` 来编写。"
+
+#: ../../c-api/intro.rst:404
+msgid ""
+"However, in practice, you will rarely use these ways of creating and "
+"populating a tuple or list.  There's a generic function, "
+":c:func:`Py_BuildValue`, that can create most common objects from C values, "
+"directed by a :dfn:`format string`. For example, the above two blocks of "
+"code could be replaced by the following (which also takes care of the error "
+"checking)::"
+msgstr ""
+"然而，在实践中，你很少会使用这些创建和填充元组或列表的方式。 有一个通用的函数 :c:func:`Py_BuildValue` 可以根据 C "
+"值来创建大多数常用对象，由一个 :dfn:`格式字符串` 来指明。 例如，上面的两个代码块可以用下面的代码来代替（还会负责错误检测）::"
+
+#: ../../c-api/intro.rst:415
+msgid ""
+"It is much more common to use :c:func:`PyObject_SetItem` and friends with "
+"items whose references you are only borrowing, like arguments that were "
+"passed in to the function you are writing.  In that case, their behaviour "
+"regarding reference counts is much saner, since you don't have to increment "
+"a reference count so you can give a reference away (\"have it be stolen\")."
+"  For example, this function sets all items of a list (actually, any mutable"
+" sequence) to a given item::"
+msgstr ""
+"使用 :c:func:`PyObject_SetItem` 等来处理那些你只是借入引用的条目是更为常见的，例如传给你正在编写的函数的参数。 "
+"在这种情况下，他们对于引用计数的行为会更为理智，因为你不需要递增引用计数以便你可以将引用计数转出去（“让它被窃取”）。 "
+"例如，这个函数将一个列表（实例上是任何可变序列）中的所有项设置为一个给定的条目::"
+
+#: ../../c-api/intro.rst:445
+msgid ""
+"The situation is slightly different for function return values.   While "
+"passing a reference to most functions does not change your  ownership "
+"responsibilities for that reference, many functions that  return a reference"
+" to an object give you ownership of the reference. The reason is simple: in "
+"many cases, the returned object is created  on the fly, and the reference "
+"you get is the only reference to the  object.  Therefore, the generic "
+"functions that return object references, like :c:func:`PyObject_GetItem` and"
+"  :c:func:`PySequence_GetItem`, always return a new reference (the caller "
+"becomes the owner of the reference)."
+msgstr ""
+"对于函数返回值的情况略有不同。 虽然向大多数函数传递一个引用不会改变你对该引用的所有权责任，但许多返回一个引用的函数会给你该引用的所有权。 "
+"原因很简单：在许多情况下，返回的对象是临时创建的，而你得到的引用是对该对象的唯一引用。 因此，返回对象引用的通用函数，如 "
+":c:func:`PyObject_GetItem` 和 "
+":c:func:`PySequence_GetItem`，将总是返回一个新的引用（调用方将成为该引用的所有者）。"
+
+#: ../../c-api/intro.rst:454
+msgid ""
+"It is important to realize that whether you own a reference returned  by a "
+"function depends on which function you call only --- *the plumage* (the type"
+" of the object passed as an argument to the function) *doesn't enter into "
+"it!* Thus, if you  extract an item from a list using "
+":c:func:`PyList_GetItem`, you don't own the reference --- but if you obtain "
+"the same item from the same list using :c:func:`PySequence_GetItem` (which "
+"happens to take exactly the same arguments), you do own a reference to the "
+"returned object."
+msgstr ""
+"一个需要了解的重点在于你是否拥有一个由函数返回的引用只取决于你所调用的函数 --- *附带物* (作为参数传给函数的对象的类型) *不会带来额外影响！*"
+" 因此，如果你使用 :c:func:`PyList_GetItem` 从一个列表提取条目，你并不会拥有其引用 --- 但是如果你使用 "
+":c:func:`PySequence_GetItem` (它恰好接受完全相同的参数) 从同一个列表获取同样的条目，你就会拥有一个对所返回对象的引用。"
+
+#: ../../c-api/intro.rst:466
+msgid ""
+"Here is an example of how you could write a function that computes the sum "
+"of the items in a list of integers; once using  :c:func:`PyList_GetItem`, "
+"and once using :c:func:`PySequence_GetItem`. ::"
+msgstr ""
+"下面是说明你要如何编写一个函数来计算一个整数列表中条目的示例；一个是使用 :c:func:`PyList_GetItem`，而另一个是使用 "
+":c:func:`PySequence_GetItem`。 ::"
+
+#: ../../c-api/intro.rst:530
+msgid "Types"
+msgstr "类型"
+
+#: ../../c-api/intro.rst:532
+msgid ""
+"There are few other data types that play a significant role in  the Python/C"
+" API; most are simple C types such as :c:expr:`int`,  :c:expr:`long`, "
+":c:expr:`double` and :c:expr:`char*`.  A few structure types  are used to "
+"describe static tables used to list the functions exported  by a module or "
+"the data attributes of a new object type, and another is used to describe "
+"the value of a complex number.  These will  be discussed together with the "
+"functions that use them."
+msgstr ""
+"在 Python/C API 中扮演重要角色的其他数据类型很少；大多为简单 C 类型如 :c:expr:`int`,  :c:expr:`long`, "
+":c:expr:`double` 和 :c:expr:`char*` 等。 "
+"有一些结构类型被用来燃烧液体于列出模块所导出的函数或者某个新对象类型的个的一个，还有一个结构类型被用来描述复数的值。 "
+"这些结构类型将与使用它们的函数放到一起讨论。"
+
+#: ../../c-api/intro.rst:542
+msgid ""
+"A signed integral type such that ``sizeof(Py_ssize_t) == sizeof(size_t)``. "
+"C99 doesn't define such a thing directly (size_t is an unsigned integral "
+"type). See :pep:`353` for details. ``PY_SSIZE_T_MAX`` is the largest "
+"positive value of type :c:type:`Py_ssize_t`."
+msgstr ""
+"一个使得 ``sizeof(Py_ssize_t) == sizeof(size_t)`` 的有符号整数类型。 C99 "
+"没有直接定义这样的东西（size_t 是一个无符号整数类型）。 请参阅 :pep:`353` 了解详情。 ``PY_SSIZE_T_MAX`` 是 "
+":c:type:`Py_ssize_t` 类型的最大正数值。"
+
+#: ../../c-api/intro.rst:551
+msgid "Exceptions"
+msgstr "异常"
+
+#: ../../c-api/intro.rst:553
+msgid ""
+"The Python programmer only needs to deal with exceptions if specific  error "
+"handling is required; unhandled exceptions are automatically  propagated to "
+"the caller, then to the caller's caller, and so on, until they reach the "
+"top-level interpreter, where they are reported to the  user accompanied by a"
+" stack traceback."
+msgstr ""
+"Python程序员只需要处理特定需要处理的错误异常；未处理的异常会自动传递给调用者，然后传递给调用者的调用者，依此类推，直到他们到达顶级解释器，在那里将它们报告给用户并伴随堆栈回溯。"
+
+#: ../../c-api/intro.rst:561
+msgid ""
+"For C programmers, however, error checking always has to be explicit.  All "
+"functions in the Python/C API can raise exceptions, unless an explicit claim"
+" is made otherwise in a function's documentation.  In general, when a "
+"function encounters an error, it sets an exception, discards any object "
+"references that it owns, and returns an error indicator.  If not documented "
+"otherwise, this indicator is either ``NULL`` or ``-1``, depending on the "
+"function's return type. A few functions return a Boolean true/false result, "
+"with false indicating an error.  Very few functions return no explicit error"
+" indicator or have an ambiguous return value, and require explicit testing "
+"for errors with :c:func:`PyErr_Occurred`.  These exceptions are always "
+"explicitly documented."
+msgstr ""
+"然而，对于 C 程序员来说，错误检查必须总是显式进行的。 Python/C API 中的所有函数都可以引发异常，除非在函数的文档中另外显式声明。 "
+"一般来说，当一个函数遇到错误时，它会设置一个异常，丢弃它所拥有的任何对象引用，并返回一个错误标示。 如果没有说明例外的文档，这个标示将为 "
+"``NULL`` 或 ``-1``，具体取决于函数的返回类型。 有少量函数会返回一个布尔真/假结果值，其中假值表示错误。 "
+"有极少的函数没有显式的错误标示或是具有不明确的返回值，并需要用 :c:func:`PyErr_Occurred` 来进行显式的检测。 "
+"这些例外总是会被明确地记入文档中。"
+
+#: ../../c-api/intro.rst:576
+msgid ""
+"Exception state is maintained in per-thread storage (this is  equivalent to "
+"using global storage in an unthreaded application).  A  thread can be in one"
+" of two states: an exception has occurred, or not. The function "
+":c:func:`PyErr_Occurred` can be used to check for this: it returns a "
+"borrowed reference to the exception type object when an exception has "
+"occurred, and ``NULL`` otherwise.  There are a number of functions to set "
+"the exception state: :c:func:`PyErr_SetString` is the most common (though "
+"not the most general) function to set the exception state, and "
+":c:func:`PyErr_Clear` clears the exception state."
+msgstr ""
+"异常状态是在各个线程的存储中维护的（这相当于在一个无线程的应用中使用全局存储）。 一个线程可以处在两种状态之一：异常已经发生，或者没有发生。 函数 "
+":c:func:`PyErr_Occurred` 可以被用来检查此状态：当异常发生时它将返回一个借入的异常类型对象的引用，在其他情况下则返回 "
+"``NULL``。 有多个函数可以设置异常状态: :c:func:`PyErr_SetString` "
+"是最常见的（尽管不是最通用的）设置异常状态的函数，而 :c:func:`PyErr_Clear` 可以清除异常状态。"
+
+#: ../../c-api/intro.rst:586
+msgid ""
+"The full exception state consists of three objects (all of which can  be "
+"``NULL``): the exception type, the corresponding exception  value, and the "
+"traceback.  These have the same meanings as the Python result of "
+"``sys.exc_info()``; however, they are not the same: the Python objects "
+"represent the last exception being handled by a Python  :keyword:`try` ... "
+":keyword:`except` statement, while the C level exception state only exists "
+"while an exception is being passed on between C functions until it reaches "
+"the Python bytecode interpreter's  main loop, which takes care of "
+"transferring it to ``sys.exc_info()`` and friends."
+msgstr ""
+"完整的异常状态由三个对象组成  (它为都可以为 ``NULL``): 异常类型、相应的异常值，以及回溯信息。 这些对象的含义与 Python 中 "
+"``sys.exc_info()`` 的结果相同；然而，它们并不是一样的：Python 对象代表由 Python  :keyword:`try` ..."
+" :keyword:`except` 语句所处理的最后一个异常，而 C 层级的异常状态只在异常被传入到 C 函数或在它们之间传递时存在直至其到达 "
+"Python 字节码解释器的主事件循环，该事件循环会负责将其转移至 ``sys.exc_info()`` 等处。"
+
+#: ../../c-api/intro.rst:598
+msgid ""
+"Note that starting with Python 1.5, the preferred, thread-safe way to access"
+" the exception state from Python code is to call the function "
+":func:`sys.exc_info`, which returns the per-thread exception state for "
+"Python code.  Also, the semantics of both ways to access the exception state"
+" have changed so that a function which catches an exception will save and "
+"restore its thread's exception state so as to preserve the exception state "
+"of its caller.  This prevents common bugs in exception handling code caused "
+"by an innocent-looking function overwriting the exception being handled; it "
+"also reduces the often unwanted lifetime extension for objects that are "
+"referenced by the stack frames in the traceback."
+msgstr ""
+"请注意自 Python 1.5 开始，从 Python 代码访问异常状态的首选的、线程安全的方式是调用函数 "
+":func:`sys.exc_info`，它将返回 Python 代码的分线程异常状态。 "
+"此外，这两种访问异常状态的方式的语义都发生了变化因而捕获到异常的函数将保存并恢复其线程的异常状态以保留其调用方的异常状态。 "
+"这将防止异常处理代码中由一个看起来很无辜的函数覆盖了正在处理的异常所造成的常见错误；它还减少了在回溯由栈帧所引用的对象的往往不被需要的生命其延长。"
+
+#: ../../c-api/intro.rst:609
+msgid ""
+"As a general principle, a function that calls another function to  perform "
+"some task should check whether the called function raised an  exception, and"
+" if so, pass the exception state on to its caller.  It  should discard any "
+"object references that it owns, and return an  error indicator, but it "
+"should *not* set another exception --- that would overwrite the exception "
+"that was just raised, and lose important information about the exact cause "
+"of the error."
+msgstr ""
+"作为一般的原则，一个调用另一个函数来执行某些任务的函数应当检查被调用的函数是否引发了异常，并在引发异常时将异常状态传递给其调用方。 "
+"它应当丢弃它所拥有的任何对象引用，并返回一个错误标示，但它 *不应* 设置另一个异常 --- 那会覆盖刚引发的异常，并丢失有关错误确切原因的重要信息。"
+
+#: ../../c-api/intro.rst:618
+msgid ""
+"A simple example of detecting exceptions and passing them on is shown in the"
+" :c:func:`sum_sequence` example above.  It so happens that this example "
+"doesn't need to clean up any owned references when it detects an error.  The"
+" following example function shows some error cleanup.  First, to remind you "
+"why you like Python, we show the equivalent Python code::"
+msgstr ""
+"一个检测异常并传递它们的简单例子在上面的 :c:func:`sum_sequence` 示例中进行了演示。 "
+"这个例子恰好在检测到错误时不需要清理所拥有的任何引用。 下面的示例函数演示了一些错误清理操作。 首先，为了向你提示 Python "
+"的优势，我们展示了等效的 Python 代码::"
+
+#: ../../c-api/intro.rst:633
+msgid "Here is the corresponding C code, in all its glory::"
+msgstr "下面是对应的闪耀荣光的 C 代码："
+
+#: ../../c-api/intro.rst:685
+msgid ""
+"This example represents an endorsed use of the ``goto`` statement  in C! It "
+"illustrates the use of :c:func:`PyErr_ExceptionMatches` and "
+":c:func:`PyErr_Clear` to handle specific exceptions, and the use of "
+":c:func:`Py_XDECREF` to dispose of owned references that may be ``NULL`` "
+"(note the ``'X'`` in the name; :c:func:`Py_DECREF` would crash when "
+"confronted with a ``NULL`` reference).  It is important that the variables "
+"used to hold owned references are initialized to ``NULL`` for this to work; "
+"likewise, the proposed return value is initialized to ``-1`` (failure) and "
+"only set to success after the final call made is successful."
+msgstr ""
+"这个例子代表了 C 语言中 ``goto`` 语句一种受到认可的用法！ 它说明了如何使用 "
+":c:func:`PyErr_ExceptionMatches` 和 :c:func:`PyErr_Clear` 来处理特定的异常，以及如何使用 "
+":c:func:`Py_XDECREF` 来处理可能为 ``NULL`` 的自有引用（注意名称中的 "
+"``'X'``；:c:func:`Py_DECREF` 在遇到 ``NULL`` 引用时将会崩溃）。 重要的一点在于用来保存自有引用的变量要被初始化为 "
+"``NULL`` 才能发挥作用；类似地，建议的返回值也要被初始化为 ``-1`` (失败) 并且只有在最终执行的调用成功后才会被设置为成功。"
+
+#: ../../c-api/intro.rst:699
+msgid "Embedding Python"
+msgstr "嵌入Python"
+
+#: ../../c-api/intro.rst:701
+msgid ""
+"The one important task that only embedders (as opposed to extension writers)"
+" of the Python interpreter have to worry about is the initialization, and "
+"possibly the finalization, of the Python interpreter.  Most functionality of"
+" the interpreter can only be used after the interpreter has been "
+"initialized."
+msgstr ""
+"只有 Python 解释器的嵌入方（相对于扩展编写者而言）才需要担心的一项重要任务是它的初始化，可能还有它的最终化。 "
+"解释器的大多数功能只有在解释器被初始化之后才能被使用。"
+
+#: ../../c-api/intro.rst:714
+msgid ""
+"The basic initialization function is :c:func:`Py_Initialize`. This "
+"initializes the table of loaded modules, and creates the fundamental modules"
+" :mod:`builtins`, :mod:`__main__`, and :mod:`sys`.  It also initializes the "
+"module search path (``sys.path``)."
+msgstr ""
+"基本的初始化函数是 :c:func:`Py_Initialize`。 此函数将初始化已加载模块表，并创建基本模块 :mod:`builtins`, "
+":mod:`__main__` 和 :mod:`sys`。 它还将初始化模块搜索路径 (``sys.path``)。"
+
+#: ../../c-api/intro.rst:719
+msgid ""
+":c:func:`Py_Initialize` does not set the \"script argument list\"  "
+"(``sys.argv``). If this variable is needed by Python code that will be "
+"executed later, setting :c:member:`PyConfig.argv` and "
+":c:member:`PyConfig.parse_argv` must be set: see :ref:`Python Initialization"
+" Configuration <init-config>`."
+msgstr ""
+":c:func:`Py_Initialize` 不会设置 \"脚本参数列表\"  (``sys.argv``)。 如果稍后将要执行的 Python "
+"代码需要此变量，则要设置 :c:member:`PyConfig.argv` 并且还要设置 "
+":c:member:`PyConfig.parse_argv`: 参见 :ref:`Python 初始化配置 <init-config>`。"
+
+#: ../../c-api/intro.rst:724
+msgid ""
+"On most systems (in particular, on Unix and Windows, although the details "
+"are slightly different), :c:func:`Py_Initialize` calculates the module "
+"search path based upon its best guess for the location of the standard "
+"Python interpreter executable, assuming that the Python library is found in "
+"a fixed location relative to the Python interpreter executable.  In "
+"particular, it looks for a directory named :file:`lib/python{X.Y}` relative "
+"to the parent directory where the executable named :file:`python` is found "
+"on the shell command search path (the environment variable :envvar:`PATH`)."
+msgstr ""
+"在大多数系统上（特别是 Unix 和 Windows，虽然在细节上有所不同），:c:func:`Py_Initialize` 将根据对标准 Python"
+" 解释器可执行文件的位置的最佳猜测来计算模块搜索路径，并设定 Python 库可在相对于 Python 解释器可执行文件的固定位置上找到。 "
+"特别地，它将相对于在 shell 命令搜索路径 (环境变量 :envvar:`PATH`) 上找到的名为 :file:`python` "
+"的可执行文件所在父目录中查找名为 :file:`lib/python{X.Y}` 的目录。"
+
+#: ../../c-api/intro.rst:733
+msgid ""
+"For instance, if the Python executable is found in "
+":file:`/usr/local/bin/python`, it will assume that the libraries are in "
+":file:`/usr/local/lib/python{X.Y}`.  (In fact, this particular path is also "
+"the \"fallback\" location, used when no executable file named :file:`python`"
+" is found along :envvar:`PATH`.)  The user can override this behavior by "
+"setting the environment variable :envvar:`PYTHONHOME`, or insert additional "
+"directories in front of the standard path by setting :envvar:`PYTHONPATH`."
+msgstr ""
+"举例来说，如果 Python 可执行文件位于 :file:`/usr/local/bin/python`，它将假定库位于 "
+":file:`/usr/local/lib/python{X.Y}`。 （实际上，这个特定路径还将成为“回退”位置，会在当无法在 "
+":envvar:`PATH` 中找到名为 :file:`python` 的可执行文件时被使用。） 用户可以通过设置环境变量 "
+":envvar:`PYTHONHOME`，或通过设置 :envvar:`PYTHONPATH` 在标准路径之前插入额外的目录来覆盖此行为。"
+
+#: ../../c-api/intro.rst:748
+msgid ""
+"The embedding application can steer the search by calling "
+"``Py_SetProgramName(file)`` *before* calling  :c:func:`Py_Initialize`.  Note"
+" that :envvar:`PYTHONHOME` still overrides this and :envvar:`PYTHONPATH` is "
+"still inserted in front of the standard path.  An application that requires "
+"total control has to provide its own implementation of :c:func:`Py_GetPath`,"
+" :c:func:`Py_GetPrefix`, :c:func:`Py_GetExecPrefix`, and "
+":c:func:`Py_GetProgramFullPath` (all defined in :file:`Modules/getpath.c`)."
+msgstr ""
+"嵌入的应用程序可以通过在调用 :c:func:`Py_Initialize` *之前* 调用 ``Py_SetProgramName(file)`` "
+"来改变搜索次序。 请注意 :envvar:`PYTHONHOME` 仍然会覆盖此设置并且 :envvar:`PYTHONPATH` "
+"仍然会被插入到标准路径之前。 需要完全控制权的应用程序必须提供它自己的 :c:func:`Py_GetPath`, "
+":c:func:`Py_GetPrefix`, :c:func:`Py_GetExecPrefix` 和 "
+":c:func:`Py_GetProgramFullPath` 实现（这些函数均在 :file:`Modules/getpath.c` 中定义）。"
+
+#: ../../c-api/intro.rst:758
+msgid ""
+"Sometimes, it is desirable to \"uninitialize\" Python.  For instance,  the "
+"application may want to start over (make another call to "
+":c:func:`Py_Initialize`) or the application is simply done with its  use of "
+"Python and wants to free memory allocated by Python.  This can be "
+"accomplished by calling :c:func:`Py_FinalizeEx`.  The function "
+":c:func:`Py_IsInitialized` returns true if Python is currently in the "
+"initialized state.  More information about these functions is given in a "
+"later chapter. Notice that :c:func:`Py_FinalizeEx` does *not* free all "
+"memory allocated by the Python interpreter, e.g. memory allocated by "
+"extension modules currently cannot be released."
+msgstr ""
+"有时，还需要对 Python 进行“反初始化”。 例如，应用程序可能想要重新启动 (再次调用 :c:func:`Py_Initialize`) "
+"或者应用程序对 Python 的使用已经完成并想要释放 Python 所分配的内存。 这可以通过调用 :c:func:`Py_FinalizeEx` "
+"来实现。 如果当前 Python 处于已初始化状态则 :c:func:`Py_IsInitialized` 函数将返回真值。 "
+"有关这些函数的更多信息将在之后的章节中给出。 请注意 :c:func:`Py_FinalizeEx` *不会* 释放所有由 Python "
+"解释器所分配的内存，例如由扩展模块所分配的内存目前是不会被释放的。"
+
+#: ../../c-api/intro.rst:772
+msgid "Debugging Builds"
+msgstr "调试构建"
+
+#: ../../c-api/intro.rst:774
+msgid ""
+"Python can be built with several macros to enable extra checks of the "
+"interpreter and extension modules.  These checks tend to add a large amount "
+"of overhead to the runtime so they are not enabled by default."
+msgstr "Python 可以附带某些宏来编译以启用对解释器和扩展模块的额外检查。 这些检查会给运行时增加大量额外开销因此它们默认未被启用。"
+
+#: ../../c-api/intro.rst:778
+msgid ""
+"A full list of the various types of debugging builds is in the file "
+":file:`Misc/SpecialBuilds.txt` in the Python source distribution. Builds are"
+" available that support tracing of reference counts, debugging the memory "
+"allocator, or low-level profiling of the main interpreter loop.  Only the "
+"most frequently used builds will be described in the remainder of this "
+"section."
+msgstr ""
+"各种调试构建版的完整列表见 Python 源代码颁发包中的 :file:`Misc/SpecialBuilds.txt`。 "
+"可用的构建版有支持追踪引用计数，调试内存分配器，或是对主解释器事件循环的低层级性能分析等等。 本节的剩余部分将只介绍最常用的几种构建版。"
+
+#: ../../c-api/intro.rst:784
+msgid ""
+"Compiling the interpreter with the :c:macro:`Py_DEBUG` macro defined "
+"produces what is generally meant by :ref:`a debug build of Python <debug-"
+"build>`. :c:macro:`Py_DEBUG` is enabled in the Unix build by adding "
+":option:`--with-pydebug` to the :file:`./configure` command. It is also "
+"implied by the presence of the not-Python-specific :c:macro:`_DEBUG` macro."
+"  When :c:macro:`Py_DEBUG` is enabled in the Unix build, compiler "
+"optimization is disabled."
+msgstr ""
+"附带定义 :c:macro:`Py_DEBUG` 宏来编译解释器将产生通常所称的 :ref:`Python 调试编译版 <debug-build>`。 "
+":c:macro:`Py_DEBUG` 在 Unix 编译中启用是通过添加 :option:`--with-pydebug` 到 "
+":file:`./configure` 命令来实现的。 它也可通过提供非 Python 专属的 :c:macro:`_DEBUG` 宏来启用。 当 "
+":c:macro:`Py_DEBUG` 在 Unix 编译中启用时，编译器优化将被禁用。"
+
+#: ../../c-api/intro.rst:792
+msgid ""
+"In addition to the reference count debugging described below, extra checks "
+"are performed, see :ref:`Python Debug Build <debug-build>`."
+msgstr "除了下文描述的引用计数调试，还会执行额外检查，请参阅 :ref:`Python Debug Build <debug-build>`。"
+
+#: ../../c-api/intro.rst:795
+msgid ""
+"Defining :c:macro:`Py_TRACE_REFS` enables reference tracing (see the "
+":option:`configure --with-trace-refs option <--with-trace-refs>`). When "
+"defined, a circular doubly linked list of active objects is maintained by "
+"adding two extra fields to every :c:type:`PyObject`.  Total allocations are "
+"tracked as well.  Upon exit, all existing references are printed.  (In "
+"interactive mode this happens after every statement run by the interpreter.)"
+msgstr ""
+"定义 :c:macro:`Py_TRACE_REFS` 将启用引用追踪 (参见 :option:`configure --with-trace-refs"
+" 选项 <--with-trace-refs>`)。 当定义了此宏时，将通过在每个 :c:type:`PyObject` "
+"上添加两个额外字段来维护一个活动对象的循环双链列表。 总的分配量也会被追踪。 在退出时，所有现存的引用将被打印出来。 "
+"（在交互模式下这将在解释器运行每条语句之后发生）。"
+
+#: ../../c-api/intro.rst:802
+msgid ""
+"Please refer to :file:`Misc/SpecialBuilds.txt` in the Python source "
+"distribution for more detailed information."
+msgstr "有关更多详细信息，请参阅Python源代码中的 :file:`Misc/SpecialBuilds.txt` 。"
+
+#: ../../c-api/intro.rst:264
+msgid "object"
+msgstr "object -- 对象"
+
+#: ../../c-api/intro.rst:264
+msgid "type"
+msgstr "type"
+
+#: ../../c-api/intro.rst:301
+msgid "Py_INCREF()"
+msgstr "Py_INCREF()"
+
+#: ../../c-api/intro.rst:301
+msgid "Py_DECREF()"
+msgstr "Py_DECREF()"
+
+#: ../../c-api/intro.rst:372
+msgid "PyList_SetItem()"
+msgstr "PyList_SetItem()"
+
+#: ../../c-api/intro.rst:372
+msgid "PyTuple_SetItem()"
+msgstr "PyTuple_SetItem()"
+
+#: ../../c-api/intro.rst:443
+msgid "set_all()"
+msgstr "set_all()"
+
+#: ../../c-api/intro.rst:462
+msgid "PyList_GetItem()"
+msgstr "PyList_GetItem()"
+
+#: ../../c-api/intro.rst:462
+msgid "PySequence_GetItem()"
+msgstr "PySequence_GetItem()"
+
+#: ../../c-api/intro.rst:492
+msgid "sum_list()"
+msgstr "sum_list()"
+
+#: ../../c-api/intro.rst:524 ../../c-api/intro.rst:616
+msgid "sum_sequence()"
+msgstr "sum_sequence()"
+
+#: ../../c-api/intro.rst:559
+msgid "PyErr_Occurred()"
+msgstr "PyErr_Occurred()"
+
+#: ../../c-api/intro.rst:572
+msgid "PyErr_SetString()"
+msgstr "PyErr_SetString()"
+
+#: ../../c-api/intro.rst:572 ../../c-api/intro.rst:680
+msgid "PyErr_Clear()"
+msgstr "PyErr_Clear()"
+
+#: ../../c-api/intro.rst:596
+msgid "exc_info() (in module sys)"
+msgstr "exc_info() (在 sys 模块中)"
+
+#: ../../c-api/intro.rst:631 ../../c-api/intro.rst:678
+msgid "incr_item()"
+msgstr "incr_item()"
+
+#: ../../c-api/intro.rst:680
+msgid "PyErr_ExceptionMatches()"
+msgstr "PyErr_ExceptionMatches()"
+
+#: ../../c-api/intro.rst:680
+msgid "Py_XDECREF()"
+msgstr "Py_XDECREF()"
+
+#: ../../c-api/intro.rst:706
+msgid "Py_Initialize()"
+msgstr "Py_Initialize()"
+
+#: ../../c-api/intro.rst:706 ../../c-api/intro.rst:706
+#: ../../c-api/intro.rst:706 ../../c-api/intro.rst:706
+msgid "module"
+msgstr "module"
+
+#: ../../c-api/intro.rst:706
+msgid "builtins"
+msgstr "builtins"
+
+#: ../../c-api/intro.rst:706
+msgid "__main__"
+msgstr "__main__"
+
+#: ../../c-api/intro.rst:706
+msgid "sys"
+msgstr "sys"
+
+#: ../../c-api/intro.rst:706
+msgid "search"
+msgstr "搜索"
+
+#: ../../c-api/intro.rst:706
+msgid "path"
+msgstr "path"
+
+#: ../../c-api/intro.rst:706
+msgid "path (in module sys)"
+msgstr "path (在 sys 模块中)"
+
+#: ../../c-api/intro.rst:741
+msgid "Py_SetProgramName()"
+msgstr "Py_SetProgramName()"
+
+#: ../../c-api/intro.rst:741
+msgid "Py_GetPath()"
+msgstr "Py_GetPath()"
+
+#: ../../c-api/intro.rst:741
+msgid "Py_GetPrefix()"
+msgstr "Py_GetPrefix()"
+
+#: ../../c-api/intro.rst:741
+msgid "Py_GetExecPrefix()"
+msgstr "Py_GetExecPrefix()"
+
+#: ../../c-api/intro.rst:741
+msgid "Py_GetProgramFullPath()"
+msgstr "Py_GetProgramFullPath()"
+
+#: ../../c-api/intro.rst:756
+msgid "Py_IsInitialized()"
+msgstr "Py_IsInitialized()"
