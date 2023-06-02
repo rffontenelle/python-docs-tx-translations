@@ -1,0 +1,2046 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2001-2023, Python Software Foundation
+# This file is distributed under the same license as the Python package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2022
+# Lu <lu2github@gmail.com>, 2022
+# LeeWendao <LeeWendao@outlook.com>, 2022
+# Nyuan Zhang, 2023
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Python 3.10\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-02 14:27+0000\n"
+"PO-Revision-Date: 2022-11-05 17:22+0000\n"
+"Last-Translator: Nyuan Zhang, 2023\n"
+"Language-Team: Chinese (China) (https://app.transifex.com/python-doc/teams/5390/zh_CN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../library/sqlite3.rst:2
+msgid ":mod:`sqlite3` --- DB-API 2.0 interface for SQLite databases"
+msgstr ":mod:`sqlite3` --- SQLite 数据库 DB-API 2.0 接口模块"
+
+#: ../../library/sqlite3.rst:9
+msgid "**Source code:** :source:`Lib/sqlite3/`"
+msgstr "**源代码：** :source:`Lib/sqlite3/`"
+
+#: ../../library/sqlite3.rst:23
+msgid ""
+"SQLite is a C library that provides a lightweight disk-based database that "
+"doesn't require a separate server process and allows accessing the database "
+"using a nonstandard variant of the SQL query language. Some applications can"
+" use SQLite for internal data storage.  It's also possible to prototype an "
+"application using SQLite and then port the code to a larger database such as"
+" PostgreSQL or Oracle."
+msgstr ""
+"SQLite 是一个C语言库，它可以提供一种轻量级的基于磁盘的数据库，这种数据库不需要独立的服务器进程，也允许需要使用一种非标准的 SQL "
+"查询语言来访问它。一些应用程序可以使用 SQLite 作为内部数据存储。可以用它来创建一个应用程序原型，然后再迁移到更大的数据库，比如 "
+"PostgreSQL 或 Oracle。"
+
+#: ../../library/sqlite3.rst:30
+msgid ""
+"The :mod:`!sqlite3` module was written by Gerhard Häring.  It provides an "
+"SQL interface compliant with the DB-API 2.0 specification described by "
+":pep:`249`, and requires SQLite 3.7.15 or newer."
+msgstr ""
+":mod:`!sqlite3` 模块由Gerhard Häring编写。它提供了 :pep:`249` 所描述的符合 DB-API 2.0 规范的 "
+"SQL 接口，并要求使用 SQLite 3.7.15 或更新的版本。"
+
+#: ../../library/sqlite3.rst:34
+msgid "This document includes four main sections:"
+msgstr "本文档包括了四个主要部分："
+
+#: ../../library/sqlite3.rst:36
+msgid ":ref:`sqlite3-tutorial` teaches how to use the :mod:`!sqlite3` module."
+msgstr ":ref:`sqlite3-tutorial` 将教你如何使用 :mod:`!sqlite3` 模块。"
+
+#: ../../library/sqlite3.rst:37
+msgid ""
+":ref:`sqlite3-reference` describes the classes and functions this module "
+"defines."
+msgstr ":ref:`sqlite3-reference` 描述了该模块定义的类与函数。"
+
+#: ../../library/sqlite3.rst:39
+msgid ":ref:`sqlite3-howtos` details how to handle specific tasks."
+msgstr ":ref:`sqlite3-howtos` 详细介绍了如何处理一些特定的任务。"
+
+#: ../../library/sqlite3.rst:40
+msgid ""
+":ref:`sqlite3-explanation` provides in-depth background on transaction "
+"control."
+msgstr ":ref:`sqlite3-explanation` 提供了关于事务控制（transaction control）的更深一步的背景。"
+
+#: ../../library/sqlite3.rst:47
+msgid "https://www.sqlite.org"
+msgstr "https://www.sqlite.org"
+
+#: ../../library/sqlite3.rst:46
+msgid ""
+"The SQLite web page; the documentation describes the syntax and the "
+"available data types for the supported SQL dialect."
+msgstr "SQLite的主页；它的文档详细描述了它所支持的 SQL 方言的语法和可用的数据类型。"
+
+#: ../../library/sqlite3.rst:50
+msgid "https://www.w3schools.com/sql/"
+msgstr "https://www.w3schools.com/sql/"
+
+#: ../../library/sqlite3.rst:50
+msgid "Tutorial, reference and examples for learning SQL syntax."
+msgstr "学习 SQL 语法的教程、参考和例子。"
+
+#: ../../library/sqlite3.rst:52
+msgid ":pep:`249` - Database API Specification 2.0"
+msgstr ":pep:`249` - DB-API 2.0 规范"
+
+#: ../../library/sqlite3.rst:53
+msgid "PEP written by Marc-André Lemburg."
+msgstr "PEP 由 Marc-André Lemburg 撰写。"
+
+#: ../../library/sqlite3.rst:66
+msgid "Tutorial"
+msgstr "教程"
+
+#: ../../library/sqlite3.rst:68
+msgid ""
+"In this tutorial, you will create a database of Monty Python movies using "
+"basic :mod:`!sqlite3` functionality. It assumes a fundamental understanding "
+"of database concepts, including `cursors`_ and `transactions`_."
+msgstr ""
+"在本篇教程中，你将会使用 :mod:`!sqlite3` 模块的基本功能创建一个存储 Monty Python "
+"的电影作品信息的数据库。本篇教程假定您在阅读前对于数据库的基本概念有所了解，例如 `cursors`_  与  `transactions`_  。"
+
+#: ../../library/sqlite3.rst:73
+msgid ""
+"First, we need to create a new database and open a database connection to "
+"allow :mod:`!sqlite3` to work with it. Call :func:`sqlite3.connect` to "
+"create a connection to the database :file:`tutorial.db` in the current "
+"working directory, implicitly creating it if it does not exist:"
+msgstr ""
+
+#: ../../library/sqlite3.rst:84
+msgid ""
+"The returned :class:`Connection` object ``con`` represents the connection to"
+" the on-disk database."
+msgstr ""
+"上面的代码中，返回的 :class:`Connection` 对象 ``con`` 代表一个与在磁盘上的数据库（on-disk databse）的连接。"
+
+#: ../../library/sqlite3.rst:87
+msgid ""
+"In order to execute SQL statements and fetch results from SQL queries, we "
+"will need to use a database cursor. Call :meth:`con.cursor() "
+"<Connection.cursor>` to create the :class:`Cursor`:"
+msgstr ""
+"为了执行 SQL 语句并且从 SQL 查询中取得结果，我们需要使用游标 (cursor) 。在下面的代码中，我们调用函数 "
+":meth:`con.cursor() <Connection.cursor>` 创建了一个游标 (:class:`Cursor`) ："
+
+#: ../../library/sqlite3.rst:95
+msgid ""
+"Now that we've got a database connection and a cursor, we can create a "
+"database table ``movie`` with columns for title, release year, and review "
+"score. For simplicity, we can just use column names in the table declaration"
+" -- thanks to the `flexible typing`_ feature of SQLite, specifying the data "
+"types is optional. Execute the ``CREATE TABLE`` statement by calling "
+":meth:`cur.execute(...) <Cursor.execute>`:"
+msgstr ""
+"通过上面的操作，我们已经得到了与数据库的连接 (connection) 与游标 (cursor) ，现在我们便可以在数据库中创建一张名为 "
+"``movie`` 的表了，它包括电影名 （title，在下方代码中对应“title”）、上映年份（release "
+"year，在下方代码中对应“year”）以及电影评分（review "
+"score，在下方代码中对应“score”）这三列。在本篇教程中，出于简洁的考虑，我们在创建表的 SQL 语句声明中只列出表头名 (column "
+"names) ，而没有像一般的 SQL 语句那样同时声明数据列的对应数据类型 —— 这一点得益于 SQLite 的 `flexible typing`_"
+" 特性，它使得我们在使用 SQLite 时，指明数据类型这一项工作时可选的。如下面的代码所示，我们通过调用函数 "
+":meth:`cur.excute(...) <Cursor.execute>` 执行创建表格的 ``CREATE TABLE`` 语句："
+
+#: ../../library/sqlite3.rst:111
+msgid ""
+"We can verify that the new table has been created by querying the "
+"``sqlite_master`` table built-in to SQLite, which should now contain an "
+"entry for the ``movie`` table definition (see `The Schema Table`_ for "
+"details). Execute that query by calling :meth:`cur.execute(...) "
+"<Cursor.execute>`, assign the result to ``res``, and call "
+":meth:`res.fetchone() <Cursor.fetchone>` to fetch the resulting row:"
+msgstr ""
+"我们可以通过查询 SQLite 内置的 ``sqlite_matser`` 表以验证新表是否已经创建，本例中，此时该表应该已经包括了一条 "
+"``movie`` 的表定义（更多内容请参考 `The Schema Table`_ ）。下面的代码将通过调用函数 "
+":meth:`cur.excute(...) <Cursor.execute>` 执行查询，把结果赋给 ``res`` ，而后调用 "
+":meth:`res.fetchone() <Cursor.fetchone>` 获取结果行："
+
+#: ../../library/sqlite3.rst:125
+msgid ""
+"We can see that the table has been created, as the query returns a "
+":class:`tuple` containing the table's name. If we query ``sqlite_master`` "
+"for a non-existent table ``spam``, :meth:`!res.fetchone()` will return "
+"``None``:"
+msgstr ""
+"在上面的代码中，我们可以看到表格已经被创建，因为查询结果返回了一个包含表格名的元组 (:class:`tuple`) 。倘若我们在 "
+"``sqlite_master`` 表中查询一个并不存在的表 ``spam`` ，那么 :meth:`!res.fetchone()` 将会返回 "
+"``None`` ："
+
+#: ../../library/sqlite3.rst:136
+msgid ""
+"Now, add two rows of data supplied as SQL literals by executing an "
+"``INSERT`` statement, once again by calling :meth:`cur.execute(...) "
+"<Cursor.execute>`:"
+msgstr ""
+"现在，让我们再次调用 :meth:`cur.execute(...) <Cursor.execute>` 去添加由 SQL 字面量 (literals)"
+" 提供的两行数据："
+
+#: ../../library/sqlite3.rst:148
+msgid ""
+"The ``INSERT`` statement implicitly opens a transaction, which needs to be "
+"committed before changes are saved in the database (see "
+":ref:`sqlite3-controlling-transactions` for details). Call "
+":meth:`con.commit() <Connection.commit>` on the connection object to commit "
+"the transaction:"
+msgstr ""
+"``INSERT`` 语句将隐式地创建一个事务 (transaction) ，事务需要在将更改保存到数据库前提交（更多细节请参考 "
+":ref:`sqlite3-controlling-transactions` ）。我们通过在一个连接对象（本例中为 ``con``）上调用 "
+":meth:`con.commit() <Connection.commit>` 提交事务："
+
+#: ../../library/sqlite3.rst:158
+msgid ""
+"We can verify that the data was inserted correctly by executing a ``SELECT``"
+" query. Use the now-familiar :meth:`cur.execute(...) <Cursor.execute>` to "
+"assign the result to ``res``, and call :meth:`res.fetchall() "
+"<Cursor.fetchall>` to return all resulting rows:"
+msgstr ""
+"我们可以通过执行一个 ``SELECT`` 查询以验证数据是否被正确地插入表中。下面的代码中，我们使用我们已经很熟悉的函数 "
+":meth:`cur.execute(...) <Cursor.execute>` 将查询结果赋给 ``res`` ，而后调用 "
+":meth:`res.fetchall() <Cursor.fetchall>` 返回所有的结果行："
+
+#: ../../library/sqlite3.rst:170
+msgid ""
+"The result is a :class:`list` of two :class:`!tuple`\\s, one per row, each "
+"containing that row's ``score`` value."
+msgstr ""
+"上面的代码中，结果是一个包含了两个元组 (:class:`!tuple`) 的列表 (:class:`list`) "
+"，其中每一个元组代表一个数据行，每个数据行都包括该行的 ``score`` 值。"
+
+#: ../../library/sqlite3.rst:173
+msgid ""
+"Now, insert three more rows by calling :meth:`cur.executemany(...) "
+"<Cursor.executemany>`:"
+msgstr "现在，让我们调用 :meth:`cur.executemany(...) <Cursor.executemany>` 再插入三行数据："
+
+#: ../../library/sqlite3.rst:186
+msgid ""
+"Notice that ``?`` placeholders are used to bind ``data`` to the query. "
+"Always use placeholders instead of :ref:`string formatting <tut-formatting>`"
+" to bind Python values to SQL statements, to avoid `SQL injection attacks`_ "
+"(see :ref:`sqlite3-placeholders` for more details)."
+msgstr ""
+"请注意，占位符 (placeholders) ``?`` 是用来在查询中绑定数据 ``data`` 的。在绑定 Python 的值到 SQL "
+"语句中时，请使用占位符取代格式化字符串 (:ref:`string formatting <tut-formatting>` ) 以避免 `SQL "
+"注入攻击`_ （更多细节请参见 :ref:`sqlite3-placeholders` ）。"
+
+#: ../../library/sqlite3.rst:192
+msgid ""
+"We can verify that the new rows were inserted by executing a ``SELECT`` "
+"query, this time iterating over the results of the query:"
+msgstr "同样的，我们可以通过执行 ``SELECT`` 查询验证新的数据行是否已经插入表中，这一次我们将迭代查询的结果："
+
+#: ../../library/sqlite3.rst:206
+msgid ""
+"Each row is a two-item :class:`tuple` of ``(year, title)``, matching the "
+"columns selected in the query."
+msgstr ""
+"如上可见，每一行都是包括 ``(year,title)`` 这两个元素的元组 (:class:`tuple` ) ，它与我们查询中选中的数据列相匹配。"
+
+#: ../../library/sqlite3.rst:209
+msgid ""
+"Finally, verify that the database has been written to disk by calling "
+":meth:`con.close() <Connection.close>` to close the existing connection, "
+"opening a new one, creating a new cursor, then querying the database:"
+msgstr ""
+"最后，让我们先通过调用 :meth:`con.close() <Connection.close>` "
+"关闭现存的与数据库的连接，而后打开一个新的连接、创建一个新的游标、执行一个新的查询以验证我们是否将数据库写入到了本地磁盘上："
+
+#: ../../library/sqlite3.rst:224
+msgid ""
+"You've now created an SQLite database using the :mod:`!sqlite3` module, "
+"inserted data and retrieved values from it in multiple ways."
+msgstr "现在您已经成功地使用模块 :mod:`!sqlite3` 创建了一个 SQLite 数据库，并且学会了以多种方式往其中插入数据与检索值。"
+
+#: ../../library/sqlite3.rst:236
+msgid ":ref:`sqlite3-howtos` for further reading:"
+msgstr "阅读 :ref:`sqlite3-howtos` 以获取更多信息："
+
+#: ../../library/sqlite3.rst:238
+msgid ":ref:`sqlite3-placeholders`"
+msgstr ":ref:`sqlite3-placeholders`"
+
+#: ../../library/sqlite3.rst:239
+msgid ":ref:`sqlite3-adapters`"
+msgstr ":ref:`sqlite3-adapters`"
+
+#: ../../library/sqlite3.rst:240
+msgid ":ref:`sqlite3-converters`"
+msgstr ":ref:`sqlite3-converters`"
+
+#: ../../library/sqlite3.rst:241 ../../library/sqlite3.rst:515
+msgid ":ref:`sqlite3-connection-context-manager`"
+msgstr ":ref:`sqlite3-connection-context-manager`"
+
+#: ../../library/sqlite3.rst:242
+msgid ":ref:`sqlite3-howto-row-factory`"
+msgstr ":ref:`sqlite3-howto-row-factory`"
+
+#: ../../library/sqlite3.rst:244
+msgid ""
+":ref:`sqlite3-explanation` for in-depth background on transaction control."
+msgstr "参阅 :ref:`sqlite3-explanation` 以获取关于事务控制的更深一步的背景。"
+
+#: ../../library/sqlite3.rst:249
+msgid "Reference"
+msgstr "参考"
+
+#: ../../library/sqlite3.rst:257
+msgid "Module functions"
+msgstr "模块函数"
+
+#: ../../library/sqlite3.rst:264
+msgid "Open a connection to an SQLite database."
+msgstr "打开一个与 SQLite 数据库的连接。"
+
+#: ../../library/sqlite3.rst:0 ../../library/sqlite3.rst:0
+#: ../../library/sqlite3.rst:0 ../../library/sqlite3.rst:0
+#: ../../library/sqlite3.rst:0 ../../library/sqlite3.rst:0
+msgid "Parameters"
+msgstr "参数"
+
+#: ../../library/sqlite3.rst:266
+msgid ""
+"The path to the database file to be opened. Pass ``\":memory:\"`` to open a "
+"connection to a database that is in RAM instead of on disk."
+msgstr ""
+"数据库文件所在的路径。传入 ``\":memory:\"`` 将会打开一个与在计算机内存 (RAM) 中的数据库连接，而不是打开与在本地磁盘 "
+"(disk) 上储存的数据库的连接。"
+
+#: ../../library/sqlite3.rst:272
+msgid ""
+"How many seconds the connection should wait before raising an "
+":exc:`OperationalError` when a table is locked. If another connection opens "
+"a transaction to modify a table, that table will be locked until the "
+"transaction is committed. Default five seconds."
+msgstr ""
+
+#: ../../library/sqlite3.rst:279
+msgid ""
+"Control whether and how data types not :ref:`natively supported by SQLite "
+"<sqlite3-types>` are looked up to be converted to Python types, using the "
+"converters registered with :func:`register_converter`. Set it to any "
+"combination (using ``|``, bitwise or) of :const:`PARSE_DECLTYPES` and "
+":const:`PARSE_COLNAMES` to enable this. Column names takes precedence over "
+"declared types if both flags are set. Types cannot be detected for generated"
+" fields (for example ``max(data)``), even when the *detect_types* parameter "
+"is set; :class:`str` will be returned instead. By default (``0``), type "
+"detection is disabled."
+msgstr ""
+"使用 :func:`register_converter` 注册的转换器被用于控制是否及如何转换不被 :ref:`SQLite 原生支持的数据类型 "
+"<sqlite3-types>` 为 Python 类型。若要启用，请将其设置为常量 :const:`PARSE_DECLTYPES` 与常量 "
+":const:`PARSE_COLNAMES` 的任意组合（使用按位或 ``|`` "
+"）。如果二者都被设置，那么列名将优先于声明的类型。请注意：生成的字段（例如 ``max(data)`` ）的类型无法被检测，即使 "
+"*detect_types* 被设置它也会被认为是 :class:`str` 。该参数默认为 ``0`` ，即禁用自动类型检测。"
+
+#: ../../library/sqlite3.rst:293
+msgid ""
+"The :attr:`~Connection.isolation_level` of the connection, controlling "
+"whether and how transactions are implicitly opened. Can be ``\"DEFERRED\"`` "
+"(default), ``\"EXCLUSIVE\"`` or ``\"IMMEDIATE\"``; or ``None`` to disable "
+"opening transactions implicitly. See :ref:`sqlite3-controlling-transactions`"
+" for more."
+msgstr ""
+"该参数代表数据库连接的事务控制级别 ( :attr:`~Connection.isolation_level` ) ，它将控制数据库事务 "
+"(transactions) 是否以及如何隐式创建。它的可取值为 ``\"DEFERRED\"`` （默认值）， ``\"EXCLUSIVE\"`` ，"
+" ``\"IMMEDIATE\"`` 或 ``None`` （取用该值将禁止事务的隐式创建）。请参阅 "
+":ref:`sqlite3-controlling-transactions` 以获取更多信息。"
+
+#: ../../library/sqlite3.rst:301
+msgid ""
+"If ``True`` (default), :exc:`ProgrammingError` will be raised if the "
+"database connection is used by a thread other than the one that created it. "
+"If ``False``, the connection may be accessed in multiple threads; write "
+"operations may need to be serialized by the user to avoid data corruption. "
+"See :attr:`threadsafety` for more information."
+msgstr ""
+
+#: ../../library/sqlite3.rst:310
+msgid ""
+"A custom subclass of :class:`Connection` to create the connection with, if "
+"not the default :class:`Connection` class."
+msgstr ""
+"如果您不想使用默认的 :class:`Connection` 类创建连接，那么您可以通过传入一个自定义的 :class:`Connection` "
+"类的子类给该参数以创建连接。"
+
+#: ../../library/sqlite3.rst:314
+msgid ""
+"The number of statements that :mod:`!sqlite3` should internally cache for "
+"this connection, to avoid parsing overhead. By default, 100 statements."
+msgstr ""
+"该参数指明 :mod:`!sqlite3` 模块为减少解析开销而为连接缓存的语句 (statements) 数量。默认情况下，它的值为 100。"
+
+#: ../../library/sqlite3.rst:319
+msgid ""
+"If set to ``True``, *database* is interpreted as a :abbr:`URI (Uniform "
+"Resource Identifier)` with a file path and an optional query string. The "
+"scheme part *must* be ``\"file:\"``, and the path can be relative or "
+"absolute. The query string allows passing parameters to SQLite, enabling "
+"various :ref:`sqlite3-uri-tricks`."
+msgstr ""
+"如果将该参数的值设置为 ``True``，参数 *database* 将会被解释为一个由文件路径与可选的查询字符串组成的 :abbr:`URI "
+"(Uniform Resource Identifier)` 链接。链接的前缀协议部分 (schema part) *必须* 是 "
+"``\"file:\"`` ，后面的文件路径可以是相对路径或绝对路径。查询字符串允许向 SQLite 传递参数，以实现不同的 "
+":ref:`sqlite3-uri-tricks`。"
+
+#: ../../library/sqlite3.rst:0
+msgid "Return type"
+msgstr "返回类型"
+
+#: ../../library/sqlite3.rst:330
+msgid ""
+"Raises an :ref:`auditing event <auditing>` ``sqlite3.connect`` with argument"
+" ``database``."
+msgstr ""
+"使用它将引发一个附带参数 ``database`` 的 :ref:`审计事件 (auditing event) <auditing>` "
+"``sqlite3.connect`` 。"
+
+#: ../../library/sqlite3.rst:331
+msgid ""
+"Raises an :ref:`auditing event <auditing>` ``sqlite3.connect/handle`` with "
+"argument ``connection_handle``."
+msgstr ""
+"使用它将引发一个附带参数 ``connection_handle`` 的 :ref:`审计事件 <auditing>` "
+"``sqlite3.connect/handle`` 。"
+
+#: ../../library/sqlite3.rst:333
+msgid "The *uri* parameter."
+msgstr "参数 *uri* 。"
+
+#: ../../library/sqlite3.rst:336
+msgid ""
+"*database* can now also be a :term:`path-like object`, not only a string."
+msgstr "*database* 现在可以是一个 :term:`path-like object` 对象了，而不仅仅是字符串。"
+
+#: ../../library/sqlite3.rst:339
+msgid "The ``sqlite3.connect/handle`` auditing event."
+msgstr "审计事件 ``sqlite3.connect/handle`` 。"
+
+#: ../../library/sqlite3.rst:344
+msgid ""
+"Return ``True`` if the string *statement* appears to contain one or more "
+"complete SQL statements. No syntactic verification or parsing of any kind is"
+" performed, other than checking that there are no unclosed string literals "
+"and the statement is terminated by a semicolon."
+msgstr ""
+"如果传入的字符串语句 (statement) 看起来像是包括一条或多条完整的 SQL 语句，那么该函数将返回 ``True`` "
+"。请注意，除了检查未封闭的字符串字面 (unclosed string literals) 以及语句是否以分号结束外，它不会执行任何的语法检查 "
+"(syntactic verification) 与语法解析 (synatatic parsing) 。"
+
+#: ../../library/sqlite3.rst:350
+msgid "For example:"
+msgstr "例如:"
+
+#: ../../library/sqlite3.rst:359
+msgid ""
+"This function may be useful during command-line input to determine if the "
+"entered text seems to form a complete SQL statement, or if additional input "
+"is needed before calling :meth:`~Cursor.execute`."
+msgstr ""
+"该函数可能在这样的情形下非常有用：在通过命令行 (command-line) 输入数据时，可使用该函数判断输入文本是否可以构成一个完成的 SQL "
+"语句，或者判断在调用函数 :meth:`~Cursor.execute` 前是否还需要额外的输入"
+
+#: ../../library/sqlite3.rst:365
+msgid ""
+"Enable or disable callback tracebacks. By default you will not get any "
+"tracebacks in user-defined functions, aggregates, converters, authorizer "
+"callbacks etc. If you want to debug them, you can call this function with "
+"*flag* set to ``True``. Afterwards, you will get tracebacks from callbacks "
+"on ``sys.stderr``. Use ``False`` to disable the feature again."
+msgstr ""
+"是否启用回调回溯 (callback tracebacks) 。默认情况下，在 SQLite 中，您不会在用户定义的函数、聚合函数 "
+"(aggregates) 、转换函数 (converters) 、验证回调函数 (authorizer callbacks) "
+"等中得到任何回溯信息。如果您想调试它们，您可以在将形式参数 *flag* 设置为 ``True`` 的情况下调用该函数。之后您便可以从 "
+"``sys.stderr`` 的回调中得到回溯信息。使用 ``False`` 将再次禁用该功能。"
+
+#: ../../library/sqlite3.rst:374
+msgid ""
+"Register an *adapter* callable to adapt the Python type *type* into an "
+"SQLite type. The adapter is called with a Python object of type *type* as "
+"its sole argument, and must return a value of a :ref:`type that SQLite "
+"natively understands <sqlite3-types>`."
+msgstr ""
+"注册一个可调用的适配器 (adapter) 以将一个 Python 类型适配为一个 SQLite 类型。适配器应该以一个类型为 *type* 的 "
+"Python 对象作为它的唯一参数传入调用，并且必需返回能被 :ref:`SQLite 原生支持的类型的一个值 <sqlite3-types>` 。"
+
+#: ../../library/sqlite3.rst:382
+msgid ""
+"Register the *converter* callable to convert SQLite objects of type "
+"*typename* into a Python object of a specific type. The converter is invoked"
+" for all SQLite values of type *typename*; it is passed a :class:`bytes` "
+"object and should return an object of the desired Python type. Consult the "
+"parameter *detect_types* of :func:`connect` for information regarding how "
+"type detection works."
+msgstr ""
+"注册一个可调用的转换器 (converter) ，它能够将 SQLite 对象转换为一个特定类型的 Python 对象。转换器将会对所有类型为 "
+"*typename* 的 SQLite 值进行调用；它会被传递给一个 :class:`bytes` 对象并且应该返回一个所需的 Python "
+"类型的对象。您可以参考函数 :func:`connect` 的形式参数 *detect_types* 的文档，以了解关于类型检测 (detection "
+"works) 是如何工作的详细信息。"
+
+#: ../../library/sqlite3.rst:390
+msgid ""
+"Note: *typename* and the name of the type in your query are matched case-"
+"insensitively."
+msgstr "注：*typename* 以及您在查询中使用的类型名是不大小写敏感的。"
+
+#: ../../library/sqlite3.rst:397
+msgid "Module constants"
+msgstr "模块常量"
+
+#: ../../library/sqlite3.rst:401
+msgid ""
+"Pass this flag value to the *detect_types* parameter of :func:`connect` to "
+"look up a converter function by using the type name, parsed from the query "
+"column name, as the converter dictionary key. The type name must be wrapped "
+"in square brackets (``[]``)."
+msgstr ""
+"将这个旗标值传递给 :func:`connect` 的 *detect_types* "
+"形参，以使用从查询列名解析的类型名作为转换器字典键来查找转换器函数。类型名称必须用方括号（``[]``）括起来。"
+
+#: ../../library/sqlite3.rst:411
+msgid ""
+"This flag may be combined with :const:`PARSE_DECLTYPES` using the ``|`` "
+"(bitwise or) operator."
+msgstr "此旗标可以使用 ``|`` （位或）运算符与 :const:`PARSE_DECLTYPES` 组合。"
+
+#: ../../library/sqlite3.rst:416
+msgid ""
+"Pass this flag value to the *detect_types* parameter of :func:`connect` to "
+"look up a converter function using the declared types for each column. The "
+"types are declared when the database table is created. :mod:`!sqlite3` will "
+"look up a converter function using the first word of the declared type as "
+"the converter dictionary key. For example:"
+msgstr ""
+"将这个旗标值传递给 :func:`connect` 的 *detect_types* "
+"形参，以使用创建数据库表时为每列声明的类型的查找转换器函数。:mod:`!sqlite3` "
+"将使用声明类型的第一个单词作为转换字典键来查找转换函数。例如："
+
+#: ../../library/sqlite3.rst:432
+msgid ""
+"This flag may be combined with :const:`PARSE_COLNAMES` using the ``|`` "
+"(bitwise or) operator."
+msgstr "该标志值可以通过操作符 ``|`` （按位或）与 :const:`PARSE_COLNAMES` 一起使用。"
+
+#: ../../library/sqlite3.rst:439
+msgid ""
+"Flags that should be returned by the *authorizer_callback* callable passed "
+"to :meth:`Connection.set_authorizer`, to indicate whether:"
+msgstr ""
+"作为传递给函数 :meth:`Connection.set_authorizer` 的形式参数 *authorizer_callback* "
+"的回调函数应该返回的旗标，以表明："
+
+#: ../../library/sqlite3.rst:442
+msgid "Access is allowed (:const:`!SQLITE_OK`),"
+msgstr "访问被允许 (:const:`!SQLITE_OK`) ，"
+
+#: ../../library/sqlite3.rst:443
+msgid ""
+"The SQL statement should be aborted with an error (:const:`!SQLITE_DENY`)"
+msgstr "当错误发生时 SQL 语句应该被终止 (:const:`!SQLITE_DENY`) "
+
+#: ../../library/sqlite3.rst:444
+msgid ""
+"The column should be treated as a ``NULL`` value (:const:`!SQLITE_IGNORE`)"
+msgstr "该列应该被视为 ``NULL`` 值 (:const:`!SQLITE_IGNORE`)"
+
+#: ../../library/sqlite3.rst:448
+msgid ""
+"String constant stating the supported DB-API level. Required by the DB-API. "
+"Hard-coded to ``\"2.0\"``."
+msgstr "指明所支持的 DB-API 级别的字符串常量。 根据 DB-API 的需要设置。 硬编码为 ``\"2.0\"``。"
+
+#: ../../library/sqlite3.rst:453
+msgid ""
+"String constant stating the type of parameter marker formatting expected by "
+"the :mod:`!sqlite3` module. Required by the DB-API. Hard-coded to "
+"``\"qmark\"``."
+msgstr ""
+"指明 :mod:`!sqlite3` 模块所期望的参数标记格式 (parameter marker formatting) 的字符串常量。根据 DB-"
+"API 的需要设置。硬编码为 ``\"qmark\"`` 。"
+
+#: ../../library/sqlite3.rst:459
+msgid "The ``named`` DB-API parameter style is also supported."
+msgstr ""
+
+#: ../../library/sqlite3.rst:463
+msgid ""
+"Version number of the runtime SQLite library as a :class:`string <str>`."
+msgstr "一个 :class:`字符串 <str>` ，指明运行时的 SQLite 库的版本号。"
+
+#: ../../library/sqlite3.rst:467
+msgid ""
+"Version number of the runtime SQLite library as a :class:`tuple` of "
+":class:`integers <int>`."
+msgstr "一个由 :class:`整数 <int>` 组成的 :class:`元组 <tuple>` ，指明运行时的 SQLite 库的版本号。"
+
+#: ../../library/sqlite3.rst:472
+msgid ""
+"Integer constant required by the DB-API, stating the level of thread safety "
+"the :mod:`!sqlite3` module supports. Currently hard-coded to ``1``, meaning "
+"*\"Threads may share the module, but not connections.\"* However, this may "
+"not always be true. You can check the underlying SQLite library's compile-"
+"time threaded mode using the following query::"
+msgstr ""
+"由 DB-API 所需要的整数常量，指明 :mod:`!sqlite3` 模块支持的线程安全 (thread safety) 等级。目前硬编码为 "
+"``1``，表示 *线程可能会分享模块 (module) ，但不会分享连接 (connections)* "
+"。然而，这可能不会总是正确的，即它无法完全确保它所指明的情况总是为真。您可以通过使用以下查询以检查底层的 SQLite 库在编译时的线程模式 "
+"(threaded mode) ："
+
+#: ../../library/sqlite3.rst:485
+msgid ""
+"Note that the `SQLITE_THREADSAFE levels "
+"<https://sqlite.org/compile.html#threadsafe>`_ do not match the DB-API 2.0 "
+"``threadsafety`` levels."
+msgstr ""
+"注意 `SQLITE_THREADSAFE 级别 <https://sqlite.org/compile.html#threadsafe>`_ 与 "
+"DB-API 2.0 ``threadsafety`` 级别不一致。"
+
+#: ../../library/sqlite3.rst:491
+msgid ""
+"Version number of this module as a :class:`string <str>`. This is not the "
+"version of the SQLite library."
+msgstr "一个 :class:`字符串 <str>` ，指明模块的版本号。请注意，它并不是 SQLite 库的版本号。"
+
+#: ../../library/sqlite3.rst:496
+msgid ""
+"Version number of this module as a :class:`tuple` of :class:`integers "
+"<int>`. This is not the version of the SQLite library."
+msgstr ""
+"一个由 :class:`整数 <int>` 组成的 :class:`元组 <tuple>` ，指明模块的版本号。请注意，它并不是 SQLite "
+"库的版本号。"
+
+#: ../../library/sqlite3.rst:503
+msgid "Connection objects"
+msgstr "连接对象 (Connection objects)"
+
+#: ../../library/sqlite3.rst:507
+msgid ""
+"Each open SQLite database is represented by a ``Connection`` object, which "
+"is created using :func:`sqlite3.connect`. Their main purpose is creating "
+":class:`Cursor` objects, and :ref:`sqlite3-controlling-transactions`."
+msgstr ""
+"每一个由函数 :func:`sqlite3.connect` 创建的 ``Connection`` 对象都代表着一个打开的 SQLite "
+"数据库。它们的主要目标是创建一个 :class:`Cursor` 对象与 :ref:`sqlite3-controlling-transactions`"
+" 。"
+
+#: ../../library/sqlite3.rst:514
+msgid ":ref:`sqlite3-connection-shortcuts`"
+msgstr ":ref:`sqlite3-connection-shortcuts`"
+
+#: ../../library/sqlite3.rst:517
+msgid ""
+"An SQLite database connection has the following attributes and methods:"
+msgstr "SQLite 数据库连接对象有如下的属性和方法："
+
+#: ../../library/sqlite3.rst:521
+msgid ""
+"Create and return a :class:`Cursor` object. The cursor method accepts a "
+"single optional parameter *factory*. If supplied, this must be a callable "
+"returning an instance of :class:`Cursor` or its subclasses."
+msgstr ""
+"创建并返回一个 :class:`Cursor` 对象。该方法接受一个可选的形式参数 *factory* "
+"。如果要提供该参数，请确保该参数是一个能够返回从属于 :class:`Cursor` 类或其子类的实例的可调用参数。"
+
+#: ../../library/sqlite3.rst:528
+msgid ""
+"Commit any pending transaction to the database. If there is no open "
+"transaction, this method is a no-op."
+msgstr "向数据库提交任何未决事务 (pending transaction) 。如果不存在打开的事务，那么该方法便没有作用。"
+
+#: ../../library/sqlite3.rst:533
+msgid ""
+"Roll back to the start of any pending transaction. If there is no open "
+"transaction, this method is a no-op."
+msgstr "回滚到任何未决事务 (pending transaction) 的起点处。如果不存在打开的事务，那么该方法便没有作用。"
+
+#: ../../library/sqlite3.rst:538
+msgid ""
+"Close the database connection. Any pending transaction is not committed "
+"implicitly; make sure to :meth:`commit` before closing to avoid losing "
+"pending changes."
+msgstr ""
+"关闭数据库连接。任何未决事务 (pending transaction) "
+"都不会被隐式提交，即所有未提交的事务都会丢失。请确保您在关闭数据库连接前调用方法 :meth:`commit` ，以避免丢失任何挂起 (pending)"
+" 的更改。"
+
+#: ../../library/sqlite3.rst:545
+msgid ""
+"Create a new :class:`Cursor` object and call :meth:`~Cursor.execute` on it "
+"with the given *sql* and *parameters*. Return the new cursor object."
+msgstr ""
+"创建一个新的 :class:`Cursor` 对象，并在其上使用给出的 *sql* 和 *parameters* 调用 "
+":meth:`~Cursor.execute`。 返回新的游标对象。"
+
+#: ../../library/sqlite3.rst:551
+msgid ""
+"Create a new :class:`Cursor` object and call :meth:`~Cursor.executemany` on "
+"it with the given *sql* and *parameters*. Return the new cursor object."
+msgstr ""
+"创建一个新的 :class:`Cursor` 对象，并在其上使用给出的 *sql* 和 *parameters* 调用 "
+":meth:`~Cursor.executemany`。 返回新的游标对象。"
+
+#: ../../library/sqlite3.rst:557
+msgid ""
+"Create a new :class:`Cursor` object and call :meth:`~Cursor.executescript` "
+"on it with the given *sql_script*. Return the new cursor object."
+msgstr ""
+"创建一个新的 :class:`Cursor` 对象，并在其上使用给出的 *sql_script* 调用 "
+":meth:`~Cursor.executescript`。 返回新的游标对象。"
+
+#: ../../library/sqlite3.rst:563
+msgid "Create or remove a user-defined SQL function."
+msgstr "创建或移除一个由用户定义的 SQL 函数。"
+
+#: ../../library/sqlite3.rst:565
+msgid "The name of the SQL function."
+msgstr "SQL 函数的名称。"
+
+#: ../../library/sqlite3.rst:568
+msgid ""
+"The number of arguments the SQL function can accept. If ``-1``, it may take "
+"any number of arguments."
+msgstr "SQL 函数可接受的参数数量。如果将它的值设置为 ``-1`` ，那么它可以接受任意数量的参数。"
+
+#: ../../library/sqlite3.rst:572
+msgid ""
+"A callable that is called when the SQL function is invoked. The callable "
+"must return :ref:`a type natively supported by SQLite <sqlite3-types>`. Set "
+"to ``None`` to remove an existing SQL function."
+msgstr ""
+"当 SQL 函数被调用时，所唤起的一个可调用对象 (callable) 。该可调用对象应该返回 :ref:`一个 SQLite 原生支持的类型 "
+"<sqlite3-types>` 。如果将它设置为 ``None`` ，那么将会移除一个现存的 SQL 函数。"
+
+#: ../../library/sqlite3.rst:579
+msgid ""
+"If ``True``, the created SQL function is marked as `deterministic "
+"<https://sqlite.org/deterministic.html>`_, which allows SQLite to perform "
+"additional optimizations."
+msgstr ""
+"如果将该参数值设置为 ``True`` ，那么创建的 SQL 函数将会被标记为确定性的 ( `deterministic "
+"<https://sqlite.org/deterministic.html>` ) ，这将允许 SQLite 进行额外的优化。"
+
+#: ../../library/sqlite3.rst:0 ../../library/sqlite3.rst:0
+#: ../../library/sqlite3.rst:0
+msgid "Raises"
+msgstr "异常抛出"
+
+#: ../../library/sqlite3.rst:584
+msgid "If *deterministic* is used with SQLite versions older than 3.8.3."
+msgstr "当使用 *deterministic* 参数时，若此时使用的 SQLite 版本低于 3.8.3 ，那么该异常便会抛出。"
+
+#: ../../library/sqlite3.rst:587
+msgid "The *deterministic* parameter."
+msgstr "添加参数 *deterministic* 。"
+
+#: ../../library/sqlite3.rst:590 ../../library/sqlite3.rst:628
+#: ../../library/sqlite3.rst:847 ../../library/sqlite3.rst:966
+#: ../../library/sqlite3.rst:1094 ../../library/sqlite3.rst:1115
+msgid "Example:"
+msgstr "示例:"
+
+#: ../../library/sqlite3.rst:606
+msgid "Create or remove a user-defined SQL aggregate function."
+msgstr "创建或移除由用户定义的聚合函数 (aggregate function) 。"
+
+#: ../../library/sqlite3.rst:608
+msgid "The name of the SQL aggregate function."
+msgstr "SQL 聚合函数的名称。"
+
+#: ../../library/sqlite3.rst:611
+msgid ""
+"The number of arguments the SQL aggregate function can accept. If ``-1``, it"
+" may take any number of arguments."
+msgstr "该 SQL 聚合函数可接受的参数数量。如果将它的值设置为 ``-1`` ，那么它可以接受任意数量的参数。"
+
+#: ../../library/sqlite3.rst:615
+msgid ""
+"A class must implement the following methods:  * ``step()``: Add a row to "
+"the aggregate. * ``finalize()``: Return the final result of the aggregate as"
+"   :ref:`a type natively supported by SQLite <sqlite3-types>`.  The number "
+"of arguments that the ``step()`` method must accept is controlled by "
+"*n_arg*.  Set to ``None`` to remove an existing SQL aggregate function."
+msgstr ""
+"一个类，它必须实现下列方法: * ``step()``: 向聚合中添加新行。* ``finalize()``: 将聚合的最终结果作为 "
+":ref:`SQLite 原生支持的类型 <sqlite3-types>` 返回。 ``step()`` 方法必需接受的参数数量由 *n_arg* "
+"控制。 将该参数设置为 ``None`` 将会移除现存的 SQL 聚合函数。"
+
+#: ../../library/sqlite3.rst:616
+msgid "A class must implement the following methods:"
+msgstr "一个类，它必需实现下列方法："
+
+#: ../../library/sqlite3.rst:618
+msgid "``step()``: Add a row to the aggregate."
+msgstr "``step()``：向聚合 (aggregate) 中添加新行。"
+
+#: ../../library/sqlite3.rst:619
+msgid ""
+"``finalize()``: Return the final result of the aggregate as :ref:`a type "
+"natively supported by SQLite <sqlite3-types>`."
+msgstr ""
+"``finalize()``: 将聚合的最终结果作为 :ref:`一个 SQLite 原生支持的类型 <sqlite3-types>` 返回。"
+
+#: ../../library/sqlite3.rst:622
+msgid ""
+"The number of arguments that the ``step()`` method must accept is controlled"
+" by *n_arg*."
+msgstr " ``step()`` 方法必需接受的参数数量由 *n_arg* 控制。 "
+
+#: ../../library/sqlite3.rst:625
+msgid "Set to ``None`` to remove an existing SQL aggregate function."
+msgstr "将该参数 (aggregate_class) 设置为 ``None`` 将会移除现存的 SQL 聚合函数。"
+
+#: ../../library/sqlite3.rst:660
+msgid ""
+"Create a collation named *name* using the collating function *callable*. "
+"*callable* is passed two :class:`string <str>` arguments, and it should "
+"return an :class:`integer <int>`:"
+msgstr ""
+"使用排序函数 *callable* 创建一个名为 *name* 的排序规则。 *callable* 被传递给两个 :class:`字符串 <str>` "
+"参数，并且它应该返回一个 :class:`整数 <int>`。"
+
+#: ../../library/sqlite3.rst:664
+msgid "``1`` if the first is ordered higher than the second"
+msgstr "如果前者的排序高于后者则为 ``1``"
+
+#: ../../library/sqlite3.rst:665
+msgid "``-1`` if the first is ordered lower than the second"
+msgstr "如果前者的排序低于于后者则为 ``-1``"
+
+#: ../../library/sqlite3.rst:666
+msgid "``0`` if they are ordered equal"
+msgstr "如果它们的顺序相同则为 ``0``"
+
+#: ../../library/sqlite3.rst:668
+msgid "The following example shows a reverse sorting collation:"
+msgstr "下面的例子显示了一个反向排序的排序方法:"
+
+#: ../../library/sqlite3.rst:696
+msgid "Remove a collation function by setting *callable* to ``None``."
+msgstr "将 *callable* 设置为 ``None`` 将移除一个排序函数。"
+
+#: ../../library/sqlite3.rst:701
+msgid ""
+"Call this method from a different thread to abort any queries that might be "
+"executing on the connection. Aborted queries will raise an "
+":exc:`OperationalError`."
+msgstr ""
+
+#: ../../library/sqlite3.rst:708
+msgid ""
+"Register callable *authorizer_callback* to be invoked for each attempt to "
+"access a column of a table in the database. The callback should return one "
+"of :const:`SQLITE_OK`, :const:`SQLITE_DENY`, or :const:`SQLITE_IGNORE` to "
+"signal how access to the column should be handled by the underlying SQLite "
+"library."
+msgstr ""
+"注册可调用的 *authorizer_callback* 回调函数，它将在每次试图访问数据库中的表的某一列被调用。回调函数应该返回常量 "
+":const:`SQLITE_OK`、:const:`SQLITE_DENY`、:const:`SQLITE_IGNORE` "
+"中的任意一个，以表明对该列的访问应该由底层 SQLite 库进行怎样的处理。"
+
+#: ../../library/sqlite3.rst:714
+msgid ""
+"The first argument to the callback signifies what kind of operation is to be"
+" authorized. The second and third argument will be arguments or ``None`` "
+"depending on the first argument. The 4th argument is the name of the "
+"database (\"main\", \"temp\", etc.) if applicable. The 5th argument is the "
+"name of the inner-most trigger or view that is responsible for the access "
+"attempt or ``None`` if this access attempt is directly from input SQL code."
+msgstr ""
+"回调函数的第一个参数标志着哪种操作将会被授权。回调函数的第二与第三个参数是的参数还是值 ``None`` "
+"取决于第一个参数。如果适用的话，回调函数的第四个参数是数据库的名称 （如 \"main\",\"temp\" 等）。回调函数的第五个参数最内层的触发器 "
+"(trigger) 或视图 (view) 的名称，该触发器或视图将负责访问尝试，若该访问尝试来自直接输入的 SQL 代码，那么该参数则为 `None` "
+"。"
+
+#: ../../library/sqlite3.rst:721
+msgid ""
+"Please consult the SQLite documentation about the possible values for the "
+"first argument and the meaning of the second and third argument depending on"
+" the first one. All necessary constants are available in the :mod:`!sqlite3`"
+" module."
+msgstr ""
+"关于回调函数的第一个参数的可能值，以及取决于第一个参数的第二个、第三个参数的含义，请参阅 SQLite 的相关文档。所有必要的常量都可以在 "
+":mod:`!sqlite3` 模块中找到。"
+
+#: ../../library/sqlite3.rst:728
+msgid ""
+"Register callable *progress_handler* to be invoked for every *n* "
+"instructions of the SQLite virtual machine. This is useful if you want to "
+"get called from SQLite during long-running operations, for example to update"
+" a GUI."
+msgstr ""
+"注册可调用的 *progress_handler* 函数，它将在 SQLite 虚拟机 (SQLite virtual machine) 的每 *n* "
+"条指令中被调用。如果您向在长期运行的操作中得到 SQLite 的调用，例如更新GUI，那么这个函数将非常有用。"
+
+#: ../../library/sqlite3.rst:733
+msgid ""
+"If you want to clear any previously installed progress handler, call the "
+"method with ``None`` for *progress_handler*."
+msgstr ""
+"如果您想清楚任何先前设置的 *progress_handler*，请调用该方法并且将形式参数 *progress_handler* 的值设置为 "
+"``None``。"
+
+#: ../../library/sqlite3.rst:736
+msgid ""
+"Returning a non-zero value from the handler function will terminate the "
+"currently executing query and cause it to raise an :exc:`OperationalError` "
+"exception."
+msgstr "从处理函数返回非零值将终止当前正在执行的查询并导致它引发 :exc:`OperationalError` 异常。"
+
+#: ../../library/sqlite3.rst:743
+msgid ""
+"Register callable *trace_callback* to be invoked for each SQL statement that"
+" is actually executed by the SQLite backend."
+msgstr ""
+"注册可调用的 *trace_callback* 追踪回调函数，它将在 SQLite后端 (SQLite backend) 执行每一条 SQL "
+"语句时被调用。"
+
+#: ../../library/sqlite3.rst:746
+msgid ""
+"The only argument passed to the callback is the statement (as :class:`str`) "
+"that is being executed. The return value of the callback is ignored. Note "
+"that the backend does not only run statements passed to the "
+":meth:`Cursor.execute` methods.  Other sources include the :ref:`transaction"
+" management <sqlite3-controlling-transactions>` of the :mod:`!sqlite3` "
+"module and the execution of triggers defined in the current database."
+msgstr ""
+"传递给该追踪回调函数的唯一参数是正在执行的语句（作为一个 :class:`str` ）。回调追踪函数的返回值将会被忽略。请注意，后端并不仅是在执行传入 "
+":meth:`Cursor.execute` 方法中的语句。其他来源，包括 :mod:`!sqlite3` 模块的 :ref:`事务管理 "
+"<sqlite3-controlling-transactions>` 以及当前数据库定义的触发器执行时的语句也会被后端执行。"
+
+#: ../../library/sqlite3.rst:754
+msgid "Passing ``None`` as *trace_callback* will disable the trace callback."
+msgstr "将形式参数 *trace_callback* 的值设置为 ``None`` 将会禁用追踪回调 (trace callback)。"
+
+#: ../../library/sqlite3.rst:757
+msgid ""
+"Exceptions raised in the trace callback are not propagated. As a development"
+" and debugging aid, use :meth:`~sqlite3.enable_callback_tracebacks` to "
+"enable printing tracebacks from exceptions raised in the trace callback."
+msgstr ""
+"在跟踪回调中产生的异常不会被传播。作为开发和调试的辅助手段，使用 :meth:`~sqlite3.enable_callback_tracebacks`"
+" 来启用打印跟踪回调中产生的异常的回调。"
+
+#: ../../library/sqlite3.rst:767
+msgid ""
+"Enable the SQLite engine to load SQLite extensions from shared libraries if "
+"*enabled* is ``True``; else, disallow loading SQLite extensions. SQLite "
+"extensions can define new functions, aggregates or whole new virtual table "
+"implementations.  One well-known extension is the fulltext-search extension "
+"distributed with SQLite."
+msgstr ""
+"如果形式参数 *enabled* 的值为 ``True``，那么将允许 SQLite 引擎 (engine) 从共享库中加载 SQLite 扩展 "
+"(extensions) ；否则，将不会允许加载 SQLite 扩展。SQLite 扩展可以定义新的函数、聚合 (aggregates) 或者新的虚拟表"
+" (virtual table) 的实现。一个著名的扩展是随 SQLite 分发的全文搜索扩展 (fulltext-search extension) "
+"。"
+
+#: ../../library/sqlite3.rst:776
+msgid ""
+"The :mod:`!sqlite3` module is not built with loadable extension support by "
+"default, because some platforms (notably macOS) have SQLite libraries which "
+"are compiled without this feature. To get loadable extension support, you "
+"must pass the :option:`--enable-loadable-sqlite-extensions` option to "
+":program:`configure`."
+msgstr ""
+"由于有些平台（尤其是macOS）没有使用特定特性编译的 SQLite 库，因此默认情况下 :mod:`!sqlite3` "
+"模块没有内置的可加载扩展支持。为了获取可加载扩展的支持，您必需将 :option:`--enable-loadable-sqlite-"
+"extensions` 选项传递给 :program:`configure`。"
+
+#: ../../library/sqlite3.rst:783
+msgid ""
+"Raises an :ref:`auditing event <auditing>` ``sqlite3.enable_load_extension``"
+" with arguments ``connection``, ``enabled``."
+msgstr ""
+"引发一个 :ref:`审计事件 <auditing>` ``sqlite3.enable_load_extension``，附带参数 "
+"``connection``, ``enabled``。"
+
+#: ../../library/sqlite3.rst:787
+msgid "Added the ``sqlite3.enable_load_extension`` auditing event."
+msgstr "增加了 ``sqlite3.enable_load_extension`` 审计事件。"
+
+#: ../../library/sqlite3.rst:830
+msgid ""
+"Load an SQLite extension from a shared library located at *path*. Enable "
+"extension loading with :meth:`enable_load_extension` before calling this "
+"method."
+msgstr ""
+"从指定路径 *path* 的共享库中加载一个 SQLite 扩展。请您在调用该方法前，确保您已经使用 "
+":meth:`enable_load_extension` 方法启用了拓展的加载。"
+
+#: ../../library/sqlite3.rst:834
+msgid ""
+"Raises an :ref:`auditing event <auditing>` ``sqlite3.load_extension`` with "
+"arguments ``connection``, ``path``."
+msgstr ""
+"引发一个 :ref:`审计事件 <auditing>` ``sqlite3.load_extension``，附带参数 ``connection``, "
+"``path``。"
+
+#: ../../library/sqlite3.rst:838
+msgid "Added the ``sqlite3.load_extension`` auditing event."
+msgstr "增加了 ``sqlite3.load_extension`` 审计事件。"
+
+#: ../../library/sqlite3.rst:843
+msgid ""
+"Return an :term:`iterator` to dump the database as SQL source code. Useful "
+"when saving an in-memory database for later restoration. Similar to the "
+"``.dump`` command in the :program:`sqlite3` shell."
+msgstr ""
+"返回一个迭代器 (:term:`iterator`) 以将数据库转储 (dump) 为 SQL 源代码。这在保存内存数据库 (in-memory "
+"database) 以供以后恢复时十分有用。它类似于 :program:`sqlite3` shell 中的 ``.dump`` 命令。"
+
+#: ../../library/sqlite3.rst:861
+msgid "Create a backup of an SQLite database."
+msgstr "创建一个 SQLite 数据库的备份。"
+
+#: ../../library/sqlite3.rst:863
+msgid ""
+"Works even if the database is being accessed by other clients or "
+"concurrently by the same connection."
+msgstr "即使数据库在被其他客户端或同一连接同时访问时，它依然能发挥作用。"
+
+#: ../../library/sqlite3.rst:866
+msgid "The database connection to save the backup to."
+msgstr "要保存备份的数据库的数据库连接。"
+
+#: ../../library/sqlite3.rst:869
+msgid ""
+"The number of pages to copy at a time. If equal to or less than ``0``, the "
+"entire database is copied in a single step. Defaults to ``-1``."
+msgstr "一次复制的页面数量。如果它的值等于或小于 ``0``，那么整个数据库将在一个步骤中被复制。默认值为 ``-1`` 。"
+
+#: ../../library/sqlite3.rst:875
+msgid ""
+"If set to a callable, it is invoked with three integer arguments for every "
+"backup iteration: the *status* of the last iteration, the *remaining* number"
+" of pages still to be copied, and the *total* number of pages. Defaults to "
+"``None``."
+msgstr ""
+"如果将它设置为一个可调用的回调函数 (callable) ，那么它会在每次备份迭代 (backup iteration) "
+"时被调用，并且带有以下三个整数参数：最近一次迭代的的状态（形式参数 *status*），需要复制的剩余页数（形式参数 "
+"*remaining*）以及总页数（形式参数 *total*）。默认值为 ``None``。"
+
+#: ../../library/sqlite3.rst:884
+msgid ""
+"The name of the database to back up. Either ``\"main\"`` (the default) for "
+"the main database, ``\"temp\"`` for the temporary database, or the name of a"
+" custom database as attached using the ``ATTACH DATABASE`` SQL statement."
+msgstr ""
+"需要备份的数据库的名称。可以是主数据库的 ``main``（默认值），也可以是临时数据库的 ``\"temp\"``，或者是使用SQL语句 "
+"``ATTACH DATABASE`` 连接的自定义数据库的名称。"
+
+#: ../../library/sqlite3.rst:891
+msgid ""
+"The number of seconds to sleep between successive attempts to back up "
+"remaining pages."
+msgstr "在连续尝试备份剩余页面之间睡眠秒数。"
+
+#: ../../library/sqlite3.rst:895
+msgid "Example 1, copy an existing database into another:"
+msgstr "这是例1，它将一个现存的数据库复制到另一个数据库："
+
+#: ../../library/sqlite3.rst:914
+msgid "Example 2, copy an existing database into a transient copy:"
+msgstr "这是例2，它将一个现存的数据库复制到临时拷贝中："
+
+#: ../../library/sqlite3.rst:926
+msgid ""
+"This read-only attribute corresponds to the low-level SQLite `autocommit "
+"mode`_."
+msgstr "这是一个只读属性，它对应于低层次的 SQLite  `autocommit mode`_."
+
+#: ../../library/sqlite3.rst:929
+msgid ""
+"``True`` if a transaction is active (there are uncommitted changes), "
+"``False`` otherwise."
+msgstr "如果一个事务仍处于激活状态（这意味着存在没有提交的更改），那么它的值是 ``True``，否则是 ``False``。"
+
+#: ../../library/sqlite3.rst:936
+msgid ""
+"This attribute controls the :ref:`transaction handling <sqlite3-controlling-"
+"transactions>` performed by :mod:`!sqlite3`. If set to ``None``, "
+"transactions are never implicitly opened. If set to one of ``\"DEFERRED\"``,"
+" ``\"IMMEDIATE\"``, or ``\"EXCLUSIVE\"``, corresponding to the underlying "
+"`SQLite transaction behaviour`_, implicit :ref:`transaction management "
+"<sqlite3-controlling-transactions>` is performed."
+msgstr ""
+"该属性控制由 :mod:`!sqlite3` 模块执行的 :ref:`事务处理 <sqlite3-controlling-transactions>` "
+"。如果将该属性设置为 ``None`` ，那么事务将永远不会被隐式地打开。如果将它设置为 ``\"DEFERRED\"`` 、 "
+"``\"IMMEDIATE\"`` 、 ``\"EXCLUSIVE\"`` 中的任意一个，那么 :ref:`事务管理 (transaction "
+"management) <sqlite3-controlling-transactions>` 将会隐式地根据其对应的 `SQLite "
+"transaction behaviour`_ 执行。"
+
+#: ../../library/sqlite3.rst:944
+msgid ""
+"If not overridden by the *isolation_level* parameter of :func:`connect`, the"
+" default is ``\"\"``, which is an alias for ``\"DEFERRED\"``."
+msgstr ""
+"如果没有使用函数 :func:`connect` 的形式参数 *isolation_level* 将该属性覆写，那么它的默认值会是 "
+"``\"\"``，该默认值是 ``\"DEFERRED\"`` 的别名。"
+
+#: ../../library/sqlite3.rst:949
+msgid ""
+"The initial :attr:`~Cursor.row_factory` for :class:`Cursor` objects created "
+"from this connection. Assigning to this attribute does not affect the "
+":attr:`!row_factory` of existing cursors belonging to this connection, only "
+"new ones. Is ``None`` by default, meaning each row is returned as a "
+":class:`tuple`."
+msgstr ""
+"该属性代表从该连接创建的 :class:`Cursor` 对象的 :attr:`~Cursor.row_factory` "
+"属性的初始值。更改该值只会影响新创建的游标，而不会影响该连接已有的游标的 :attr:`!row_factory` 属性的值。默认情况下它的值为 "
+"``None`` ，代表每一行都会以 :class:`tuple` 的形式返回。"
+
+#: ../../library/sqlite3.rst:956 ../../library/sqlite3.rst:1239
+#: ../../library/sqlite3.rst:1262
+msgid "See :ref:`sqlite3-howto-row-factory` for more details."
+msgstr "更多细节参见 :ref:`sqlite3-howto-row-factory` 。"
+
+#: ../../library/sqlite3.rst:960
+msgid ""
+"A callable that accepts a :class:`bytes` parameter and returns a text "
+"representation of it. The callable is invoked for SQLite values with the "
+"``TEXT`` data type. By default, this attribute is set to :class:`str`. If "
+"you want to return ``bytes`` instead, set *text_factory* to ``bytes``."
+msgstr ""
+"一个可调用对象 (callable) ，它接受一个 :class:`bytes` 作为形式参数并且返回该参数的文本表示。该调用对象将为数据类型为 "
+"``TEXT`` 的 SQLite 值调用。默认情况下，该属性将被设置为 :class:`str` ，这意味着它总是返回一个字符串。如果您想返回 "
+"`bytes` ，请将*text_factory*设置为`bytes`。"
+
+#: ../../library/sqlite3.rst:1000
+msgid ""
+"Return the total number of database rows that have been modified, inserted, "
+"or deleted since the database connection was opened."
+msgstr "返回自数据库连接打开后，被修改、插入或者删除的数据库行的总行数。"
+
+#: ../../library/sqlite3.rst:1006
+msgid "Cursor objects"
+msgstr "游标对象 (Cursor Objects)"
+
+#: ../../library/sqlite3.rst:1008
+msgid ""
+"A ``Cursor`` object represents a `database cursor`_ which is used to execute"
+" SQL statements, and manage the context of a fetch operation. Cursors are "
+"created using :meth:`Connection.cursor`, or by using any of the "
+":ref:`connection shortcut methods <sqlite3-connection-shortcuts>`."
+msgstr ""
+"一个游标对象 (``Cursor``) 代表一个用于执行 SQL 语句、管理从获取操作 (fetch operation) 中获取的内容 "
+"(context) 的数据库游标 (`database cursor`_) 。游标通过方法 :meth:`Connection.cursor` "
+"或者通过任何 一个 :ref:`数据库连接的快捷方法 <sqlite3-connection-shortcuts>` 创建。"
+
+#: ../../library/sqlite3.rst:1015
+msgid ""
+"Cursor objects are :term:`iterators <iterator>`, meaning that if you "
+":meth:`~Cursor.execute` a ``SELECT`` query, you can simply iterate over the "
+"cursor to fetch the resulting rows:"
+msgstr ""
+"游标对象是 :term:`迭代器<iterator>` ，这意味着如果你使用 :meth:`~Cursor.execute` 执行一个 "
+"``SELECT`` 查询，你可以简单地通过在游标上执行迭代来获取结果行："
+
+#: ../../library/sqlite3.rst:1040
+msgid "A :class:`Cursor` instance has the following attributes and methods."
+msgstr ":class:`Cursor` 游标实例具有以下属性和方法。"
+
+#: ../../library/sqlite3.rst:1047
+msgid ""
+"Execute SQL a single SQL statement, optionally binding Python values using "
+":ref:`placeholders <sqlite3-placeholders>`."
+msgstr ""
+
+#: ../../library/sqlite3.rst:1051
+msgid "A single SQL statement."
+msgstr ""
+
+#: ../../library/sqlite3.rst:1054
+msgid ""
+"Python values to bind to placeholders in *sql*. A :class:`!dict` if named "
+"placeholders are used. A :term:`!sequence` if unnamed placeholders are used."
+" See :ref:`sqlite3-placeholders`."
+msgstr ""
+
+#: ../../library/sqlite3.rst:1061 ../../library/sqlite3.rst:1091
+msgid "If *sql* contains more than one SQL statement."
+msgstr ""
+
+#: ../../library/sqlite3.rst:1064
+msgid ""
+"If :attr:`~Connection.isolation_level` is not ``None``, *sql* is an "
+"``INSERT``, ``UPDATE``, ``DELETE``, or ``REPLACE`` statement, and there is "
+"no open transaction, a transaction is implicitly opened before executing "
+"*sql*."
+msgstr ""
+"如果属性 :attr:`~Connection.isolation_level` 的值不是 ``None``，并且 *sql* 是一个 "
+"``INSERT``、``UPDATE``、 ``DELETE`` 或 ``REPLACE`` 语句，并且现在没有打开的事务 (transaction)"
+" ，那么在执行 *sql* 语句前将会隐式打开一个事务。"
+
+#: ../../library/sqlite3.rst:1069
+msgid "Use :meth:`executescript` to execute multiple SQL statements."
+msgstr ""
+
+#: ../../library/sqlite3.rst:1073
+msgid ""
+"For every item in *parameters*, repeatedly execute the :ref:`parameterized "
+"<sqlite3-placeholders>` SQL statement *sql*."
+msgstr ""
+
+#: ../../library/sqlite3.rst:1077
+msgid ""
+"Uses the same implicit transaction handling as :meth:`~Cursor.execute`."
+msgstr ""
+
+#: ../../library/sqlite3.rst:1079
+msgid "A single SQL :abbr:`DML (Data Manipulation Language)` statement."
+msgstr ""
+
+#: ../../library/sqlite3.rst:1082
+msgid ""
+"An :term:`!iterable` of parameters to bind with the placeholders in *sql*. "
+"See :ref:`sqlite3-placeholders`."
+msgstr ""
+
+#: ../../library/sqlite3.rst:1088
+msgid "If *sql* is not a DML statment."
+msgstr ""
+
+#: ../../library/sqlite3.rst:1107
+msgid ""
+"Execute the SQL statements in *sql_script*. If there is a pending "
+"transaction, an implicit ``COMMIT`` statement is executed first. No other "
+"implicit transaction control is performed; any transaction control must be "
+"added to *sql_script*."
+msgstr ""
+"执行形式参数 *sql_script* 中的 SQL 语句。如果在执行时仍有一个未决事务 (pending transaction) "
+"，那么首先会隐式地执行一个 ``COMMIT`` 语句。请注意，除此之外，它不会执行任何隐式的事务控制；因此，任何关于事务控制的内容都应添加到 "
+"*sql_script* 中。"
+
+#: ../../library/sqlite3.rst:1113
+msgid "*sql_script* must be a :class:`string <str>`."
+msgstr "*sql_script*  必须是 :class:`string<str>`"
+
+#: ../../library/sqlite3.rst:1131
+msgid ""
+"If :attr:`~Cursor.row_factory` is ``None``, return the next row query result"
+" set as a :class:`tuple`. Else, pass it to the row factory and return its "
+"result. Return ``None`` if no more data is available."
+msgstr ""
+"如果 :attr:`~Cursor.row_factory` 的值为 ``None``，那么将会以 :class:`tuple` "
+"的形式返回下一行的查询结果集。否则，则将传递给行工厂而后返回其结果。如果不存在可用的数据了，那么将返回 ``None`` 。"
+
+#: ../../library/sqlite3.rst:1139
+msgid ""
+"Return the next set of rows of a query result as a :class:`list`. Return an "
+"empty list if no more rows are available."
+msgstr "以 :class:`list` 的形式返回下一组查询结果的行。如果没有更多可用的数据，那么它将返回一个空列表。"
+
+#: ../../library/sqlite3.rst:1142
+msgid ""
+"The number of rows to fetch per call is specified by the *size* parameter. "
+"If *size* is not given, :attr:`arraysize` determines the number of rows to "
+"be fetched. If fewer than *size* rows are available, as many rows as are "
+"available are returned."
+msgstr ""
+"每次调用执行时获取的行的数量由形式参数 *size* 指定。如果形式参数 *size* 没有给出，那么属性 :attr:`arraysize` "
+"决定了要获取的行的数量。如果可用于查询的数据行数少于 *size* 指定的行数，那么它将返回所有可用的数据行。"
+
+#: ../../library/sqlite3.rst:1148
+msgid ""
+"Note there are performance considerations involved with the *size* "
+"parameter. For optimal performance, it is usually best to use the arraysize "
+"attribute. If the *size* parameter is used, then it is best for it to retain"
+" the same value from one :meth:`fetchmany` call to the next."
+msgstr ""
+"请注意 *size* 形参会涉及到性能方面的考虑。为了获得优化的性能，通常最好是使用 arraysize 属性。 如果使用 *size* "
+"形参，则最好在从一个 :meth:`fetchmany` 调用到下一个调用之间保持相同的值。"
+
+#: ../../library/sqlite3.rst:1155
+msgid ""
+"Return all (remaining) rows of a query result as a :class:`list`. Return an "
+"empty list if no rows are available. Note that the :attr:`arraysize` "
+"attribute can affect the performance of this operation."
+msgstr ""
+"以 :class:`list` 的形式返回一个查询结果的所有（剩余的）数据行。如果没有可用的行，那么将返回一个空列表。请注意， "
+":attr:`arraysize` 属性将影响这一操作的性能。"
+
+#: ../../library/sqlite3.rst:1162
+msgid "Close the cursor now (rather than whenever ``__del__`` is called)."
+msgstr "立即关闭 cursor（而不是在当 ``__del__`` 被调用的时候）。"
+
+#: ../../library/sqlite3.rst:1164
+msgid ""
+"The cursor will be unusable from this point forward; a "
+":exc:`ProgrammingError` exception will be raised if any operation is "
+"attempted with the cursor."
+msgstr ""
+"从这一时刻起该 cursor 将不再可用，如果再尝试用该 cursor 执行任何操作将引发 :exc:`ProgrammingError` 异常。"
+
+#: ../../library/sqlite3.rst:1169 ../../library/sqlite3.rst:1173
+msgid "Required by the DB-API. Does nothing in :mod:`!sqlite3`."
+msgstr "这是一个为 DB-API 所需要的方法。它在模块 :mod:`!sqlite3` 中没有任何作用。"
+
+#: ../../library/sqlite3.rst:1177
+msgid ""
+"Read/write attribute that controls the number of rows returned by "
+":meth:`fetchmany`. The default value is 1 which means a single row would be "
+"fetched per call."
+msgstr "用于控制 :meth:`fetchmany` 返回行数的可读取/写入属性。 该属性的默认值为 1，表示每次调用将获取单独一行。"
+
+#: ../../library/sqlite3.rst:1182
+msgid ""
+"Read-only attribute that provides the SQLite database :class:`Connection` "
+"belonging to the cursor.  A :class:`Cursor` object created by calling "
+":meth:`con.cursor() <Connection.cursor>` will have a :attr:`connection` "
+"attribute that refers to *con*:"
+msgstr ""
+"这是一个只读属性，它将提供属于该游标的 SQLite 数据库 :class:`Connection` 。一个使用方法 "
+":meth:`con.cursor() <Connection.cursor>` 创建的 :class:`Cursor` 对象将会有一个指向数据库连接 "
+"*con* 的 :attr:`connection` 的属性。"
+
+#: ../../library/sqlite3.rst:1196
+msgid ""
+"Read-only attribute that provides the column names of the last query. To "
+"remain compatible with the Python DB API, it returns a 7-tuple for each "
+"column where the last six items of each tuple are ``None``."
+msgstr ""
+"这是一个只读属性，它提供最后一次查询的列名。为了与 Python DB API 兼容，它将为每一列返回一个7元组 (7-tuple) "
+"，其中每个元组的最后六项是 `None`。"
+
+#: ../../library/sqlite3.rst:1200
+msgid "It is set for ``SELECT`` statements without any matching rows as well."
+msgstr "对于没有任何匹配行的 ``SELECT`` 语句同样会设置该属性。"
+
+#: ../../library/sqlite3.rst:1204
+msgid ""
+"Read-only attribute that provides the row id of the last inserted row. It is"
+" only updated after successful ``INSERT`` or ``REPLACE`` statements using "
+"the :meth:`execute` method.  For other statements, after :meth:`executemany`"
+" or :meth:`executescript`, or if the insertion failed, the value of "
+"``lastrowid`` is left unchanged.  The initial value of ``lastrowid`` is "
+"``None``."
+msgstr ""
+"这是一个只读属性，它将提供最后一次插入行的 行id 。它只会在使用方法 :meth:`execute` 成功执行 ``INSERT`` 或 "
+"``REPLACE`` 语句后被更新。对于其他语句，使用方法 :meth:`executemany` 或使用方法 "
+":meth:`executescript` 或插入操作失败都不会使 ``lastrowid`` 的值发生更新。``lastrowid`` 的默认值是 "
+"``None`` 。"
+
+#: ../../library/sqlite3.rst:1212
+msgid "Inserts into ``WITHOUT ROWID`` tables are not recorded."
+msgstr "对 ``WITHOUT ROWID`` 表的插入不被记录。"
+
+#: ../../library/sqlite3.rst:1214
+msgid "Added support for the ``REPLACE`` statement."
+msgstr "增加了 ``REPLACE`` 语句的支持。"
+
+#: ../../library/sqlite3.rst:1219
+msgid ""
+"Read-only attribute that provides the number of modified rows for "
+"``INSERT``, ``UPDATE``, ``DELETE``, and ``REPLACE`` statements; is ``-1`` "
+"for other statements, including :abbr:`CTE (Common Table Expression)` "
+"queries. It is only updated by the :meth:`execute` and :meth:`executemany` "
+"methods."
+msgstr ""
+"这是一个只读属性。对于语句 ``INSERT``、``DELETE``、``REPLACE`` ，它将提供这些语句所修改的行数；对于其他语句，包括 "
+":abbr:`CTE (Common Table Expression)` 查询，它的值将会是 ``-1``。它的值只会在执行方法 "
+":meth:`execute` 与方法 :meth:`executemany` 时发生更新。"
+
+#: ../../library/sqlite3.rst:1227
+msgid ""
+"Control how a row fetched from this :class:`!Cursor` is represented. If "
+"``None``, a row is represented as a :class:`tuple`. Can be set to the "
+"included :class:`sqlite3.Row`; or a :term:`callable` that accepts two "
+"arguments, a :class:`Cursor` object and the :class:`!tuple` of row values, "
+"and returns a custom object representing an SQLite row."
+msgstr ""
+"控制一个行从 :class:`!Cursor` 中获取的数据如何表示。如果它的值为 ``None``，那么一个行将会以一个 :class:`tuple`"
+" 表示。它的值可以被设置为 :class:`sqlite3.Row` ；或是一个接收两个参数的 :term:`callable` ，这两个参数分别为一个"
+" :class:`Cursor` 对象与行值的 :class:`!tuple`，最后返回一个代表一个 SQLite 行的自定义对象。"
+
+#: ../../library/sqlite3.rst:1234
+msgid ""
+"Defaults to what :attr:`Connection.row_factory` was set to when the "
+":class:`!Cursor` was created. Assigning to this attribute does not affect "
+":attr:`Connection.row_factory` of the parent connection."
+msgstr ""
+"该属性的默认值为 :class:`!Cursor` 创建时的 :attr:`Connection.row_factory` "
+"值。对该属性赋值不会影响父连接 :attr:`Connection.row_factory` 的值。"
+
+#: ../../library/sqlite3.rst:1250
+msgid "Row objects"
+msgstr "行对象 (Row objects)"
+
+#: ../../library/sqlite3.rst:1254
+msgid ""
+"A :class:`!Row` instance serves as a highly optimized "
+":attr:`~Connection.row_factory` for :class:`Connection` objects. It supports"
+" iteration, equality testing, :func:`len`, and :term:`mapping` access by "
+"column name and index."
+msgstr ""
+"作为一个高度优化的 :attr:`~Connection.row_factory` ，:class:`!Row` 实例主要用于 "
+":class:`Connection` 对象。它支持迭代、相等测试 (equality testing) 、使用函数 :func:`len` "
+"与通过列名与索引进行访问的 :term:`映射 <mapping>` 。"
+
+#: ../../library/sqlite3.rst:1259
+msgid ""
+"Two :class:`!Row` objects compare equal if they have identical column names "
+"and values."
+msgstr "如果两个 :class:`!Row` 对象具有同样的列名与值，那么这两个对象相等。"
+
+#: ../../library/sqlite3.rst:1266
+msgid ""
+"Return a :class:`list` of column names as :class:`strings <str>`. "
+"Immediately after a query, it is the first member of each tuple in "
+":attr:`Cursor.description`."
+msgstr ""
+"返回一个由类型为 :class:`strings <str>` 的列名组成的 :class:`list` 。若在查询之后调用，它会返回 "
+":attr:`Cursor.description` 中每个元组的第一个成员。"
+
+#: ../../library/sqlite3.rst:1270
+msgid "Added support of slicing."
+msgstr "添加了对切片操作的支持。"
+
+#: ../../library/sqlite3.rst:1275
+msgid "PrepareProtocol objects"
+msgstr "预备协议对象 (PrepareProtocol objects)"
+
+#: ../../library/sqlite3.rst:1279
+msgid ""
+"The PrepareProtocol type's single purpose is to act as a :pep:`246` style "
+"adaption protocol for objects that can :ref:`adapt themselves "
+"<sqlite3-conform>` to :ref:`native SQLite types <sqlite3-types>`."
+msgstr ""
+"预备协议类型 (PrepareProtocol type) 的唯一目的是作为一个诠释 :pep:`264` 风格的适应协议的对象，从而可以将 "
+":ref:`调配它们自身 <sqlite3-conform>` 转化为 :ref:`原生的 SQLite 类型 <sqlite3-types>` 。"
+
+#: ../../library/sqlite3.rst:1287
+msgid "Exceptions"
+msgstr "异常"
+
+#: ../../library/sqlite3.rst:1289
+msgid "The exception hierarchy is defined by the DB-API 2.0 (:pep:`249`)."
+msgstr "异常层次是由 DB-API 2.0 (:pep:`249`) 定义的。"
+
+#: ../../library/sqlite3.rst:1293
+msgid ""
+"This exception is raised by :mod:`!sqlite3` if an SQL query is not a "
+":class:`string <str>`, or if multiple statements are passed to "
+":meth:`~Cursor.execute` or :meth:`~Cursor.executemany`. ``Warning`` is a "
+"subclass of :exc:`Exception`."
+msgstr ""
+"当 SQL 查询不是一个 :class:`字符串 <str>` 或多个语句被传递给了方法 :meth:`~Cursor.execute` 或方法 "
+":meth:`~Cursor.executemany` 时由模块 :mod:`!sqlite3` 引发的异常。``Warning`` 是 "
+":exc:`Exception` 的子类。"
+
+#: ../../library/sqlite3.rst:1300
+msgid ""
+"The base class of the other exceptions in this module. Use this to catch all"
+" errors with one single :keyword:`except` statement. ``Error`` is a subclass"
+" of :exc:`Exception`."
+msgstr ""
+"本模块中其他异常的基类。使用它来捕捉所有的错误，只需一条 :keyword:`except` 语句。 ``Error`` 是 "
+":exc:`Exception` 的子类。"
+
+#: ../../library/sqlite3.rst:1306
+msgid ""
+"This exception is raised by :mod:`!sqlite3` for fetch across rollback, or if"
+" :mod:`!sqlite3` is unable to bind parameters. ``InterfaceError`` is a "
+"subclass of :exc:`Error`."
+msgstr ""
+"当跨越回滚 (rollback) 获取数据或模块 :mod:`!sqlite3` 无法绑定参数时引发的异常。``InterfaceError`` 是 "
+":exc:`Error` 的子类。"
+
+#: ../../library/sqlite3.rst:1312
+msgid ""
+"Exception raised for errors that are related to the database. This serves as"
+" the base exception for several types of database errors. It is only raised "
+"implicitly through the specialised subclasses. ``DatabaseError`` is a "
+"subclass of :exc:`Error`."
+msgstr ""
+"对与数据库有关的错误引发的异常。它作为几种数据库错误的基础异常。它只通过专门的子类隐式引发。 ``DatabaseError`` 是 "
+":exc:`Error` 的一个子类。"
+
+#: ../../library/sqlite3.rst:1319
+msgid ""
+"Exception raised for errors caused by problems with the processed data, like"
+" numeric values out of range, and strings which are too long. ``DataError`` "
+"is a subclass of :exc:`DatabaseError`."
+msgstr ""
+"由于处理的数据有问题而产生的异常，比如数字值超出范围，字符串太长。 ``DataError`` 是 :exc:`DatabaseError` 的子类。"
+
+#: ../../library/sqlite3.rst:1325
+msgid ""
+"Exception raised for errors that are related to the database's operation, "
+"and not necessarily under the control of the programmer. For example, the "
+"database path is not found, or a transaction could not be processed. "
+"``OperationalError`` is a subclass of :exc:`DatabaseError`."
+msgstr ""
+"与数据库操作有关的错误而引发的异常，不一定在程序员的控制之下。例如，数据库路径没有找到，或者一个事务无法被处理。 "
+"``OperationalError`` 是 :exc:`DatabaseError` 的子类。"
+
+#: ../../library/sqlite3.rst:1333
+msgid ""
+"Exception raised when the relational integrity of the database is affected, "
+"e.g. a foreign key check fails.  It is a subclass of :exc:`DatabaseError`."
+msgstr "当数据库的关系一致性受到影响时引发的异常。 例如外键检查失败等。 它是 :exc:`DatabaseError` 的子类。"
+
+#: ../../library/sqlite3.rst:1338
+msgid ""
+"Exception raised when SQLite encounters an internal error. If this is "
+"raised, it may indicate that there is a problem with the runtime SQLite "
+"library. ``InternalError`` is a subclass of :exc:`DatabaseError`."
+msgstr ""
+"当 SQLite 遇到一个内部错误时引发的异常。如果它被引发，可能表明运行中的 SQLite 库有问题。  ``InternalError`` 是 "
+":exc:`DatabaseError` 的子类。"
+
+#: ../../library/sqlite3.rst:1345
+msgid ""
+"Exception raised for :mod:`!sqlite3` API programming errors, for example "
+"trying to operate on a closed :class:`Connection`, or trying to execute non-"
+"DML statements with :meth:`~Cursor.executemany`. ``ProgrammingError`` is a "
+"subclass of :exc:`DatabaseError`."
+msgstr ""
+"由 :mod:`!sqlite3` API 编程错误引发的异常。例如，您尝试对一个已经关闭的 :class:`Connection` "
+"对象进行操作，或试图通过方法 :meth:`~Cursor.executemany` 执行非DML语句  (non-DML statements) "
+"，这些行为都会引发该异常。``ProgrammingError`` 是 :exc:`DatabaseError` 的子类。"
+
+#: ../../library/sqlite3.rst:1352
+msgid ""
+"Exception raised in case a method or database API is not supported by the "
+"underlying SQLite library. For example, setting *deterministic* to ``True`` "
+"in :meth:`~Connection.create_function`, if the underlying SQLite library "
+"does not support deterministic functions. ``NotSupportedError`` is a "
+"subclass of :exc:`DatabaseError`."
+msgstr ""
+"当 底层SQLite库 不支持某个方法或数据库 API 时引发的异常。例如，如果 底层SQLite库 不支持确定性函数 (deterministic "
+"functions) ，那么将方法 :meth:`~Connection.create_function` 的形式参数 *deterministic* "
+"设置为 ``True`` 则会引发该异常。``NotSupportedError`` 是 :exc:`DatabaseError` 的子类。"
+
+#: ../../library/sqlite3.rst:1362
+msgid "SQLite and Python types"
+msgstr "SQLite 与 Python 类型"
+
+#: ../../library/sqlite3.rst:1364
+msgid ""
+"SQLite natively supports the following types: ``NULL``, ``INTEGER``, "
+"``REAL``, ``TEXT``, ``BLOB``."
+msgstr "SQLite 原生支持如下的类型： ``NULL``，``INTEGER``，``REAL``，``TEXT``，``BLOB``。"
+
+#: ../../library/sqlite3.rst:1367
+msgid ""
+"The following Python types can thus be sent to SQLite without any problem:"
+msgstr "因此可以将以下Python类型发送到SQLite而不会出现任何问题："
+
+#: ../../library/sqlite3.rst:1370 ../../library/sqlite3.rst:1387
+msgid "Python type"
+msgstr "Python 类型"
+
+#: ../../library/sqlite3.rst:1370 ../../library/sqlite3.rst:1387
+msgid "SQLite type"
+msgstr "SQLite 类型"
+
+#: ../../library/sqlite3.rst:1372 ../../library/sqlite3.rst:1389
+msgid "``None``"
+msgstr "``None``"
+
+#: ../../library/sqlite3.rst:1372 ../../library/sqlite3.rst:1389
+msgid "``NULL``"
+msgstr "``NULL``"
+
+#: ../../library/sqlite3.rst:1374 ../../library/sqlite3.rst:1391
+msgid ":class:`int`"
+msgstr ":class:`int`"
+
+#: ../../library/sqlite3.rst:1374 ../../library/sqlite3.rst:1391
+msgid "``INTEGER``"
+msgstr "``INTEGER``"
+
+#: ../../library/sqlite3.rst:1376 ../../library/sqlite3.rst:1393
+msgid ":class:`float`"
+msgstr ":class:`float`"
+
+#: ../../library/sqlite3.rst:1376 ../../library/sqlite3.rst:1393
+msgid "``REAL``"
+msgstr "``REAL``"
+
+#: ../../library/sqlite3.rst:1378
+msgid ":class:`str`"
+msgstr ":class:`str`"
+
+#: ../../library/sqlite3.rst:1378 ../../library/sqlite3.rst:1395
+msgid "``TEXT``"
+msgstr "``TEXT``"
+
+#: ../../library/sqlite3.rst:1380 ../../library/sqlite3.rst:1398
+msgid ":class:`bytes`"
+msgstr ":class:`bytes`"
+
+#: ../../library/sqlite3.rst:1380 ../../library/sqlite3.rst:1398
+msgid "``BLOB``"
+msgstr "``BLOB``"
+
+#: ../../library/sqlite3.rst:1384
+msgid "This is how SQLite types are converted to Python types by default:"
+msgstr "这是SQLite类型默认转换为Python类型的方式："
+
+#: ../../library/sqlite3.rst:1395
+msgid "depends on :attr:`~Connection.text_factory`, :class:`str` by default"
+msgstr "取决于 :attr:`~Connection.text_factory` , 默认为 :class:`str`"
+
+#: ../../library/sqlite3.rst:1401
+msgid ""
+"The type system of the :mod:`!sqlite3` module is extensible in two ways: you"
+" can store additional Python types in an SQLite database via :ref:`object "
+"adapters <sqlite3-adapters>`, and you can let the :mod:`!sqlite3` module "
+"convert SQLite types to Python types via :ref:`converters "
+"<sqlite3-converters>`."
+msgstr ""
+":mod:`!sqlite3` 模块的类型系统有以下两种拓展方式：一是通过 :ref:`对象调解器 (object adapters) "
+"<sqlite3-adapters>` 存储额外的 Python 类型到一个 SQLite 数据库内，另一个则是通过 :ref:`转换器 "
+"<sqlite3-converters>` 使 :mod:`!sqlite3` 模块转换 SQLite 类型到 Python 类型。"
+
+#: ../../library/sqlite3.rst:1411
+msgid "Default adapters and converters"
+msgstr "默认适配器和转换器"
+
+#: ../../library/sqlite3.rst:1413
+msgid ""
+"There are default adapters for the date and datetime types in the datetime "
+"module. They will be sent as ISO dates/ISO timestamps to SQLite."
+msgstr ""
+"对于 datetime 模块中的 date 和 datetime 类型已提供了默认的适配器。 它们将会以 ISO 日期/ISO 时间戳的形式发给 "
+"SQLite。"
+
+#: ../../library/sqlite3.rst:1416
+msgid ""
+"The default converters are registered under the name \"date\" for "
+":class:`datetime.date` and under the name \"timestamp\" for "
+":class:`datetime.datetime`."
+msgstr ""
+"默认转换器使用的注册名称是针对 :class:`datetime.date` 的 \"date\" 和针对 "
+":class:`datetime.datetime` 的 \"timestamp\"。"
+
+#: ../../library/sqlite3.rst:1420
+msgid ""
+"This way, you can use date/timestamps from Python without any additional "
+"fiddling in most cases. The format of the adapters is also compatible with "
+"the experimental SQLite date/time functions."
+msgstr ""
+"通过这种方式，你可以在大多数情况下使用 Python 的 date/timestamp 对象而无须任何额外处理。 适配器的格式还与实验性的 SQLite"
+" date/time 函数兼容。"
+
+#: ../../library/sqlite3.rst:1424
+msgid "The following example demonstrates this."
+msgstr "下面的示例演示了这一点。"
+
+#: ../../library/sqlite3.rst:1428
+msgid ""
+"If a timestamp stored in SQLite has a fractional part longer than 6 numbers,"
+" its value will be truncated to microsecond precision by the timestamp "
+"converter."
+msgstr "如果存储在 SQLite 中的时间戳的小数位多于 6 个数字，则时间戳转换器会将该值截断至微秒精度。"
+
+#: ../../library/sqlite3.rst:1434
+msgid ""
+"The default \"timestamp\" converter ignores UTC offsets in the database and "
+"always returns a naive :class:`datetime.datetime` object. To preserve UTC "
+"offsets in timestamps, either leave converters disabled, or register an "
+"offset-aware converter with :func:`register_converter`."
+msgstr ""
+"默认的 \"时间戳\" 转换器忽略了数据库中的 UTC 偏移，总是返回一个原生的 :class:`datetime.datetime` "
+"对象。要在时间戳中保留 UTC 偏移，可以不使用转换器，或者用 :func:`register_converter` 注册一个偏移感知的转换器。"
+
+#: ../../library/sqlite3.rst:1443
+msgid "How-to guides"
+msgstr "How-to guides"
+
+#: ../../library/sqlite3.rst:1448
+msgid "How to use placeholders to bind values in SQL queries"
+msgstr "如何在 SQL 查询中使用占位符绑定值"
+
+#: ../../library/sqlite3.rst:1450
+msgid ""
+"SQL operations usually need to use values from Python variables. However, "
+"beware of using Python's string operations to assemble queries, as they are "
+"vulnerable to `SQL injection attacks`_. For example, an attacker can simply "
+"close the single quote and inject ``OR TRUE`` to select all rows::"
+msgstr ""
+"通常，SQL 操作需要使用来自 Python 变量的值。然而，我们应小心使用 Python 的字符串操作来构建我们的查询，因为它们很容易受到 `SQL "
+"注入攻击`_ 。例如，一个攻击者可以简单地关闭单引号，而后注入 ``OR TRUE`` 以选择所有行："
+
+#: ../../library/sqlite3.rst:1463
+msgid ""
+"Instead, use the DB-API's parameter substitution. To insert a variable into "
+"a query string, use a placeholder in the string, and substitute the actual "
+"values into the query by providing them as a :class:`tuple` of values to the"
+" second argument of the cursor's :meth:`~Cursor.execute` method."
+msgstr ""
+
+#: ../../library/sqlite3.rst:1468
+msgid ""
+"An SQL statement may use one of two kinds of placeholders: question marks "
+"(qmark style) or named placeholders (named style). For the qmark style, "
+"*parameters* must be a :term:`sequence` whose length must match the number "
+"of placeholders, or a :exc:`ProgrammingError` is raised. For the named "
+"style, *parameters* should be an instance of a :class:`dict` (or a "
+"subclass), which must contain keys for all named parameters; any extra items"
+" are ignored. Here's an example of both styles:"
+msgstr ""
+
+#: ../../library/sqlite3.rst:1505
+msgid ""
+":pep:`249` numeric placeholders are *not* supported. If used, they will be "
+"interpreted as named placeholders."
+msgstr ""
+
+#: ../../library/sqlite3.rst:1512
+msgid "How to adapt custom Python types to SQLite values"
+msgstr "如何将自定义的 Python 类型调整为 SQLite 值"
+
+#: ../../library/sqlite3.rst:1514
+msgid ""
+"SQLite supports only a limited set of data types natively. To store custom "
+"Python types in SQLite databases, *adapt* them to one of the :ref:`Python "
+"types SQLite natively understands <sqlite3-types>`."
+msgstr ""
+"SQLite 本身只支持有限的数据类型集。为了在 SQLite 数据库中存储自定义的 Python 类型，请将它们 *调整* 为 "
+":ref:`SQLite 原生支持的 Python 类型 <sqlite3-types>` 之一。"
+
+#: ../../library/sqlite3.rst:1518
+msgid ""
+"There are two ways to adapt Python objects to SQLite types: letting your "
+"object adapt itself, or using an *adapter callable*. The latter will take "
+"precedence above the former. For a library that exports a custom type, it "
+"may make sense to enable that type to adapt itself. As an application "
+"developer, it may make more sense to take direct control by registering "
+"custom adapter functions."
+msgstr ""
+"有两种方法可以使 Python 对象适配 SQLite 类型：一是让您的对象实现自适配，或是使用一个 *可调用的适配器 (adapter "
+"callable)*，后者优于前者。对于一个输出自定义类型的库来说，如果使类型能够自适配的话，那么是很有意义的。作为一个应用开发者，通过注册自定义的适配器函数"
+" (adapter functions) 来直接控制可能更有意义。"
+
+#: ../../library/sqlite3.rst:1530
+msgid "How to write adaptable objects"
+msgstr "如何编写可适配的对象"
+
+#: ../../library/sqlite3.rst:1532
+msgid ""
+"Suppose we have a :class:`!Point` class that represents a pair of "
+"coordinates, ``x`` and ``y``, in a Cartesian coordinate system. The "
+"coordinate pair will be stored as a text string in the database, using a "
+"semicolon to separate the coordinates. This can be implemented by adding a "
+"``__conform__(self, protocol)`` method which returns the adapted value. The "
+"object passed to *protocol* will be of type :class:`PrepareProtocol`."
+msgstr ""
+"假定我们有一个在笛卡尔坐标系中代表一对坐标 ``x`` 与 ``y`` 的 :class:`!Point` "
+"类。该坐标对将会使用一个分号进行分隔、以文本字符串的形式存储在数据库中。这可以通过添加一个返回适配后的结果值的 "
+"``_conform_(self,protocol)`` 方法来实现。传递给形式参数 *protocol* 的对象将会是类型 "
+":class:`PrepareProtocol`。"
+
+#: ../../library/sqlite3.rst:1563
+msgid "How to register adapter callables"
+msgstr "如何注册可调用的适配器"
+
+#: ../../library/sqlite3.rst:1565
+msgid ""
+"The other possibility is to create a function that converts the Python "
+"object to an SQLite-compatible type. This function can then be registered "
+"using :func:`register_adapter`."
+msgstr ""
+"另一种可行的方法是创造一个函数，它能够将 Python 对象转换为一个与 SQLite 兼容的类型。可以使用函数 "
+":func:`register_adapter` 注册该函数。"
+
+#: ../../library/sqlite3.rst:1595
+msgid "How to convert SQLite values to custom Python types"
+msgstr "如何将 SQLite 值转换为自定义 Python 类型"
+
+#: ../../library/sqlite3.rst:1597
+msgid ""
+"Writing an adapter lets you convert *from* custom Python types *to* SQLite "
+"values. To be able to convert *from* SQLite values *to* custom Python types,"
+" we use *converters*."
+msgstr ""
+"通过撰写一个适配器，您可以将自定义的 Python 类型转换为 SQLite 值。为了能够将 SQLite 值转换回自定义的 Python "
+"类型，我们使用 *converters*。"
+
+#: ../../library/sqlite3.rst:1602
+msgid ""
+"Let's go back to the :class:`!Point` class. We stored the x and y "
+"coordinates separated via semicolons as strings in SQLite."
+msgstr ""
+"让我们重新把目光放回 :class:`!Point` 类上来。我们通过使用分号分隔的形式将坐标 x 与 y 作为字符串存储在 SQLite 中。"
+
+#: ../../library/sqlite3.rst:1605
+msgid ""
+"First, we'll define a converter function that accepts the string as a "
+"parameter and constructs a :class:`!Point` object from it."
+msgstr ""
+"首先，我们需要定义一个转换函数 (converter function) ，该转换函数接收字符串作为它的形式参数，而后从中构筑一个 "
+":class:`!Point` 对象。"
+
+#: ../../library/sqlite3.rst:1610
+msgid ""
+"Converter functions are **always** passed a :class:`bytes` object, no matter"
+" the underlying SQLite data type."
+msgstr "无论底层的 SQLite 数据类型如何，转换函数总是回传递一个 :class:`bytes` 对象。"
+
+#: ../../library/sqlite3.rst:1619
+msgid ""
+"We now need to tell :mod:`!sqlite3` when it should convert a given SQLite "
+"value. This is done when connecting to a database, using the *detect_types* "
+"parameter of :func:`connect`. There are three options:"
+msgstr ""
+"现在，我们需要告诉 :mod:`!sqlite3` 模块应该在合适转换一个给定的 SQLite 值。通过使用 :func:`connect` 的形式参数"
+" *detect_types* ，这一项工作将在连接到数据库时便会被完成。有以下三个选项："
+
+#: ../../library/sqlite3.rst:1623
+msgid "Implicit: set *detect_types* to :const:`PARSE_DECLTYPES`"
+msgstr "隐式的：将 *detect_types* 设置为 :const:`PARSE_DECLTYPES`"
+
+#: ../../library/sqlite3.rst:1624
+msgid "Explicit: set *detect_types* to :const:`PARSE_COLNAMES`"
+msgstr "显式的：将 *detect_types* 设置为 :const:`PARSE_COLNAMES`"
+
+#: ../../library/sqlite3.rst:1625
+msgid ""
+"Both: set *detect_types* to ``sqlite3.PARSE_DECLTYPES | "
+"sqlite3.PARSE_COLNAMES``. Column names take precedence over declared types."
+msgstr ""
+"同样的：将 *detect_types* 设置为 ``sqlite3.PARSE_DECLTYPES | "
+"sqlite3.PARSE_COLNAMES``。在此情况下，列名具有比声明类型更高的优先级。"
+
+#: ../../library/sqlite3.rst:1629
+msgid ""
+"The following example illustrates the implicit and explicit approaches:"
+msgstr "下面的例子说明了隐式与显式的方式："
+
+#: ../../library/sqlite3.rst:1680
+msgid "Adapter and converter recipes"
+msgstr "适配器与转换器专题"
+
+#: ../../library/sqlite3.rst:1682
+msgid "This section shows recipes for common adapters and converters."
+msgstr "这一节内容展示了一般情况下如何使用适配器与转换器的例子："
+
+#: ../../library/sqlite3.rst:1744
+msgid "How to use connection shortcut methods"
+msgstr "如何使用连接的便捷方法"
+
+#: ../../library/sqlite3.rst:1746
+msgid ""
+"Using the :meth:`~Connection.execute`, :meth:`~Connection.executemany`, and "
+":meth:`~Connection.executescript` methods of the :class:`Connection` class, "
+"your code can be written more concisely because you don't have to create the"
+" (often superfluous) :class:`Cursor` objects explicitly. Instead, the "
+":class:`Cursor` objects are created implicitly and these shortcut methods "
+"return the cursor objects. This way, you can execute a ``SELECT`` statement "
+"and iterate over it directly using only a single call on the "
+":class:`Connection` object."
+msgstr ""
+"通过使用 :class:`Connection` 类的 :meth:`~Connection.execute`, "
+":meth:`~Connection.executemany` 与 :meth:`~Connection.executescript` "
+"方法，您可以简化您的代码，因为无需再显式创建 （通常是多余的） :class:`Cursor` 对象。此时 :class:`Cursor` "
+"对象会被隐式创建并且由这些快捷方法返回。这样一来，您仅需在 :class:`Connection` 对象上调用一次方法就可以执行 ``SELECT`` "
+"语句，并对其进行迭代。"
+
+#: ../../library/sqlite3.rst:1787
+msgid "How to use the connection context manager"
+msgstr "如何使用连接上下文管理器"
+
+#: ../../library/sqlite3.rst:1789
+msgid ""
+"A :class:`Connection` object can be used as a context manager that "
+"automatically commits or rolls back open transactions when leaving the body "
+"of the context manager. If the body of the :keyword:`with` statement "
+"finishes without exceptions, the transaction is committed. If this commit "
+"fails, or if the body of the ``with`` statement raises an uncaught "
+"exception, the transaction is rolled back."
+msgstr ""
+"一个 :class:`Connection` 对象可以像一个上下文管理器 (context manager) "
+"那般被使用，在这种情况下当离开上下文管理器的主体时，将会自动提交或回滚打开的事务。如果 :keyword:`with` "
+"语句的主体在没有异常的情况下完成，那么事务便会被提交；如果提交失败，或者 ``with`` 语句的主体引发了一个未被捕获异常，那么事务将会回滚。"
+
+#: ../../library/sqlite3.rst:1798
+msgid ""
+"If there is no open transaction upon leaving the body of the ``with`` "
+"statement, the context manager is a no-op."
+msgstr "如果在离开 ``with`` 语句的主体时没有打开的事务，那么上下文管理器是无用的。"
+
+#: ../../library/sqlite3.rst:1803
+msgid ""
+"The context manager neither implicitly opens a new transaction nor closes "
+"the connection."
+msgstr "上下文管理器既不会隐式地打开一个新事务，也不会关闭连接。"
+
+#: ../../library/sqlite3.rst:1836
+msgid "How to work with SQLite URIs"
+msgstr "如何使用 SQLite URIS"
+
+#: ../../library/sqlite3.rst:1838
+msgid "Some useful URI tricks include:"
+msgstr "一些有用的 URI 技巧包括："
+
+#: ../../library/sqlite3.rst:1840
+msgid "Open a database in read-only mode:"
+msgstr "在只读模式下打开一个数据库："
+
+#: ../../library/sqlite3.rst:1849
+msgid ""
+"Do not implicitly create a new database file if it does not already exist; "
+"will raise :exc:`~sqlite3.OperationalError` if unable to create a new file:"
+msgstr ""
+"如果数据库文件并不存在，那么不显式地创建该文件；如果不能够创建一个新文件，那么将会抛出 :exc:`~sqlite3.OperationalError`"
+" ："
+
+#: ../../library/sqlite3.rst:1859
+msgid "Create a shared named in-memory database:"
+msgstr "创建一个共享的具名内存数据库："
+
+#: ../../library/sqlite3.rst:1873
+msgid ""
+"More information about this feature, including a list of parameters, can be "
+"found in the `SQLite URI documentation`_."
+msgstr "关于该特性的更多信息，包括形式参数的列表，请您参阅 `SQLite URI documentation`_ 。"
+
+#: ../../library/sqlite3.rst:1882
+msgid "How to create and use row factories"
+msgstr "如何创建与使用行工厂 (row factories)"
+
+#: ../../library/sqlite3.rst:1884
+msgid ""
+"By default, :mod:`!sqlite3` represents each row as a :class:`tuple`. If a "
+":class:`!tuple` does not suit your needs, you can use the "
+":class:`sqlite3.Row` class or a custom :attr:`~Cursor.row_factory`."
+msgstr ""
+"默认情况下，:mod:`!sqlite3` 模块以一个 :class:`tuple` 代表每一行。如果一个 :class:`!tuple` "
+"不能满足您的需要，您可以使用 :class:`sqlite3.Row` 类或一个自定义的 :attr:`~Cursor.row_factory`。"
+
+#: ../../library/sqlite3.rst:1889
+msgid ""
+"While :attr:`!row_factory` exists as an attribute both on the "
+":class:`Cursor` and the :class:`Connection`, it is recommended to set "
+":class:`Connection.row_factory`, so all cursors created from the connection "
+"will use the same row factory."
+msgstr ""
+"尽管在 :class:`Cursor` 与 :class:`Connection` 上同时存在属性 "
+":attr:`!row_factory`，我们推荐您设置 :class:`Connection.row_factory`  "
+"，如此所有从连接创建的游标将会使用同样的行工厂。"
+
+#: ../../library/sqlite3.rst:1894
+msgid ""
+":class:`!Row` provides indexed and case-insensitive named access to columns,"
+" with minimal memory overhead and performance impact over a :class:`!tuple`."
+" To use :class:`!Row` as a row factory, assign it to the "
+":attr:`!row_factory` attribute:"
+msgstr ""
+":class:`!Row` 提供对列的索引与不区分大小写的具名访问，其中对 :class:`!tuple` 的访问内存开销与性能影响最小。要将 "
+":class:`!Row` 作为一个行工厂使用，请将它分配给 :attr:`!row_factory` 属性："
+
+#: ../../library/sqlite3.rst:1904
+msgid "Queries now return :class:`!Row` objects:"
+msgstr "现在，查询将会返回 :class:`!Row` 对象："
+
+#: ../../library/sqlite3.rst:1919
+msgid ""
+"You can create a custom :attr:`~Cursor.row_factory` that returns each row as"
+" a :class:`dict`, with column names mapped to values:"
+msgstr ""
+"您可以创建一个自定义的 :attr:`~Cursor.row_factory` ，它将会把每一行作为一个完成列名到值的映射的 :class:`dict`"
+" 返回："
+
+#: ../../library/sqlite3.rst:1928
+msgid ""
+"Using it, queries now return a :class:`!dict` instead of a :class:`!tuple`:"
+msgstr "通过使用它，查询现在将返回一个 :class:`!dict`，而不是一个 :class:`!tuple`。"
+
+#: ../../library/sqlite3.rst:1938
+msgid "The following row factory returns a :term:`named tuple`:"
+msgstr "下面的行工厂将会返回一个 :term:`named tuple`："
+
+#: ../../library/sqlite3.rst:1949
+msgid ":func:`!namedtuple_factory` can be used as follows:"
+msgstr ":func:`!namedtuple_factory` 函数可以如下般被使用："
+
+#: ../../library/sqlite3.rst:1964
+msgid ""
+"With some adjustments, the above recipe can be adapted to use a "
+":class:`~dataclasses.dataclass`, or any other custom class, instead of a "
+":class:`~collections.namedtuple`."
+msgstr ""
+"通过一些调整，上面所述的方法可用于 :class:`~dataclasses.dataclass` 及其他自定义类型，而不限于 "
+":class:`~collections.namedtuple` 。"
+
+#: ../../library/sqlite3.rst:1972
+msgid "Explanation"
+msgstr "说明"
+
+#: ../../library/sqlite3.rst:1977
+msgid "Transaction control"
+msgstr "事务控制"
+
+#: ../../library/sqlite3.rst:1979
+msgid ""
+"The :mod:`!sqlite3` module does not adhere to the transaction handling "
+"recommended by :pep:`249`."
+msgstr ":mod:`!sqlite3` 模块并不遵守 :pep:`249` 所推荐的事务控制规范。"
+
+#: ../../library/sqlite3.rst:1982
+msgid ""
+"If the connection attribute :attr:`~Connection.isolation_level` is not "
+"``None``, new transactions are implicitly opened before "
+":meth:`~Cursor.execute` and :meth:`~Cursor.executemany` executes ``INSERT``,"
+" ``UPDATE``, ``DELETE``, or ``REPLACE`` statements; for other statements, no"
+" implicit transaction handling is performed. Use the "
+":meth:`~Connection.commit` and :meth:`~Connection.rollback` methods to "
+"respectively commit and roll back pending transactions. You can choose the "
+"underlying `SQLite transaction behaviour`_ — that is, whether and what type "
+"of ``BEGIN`` statements :mod:`!sqlite3` implicitly executes – via the "
+":attr:`~Connection.isolation_level` attribute."
+msgstr ""
+"如果连接的属性 :attr:`~Connection.isolation_level` 不是 ``None``，那么在方法 "
+":meth:`~Cursor.execute` 与 :meth:`~Cursor.executemany` 执行 "
+"``INSERT``,``UPDATE``,``DELETE`` 或 ``REPLACE`` "
+"语句之前新的事务会隐式地打开；对于其他语句，不执行隐式的事务处理。您可以通过分别使用方法 :meth:`~Connection.commit` 与 "
+":meth:`~Connection.rollback` 完成提交未决事务与回滚未决事务的操作。您可以通过 "
+":attr:`~Connection.isolation_level` 属性选择底层的 SQLite 事务行为（参见 `SQLite "
+"transaction behaviour`_ ）——即  :mod:`!sqlite3` 模块是否隐式执行 ``BEGIN`` "
+"语句以及隐式执行哪种类型的 ``BEGIN`` 语句。"
+
+#: ../../library/sqlite3.rst:1995
+msgid ""
+"If :attr:`~Connection.isolation_level` is set to ``None``, no transactions "
+"are implicitly opened at all. This leaves the underlying SQLite library in "
+"`autocommit mode`_, but also allows the user to perform their own "
+"transaction handling using explicit SQL statements. The underlying SQLite "
+"library autocommit mode can be queried using the "
+":attr:`~Connection.in_transaction` attribute."
+msgstr ""
+"如果将 :attr:`~Connection.isolation_level` 属性设置为 ``None``，那么不会有事务隐式地打开。这将会让底层的 "
+"SQLite 库处于自动提交模式 ( `autocommit mode`_ ) ，但是这也同样使得用户能够通过使用显式的 SQL "
+"语句执行他们自己的事务处理。您可以通过使用 :attr:`~Connection.in_transaction` 属性查询底层的 SQLite "
+"库是否处于自动提交模式。"
+
+#: ../../library/sqlite3.rst:2003
+msgid ""
+"The :meth:`~Cursor.executescript` method implicitly commits any pending "
+"transaction before execution of the given SQL script, regardless of the "
+"value of :attr:`~Connection.isolation_level`."
+msgstr ""
+":meth:`~Cursor.executescript` 方法会在给定的 SQL 脚本执行之前隐式地提交任何未决地事务，无论 "
+":attr:`~Connection.isolation_level` 如何。"
+
+#: ../../library/sqlite3.rst:2007
+msgid ""
+":mod:`!sqlite3` used to implicitly commit an open transaction before DDL "
+"statements.  This is no longer the case."
+msgstr ":mod:`!sqlite3` 模块过去会在 DDL 语句前隐式地提交一个打开地事务。现在不会再这样了。"
