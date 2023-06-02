@@ -1,0 +1,957 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2001-2023, Python Software Foundation
+# This file is distributed under the same license as the Python package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Shengjing Zhu <zsj950618@gmail.com>, 2019
+# Alpha Du <alphanow@gmail.com>, 2019
+# nick <2330458484@qq.com>, 2019
+# ppcfish <ppcfish@gmail.com>, 2019
+# Sean Chao <seanchao0804@gmail.com>, 2020
+# Freesand Leo <yuqinju@163.com>, 2020
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Python 3.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-02 14:49+0000\n"
+"PO-Revision-Date: 2019-09-01 03:39+0000\n"
+"Last-Translator: Freesand Leo <yuqinju@163.com>, 2020\n"
+"Language-Team: Chinese (China) (https://app.transifex.com/python-doc/teams/5390/zh_CN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:8
+msgid "Memory Management"
+msgstr "内存管理"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:17
+msgid "Overview"
+msgstr "概述"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:19
+msgid ""
+"Memory management in Python involves a private heap containing all Python "
+"objects and data structures. The management of this private heap is ensured "
+"internally by the *Python memory manager*.  The Python memory manager has "
+"different components which deal with various dynamic storage management "
+"aspects, like sharing, segmentation, preallocation or caching."
+msgstr ""
+"在 Python 中，内存管理涉及到一个包含所有 Python 对象和数据结构的私有堆（heap）。这个私有堆的管理由内部的 *Python "
+"内存管理器（Python memory manager）* 保证。Python "
+"内存管理器有不同的组件来处理各种动态存储管理方面的问题，如共享、分割、预分配或缓存。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:25
+msgid ""
+"At the lowest level, a raw memory allocator ensures that there is enough "
+"room in the private heap for storing all Python-related data by interacting "
+"with the memory manager of the operating system. On top of the raw memory "
+"allocator, several object-specific allocators operate on the same heap and "
+"implement distinct memory management policies adapted to the peculiarities "
+"of every object type. For example, integer objects are managed differently "
+"within the heap than strings, tuples or dictionaries because integers imply "
+"different storage requirements and speed/space tradeoffs. The Python memory "
+"manager thus delegates some of the work to the object-specific allocators, "
+"but ensures that the latter operate within the bounds of the private heap."
+msgstr ""
+"在最底层，一个原始内存分配器通过与操作系统的内存管理器交互，确保私有堆中有足够的空间来存储所有与 Python "
+"相关的数据。在原始内存分配器的基础上，几个对象特定的分配器在同一堆上运行，并根据每种对象类型的特点实现不同的内存管理策略。例如，整数对象在堆内的管理方式不同于字符串、元组或字典，因为整数需要不同的存储需求和速度与空间的权衡。因此，Python"
+" 内存管理器将一些工作分配给对象特定分配器，但确保后者在私有堆的范围内运行。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:36
+msgid ""
+"It is important to understand that the management of the Python heap is "
+"performed by the interpreter itself and that the user has no control over "
+"it, even if they regularly manipulate object pointers to memory blocks "
+"inside that heap.  The allocation of heap space for Python objects and other"
+" internal buffers is performed on demand by the Python memory manager "
+"through the Python/C API functions listed in this document."
+msgstr ""
+"Python 堆内存的管理是由解释器来执行，用户对它没有控制权，即使他们经常操作指向堆内内存块的对象指针，理解这一点十分重要。Python "
+"对象和其他内部缓冲区的堆空间分配是由 Python 内存管理器按需通过本文档中列出的 Python/C API 函数进行的。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:49
+msgid ""
+"To avoid memory corruption, extension writers should never try to operate on"
+" Python objects with the functions exported by the C library: "
+":c:func:`malloc`, :c:func:`calloc`, :c:func:`realloc` and :c:func:`free`.  "
+"This will result in  mixed calls between the C allocator and the Python "
+"memory manager with fatal consequences, because they implement different "
+"algorithms and operate on different heaps.  However, one may safely allocate"
+" and release memory blocks with the C library allocator for individual "
+"purposes, as shown in the following example::"
+msgstr ""
+"为了避免内存破坏，扩展的作者永远不应该试图用 C 库函数导出的函数来对 Python 对象进行操作，这些函数包括： :c:func:`malloc`, "
+":c:func:`calloc`, :c:func:`realloc` 和 :c:func:`free`。这将导致 C 分配器和 Python "
+"内存管理器之间的混用，引发严重后果，这是由于它们实现了不同的算法，并在不同的堆上操作。但是，我们可以安全地使用 C "
+"库分配器为单独的目的分配和释放内存块，如下例所示："
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:68
+msgid ""
+"In this example, the memory request for the I/O buffer is handled by the C "
+"library allocator. The Python memory manager is involved only in the "
+"allocation of the bytes object returned as a result."
+msgstr "在这个例子中，I/O 缓冲区的内存请求是由 C 库分配器处理的。Python 内存管理器只参与了分配作为结果返回的字节对象。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:72
+msgid ""
+"In most situations, however, it is recommended to allocate memory from the "
+"Python heap specifically because the latter is under control of the Python "
+"memory manager. For example, this is required when the interpreter is "
+"extended with new object types written in C. Another reason for using the "
+"Python heap is the desire to *inform* the Python memory manager about the "
+"memory needs of the extension module. Even when the requested memory is used"
+" exclusively for internal, highly-specific purposes, delegating all memory "
+"requests to the Python memory manager causes the interpreter to have a more "
+"accurate image of its memory footprint as a whole. Consequently, under "
+"certain circumstances, the Python memory manager may or may not trigger "
+"appropriate actions, like garbage collection, memory compaction or other "
+"preventive procedures. Note that by using the C library allocator as shown "
+"in the previous example, the allocated memory for the I/O buffer escapes "
+"completely the Python memory manager."
+msgstr ""
+"然而，在大多数情况下，建议专门从 Python 堆中分配内存，因为后者由 Python 内存管理器控制。例如，当解释器扩展了用 C "
+"写的新对象类型时，就必须这样做。使用 Python 堆的另一个原因是希望*通知* Python "
+"内存管理器关于扩展模块的内存需求。即使所请求的内存全部只用于内部的、高度特定的目的，将所有的内存请求交给 Python "
+"内存管理器能让解释器对其内存占用的整体情况有更准确的了解。因此，在某些情况下，Python "
+"内存管理器可能会触发或不触发适当的操作，如垃圾回收、内存压缩或其他预防性操作。请注意，通过使用前面例子中所示的 C 库分配器，为 I/O "
+"缓冲区分配的内存会完全不受 Python 内存管理器管理。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:88
+msgid ""
+"The :envvar:`PYTHONMALLOC` environment variable can be used to configure the"
+" memory allocators used by Python."
+msgstr "环境变量 :envvar:`PYTHONMALLOC` 可被用来配置 Python 所使用的内存分配器。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:91
+msgid ""
+"The :envvar:`PYTHONMALLOCSTATS` environment variable can be used to print "
+"statistics of the :ref:`pymalloc memory allocator <pymalloc>` every time a "
+"new pymalloc object arena is created, and on shutdown."
+msgstr ""
+"环境变量 :envvar:`PYTHONMALLOCSTATS` 可以用来在每次创建和关闭新的 pymalloc 对象区域时打印 "
+":ref:`pymalloc  内存分配器 <pymalloc>` 的统计数据。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:97
+msgid "Raw Memory Interface"
+msgstr "原始内存接口"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:99
+msgid ""
+"The following function sets are wrappers to the system allocator. These "
+"functions are thread-safe, the :term:`GIL <global interpreter lock>` does "
+"not need to be held."
+msgstr "以下函数集封装了系统分配器。这些函数是线程安全的，不需要持有 :term:`GIL <global interpreter lock>`。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:103
+msgid ""
+"The :ref:`default raw memory allocator <default-memory-allocators>` uses the"
+" following functions: :c:func:`malloc`, :c:func:`calloc`, :c:func:`realloc` "
+"and :c:func:`free`; call ``malloc(1)`` (or ``calloc(1, 1)``) when requesting"
+" zero bytes."
+msgstr ""
+":ref:`default raw memory allocator <default-memory-allocators>` "
+"使用这些函数：:c:func:`malloc`、 :c:func:`calloc`、 :c:func:`realloc` 和 "
+":c:func:`free`；申请零字节时则调用 ``malloc(1)``（或 ``calloc(1, 1)``）"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:112
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:183
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:285
+msgid ""
+"Allocates *n* bytes and returns a pointer of type :c:type:`void\\*` to the "
+"allocated memory, or ``NULL`` if the request fails."
+msgstr "分配 *n* 个字节，并返回一个指向分配的内存的 :c:type:`void\\*` 类型指针，如果请求失败，则返回 ``NULL`` 。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:115
+msgid ""
+"Requesting zero bytes returns a distinct non-``NULL`` pointer if possible, "
+"as if ``PyMem_RawMalloc(1)`` had been called instead. The memory will not "
+"have been initialized in any way."
+msgstr ""
+"请求零字节可能返回一个独特的非 ``NULL`` 指针，就像调用了``PyMem_RawMalloc(1)`` 一样。但是内存不会以任何方式被初始化。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:122
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:193
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:295
+msgid ""
+"Allocates *nelem* elements each whose size in bytes is *elsize* and returns "
+"a pointer of type :c:type:`void\\*` to the allocated memory, or ``NULL`` if "
+"the request fails. The memory is initialized to zeros."
+msgstr ""
+"分配 *nelem* 个元素，每个元素的大小为 *elsize* 字节，并返回指向分配的内存的 :c:type:`void*/` "
+"类型指针，如果请求失败，则返回``NULL``。内存被初始化为零。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:126
+msgid ""
+"Requesting zero elements or elements of size zero bytes returns a distinct "
+"non-``NULL`` pointer if possible, as if ``PyMem_RawCalloc(1, 1)`` had been "
+"called instead."
+msgstr "请求零字节可能返回一个独特的非 ``NULL`` 指针，就像调用了``PyMem_RawCalloc(1, 1)`` 一样。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:135
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:206
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:308
+msgid ""
+"Resizes the memory block pointed to by *p* to *n* bytes. The contents will "
+"be unchanged to the minimum of the old and the new sizes."
+msgstr "将 *p* 指向的内存块大小调整为 *n* 字节。以新旧内存块大小中的最小值为准，其中内容保持不变，"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:138
+msgid ""
+"If *p* is ``NULL``, the call is equivalent to ``PyMem_RawMalloc(n)``; else "
+"if *n* is equal to zero, the memory block is resized but is not freed, and "
+"the returned pointer is non-``NULL``."
+msgstr ""
+"如果*p*是``NULL``，则相当于调用 ``PyMem_RawMalloc(n)`` ；如果 *n* 等于 "
+"0，则内存块大小会被调整，但不会被释放，返回非 ``NULL`` 指针。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:142
+msgid ""
+"Unless *p* is ``NULL``, it must have been returned by a previous call to "
+":c:func:`PyMem_RawMalloc`, :c:func:`PyMem_RawRealloc` or "
+":c:func:`PyMem_RawCalloc`."
+msgstr ""
+"除非 *p* 是 ``NULL`` ，否则它必须是之前调用 :c:func:`PyMem_RawMalloc` 、 "
+":c:func:`PyMem_RawRealloc` 或 :c:func:`PyMem_RawCalloc` 所返回的。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:146
+msgid ""
+"If the request fails, :c:func:`PyMem_RawRealloc` returns ``NULL`` and *p* "
+"remains a valid pointer to the previous memory area."
+msgstr "如果请求失败，:c:func:`PyMem_RawRealloc` 返回 ``NULL`` ， *p* 仍然是指向先前内存区域的有效指针。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:152
+msgid ""
+"Frees the memory block pointed to by *p*, which must have been returned by a"
+" previous call to :c:func:`PyMem_RawMalloc`, :c:func:`PyMem_RawRealloc` or "
+":c:func:`PyMem_RawCalloc`.  Otherwise, or if ``PyMem_RawFree(p)`` has been "
+"called before, undefined behavior occurs."
+msgstr ""
+"释放 *p* 指向的内存块。除非 *p* 是 ``NULL`` ，否则它必须是之前调用 :c:func:`PyMem_RawMalloc` 、 "
+":c:func:`PyMem_RawRealloc` 或 :c:func:`PyMem_RawCalloc` 所返回的指针。否则，或在 "
+"``PyMem_RawFree(p)`` 之前已经调用过的情况下，未定义的行为会发生。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:157
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:227
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:329
+msgid "If *p* is ``NULL``, no operation is performed."
+msgstr "如果 *p* 是 ``NULL``, 那么什么操作也不会进行。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:163
+msgid "Memory Interface"
+msgstr "内存接口"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:165
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:271
+msgid ""
+"The following function sets, modeled after the ANSI C standard, but "
+"specifying behavior when requesting zero bytes, are available for allocating"
+" and releasing memory from the Python heap."
+msgstr "以下函数集，仿照 ANSI C 标准，并指定了请求零字节时的行为，可用于从Python堆分配和释放内存。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:169
+msgid ""
+"The :ref:`default memory allocator <default-memory-allocators>` uses the "
+":ref:`pymalloc memory allocator <pymalloc>`."
+msgstr ""
+":ref:`默认内存分配器 <default-memory-allocators>` 使用了 :ref:`pymalloc 内存分配器 "
+"<pymalloc>`."
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:174
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:280
+msgid ""
+"The :term:`GIL <global interpreter lock>` must be held when using these "
+"functions."
+msgstr "在使用这些函数时，必须持有 :term:`全局解释器锁（GIL） <global interpreter lock>` 。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:179
+msgid ""
+"The default allocator is now pymalloc instead of system :c:func:`malloc`."
+msgstr "现在默认的分配器是 pymalloc 而非系统的 :c:func:`malloc` 。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:186
+msgid ""
+"Requesting zero bytes returns a distinct non-``NULL`` pointer if possible, "
+"as if ``PyMem_Malloc(1)`` had been called instead. The memory will not have "
+"been initialized in any way."
+msgstr ""
+"请求零字节可能返回一个独特的非 ``NULL`` 指针，就像调用了``PyMem_Malloc(1)`` 一样。但是内存不会以任何方式被初始化。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:197
+msgid ""
+"Requesting zero elements or elements of size zero bytes returns a distinct "
+"non-``NULL`` pointer if possible, as if ``PyMem_Calloc(1, 1)`` had been "
+"called instead."
+msgstr "请求零字节可能返回一个独特的非 ``NULL`` 指针，就像调用了``PyMem_Calloc(1, 1)`` 一样。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:209
+msgid ""
+"If *p* is ``NULL``, the call is equivalent to ``PyMem_Malloc(n)``; else if "
+"*n* is equal to zero, the memory block is resized but is not freed, and the "
+"returned pointer is non-``NULL``."
+msgstr ""
+"如果*p*是``NULL``，则相当于调用 ``PyMem_Malloc(n)`` ；如果 *n* 等于 0，则内存块大小会被调整，但不会被释放，返回非"
+" ``NULL`` 指针。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:213
+msgid ""
+"Unless *p* is ``NULL``, it must have been returned by a previous call to "
+":c:func:`PyMem_Malloc`, :c:func:`PyMem_Realloc` or :c:func:`PyMem_Calloc`."
+msgstr ""
+"除非 *p* 是 ``NULL`` ，否则它必须是之前调用 :c:func:`PyMem_Malloc` 、 "
+":c:func:`PyMem_Realloc` 或 :c:func:`PyMem_Calloc` 所返回的。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:216
+msgid ""
+"If the request fails, :c:func:`PyMem_Realloc` returns ``NULL`` and *p* "
+"remains a valid pointer to the previous memory area."
+msgstr "如果请求失败，:c:func:`PyMem_Realloc` 返回 ``NULL`` ， *p* 仍然是指向先前内存区域的有效指针。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:222
+msgid ""
+"Frees the memory block pointed to by *p*, which must have been returned by a"
+" previous call to :c:func:`PyMem_Malloc`, :c:func:`PyMem_Realloc` or "
+":c:func:`PyMem_Calloc`.  Otherwise, or if ``PyMem_Free(p)`` has been called "
+"before, undefined behavior occurs."
+msgstr ""
+"释放 *p* 指向的内存块。除非 *p* 是 ``NULL`` ，否则它必须是之前调用 :c:func:`PyMem_Malloc` 、 "
+":c:func:`PyMem_Realloc` 或 :c:func:`PyMem_Calloc` 所返回的指针。否则，或在 "
+"``PyMem_Free(p)`` 之前已经调用过的情况下，未定义的行为会发生。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:229
+msgid ""
+"The following type-oriented macros are provided for convenience.  Note  that"
+" *TYPE* refers to any C type."
+msgstr "以下面向类型的宏为方便而提供。 注意 *TYPE* 可以指任何 C 类型。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:235
+msgid ""
+"Same as :c:func:`PyMem_Malloc`, but allocates ``(n * sizeof(TYPE))`` bytes "
+"of memory.  Returns a pointer cast to :c:type:`TYPE\\*`.  The memory will "
+"not have been initialized in any way."
+msgstr ""
+"与 :c:func:`PyMem_Malloc` 相同，但分配 ``(n * sizeof(TYPE))`` 字节的内存。返回一个转换为 "
+":c:type:`TYPE\\*` 的指针。内存不会以任何方式被初始化。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:242
+msgid ""
+"Same as :c:func:`PyMem_Realloc`, but the memory block is resized to ``(n * "
+"sizeof(TYPE))`` bytes.  Returns a pointer cast to :c:type:`TYPE\\*`. On "
+"return, *p* will be a pointer to the new memory area, or ``NULL`` in the "
+"event of failure."
+msgstr ""
+"与 :c:func:`PyMem_Realloc` 相同，但内存块的大小被调整为 ``(n * sizeof(TYPE))`` 字节。返回一个转换为 "
+":c:type:`TYPE|*` 类型的指针。返回时， *p* 是指向新内存区域的指针；如果失败，则返回 ``NULL`` 。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:247
+msgid ""
+"This is a C preprocessor macro; *p* is always reassigned.  Save the original"
+" value of *p* to avoid losing memory when handling errors."
+msgstr "这是一个 C 预处理宏， *p* 总是被重新赋值。请保存 *p* 的原始值，以避免在处理错误时丢失内存。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:253
+msgid "Same as :c:func:`PyMem_Free`."
+msgstr "与 :c:func:`PyMem_Free` 相同"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:255
+msgid ""
+"In addition, the following macro sets are provided for calling the Python "
+"memory allocator directly, without involving the C API functions listed "
+"above. However, note that their use does not preserve binary compatibility "
+"across Python versions and is therefore deprecated in extension modules."
+msgstr ""
+"此外，我们还提供了以下宏集用于直接调用 Python 内存分配器，而不涉及上面列出的 C API 函数。但是请注意，使用它们并不能保证跨 Python "
+"版本的二进制兼容性，因此在扩展模块被弃用。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:260
+msgid "``PyMem_MALLOC(size)``"
+msgstr "``PyMem_MALLOC(size)``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:261
+msgid "``PyMem_NEW(type, size)``"
+msgstr "``PyMem_NEW(type, size)``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:262
+msgid "``PyMem_REALLOC(ptr, size)``"
+msgstr "``PyMem_REALLOC(ptr, size)``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:263
+msgid "``PyMem_RESIZE(ptr, type, size)``"
+msgstr "``PyMem_RESIZE(ptr, type, size)``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:264
+msgid "``PyMem_FREE(ptr)``"
+msgstr "``PyMem_FREE(ptr)``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:265
+msgid "``PyMem_DEL(ptr)``"
+msgstr "``PyMem_DEL(ptr)``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:269
+msgid "Object allocators"
+msgstr "对象分配器"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:275
+msgid ""
+"The :ref:`default object allocator <default-memory-allocators>` uses the "
+":ref:`pymalloc memory allocator <pymalloc>`."
+msgstr ""
+":ref:`默认对象分配器 <default-memory-allocators>` 使用 :ref:`pymalloc 内存分配器 "
+"<pymalloc>`."
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:288
+msgid ""
+"Requesting zero bytes returns a distinct non-``NULL`` pointer if possible, "
+"as if ``PyObject_Malloc(1)`` had been called instead. The memory will not "
+"have been initialized in any way."
+msgstr ""
+"请求零字节可能返回一个独特的非 ``NULL`` 指针，就像调用了``PyObject_Malloc(1)`` 一样。但是内存不会以任何方式被初始化。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:299
+msgid ""
+"Requesting zero elements or elements of size zero bytes returns a distinct "
+"non-``NULL`` pointer if possible, as if ``PyObject_Calloc(1, 1)`` had been "
+"called instead."
+msgstr "请求零字节可能返回一个独特的非 ``NULL`` 指针，就像调用了``PyObject_Calloc(1, 1)`` 一样。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:311
+msgid ""
+"If *p* is ``NULL``, the call is equivalent to ``PyObject_Malloc(n)``; else "
+"if *n* is equal to zero, the memory block is resized but is not freed, and "
+"the returned pointer is non-``NULL``."
+msgstr ""
+"如果*p*是``NULL``，则相当于调用 ``PyObject_Malloc(n)`` ；如果 *n* 等于 "
+"0，则内存块大小会被调整，但不会被释放，返回非 ``NULL`` 指针。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:315
+msgid ""
+"Unless *p* is ``NULL``, it must have been returned by a previous call to "
+":c:func:`PyObject_Malloc`, :c:func:`PyObject_Realloc` or "
+":c:func:`PyObject_Calloc`."
+msgstr ""
+"除非 *p* 是 ``NULL`` ，否则它必须是之前调用 :c:func:`PyObject_Malloc` 、 "
+":c:func:`PyObject_Realloc` 或 :c:func:`PyObject_Calloc` 所返回的。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:318
+msgid ""
+"If the request fails, :c:func:`PyObject_Realloc` returns ``NULL`` and *p* "
+"remains a valid pointer to the previous memory area."
+msgstr "如果请求失败，:c:func:`PyObject_Realloc` 返回 ``NULL`` ， *p* 仍然是指向先前内存区域的有效指针。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:324
+msgid ""
+"Frees the memory block pointed to by *p*, which must have been returned by a"
+" previous call to :c:func:`PyObject_Malloc`, :c:func:`PyObject_Realloc` or "
+":c:func:`PyObject_Calloc`.  Otherwise, or if ``PyObject_Free(p)`` has been "
+"called before, undefined behavior occurs."
+msgstr ""
+"释放 *p* 指向的内存块。除非 *p* 是 ``NULL`` ，否则它必须是之前调用 :c:func:`PyObject_Malloc` 、 "
+":c:func:`PyObject_Realloc` 或 :c:func:`PyObject_Calloc` 所返回的指针。否则，或在 "
+"``PyObject_Free(p)`` 之前已经调用过的情况下，未定义的行为会发生。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:335
+msgid "Default Memory Allocators"
+msgstr "默认内存分配器"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:337
+msgid "Default memory allocators:"
+msgstr "默认内存分配器："
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:340
+msgid "Configuration"
+msgstr "配置"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:340
+msgid "Name"
+msgstr "名称"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:340
+msgid "PyMem_RawMalloc"
+msgstr "PyMem_RawMalloc"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:340
+msgid "PyMem_Malloc"
+msgstr "PyMem_Malloc"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:340
+msgid "PyObject_Malloc"
+msgstr "PyObject_Malloc"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:342
+msgid "Release build"
+msgstr "发布版本"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:342
+msgid "``\"pymalloc\"``"
+msgstr "``\"pymalloc\"``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:342
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:344
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:344
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:344
+msgid "``malloc``"
+msgstr "``malloc``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:342
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:342
+msgid "``pymalloc``"
+msgstr "``pymalloc``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:343
+msgid "Debug build"
+msgstr "调试构建"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:343
+msgid "``\"pymalloc_debug\"``"
+msgstr "``\"pymalloc_debug\"``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:343
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:345
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:345
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:345
+msgid "``malloc`` + debug"
+msgstr "``malloc`` + debug"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:343
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:343
+msgid "``pymalloc`` + debug"
+msgstr "``pymalloc`` + debug"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:344
+msgid "Release build, without pymalloc"
+msgstr "没有 pymalloc 的发布版本"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:344
+msgid "``\"malloc\"``"
+msgstr "``\"malloc\"``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:345
+msgid "Debug build, without pymalloc"
+msgstr "没有 pymalloc 的调试构建"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:345
+msgid "``\"malloc_debug\"``"
+msgstr "``\"malloc_debug\"``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:348
+msgid "Legend:"
+msgstr "说明："
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:350
+msgid "Name: value for :envvar:`PYTHONMALLOC` environment variable"
+msgstr "名称: 环境变量 :envvar:`PYTHONMALLOC` 的值"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:351
+msgid ""
+"``malloc``: system allocators from the standard C library, C functions: "
+":c:func:`malloc`, :c:func:`calloc`, :c:func:`realloc` and :c:func:`free`"
+msgstr ""
+"``malloc``: 来自 C 标准库的系统分配, C 函数 :c:func:`malloc`, :c:func:`calloc`, "
+":c:func:`realloc` and :c:func:`free`"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:353
+msgid "``pymalloc``: :ref:`pymalloc memory allocator <pymalloc>`"
+msgstr "``pymalloc``: :ref:`pymalloc 内存分配器 <pymalloc>`"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:354
+msgid "\"+ debug\": with debug hooks installed by :c:func:`PyMem_SetupDebugHooks`"
+msgstr "\"+ debug\": 带有 :c:func:`PyMem_SetupDebugHooks` 安装的调试钩子"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:358
+msgid "Customize Memory Allocators"
+msgstr "自定义内存分配器"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:364
+msgid ""
+"Structure used to describe a memory block allocator. The structure has four "
+"fields:"
+msgstr "用于描述内存块分配器的结构体。包含四个字段："
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:368
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:513
+msgid "Field"
+msgstr "域"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:368
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:513
+msgid "Meaning"
+msgstr "含义"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:370
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:515
+msgid "``void *ctx``"
+msgstr "``void *ctx``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:370
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:515
+msgid "user context passed as first argument"
+msgstr "作为第一个参数传入的用户上下文"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:372
+msgid "``void* malloc(void *ctx, size_t size)``"
+msgstr "``void* malloc(void *ctx, size_t size)``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:372
+msgid "allocate a memory block"
+msgstr "分配一个内存块"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:374
+msgid "``void* calloc(void *ctx, size_t nelem, size_t elsize)``"
+msgstr "``void* calloc(void *ctx, size_t nelem, size_t elsize)``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:374
+msgid "allocate a memory block initialized with zeros"
+msgstr "分配一个初始化为 0 的内存块"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:377
+msgid "``void* realloc(void *ctx, void *ptr, size_t new_size)``"
+msgstr "``void* realloc(void *ctx, void *ptr, size_t new_size)``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:377
+msgid "allocate or resize a memory block"
+msgstr "分配一个内存块或调整其大小"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:379
+msgid "``void free(void *ctx, void *ptr)``"
+msgstr "``void free(void *ctx, void *ptr)``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:379
+msgid "free a memory block"
+msgstr "释放一个内存块"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:382
+msgid ""
+"The :c:type:`PyMemAllocator` structure was renamed to "
+":c:type:`PyMemAllocatorEx` and a new ``calloc`` field was added."
+msgstr ""
+" :c:type:`PyMemAllocator` 结构被重命名为 :c:type:`PyMemAllocatorEx` 并且添加了一个字段 "
+"``calloc`` 。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:389
+msgid "Enum used to identify an allocator domain. Domains:"
+msgstr "用来识别分配器域的枚举类。域有："
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:393
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:402
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:411
+msgid "Functions:"
+msgstr "函数"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:395
+msgid ":c:func:`PyMem_RawMalloc`"
+msgstr ":c:func:`PyMem_RawMalloc`"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:396
+msgid ":c:func:`PyMem_RawRealloc`"
+msgstr ":c:func:`PyMem_RawRealloc`"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:397
+msgid ":c:func:`PyMem_RawCalloc`"
+msgstr ":c:func:`PyMem_RawCalloc`"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:398
+msgid ":c:func:`PyMem_RawFree`"
+msgstr ":c:func:`PyMem_RawFree`"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:404
+msgid ":c:func:`PyMem_Malloc`,"
+msgstr ":c:func:`PyMem_Malloc`,"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:405
+msgid ":c:func:`PyMem_Realloc`"
+msgstr ":c:func:`PyMem_Realloc`"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:406
+msgid ":c:func:`PyMem_Calloc`"
+msgstr ":c:func:`PyMem_Calloc`"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:407
+msgid ":c:func:`PyMem_Free`"
+msgstr ":c:func:`PyMem_Free`"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:413
+msgid ":c:func:`PyObject_Malloc`"
+msgstr ":c:func:`PyObject_Malloc`"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:414
+msgid ":c:func:`PyObject_Realloc`"
+msgstr ":c:func:`PyObject_Realloc`"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:415
+msgid ":c:func:`PyObject_Calloc`"
+msgstr ":c:func:`PyObject_Calloc`"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:416
+msgid ":c:func:`PyObject_Free`"
+msgstr ":c:func:`PyObject_Free`"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:420
+msgid "Get the memory block allocator of the specified domain."
+msgstr "获取指定域的内存块分配器。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:425
+msgid "Set the memory block allocator of the specified domain."
+msgstr "设置指定域的内存块分配器。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:427
+msgid ""
+"The new allocator must return a distinct non-``NULL`` pointer when "
+"requesting zero bytes."
+msgstr "当请求零字节时，新的分配器必须返回一个独特的非 ``NULL`` 指针。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:430
+msgid ""
+"For the :c:data:`PYMEM_DOMAIN_RAW` domain, the allocator must be thread-"
+"safe: the :term:`GIL <global interpreter lock>` is not held when the "
+"allocator is called."
+msgstr ""
+"对于 :c:data:`PYMEM_DOMAIN_RAW` 域，分配器必须是线程安全的：当分配器被调用时，不持有 :term:`全局解释器锁 "
+"<global interpreter lock>` 。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:434
+msgid ""
+"If the new allocator is not a hook (does not call the previous allocator), "
+"the :c:func:`PyMem_SetupDebugHooks` function must be called to reinstall the"
+" debug hooks on top on the new allocator."
+msgstr ""
+"如果新的分配器不是钩子（不调用之前的分配器），必须调用 :c:func:`PyMem_SetupDebugHooks` "
+"函数在新分配器上重新安装调试钩子。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:441
+msgid "Setup hooks to detect bugs in the Python memory allocator functions."
+msgstr "设置检测 Python 内存分配器函数中错误的钩子。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:443
+msgid ""
+"Newly allocated memory is filled with the byte ``0xCD`` (``CLEANBYTE``), "
+"freed memory is filled with the byte ``0xDD`` (``DEADBYTE``). Memory blocks "
+"are surrounded by \"forbidden bytes\" (``FORBIDDENBYTE``: byte ``0xFD``)."
+msgstr ""
+"新分配的内存由字节 ``0xCD`` ( ``CLEANBYTE`` ) 填充，释放的内存由字节 ``0xDD`` ( ``DEADBYTE`` "
+")填充。内存块被 \"禁止字节\" 包围（ ``FORBIDDENBYTE`` ：字节 ``0xFD`` ）。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:447
+msgid "Runtime checks:"
+msgstr "运行时检查："
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:449
+msgid ""
+"Detect API violations, ex: :c:func:`PyObject_Free` called on a buffer "
+"allocated by :c:func:`PyMem_Malloc`"
+msgstr ""
+"检测对 API 的违反，例如：对用 :c:func:`PyMem_Malloc` 分配的缓冲区调用 :c:func:`PyObject_Free` 。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:451
+msgid "Detect write before the start of the buffer (buffer underflow)"
+msgstr "检测缓冲区起始位置前的写入（缓冲区下溢）。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:452
+msgid "Detect write after the end of the buffer (buffer overflow)"
+msgstr "检测缓冲区终止位置后的写入（缓冲区溢出）。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:453
+msgid ""
+"Check that the :term:`GIL <global interpreter lock>` is held when allocator "
+"functions of :c:data:`PYMEM_DOMAIN_OBJ` (ex: :c:func:`PyObject_Malloc`) and "
+":c:data:`PYMEM_DOMAIN_MEM` (ex: :c:func:`PyMem_Malloc`) domains are called"
+msgstr ""
+"检测当调用 :c:data:`PYMEM_DOMAIN_OBJ` (如: :c:func:`PyObject_Malloc`) 和 "
+":c:data:`PYMEM_DOMAIN_MEM` (如: :c:func:`PyMem_Malloc`) 域的分配器函数时 :term:`GIL "
+"<global interpreter lock>` 已被保持。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:458
+msgid ""
+"On error, the debug hooks use the :mod:`tracemalloc` module to get the "
+"traceback where a memory block was allocated. The traceback is only "
+"displayed if :mod:`tracemalloc` is tracing Python memory allocations and the"
+" memory block was traced."
+msgstr ""
+"在出错时，调试钩子使用 :mod:`tracemalloc` 模块来回溯内存块被分配的位置。只有当 :mod:`tracemalloc` 正在追踪 "
+"Python 内存分配，并且内存块被追踪时，才会显示回溯。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:463
+msgid ""
+"These hooks are :ref:`installed by default <default-memory-allocators>` if "
+"Python is compiled in debug mode. The :envvar:`PYTHONMALLOC` environment "
+"variable can be used to install debug hooks on a Python compiled in release "
+"mode."
+msgstr ""
+"如果 Python 是在调试模式下编译的，这些钩子是 :ref:`installed by default <default-memory-"
+"allocators>` 。环境变量 :envvar:`PYTHONMALLOC` 可以用来在发布模式编译的 Python 上安装调试钩子。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:468
+msgid ""
+"This function now also works on Python compiled in release mode. On error, "
+"the debug hooks now use :mod:`tracemalloc` to get the traceback where a "
+"memory block was allocated. The debug hooks now also check if the GIL is "
+"held when functions of :c:data:`PYMEM_DOMAIN_OBJ` and "
+":c:data:`PYMEM_DOMAIN_MEM` domains are called."
+msgstr ""
+"这个函数现在也适用于以 发布模式编译的 Python。在出错时，调试钩子现在使用 :mod:`tracemalloc` "
+"来回溯内存块被分配的位置。调试钩子现在也检查当 :c:data:`PYMEM_DOMAIN_OBJ` 和 "
+":c:data:`PYMEM_DOMAIN_MEM` 域的函数被调用时，全局解释器锁是否被持有。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:475
+msgid ""
+"Byte patterns ``0xCB`` (``CLEANBYTE``), ``0xDB`` (``DEADBYTE``) and ``0xFB``"
+" (``FORBIDDENBYTE``) have been replaced with ``0xCD``, ``0xDD`` and ``0xFD``"
+" to use the same values than Windows CRT debug ``malloc()`` and ``free()``."
+msgstr ""
+"字节模式 ``0xCB`` (``CLEANBYTE``)、 ``0xDB`` (``DEADBYTE``) 和 ``0xFB`` "
+"(``FORBIDDENBYTE``) 已被 ``0xCD`` 、 ``0xDD`` 和 ``0xFD`` 替代以使用与 Windows CRT 调试 "
+"``malloc()`` 和 ``free()`` 相同的值。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:485
+msgid "The pymalloc allocator"
+msgstr "pymalloc 分配器"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:487
+msgid ""
+"Python has a *pymalloc* allocator optimized for small objects (smaller or "
+"equal to 512 bytes) with a short lifetime. It uses memory mappings called "
+"\"arenas\" with a fixed size of 256 KiB. It falls back to "
+":c:func:`PyMem_RawMalloc` and :c:func:`PyMem_RawRealloc` for allocations "
+"larger than 512 bytes."
+msgstr ""
+"Python 有为具有短生命周期的小对象（小于或等于 512 字节）优化的 *pymalloc* 分配器。它使用固定大小为 256 KiB 的称为 "
+"\"arenas\" 的内存映射。对于大于512字节的分配，它回到使用 :c:func:`PyMem_RawMalloc` 和 "
+":c:func:`PyMem_RawRealloc` 。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:492
+msgid ""
+"*pymalloc* is the :ref:`default allocator <default-memory-allocators>` of "
+"the :c:data:`PYMEM_DOMAIN_MEM` (ex: :c:func:`PyMem_Malloc`) and "
+":c:data:`PYMEM_DOMAIN_OBJ` (ex: :c:func:`PyObject_Malloc`) domains."
+msgstr ""
+"*pymalloc* 是 :c:data:`PYMEM_DOMAIN_MEM` (例如: :c:func:`PyMem_Malloc`) 和 "
+":c:data:`PYMEM_DOMAIN_OBJ` (例如: :c:func:`PyObject_Malloc`) 域的 :ref:`默认分配器 "
+"<default-memory-allocators>` 。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:496
+msgid "The arena allocator uses the following functions:"
+msgstr "arena 分配器使用以下函数："
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:498
+msgid ":c:func:`VirtualAlloc` and :c:func:`VirtualFree` on Windows,"
+msgstr "Windows 上的 :c:func:`VirtualAlloc` and :c:func:`VirtualFree` ,"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:499
+msgid ":c:func:`mmap` and :c:func:`munmap` if available,"
+msgstr ":c:func:`mmap` 和 :c:func:`munmap` ，如果可用，"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:500
+msgid ":c:func:`malloc` and :c:func:`free` otherwise."
+msgstr "否则， :c:func:`malloc` 和 :c:func:`free` 。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:503
+msgid "Customize pymalloc Arena Allocator"
+msgstr "自定义 pymalloc Arena 分配器"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:509
+msgid ""
+"Structure used to describe an arena allocator. The structure has three "
+"fields:"
+msgstr "用来描述一个 arena 分配器的结构体。这个结构体有三个字段："
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:517
+msgid "``void* alloc(void *ctx, size_t size)``"
+msgstr "``void* alloc(void *ctx, size_t size)``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:517
+msgid "allocate an arena of size bytes"
+msgstr "分配一块 size 字节的区域"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:519
+msgid "``void free(void *ctx, size_t size, void *ptr)``"
+msgstr "``void free(void *ctx, size_t size, void *ptr)``"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:519
+msgid "free an arena"
+msgstr "释放一块区域"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:524
+msgid "Get the arena allocator."
+msgstr "获取 arena 分配器"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:528
+msgid "Set the arena allocator."
+msgstr "设置 arena 分配器"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:532
+msgid "tracemalloc C API"
+msgstr "tracemalloc C API"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:538
+msgid "Track an allocated memory block in the :mod:`tracemalloc` module."
+msgstr "在 :mod:`tracemalloc` 模块中跟踪一个已分配的内存块。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:540
+msgid ""
+"Return ``0`` on success, return ``-1`` on error (failed to allocate memory "
+"to store the trace). Return ``-2`` if tracemalloc is disabled."
+msgstr ""
+"成功时返回 ``0``，出错时返回 ``-1`` (无法分配内存来保存跟踪信息)。 如果禁用了 tracemalloc 则返回 ``-2``。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:543
+msgid "If memory block is already tracked, update the existing trace."
+msgstr "如果内存块已被跟踪，则更新现有跟踪信息。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:547
+msgid ""
+"Untrack an allocated memory block in the :mod:`tracemalloc` module. Do "
+"nothing if the block was not tracked."
+msgstr "在 :mod:`tracemalloc` 模块中取消跟踪一个已分配的内存块。 如果内存块未被跟踪则不执行任何操作。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:550
+msgid "Return ``-2`` if tracemalloc is disabled, otherwise return ``0``."
+msgstr "如果 tracemalloc 被禁用则返回 ``-2``，否则返回 ``0``。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:556
+msgid "Examples"
+msgstr "例子"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:558
+msgid ""
+"Here is the example from section :ref:`memoryoverview`, rewritten so that "
+"the I/O buffer is allocated from the Python heap by using the first function"
+" set::"
+msgstr ""
+"以下是来自 :ref:`memoryoverview` 小节的示例，经过重写以使 I/O 缓冲区是通过使用第一个函数集从 Python 堆中分配的::"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:571
+msgid "The same code using the type-oriented function set::"
+msgstr "使用面向类型函数集的相同代码::"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:583
+msgid ""
+"Note that in the two examples above, the buffer is always manipulated via "
+"functions belonging to the same set. Indeed, it is required to use the same "
+"memory API family for a given memory block, so that the risk of mixing "
+"different allocators is reduced to a minimum. The following code sequence "
+"contains two errors, one of which is labeled as *fatal* because it mixes two"
+" different allocators operating on different heaps. ::"
+msgstr ""
+"请注意在以上两个示例中，缓冲区总是通过归属于相同集的函数来操纵的。 事实上，对于一个给定的内存块必须使用相同的内存 API "
+"族，以便使得混合不同分配器的风险减至最低。 以下代码序列包含两处错误，其中一个被标记为 *fatal* 因为它混合了两种在不同堆上操作的不同分配器。 "
+"::"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:598
+msgid ""
+"In addition to the functions aimed at handling raw memory blocks from the "
+"Python heap, objects in Python are allocated and released with "
+":c:func:`PyObject_New`, :c:func:`PyObject_NewVar` and "
+":c:func:`PyObject_Del`."
+msgstr ""
+"除了旨在处理来自 Python 堆的原始内存块的函数之外， Python 中的对象是通过 :c:func:`PyObject_New`, "
+":c:func:`PyObject_NewVar` 和 :c:func:`PyObject_Del` 来分配和释放的。"
+
+#: /home/runner/work/docspush-transifex/docspush-transifex/cpython/Doc/c-api/memory.rst:602
+msgid ""
+"These will be explained in the next chapter on defining and implementing new"
+" object types in C."
+msgstr "这些将在有关如何在 C 中定义和实现新对象类型的下一章中讲解。"
