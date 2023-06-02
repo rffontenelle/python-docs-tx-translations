@@ -1,0 +1,306 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2001-2023, Python Software Foundation
+# This file is distributed under the same license as the Python package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# tomo, 2020
+# Naoki Koike, 2023
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Python 3.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-02 14:43+0000\n"
+"PO-Revision-Date: 2020-05-30 12:04+0000\n"
+"Last-Translator: Naoki Koike, 2023\n"
+"Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../../library/importlib.metadata.rst:5
+msgid "Using :mod:`!importlib.metadata`"
+msgstr ":mod:`!importlib.metadata` を使う"
+
+#: ../../library/importlib.metadata.rst:12
+msgid "**Source code:** :source:`Lib/importlib/metadata.py`"
+msgstr "**ソースコード:** :source:`Lib/importlib/metadata.py`"
+
+#: ../../library/importlib.metadata.rst:15
+msgid ""
+"This functionality is provisional and may deviate from the usual version "
+"semantics of the standard library."
+msgstr ""
+
+#: ../../library/importlib.metadata.rst:18
+msgid ""
+"``importlib.metadata`` is a library that provides for access to installed "
+"package metadata.  Built in part on Python's import system, this library "
+"intends to replace similar functionality in the `entry point API`_ and "
+"`metadata API`_ of ``pkg_resources``.  Along with :mod:`importlib.resources`"
+" in Python 3.7 and newer (backported as `importlib_resources`_ for older "
+"versions of Python), this can eliminate the need to use the older and less "
+"efficient ``pkg_resources`` package."
+msgstr ""
+"``importlib.metadata`` "
+"はインストールされたパッケージのメタデータへのアクセスを提供するライブラリです。Pythonのインポートシステムをベースに構築されており、このライブラリは"
+" ``pkg_resources`` の `entry point API`_ と `metadata API`_ "
+"にある同様の機能を置き換えることを目的としています。Python 3.7 以降の :mod:`importlib.resources` "
+"と共に(古いバージョンの Python では `importlib_resources`_ としてバックポートされます)、古くて効率の悪い "
+"``pkg_resources`` パッケージを使う必要性を無くすことができます。"
+
+#: ../../library/importlib.metadata.rst:27
+msgid ""
+"By \"installed package\" we generally mean a third-party package installed "
+"into Python's ``site-packages`` directory via tools such as `pip "
+"<https://pypi.org/project/pip/>`_.  Specifically, it means a package with "
+"either a discoverable ``dist-info`` or ``egg-info`` directory, and metadata "
+"defined by :pep:`566` or its older specifications. By default, package "
+"metadata can live on the file system or in zip archives on :data:`sys.path`."
+"  Through an extension mechanism, the metadata can live almost anywhere."
+msgstr ""
+
+#: ../../library/importlib.metadata.rst:38
+msgid "Overview"
+msgstr "概要"
+
+#: ../../library/importlib.metadata.rst:40
+msgid ""
+"Let's say you wanted to get the version string for a package you've "
+"installed using ``pip``.  We start by creating a virtual environment and "
+"installing something into it:"
+msgstr ""
+"例えば、``pip`` "
+"を使ってインストールしたパッケージのバージョン文字列を取得したいとします。まず、仮想環境を作成し、そこに何かをインストールすることから始めましょう："
+
+#: ../../library/importlib.metadata.rst:50
+msgid "You can get the version string for ``wheel`` by running the following:"
+msgstr "以下のように実行することで、``wheel`` のバージョン文字列を取得することができます："
+
+#: ../../library/importlib.metadata.rst:59
+msgid ""
+"You can also get the set of entry points keyed by group, such as "
+"``console_scripts``, ``distutils.commands`` and others.  Each group contains"
+" a sequence of :ref:`EntryPoint <entry-points>` objects."
+msgstr ""
+"また、``console_scripts`` や ``distutils.commands`` "
+"などのように、グループ単位でキーとなるエントリポイントの集合を取得することもできます。 各グループは :ref:`EntryPoint <entry-"
+"points>` オブジェクトのシーケンスを含んでいます。"
+
+#: ../../library/importlib.metadata.rst:63
+msgid "You can get the :ref:`metadata for a distribution <metadata>`::"
+msgstr ":ref:`ディストリビューションのメタデータ <metadata>`:: を取得することができます。"
+
+#: ../../library/importlib.metadata.rst:68
+msgid ""
+"You can also get a :ref:`distribution's version number <version>`, list its "
+":ref:`constituent files <files>`, and get a list of the distribution's "
+":ref:`requirements`."
+msgstr ""
+"また、 :ref:`配布物のバージョン番号 <version>` を取得し、 :ref:`構成ファイル <files>` をリストアップし、配布物の "
+":ref:`requirements` のリストを取得することができます。"
+
+#: ../../library/importlib.metadata.rst:74
+msgid "Functional API"
+msgstr "機能 API"
+
+#: ../../library/importlib.metadata.rst:76
+msgid "This package provides the following functionality via its public API."
+msgstr "本パッケージは、公開APIを通じて以下の機能を提供します。"
+
+#: ../../library/importlib.metadata.rst:82
+msgid "Entry points"
+msgstr "エントリポイント"
+
+#: ../../library/importlib.metadata.rst:84
+msgid ""
+"The ``entry_points()`` function returns a dictionary of all entry points, "
+"keyed by group.  Entry points are represented by ``EntryPoint`` instances; "
+"each ``EntryPoint`` has a ``.name``, ``.group``, and ``.value`` attributes "
+"and a ``.load()`` method to resolve the value."
+msgstr ""
+
+#: ../../library/importlib.metadata.rst:100
+msgid ""
+"The ``group`` and ``name`` are arbitrary values defined by the package "
+"author and usually a client will wish to resolve all entry points for a "
+"particular group.  Read `the setuptools docs "
+"<https://setuptools.readthedocs.io/en/latest/setuptools.html#dynamic-"
+"discovery-of-services-and-plugins>`_ for more information on entrypoints, "
+"their definition, and usage."
+msgstr ""
+
+#: ../../library/importlib.metadata.rst:110
+msgid "Distribution metadata"
+msgstr "配布物メタデータ"
+
+#: ../../library/importlib.metadata.rst:112
+msgid ""
+"Every distribution includes some metadata, which you can extract using the "
+"``metadata()`` function::"
+msgstr "すべての配布物にはいくつかのメタデータが含まれており、``metadata()`` 関数を使ってそれを取得することができます::"
+
+#: ../../library/importlib.metadata.rst:117
+msgid ""
+"The keys of the returned data structure [#f1]_ name the metadata keywords, "
+"and their values are returned unparsed from the distribution metadata::"
+msgstr "返されたデータ構造 [#f1]_ のキーはメタデータのキーワードを示し、その値は配布物のメタデータから解析されずに返されます::"
+
+#: ../../library/importlib.metadata.rst:127
+msgid "Distribution versions"
+msgstr "配布物バージョン"
+
+#: ../../library/importlib.metadata.rst:129
+msgid ""
+"The ``version()`` function is the quickest way to get a distribution's "
+"version number, as a string::"
+msgstr "``version()`` 関数は、配布物のバージョン番号を文字列として取得するもっとも簡単な方法です::"
+
+#: ../../library/importlib.metadata.rst:139
+msgid "Distribution files"
+msgstr "配布物ファイル"
+
+#: ../../library/importlib.metadata.rst:141
+msgid ""
+"You can also get the full set of files contained within a distribution.  The"
+" ``files()`` function takes a distribution package name and returns all of "
+"the files installed by this distribution.  Each file object returned is a "
+"``PackagePath``, a :class:`pathlib.Path` derived object with additional "
+"``dist``, ``size``, and ``hash`` properties as indicated by the metadata.  "
+"For example::"
+msgstr ""
+
+#: ../../library/importlib.metadata.rst:157
+msgid "Once you have the file, you can also read its contents::"
+msgstr "ファイルを取得したら、その内容を読むこともできます::"
+
+#: ../../library/importlib.metadata.rst:168
+msgid ""
+"In the case where the metadata file listing files (RECORD or SOURCES.txt) is"
+" missing, ``files()`` will return ``None``. The caller may wish to wrap "
+"calls to ``files()`` in `always_iterable <https://more-"
+"itertools.readthedocs.io/en/stable/api.html#more_itertools.always_iterable>`_"
+" or otherwise guard against this condition if the target distribution is not"
+" known to have the metadata present."
+msgstr ""
+
+#: ../../library/importlib.metadata.rst:179
+msgid "Distribution requirements"
+msgstr "配布物の要件"
+
+#: ../../library/importlib.metadata.rst:181
+msgid ""
+"To get the full set of requirements for a distribution, use the "
+"``requires()`` function::"
+msgstr "配布物に必要なすべての要件を取得するには、 ``requires()`` 関数を使用します::"
+
+#: ../../library/importlib.metadata.rst:189
+msgid "Distributions"
+msgstr ""
+
+#: ../../library/importlib.metadata.rst:191
+msgid ""
+"While the above API is the most common and convenient usage, you can get all"
+" of that information from the ``Distribution`` class.  A ``Distribution`` is"
+" an abstract object that represents the metadata for a Python package.  You "
+"can get the ``Distribution`` instance::"
+msgstr ""
+"上記のAPIは最も一般的で便利な使い方ですが、 ``Distribution`` クラスからすべての情報を得ることができます。 "
+"``Distribution`` はPythonパッケージのメタデータを表す抽象オブジェクトです。 ``Distribution`` "
+"のインスタンスを取得することができます::"
+
+#: ../../library/importlib.metadata.rst:199
+msgid ""
+"Thus, an alternative way to get the version number is through the "
+"``Distribution`` instance::"
+msgstr "したがって、バージョン情報を取得する別の方法として、 ``Distribution`` インスタンスを使用します::"
+
+#: ../../library/importlib.metadata.rst:205
+msgid ""
+"There are all kinds of additional metadata available on the ``Distribution``"
+" instance::"
+msgstr "``Distribution`` インスタンスには、あらゆる種類の追加メタデータが用意されています::"
+
+#: ../../library/importlib.metadata.rst:213
+msgid ""
+"The full set of available metadata is not described here.  See :pep:`566` "
+"for additional details."
+msgstr "利用可能なメタデータのフルセットはここでは説明しません。詳細は :pep:`566` を参照してください。"
+
+#: ../../library/importlib.metadata.rst:218
+msgid "Extending the search algorithm"
+msgstr "検索アルゴリズムの拡張"
+
+#: ../../library/importlib.metadata.rst:220
+msgid ""
+"Because package metadata is not available through :data:`sys.path` searches,"
+" or package loaders directly, the metadata for a package is found through "
+"import system :ref:`finders <finders-and-loaders>`.  To find a distribution "
+"package's metadata, ``importlib.metadata`` queries the list of :term:`meta "
+"path finders <meta path finder>` on :data:`sys.meta_path`."
+msgstr ""
+"パッケージのメタデータは :data:`sys.path` の検索やパッケージローダーから直接取得することができないため、インポートシステム "
+":ref:`finders <finders-and-loaders>` から見つけます。配布パッケージのメタデータを見つけるために、 "
+"``importlib.metadata`` は :data:`sys.meta_path` の :term:`meta path finders "
+"<meta path finder>` のリストに問い合わせをします。"
+
+#: ../../library/importlib.metadata.rst:226
+msgid ""
+"The default ``PathFinder`` for Python includes a hook that calls into "
+"``importlib.metadata.MetadataPathFinder`` for finding distributions loaded "
+"from typical file-system-based paths."
+msgstr ""
+"Pythonのデフォルトの ``PathFinder`` には、典型的なファイスシステムベースのパスから読み込まれた配布物を見つけるための "
+"``importlib.metadata.MetadadaPathFinder`` を呼び出すフックがあります。"
+
+#: ../../library/importlib.metadata.rst:230
+msgid ""
+"The abstract class :py:class:`importlib.abc.MetaPathFinder` defines the "
+"interface expected of finders by Python's import system. "
+"``importlib.metadata`` extends this protocol by looking for an optional "
+"``find_distributions`` callable on the finders from :data:`sys.meta_path` "
+"and presents this extended interface as the ``DistributionFinder`` abstract "
+"base class, which defines this abstract method::"
+msgstr ""
+"抽象クラス :py:class:`importlib.abc.MetaPathFinder` はPythonの "
+"importシステムによってファインダーに期待されるインターフェイスを定義しています。 ``importlib.metadata`` "
+"はこのプロトコルを拡張し、 :data:`sys.meta_path` からファインダーにオプションの ``find_distributions`` "
+"を呼び出すことができるようにし、この拡張インターフェースを ``DistributionFinder`` "
+"抽象基底クラスとして提示し、この抽象メソッドを定義しています::"
+
+#: ../../library/importlib.metadata.rst:244
+msgid ""
+"The ``DistributionFinder.Context`` object provides ``.path`` and ``.name`` "
+"properties indicating the path to search and names to match and may supply "
+"other relevant context."
+msgstr ""
+
+#: ../../library/importlib.metadata.rst:248
+msgid ""
+"What this means in practice is that to support finding distribution package "
+"metadata in locations other than the file system, subclass ``Distribution`` "
+"and implement the abstract methods. Then from a custom finder, return "
+"instances of this derived ``Distribution`` in the ``find_distributions()`` "
+"method."
+msgstr ""
+"つまり、ファイルシステム以外の場所にある配布パッケージのメタデータを見つけるには、 ``Distribution`` "
+"をサブクラス化して抽象メソッドを実装します。そして、カスタムファインダーから ``find_distributions()`` メソッドで、派生した "
+"``Distribution`` のインスタンスを返します。"
+
+#: ../../library/importlib.metadata.rst:261
+msgid "Footnotes"
+msgstr "脚注"
+
+#: ../../library/importlib.metadata.rst:262
+msgid ""
+"Technically, the returned distribution metadata object is an "
+":class:`email.message.EmailMessage` instance, but this is an implementation "
+"detail, and not part of the stable API.  You should only use dictionary-like"
+" methods and syntax to access the metadata contents."
+msgstr ""
+"技術的には、返される配布物メタデータオブジェクトは :class:`email.message.EmailMessage` "
+"インスタンスですが、これは実装の詳細であり、安定したAPIの一部ではありません。メタデータの内容にアクセスするためには、辞書的なメソッドや構文のみを使用する必要があります。"
