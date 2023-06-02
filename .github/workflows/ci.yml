@@ -42,7 +42,7 @@ jobs:
       - name: Check out ${{ github.repository }}
         uses: actions/checkout@v3
 
-      - name: Check out CPython
+      - name: Check out ${{ matrix.cpython_version }} branch of CPython
         uses: actions/checkout@v3
         with:
           repository: python/cpython
@@ -50,11 +50,7 @@ jobs:
           ref: ${{ matrix.cpython_version }}
           path: cpython
 
-      - name: Create branch ${{ matrix.cpython_version }} if missing
-        run: |
-          bash scripts/create-missing-branch.sh ${{ matrix.cpython_version }}
-
-      - name: Check out ${{ github.repository }}
+      - name: Check out ${{ matrix.cpython_version }} branch of ${{ github.repository }}
         uses: actions/checkout@v3
         with:
           ref: ${{ matrix.cpython_version }}
