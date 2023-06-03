@@ -133,9 +133,11 @@ jobs:
           powrap --modified
           powrap pot/{**/,}*.pot
 
-      - run: |
+      - working-directory: cpython/Doc/locales
+        run: |
           git diff -I'^"POT-Creation-Date: ' --numstat **/*.po **/*.pot | cut -f3
-      - run: |
+      - working-directory: cpython/Doc/locales
+        run: |
           git add $(git ls-files -o --exclude-standard *.po *.pot) .tx/config
       
       # tx pull takes some time and have big chances of connection error,
