@@ -90,6 +90,12 @@ jobs:
         run: |
           sphinx-build -E -b gettext -D gettext_compact=0 -d build/.doctrees . locales/pot
 
+        # See issue #15
+      - name: Patch POT files
+        working-directory: cpython/Doc/locales/pot
+        run: |
+          scripts/remove-ilegal-scripts.sh library/codecs.pot library/re.pot reference/lexical_analysis.pot
+
       - name: Generate Transifex configuration file (.tx/config)
         working-directory: cpython/Doc/locales
         run: |
@@ -113,12 +119,19 @@ jobs:
           TX_TOKEN: ${{ secrets.TX_TOKEN }}
 
       - name: Pull translations for all languages
+        continue-on-error: true
         working-directory: cpython/Doc/locales
         id: tx_pull
         run: |
           tx pull --all --translations --force
         env:
           TX_TOKEN: ${{ secrets.TX_TOKEN }}
+
+      - name: Powrap POT files and modified PO files
+        working-directory: cpython/Doc/locales
+        run: |
+          powrap --modified
+          powrap pot/{**/,}*.pot
 
       # tx pull takes some time and have big chances of connection error,
       # so make to to commit downloaded PO successfully downloads on
@@ -127,8 +140,8 @@ jobs:
         working-directory: cpython/Doc/locales
         if: contains(fromJSON('["failure", "success"]'), steps.tx_pull.outcome)
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git status
           git diff -I'^"POT-Creation-Date: ' --numstat **/*.po **/*.pot | cut -f3 | xargs -r git add
           git add $(git ls-files -o --exclude-standard *.po *.pot) .tx/config
