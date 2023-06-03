@@ -130,6 +130,6 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git status
-          git diff -I'^"POT-Creation-Date: ' --numstat *.po **/*.po **/*.pot | cut -f3 | xargs -r git add
-          git add $(git ls-files -o --exclude-standard *.po **/*.po **/*.pot) .tx/config
+          git diff -I'^"POT-Creation-Date: ' --numstat **/*.po **/*.pot | cut -f3 | xargs -r git add
+          git add $(git ls-files -o --exclude-standard *.po *.pot) .tx/config
           git diff-index --cached --quiet HEAD || { git commit -m "Update translations from ${{ env.BRANCH }}" && git push; }
