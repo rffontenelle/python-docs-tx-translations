@@ -135,7 +135,19 @@ jobs:
 
       - working-directory: cpython/Doc/locales
         run: |
+          msggrep -Ke '^\\N$' pot/library/codecs.pot
+      - working-directory: cpython/Doc/locales
+        run: |
+          git diff
+      - working-directory: cpython/Doc/locales
+        run: |
+          git diff -I'^"POT-Creation-Date: ' **/*.po **/*.pot
+      - working-directory: cpython/Doc/locales
+        run: |
           git diff -I'^"POT-Creation-Date: ' --numstat **/*.po **/*.pot | cut -f3
+      - working-directory: cpython/Doc/locales
+        run: |
+          git ls-files
       - working-directory: cpython/Doc/locales
         run: |
           git ls-files -o --exclude-standard *.po *.pot
