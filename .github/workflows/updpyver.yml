@@ -1,6 +1,12 @@
 name: Update versions
 
 on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
   schedule:
     - cron: 0 13 * * 5
@@ -14,28 +20,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out ${{ github.repository }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.5.2
         with:
           fetch-depth: 0
 
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v4
+      - name: Set up Python 3
+        uses: actions/setup-python@v4.6.1
         with:
-          python-version: '3.9'
+          python-version: '3'
           cache: 'pip'
-          cache-dependency-path: '**/requirements*.txt'
+          cache-dependency-path: 'requirements.txt'
 
       - name: Install dependencies
         run: |
           pip3 install --upgrade pip
-          pip3 install -r requirements/requirements-updpyver.txt
+          pip3 install -r requirements.txt
 
       - name: Update versions.txt file
         run: |
           python3 scripts/updpyver.py
 
       - name: Commit changes to a new branch 
-        if: success()
+        if: ${{ success() && !contains(fromJSON('["push", "pull_request"]'), github.event_name) }}
         uses: devops-infra/action-commit-push@v0.9.2
         with:
           github_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -45,7 +51,7 @@ jobs:
           target_branch: update/version
 
       - name: Create pull request 
-        if: success()
+        if: ${{ success() && !contains(fromJSON('["push", "pull_request"]'), github.event_name) }}
         uses: devops-infra/action-pull-request@v0.5.3
         with:
           github_token: "${{ secrets.GITHUB_TOKEN }}"

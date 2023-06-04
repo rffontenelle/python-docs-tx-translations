@@ -29,7 +29,7 @@ jobs:
     outputs:
       matrix: ${{ steps.version.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.5.2
       - id: version
         run: echo "matrix=$(cat .github/versions.txt)" >> $GITHUB_OUTPUT
 
@@ -47,10 +47,10 @@ jobs:
 
     steps:
       - name: Check out ${{ github.repository }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.5.2
 
       - name: Check out ${{ matrix.cpython_version }} branch of CPython
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.5.2
         with:
           repository: python/cpython
           persist-credentials: false
@@ -58,19 +58,19 @@ jobs:
           path: cpython
 
       - name: Check out ${{ matrix.cpython_version }} branch of ${{ github.repository }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.5.2
         with:
           ref: ${{ matrix.cpython_version }}
           path: cpython/Doc/locales
 
       - name: Set up Python 3
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v4.6.1
         with:
           python-version: '3'
           cache: 'pip'
           cache-dependency-path: |
-            "requirements/*.txt'
-            cpython/Doc/requirements.txt
+            'requirements.txt'
+            'cpython/Doc/requirements.txt'
 
       - name: Install Transifex CLI
         working-directory: /usr/local/bin
@@ -81,7 +81,7 @@ jobs:
         run: |
           sudo apt update -y && sudo apt install gettext -y
           pip3 install --upgrade pip
-          pip3 install -r requirements/requirements-ci.txt -r cpython/Doc/requirements.txt
+          pip3 install -r requirements.txt -r cpython/Doc/requirements.txt
 
       - name: Change Transifex project name if Python version != python-newest
         if: ${{ matrix.cpython_version != env.PYTHON_NEWEST }}
