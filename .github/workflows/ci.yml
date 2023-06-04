@@ -12,6 +12,9 @@ on:
       push:
         description: "Push source strings to Transifex"
         type: boolean
+      pull:
+        description: "Pull translations from Transifex"
+        type: boolean
   schedule:
     - cron: '0 14 * * 5'
 
@@ -109,20 +112,24 @@ jobs:
 
       - name: Push source strings to Transifex
         if: ${{ github.event_name == 'schedule' ||
-               (github.event_name == 'workflow_dispatch' && github.event.inputs.push == true) }}
+               (github.event_name == 'workflow_dispatch' && github.event.inputs.push == 'true') }}
         working-directory: cpython/Doc/locales
+        id: tx_push
         run: |
           tx push --source --skip
         env:
           TX_TOKEN: ${{ secrets.TX_TOKEN }}
 
       - name: Lock unused translations
+        if: steps.tx_push.outcome == 'success'
         run: |
           python3 scripts/lock-translations.py cpython/Doc/locales/.tx/config ${{ env.TX_PROJECT }}
         env:
           TX_TOKEN: ${{ secrets.TX_TOKEN }}
 
       - name: Pull translations for all languages
+        if: ${{ github.event_name == 'schedule' ||
+               (github.event_name == 'workflow_dispatch' && github.event.inputs.pull == 'true') }}
         working-directory: cpython/Doc/locales
         run: |
           tx pull --all --translations --force
