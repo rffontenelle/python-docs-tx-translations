@@ -118,14 +118,14 @@ jobs:
         env:
           TX_TOKEN: ${{ secrets.TX_TOKEN }}
 
-      - name: Pull translations for all languages
-        continue-on-error: true
-        working-directory: cpython/Doc/locales
-        id: tx_pull
-        run: |
-          tx pull --all --translations --force
-        env:
-          TX_TOKEN: ${{ secrets.TX_TOKEN }}
+      #- name: Pull translations for all languages
+      # continue-on-error: true
+      #  working-directory: cpython/Doc/locales
+      #  id: tx_pull
+      #  run: |
+      #    tx pull --all --translations --force
+      #  env:
+      #    TX_TOKEN: ${{ secrets.TX_TOKEN }}
 
       - name: Powrap POT files and modified PO files
         working-directory: cpython/Doc/locales
@@ -133,6 +133,12 @@ jobs:
           powrap --modified
           powrap pot/{**/,}*.pot
 
+      - working-directory: cpython/Doc/locales
+        run: |
+          grep -R '\\N' pot/
+      - working-directory: cpython/Doc/locales
+        run: |
+          cat pot/library/codecs.pot
       - working-directory: cpython/Doc/locales
         run: |
           msggrep -Ke '^\\N$' pot/library/codecs.pot
