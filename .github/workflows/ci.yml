@@ -10,9 +10,8 @@ on:
   workflow_dispatch:
     inputs:
       push:
-        description: "Whether should perform push to Transifex"
+        description: "Push source strings to Transifex"
         type: boolean
-        default: false
   schedule:
     - cron: '0 14 * * 5'
 
@@ -110,7 +109,7 @@ jobs:
 
       - name: Push source strings to Transifex
         if: ${{ !contains(fromJSON('["push", "pull_request"]'), github.event_name) ||
-              (github.event_name == 'workflow_dispatch' && github.event.inputs.push != true) }}
+              (github.event_name == 'workflow_dispatch' && github.event.inputs.push == true) }}
         working-directory: cpython/Doc/locales
         run: |
           tx push --source --skip
