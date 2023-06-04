@@ -142,12 +142,9 @@ jobs:
           powrap --modified
           powrap pot/{**/,}*.pot
 
-      # tx pull takes some time and have big chances of connection error,
-      # so make to to commit downloaded PO successfully downloads on
-      # failure or success.
       - name: Commit and push changes
         working-directory: cpython/Doc/locales
-        if: always()
+        if: ${{ contains(fromJSON('["schedule", "workflow_dispatch"]'), github.event_name) }}
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
