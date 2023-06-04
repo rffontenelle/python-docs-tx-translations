@@ -92,11 +92,9 @@ jobs:
 
         # See issue #15
       - name: Patch POT files
+        working-directory: cpython/Doc/locales/pot
         run: |
-          scripts/remove-ilegal-scripts.sh \
-            cpython/Doc/locales/library/codecs.pot \
-            cpython/Doc/locales/library/re.pot \
-            cpython/Doc/locales/reference/lexical_analysis.pot
+          $GITHUB_WORKSPACE/scripts/remove-ilegal-strings.sh library/{codecs,re}.pot reference/lexical_analysis.pot
 
       - name: Generate Transifex configuration file (.tx/config)
         working-directory: cpython/Doc/locales
@@ -121,9 +119,7 @@ jobs:
           TX_TOKEN: ${{ secrets.TX_TOKEN }}
 
       - name: Pull translations for all languages
-        continue-on-error: true
         working-directory: cpython/Doc/locales
-        id: tx_pull
         run: |
           tx pull --all --translations --force
         env:
@@ -140,11 +136,12 @@ jobs:
       # failure or success.
       - name: Commit and push changes
         working-directory: cpython/Doc/locales
-        if: contains(fromJSON('["failure", "success"]'), steps.tx_pull.outcome)
+        if: always()
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git status
+          shopt -s globstar
           git diff -I'^"POT-Creation-Date: ' --numstat **/*.po **/*.pot | cut -f3 | xargs -r git add
           git add $(git ls-files -o --exclude-standard *.po *.pot) .tx/config
           git diff-index --cached --quiet HEAD || { git commit -m "Update translations from ${{ env.BRANCH }}" && git push; }
