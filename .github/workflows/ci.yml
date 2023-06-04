@@ -108,8 +108,8 @@ jobs:
           sed -i '/^minimum_perc = 0$/s/0/1/' .tx/config
 
       - name: Push source strings to Transifex
-        if: ${{ !contains(fromJSON('["push", "pull_request"]'), github.event_name) ||
-              (github.event_name == 'workflow_dispatch' && github.event.inputs.push == true) }}
+        if: ${{ github.event_name == 'schedule' ||
+               (github.event_name == 'workflow_dispatch' && github.event.inputs.push == true) }}
         working-directory: cpython/Doc/locales
         run: |
           tx push --source --skip
