@@ -1,6 +1,12 @@
 name: Update versions
 
 on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
   schedule:
     - cron: 0 13 * * 5
@@ -35,7 +41,7 @@ jobs:
           python3 scripts/updpyver.py
 
       - name: Commit changes to a new branch 
-        if: success()
+        if: ${{ success() && !contains(fromJSON('["push", "pull_request"]'), github.event_name) }}
         uses: devops-infra/action-commit-push@v0.9.2
         with:
           github_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -45,7 +51,7 @@ jobs:
           target_branch: update/version
 
       - name: Create pull request 
-        if: success()
+        if: ${{ success() && !contains(fromJSON('["push", "pull_request"]'), github.event_name) }}
         uses: devops-infra/action-pull-request@v0.5.3
         with:
           github_token: "${{ secrets.GITHUB_TOKEN }}"
