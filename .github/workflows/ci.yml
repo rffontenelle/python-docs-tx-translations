@@ -118,53 +118,25 @@ jobs:
         env:
           TX_TOKEN: ${{ secrets.TX_TOKEN }}
 
-      #- name: Pull translations for all languages
-      # continue-on-error: true
-      #  working-directory: cpython/Doc/locales
-      #  id: tx_pull
-      #  run: |
-      #    tx pull --all --translations --force
-      #  env:
-      #    TX_TOKEN: ${{ secrets.TX_TOKEN }}
+      - name: Pull translations for all languages
+        working-directory: cpython/Doc/locales
+        run: |
+          tx pull --all --translations --force
+        env:
+          TX_TOKEN: ${{ secrets.TX_TOKEN }}
 
       - name: Powrap POT files and modified PO files
         working-directory: cpython/Doc/locales
         run: |
           powrap --modified
           powrap pot/{**/,}*.pot
-
-      - working-directory: cpython/Doc/locales
-        run: |
-          grep -R '\\N' pot/
-      - working-directory: cpython/Doc/locales
-        run: |
-          cat pot/library/codecs.pot
-      - working-directory: cpython/Doc/locales
-        run: |
-          msggrep -Ke '^\\N$' pot/library/codecs.pot
-      - working-directory: cpython/Doc/locales
-        run: |
-          git diff -I'^"POT-Creation-Date: '
-      - working-directory: cpython/Doc/locales
-        run: |
-          git diff -I'^"POT-Creation-Date: ' **/*.po **/**/*.po pot/*.pot pot/**/*.pot
-      - working-directory: cpython/Doc/locales
-        run: |
-          shopt -s globstar
-          git diff -I'^"POT-Creation-Date: ' --numstat **/*.po **/*.pot | cut -f3
-      - working-directory: cpython/Doc/locales
-        run: |
-          git ls-files
-      - working-directory: cpython/Doc/locales
-        run: |
-          git ls-files -o --exclude-standard *.po *.pot
       
       # tx pull takes some time and have big chances of connection error,
       # so make to to commit downloaded PO successfully downloads on
       # failure or success.
       - name: Commit and push changes
         working-directory: cpython/Doc/locales
-        if: contains(fromJSON('["failure", "success"]'), steps.tx_pull.outcome)
+        if: always()
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
