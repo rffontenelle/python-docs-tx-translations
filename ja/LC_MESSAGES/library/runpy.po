@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 05:49+0000\n"
+"POT-Creation-Date: 2023-06-09 14:40+0000\n"
 "PO-Revision-Date: 2023-05-24 02:19+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -24,11 +24,11 @@ msgstr ""
 
 #: ../../library/runpy.rst:2
 msgid ":mod:`runpy` --- Locating and executing Python modules"
-msgstr ""
+msgstr ":mod:`runpy` --- Python モジュールの位置特定と実行"
 
 #: ../../library/runpy.rst:9
 msgid "**Source code:** :source:`Lib/runpy.py`"
-msgstr ""
+msgstr "**ソースコード:** :source:`Lib/runpy.py`"
 
 #: ../../library/runpy.rst:13
 msgid ""
@@ -37,6 +37,10 @@ msgid ""
 "line switch that allows scripts to be located using the Python module "
 "namespace rather than the filesystem."
 msgstr ""
+":mod:`runpy` モジュールは Python のモジュールをインポートせずにその位置を特定"
+"したり実行したりするのに使われます。その主な目的はファイルシステムではなく "
+"Python のモジュール名前空間を使って位置を特定したスクリプトの実行を可能にす"
+"る :option:`-m` コマンドラインスイッチを実装することです。"
 
 #: ../../library/runpy.rst:18
 msgid ""
@@ -44,6 +48,9 @@ msgid ""
 "current process, and any side effects (such as cached imports of other "
 "modules) will remain in place after the functions have returned."
 msgstr ""
+"これはサンドボックスモジュール *ではない* ことに注意してください。すべての"
+"コードは現在のプロセスで実行され、あらゆる副作用 (たとえば他のモジュールの"
+"キャッシュされたインポート等) は関数から戻った後にそのまま残ります。"
 
 #: ../../library/runpy.rst:22
 msgid ""
@@ -52,10 +59,14 @@ msgid ""
 "that limitation is not acceptable for a given use case, :mod:`importlib` is "
 "likely to be a more suitable choice than this module."
 msgstr ""
+"さらに、 :mod:`runpy` 関数から戻った後で、実行されたコードによって定義された"
+"任意の関数およびクラスが正常に動作することは保証されません。この制限が受け入"
+"れられないユースケースでは、 :mod:`importlib` がこのモジュールより適切な選択"
+"となるでしょう。"
 
 #: ../../library/runpy.rst:27
 msgid "The :mod:`runpy` module provides two functions:"
-msgstr ""
+msgstr ":mod:`runpy` モジュールは2つの関数を提供しています:"
 
 #: ../../library/runpy.rst:35
 msgid ""
@@ -64,6 +75,10 @@ msgid ""
 "import mechanism (refer to :pep:`302` for details) and then executed in a "
 "fresh module namespace."
 msgstr ""
+"指定されたモジュールのコードを実行し、実行後のモジュールグローバル辞書を返し"
+"ます。モジュールのコードはまず標準インポート機構(詳細は :pep:`302` を参照) を"
+"使ってモジュールの位置を特定され、まっさらなモジュール名前空間で実行されま"
+"す。"
 
 #: ../../library/runpy.rst:40
 msgid ""
@@ -72,6 +87,10 @@ msgid ""
 "imported and the ``__main__`` submodule within that package is then executed "
 "and the resulting module globals dictionary returned."
 msgstr ""
+"*mod_name* 引数は絶対モジュール名でなければなりません。モジュール名が通常のモ"
+"ジュールではなくパッケージを参照していた場合、そのパッケージが import された"
+"後その中の ``__main__`` モジュールが実行され、実行後のモジュールグローバル辞"
+"書を返します。"
 
 #: ../../library/runpy.rst:46
 msgid ""
@@ -81,6 +100,10 @@ msgid ""
 "below are defined in the supplied dictionary, those definitions are "
 "overridden by :func:`run_module`."
 msgstr ""
+"オプションの辞書型引数 *init_globals* はコードを実行する前にモジュールグロー"
+"バル辞書に前もって必要な設定しておくのに使われます。与えられた辞書は変更され"
+"ません。その辞書の中に以下に挙げる特別なグローバル変数が定義されていたとして"
+"も、それらの定義は :func:`run_module` 関数によってオーバーライドされます。"
 
 #: ../../library/runpy.rst:52 ../../library/runpy.rst:121
 msgid ""
@@ -90,6 +113,11 @@ msgid ""
 "set of variables - other variables may be set implicitly as an interpreter "
 "implementation detail)."
 msgstr ""
+"特別なグローバル変数 ``__name__``, ``__spec__``, ``__file__``, "
+"``__cached__``, ``__loader__``, ``__package__`` はモジュールコードが実行され"
+"る前にグローバル辞書にセットされます。(この変数群は修正される最小セットです。"
+"これ以外の変数もインタプリタの実装の詳細として暗黙的に設定されるかもしれませ"
+"ん)。"
 
 #: ../../library/runpy.rst:58
 msgid ""
@@ -97,6 +125,9 @@ msgid ""
 "`None`, to ``mod_name + '.__main__'`` if the named module is a package and "
 "to the *mod_name* argument otherwise."
 msgstr ""
+"``__name__`` は、オプション引数 *run_name* が :const:`None` でない場合、指定"
+"されたモジュールがパッケージであれば ``mod_name + '.__main__'`` に、そうでな"
+"ければ *mod_name* 引数の値がセットされます。"
 
 #: ../../library/runpy.rst:62
 msgid ""
@@ -119,6 +150,11 @@ msgid ""
 "being executed. Both ``sys.argv[0]`` and ``sys.modules[__name__]`` are "
 "restored to their original values before the function returns."
 msgstr ""
+"引数 *alter_sys* が与えられて :const:`True` に評価されるならば、 ``sys."
+"argv[0]`` は ``__file__`` の値で更新され ``sys.modules[__name__]`` は実行され"
+"るモジュールの一時的モジュールオブジェクトで更新されます。 ``sys.argv[0]`` "
+"と ``sys.modules[__name__]`` はどちらも関数が処理を戻す前にもとの値に復旧しま"
+"す。"
 
 #: ../../library/runpy.rst:75
 msgid ""
@@ -127,21 +163,29 @@ msgid ""
 "arguments. It is recommended that the :mod:`sys` module be left alone when "
 "invoking this function from threaded code."
 msgstr ""
+"この :mod:`sys` に対する操作はスレッドセーフではないということに注意してくだ"
+"さい。他のスレッドは部分的に初期化されたモジュールを見たり、入れ替えられた引"
+"数リストを見たりするかもしれません。この関数をスレッド化されたコードから起動"
+"するときは :mod:`sys` モジュールには手を触れないことが推奨されます。"
 
 #: ../../library/runpy.rst:81
 msgid ""
 "The :option:`-m` option offering equivalent functionality from the command "
 "line."
 msgstr ""
+"コマンドラインから、 :option:`-m` オプションを与えることで同じ機能を実現出来"
+"ます。"
 
 #: ../../library/runpy.rst:84
 msgid ""
 "Added ability to execute packages by looking for a ``__main__`` submodule."
 msgstr ""
+"``__main__`` サブモジュールを検索することによってパッケージを実行する機能が追"
+"加されました。"
 
 #: ../../library/runpy.rst:87
 msgid "Added ``__cached__`` global variable (see :pep:`3147`)."
-msgstr ""
+msgstr "``__cached__`` グローバル変数が追加されました (:pep:`3147` を参照)。"
 
 #: ../../library/runpy.rst:90
 msgid ""
@@ -159,6 +203,12 @@ msgid ""
 "compiled bytecode file or a valid sys.path entry containing a ``__main__`` "
 "module (e.g. a zipfile containing a top-level ``__main__.py`` file)."
 msgstr ""
+"指定されたファイルシステム上の場所にあるコードを実行して、結果としてそのモ"
+"ジュールグローバル辞書を返します。通常の CPython 実行時にコマンドラインで指定"
+"するスクリプト名と同じく、指定できるパスは Python ソースファイル、コンパイル"
+"されたバイトコードファイル、もしくは ``__main__`` モジュールを含む有効な sys."
+"path エントリ(例: トップレベルに ``__main__.py`` ファイルを持つ zip ファイル)"
+"です。"
 
 #: ../../library/runpy.rst:107
 msgid ""
@@ -170,6 +220,13 @@ msgid ""
 "`__main__` entry located elsewhere on ``sys.path`` if there is no such "
 "module at the specified location."
 msgstr ""
+"シンプルなスクリプトを指定した場合は、指定されたコードはシンプルに新しいモ"
+"ジュール名前空間で実行されます。有効な sys.path エントリ (一般的には zip ファ"
+"イルかディレクトリ) を指定した場合は、最初にそのエントリが ``sys.path`` の先"
+"頭に追加されます。次に更新した ``sys.path`` を元に :mod:`__main__` モジュール"
+"を検索して実行します。指定された場所に :mod:`__main__` モジュールが無かった"
+"時、 ``sys.path`` のどこか他のエントリに存在する別の :mod:`__main__` を実行し"
+"てしまう可能性があることに注意してください。"
 
 #: ../../library/runpy.rst:115
 msgid ""
@@ -179,12 +236,18 @@ msgid ""
 "below are defined in the supplied dictionary, those definitions are "
 "overridden by :func:`run_path`."
 msgstr ""
+"オプションの辞書型引数 *init_globals* はコードを実行する前にモジュールグロー"
+"バル辞書に前もって必要な設定しておくのに使われます。与えられた辞書は変更され"
+"ません。その辞書の中に以下に挙げる特別なグローバル変数が定義されていたとして"
+"も、それらの定義は :func:`run_path` 関数によってオーバーライドされます。"
 
 #: ../../library/runpy.rst:127
 msgid ""
 "``__name__`` is set to *run_name* if this optional argument is not :const:"
 "`None` and to ``'<run_path>'`` otherwise."
 msgstr ""
+"``__name__`` は、オプション引数 *run_name* が :const:`None` でない場合、 "
+"*run_name* に設定され、それ以外の場合は ``'<run_path>'`` に設定されます。"
 
 #: ../../library/runpy.rst:130
 msgid ""
@@ -212,6 +275,11 @@ msgid ""
 "modifications to items in :mod:`sys` are reverted before the function "
 "returns."
 msgstr ""
+":mod:`sys` モジュールに対していくつかの変更操作が行われます。まず、 ``sys."
+"path`` が上記のように修正されます。 ``sys.argv[0]`` は ``path_name`` の値に更"
+"新され、 ``sys.modules[__name__]`` は実行されるモジュールのための一時モジュー"
+"ルオブジェクトに更新されます。 :mod:`sys` の要素に対する全ての変更は、この関"
+"数から戻る前に元に戻されます。"
 
 #: ../../library/runpy.rst:148
 msgid ""
@@ -221,12 +289,19 @@ msgid ""
 "apply, use of this function in threaded code should be either serialised "
 "with the import lock or delegated to a separate process."
 msgstr ""
+":func:`run_module` と違い、 :mod:`sys` に対する変更はオプションではありませ"
+"ん。これらの変更は sys.path エントリの実行に必要不可欠だからです。スレッド"
+"セーフ性に関する制限はこの関数にも存在します。この関数をマルチスレッドプログ"
+"ラムから実行する場合は、 import lock によりシリアライズして実行するか、別プロ"
+"セスに委譲してください。"
 
 #: ../../library/runpy.rst:155
 msgid ""
 ":ref:`using-on-interface-options` for equivalent functionality on the "
 "command line (``python path/to/script``)."
 msgstr ""
+"コマンドラインから :ref:`using-on-interface-options` で同じ機能を使えます "
+"(``python path/to/script``)。"
 
 #: ../../library/runpy.rst:160
 msgid ""
@@ -238,31 +313,31 @@ msgstr ""
 
 #: ../../library/runpy.rst:169
 msgid ":pep:`338` -- Executing modules as scripts"
-msgstr ""
+msgstr ":pep:`338` - モジュールをスクリプトとして実行する"
 
 #: ../../library/runpy.rst:169 ../../library/runpy.rst:172
 msgid "PEP written and implemented by Nick Coghlan."
-msgstr ""
+msgstr "PEP written and implemented by Nick Coghlan."
 
 #: ../../library/runpy.rst:172
 msgid ":pep:`366` -- Main module explicit relative imports"
-msgstr ""
+msgstr ":pep:`366` - main モジュールの明示的な相対インポート"
 
 #: ../../library/runpy.rst:175
 msgid ":pep:`451` -- A ModuleSpec Type for the Import System"
-msgstr ""
+msgstr ":pep:`451` -- インポートシステムのための ModuleSpec 型"
 
 #: ../../library/runpy.rst:175
 msgid "PEP written and implemented by Eric Snow"
-msgstr ""
+msgstr "PEP written and implemented by Eric Snow"
 
 #: ../../library/runpy.rst:177
 msgid ":ref:`using-on-general` - CPython command line details"
-msgstr ""
+msgstr ":ref:`using-on-general` - CPython コマンドライン詳細"
 
 #: ../../library/runpy.rst:179
 msgid "The :func:`importlib.import_module` function"
-msgstr ""
+msgstr ":func:`importlib.import_module` 関数"
 
 #: ../../library/runpy.rst:32 ../../library/runpy.rst:98
 msgid "module"
