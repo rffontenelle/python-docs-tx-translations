@@ -21,7 +21,7 @@ From inside your language repository, run:
 
 .. code-block:: shell
 
-   BRANCH=3.11
+   BRANCH=3.12
    git clone --depth 1 https://github.com/python/cpython --branch $BRANCH
 
 ``--depth 1`` do a shallow clone, which avoid downloading all the 800 MB of data from CPython's repository.
@@ -216,17 +216,17 @@ Linting the translation files
 Merging translations into another branch
 ----------------------------------------
 
-This is useful when you want to replicate a translation from the CPython branch currently being translated to another older branch. E.g. 3.11 is currently being translated, but 3.10 has that same string and could make use of the translation contributed.
+This is useful when you want to replicate a translation from the CPython branch currently being translated to another older branch. E.g. 3.12 is currently being translated, but 3.11 has that same string and could make use of the translation contributed.
 
 .. code-block:: shell
 
    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-   TARGET_BRANCH=3.10
+   TARGET_BRANCH=3.11
    pomerge --from-files *.po **/*.po
    git checkout ${TARGET_BRANCH}
    pomerge --to-files *.po **/*.po
 
-After the above command, the translation from the current branch were applied to the previous branch "3.10". Now, let's make sure lines are wrapped:
+After the above command, the translation from the current branch were applied to the previous branch "3.11". Now, let's make sure lines are wrapped:
 
 .. code-block:: shell
 
