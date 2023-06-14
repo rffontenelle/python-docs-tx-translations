@@ -4,7 +4,7 @@ Guidance for New Contributors to Python Documentation Translation on Transifex
 
 This guide is intended for language teams working on the Python documentation within the python-doc_ organization on Transifex_. Yes: not all teams translate on Transifex, so using Transifex is optional.
 
-.. _python-doc: https://www.transifex.com/python-doc
+.. _python-doc: https://app.transifex.com/python-doc
 .. _Transifex: https://www.transifex.com/
 
 
@@ -41,13 +41,13 @@ Language teams must download and store the translation files in their VCS reposi
 Projects within python-doc
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The python-doc_ organization contains several projects, each representing the documentation for a specific version of Python (e.g. 3.10). The "Python" project (slug "python-newest") is the latest version available for translation. All other projects are named "Python <version>".
+The python-doc_ organization contains several projects, each representing the documentation for a specific version of Python (e.g. 3.11). The "Python" project (slug "python-newest") is the latest version available for translation. All other projects are named "Python <version>".
 
 
 The Latest Version for Translation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The "Python" project in Transifex always contains the latest stable release of Python or its latest beta/RC release, but not alpha releases. For example, if the latest version is 3.11, the "Python" project will only be updated with strings from the 3.12 branch when a beta is released.
+The "Python" project in Transifex always contains the latest stable release of Python or its latest beta/RC release, but not alpha releases. For example, if the latest version is 3.12, the "Python" project will only be updated with strings from the 3.13 branch when a beta is released.
 
 
 Translate the Latest Version
