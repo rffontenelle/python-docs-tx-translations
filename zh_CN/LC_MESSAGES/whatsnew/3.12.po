@@ -25,7 +25,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-09 14:13+0000\n"
+"POT-Creation-Date: 2023-06-16 14:12+0000\n"
 "PO-Revision-Date: 2023-05-24 13:08+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -164,7 +164,7 @@ msgstr ""
 "在包括基于 ``<module>`` 中可用名称的 ``<name>`` 值的建议。由 Pablo Galindo "
 "在 :gh:`91058` 中贡献。"
 
-#: ../../whatsnew/3.12.rst:143 ../../whatsnew/3.12.rst:1544
+#: ../../whatsnew/3.12.rst:143 ../../whatsnew/3.12.rst:1549
 msgid "New Features"
 msgstr "新的特性"
 
@@ -222,6 +222,9 @@ msgid ""
 "making them harder to read. In Python 3.12 you can now define expressions "
 "spanning multiple lines and include comments on them:"
 msgstr ""
+"多行表达式和注释：在Python 3.11中，f-字符串表达式必须在一行中定义，即使外部f-"
+"字符串表达式可能跨越多行（就像在多行上定义的字面值列表一样），也会使它们更难"
+"阅读。在Python 3.12中，你现在可以定义跨越多行的表达式，并在其中包含注释："
 
 #: ../../whatsnew/3.12.rst:191
 msgid ""
@@ -248,6 +251,9 @@ msgid ""
 "For example, in Python 3.11, the following f-string raises a :exc:"
 "`SyntaxError`:"
 msgstr ""
+"作为实现此功能的正面影响 (通过使用 PEG 解析器解析 f 字符串，参见 :pep:"
+"`617`)，现在 f 字符串的错误消息更加精确，包括错误的确切位置。 例如，在 "
+"Python 3.11 中，以下 f 字符串引发一个 :exc:`SyntaxError`:"
 
 #: ../../whatsnew/3.12.rst:219
 msgid ""
@@ -256,6 +262,9 @@ msgid ""
 "In Python 3.12, as f-strings are parsed with the PEG parser, error messages "
 "can be more precise and show the entire line:"
 msgstr ""
+"但是错误消息不包括错误在行中的确切位置，而且表达式被人为地用括号括起来。在"
+"Python 3.12中，由于f-字符串是用PEG解析器解析的，因此错误消息可以更精确，并显"
+"示整行："
 
 #: ../../whatsnew/3.12.rst:231
 msgid ""
@@ -524,24 +533,35 @@ msgid ""
 "the default will switch to ``'data'``. (Contributed by Petr Viktorin in :pep:"
 "`706`.)"
 msgstr ""
+":mod:`tarfile` 和 :func:`shutil.unpack_archive` 中的提取方法有一个新的 "
+"*filter* 参数，该参数允许限制可能令人惊讶或危险的 tar 功能，例如在目标目录之"
+"外创建文件。 有关详细信息，请参阅 :ref:`tarfile-extraction-filter` 提取筛选"
+"器。 在 Python 3.14 中，默认值将切换为 ``'data'``。 （由 Petr Viktorin 在 :"
+"pep:`706` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:416
 msgid ""
 ":class:`types.MappingProxyType` instances are now hashable if the underlying "
 "mapping is hashable. (Contributed by Serhiy Storchaka in :gh:`87995`.)"
 msgstr ""
+"如果底层映射是可哈希的，那么 :class:`types.MappingProxyType` 实例现在是可哈希"
+"的。 （由 Serhiy Storchaka 在 :gh:`87995` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:420
 msgid ""
 ":class:`memoryview` now supports the half-float type (the \"e\" format "
 "code). (Contributed by Dong-hee Na and Antoine Pitrou in :gh:`90751`.)"
 msgstr ""
+":class:`memoryview` 现在支持半浮点类型（“e”格式代码）。 （由 Dong-hee Na 和 "
+"Antoine Pitrou 在 :gh:`90751` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:423
 msgid ""
 "The parser now raises :exc:`SyntaxError` when parsing source code containing "
 "null bytes. (Contributed by Pablo Galindo in :gh:`96670`.)"
 msgstr ""
+"解析器现在在解析包含空字节的源代码时引发 :exc:`SyntaxError`。 （由 Pablo "
+"Galindo 在 :gh:`96670` 中贡献 。）"
 
 #: ../../whatsnew/3.12.rst:426
 msgid ""
@@ -549,6 +569,8 @@ msgid ""
 "when parsing source code containing null bytes. (Contributed by Pablo "
 "Galindo in :gh:`96670`.)"
 msgstr ""
+":func:`ast.parse` 现在会在解析包含空字节的源代码时引发 :exc:`SyntaxError` 而"
+"不是 :exc:`ValueError`。 （由 Pablo Galindo 在 :gh:`96670` 中贡献 。）"
 
 #: ../../whatsnew/3.12.rst:430
 msgid ""
@@ -559,6 +581,10 @@ msgid ""
 "chance to execute the GC periodically. (Contributed by Pablo Galindo in :gh:"
 "`97922`.)"
 msgstr ""
+"垃圾回收器现在只在 Python 字节码评估循环的 eval-breaker 机制上运行，而不是在"
+"对象分配上运行。 垃圾回收也可以在调用 :c:func:`PyErr_CheckSignals` 时运行，因"
+"此需要长时间运行而不执行任何 Python 代码的 C 扩展也有机会定期执行垃圾回收。 "
+"（由 Pablo Galindo 在 :gh:`97922` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:437
 msgid ""
@@ -570,6 +596,12 @@ msgid ""
 "exc:`SyntaxError` will eventually be raised, instead of :exc:"
 "`SyntaxWarning`. (Contributed by Victor Stinner in :gh:`98401`.)"
 msgstr ""
+"不是有效转义序列的反斜杠+字符的组合现在会生成 :exc:`SyntaxWarning`，而不是  :"
+"exc:`DeprecationWarning`。 例如，``re.compile(\"\\d+\\.\\d+\")`` 现在会发出 :"
+"exc:`SyntaxWarning` (``\"\\d\"`` 是一个无效的转义序列)，对正则表达式使用原始"
+"字符串: ``re.compile(r\"\\d+\\.\\d+\")``。 在未来的 Python 版本中，最终将引"
+"发 :exc:`SyntaxError`，而不是 :exc:`SyntaxWarning`。 （由 Victor Stinner 在 :"
+"gh:`98401` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:446
 msgid ""
@@ -578,6 +610,10 @@ msgid ""
 "exc:`DeprecationWarning`. In a future Python version they will be eventually "
 "a :exc:`SyntaxError`. (Contributed by Victor Stinner in :gh:`98401`.)"
 msgstr ""
+"值大于``0o377`` (例如: ``\"\\477\"``) 的八进制转义，在 Python 3.11 中已弃用，"
+"现在会产生 :exc:`SyntaxWarning`，而不是 :exc:`DeprecationWarning`。 在未来的 "
+"Python 版本中，它们最终将是 :exc:`SyntaxError`。 （由 Victor Stinner 在 :gh:"
+"`98401` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:452
 msgid ""
@@ -585,6 +621,9 @@ msgid ""
 "arguments of any type instead of just :class:`bool` and :class:`int`. "
 "(Contributed by Serhiy Storchaka in :gh:`60203`.)"
 msgstr ""
+"所有期望布尔参数的内置和扩展可调用函数现在都接受任何类型的参数，而不仅仅是 :"
+"class:`bool` 和 :class:`int`。 （由 Serhiy Storchaka 在 :gh:`60203` 中贡"
+"献。）"
 
 #: ../../whatsnew/3.12.rst:456
 msgid ""
@@ -595,6 +634,10 @@ msgid ""
 "comprehensions (like ``a``) is still disallowed, as per :pep:`572`. "
 "(Contributed by Nikita Sobolev in :gh:`100581`.)"
 msgstr ""
+"未存储在推导式目标部分中的变量现在可以在赋值表达式 (``:=``) 中使用。 例如，"
+"在 ``[(b := 1) for a, b.prop in some_iter]`` 中，现在允许对 ``b`` 进行赋值。 "
+"请注意，根据 :pep:`572`，仍然不允许向存储在推导式目标部分中的变量 (如 ``a``) "
+"赋值。 （由 Nikita Sobolev 在 :gh:`100581` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:463
 msgid ""
@@ -602,6 +645,8 @@ msgid ""
 "keys and set items. (Contributed by Will Bradshaw, Furkan Onder, and Raymond "
 "Hettinger in :gh:`101264`.)"
 msgstr ""
+":class:`slice` 对象现在是可哈希的，允许它们用作字典的键和集合项。 （由 Will "
+"Bradshaw、Furkan Onder 和 Raymond Hettinger 在 :gh:`101264` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:466
 msgid ""
@@ -609,6 +654,8 @@ msgid ""
 "floats or mixed ints and floats. (Contributed by Raymond Hettinger in :gh:"
 "`100425`.)"
 msgstr ""
+":func:`sum` 现在使用 Neumaier 求和来提高浮点求和或整数浮点混合求和的准确性。 "
+"（由 Raymond Hettinger 在 :gh:`100425` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:470
 msgid ""
@@ -616,6 +663,9 @@ msgid ""
 "wrapped by a :exc:`RuntimeError`. Context information is added to the "
 "exception as a :pep:`678` note. (Contributed by Irit Katriel in :gh:`77757`.)"
 msgstr ""
+"类型对象的 ``__set_name__`` 方法引发的异常不再由 :exc:`RuntimeError` 封装。 "
+"上下文信息将作为 :pep:`678` 注释添加到异常中。 （由 Irit Katriel 在 :gh:"
+"`77757` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:474
 msgid ""
@@ -624,6 +674,9 @@ msgid ""
 "exc:`ExceptionGroup`. Also changed in version 3.11.4. (Contributed by Irit "
 "Katriel in :gh:`103590`.)"
 msgstr ""
+"当 ``try-except*`` 构造处理整个 :exc:`ExceptionGroup` 并引发另一个异常时，该"
+"异常不再封装在 :exc:`ExceptionGroup` 中。 在 3.11.4 版中也进行了更改。 （由 "
+"Irit Katriel 在 :gh:`103590` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:481
 msgid "New Modules"
@@ -646,6 +699,8 @@ msgid ""
 "The :class:`array.array` class now supports subscripting, making it a :term:"
 "`generic type`. (Contributed by Jelle Zijlstra in :gh:`98658`.)"
 msgstr ""
+":class:`array.array` 类现在支持下标，使其成为 :term:`generic type`。 （由 "
+"Jelle Zijlstra 在 :gh:`98658` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:496
 msgid "asyncio"
@@ -658,6 +713,9 @@ msgid ""
 "writing to sockets and uses :meth:`~socket.socket.sendmsg` if the platform "
 "supports it. (Contributed by Kumar Aditya in :gh:`91166`.)"
 msgstr ""
+"在 :mod:`asyncio` 中写入套接字的性能得到了显著提高。 ``asyncio`` 现在可以避免"
+"在写入套接字时进行不必要的复制，并在平台支持的情况下使用 :meth:`~socket."
+"socket.sendmsg`。 （由 Kumar Aditya 在 :gh:`91166` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:503
 msgid ""
@@ -666,6 +724,10 @@ msgid ""
 "eager task execution, making some use-cases 2x to 5x faster. (Contributed by "
 "Jacob Bower & Itamar O in :gh:`102853`, :gh:`104140`, and :gh:`104138`)"
 msgstr ""
+"添加了 :func:`asyncio.eager_task_factory` 和 :func:`asyncio."
+"create_eager_task_factory` 函数，允许在紧急任务执行中选择事件循环，使某些用例"
+"的速度提高了 2 到 5 倍。 （由 Jacob Bower 和 Itamar O 在 :gh:`102853`、:gh:"
+"`104140` 和 :gh:`104138` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:508
 msgid ""
@@ -674,6 +736,9 @@ msgid ""
 "`~asyncio.ThreadedChildWatcher`. (Contributed by Kumar Aditya in :gh:"
 "`98024`.)"
 msgstr ""
+"在 Linux 上，如果 :func:`os.pidfd_open` 可用且能工作，:mod:`asyncio` 默认使"
+"用 :class:`~asyncio.PidfdChildWatcher` 而不是 :class:`~asyncio."
+"ThreadedChildWatcher`。 （由 Kumar Aditya 在 :gh:`98024` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:513
 msgid ""
@@ -686,6 +751,12 @@ msgid ""
 "ThreadedChildWatcher` otherwise). (Contributed by Kumar Aditya in :gh:"
 "`94597`.)"
 msgstr ""
+"子观察程序类 :class:`~asyncio.MultiLoopChildWatcher`、:class:`~asyncio."
+"FastChildWatcher`、:class:`~asyncio.AbstractChildWatcher` 和 :class:"
+"`~asyncio.SafeChildWatcher` 已弃用，它们将在 Python 3.14 中移除。 建议不要手"
+"动配置子观察程序，因为事件循环现在为每个平台使用最佳可用的子观察程序 (如果支"
+"持就用 :class:`~asyncio.PidfdChildWatcher`，不支持则用 :class:`~asyncio."
+"ThreadedChildWatcher`)。 （由 Kumar Aditya 在 :gh:`94597` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:522
 msgid ""
@@ -694,18 +765,26 @@ msgid ""
 "AbstractEventLoopPolicy.get_child_watcher` are deprecated and will be "
 "removed in Python 3.14. (Contributed by Kumar Aditya in :gh:`94597`.)"
 msgstr ""
+":func:`asyncio.set_child_watcher`、:func:`asyncio.get_child_watcher`、:meth:"
+"`asyncio.AbstractEventLoopPolicy.set_child_watcher` 和 :meth:`asyncio."
+"AbstractEventLoopPolicy.get_child_watcher` 已弃用，并将在 Python 3.14 中移"
+"除。（由 Kumar Aditya 在 :gh:`94597` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:528
 msgid ""
 "Add *loop_factory* parameter to :func:`asyncio.run` to allow specifying a "
 "custom event loop factory. (Contributed by Kumar Aditya in :gh:`99388`.)"
 msgstr ""
+"为 :func:`asyncio.run` 添加了形参 *loop_factory*，以允许指定自定义事件循环工"
+"厂。 （由 Kumar Aditya 在 :gh:`99388` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:532
 msgid ""
 "Add C implementation of :func:`asyncio.current_task` for 4x-6x speedup. "
 "(Contributed by Itamar Ostricher and Pranav Thulasiram Bhat in :gh:`100344`.)"
 msgstr ""
+"添加了 :func:`asyncio.current_task` 的 C 实现，以实现 4 - 6 倍的加速。 （由 "
+"Itamar Ostricher 和 Pranav Thulasiram Bhat 在 :gh:`100344` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:535
 msgid ""
@@ -713,12 +792,16 @@ msgid ""
 "`asyncio` does not support legacy generator-based coroutines. (Contributed "
 "by Kumar Aditya in :gh:`102748`.)"
 msgstr ""
+":func:`asyncio.iscoroutine` 现在为生成器返回 ``False``，因为 :mod:`asyncio` "
+"不支持传统的基于生成器的协程。 （由 Kumar Aditya 在 :gh:`102748` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:539
 msgid ""
 ":func:`asyncio.wait` and :func:`asyncio.as_completed` now accepts generators "
 "yielding tasks. (Contributed by Kumar Aditya in :gh:`78530`.)"
 msgstr ""
+":func:`asyncio.wait` 和 :func:`asyncio.as_completed` 现在接受生成器 yield 任"
+"务。 （由 Kumar Aditya 在 :gh:`78530` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:544
 msgid "calendar"
@@ -729,6 +812,8 @@ msgid ""
 "Add enums :data:`~calendar.Month` and :data:`~calendar.Day`. (Contributed by "
 "Prince Roshan in :gh:`103636`.)"
 msgstr ""
+"添加 :data:`~calendar.Month` 和 :data:`~calendar.Day` 枚举。 （由 Prince "
+"Roshan 在 :gh:`103636` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:550
 msgid "csv"
@@ -740,6 +825,8 @@ msgid ""
 "provide finer grained control of ``None`` and empty strings by :class:`~csv."
 "writer` objects."
 msgstr ""
+"添加 :data:`~csv.QUOTE_NOTNULL` 和 :data:`~csv.QUOTE_STRINGS` 标志，以通过 :"
+"class:`~csv.writer` 对象提供对 ``None`` 和空字符串的细粒度控制。"
 
 #: ../../whatsnew/3.12.rst:557
 msgid "dis"
@@ -753,6 +840,10 @@ msgid ""
 "pseudo instructions. Use the new :data:`~dis.hasarg` collection instead. "
 "(Contributed by Irit Katriel in :gh:`94216`.)"
 msgstr ""
+"伪指令操作码（编译器使用，但不出现在可执行字节码中）现在暴露在 :mod:`dis` 模"
+"块中。 :opcode:`HAVE_ARGUMENT` 仍然与实际操作码相关，但对伪指令没有用处。请改"
+"用新的 :data:`~dis.hasarg` 多项集。 （由 Irit Katriel 在 :gh:`94216` 中贡"
+"献。）"
 
 #: ../../whatsnew/3.12.rst:568
 msgid "fractions"
@@ -763,6 +854,8 @@ msgid ""
 "Objects of type :class:`fractions.Fraction` now support float-style "
 "formatting. (Contributed by Mark Dickinson in :gh:`100161`.)"
 msgstr ""
+"类型为 :class:`fractions.Fraction` 的对象现在支持浮点格式。 （由 Mark "
+"Dickinson 在 :gh:`100161` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:574
 msgid "inspect"
@@ -774,6 +867,9 @@ msgid ""
 "a :term:`coroutine` for use with :func:`inspect.iscoroutinefunction`. "
 "(Contributed Carlton Gibson in :gh:`99247`.)"
 msgstr ""
+"添加 :func:`inspect.markcoroutinefunction` 来标记返回 :term:`coroutine`  的同"
+"步函数，以便与 :func:`inspect.iscoroutinefunction` 一起使用。 （由 Carlton "
+"Gibson 在 :gh:`99247` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:580
 msgid ""
@@ -781,6 +877,9 @@ msgid ""
 "for determining the current state of asynchronous generators. (Contributed "
 "by Thomas Krennwallner in :issue:`35759`.)"
 msgstr ""
+"添加 :func:`inspect.getasyncgenstate` 和 :func:`inspect.getasyncgenlocals` 来"
+"确定异步生成器的当前状态。 （由 Thomas Krennwallner 在 :issue:`35759` 中贡"
+"献。）"
 
 #: ../../whatsnew/3.12.rst:584
 msgid ""
@@ -789,6 +888,9 @@ msgid ""
 "were in Python 3.11, and some may be 6x faster or more. (Contributed by Alex "
 "Waygood in :gh:`103193`.)"
 msgstr ""
+":func:`inspect.getattr_static` 的性能得到了相当大的改进。 对函数的大多数调用"
+"应该比 Python 3.11 中至少快 2 倍，有些可能快 6 倍甚至更多。 （由 Alex "
+"Waygood 在 :gh:`103193` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:590
 msgid "itertools"
@@ -800,6 +902,8 @@ msgid ""
 "where the last batch may be shorter than the rest. (Contributed by Raymond "
 "Hettinger in :gh:`98363`.)"
 msgstr ""
+"增加了 :class:`itertools.batched()` 用来收集到相同大小的元组其中最后一个批次"
+"的长度可能会比其他批次的短。 （由 Raymond Hettinger 在 :gh:`98363` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:597
 msgid "json"
@@ -812,6 +916,9 @@ msgid ""
 "supports attribute style dotted access. (Contributed by Raymond Hettinger "
 "in :gh:`96145`.)"
 msgstr ""
+"添加了 :class:`json.AttrDict`，用于 :func:`json.load` 或 :func:`json.loads` "
+"中的 ``object_hook``。 这是 :class:`dict` 的子类，也支持属性样式的点式访问。 "
+"（由 Raymond Hettinger 在 :gh:`96145` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:605
 msgid "math"
@@ -822,6 +929,8 @@ msgid ""
 "Added :func:`math.sumprod` for computing a sum of products. (Contributed by "
 "Raymond Hettinger in :gh:`100485`.)"
 msgstr ""
+"添加了 :func:`math.sumprod` 用于计算乘积的和。 （由 Raymond Hettinger 在 :gh:"
+"`100485` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:610
 msgid ""
@@ -829,6 +938,9 @@ msgid ""
 "or down multiple steps at a time. (By Matthias Goergens, Mark Dickinson, and "
 "Raymond Hettinger in :gh:`94906`.)"
 msgstr ""
+"扩展了 :func:`math.nextafter` 以包含一个 *steps* 参数，用于一次上移或下移多个"
+"步骤。 （由 Matthias Goergens、Mark Dickinson 和 Raymond Hettinger在 :gh:"
+"`94906` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:615
 msgid "os"
@@ -840,6 +952,8 @@ msgid ""
 "func:`os.pidfd_open` in non-blocking mode. (Contributed by Kumar Aditya in :"
 "gh:`93312`.)"
 msgstr ""
+"添加 :data:`os.PIDFD_NONBLOCK`，以在非阻塞模式下打开具有 :func:`os."
+"pidfd_open` 的进程的文件描述符。 （由 Kumar Aditya 在 :gh:`93312` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:621
 msgid ""
@@ -847,6 +961,8 @@ msgid ""
 "to check if the entry is a junction. (Contributed by Charles Machalow in :gh:"
 "`99547`.)"
 msgstr ""
+":class:`os.DirEntry` 现在包括一个 :meth:`os.DirEntry.is_junction` 方法来检查"
+"该条目是否为目录联接。 （由 Charles Machalow 在 :gh:`99547` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:625
 msgid ""
@@ -854,6 +970,9 @@ msgid ""
 "functions on Windows for enumerating drives, volumes and mount points. "
 "(Contributed by Steve Dower in :gh:`102519`.)"
 msgstr ""
+"在 Windows 版中添加 :func:`os.listdrives`、:func:`os.listvolumes` 和 :func:"
+"`os.listmounts` 函数，用于枚举驱动器、卷和挂载点。 （由 Steve Dower 在 :gh:"
+"`102519` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:629
 msgid ""
@@ -867,6 +986,12 @@ msgid ""
 "faster on newer releases of Windows. (Contributed by Steve Dower in :gh:"
 "`99726`.)"
 msgstr ""
+":func:`os.stat` 和 :func:`os.lstat` 现在在 Windows 系统上更准确了。 "
+"``st_birthtime`` 字段现在将使用文件的创建时间，``st_ctime`` 已弃用，但仍包含"
+"创建时间（但为了与其他平台保持一致，将来将返回最后一次元数据更改时间）。 "
+"``st_dev`` 可以高达 64 位，``st_ino`` 可以高达 128 位，具体取决于你的文件系"
+"统，并且 ``st_rdev`` 始终设置为零，而非不正确的值。 这两个函数在较新版本的 "
+"Windows 上将会明显更快。  （由 Steve Dower 在 :gh:`99726` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:640
 msgid "os.path"
@@ -877,12 +1002,16 @@ msgid ""
 "Add :func:`os.path.isjunction` to check if a given path is a junction. "
 "(Contributed by Charles Machalow in :gh:`99547`.)"
 msgstr ""
+"添加 :func:`os.path.isjunction` 以检查给定路径是否为目录联接。 （由 Charles "
+"Machalow 在 :gh:`99547` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:645
 msgid ""
 "Add :func:`os.path.splitroot` to split a path into a triad ``(drive, root, "
 "tail)``. (Contributed by Barney Gale in :gh:`101000`.)"
 msgstr ""
+"添加 :func:`os.path.splitroot` 以将路径拆分为三元组 ``(drive, root, tail)``。"
+"（由 Barney Gale 在 :gh:`101000` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:649
 msgid "pathlib"
@@ -895,6 +1024,9 @@ msgid ""
 "override the :meth:`~pathlib.PurePath.with_segments` method to pass "
 "information between path instances."
 msgstr ""
+"增加对 :class:`pathlib.PurePath` 和 :class:`~pathlib.Path` 的子类化支持，以及"
+"它们的 Posix 和 Windows 特定变体。 子类可以重写 :meth:`~pathlib.PurePath."
+"with_segments` 方法来在路径实例之间传递信息。"
 
 #: ../../whatsnew/3.12.rst:656
 msgid ""
@@ -902,6 +1034,8 @@ msgid ""
 "generating all file or directory names within them, similar to :func:`os."
 "walk`. (Contributed by Stanislav Zmiev in :gh:`90385`.)"
 msgstr ""
+"添加 :meth:`~pathlib.Path.walk`，用于遍历目录树并生成其中的所有文件或目录名，"
+"类似于 :func:`os.walk`。 （由 Stanislav Zmiev 在 :gh:`90385` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:660
 msgid ""
@@ -910,12 +1044,17 @@ msgid ""
 "consistent with :func:`os.path.relpath`. (Contributed by Domenico Ragusa in :"
 "issue:`40358`.)"
 msgstr ""
+"添加可选形参 *walk_up* 到 :meth:`pathlib.PurePath.relative_to`，以允许在结果"
+"中插入 ``..`` 条目；此行为更符合 :func:`os.path.relpath`。 （由 Domenico "
+"Ragusa 在 :issue:`40358` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:665
 msgid ""
 "Add :meth:`pathlib.Path.is_junction` as a proxy to :func:`os.path."
 "isjunction`. (Contributed by Charles Machalow in :gh:`99547`.)"
 msgstr ""
+"添加 :meth:`pathlib.Path.is_junction` 作为 :func:`os.path.isjunction` 的代"
+"理。 （由 Charles Machalow 在 :gh:`99547` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:668
 msgid ""
@@ -924,6 +1063,9 @@ msgid ""
 "path's case sensitivity, allowing for more precise control over the matching "
 "process."
 msgstr ""
+"为 :meth:`pathlib.Path.glob`、:meth:`pathlib.Path.rglob` 和 :meth:`pathlib."
+"PurePath.match` 添加可选形参 *case_sensitive*，以匹配路径的大小写敏感性，从而"
+"对匹配过程进行更精确的控制。"
 
 #: ../../whatsnew/3.12.rst:673
 msgid "pdb"
@@ -935,6 +1077,8 @@ msgid ""
 "provide quick access to values like the current frame or the return value. "
 "(Contributed by Tian Gao in :gh:`103693`.)"
 msgstr ""
+"添加便利变量以临时保存调试会话的值，并提供对当前帧或返回值等值的快速访问。 "
+"（由高天在 :gh:`103693` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:681
 msgid "random"
@@ -945,12 +1089,16 @@ msgid ""
 "Added :func:`random.binomialvariate`. (Contributed by Raymond Hettinger in :"
 "gh:`81620`.)"
 msgstr ""
+"添加了 :func:`random.binomialvariate`。 （由 Raymond Hettinger 在 :gh:"
+"`81620` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:686
 msgid ""
 "Added a default of ``lamb=1.0`` to :func:`random.expovariate`. (Contributed "
 "by Raymond Hettinger in :gh:`100234`.)"
 msgstr ""
+"在 :func:`random.expovariate` 中添加了一个默认值 ``lamb=1.0``。 （由 Raymond "
+"Hettinger 在 :gh:`100234` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:690
 msgid "shutil"
@@ -963,6 +1111,9 @@ msgid ""
 "the current working directory of the process to *root_dir* to perform "
 "archiving. (Contributed by Serhiy Storchaka in :gh:`74696`.)"
 msgstr ""
+":func:`shutil.make_archive` 现在将 *rootdir* 参数传递给支持它的自定义存档程"
+"序。 在这种情况下，它不再临时将进程的当前工作目录更改为 *rootdir* 来执行存"
+"档。 （由 Serhiy Storchaka 在 :gh:`74696` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:698
 msgid ""
@@ -971,6 +1122,10 @@ msgid ""
 "*(typ, val, tb)* triplet. *onerror* is deprecated and will be removed in "
 "Python 3.14. (Contributed by Irit Katriel in :gh:`102828`.)"
 msgstr ""
+":func:`shutil.rmtree` 现在接受一个新的参数 *onexc* ，它是一个类似 *onerror* "
+"的错误处理器，但它需要一个异常实例，而不是一个 *(typ, val, tb)*  三元组。 "
+"*onerror* 已弃用，并将在 Python 3.14 中移除。 （由 Irit Katriel 在 :gh:"
+"`102828` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:704
 msgid ""
@@ -978,6 +1133,9 @@ msgid ""
 "matches within *PATH* on Windows even when the given *cmd* includes a "
 "directory component. (Contributed by Charles Machalow in :gh:`103179`.)"
 msgstr ""
+":func:`shutil.which` 现在即使给定的 *cmd* 包含目录组件，在 Windows 系统上也会"
+"参考 *PATHEXT* 环境变量在 *PATH* 中查找匹配项。 （由 Charles Machalow 在 :gh:"
+"`103179` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:709
 msgid ""
@@ -986,6 +1144,9 @@ msgid ""
 "directory should be prepended to the search path. (Contributed by Charles "
 "Machalow in :gh:`103179`.)"
 msgstr ""
+":func:`shutil.which` 将在 Windows 上查询可执行文件时调用 "
+"``NeedCurrentDirectoryForExePathW``，以确定是否应将当前工作目录预先设置为搜索"
+"路径。 （由 Charles Machalow 在 :gh:`103179` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:714
 msgid ""
@@ -993,6 +1154,9 @@ msgid ""
 "from ``PATHEXT`` prior to a direct match elsewhere in the search path on "
 "Windows. (Contributed by Charles Machalow in :gh:`103179`.)"
 msgstr ""
+"在 Windows 上 :func:`shutil.which` 将在搜索路径的其他地方直接匹配之前返回 "
+"*cmd* 与来自 ``PATHEXT`` 的组件相匹配的路径。 （由 Charles Machalow 在 :gh:"
+"`103179` 中贡献。）"
 
 #: ../../whatsnew/3.12.rst:720
 msgid "sqlite3"
@@ -1060,7 +1224,7 @@ msgid ""
 "Katriel in :gh:`102778`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:767 ../../whatsnew/3.12.rst:1457
+#: ../../whatsnew/3.12.rst:767 ../../whatsnew/3.12.rst:1459
 msgid ""
 ":func:`sys._current_exceptions` now returns a mapping from thread-id to an "
 "exception instance, rather than to a ``(typ, exc, tb)`` tuple. (Contributed "
@@ -1325,7 +1489,7 @@ msgid ""
 "demos>`_. (Contributed by Victor Stinner in :gh:`97669`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:970 ../../whatsnew/3.12.rst:1790
+#: ../../whatsnew/3.12.rst:970 ../../whatsnew/3.12.rst:1800
 msgid "Deprecated"
 msgstr "弃用"
 
@@ -1768,7 +1932,7 @@ msgid ""
 "syntax error. (:gh:`87999`)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1196 ../../whatsnew/3.12.rst:1871
+#: ../../whatsnew/3.12.rst:1196 ../../whatsnew/3.12.rst:1881
 msgid "Removed"
 msgstr "移除"
 
@@ -2159,13 +2323,17 @@ msgid ""
 msgstr ""
 
 #: ../../whatsnew/3.12.rst:1371
+msgid "Replace ``imp.new_module(name)`` with ``types.ModuleType(name)``."
+msgstr ""
+
+#: ../../whatsnew/3.12.rst:1373
 msgid ""
 "Removed the ``suspicious`` rule from the documentation Makefile, and removed "
 "``Doc/tools/rstlint.py``, both in favor of `sphinx-lint <https://github.com/"
 "sphinx-contrib/sphinx-lint>`_. (Contributed by Julien Palard in :gh:`98179`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1376
+#: ../../whatsnew/3.12.rst:1378
 msgid ""
 "Remove the *keyfile* and *certfile* parameters from the :mod:`ftplib`, :mod:"
 "`imaplib`, :mod:`poplib` and :mod:`smtplib` modules, and the *key_file*, "
@@ -2175,34 +2343,34 @@ msgid ""
 "in :gh:`94172`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1384
+#: ../../whatsnew/3.12.rst:1386
 msgid ""
 ":mod:`ftplib`: Remove the ``FTP_TLS.ssl_version`` class attribute: use the "
 "*context* parameter instead. (Contributed by Victor Stinner in :gh:`94172`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1388
+#: ../../whatsnew/3.12.rst:1390
 msgid ""
 "Remove support for obsolete browsers from :mod:`webbrowser`. Removed "
 "browsers include: Grail, Mosaic, Netscape, Galeon, Skipstone, Iceape, "
 "Firebird, and Firefox versions 35 and below (:gh:`102871`)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1396 ../../whatsnew/3.12.rst:1692
+#: ../../whatsnew/3.12.rst:1398 ../../whatsnew/3.12.rst:1702
 msgid "Porting to Python 3.12"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1398
+#: ../../whatsnew/3.12.rst:1400
 msgid ""
 "This section lists previously described changes and other bugfixes that may "
 "require changes to your code."
 msgstr "本节列出了先前描述的更改以及可能需要更改代码的其他错误修正."
 
-#: ../../whatsnew/3.12.rst:1402
+#: ../../whatsnew/3.12.rst:1404
 msgid "Changes in the Python API"
 msgstr "Python API 的变化"
 
-#: ../../whatsnew/3.12.rst:1404
+#: ../../whatsnew/3.12.rst:1406
 msgid ""
 "More strict rules are now applied for numerical group references and group "
 "names in regular expressions. Only sequence of ASCII digits is now accepted "
@@ -2211,7 +2379,7 @@ msgid ""
 "(Contributed by Serhiy Storchaka in :gh:`91760`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1411
+#: ../../whatsnew/3.12.rst:1413
 msgid ""
 "Removed ``randrange()`` functionality deprecated since Python 3.10.  "
 "Formerly, ``randrange(10.0)`` losslessly converted to ``randrange(10)``. "
@@ -2223,7 +2391,7 @@ msgid ""
 "`86388`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1419
+#: ../../whatsnew/3.12.rst:1421
 msgid ""
 ":class:`argparse.ArgumentParser` changed encoding and error handler for "
 "reading arguments from file (e.g. ``fromfile_prefix_chars`` option) from "
@@ -2233,21 +2401,21 @@ msgid ""
 "on Windows."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1425
+#: ../../whatsnew/3.12.rst:1427
 msgid ""
 "Removed the ``asyncore``-based ``smtpd`` module deprecated in Python 3.4.7 "
 "and 3.5.4.  A recommended replacement is the :mod:`asyncio`-based aiosmtpd_ "
 "PyPI module."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1429
+#: ../../whatsnew/3.12.rst:1431
 msgid ""
 ":func:`shlex.split`: Passing ``None`` for *s* argument now raises an "
 "exception, rather than reading :data:`sys.stdin`. The feature was deprecated "
 "in Python 3.9. (Contributed by Victor Stinner in :gh:`94352`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1434
+#: ../../whatsnew/3.12.rst:1436
 msgid ""
 "The :mod:`os` module no longer accepts bytes-like paths, like :class:"
 "`bytearray` and :class:`memoryview` types: only the exact :class:`bytes` "
@@ -2255,7 +2423,7 @@ msgid ""
 "`98393`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1439
+#: ../../whatsnew/3.12.rst:1441
 msgid ""
 ":func:`syslog.openlog` and :func:`syslog.closelog` now fail if used in "
 "subinterpreters. :func:`syslog.syslog` may still be used in subinterpreters, "
@@ -2267,7 +2435,7 @@ msgid ""
 "(Contributed by Dong-hee Na in :gh:`99127`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1448
+#: ../../whatsnew/3.12.rst:1450
 msgid ""
 "The undocumented locking behavior of :func:`~functools.cached_property` is "
 "removed, because it locked across all instances of the class, leading to "
@@ -2279,14 +2447,14 @@ msgid ""
 "property getter function or around multi-threaded access points."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1461
+#: ../../whatsnew/3.12.rst:1463
 msgid ""
 "When extracting tar files using :mod:`tarfile` or :func:`shutil."
 "unpack_archive`, pass the *filter* argument to limit features that may be "
 "surprising or dangerous. See :ref:`tarfile-extraction-filter` for details."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1466
+#: ../../whatsnew/3.12.rst:1468
 msgid ""
 "The output of the :func:`tokenize.tokenize` and :func:`tokenize."
 "generate_tokens` functions is now changed due to the changes introduced in :"
@@ -2298,39 +2466,45 @@ msgid ""
 "``f\"start {1+1} end\"`` the old version of the tokenizer emitted::"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1477
+#: ../../whatsnew/3.12.rst:1479
 msgid "while the new version emits::"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1489
+#: ../../whatsnew/3.12.rst:1491
 msgid ""
 "Additionally, there may be some minor behavioral changes as a consecuence of "
 "the changes required to support :pep:`701`. Some of these changes include:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1492
+#: ../../whatsnew/3.12.rst:1494
 msgid ""
 "The ``type`` attribute of the tokens emitted when tokenizing some invalid "
 "Python characters such as ``!`` has changed from ``ERRORTOKEN`` to ``OP``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1495
+#: ../../whatsnew/3.12.rst:1497
 msgid ""
 "Incomplete single-line strings now also raise :exc:`tokenize.TokenError` as "
 "incomplete multiline strings do."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1498
+#: ../../whatsnew/3.12.rst:1500
 msgid ""
 "Some incomplete or invalid Python code now raises :exc:`tokenize.TokenError` "
 "instead of returning arbitrary ``ERRORTOKEN`` tokens when tokenizing it."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1502
+#: ../../whatsnew/3.12.rst:1503
+msgid ""
+"Mixing tabs and spaces as indentation in the same file is not supported "
+"anymore and will raise a :exc:`TabError`."
+msgstr ""
+
+#: ../../whatsnew/3.12.rst:1507
 msgid "Build Changes"
 msgstr "构建变化"
 
-#: ../../whatsnew/3.12.rst:1504
+#: ../../whatsnew/3.12.rst:1509
 msgid ""
 "Python no longer uses ``setup.py`` to build shared C extension modules. "
 "Build parameters like headers and libraries are detected in ``configure`` "
@@ -2339,21 +2513,21 @@ msgid ""
 "in :gh:`93939`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1510
+#: ../../whatsnew/3.12.rst:1515
 msgid ""
 "``va_start()`` with two parameters, like ``va_start(args, format),`` is now "
 "required to build Python. ``va_start()`` is no longer called with a single "
 "parameter. (Contributed by Kumar Aditya in :gh:`93207`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1515
+#: ../../whatsnew/3.12.rst:1520
 msgid ""
 "CPython now uses the ThinLTO option as the default link time optimization "
 "policy if the Clang compiler accepts the flag. (Contributed by Dong-hee Na "
 "in :gh:`89536`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1519
+#: ../../whatsnew/3.12.rst:1524
 msgid ""
 "Add ``COMPILEALL_OPTS`` variable in Makefile to override :mod:`compileall` "
 "options (default: ``-j0``) in ``make install``. Also merged the 3 "
@@ -2362,41 +2536,41 @@ msgid ""
 "`99289`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1525
+#: ../../whatsnew/3.12.rst:1530
 msgid "Add platform triplets for 64-bit LoongArch:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1527
+#: ../../whatsnew/3.12.rst:1532
 msgid "loongarch64-linux-gnusf"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1528
+#: ../../whatsnew/3.12.rst:1533
 msgid "loongarch64-linux-gnuf32"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1529
+#: ../../whatsnew/3.12.rst:1534
 msgid "loongarch64-linux-gnu"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1531
+#: ../../whatsnew/3.12.rst:1536
 msgid "(Contributed by Zhang Na in :gh:`90656`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1533
+#: ../../whatsnew/3.12.rst:1538
 msgid "``PYTHON_FOR_REGEN`` now require Python 3.10 or newer."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1535
+#: ../../whatsnew/3.12.rst:1540
 msgid ""
 "Autoconf 2.71 and aclocal 1.16.4 is now required to regenerate :file:`!"
 "configure`. (Contributed by Christian Heimes in :gh:`89886`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1541
+#: ../../whatsnew/3.12.rst:1546
 msgid "C API Changes"
 msgstr "C API 的变化"
 
-#: ../../whatsnew/3.12.rst:1547
+#: ../../whatsnew/3.12.rst:1552
 msgid ""
 ":pep:`697`: Introduced the :ref:`Unstable C API tier <unstable-c-api>`, "
 "intended for low-level tools like debuggers and JIT compilers. This API may "
@@ -2404,84 +2578,88 @@ msgid ""
 "contents are marked by the ``PyUnstable_`` prefix in names."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1553
+#: ../../whatsnew/3.12.rst:1558
 msgid "Code object constructors:"
-msgstr ""
+msgstr "代码对象构造器:"
 
-#: ../../whatsnew/3.12.rst:1555
+#: ../../whatsnew/3.12.rst:1560
 msgid "``PyUnstable_Code_New()`` (renamed from ``PyCode_New``)"
-msgstr ""
+msgstr "``PyUnstable_Code_New()`` (由 ``PyCode_New`` 改名而来)"
 
-#: ../../whatsnew/3.12.rst:1556
+#: ../../whatsnew/3.12.rst:1561
 msgid ""
 "``PyUnstable_Code_NewWithPosOnlyArgs()`` (renamed from "
 "``PyCode_NewWithPosOnlyArgs``)"
 msgstr ""
+"``PyUnstable_Code_NewWithPosOnlyArgs()`` (由 ``PyCode_NewWithPosOnlyArgs`` 改"
+"名而来)"
 
-#: ../../whatsnew/3.12.rst:1558
+#: ../../whatsnew/3.12.rst:1563
 msgid "Extra storage for code objects (:pep:`523`):"
-msgstr ""
+msgstr "代码对象的额外存储 (:pep:`523`):"
 
-#: ../../whatsnew/3.12.rst:1560
+#: ../../whatsnew/3.12.rst:1565
 msgid ""
 "``PyUnstable_Eval_RequestCodeExtraIndex()`` (renamed from "
 "``_PyEval_RequestCodeExtraIndex``)"
 msgstr ""
+"``PyUnstable_Eval_RequestCodeExtraIndex()`` (由 "
+"``_PyEval_RequestCodeExtraIndex`` 改名而来)"
 
-#: ../../whatsnew/3.12.rst:1561
+#: ../../whatsnew/3.12.rst:1566
 msgid "``PyUnstable_Code_GetExtra()`` (renamed from ``_PyCode_GetExtra``)"
-msgstr ""
+msgstr "``PyUnstable_Code_GetExtra()`` (由 ``_PyCode_GetExtra`` 改名而来)"
 
-#: ../../whatsnew/3.12.rst:1562
+#: ../../whatsnew/3.12.rst:1567
 msgid "``PyUnstable_Code_SetExtra()`` (renamed from ``_PyCode_SetExtra``)"
-msgstr ""
+msgstr "``PyUnstable_Code_SetExtra()`` (由 ``_PyCode_SetExtra`` 改名而来)"
 
-#: ../../whatsnew/3.12.rst:1564
+#: ../../whatsnew/3.12.rst:1569
 msgid ""
 "The original names will continue to be available until the respective API "
 "changes."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1567
+#: ../../whatsnew/3.12.rst:1572
 msgid "(Contributed by Petr Viktorin in :gh:`101101`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1569
+#: ../../whatsnew/3.12.rst:1574
 msgid ""
 ":pep:`697`: Added API for extending types whose instance memory layout is "
 "opaque:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1572
+#: ../../whatsnew/3.12.rst:1577
 msgid ""
 ":c:member:`PyType_Spec.basicsize` can be zero or negative to specify "
 "inheriting or extending the base class size."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1574
+#: ../../whatsnew/3.12.rst:1579
 msgid ""
 ":c:func:`PyObject_GetTypeData` and :c:func:`PyType_GetTypeDataSize` added to "
 "allow access to subclass-specific instance data."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1576
+#: ../../whatsnew/3.12.rst:1581
 msgid ""
 ":const:`Py_TPFLAGS_ITEMS_AT_END` and :c:func:`PyObject_GetItemData` added to "
 "allow safely extending certain variable-sized types, including :c:var:"
 "`PyType_Type`."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1579
+#: ../../whatsnew/3.12.rst:1584
 msgid ""
 ":c:macro:`Py_RELATIVE_OFFSET` added to allow defining :c:type:`members "
 "<PyMemberDef>` in terms of a subclass-specific struct."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1582
+#: ../../whatsnew/3.12.rst:1587
 msgid "(Contributed by Petr Viktorin in :gh:`103509`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1584
+#: ../../whatsnew/3.12.rst:1589
 msgid ""
 "Added the new :ref:`limited C API <limited-c-api>` function :c:func:"
 "`PyType_FromMetaclass`, which generalizes the existing :c:func:"
@@ -2489,29 +2667,29 @@ msgid ""
 "(Contributed by Wenzel Jakob in :gh:`93012`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1589
+#: ../../whatsnew/3.12.rst:1594
 msgid ""
 "API for creating objects that can be called using :ref:`the vectorcall "
 "protocol <vectorcall>` was added to the :ref:`Limited API <stable>`:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1593
+#: ../../whatsnew/3.12.rst:1598
 msgid ":const:`Py_TPFLAGS_HAVE_VECTORCALL`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1594
+#: ../../whatsnew/3.12.rst:1599
 msgid ":c:func:`PyVectorcall_NARGS`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1595
+#: ../../whatsnew/3.12.rst:1600
 msgid ":c:func:`PyVectorcall_Call`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1596
+#: ../../whatsnew/3.12.rst:1601
 msgid ":c:type:`vectorcallfunc`"
 msgstr ":c:type:`vectorcallfunc`"
 
-#: ../../whatsnew/3.12.rst:1598
+#: ../../whatsnew/3.12.rst:1603
 msgid ""
 "The :const:`Py_TPFLAGS_HAVE_VECTORCALL` flag is now removed from a class "
 "when the class's :py:meth:`~object.__call__` method is reassigned. This "
@@ -2522,7 +2700,7 @@ msgid ""
 "`93274`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1606
+#: ../../whatsnew/3.12.rst:1611
 msgid ""
 "The :const:`Py_TPFLAGS_MANAGED_DICT` and :const:`Py_TPFLAGS_MANAGED_WEAKREF` "
 "flags have been added. This allows extensions classes to support object "
@@ -2530,32 +2708,32 @@ msgid ""
 "faster access."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1611
+#: ../../whatsnew/3.12.rst:1616
 msgid ""
 "API for performing calls using :ref:`the vectorcall protocol <vectorcall>` "
 "was added to the :ref:`Limited API <stable>`:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1615
+#: ../../whatsnew/3.12.rst:1620
 msgid ":c:func:`PyObject_Vectorcall`"
 msgstr ":c:func:`PyObject_Vectorcall`"
 
-#: ../../whatsnew/3.12.rst:1616
+#: ../../whatsnew/3.12.rst:1621
 msgid ":c:func:`PyObject_VectorcallMethod`"
 msgstr ":c:func:`PyObject_VectorcallMethod`"
 
-#: ../../whatsnew/3.12.rst:1617
+#: ../../whatsnew/3.12.rst:1622
 msgid ":const:`PY_VECTORCALL_ARGUMENTS_OFFSET`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1619
+#: ../../whatsnew/3.12.rst:1624
 msgid ""
 "This means that both the incoming and outgoing ends of the vector call "
 "protocol are now available in the :ref:`Limited API <stable>`. (Contributed "
 "by Wenzel Jakob in :gh:`98586`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1623
+#: ../../whatsnew/3.12.rst:1628
 msgid ""
 "Added two new public functions, :c:func:`PyEval_SetProfileAllThreads` and :c:"
 "func:`PyEval_SetTraceAllThreads`, that allow to set tracing and profiling "
@@ -2563,14 +2741,14 @@ msgid ""
 "(Contributed by Pablo Galindo in :gh:`93503`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1629
+#: ../../whatsnew/3.12.rst:1634
 msgid ""
 "Added new function :c:func:`PyFunction_SetVectorcall` to the C API which "
 "sets the vectorcall field of a given :c:type:`PyFunctionObject`. "
 "(Contributed by Andrew Frost in :gh:`92257`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1633
+#: ../../whatsnew/3.12.rst:1638
 msgid ""
 "The C API now permits registering callbacks via :c:func:"
 "`PyDict_AddWatcher`, :c:func:`PyDict_Watch` and related APIs to be called "
@@ -2579,28 +2757,28 @@ msgid ""
 "`91052`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1639
+#: ../../whatsnew/3.12.rst:1644
 msgid ""
 "Added :c:func:`PyType_AddWatcher` and :c:func:`PyType_Watch` API to register "
 "callbacks to receive notification on changes to a type. (Contributed by Carl "
 "Meyer in :gh:`91051`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1643
+#: ../../whatsnew/3.12.rst:1648
 msgid ""
 "Added :c:func:`PyCode_AddWatcher` and :c:func:`PyCode_ClearWatcher` APIs to "
 "register callbacks to receive notification on creation and destruction of "
 "code objects. (Contributed by Itamar Ostricher in :gh:`91054`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1648
+#: ../../whatsnew/3.12.rst:1653
 msgid ""
 "Add :c:func:`PyFrame_GetVar` and :c:func:`PyFrame_GetVarString` functions to "
 "get a frame variable by its name. (Contributed by Victor Stinner in :gh:"
 "`91248`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1652
+#: ../../whatsnew/3.12.rst:1657
 msgid ""
 "Add :c:func:`PyErr_GetRaisedException` and :c:func:"
 "`PyErr_SetRaisedException` for saving and restoring the current exception. "
@@ -2610,14 +2788,14 @@ msgid ""
 "(Contributed by Mark Shannon in :gh:`101578`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1660
+#: ../../whatsnew/3.12.rst:1665
 msgid ""
 "Add ``_PyErr_ChainExceptions1``, which takes an exception instance, to "
 "replace the legacy-API ``_PyErr_ChainExceptions``, which is now deprecated. "
 "(Contributed by Mark Shannon in :gh:`101578`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1664
+#: ../../whatsnew/3.12.rst:1669
 msgid ""
 "Add :c:func:`PyException_GetArgs` and :c:func:`PyException_SetArgs` as "
 "convenience functions for retrieving and modifying the :attr:`~BaseException."
@@ -2625,84 +2803,91 @@ msgid ""
 "in :gh:`101578`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1669
+#: ../../whatsnew/3.12.rst:1674
 msgid ""
 "Add :c:func:`PyErr_DisplayException`, which takes an exception instance, to "
 "replace the legacy-api :c:func:`!PyErr_Display`. (Contributed by Irit "
 "Katriel in :gh:`102755`)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1673
+#: ../../whatsnew/3.12.rst:1678
 msgid ""
 ":pep:`683`: Introduced Immortal Objects to Python which allows objects to "
 "bypass reference counts and introduced changes to the C-API:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1676
+#: ../../whatsnew/3.12.rst:1681
 msgid "``_Py_IMMORTAL_REFCNT``: The reference count that defines an object"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1677
+#: ../../whatsnew/3.12.rst:1682
 msgid "as immortal."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1678
+#: ../../whatsnew/3.12.rst:1683
 msgid ""
 "``_Py_IsImmortal`` Checks if an object has the immortal reference count."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1679
+#: ../../whatsnew/3.12.rst:1684
 msgid "``PyObject_HEAD_INIT`` This will now initialize reference count to"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1680
+#: ../../whatsnew/3.12.rst:1685
 msgid "``_Py_IMMORTAL_REFCNT`` when used with ``Py_BUILD_CORE``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1681
+#: ../../whatsnew/3.12.rst:1686
 msgid "``SSTATE_INTERNED_IMMORTAL`` An identifier for interned unicode objects"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1682
+#: ../../whatsnew/3.12.rst:1687
 msgid "that are immortal."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1683
+#: ../../whatsnew/3.12.rst:1688
 msgid "``SSTATE_INTERNED_IMMORTAL_STATIC`` An identifier for interned unicode"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1684
+#: ../../whatsnew/3.12.rst:1689
 msgid "objects that are immortal and static"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1687
+#: ../../whatsnew/3.12.rst:1692
 msgid "``sys.getunicodeinternedsize`` This returns the total number of unicode"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1686
+#: ../../whatsnew/3.12.rst:1691
 msgid ""
 "objects that have been interned. This is now needed for refleak.py to "
 "correctly track reference counts and allocated blocks"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1689
+#: ../../whatsnew/3.12.rst:1694
 msgid "(Contributed by Eddie Elizondo in :gh:`84436`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1694
+#: ../../whatsnew/3.12.rst:1696
+msgid ""
+"In the limited C API version 3.12, :c:func:`Py_INCREF` and :c:func:"
+"`Py_DECREF` functions are now implemented as opaque function calls to hide "
+"implementation details. (Contributed by Victor Stinner in :gh:`105387`.)"
+msgstr ""
+
+#: ../../whatsnew/3.12.rst:1704
 msgid ""
 "Legacy Unicode APIs based on ``Py_UNICODE*`` representation has been "
 "removed. Please migrate to APIs based on UTF-8 or ``wchar_t*``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1697
+#: ../../whatsnew/3.12.rst:1707
 msgid ""
 "Argument parsing functions like :c:func:`PyArg_ParseTuple` doesn't support "
 "``Py_UNICODE*`` based format (e.g. ``u``, ``Z``) anymore. Please migrate to "
 "other formats for Unicode like ``s``, ``z``, ``es``, and ``U``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1701
+#: ../../whatsnew/3.12.rst:1711
 msgid ""
 "``tp_weaklist`` for all static builtin types is always ``NULL``. This is an "
 "internal-only field on ``PyTypeObject`` but we're pointing out the change in "
@@ -2711,7 +2896,7 @@ msgid ""
 "necessary, the (internal-only) ``_PyObject_GET_WEAKREFS_LISTPTR()`` macro."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1708
+#: ../../whatsnew/3.12.rst:1718
 msgid ""
 "This internal-only :c:member:`PyTypeObject.tp_subclasses` may now not be a "
 "valid object pointer.  Its type was changed to :c:expr:`void *` to reflect "
@@ -2719,13 +2904,13 @@ msgid ""
 "only field directly."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1713
+#: ../../whatsnew/3.12.rst:1723
 msgid ""
 "To get a list of subclasses, call the Python method :py:meth:`~class."
 "__subclasses__` (using :c:func:`PyObject_CallMethod`, for example)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1717
+#: ../../whatsnew/3.12.rst:1727
 msgid ""
 "Add support of more formatting options (left aligning, octals, uppercase "
 "hexadecimals, ``intmax_t``, ``ptrdiff_t``, ``wchar_t`` C strings, variable "
@@ -2733,7 +2918,7 @@ msgid ""
 "`PyUnicode_FromFormatV`. (Contributed by Serhiy Storchaka in :gh:`98836`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1723
+#: ../../whatsnew/3.12.rst:1733
 msgid ""
 "An unrecognized format character in :c:func:`PyUnicode_FromFormat` and :c:"
 "func:`PyUnicode_FromFormatV` now sets a :exc:`SystemError`. In previous "
@@ -2742,13 +2927,13 @@ msgid ""
 "Storchaka in :gh:`95781`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1729
+#: ../../whatsnew/3.12.rst:1739
 msgid ""
 "Fixed wrong sign placement in :c:func:`PyUnicode_FromFormat` and :c:func:"
 "`PyUnicode_FromFormatV`. (Contributed by Philip Georgi in :gh:`95504`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1733
+#: ../../whatsnew/3.12.rst:1743
 msgid ""
 "Extension classes wanting to add a ``__dict__`` or weak reference slot "
 "should use :const:`Py_TPFLAGS_MANAGED_DICT` and :const:"
@@ -2762,7 +2947,7 @@ msgid ""
 "func:`PyObject_ClearWeakRefs`, as before."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1745
+#: ../../whatsnew/3.12.rst:1755
 msgid ""
 "The :c:func:`PyUnicode_FSDecoder` function no longer accepts bytes-like "
 "paths, like :class:`bytearray` and :class:`memoryview` types: only the "
@@ -2770,7 +2955,7 @@ msgid ""
 "Victor Stinner in :gh:`98393`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1750
+#: ../../whatsnew/3.12.rst:1760
 msgid ""
 "The :c:macro:`Py_CLEAR`, :c:macro:`Py_SETREF` and :c:macro:`Py_XSETREF` "
 "macros now only evaluate their arguments once. If an argument has side "
@@ -2778,7 +2963,7 @@ msgid ""
 "Stinner in :gh:`98724`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1755
+#: ../../whatsnew/3.12.rst:1765
 msgid ""
 "The interpreter's error indicator is now always normalized. This means that :"
 "c:func:`PyErr_SetObject`, :c:func:`PyErr_SetString` and the other functions "
@@ -2786,7 +2971,7 @@ msgid ""
 "(Contributed by Mark Shannon in :gh:`101578`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1760
+#: ../../whatsnew/3.12.rst:1770
 msgid ""
 "``_Py_RefTotal`` is no longer authoritative and only kept around for ABI "
 "compatibility.  Note that it is an internal global and only available on "
@@ -2794,25 +2979,25 @@ msgid ""
 "``_Py_GetGlobalRefTotal()``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1765
+#: ../../whatsnew/3.12.rst:1775
 msgid ""
 "The following functions now select an appropriate metaclass for the newly "
 "created type:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1768
+#: ../../whatsnew/3.12.rst:1778
 msgid ":c:func:`PyType_FromSpec`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1769
+#: ../../whatsnew/3.12.rst:1779
 msgid ":c:func:`PyType_FromSpecWithBases`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1770
+#: ../../whatsnew/3.12.rst:1780
 msgid ":c:func:`PyType_FromModuleAndSpec`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1772
+#: ../../whatsnew/3.12.rst:1782
 msgid ""
 "Creating classes whose metaclass overrides :c:member:`~PyTypeObject.tp_new` "
 "is deprecated, and in Python 3.14+ it will be disallowed. Note that these "
@@ -2820,13 +3005,13 @@ msgid ""
 "initialization."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1777
+#: ../../whatsnew/3.12.rst:1787
 msgid ""
 "Note that :c:func:`PyType_FromMetaclass` (added in Python 3.12) already "
 "disallows creating classes whose metaclass overrides ``tp_new``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1780
+#: ../../whatsnew/3.12.rst:1790
 msgid ""
 ":c:var:`PyOS_InputHook` and :c:var:`PyOS_ReadlineFunctionPointer` are no "
 "longer called in :ref:`subinterpreters <sub-interpreter-support>`. This is "
@@ -2834,270 +3019,291 @@ msgid ""
 "callbacks have no way of recovering extension module state)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1785
+#: ../../whatsnew/3.12.rst:1795
 msgid ""
 "This also avoids situations where extensions may find themselves running in "
 "a subinterpreter that they don't support (or haven't yet been loaded in). "
 "See :gh:`104668` for more info."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1792
-msgid "Deprecate global configuration variable:"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:1794
-msgid ":c:var:`Py_DebugFlag`: use :c:member:`PyConfig.parser_debug`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:1795
-msgid ":c:var:`Py_VerboseFlag`: use :c:member:`PyConfig.verbose`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:1796
-msgid ":c:var:`Py_QuietFlag`: use :c:member:`PyConfig.quiet`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:1797
-msgid ":c:var:`Py_InteractiveFlag`: use :c:member:`PyConfig.interactive`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:1798
-msgid ":c:var:`Py_InspectFlag`: use :c:member:`PyConfig.inspect`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:1799
-msgid ":c:var:`Py_OptimizeFlag`: use :c:member:`PyConfig.optimization_level`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:1800
-msgid ":c:var:`Py_NoSiteFlag`: use :c:member:`PyConfig.site_import`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:1801
-msgid ":c:var:`Py_BytesWarningFlag`: use :c:member:`PyConfig.bytes_warning`"
-msgstr ""
-
 #: ../../whatsnew/3.12.rst:1802
-msgid ":c:var:`Py_FrozenFlag`: use :c:member:`PyConfig.pathconfig_warnings`"
-msgstr ""
+msgid "Deprecate global configuration variable:"
+msgstr "已弃用的全局配置变量:"
 
-#: ../../whatsnew/3.12.rst:1803
+#: ../../whatsnew/3.12.rst:1804
+msgid ":c:var:`Py_DebugFlag`: use :c:member:`PyConfig.parser_debug`"
+msgstr ":c:var:`Py_DebugFlag`: 使用 :c:member:`PyConfig.parser_debug`"
+
+#: ../../whatsnew/3.12.rst:1805
+msgid ":c:var:`Py_VerboseFlag`: use :c:member:`PyConfig.verbose`"
+msgstr ":c:var:`Py_VerboseFlag`: 使用 :c:member:`PyConfig.verbose`"
+
+#: ../../whatsnew/3.12.rst:1806
+msgid ":c:var:`Py_QuietFlag`: use :c:member:`PyConfig.quiet`"
+msgstr ":c:var:`Py_QuietFlag`: 使用 :c:member:`PyConfig.quiet`"
+
+#: ../../whatsnew/3.12.rst:1807
+msgid ":c:var:`Py_InteractiveFlag`: use :c:member:`PyConfig.interactive`"
+msgstr ":c:var:`Py_InteractiveFlag`: 使用 :c:member:`PyConfig.interactive`"
+
+#: ../../whatsnew/3.12.rst:1808
+msgid ":c:var:`Py_InspectFlag`: use :c:member:`PyConfig.inspect`"
+msgstr ":c:var:`Py_InspectFlag`: 使用 :c:member:`PyConfig.inspect`"
+
+#: ../../whatsnew/3.12.rst:1809
+msgid ":c:var:`Py_OptimizeFlag`: use :c:member:`PyConfig.optimization_level`"
+msgstr ":c:var:`Py_OptimizeFlag`: 使用 :c:member:`PyConfig.optimization_level`"
+
+#: ../../whatsnew/3.12.rst:1810
+msgid ":c:var:`Py_NoSiteFlag`: use :c:member:`PyConfig.site_import`"
+msgstr ":c:var:`Py_NoSiteFlag`: 使用 :c:member:`PyConfig.site_import`"
+
+#: ../../whatsnew/3.12.rst:1811
+msgid ":c:var:`Py_BytesWarningFlag`: use :c:member:`PyConfig.bytes_warning`"
+msgstr ":c:var:`Py_BytesWarningFlag`: 使用 :c:member:`PyConfig.bytes_warning`"
+
+#: ../../whatsnew/3.12.rst:1812
+msgid ":c:var:`Py_FrozenFlag`: use :c:member:`PyConfig.pathconfig_warnings`"
+msgstr ":c:var:`Py_FrozenFlag`: 使用 :c:member:`PyConfig.pathconfig_warnings`"
+
+#: ../../whatsnew/3.12.rst:1813
 msgid ""
 ":c:var:`Py_IgnoreEnvironmentFlag`: use :c:member:`PyConfig.use_environment`"
 msgstr ""
+":c:var:`Py_IgnoreEnvironmentFlag`: 使用 :c:member:`PyConfig.use_environment`"
 
-#: ../../whatsnew/3.12.rst:1804
+#: ../../whatsnew/3.12.rst:1814
 msgid ""
 ":c:var:`Py_DontWriteBytecodeFlag`: use :c:member:`PyConfig.write_bytecode`"
 msgstr ""
+":c:var:`Py_DontWriteBytecodeFlag`: 使用 :c:member:`PyConfig.write_bytecode`"
 
-#: ../../whatsnew/3.12.rst:1805
+#: ../../whatsnew/3.12.rst:1815
 msgid ""
 ":c:var:`Py_NoUserSiteDirectory`: use :c:member:`PyConfig.user_site_directory`"
 msgstr ""
+":c:var:`Py_NoUserSiteDirectory`: 使用 :c:member:`PyConfig."
+"user_site_directory`"
 
-#: ../../whatsnew/3.12.rst:1806
+#: ../../whatsnew/3.12.rst:1816
 msgid ""
 ":c:var:`Py_UnbufferedStdioFlag`: use :c:member:`PyConfig.buffered_stdio`"
 msgstr ""
+":c:var:`Py_UnbufferedStdioFlag`: 使用 :c:member:`PyConfig.buffered_stdio`"
 
-#: ../../whatsnew/3.12.rst:1807
+#: ../../whatsnew/3.12.rst:1817
 msgid ""
 ":c:var:`Py_HashRandomizationFlag`: use :c:member:`PyConfig.use_hash_seed` "
 "and :c:member:`PyConfig.hash_seed`"
 msgstr ""
+":c:var:`Py_HashRandomizationFlag`: 使用 :c:member:`PyConfig.use_hash_seed` "
+"和 :c:member:`PyConfig.hash_seed`"
 
-#: ../../whatsnew/3.12.rst:1809
+#: ../../whatsnew/3.12.rst:1819
 msgid ":c:var:`Py_IsolatedFlag`: use :c:member:`PyConfig.isolated`"
-msgstr ""
+msgstr ":c:var:`Py_IsolatedFlag`: 使用 :c:member:`PyConfig.isolated`"
 
-#: ../../whatsnew/3.12.rst:1810
+#: ../../whatsnew/3.12.rst:1820
 msgid ""
 ":c:var:`Py_LegacyWindowsFSEncodingFlag`: use :c:member:`PyPreConfig."
 "legacy_windows_fs_encoding`"
 msgstr ""
+":c:var:`Py_LegacyWindowsFSEncodingFlag`: 使用 :c:member:`PyPreConfig."
+"legacy_windows_fs_encoding`"
 
-#: ../../whatsnew/3.12.rst:1811
+#: ../../whatsnew/3.12.rst:1821
 msgid ""
 ":c:var:`Py_LegacyWindowsStdioFlag`: use :c:member:`PyConfig."
 "legacy_windows_stdio`"
 msgstr ""
+":c:var:`Py_LegacyWindowsStdioFlag`: 使用 :c:member:`PyConfig."
+"legacy_windows_stdio`"
 
-#: ../../whatsnew/3.12.rst:1812
+#: ../../whatsnew/3.12.rst:1822
 msgid ""
 ":c:var:`!Py_FileSystemDefaultEncoding`: use :c:member:`PyConfig."
 "filesystem_encoding`"
 msgstr ""
+":c:var:`!Py_FileSystemDefaultEncoding`: 使用 :c:member:`PyConfig."
+"filesystem_encoding`"
 
-#: ../../whatsnew/3.12.rst:1813
+#: ../../whatsnew/3.12.rst:1823
 msgid ""
 ":c:var:`!Py_FileSystemDefaultEncodeErrors`: use :c:member:`PyConfig."
 "filesystem_errors`"
 msgstr ""
+":c:var:`!Py_FileSystemDefaultEncodeErrors`: 使用 :c:member:`PyConfig."
+"filesystem_errors`"
 
-#: ../../whatsnew/3.12.rst:1814
+#: ../../whatsnew/3.12.rst:1824
 msgid ""
 ":c:var:`!Py_UTF8Mode`: use :c:member:`PyPreConfig.utf8_mode` (see :c:func:"
 "`Py_PreInitialize`)"
 msgstr ""
+":c:var:`!Py_UTF8Mode`: 使用 :c:member:`PyPreConfig.utf8_mode` (参见 :c:func:"
+"`Py_PreInitialize`)"
 
-#: ../../whatsnew/3.12.rst:1816
+#: ../../whatsnew/3.12.rst:1826
 msgid ""
 "The :c:func:`Py_InitializeFromConfig` API should be used with :c:type:"
 "`PyConfig` instead. (Contributed by Victor Stinner in :gh:`77782`.)"
 msgstr ""
+":c:func:`Py_InitializeFromConfig` API 应当改为使用 :c:type:`PyConfig`。 （由 "
+"Victor Stinner 在 :gh:`77782` 中贡献。）"
 
-#: ../../whatsnew/3.12.rst:1820
+#: ../../whatsnew/3.12.rst:1830
 msgid ""
 "Creating immutable types (:const:`Py_TPFLAGS_IMMUTABLETYPE`) with mutable "
 "bases is deprecated and will be disabled in Python 3.14."
 msgstr ""
+"使用可变的基类创建不可变类型 (:const:`Py_TPFLAGS_IMMUTABLETYPE`) 的做法已被弃"
+"用并将在 Python 3.14 中被禁用。"
 
-#: ../../whatsnew/3.12.rst:1823
+#: ../../whatsnew/3.12.rst:1833
 msgid ""
 "The ``structmember.h`` header is deprecated, though it continues to be "
 "available and there are no plans to remove it."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1826
+#: ../../whatsnew/3.12.rst:1836
 msgid ""
 "Its contents are now available just by including ``Python.h``, with a ``Py`` "
 "prefix added if it was missing:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1829
+#: ../../whatsnew/3.12.rst:1839
 msgid ""
 ":c:struct:`PyMemberDef`, :c:func:`PyMember_GetOne` and :c:func:"
 "`PyMember_SetOne`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1831
+#: ../../whatsnew/3.12.rst:1841
 msgid ""
 "Type macros like :c:macro:`Py_T_INT`, :c:macro:`Py_T_DOUBLE`, etc. "
 "(previously ``T_INT``, ``T_DOUBLE``, etc.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1833
+#: ../../whatsnew/3.12.rst:1843
 msgid ""
 "The flags :c:macro:`Py_READONLY` (previously ``READONLY``) and :c:macro:"
 "`Py_AUDIT_READ` (previously all uppercase)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1836
+#: ../../whatsnew/3.12.rst:1846
 msgid "Several items are not exposed from ``Python.h``:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1838
+#: ../../whatsnew/3.12.rst:1848
 msgid ":c:macro:`T_OBJECT` (use :c:macro:`Py_T_OBJECT_EX`)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1839
+#: ../../whatsnew/3.12.rst:1849
 msgid ":c:macro:`T_NONE` (previously undocumented, and pretty quirky)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1840
+#: ../../whatsnew/3.12.rst:1850
 msgid "The macro ``WRITE_RESTRICTED`` which does nothing."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1841
+#: ../../whatsnew/3.12.rst:1851
 msgid ""
 "The macros ``RESTRICTED`` and ``READ_RESTRICTED``, equivalents of :c:macro:"
 "`Py_AUDIT_READ`."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1843
+#: ../../whatsnew/3.12.rst:1853
 msgid ""
 "In some configurations, ``<stddef.h>`` is not included from ``Python.h``. It "
 "should be included manually when using ``offsetof()``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1846
+#: ../../whatsnew/3.12.rst:1856
 msgid ""
 "The deprecated header continues to provide its original contents under the "
 "original names. Your old code can stay unchanged, unless the extra include "
 "and non-namespaced macros bother you greatly."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1851
+#: ../../whatsnew/3.12.rst:1861
 msgid ""
 "(Contributed in :gh:`47146` by Petr Viktorin, based on earlier work by "
 "Alexander Belopolsky and Matthias Braun.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1854
+#: ../../whatsnew/3.12.rst:1864
 msgid ""
 ":c:func:`PyErr_Fetch` and :c:func:`PyErr_Restore` are deprecated. Use :c:"
 "func:`PyErr_GetRaisedException` and :c:func:`PyErr_SetRaisedException` "
 "instead. (Contributed by Mark Shannon in :gh:`101578`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1859
+#: ../../whatsnew/3.12.rst:1869
 msgid ""
 ":c:func:`!PyErr_Display` is deprecated. Use :c:func:`PyErr_DisplayException` "
 "instead. (Contributed by Irit Katriel in :gh:`102755`)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1862
+#: ../../whatsnew/3.12.rst:1872
 msgid ""
 "``_PyErr_ChainExceptions`` is deprecated. Use ``_PyErr_ChainExceptions1`` "
 "instead. (Contributed by Irit Katriel in :gh:`102192`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1865
+#: ../../whatsnew/3.12.rst:1875
 msgid ""
 "Using :c:func:`PyType_FromSpec`, :c:func:`PyType_FromSpecWithBases` or :c:"
 "func:`PyType_FromModuleAndSpec` to create a class whose metaclass overrides :"
 "c:member:`~PyTypeObject.tp_new` is deprecated. Call the metaclass instead."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1873
+#: ../../whatsnew/3.12.rst:1883
 msgid ""
 "Remove the ``token.h`` header file. There was never any public tokenizer C "
 "API. The ``token.h`` header file was only designed to be used by Python "
 "internals. (Contributed by Victor Stinner in :gh:`92651`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1878
+#: ../../whatsnew/3.12.rst:1888
 msgid "Legacy Unicode APIs have been removed. See :pep:`623` for detail."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1880
+#: ../../whatsnew/3.12.rst:1890
 msgid ":c:macro:`!PyUnicode_WCHAR_KIND`"
 msgstr ":c:macro:`!PyUnicode_WCHAR_KIND`"
 
-#: ../../whatsnew/3.12.rst:1881
+#: ../../whatsnew/3.12.rst:1891
 msgid ":c:func:`!PyUnicode_AS_UNICODE`"
 msgstr ":c:func:`!PyUnicode_AS_UNICODE`"
 
-#: ../../whatsnew/3.12.rst:1882
+#: ../../whatsnew/3.12.rst:1892
 msgid ":c:func:`!PyUnicode_AsUnicode`"
 msgstr ":c:func:`!PyUnicode_AsUnicode`"
 
-#: ../../whatsnew/3.12.rst:1883
+#: ../../whatsnew/3.12.rst:1893
 msgid ":c:func:`!PyUnicode_AsUnicodeAndSize`"
 msgstr ":c:func:`!PyUnicode_AsUnicodeAndSize`"
 
-#: ../../whatsnew/3.12.rst:1884
+#: ../../whatsnew/3.12.rst:1894
 msgid ":c:func:`!PyUnicode_AS_DATA`"
 msgstr ":c:func:`!PyUnicode_AS_DATA`"
 
-#: ../../whatsnew/3.12.rst:1885
+#: ../../whatsnew/3.12.rst:1895
 msgid ":c:func:`!PyUnicode_FromUnicode`"
 msgstr ":c:func:`!PyUnicode_FromUnicode`"
 
-#: ../../whatsnew/3.12.rst:1886
+#: ../../whatsnew/3.12.rst:1896
 msgid ":c:func:`!PyUnicode_GET_SIZE`"
 msgstr ":c:func:`!PyUnicode_GET_SIZE`"
 
-#: ../../whatsnew/3.12.rst:1887
+#: ../../whatsnew/3.12.rst:1897
 msgid ":c:func:`!PyUnicode_GetSize`"
 msgstr ":c:func:`!PyUnicode_GetSize`"
 
-#: ../../whatsnew/3.12.rst:1888
+#: ../../whatsnew/3.12.rst:1898
 msgid ":c:func:`!PyUnicode_GET_DATA_SIZE`"
 msgstr ":c:func:`!PyUnicode_GET_DATA_SIZE`"
 
-#: ../../whatsnew/3.12.rst:1890
+#: ../../whatsnew/3.12.rst:1900
 msgid ""
 "Remove the ``PyUnicode_InternImmortal()`` function macro. (Contributed by "
 "Victor Stinner in :gh:`85858`.)"
@@ -3105,7 +3311,7 @@ msgstr ""
 "移除了 ``PyUnicode_InternImmortal()`` 函数宏。 （由 Victor Stinner 在 :gh:"
 "`85858` 中贡献。）.)"
 
-#: ../../whatsnew/3.12.rst:1893
+#: ../../whatsnew/3.12.rst:1903
 msgid ""
 "Remove ``Jython`` compatibility hacks from several stdlib modules and tests. "
 "(Contributed by Nikita Sobolev in :gh:`99482`.)"
@@ -3113,7 +3319,7 @@ msgstr ""
 "从多个标准库模块和测试中移除了 ``Jython`` 兼容性处理。 （由 Nikita Sobolev "
 "在 :gh:`99482` 中贡献。）"
 
-#: ../../whatsnew/3.12.rst:1896
+#: ../../whatsnew/3.12.rst:1906
 msgid ""
 "Remove ``_use_broken_old_ctypes_structure_semantics_`` flag from :mod:"
 "`ctypes` module. (Contributed by Nikita Sobolev in :gh:`99285`.)"
