@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-09 14:13+0000\n"
+"POT-Creation-Date: 2023-06-16 14:12+0000\n"
 "PO-Revision-Date: 2021-06-28 01:13+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -569,7 +569,7 @@ msgstr "*dir_fd* 参数。"
 
 #: ../../library/shutil.rst:343
 msgid "Added the *onexc* parameter, deprecated *onerror*."
-msgstr ""
+msgstr "增加了 *onexc* 形参，弃用了 *onerror*。"
 
 #: ../../library/shutil.rst:348
 msgid ""
@@ -726,6 +726,11 @@ msgid ""
 "consulting the current working directory for executables: set the "
 "environment variable ``NoDefaultCurrentDirectoryInExePath``."
 msgstr ""
+"在 Windows 上，如果 *mode* 不包括 ``os.X_OK`` 则会将当前目录添加到 *path* "
+"中。 当 *mode* 包括 ``os.X_OK`` 时，则将通过 Windows API "
+"``NeedCurrentDirectoryForExePathW`` 来确定当前目录是否应当添加到 *path* 中。 "
+"要避免在当前工作目录下查找可执行文件：可设置 "
+"``NoDefaultCurrentDirectoryInExePath`` 环境变量。"
 
 #: ../../library/shutil.rst:443
 msgid ""
@@ -735,12 +740,15 @@ msgid ""
 "should look for ``python.exe`` within the *path* directories. For example, "
 "on Windows::"
 msgstr ""
+"在 Windows 上，还会使用 ``PATHEXT`` 变量来查找尚未包括某个扩展名的命令。 举例"
+"来说，如果你调用 ``shutil.which(\"python\")``，:func:`which` 将搜索 "
+"``PATHEXT`` 以获知应当在 *path* 中查找 ``python.exe``。 例如，在 Windows 上::"
 
 #: ../../library/shutil.rst:452
 msgid ""
 "This is also applied when *cmd* is a path that contains a directory "
 "component::"
-msgstr ""
+msgstr "这也适用于当 *cmd* 是一个包含目录组成部分路径的情况::"
 
 #: ../../library/shutil.rst:460
 msgid ""
@@ -760,6 +768,11 @@ msgid ""
 "extension that is in ``PATHEXT``; and filenames that have no extension can "
 "now be found."
 msgstr ""
+"在 Windows 上，如果 *mode* 包括 ``os.X_OK`` 且 WinAPI "
+"``NeedCurrentDirectoryForExePathW(cmd)`` 为假值则不会再将当前目录添加到搜索路"
+"径中，否则即使当前目录已经在搜索路径中仍会再次添加它；现在 ``PATHEXT`` 即使"
+"当 *cmd* 包括目录组成部分或以 ``PATHEXT`` 中的扩展名结束时仍然会被使用；并且"
+"没有扩展名的文件名现在也能被找到。"
 
 #: ../../library/shutil.rst:475
 msgid ""
@@ -845,6 +858,9 @@ msgid ""
 "the readonly bit and reattempt the remove. Any subsequent failure will "
 "propagate. ::"
 msgstr ""
+"这个例子演示了如何在 Windows 上删除一个目录树，其中部分文件设置了只读属性"
+"位。 它会使用 onexc 回调函数来清除只读属性并再次尝试删除。 任何后续的失败都将"
+"被传播。 ::"
 
 #: ../../library/shutil.rst:555
 msgid "Archiving operations"
@@ -947,6 +963,9 @@ msgid ""
 "case it temporarily changes the current working directory of the process to "
 "*root_dir* to perform archiving."
 msgstr ""
+"此函数在通过 :func:`register_archive_format` 注册的自定义归档程序不支持 "
+"*root_dir* 参数时时不是线程安全的。 在这种情况下它会临时改变进程的当前工作目"
+"录到 *root_dir* 来执行归档操作。"
 
 #: ../../library/shutil.rst:609
 msgid ""
@@ -1029,6 +1048,10 @@ msgid ""
 "*root_dir* before calling *function*. In this case :func:`make_archive` is "
 "not thread-safe."
 msgstr ""
+"如果 *function* 将自定义属性 ``function.supports_root_dir`` 设为 ``True``，则"
+"会以关键字参数形式传递 *root_dir* 参数。 否则进程的当前工作目录将在调用 "
+"*function* 之前被临时更改为 *root_dir*。 在此情况下 :func:`make_archive` 将不"
+"是线程安全的。"
 
 #: ../../library/shutil.rst:650
 msgid ""
@@ -1048,7 +1071,7 @@ msgstr ""
 
 #: ../../library/shutil.rst:656
 msgid "Added support for functions supporting the *root_dir* argument."
-msgstr ""
+msgstr "增加了对支持 *root_dir* 参数的函数的支持。"
 
 #: ../../library/shutil.rst:662
 msgid "Remove the archive format *name* from the list of supported formats."
@@ -1089,6 +1112,10 @@ msgid ""
 "details.) The ``'data'`` filter will become the default for tar files in "
 "Python 3.14."
 msgstr ""
+"仅限关键字参数 *filter* 将被传给下层的解包函数。 对于 zip 文件，*filter* 将不"
+"被接受。 对于 tar 文件，推荐将其设为 ``'data'``，除非使用了 tar 专属的特征且"
+"为 UNIX 类文件系统。 （请参阅 :ref:`tarfile-extraction-filter` 了解详情。） "
+"``'data'`` 将在 Python 3.14 中成为 tar 文件的默认过滤器。"
 
 #: ../../library/shutil.rst:687
 msgid ""
