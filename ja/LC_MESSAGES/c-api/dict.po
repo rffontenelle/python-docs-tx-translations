@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 14:49+0000\n"
+"POT-Creation-Date: 2023-06-30 14:41+0000\n"
 "PO-Revision-Date: 2023-05-24 02:08+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -149,24 +149,20 @@ msgstr ""
 "キー *key* が存在しない場合には ``NULL`` を返しますが、例外をセット *しません"
 "*。"
 
-#: ../../c-api/dict.rst:101
+#: ../../c-api/dict.rst:103
 msgid ""
-"Note that exceptions which occur while calling :meth:`__hash__` and :meth:"
-"`__eq__` methods will get suppressed. To get error reporting use :c:func:"
-"`PyDict_GetItemWithError()` instead."
+"Exceptions that occur while this calls :meth:`~object.__hash__` and :meth:"
+"`~object.__eq__` methods are silently ignored. Prefer the :c:func:"
+"`PyDict_GetItemWithError` function instead."
 msgstr ""
-":meth:`__hash__` メソッドや :meth:`__eq__` メソッドの呼び出し中に起こる例外は"
-"抑制されることに注意してください。\n"
-"エラーを報告させるには、代わりに :c:func:`PyDict_GetItemWithError()` を使って"
-"ください。"
 
-#: ../../c-api/dict.rst:105
+#: ../../c-api/dict.rst:107
 msgid ""
 "Calling this API without :term:`GIL` held had been allowed for historical "
 "reason. It is no longer allowed."
 msgstr ""
 
-#: ../../c-api/dict.rst:112
+#: ../../c-api/dict.rst:114
 msgid ""
 "Variant of :c:func:`PyDict_GetItem` that does not suppress exceptions. "
 "Return ``NULL`` **with** an exception set if an exception occurred.  Return "
@@ -176,7 +172,7 @@ msgstr ""
 "例外が発生した場合は、例外をセット **した上で** ``NULL`` を返します。\n"
 "キーが存在しなかった場合は、例外をセット **せずに** ``NULL`` を返します。"
 
-#: ../../c-api/dict.rst:120
+#: ../../c-api/dict.rst:122
 msgid ""
 "This is the same as :c:func:`PyDict_GetItem`, but *key* is specified as a :c:"
 "expr:`const char*`, rather than a :c:expr:`PyObject*`."
@@ -184,18 +180,15 @@ msgstr ""
 ":c:func:`PyDict_GetItem` と同じですが、 *key* は :c:expr:`PyObject*` ではな"
 "く :c:expr:`const char*` で指定します。"
 
-#: ../../c-api/dict.rst:123
+#: ../../c-api/dict.rst:127
 msgid ""
-"Note that exceptions which occur while calling :meth:`__hash__` and :meth:"
-"`__eq__` methods and creating a temporary string object will get suppressed. "
-"To get error reporting use :c:func:`PyDict_GetItemWithError()` instead."
+"Exceptions that occur while this calls :meth:`~object.__hash__` and :meth:"
+"`~object.__eq__` methods or while creating the temporary :class:`str` object "
+"are silently ignored. Prefer using the :c:func:`PyDict_GetItemWithError` "
+"function with your own :c:func:`PyUnicode_FromString` *key* instead."
 msgstr ""
-":meth:`__hash__` メソッドや :meth:`__eq__` メソッドの呼び出し中や、一時的な文"
-"字列オブジェクトの作成中に起こる例外は抑制されることに注意してください。\n"
-"エラーを報告させるには、代わりに :c:func:`PyDict_GetItemWithError()` を使って"
-"ください。"
 
-#: ../../c-api/dict.rst:131
+#: ../../c-api/dict.rst:136
 msgid ""
 "This is the same as the Python-level :meth:`dict.setdefault`.  If present, "
 "it returns the value corresponding to *key* from the dictionary *p*.  If the "
@@ -210,30 +203,30 @@ msgstr ""
 "この関数は、 *key* のハッシュ値を検索と挿入ごとに別々に評価するのではなく、一"
 "度だけしか評価しません。"
 
-#: ../../c-api/dict.rst:141
+#: ../../c-api/dict.rst:146
 msgid ""
 "Return a :c:type:`PyListObject` containing all the items from the dictionary."
 msgstr "辞書内の全ての要素対が入った :c:type:`PyListObject` を返します。"
 
-#: ../../c-api/dict.rst:146
+#: ../../c-api/dict.rst:151
 msgid ""
 "Return a :c:type:`PyListObject` containing all the keys from the dictionary."
 msgstr "辞書内の全てのキーが入った :c:type:`PyListObject` を返します。"
 
-#: ../../c-api/dict.rst:151
+#: ../../c-api/dict.rst:156
 msgid ""
 "Return a :c:type:`PyListObject` containing all the values from the "
 "dictionary *p*."
 msgstr "辞書 *p* 内の全ての値が入った :c:type:`PyListObject` を返します。"
 
-#: ../../c-api/dict.rst:159
+#: ../../c-api/dict.rst:164
 msgid ""
 "Return the number of items in the dictionary.  This is equivalent to "
 "``len(p)`` on a dictionary."
 msgstr ""
 "辞書内の要素の数を返します。辞書に対して ``len(p)`` を実行するのと同じです。"
 
-#: ../../c-api/dict.rst:165
+#: ../../c-api/dict.rst:170
 msgid ""
 "Iterate over all key-value pairs in the dictionary *p*.  The :c:type:"
 "`Py_ssize_t` referred to by *ppos* must be initialized to ``0`` prior to the "
@@ -259,11 +252,11 @@ msgstr ""
 "この値は内部的な辞書構造体のオフセットを表現しており、構造体はスパースなの"
 "で、オフセットの値に一貫性がないためです。"
 
-#: ../../c-api/dict.rst:176
+#: ../../c-api/dict.rst:181
 msgid "For example::"
 msgstr "例えば::"
 
-#: ../../c-api/dict.rst:186
+#: ../../c-api/dict.rst:191
 msgid ""
 "The dictionary *p* should not be mutated during iteration.  It is safe to "
 "modify the values of the keys as you iterate over the dictionary, but only "
@@ -273,7 +266,7 @@ msgstr ""
 "応する値を変更しても大丈夫になりましたが、キーの集合を変更しないことが前提で"
 "す。以下に例を示します::"
 
-#: ../../c-api/dict.rst:211
+#: ../../c-api/dict.rst:216
 msgid ""
 "Iterate over mapping object *b* adding key-value pairs to dictionary *a*. "
 "*b* may be a dictionary, or any object supporting :c:func:`PyMapping_Keys` "
@@ -290,7 +283,7 @@ msgstr ""
 "行います。成功した場合には ``0`` を返し、例外が送出された場合には ``-1`` を返"
 "します。"
 
-#: ../../c-api/dict.rst:221
+#: ../../c-api/dict.rst:226
 msgid ""
 "This is the same as ``PyDict_Merge(a, b, 1)`` in C, and is similar to ``a."
 "update(b)`` in Python except that :c:func:`PyDict_Update` doesn't fall back "
@@ -303,7 +296,7 @@ msgstr ""
 "性を持たない場合にキー/値ペアのシーケンスを反復することはありません。成功した"
 "場合には ``0`` を返し、例外が送出された場合には ``-1`` を返します。"
 
-#: ../../c-api/dict.rst:230
+#: ../../c-api/dict.rst:235
 msgid ""
 "Update or merge into dictionary *a*, from the key-value pairs in *seq2*. "
 "*seq2* must be an iterable object producing iterable objects of length 2, "
@@ -331,10 +324,10 @@ msgstr "dictionary"
 msgid "PyUnicode_FromString()"
 msgstr "PyUnicode_FromString()"
 
-#: ../../c-api/dict.rst:157
+#: ../../c-api/dict.rst:162
 msgid "built-in function"
 msgstr "組み込み関数"
 
-#: ../../c-api/dict.rst:157
+#: ../../c-api/dict.rst:162
 msgid "len"
 msgstr "len"
