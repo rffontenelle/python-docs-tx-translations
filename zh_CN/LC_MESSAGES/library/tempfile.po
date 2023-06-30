@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-09 14:13+0000\n"
+"POT-Creation-Date: 2023-06-23 14:14+0000\n"
 "PO-Revision-Date: 2021-06-28 01:14+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -159,13 +159,13 @@ msgstr "添加了 *errors* 参数。"
 msgid ""
 "This function operates exactly as :func:`TemporaryFile` does, except the "
 "following differences:"
-msgstr ""
+msgstr "此函数的操作与 :func:`TemporaryFile` 所做的完全相同，除了存在下列差异:"
 
 #: ../../library/tempfile.rst:83
 msgid ""
 "This function returns a file that is guaranteed to have a visible name in "
 "the file system."
-msgstr ""
+msgstr "此函数将返回一个肯定具有在文件系统中的可见名称的文件。"
 
 #: ../../library/tempfile.rst:85
 msgid ""
@@ -173,6 +173,9 @@ msgid ""
 "with *delete* and *delete_on_close* parameters that determine whether and "
 "how the named file should be automatically deleted."
 msgstr ""
+"为管理指定名称的文件，它将为 :func:`TemporaryFile` 扩展 *delete* 和 "
+"*delete_on_close* 形参来确定指定名称的文件是否要被自动删除以及要如何执行删"
+"除。"
 
 #: ../../library/tempfile.rst:89
 msgid ""
@@ -184,6 +187,11 @@ msgid ""
 "`TemporaryFile`, the directory entry does not get unlinked immediately after "
 "the file creation."
 msgstr ""
+"返回的对象将总是一个 :term:`file-like object` 并且其 :attr:`!file` 属性为底层"
+"的实际文件对象。 这个 :term:`file-like object` 可在 :keyword:`with` 语句中使"
+"用，就像普通的文件一样。 该临时文件的文件名可从被返回的文件类对象的 :attr:"
+"`name` 属性中提取。 在 Unix 上，不同于 :func:`TemporaryFile`，其目录项不会在"
+"创建文件之后立即被取消链接。"
 
 #: ../../library/tempfile.rst:97
 msgid ""
@@ -194,6 +202,11 @@ msgid ""
 "not always guaranteed in this case (see :meth:`object.__del__`). If *delete* "
 "is false, the value of *delete_on_close* is ignored."
 msgstr ""
+"如果 *delete* 为（默认的）真值且 *delete_on_close* 也为（默认的）真值，则文件"
+"将在关闭后立即被删除。 如果 *delete* 为真值而 *delete_on_close* 为假值，则文"
+"件将在退出上下文管理器，或者当 :term:`file-like object` 被终结时才会被删除。 "
+"在此情况下将不保证总是能删除文件（参见 :meth:`object.__del__` 文档）。 如果 "
+"*delete* 为假值，则 *delete_on_close* 的值将被忽略。"
 
 #: ../../library/tempfile.rst:104
 msgid ""
@@ -204,32 +217,39 @@ msgid ""
 "false. The latter approach is recommended as it provides assistance in "
 "automatic cleaning of the temporary file upon the context manager exit."
 msgstr ""
+"因此要使用该临时文件的名称在关闭文件之后重新打开它，那么注意在关闭时不要删除"
+"文件（将 *delete* 形参设为假值），或者如果该临时文件是在 :keyword:`with` 语句"
+"中创建的，则要将 *delete_on_close* 形参设为假值。 更推荐后一种方式因为它在上"
+"下文管理器退出时提供了自动清理协助。"
 
 #: ../../library/tempfile.rst:111
 msgid ""
 "Opening the temporary file again by its name while it is still open works as "
 "follows:"
-msgstr ""
+msgstr "临时文件仍然打开时使用其名称再次打开它的操作如下所示:"
 
 #: ../../library/tempfile.rst:114
 msgid "On POSIX the file can always be opened again."
 msgstr ""
+"在 POSIX 上该文件总是可以被再次打开。the file can always be opened again."
 
 #: ../../library/tempfile.rst:115
 msgid ""
 "On Windows, make sure that at least one of the following conditions are "
 "fulfilled:"
-msgstr ""
+msgstr "在 Windows 上，要确保至少满足下列条件之一:"
 
 #: ../../library/tempfile.rst:118
 msgid "*delete* is false"
-msgstr ""
+msgstr "*delete* 为假值"
 
 #: ../../library/tempfile.rst:119
 msgid ""
 "additional open shares delete access (e.g. by calling :func:`os.open` with "
 "the flag ``O_TEMPORARY``)"
 msgstr ""
+"额外的打开将共享删除操作（例如调用 :func:`os.open` 时附带了 ``O_TEMPORARY`` "
+"旗标）"
 
 #: ../../library/tempfile.rst:121
 msgid ""
@@ -239,6 +259,10 @@ msgid ""
 "func:`os.unlink` call on context manager exit will fail with a :exc:"
 "`PermissionError`."
 msgstr ""
+"*delete* 为真值但 *delete_on_close* 为假值。 注意，在此情况下没有共享删除操作"
+"的额外的打开（例如通过内置的 :func:`open` 创建）必须在退出上下文管理器之前被"
+"关闭，否则在退出上下文管理器时的 :func:`os.unlink` 调用将失败并引发 :exc:"
+"`PermissionError`。"
 
 #: ../../library/tempfile.rst:127
 msgid ""
@@ -249,6 +273,10 @@ msgid ""
 "requested by the open, which fails immediately if the requested access is "
 "not granted."
 msgstr ""
+"在 Windows 上，如果 *delete_on_close* 为假值，并且文件是在用户没有删除权限的"
+"目录中创建的，则退出上下文管理器时的 :func:`os.unlink` 调用将失败并引发 :exc:"
+"`PermissionError`。 这在 *delete_on_close* 为真值时不会发生因为删除权限是由打"
+"开操作所请求的，如果未获得所请求的权限此操作将立即失败。"
 
 #: ../../library/tempfile.rst:134
 msgid ""
@@ -260,7 +288,7 @@ msgstr ""
 
 #: ../../library/tempfile.rst:142
 msgid "Added *delete_on_close* parameter."
-msgstr ""
+msgstr "增加了 *delete_on_close* 形参。"
 
 #: ../../library/tempfile.rst:148
 msgid ""
@@ -356,6 +384,9 @@ msgid ""
 "during debugging or when you need your cleanup behavior to be conditional "
 "based on other logic."
 msgstr ""
+"*delete* 可被用于禁止在退出上下文时清理目录树。 虽然在退出上下文时禁止此操作"
+"看起来可能很不常见，但这在进行调试或在你的清理行为需要以其他逻辑为条件时将会"
+"很有用处。"
 
 #: ../../library/tempfile.rst:204 ../../library/tempfile.rst:284
 msgid ""
