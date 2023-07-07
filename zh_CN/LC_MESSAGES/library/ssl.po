@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-16 14:12+0000\n"
+"POT-Creation-Date: 2023-06-30 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 01:13+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -155,6 +155,9 @@ msgid ""
 "wrap_socket` method. The helper function :func:`create_default_context` "
 "returns a new context with secure default settings."
 msgstr ""
+":class:`SSLSocket` 的实例必须使用 :meth:`SSLContext.wrap_socket` 方法来创"
+"建。 辅助函数 :func:`create_default_context` 将返回一个使用安全的默认设置的新"
+"上下文。"
 
 #: ../../library/ssl.rst:82
 msgid "Client socket example with default context and IPv4/IPv6 dual stack::"
@@ -494,6 +497,13 @@ msgid ""
 "validation attempt fails.  A timeout can be specified with the ``timeout`` "
 "parameter."
 msgstr ""
+"给定使用 SSL 保护的服务器的地址 ``addr``，形式为一个 (*hostname*, *port-"
+"number*) 对，获取该服务器的证书，并返回为 PEM 编码的字符串。 如果指定了 "
+"``ssl_version``，则使用该版本的 SSL 协议尝试连接该服务器。 如果指定了 "
+"*ca_certs*，它应当是一个包含根证书列表的文件，与 :meth:`SSLContext."
+"load_verify_locations` 中 *cafile* 形参所使用的格式相同。 该调用将尝试根据该"
+"根证书集来难服务器的证书，如果验证失败则调用也将失败。 可以通过 ``timeout`` "
+"形参来指定超时限制。"
 
 #: ../../library/ssl.rst:377
 msgid "This function is now IPv6-compatible."
@@ -636,6 +646,9 @@ msgid ""
 "just about any cert is accepted.  Validation errors, such as untrusted or "
 "expired cert, are ignored and do not abort the TLS/SSL handshake."
 msgstr ""
+":attr:`SSLContext.verify_mode` 可能的取值。 :const:`PROTOCOL_TLS_CLIENT` 除"
+"外，这是默认的模式。 对于客户端套接字，几乎任何证书都会被接受。 验证错误，如"
+"不受信任或过期的证书等，会被忽略并且不会中止 TLS/SSL 握手。"
 
 #: ../../library/ssl.rst:467
 msgid ""
@@ -655,6 +668,9 @@ msgid ""
 "`CERT_OPTIONAL` has the same meaning as :const:`CERT_REQUIRED`. It is "
 "recommended to use :const:`CERT_REQUIRED` for client-side sockets instead."
 msgstr ""
+":attr:`SSLContext.verify_mode` 可能的取值。 在客户端模式下，:const:"
+"`CERT_OPTIONAL` 具有与 :const:`CERT_REQUIRED` 相同的含义。 对于客户端套接字推"
+"荐改用 :const:`CERT_REQUIRED`。"
 
 #: ../../library/ssl.rst:479
 msgid ""
@@ -673,6 +689,8 @@ msgid ""
 "Use of this setting requires a valid set of CA certificates to be passed to :"
 "meth:`SSLContext.load_verify_locations`."
 msgstr ""
+"使用此设置要求将一组有效的 CA 证书传递给 :meth:`SSLContext."
+"load_verify_locations`。"
 
 #: ../../library/ssl.rst:490
 msgid ""
@@ -685,6 +703,12 @@ msgid ""
 "cert. :const:`PROTOCOL_TLS_CLIENT` uses :const:`CERT_REQUIRED` and enables :"
 "attr:`~SSLContext.check_hostname` by default."
 msgstr ""
+":attr:`SSLContext.verify_mode` 可能的取值。 在此模式下，需要从套接字连接的另"
+"一端获取证书；如果未提供证书，或验证失败则将引发 :class:`SSLError`。 此模式 "
+"**不能** 在客户端模式下对证书进行验证因为它不会匹配主机名。 :attr:"
+"`~SSLContext.check_hostname` 也必须被启用以验证证书的真实性。 :const:"
+"`PROTOCOL_TLS_CLIENT` 会使用 :const:`CERT_REQUIRED` 并默认启用 :attr:"
+"`~SSLContext.check_hostname`。"
 
 #: ../../library/ssl.rst:500
 msgid ""
@@ -1030,6 +1054,8 @@ msgid ""
 "extensions must be supported by it (a list of supported ones may vary by "
 "platform and kernel version)."
 msgstr ""
+"启用内核 TLS。 为了利用该特征，OpenSSL 编译时必须附带对它的支持，并且协商的密"
+"码套件和扩展必须被它所支持（受支持项的列表可能因平台和内核版本而有所变化）。"
 
 #: ../../library/ssl.rst:817
 msgid ""
@@ -1038,12 +1064,15 @@ msgid ""
 "Providers. This might be undesirable if, for example, the application "
 "requires all cryptographic operations to be performed by the FIPS provider."
 msgstr ""
+"请注意当启用内核 TLS 时某些加解密操作将由内核直接执行而不是通过任何可用的 "
+"OpenSSL 提供程序。 这可能并不是你想要的，例如，当应用程序要求所有加解密操作"
+"由 FIPS 提供程序执行时。"
 
 #: ../../library/ssl.rst:828
 msgid ""
 "Allow legacy insecure renegotiation between OpenSSL and unpatched servers "
 "only."
-msgstr ""
+msgstr "允许只在 OpenSSL 和未打补丁的服务器之间进行旧式的不安全协商。"
 
 #: ../../library/ssl.rst:835
 msgid ""
@@ -1560,7 +1589,7 @@ msgstr ""
 
 #: ../../library/ssl.rst:1199
 msgid "See also :attr:`SSLContext.check_hostname`."
-msgstr ""
+msgstr "另请参阅 :attr:`SSLContext.check_hostname`。"
 
 #: ../../library/ssl.rst:1201
 msgid ""
@@ -1736,7 +1765,7 @@ msgstr "返回在连接上等待被读取的已解密字节数。"
 
 #: ../../library/ssl.rst:1321
 msgid "The :class:`SSLContext` object this SSL socket is tied to."
-msgstr ""
+msgstr "该 SSL 套接字所关联的 :class:`SSLContext` 对象。"
 
 #: ../../library/ssl.rst:1327
 msgid ""
@@ -1918,6 +1947,11 @@ msgid ""
 "The initial cipher suite list contains only ``HIGH`` ciphers, no ``NULL`` "
 "ciphers and no ``MD5`` ciphers."
 msgstr ""
+"上下文会使用安全的默认值来创建。 默认设置的选项有 :data:"
+"`OP_NO_COMPRESSION`, :data:`OP_CIPHER_SERVER_PREFERENCE`, :data:"
+"`OP_SINGLE_DH_USE`, :data:`OP_SINGLE_ECDH_USE`, :data:`OP_NO_SSLv2` 和 :data:"
+"`OP_NO_SSLv3` (:data:`PROTOCOL_SSLv3` 除外)。 初始密码套件列表只包含 "
+"``HIGH`` 密码，而不包含 ``NULL`` 密码和 ``MD5`` 密码。"
 
 #: ../../library/ssl.rst:1419
 msgid ""
@@ -2858,6 +2892,9 @@ msgid ""
 "needs to be passed.  If the private key is stored with the certificate, it "
 "should come before the first certificate in the certificate chain::"
 msgstr ""
+"私钥往往与证书存储在相同的文件中；在此情况下，只需要将 ``certfile`` 形参传"
+"给 :meth:`SSLContext.load_cert_chain`。 如果私钥是与证书一起存储的，则它应当"
+"放在证书链的第一个证书之前::"
 
 #: ../../library/ssl.rst:2089
 msgid "Self-signed certificates"
@@ -3493,6 +3530,13 @@ msgid ""
 "check is automatically performed when :attr:`SSLContext.check_hostname` is "
 "enabled."
 msgstr ""
+"当直接调用 :class:`SSLContext` 构造器时，将默认使用 :const:`CERT_NONE`。 由于"
+"它不会验证对等方的身份，因此是不安全的，特别是在客户端模式下，大多数时候你都"
+"希望能保证你所连接的服务器的身份真实性。 因此，当牌客户端模式时，强烈推荐使"
+"用 :const:`CERT_REQUIRED`。 但是，光这样是不够的；你还必须检查服务器证书，这"
+"可以通过调用 :meth:`SSLSocket.getpeercert`，并匹配所需的服务来实现。 对于许多"
+"协议和应用来说，服务可通过主机名来标识。 这种通用检查会在 :attr:`SSLContext."
+"check_hostname` 被启用时自动执行。"
 
 #: ../../library/ssl.rst:2570
 msgid ""
@@ -3577,6 +3621,11 @@ msgid ""
 "successful call of :func:`~ssl.RAND_add` or :func:`~ssl.RAND_bytes` is "
 "sufficient."
 msgstr ""
+"如果使用此模块作为多进程应用的一部分（例如，使用 :mod:`multiprocessing` 或 :"
+"mod:`concurrent.futures` 模块），请注意 OpenSSL 的内部随机数字生成器并不能正"
+"确处理分叉的进程。 应用程序必须修改父进程的 PRNG 状态，如果它们要使用任何包"
+"含 :func:`os.fork` 的 SSL 特征的话。 任何对 :func:`~ssl.RAND_add` 或 :func:"
+"`~ssl.RAND_bytes` 的成功调用都可以做到这一点。"
 
 #: ../../library/ssl.rst:2629
 msgid "TLS 1.3"

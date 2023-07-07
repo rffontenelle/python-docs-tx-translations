@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 14:14+0000\n"
+"POT-Creation-Date: 2023-06-30 14:13+0000\n"
 "PO-Revision-Date: 2022-11-05 19:49+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -1631,6 +1631,10 @@ msgid ""
 "has a resolution of 1 microsecond (10\\ :sup:`-6` seconds). (Contributed by "
 "Benjamin Szőke and Victor Stinner in :issue:`21302`.)"
 msgstr ""
+"在 Unix 上，如果有可能，:func:`time.sleep` 现在将使用 ``clock_nanosleep()`` "
+"或 ``nanosleep()`` 函数，其精度为 1 纳秒 (10\\ :sup:`-9` 秒)，而不是使用精度"
+"为 1 微秒 (10\\ :sup:`-6` 秒) 的 ``select()``。 （由 Benjamin Szőke 和 "
+"Victor Stinner 在 :issue:`21302` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1083
 msgid ""
@@ -1641,6 +1645,12 @@ msgid ""
 "1 millisecond (10\\ :sup:`-3` seconds). (Contributed by Benjamin Szőke, Dong-"
 "hee Na, Eryk Sun and Victor Stinner in :issue:`21302` and :issue:`45429`.)"
 msgstr ""
+"在 Windows 8.1 或更新版本上，现在 :func:`time.sleep` 会使用一个基于 `高精度计"
+"时器 <https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/high-"
+"resolution-timers>`_ 的可等待计时器，其精度为 100 纳秒 (10\\ :sup:`-7` 秒)。 "
+"在之前版本上，其精度为 1 毫秒 (10\\ :sup:`-3` 秒)。 （由 Benjamin Szőke, "
+"Dong-hee Na, Eryk Sun 和 Victor Stinner 在 :issue:`21302` 和 :issue:`45429` "
+"中贡献。）.)"
 
 #: ../../whatsnew/3.11.rst:1094
 msgid "tkinter"
@@ -1652,6 +1662,8 @@ msgid ""
 "Tcl library as a named tuple similar to :data:`sys.version_info`. "
 "(Contributed by Serhiy Storchaka in :gh:`91827`.)"
 msgstr ""
+"增加了将 Tcl 库的准确版本号作为类似 :data:`sys.version_info` 的命名元组返回的"
+"方法 ``info_patchlevel()``。 （由 Serhiy Storchaka 在 :gh:`91827` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1104
 msgid "traceback"
@@ -1663,6 +1675,9 @@ msgid ""
 "override which frames appear in the traceback, and how they are formatted. "
 "(Contributed by Ammar Askar in :issue:`44569`.)"
 msgstr ""
+"增加了 :func:`traceback.StackSummary.format_frame_summary` 以允许用户重载要在"
+"回溯中出现哪些帧，以及要如何格式化它们。 （由 Ammar Askar 在 :issue:`44569` "
+"中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1111
 msgid ""
@@ -1670,6 +1685,9 @@ msgid ""
 "exc:`~traceback.TracebackException` instance to a file. (Contributed by Irit "
 "Katriel in :issue:`33809`.)"
 msgstr ""
+"增加了 :func:`traceback.TracebackException.print`，该函数可将 :exc:"
+"`~traceback.TracebackException` 实例格式化打印到一个文件。 （由 Irit Katriel "
+"在 :issue:`33809` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1119
 msgid "typing"
@@ -1677,7 +1695,7 @@ msgstr "typing"
 
 #: ../../whatsnew/3.11.rst:1121
 msgid "For major changes, see :ref:`new-feat-related-type-hints-311`."
-msgstr ""
+msgstr "主要的变化，请参阅 :ref:`new-feat-related-type-hints-311`。"
 
 #: ../../whatsnew/3.11.rst:1123
 msgid ""
@@ -1686,6 +1704,9 @@ msgid ""
 "code is not reachable. At runtime, it raises an :exc:`AssertionError`. "
 "(Contributed by Jelle Zijlstra in :gh:`90633`.)"
 msgstr ""
+"增加了 :func:`typing.assert_never` 和 :class:`typing.Never`。 :func:`typing."
+"assert_never` 适用于要求类型检查器确认某一行代码是不可达的。 在运行时，它会引"
+"发 :exc:`AssertionError`。 （由 Jelle Zijlstra 在 :gh:`90633` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1129
 msgid ""
@@ -1693,6 +1714,9 @@ msgid ""
 "what type it has inferred for a given expression. At runtime it prints the "
 "type of the received value. (Contributed by Jelle Zijlstra in :gh:`90572`.)"
 msgstr ""
+"增加了 :func:`typing.reveal_type`。 它适用于让类型检查器推理出给定表达式的类"
+"型。 在运行时它会打印所接收的值的类型。 （由 Jelle Zijlstra 在 :gh:`90572` 中"
+"贡献。）"
 
 #: ../../whatsnew/3.11.rst:1134
 msgid ""
@@ -1701,18 +1725,25 @@ msgid ""
 "given type. At runtime it simply returns the received value. (Contributed by "
 "Jelle Zijlstra in :gh:`90638`.)"
 msgstr ""
+"增加了 :func:`typing.assert_type`。 它适用于让类型检查器确认推理出的给定表达"
+"式的类型与给定的类型相匹配。 在运行时它将简单地返回所接收的值。 （由 Jelle "
+"Zijlstra 在 :gh:`90638` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1139
 msgid ""
 ":data:`typing.TypedDict` types can now be generic. (Contributed by Samodya "
 "Abeysiriwardane in :gh:`89026`.)"
 msgstr ""
+"现在 :data:`typing.TypedDict` 类型可以是泛型。 （由 Samodya Abeysiriwardane "
+"在 :gh:`89026` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1142
 msgid ""
 ":class:`~typing.NamedTuple` types can now be generic. (Contributed by Serhiy "
 "Storchaka in :issue:`43923`.)"
 msgstr ""
+"现在 :class:`~typing.NamedTuple` 类型可以是泛型。 （由 Serhiy Storchaka 在 :"
+"issue:`43923` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1145
 msgid ""
@@ -1720,12 +1751,16 @@ msgid ""
 "checker errors related to highly dynamic class, such as mocks. (Contributed "
 "by Shantanu Jain in :gh:`91154`.)"
 msgstr ""
+"允许 :class:`typing.Any` 子类化。 这适用于避免关联到高度动态类的类型检查器错"
+"误，例如 mock 类。 （由 Shantanu Jain 在 :gh:`91154` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1149
 msgid ""
 "The :func:`typing.final` decorator now sets the ``__final__`` attributed on "
 "the decorated object. (Contributed by Jelle Zijlstra in :gh:`90500`.)"
 msgstr ""
+"现在 :func:`typing.final` 装饰器可在被装饰的对象上设置 ``__final__`` 属性。 "
+"（由 Jelle Zijlstra 在 :gh:`90500` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1153
 msgid ""
@@ -1734,12 +1769,17 @@ msgid ""
 "all registered overloads of a function. (Contributed by Jelle Zijlstra in :"
 "gh:`89263`.)"
 msgstr ""
+":func:`typing.get_overloads` 函数可被用来内省一个函数的重载。 :func:`typing."
+"clear_overloads` 可被用来清理一个函数所有的重载。 （由 Jelle Zijlstra 在 :gh:"
+"`89263` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1158
 msgid ""
 "The :meth:`~object.__init__` method of :class:`~typing.Protocol` subclasses "
 "is now preserved. (Contributed by Adrian Garcia Badarasco in :gh:`88970`.)"
 msgstr ""
+"现在 :class:`~typing.Protocol` 子类的 :meth:`~object.__init__` 方法将被保"
+"留。 （由 Adrian Garcia Badarasco 在 :gh:`88970` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1161
 msgid ""
@@ -1747,6 +1787,9 @@ msgid ""
 "affects introspection, e.g. ``get_args(Tuple[()])`` now evaluates to ``()`` "
 "instead of ``((),)``. (Contributed by Serhiy Storchaka in :gh:`91137`.)"
 msgstr ""
+"空元组类型 (``Tuple[()]``) 的表示形式已被简化。 这将影响内省操作，例如 "
+"``get_args(Tuple[()])`` 现在将被求值为 ``()`` 而不是 ``((),)``。 （由 Serhiy "
+"Storchaka 在 :gh:`91137` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1166
 msgid ""
@@ -1754,6 +1797,8 @@ msgid ""
 "check in the private ``typing._type_check`` function. (Contributed by "
 "Gregory Beauregard in :gh:`90802`.)"
 msgstr ""
+"通过移除私有 ``typing._type_check`` 函数的回调检查放松了类型标注的运行时要"
+"求。 （由 Gregory Beauregard 在 :gh:`90802` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1170
 msgid ""
@@ -1761,6 +1806,9 @@ msgid ""
 "references in :ref:`PEP 585 generic aliases <types-genericalias>`. "
 "(Contributed by Niklas Rosenstein in :gh:`85542`.)"
 msgstr ""
+"现在 :func:`typing.get_type_hints` 支持将字符串求值为 :ref:`PEP 585 泛型别名 "
+"<types-genericalias>` 中的前向引用。 （由 Niklas Rosenstein 在 :gh:`85542` 中"
+"贡献。）"
 
 #: ../../whatsnew/3.11.rst:1174
 msgid ""
@@ -1768,6 +1816,8 @@ msgid ""
 "parameters with ``None`` as a default. (Contributed by Nikita Sobolev in :gh:"
 "`90353`.)"
 msgstr ""
+":func:`typing.get_type_hints` 将不再添加 :data:`~typing.Optional` 到形参并以 "
+"``None`` 作为默认值。 （由 Nikita Sobolev 在 :gh:`90353` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1178
 msgid ""
@@ -1775,6 +1825,8 @@ msgid ""
 "`~typing.ClassVar` annotations. (Contributed by Gregory Beauregard in :gh:"
 "`90711`.)"
 msgstr ""
+"现在 :func:`typing.get_type_hints` 支持与纯字符串化的 :data:`~typing."
+"ClassVar` 标注进行求值。 （由 Gregory Beauregard 在 :gh:`90711` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1182
 msgid ""
@@ -1782,6 +1834,8 @@ msgid ""
 "functions. It also now correctly marks classmethods as not to be type "
 "checked. (Contributed by Nikita Sobolev in :gh:`90729`.)"
 msgstr ""
+":func:`typing.no_type_check` 将不再修改外部类和函数。 现在它还会正确地将类方"
+"法标记为不进行类型检查。 （由 Nikita Sobolev 在 :gh:`90729` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1190
 msgid "unicodedata"
@@ -1792,6 +1846,8 @@ msgid ""
 "The Unicode database has been updated to version 14.0.0. (Contributed by "
 "Benjamin Peterson in :issue:`45190`)."
 msgstr ""
+"Unicode 数据库已更新到 14.0.0 版。 （由 Benjamin Peterson 在 :issue:`45190` "
+"中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1199
 msgid "unittest"
@@ -1805,6 +1861,11 @@ msgid ""
 "`~unittest.IsolatedAsyncioTestCase` and function :func:`unittest."
 "enterModuleContext`. (Contributed by Serhiy Storchaka in :issue:`45046`.)"
 msgstr ""
+"增加了 :class:`~unittest.TestCase` 类的 :meth:`~unittest.TestCase."
+"enterContext` 和 :meth:`~unittest.TestCase.enterClassContext` 方法，:class:"
+"`~unittest.IsolatedAsyncioTestCase` 类的 :meth:`~unittest."
+"IsolatedAsyncioTestCase.enterAsyncContext` 方法和 :func:`unittest."
+"enterModuleContext` 函数。 （由 Serhiy Storchaka 在 :issue:`45046` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1213
 msgid "venv"
@@ -1821,6 +1882,11 @@ msgid ""
 "environments should do the same. (Contributed by Miro Hrončok in :issue:"
 "`45413`.)"
 msgstr ""
+"当新的 Python 虚拟环境被创建时，将使用 *venv* :ref:`sysconfig 安装方案 "
+"<installation_paths>` 来确定环境内部的路径。 当 Python 在虚拟环境中运行时，同"
+"一个安装方案将被设为默认。 这意味着下游分发方可以修改默认的 sysconfig 安装方"
+"案而不会改变虚拟环境的行为。 同样会创建新的虚拟环境的第三方代码也应当这样"
+"做。 （由 Miro Hrončok 在 :issue:`45413` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1229
 msgid "warnings"
@@ -1833,6 +1899,9 @@ msgid ""
 "convert them to errors. (Contributed by Zac Hatfield-Dodds in :issue:"
 "`47074`.)"
 msgstr ""
+":func:`warnings.catch_warnings` 现在接受 :func:`warnings.simplefilter` 的参"
+"数，这提供了一种在局部忽略警告或将其转为错误的更精确方式。 （由 Zac Hatfield-"
+"Dodds 在 :issue:`47074` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1239
 msgid "zipfile"
@@ -1844,12 +1913,17 @@ msgid ""
 "class:`~zipfile.ZipFile`'s directory and file headers. (Contributed by "
 "Stephen J. Turnbull and Serhiy Storchaka in :issue:`28080`.)"
 msgstr ""
+"增加了为在 :class:`~zipfile.ZipFile` 的目录和文件头中读取元数据指定成员名称编"
+"码格式的支持。 （由 Stephen J. Turnbull 和 Serhiy Storchaka 在 :issue:"
+"`28080` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1245
 msgid ""
 "Added :meth:`ZipFile.mkdir() <zipfile.ZipFile.mkdir>` for creating new "
 "directories inside ZIP archives. (Contributed by Sam Ezeh in :gh:`49083`.)"
 msgstr ""
+"增加了 :meth:`ZipFile.mkdir() <zipfile.ZipFile.mkdir>` 用于在 ZIP 归档中新建"
+"目录。 （由 Sam Ezeh 在 :gh:`49083` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1249
 msgid ""
@@ -1857,6 +1931,9 @@ msgid ""
 "`~zipfile.Path.suffixes` to :class:`zipfile.Path`. (Contributed by Miguel "
 "Brito in :gh:`88261`.)"
 msgstr ""
+"为 :class:`zipfile.Path` 增加了 :attr:`~zipfile.Path.stem`, :attr:`~zipfile."
+"Path.suffix` 和 :attr:`~zipfile.Path.suffixes`。 （由 Miguel Brito 在 :gh:"
+"`88261` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1257
 msgid "Optimizations"
@@ -1867,6 +1944,8 @@ msgid ""
 "This section covers specific optimizations independent of the :ref:"
 "`whatsnew311-faster-cpython` project, which is covered in its own section."
 msgstr ""
+"本节列出的特定优化均不依赖于 :ref:`whatsnew311-faster-cpython` 项目，后者将在"
+"其专属章节中列出。"
 
 #: ../../whatsnew/3.11.rst:1262
 msgid ""
@@ -1875,6 +1954,10 @@ msgid ""
 "``%s``, ``%r`` and ``%a`` and makes it as fast as a corresponding :term:`f-"
 "string` expression. (Contributed by Serhiy Storchaka in :issue:`28307`.)"
 msgstr ""
+"编译器现在将优化只包含格式代码 ``%s``, ``%r`` 和 ``%a`` 的字符串字面值中的简"
+"单 :ref:`printf 风格 % 格式化 <old-string-formatting>` 并使其速度与对应的 :"
+"term:`f-string` 表达式一样快。 （由 Serhiy Storchaka 在 :issue:`28307` 中贡"
+"献。）"
 
 #: ../../whatsnew/3.11.rst:1268
 msgid ""
@@ -1883,12 +1966,17 @@ msgid ""
 "smaller than ``2**30``. (Contributed by Gregory P. Smith and Tim Peters in :"
 "gh:`90564`.)"
 msgstr ""
+"整除运算 (``//``) 已进行了更好的编译器微调。 在 x86-64 上现在将 :class:`int` "
+"除以小于 ``2**30`` 的值时能够提速 20%。 （由 Gregory P. Smith 和 Tim Peters "
+"在 :gh:`90564` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1273
 msgid ""
 ":func:`sum` is now nearly 30% faster for integers smaller than ``2**30``. "
 "(Contributed by Stefan Behnel in :gh:`68264`.)"
 msgstr ""
+":func:`sum` 现在对小于 ``2**30`` 的整数运算可提速将近 30%。 （由 Stefan "
+"Behnel 在 :gh:`68264` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1276
 msgid ""
@@ -1896,6 +1984,9 @@ msgid ""
 "append` by ≈15% and simple :term:`list comprehension`\\s by up to 20-30% "
 "(Contributed by Dennis Sweeney in :gh:`91165`.)"
 msgstr ""
+"列表大小调整针对常见场景进行了优化，对于 :meth:`list.append` 可提速 ≈15% 而对"
+"于简单的 :term:`list comprehension` 可提速 20-30%。 （由 Dennis Sweeney 在 :"
+"gh:`91165` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1281
 msgid ""
@@ -1904,6 +1995,9 @@ msgid ""
 "fromkeys(\"abcdefg\"))`` is reduced from 352 bytes to 272 bytes (23% "
 "smaller) on 64-bit platforms. (Contributed by Inada Naoki in :issue:`46845`.)"
 msgstr ""
+"字典在所有键均为 Unicode 对象时将不保存哈希值，以缩减 :class:`dict` 的大小。 "
+"例如，``sys.getsizeof(dict.fromkeys(\"abcdefg\"))`` 在 64 位平台上将从 352 字"
+"节缩减为 272 字节（减小 23%）。 （由 Inada Naoki 在 :issue:`46845` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1287
 msgid ""
@@ -1911,6 +2005,9 @@ msgid ""
 "when transferring large files over UDP, with speeds over 100 times higher "
 "for a ≈60 MiB file. (Contributed by msoxzw in :gh:`91487`.)"
 msgstr ""
+"现在使用 :class:`asyncio.DatagramProtocol` 通过 UDP 传输大文件时速度将有成数"
+"量级的提升，对于 ≈60 MiB 的文件将可提速 100 倍以上。 （由 msoxzw 在 :gh:"
+"`91487` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1292
 msgid ""
@@ -1918,6 +2015,9 @@ msgid ""
 "times faster for large arguments (with a larger speedup for larger *k*). "
 "(Contributed by Serhiy Storchaka in :issue:`37295`.)"
 msgstr ""
+"现在 :mod:`math` 中的函数 :func:`~math.comb` 和 :func:`~math.perm` 对于大参数"
+"可提速 ≈10 倍（对于越大的 *k* 值提速幅度越大）。 （由 Serhiy Storchaka 在 :"
+"issue:`37295` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1296
 msgid ""
@@ -1927,12 +2027,18 @@ msgid ""
 "and can save substantial memory. (Contributed by Raymond Hettinger in :gh:"
 "`90415`.)"
 msgstr ""
+"现在 :mod:`statistics` 中的函数 :func:`~statistics.mean`, :func:`~statistics."
+"variance` 和 :func:`~statistics.stdev` 将会直接消耗迭代器而不是先将它们转换"
+"为 :class:`list`。 这将使速度翻倍并能节省大量内存。 （由 Raymond Hettinger "
+"在 :gh:`90415` 中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1302
 msgid ""
 ":func:`unicodedata.normalize` now normalizes pure-ASCII strings in constant "
 "time. (Contributed by Dong-hee Na in :issue:`44987`.)"
 msgstr ""
+"现在 :func:`unicodedata.normalize` 将在常量时间内正规化纯 ASCII 字符串。 "
+"（由 Dong-hee Na 在 :issue:`44987` 中贡献。）.)"
 
 #: ../../whatsnew/3.11.rst:1310
 msgid "Faster CPython"
@@ -1946,6 +2052,10 @@ msgid ""
 "when compiled with GCC on Ubuntu Linux. Depending on your workload, the "
 "overall speedup could be 10-60%."
 msgstr ""
+"平均而言 CPython 3.11 比 CPython 3.10 `快 25% <https://github.com/faster-"
+"cpython/ideas#published-results>`_，该数据是用 `pyperformance <https://"
+"github.com/python/pyperformance>`_ 基准测试套件测得的，基于 Ubuntu Linux 上"
+"的 GCC 编译版。 根据工作负载的不同，总的提速效果可达 10-60%。"
 
 #: ../../whatsnew/3.11.rst:1319
 msgid ""
@@ -1953,6 +2063,9 @@ msgid ""
 "startup` and :ref:`whatsnew311-faster-runtime`. Optimizations not covered by "
 "this project are listed separately under :ref:`whatsnew311-optimizations`."
 msgstr ""
+"本项目聚焦于 Python 的两个主要领域: :ref:`whatsnew311-faster-startup` 和 :"
+"ref:`whatsnew311-faster-runtime`。 本项目未涉及的优化将在 :ref:`whatsnew311-"
+"optimizations` 中单独列出。"
 
 #: ../../whatsnew/3.11.rst:1328
 msgid "Faster Startup"
@@ -1981,17 +2094,23 @@ msgid ""
 "statically allocated by the interpreter. This reduces the steps in module "
 "execution process to:"
 msgstr ""
+"在 Python 3.11 中，对 Python 启动具有关键影响的核心模块已被“冻结”。 这意味着"
+"它们的 :ref:`codeobjects` (及字节码) 将由解释器静态地分配。 这使得模块执行过"
+"程的步骤减少为:"
 
 #: ../../whatsnew/3.11.rst:1353
 msgid ""
 "Interpreter startup is now 10-15% faster in Python 3.11. This has a big "
 "impact for short-running programs using Python."
 msgstr ""
+"现在 Python 3.11 解释器启动加快了 10-15%。 这对使用 Python 的短期运行程序具有"
+"显著的影响。"
 
 #: ../../whatsnew/3.11.rst:1356
 msgid ""
 "(Contributed by Eric Snow, Guido van Rossum and Kumar Aditya in many issues.)"
 msgstr ""
+"（由 Eric Snow, Guido van Rossum 和 Kumar Aditya 在许多问题事件中贡献。）"
 
 #: ../../whatsnew/3.11.rst:1362
 msgid "Faster Runtime"
@@ -2023,6 +2142,8 @@ msgid ""
 "Streamlined the internal frame struct to contain only essential information. "
 "Frames previously held extra debugging and memory management information."
 msgstr ""
+"将内部帧结构优化为仅包含关键信息。 在此之前的帧保存有额外的调试和内存管理信"
+"息。"
 
 #: ../../whatsnew/3.11.rst:1378
 msgid ""
@@ -2033,6 +2154,10 @@ msgid ""
 "calls have sped up significantly. We measured a 3-7% speedup in "
 "pyperformance."
 msgstr ""
+"现在旧式的 :ref:`帧对象 <frame-objects>` 仅在调试器或 Python 内省函数如 :"
+"func:`sys._getframe` 和 :func:`inspect.currentframe` 发出请求时才会被创建。 "
+"对于大多数用户代码，将不会创建任何帧对象。 因此，几乎所有 Python 函数调用都有"
+"显著的提速。 我们在 pyperformance 中测得了 3-7% 的提速。"
 
 #: ../../whatsnew/3.11.rst:1385
 msgid "(Contributed by Mark Shannon in :issue:`44590`.)"

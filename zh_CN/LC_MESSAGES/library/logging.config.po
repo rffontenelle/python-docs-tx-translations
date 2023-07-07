@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-09 14:13+0000\n"
+"POT-Creation-Date: 2023-06-30 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 01:09+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -1104,16 +1104,23 @@ msgid ""
 "configuration. The dictionary schema for configuring the pair is shown in "
 "the example YAML snippet below."
 msgstr ""
+"如果你想要配置一个 :class:`~logging.handlers.QueueHandler`，请注意它通常是"
+"与 :class:`~logging.handlers.QueueListener` 一起使用的，你可以同时配置这两"
+"者。 配置完成之后，``QueueListener`` 实例将可作为所创建的处理句柄的 :attr:"
+"`~logging.handlers.QueueHandler.listener` 属性来访问，而你也将可以使用 :func:"
+"`~logging.getHandlerByName` 来访问它并将你所使用的名称作为配置中的 "
+"``QueueHandler`` 传入。 用于配置这两者的字典规格显示在下面的 YAML 实例代码段"
+"中。"
 
 #: ../../library/logging.config.rst:751
 msgid "The ``queue`` and ``listener`` keys are optional."
-msgstr ""
+msgstr "``queue`` 和 ``listener`` 键是可选的。"
 
 #: ../../library/logging.config.rst:753
 msgid ""
 "If the ``queue`` key is present, the corresponding value can be one of the "
 "following:"
-msgstr ""
+msgstr "如果存在 ``queue`` 键，相应的值可以是下列几项之一:"
 
 #: ../../library/logging.config.rst:755
 msgid ""
@@ -1121,6 +1128,8 @@ msgid ""
 "course only possible if you are constructing or modifying the configuration "
 "dictionary in code."
 msgstr ""
+"一个实际的 :class:`queue.Queue` 实例或其子类的实例。 这当然仅在你在代码中构造"
+"或修改了该配置字典时才是可能的。"
 
 #: ../../library/logging.config.rst:759
 msgid ""
@@ -1129,6 +1138,9 @@ msgid ""
 "class:`queue.Queue` subclass or a function which returns a suitable queue "
 "instance, such as ``my.module.queue_factory()``."
 msgstr ""
+"一个将被求值为可调用对象的字符串，当不带任何参数被调用时，该可调用对象将返回"
+"要使用的 :class:`queue.Queue` 实例。 该可调用对象可以是一个 :class:`queue."
+"Queue` 子类或一个返回适当的队列实例的函数，如 ``my.module.queue_factory()``。"
 
 #: ../../library/logging.config.rst:764
 msgid ""
@@ -1136,18 +1148,22 @@ msgid ""
 "discussed in :ref:`logging-config-dict-userdef`. The result of this "
 "construction should be a :class:`queue.Queue` instance."
 msgstr ""
+"一个带有 ``'()'`` 键的字典，它使用 :ref:`logging-config-dict-userdef` 中所介"
+"绍的通常方式构造。 这样构造的结果应当是一个 :class:`queue.Queue` 实例。"
 
 #: ../../library/logging.config.rst:768
 msgid ""
 "If the  ``queue`` key is absent, a standard unbounded :class:`queue.Queue` "
 "instance is created and used."
 msgstr ""
+"如果没有  ``queue`` 键，则会创建并使用一个标准的未绑定 :class:`queue.Queue` "
+"实例。"
 
 #: ../../library/logging.config.rst:771
 msgid ""
 "If the ``listener`` key is present, the corresponding value can be one of "
 "the following:"
-msgstr ""
+msgstr "如果存在 ``listener`` 键，则相应的值可以是下列几项中的一个:"
 
 #: ../../library/logging.config.rst:773
 msgid ""
@@ -1155,12 +1171,16 @@ msgid ""
 "only possible if you are constructing or modifying the configuration "
 "dictionary in code."
 msgstr ""
+"一个 :class:`logging.handlers.QueueListener` 的子类。 这当然仅在你通过代码构"
+"造或修改配置字典时才是可能的。"
 
 #: ../../library/logging.config.rst:777
 msgid ""
 "A string which resolves to a class which is a subclass of ``QueueListener``, "
 "such as ``'my.package.CustomListener'``."
 msgstr ""
+"一个将被求值为属于 ``QueueListener`` 的子类的类的字符串，例如 ``'my.package."
+"CustomListener'``。"
 
 #: ../../library/logging.config.rst:780
 msgid ""
@@ -1169,12 +1189,17 @@ msgid ""
 "construction should be a callable with the same signature as the "
 "``QueueListener`` initializer."
 msgstr ""
+"一个带有 ``'()'`` 键的字典，它使用 :ref:`logging-config-dict-userdef` 中所介"
+"绍的通常方式构造。 这样构造的结果应当是一个与 ``QueueListener`` 初始化器具有"
+"相同签名的可调用对象。"
 
 #: ../../library/logging.config.rst:784
 msgid ""
 "If the ``listener`` key is absent, :class:`logging.handlers.QueueListener` "
 "is used."
 msgstr ""
+"如果不存在 ``listener`` 键，则会使用 :class:`logging.handlers."
+"QueueListener`。"
 
 #: ../../library/logging.config.rst:786
 msgid ""
@@ -1182,6 +1207,8 @@ msgid ""
 "configuration (not shown in the above snippet) which will be passed to the "
 "queue listener."
 msgstr ""
+"在 ``handlers`` 键之下的值是配置中其他处理句柄的名称（未显示在上面的代码片段"
+"中），它们将被传给队列监听器。"
 
 #: ../../library/logging.config.rst:790
 msgid ""
@@ -1189,6 +1216,8 @@ msgid ""
 "the same initialization signatures as :class:`~logging.handlers."
 "QueueHandler` and :class:`~logging.handlers.QueueListener`."
 msgstr ""
+"任何队列处理句柄和监听器类都需要定义为具有与 :class:`~logging.handlers."
+"QueueHandler` 和 :class:`~logging.handlers.QueueListener` 相同的初始化签名。"
 
 #: ../../library/logging.config.rst:799
 msgid "Configuration file format"
@@ -1369,6 +1398,9 @@ msgid ""
 "the ``logging`` package's namespace, is a dictionary of default values for "
 "custom formatting fields. If not provided, it defaults to ``None``."
 msgstr ""
+"``defaults`` 条目，当在 ``logging`` 包的命名空间的上下文中 :ref:`求值 <func-"
+"eval>` 时，将是一个由自定义格式化字段的默认值组成的字典。 如果未提供，则默认"
+"为 ``None``。"
 
 #: ../../library/logging.config.rst:983
 msgid ""
