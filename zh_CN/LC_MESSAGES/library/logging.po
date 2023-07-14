@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-09 14:13+0000\n"
+"POT-Creation-Date: 2023-07-07 14:14+0000\n"
 "PO-Revision-Date: 2021-06-28 01:09+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -318,6 +318,11 @@ msgid ""
 "might return a set including a logger named ``foo.bar``, but it wouldn't "
 "include one named ``foo.bar.baz``."
 msgstr ""
+"返回由该日志记录器的直接下级日志记录器组成的集合。 举例来说 ``logging."
+"getLogger().getChildren()`` 将返回包含名为 ``foo`` 和 ``bar`` 的日志记录器的"
+"集合，但名为 ``foo.bar`` 的日志记录器则不会包括在集合中。 类似地，``logging."
+"getLogger('foo').getChildren()`` 将返回包括名为 ``foo.bar`` 的日志记录器的集"
+"合，但不会包括名为 ``foo.bar.baz`` 的日志记录器。"
 
 #: ../../library/logging.rst:187
 msgid ""
@@ -879,6 +884,7 @@ msgid ""
 "Responsible for converting a :class:`LogRecord` to an output string to be "
 "interpreted by a human or external system."
 msgstr ""
+"负责将一个 :class:`LogRecord` 转换为可供人类或外部系统解读的输出字符串。"
 
 #: ../../library/logging.rst:0
 msgid "Parameters"
@@ -891,6 +897,9 @@ msgid ""
 "`logrecord-attributes`. If not specified, ``'%(message)s'`` is used, which "
 "is just the logged message."
 msgstr ""
+"用于日志记录整体输出的给定 *style* 形式的格式字符串。 可用的映射键将从 :"
+"class:`LogRecord` 对象的 :ref:`logrecord-attributes` 中提取。 如果未指定，则"
+"将使用 ``'%(message)s'``，即已记录的日志消息。"
 
 #: ../../library/logging.rst:575
 msgid ""
@@ -898,6 +907,8 @@ msgid ""
 "output. If not specified, the default described in :meth:`formatTime` is "
 "used."
 msgstr ""
+"用于日志记录输出的日期/时间部分的给定 *style* 形式的格式字符串。 如果未指定，"
+"则将使用 :meth:`formatTime` 中描述的默认值。"
 
 #: ../../library/logging.rst:580
 msgid ""
@@ -909,6 +920,12 @@ msgid ""
 "logging methods. However, there are :ref:`other ways <formatting-styles>` to "
 "use ``{``- and ``$``-formatting for log messages."
 msgstr ""
+"可以是 ``'%'``, ``'{'`` 或 ``'$'`` 之一并决定格式字符串将如何与数据合并: 使"
+"用 :ref:`old-string-formatting` (``%``), :meth:`str.format` (``{``) 或 :"
+"class:`string.Template` (``$``) 之一。 这将只应用于 *fmt* 和 *datefmt* (例如 "
+"``'%(message)s'`` 或 ``'{message}'``)，而不会应用于传给日志记录方法的实际日志"
+"消息。 但是，也存在 :ref:`其他方式 <formatting-styles>` 可以为日志消息使用 "
+"``{`` 和 ``$`` 格式化。"
 
 #: ../../library/logging.rst:590
 msgid ""
@@ -916,12 +933,17 @@ msgid ""
 "raise a :exc:`ValueError`; for example, ``logging.Formatter('%(asctime)s - "
 "%(message)s', style='{')``."
 msgstr ""
+"如果为 ``True`` (默认值)，则不正确或不匹配的 *fmt* 和 *style* 将引发 :exc:"
+"`ValueError`；例如 ``logging.Formatter('%(asctime)s - %(message)s', "
+"style='{')``。"
 
 #: ../../library/logging.rst:595
 msgid ""
 "A dictionary with default values to use in custom fields. For example, "
 "``logging.Formatter('%(ip)s %(message)s', defaults={\"ip\": None})``"
 msgstr ""
+"一个由在自定义字段中使用的默认值组成的字典。 例如 ``logging."
+"Formatter('%(ip)s %(message)s', defaults={\"ip\": None})``"
 
 #: ../../library/logging.rst:600
 msgid "The *style* parameter."
@@ -1129,6 +1151,9 @@ msgid ""
 "different record instance which will replace the original log record in any "
 "future processing of the event."
 msgstr ""
+"指定的记录是否会被写入日志？否则返回假值，是则返回真值。 过滤器可以原地修改日"
+"志记录或者返回完全不同的记录实例并在该事件未来的任何处理过程中用它来替代原始"
+"日志记录。"
 
 #: ../../library/logging.rst:737
 msgid ""
@@ -1175,6 +1200,9 @@ msgid ""
 "to a :class:`Handler` to modify the log record before it is emitted, without "
 "having side effects on other handlers."
 msgstr ""
+"现在你可以从过滤器返回一个 :class:`LogRecord` 实例来替代日志记录而不是原地修"
+"改它。 这允许附加到特定 :class:`Handler` 的过滤器在日志记录发出之前修改它，而"
+"不会对其他处理句柄产生附带影响。"
 
 #: ../../library/logging.rst:763
 msgid ""
@@ -1667,15 +1695,15 @@ msgstr "线程名（如果可用）"
 
 #: ../../library/logging.rst:969
 msgid "taskName"
-msgstr ""
+msgstr "taskName"
 
 #: ../../library/logging.rst:969
 msgid "``%(taskName)s``"
-msgstr ""
+msgstr "``%(taskName)s``"
 
 #: ../../library/logging.rst:969
 msgid ":class:`asyncio.Task` name (if available)."
-msgstr ""
+msgstr ":class:`asyncio.Task` 名称（如果可用）。"
 
 #: ../../library/logging.rst:972
 msgid "*processName* was added."
@@ -1683,7 +1711,7 @@ msgstr "添加了 *processName* "
 
 #: ../../library/logging.rst:975
 msgid "*taskName* was added."
-msgstr ""
+msgstr "添加了 *taskName*。"
 
 #: ../../library/logging.rst:981
 msgid "LoggerAdapter Objects"
@@ -2108,10 +2136,12 @@ msgid ""
 "Returns a handler with the specified *name*, or ``None`` if there is no "
 "handler with that name."
 msgstr ""
+"返回具有指定 *name* 的处理句柄，或者如果指定名称的处理句柄不存在则返回 "
+"``None``。"
 
 #: ../../library/logging.rst:1270
 msgid "Returns an immutable set of all known handler names."
-msgstr ""
+msgstr "返回一个由所有已知处理句柄名称组成的不可变集合。"
 
 #: ../../library/logging.rst:1276
 msgid ""

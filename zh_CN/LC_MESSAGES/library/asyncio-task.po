@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-30 14:13+0000\n"
+"POT-Creation-Date: 2023-07-07 14:14+0000\n"
 "PO-Revision-Date: 2021-06-28 00:55+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -270,6 +270,8 @@ msgid ""
 "structural concurrency; it allows for waiting for a group of related tasks "
 "with strong safety guarantees."
 msgstr ""
+":meth:`asyncio.TaskGroup.create_task` 是一个平衡了结构化并发的新选择；它允许"
+"等待一组相关任务并具有极强的安全保证。"
 
 #: ../../library/asyncio-task.rst:265
 msgid ""
@@ -553,6 +555,10 @@ msgid ""
 "*TaskGroup* will, while *gather* will not, cancel the remaining scheduled "
 "tasks)."
 msgstr ""
+"一个创建然后并发地运行任务等待它们完成的新选择是 :class:`asyncio."
+"TaskGroup`。 *TaskGroup* 提供了针对调度嵌套子任务的比 *gather* 更强的安全保"
+"证：如果一个任务（或子任务，即由一个任务调度的任务）引发了异常，*TaskGroup* "
+"将取消剩余的已排期任务）。"
 
 #: ../../library/asyncio-task.rst:510
 msgid ""
@@ -601,12 +607,18 @@ msgid ""
 "overhead of loop scheduling is avoided for coroutines that complete "
 "synchronously."
 msgstr ""
+"当使用这个工厂函数时 (通过 :meth:`loop.set_task_factory(asyncio."
+"eager_task_factory) <loop.set_task_factory>`)，协程将在 :class:`Task` 构造期"
+"间同步地开始执行。 任务仅会在它们阻塞时被加入事件循环上的计划任务。 这可以达"
+"成性能提升因为对同步完成的协程来说可以避免循环调度的开销。"
 
 #: ../../library/asyncio-task.rst:545
 msgid ""
 "A common example where this is beneficial is coroutines which employ caching "
 "or memoization to avoid actual I/O when possible."
 msgstr ""
+"此特性会带来好处的一个常见例子是应用了缓存或记忆功能以便在可能的情况避免实际 "
+"I/O 的协程。"
 
 #: ../../library/asyncio-task.rst:550
 msgid ""
@@ -616,6 +628,10 @@ msgid ""
 "change may introduce behavior changes to existing applications. For example, "
 "the application's task execution order is likely to change."
 msgstr ""
+"协程是立即执行是一项语言改变。 如果协程返回或引发异常，其任务将不会被加入事件"
+"循环上的计划任务。 如果协程执行发生阻塞，其任务将被加入事件循环上的计划任"
+"务。 这项改变可能会向现有应用程序引入行为变化。 例如，应用程序的任务执行顺序"
+"可能会发生改变。"
 
 #: ../../library/asyncio-task.rst:561
 msgid ""
@@ -623,6 +639,8 @@ msgid ""
 "the provided *custom_task_constructor* when creating a new task instead of "
 "the default :class:`Task`."
 msgstr ""
+"创建一个主动型任务工厂，类似于 :func:`eager_task_factory`，在创建新任务时使用"
+"所提供的 *custom_task_constructor* 而不是默认的 :class:`Task`。"
 
 #: ../../library/asyncio-task.rst:565
 msgid ""
@@ -630,6 +648,9 @@ msgid ""
 "the signature of :class:`Task.__init__ <Task>`. The callable must return a :"
 "class:`asyncio.Task`-compatible object."
 msgstr ""
+"*custom_task_constructor* 必须是一个 *可调用对象*，其签名与 :class:`Task."
+"__init__ <Task>` 的签名相匹配。 该可调用对象必须返回一个兼容 :class:`asyncio."
+"Task` 的对象。"
 
 #: ../../library/asyncio-task.rst:569
 msgid ""
@@ -637,6 +658,8 @@ msgid ""
 "an event loop via :meth:`loop.set_task_factory(factory) <loop."
 "set_task_factory>`)."
 msgstr ""
+"此函数返回一个 *可调用对象*，将通过 :meth:`loop.set_task_factory(factory) "
+"<loop.set_task_factory>`) 被用作一个事件循环的任务工厂。"
 
 #: ../../library/asyncio-task.rst:576
 msgid "Shielding From Cancellation"
@@ -746,6 +769,9 @@ msgid ""
 "CancelledError` internally, transforming it into a :exc:`TimeoutError` which "
 "can be caught and handled."
 msgstr ""
+"如果 ``long_running_task`` 耗费 10 秒以上完成，该上下文管理器将取消当前任务并"
+"在内部处理所引发的 :exc:`asyncio.CancelledError`，将其转化为可被捕获和处理"
+"的 :exc:`TimeoutError`。"
 
 #: ../../library/asyncio-task.rst:658
 msgid ""
@@ -753,10 +779,13 @@ msgid ""
 "`asyncio.CancelledError` into a :exc:`TimeoutError`, which means the :exc:"
 "`TimeoutError` can only be caught *outside* of the context manager."
 msgstr ""
+":func:`asyncio.timeout` 上下文管理器负责将 :exc:`asyncio.CancelledError` 转化"
+"为 :exc:`TimeoutError`，这意味着 :exc:`TimeoutError` 只能在该上下文管理器 *之"
+"外* 被捕获。"
 
 #: ../../library/asyncio-task.rst:663
 msgid "Example of catching :exc:`TimeoutError`::"
-msgstr ""
+msgstr "捕获 :exc:`TimeoutError` 的示例::"
 
 #: ../../library/asyncio-task.rst:674
 msgid ""
@@ -961,7 +990,7 @@ msgstr "直接向 ``wait()`` 传入协程对象的方式已被弃用。"
 
 #: ../../library/asyncio-task.rst:855 ../../library/asyncio-task.rst:882
 msgid "Added support for generators yielding tasks."
-msgstr ""
+msgstr "增加了对产生任务的生成器的支持。"
 
 #: ../../library/asyncio-task.rst:861
 msgid ""
@@ -1208,6 +1237,10 @@ msgid ""
 "coroutine returns or raises without blocking, the task will be finished "
 "eagerly and will skip scheduling to the event loop."
 msgstr ""
+"可选的仅限关键字参数 *eager_start* 允许在任务创建时主动开始 :class:`asyncio."
+"Task` 的执行。 如果设为 ``True`` 并且事件循环正在运行，任务将立即开始执行协"
+"程，直到该协程第一次阻塞。 如果协程未发生阻塞即返回或引发异常，任务将主动结果"
+"并将跳过向事件循环添加计划任务。"
 
 #: ../../library/asyncio-task.rst:1073
 msgid "Added support for the :mod:`contextvars` module."
@@ -1369,10 +1402,12 @@ msgid ""
 "This will return ``None`` for Tasks which have already completed eagerly. "
 "See the :ref:`Eager Task Factory <eager-task-factory>`."
 msgstr ""
+"这对于已经主动完成的任务将返回 ``None``。 参见 :ref:`主动任务工厂 <eager-"
+"task-factory>`。"
 
 #: ../../library/asyncio-task.rst:1188
 msgid "Newly added eager task execution means result may be ``None``."
-msgstr ""
+msgstr "新增加的主动任务执行意味着结果可能为 ``None``。"
 
 #: ../../library/asyncio-task.rst:1192
 msgid ""

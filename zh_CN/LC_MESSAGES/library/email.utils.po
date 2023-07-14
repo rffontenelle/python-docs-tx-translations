@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 14:14+0000\n"
+"POT-Creation-Date: 2023-07-14 14:14+0000\n"
 "PO-Revision-Date: 2021-06-28 01:05+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -116,7 +116,14 @@ msgstr ""
 "值）解析为构成之的 *真实名字* 和 *电子邮件地址* 部分。返回包含这两个信息的一"
 "个元组；如若解析失败，则返回一个二元组 ``('', '')`` 。"
 
-#: ../../library/email.utils.rst:71
+#: ../../library/email.utils.rst:68
+msgid ""
+"For security reasons, addresses that were ambiguous and could parse into "
+"multiple different addresses now cause ``('', '')`` to be returned instead "
+"of only one of the *potential* addresses."
+msgstr ""
+
+#: ../../library/email.utils.rst:76
 msgid ""
 "The inverse of :meth:`parseaddr`, this takes a 2-tuple of the form "
 "``(realname, email_address)`` and returns the string value suitable for a :"
@@ -127,7 +134,7 @@ msgstr ""
 "组，并返回适合于 :mailheader:`To` or :mailheader:`Cc` 标头的字符串。如果第一"
 "个元素为假性值，则第二个元素将被原样返回。"
 
-#: ../../library/email.utils.rst:76
+#: ../../library/email.utils.rst:81
 msgid ""
 "Optional *charset* is the character set that will be used in the :rfc:`2047` "
 "encoding of the ``realname`` if the ``realname`` contains non-ASCII "
@@ -138,22 +145,49 @@ msgstr ""
 "码 ``真实名字`` 中的非 ASCII 字符。可以是一个 :class:`str` 类的实例，或者一"
 "个 :class:`~email.charset.Charset` 类。默认为  ``utf-8`` 。"
 
-#: ../../library/email.utils.rst:81
+#: ../../library/email.utils.rst:86
 msgid "Added the *charset* option."
 msgstr "添加了 *charset* 选项。"
 
-#: ../../library/email.utils.rst:87
+#: ../../library/email.utils.rst:92
 msgid ""
 "This method returns a list of 2-tuples of the form returned by "
 "``parseaddr()``. *fieldvalues* is a sequence of header field values as might "
 "be returned by :meth:`Message.get_all <email.message.Message.get_all>`.  "
-"Here's a simple example that gets all the recipients of a message::"
+"Here's a simple example that gets all the recipients of a message:"
 msgstr ""
-"该方法返回一个形似 ``parseaddr()`` 返回的二元组的列表。 *fieldvalues* 是一个"
-"序列，包含了形似 :meth:`Message.get_all <email.message.Message.get_all>` 返回"
-"值的标头字段值。获取了一消息的所有收件人的简单示例如下："
 
-#: ../../library/email.utils.rst:103
+#: ../../library/email.utils.rst:97
+msgid "from email.utils import getaddresses"
+msgstr ""
+
+#: ../../library/email.utils.rst:99
+msgid ""
+"tos = msg.get_all('to', []) ccs = msg.get_all('cc', []) resent_tos = msg."
+"get_all('resent-to', []) resent_ccs = msg.get_all('resent-cc', []) "
+"all_recipients = getaddresses(tos + ccs + resent_tos + resent_ccs)"
+msgstr ""
+
+#: ../../library/email.utils.rst:105
+msgid ""
+"When parsing fails for a single fieldvalue, a 2-tuple of ``('', '')`` is "
+"returned in its place.  Other errors in parsing the list of addresses such "
+"as a fieldvalue seemingly parsing into multiple addresses may result in a "
+"list containing a single empty 2-tuple ``[('', '')]`` being returned rather "
+"than returning potentially invalid output."
+msgstr ""
+
+#: ../../library/email.utils.rst:112
+msgid "Example malformed input parsing:"
+msgstr ""
+
+#: ../../library/email.utils.rst:120
+msgid ""
+"The 2-tuple of ``('', '')`` in the returned values when parsing fails were "
+"added as to address a security issue."
+msgstr ""
+
+#: ../../library/email.utils.rst:127
 msgid ""
 "Attempts to parse a date according to the rules in :rfc:`2822`. however, "
 "some mailers don't follow that format as specified, so :func:`parsedate` "
@@ -170,7 +204,7 @@ msgstr ""
 "`time.mktime`；否则返回 ``None``。注意返回的元组中下标为 6、7、8 的部分是无用"
 "的。"
 
-#: ../../library/email.utils.rst:114
+#: ../../library/email.utils.rst:138
 msgid ""
 "Performs the same function as :func:`parsedate`, but returns either ``None`` "
 "or a 10-tuple; the first 9 elements make up a tuple that can be passed "
@@ -186,7 +220,7 @@ msgstr ""
 "带时区，则所返回元组的最后一个元素将为 ``0``，这表示 UTC。 请注意结果元组的索"
 "引号 6, 7 和 8 是不可用的。"
 
-#: ../../library/email.utils.rst:124
+#: ../../library/email.utils.rst:148
 msgid ""
 "The inverse of :func:`format_datetime`.  Performs the same function as :func:"
 "`parsedate`, but on success returns a :mod:`~datetime.datetime`; otherwise "
@@ -208,7 +242,7 @@ msgstr ""
 "``datetime`` 将是一个感知型 ``datetime`` 并与 :class:`~datetime.timezone` :"
 "class:`~datetime.tzinfo` 相对应。"
 
-#: ../../library/email.utils.rst:140
+#: ../../library/email.utils.rst:164
 msgid ""
 "Turn a 10-tuple as returned by :func:`parsedate_tz` into a UTC timestamp "
 "(seconds since the Epoch).  If the timezone item in the tuple is ``None``, "
@@ -217,11 +251,11 @@ msgstr ""
 "将 :func:`parsedate_tz` 所返回的 10 元组转换为一个 UTC 时间戳（相距 Epoch 纪"
 "元初始的秒数）。 如果元组中的时区项为 ``None``，则视为当地时间。"
 
-#: ../../library/email.utils.rst:147
+#: ../../library/email.utils.rst:171
 msgid "Returns a date string as per :rfc:`2822`, e.g.::"
 msgstr "返回 :rfc:`2822` 标准的日期字符串，例如::"
 
-#: ../../library/email.utils.rst:151
+#: ../../library/email.utils.rst:175
 msgid ""
 "Optional *timeval* if given is a floating point time value as accepted by :"
 "func:`time.gmtime` and :func:`time.localtime`, otherwise the current time is "
@@ -230,7 +264,7 @@ msgstr ""
 "可选的 *timeval* 如果给出，则是一个可被 :func:`time.gmtime` 和 :func:`time."
 "localtime` 接受的浮点数时间值，否则会使用当前时间。"
 
-#: ../../library/email.utils.rst:155
+#: ../../library/email.utils.rst:179
 msgid ""
 "Optional *localtime* is a flag that when ``True``, interprets *timeval*, and "
 "returns a date relative to the local timezone instead of UTC, properly "
@@ -241,7 +275,7 @@ msgstr ""
 "个相对于当地时区而非 UTC 的日期值，并会适当地考虑夏令时。 默认值 ``False`` 表"
 "示使用 UTC。"
 
-#: ../../library/email.utils.rst:160
+#: ../../library/email.utils.rst:184
 msgid ""
 "Optional *usegmt* is a flag that when ``True``, outputs a  date string with "
 "the timezone as an ascii string ``GMT``, rather than a numeric ``-0000``. "
@@ -253,7 +287,7 @@ msgstr ""
 "HTTP）来说是必要的。 这仅在 *localtime* 为 ``False`` 时应用。 默认值为 "
 "``False``。"
 
-#: ../../library/email.utils.rst:168
+#: ../../library/email.utils.rst:192
 msgid ""
 "Like ``formatdate``, but the input is a :mod:`datetime` instance.  If it is "
 "a naive datetime, it is assumed to be \"UTC with no information about the "
@@ -271,11 +305,11 @@ msgstr ""
 "将使用字符串 ``GMT`` 而非数字形式的时区时差。 这提供了一种生成符合标准 HTTP "
 "日期标头的方式。"
 
-#: ../../library/email.utils.rst:182
+#: ../../library/email.utils.rst:206
 msgid "Decode the string *s* according to :rfc:`2231`."
 msgstr "根据 :rfc:`2231` 解码字符串 *s*。"
 
-#: ../../library/email.utils.rst:187
+#: ../../library/email.utils.rst:211
 msgid ""
 "Encode the string *s* according to :rfc:`2231`.  Optional *charset* and "
 "*language*, if given is the character set name and language name to use.  If "
@@ -288,7 +322,7 @@ msgstr ""
 "*s*。 如果给出 *charset* 但未给出 *language*，则会使用空字符串作为 "
 "*language* 值来对字符串进行编码。"
 
-#: ../../library/email.utils.rst:195
+#: ../../library/email.utils.rst:219
 msgid ""
 "When a header parameter is encoded in :rfc:`2231` format, :meth:`Message."
 "get_param <email.message.Message.get_param>` may return a 3-tuple containing "
@@ -307,7 +341,7 @@ msgstr ""
 "`2231` 标头中的字符集无法被 Python 识别时要使用的字符集；它的默认值为 ``'us-"
 "ascii'``。"
 
-#: ../../library/email.utils.rst:204
+#: ../../library/email.utils.rst:228
 msgid ""
 "For convenience, if the *value* passed to :func:`collapse_rfc2231_value` is "
 "not a tuple, it should be a string and it is returned unquoted."
@@ -315,7 +349,7 @@ msgstr ""
 "为方便起见，如果传给 :func:`collapse_rfc2231_value` 的 *value* 不是一个元组，"
 "则应为一个字符串并会将其原样返回。"
 
-#: ../../library/email.utils.rst:210
+#: ../../library/email.utils.rst:234
 msgid ""
 "Decode parameters list according to :rfc:`2231`.  *params* is a sequence of "
 "2-tuples containing elements of the form ``(content-type, string-value)``."
@@ -323,11 +357,11 @@ msgstr ""
 "根据 :rfc:`2231` 解码参数列表。 *params* 是一个包含 ``(content-type, string-"
 "value)`` 形式的元素的 2 元组的序列。"
 
-#: ../../library/email.utils.rst:215
+#: ../../library/email.utils.rst:239
 msgid "Footnotes"
 msgstr "备注"
 
-#: ../../library/email.utils.rst:216
+#: ../../library/email.utils.rst:240
 msgid ""
 "Note that the sign of the timezone offset is the opposite of the sign of the "
 "``time.timezone`` variable for the same timezone; the latter variable "
