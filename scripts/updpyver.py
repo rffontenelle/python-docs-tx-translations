@@ -71,7 +71,7 @@ def get_latest_version() -> str:
             version = m.group().split(' ')[1]
             versions.append(version)
     
-    latest = max(versions, default=None, key=lambda v: parse(v)) if versions else None
+    latest = max(versions, default=None, key=lambda v: parse(v))
     
     if parse(latest).pre and parse(latest).pre[0] in ['b', 'rc']:
         return latest
