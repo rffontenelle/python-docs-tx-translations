@@ -4,7 +4,6 @@
 from bs4 import BeautifulSoup
 from packaging.version import parse
 from pathlib import Path
-import io
 import json
 import re
 import requests
@@ -17,8 +16,9 @@ versions_file = str(rootdir) + '/.github/versions.txt'
 
 def get_from_devguide() -> list:
     """
-    Returns a list of bug-fix and security-fix releases from a devguide's JSON,
-    which is used to generate info on version.rst for https://devguide.python.org/versions/.
+    Returns a list of bug-fix and security-fix releases from
+    a JSON file in devguide, which is used to generate info
+    on version.rst for https://devguide.python.org/versions/.
     
     Returns:
         A list containing the versions.
@@ -26,17 +26,19 @@ def get_from_devguide() -> list:
     Raises:
         JSONDecodeError: If an error occurs when parsing the data as JSON.
     """
-    url = 'https://raw.githubusercontent.com/python/devguide/main/include/release-cycle.json'
+    raw_root_url = 'https://raw.githubusercontent.com/python/devguide/main'
+    url = f'{raw_root_url}/include/release-cycle.json'
     
     r = requests.get(url, allow_redirects=True)
     if r.status_code != 200:
-        sys.exit(f'ERROR: Unable to collect Python versions, connection failed with: {url}')
+        exit(f'ERROR: Collect Python versions failed, no connection to: {url}')
 
     try:
         data = json.loads(r.content.decode(r.apparent_encoding))
-        versions = [k for k, v in data.items() if v['status'] in ['bugfix', 'security']]
+        versions = [k for k, v in data.items()
+                    if v['status'] in ['bugfix', 'security']]
         return versions
-    except JSONDecodeError:
+    except json.JSONDecodeError:
         sys.exit("ERROR: Unable to parse response as a JSON object")
 
 
@@ -44,15 +46,17 @@ def get_latest_version() -> str:
     """
     Returns the latest beta or release candidate version of Python.
 
-    This function scrapes the Python download page to gather version information and selects the latest one.
+    This function scrapes the Python download page to gather version
+    information and selects the latest one.
     Versions that are either alpha or stable are excluded from the results.
     
     Returns:
-        str: The latestlatest beta or release candidate version of Python. If no version is found, or
-             if the latest version is either alpha or stable, returns `None`.
+        str: The latest beta or release candidate version of Python.
+             If no version is found, or if the latest version is
+             either alpha or stable, returns 'None'.
     """
     url = 'https://www.python.org/downloads/source/'
-    pattern = 'Python 3\.[\d]+\.[\d]+((rc|b)[\d]+)? '
+    pattern = r'Python 3.[\d]+.[\d]+((rc|b)[\d]+)? '
     
     r = requests.get(url, allow_redirects=True)
     if r.status_code != 200:
@@ -80,7 +84,7 @@ latest = get_latest_version()
 
 # Store version in major.minor versioning scheme (e.g. 3.11) 
 if latest:
-    major_version = re.match('3.[\d]+', latest).group()
+    major_version = re.match(r'3.[\d]+', latest).group()
     versions.insert(0, major_version)
 
 with open(versions_file, 'w') as f:
