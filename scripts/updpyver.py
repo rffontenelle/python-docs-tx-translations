@@ -76,7 +76,7 @@ def get_latest_version() -> str:
         return None
 
 
-def updpyver(versions_file: str):
+def update_versions_file(versions_file: str):
     """
     Writes Python versions in *versions_file* using info gathered by
     the get_from_devguide() and get_latest_version() functions.
@@ -96,7 +96,7 @@ def updpyver(versions_file: str):
 
 
 def main():
-    RUNNABLE_SCRIPTS = ('updpyver',)
+    RUNNABLE_SCRIPTS = ('update_versions_file')
 
     parser = ArgumentParser()
     parser.add_argument('cmd', choices=RUNNABLE_SCRIPTS)
