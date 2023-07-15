@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # Update versions.txt with latest status from Python devguide
 
+from argparse import ArgumentParser
 from bs4 import BeautifulSoup
 from packaging.version import parse
 from pathlib import Path
@@ -8,10 +9,6 @@ import json
 import re
 import requests
 import sys
-
-script_path = Path(__file__)
-rootdir = script_path.parent.parent.absolute()
-versions_file = str(rootdir) + '/.github/versions.txt'
 
 
 def get_from_devguide() -> list:
@@ -79,15 +76,38 @@ def get_latest_version() -> str:
         return None
 
 
-versions = get_from_devguide()
-latest = get_latest_version()
+def updpyver(versions_file: str):
+    """
+    Writes Python versions in *versions_file* using info gathered by
+    the get_from_devguide() and get_latest_version() functions.
+    """
+    versions = get_from_devguide()
+    latest = get_latest_version()
 
-# Store version in major.minor versioning scheme (e.g. 3.11) 
-if latest:
-    major_version = re.match(r'3.[\d]+', latest).group()
-    versions.insert(0, major_version)
+    # Store version in major.minor versioning scheme (e.g. 3.11)
+    if latest:
+        major_version = re.match(r'3.[\d]+', latest).group()
+        versions.insert(0, major_version)
 
-with open(versions_file, 'w') as f:
-    f.write(f"{versions}\n")
+    with open(versions_file, 'w') as f:
+        f.write(f"{versions}\n")
 
-print('Contents stored:\n', "\n ".join(map(str, versions)))
+    print('Contents stored:\n', "\n ".join(map(str, versions)))
+
+
+def main():
+    RUNNABLE_SCRIPTS = ('updpyver',)
+
+    parser = ArgumentParser()
+    parser.add_argument('cmd', choices=RUNNABLE_SCRIPTS)
+    options = parser.parse_args()
+
+    script_path = Path(__file__)
+    rootdir = script_path.parent.parent.absolute()
+    versions_file = str(rootdir) + '/.github/versions.txt'
+
+    eval(options.cmd)(versions_file)
+
+
+if __name__ == '__main__':
+    main()
