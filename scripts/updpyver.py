@@ -95,8 +95,33 @@ def update_versions_file(versions_file: str):
     print('Contents stored:\n', "\n ".join(map(str, versions)))
 
 
+def get_versions_from_file(file: str) -> list:
+    """Read versions file and make sure the content is read as list."""
+    try:
+        with open(file,'r') as f:
+            versions = f.read().strip()
+        return re.sub("('|\[|\])", '', versions).split(', ')
+    except OSError as e:
+        sys.exit(f'ERROR: Failed to open versions file {file}. {e}')
+
+
+def all(file):
+    """List all versions in the version file."""
+    print(get_versions_from_file(file))
+
+
+def current(file):
+    """List only the current version, latest listed in the version file."""
+    print(get_versions_from_file(file)[0])
+
+
+def others(file):
+    """List all versions but the current in the version file."""
+    print(get_versions_from_file(file)[1:])
+
+
 def main():
-    RUNNABLE_SCRIPTS = ('update_versions_file')
+    RUNNABLE_SCRIPTS = ('update_versions_file', 'all', 'current', 'others')
 
     parser = ArgumentParser()
     parser.add_argument('cmd', choices=RUNNABLE_SCRIPTS)
