@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 # Update versions.txt with latest status from Python devguide
 
 from bs4 import BeautifulSoup
