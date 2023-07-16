@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Update versions.txt with latest status from Python devguide
+# Update versions.txt with latest Python versions and print them
 
 from argparse import ArgumentParser
 from bs4 import BeautifulSoup
@@ -90,17 +90,20 @@ def update_versions_file(versions_file: str):
         versions.insert(0, major_version)
 
     with open(versions_file, 'w') as f:
-        f.write(f"{versions}")
+        for item in versions:
+            f.write(f'{item}\n')
 
     print('Contents stored:\n', "\n ".join(map(str, versions)))
 
 
 def get_versions_from_file(file: str) -> list:
-    """Read versions file and make sure the content is read as list."""
+    """Read versions file and return then as a list."""
+    versions = []
     try:
         with open(file,'r') as f:
-            versions = f.read()
-        return re.sub("('|\[|\])", '', versions).split(', ')
+            for line in f:
+                versions.append(line.strip())
+        return versions
     except OSError as e:
         sys.exit(f'ERROR: Failed to open versions file {file}. {e}')
 

@@ -26,12 +26,31 @@ env:
 jobs:
   trigger:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
-      matrix: ${{ steps.version.outputs.matrix }}
+      all_versions: ${{ steps.matrix.outputs.versions }}
     steps:
-      - uses: actions/checkout@v3.5.3
-      - id: version
-        run: echo "matrix=$(cat .github/versions.txt)" >> $GITHUB_OUTPUT
+    - name: Check out ${{ github.repository }}
+      uses: actions/checkout@v3.5.3
+
+    - name: Set up Python 3
+        uses: actions/setup-python@v4.6.1
+        with:
+          python-version: '3'
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements.txt
+
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install -r requirements.txt
+
+    - id: version
+      run: |
+        echo "versions=$(scripts/manage_versions.py all)" >> $GITHUB_OUTPUT
+
 
   update:
     runs-on: ubuntu-latest
@@ -42,7 +61,7 @@ jobs:
       max-parallel: 1
       fail-fast: false
       matrix:
-        cpython_version: ${{fromJson(needs.trigger.outputs.matrix)}}
+        cpython_version: ${{fromJson(needs.trigger.outputs.all_versions)}}
         # must match existent projects in Transifex
 
     steps:
