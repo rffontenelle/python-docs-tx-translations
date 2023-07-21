@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-14 15:16+0000\n"
+"POT-Creation-Date: 2023-07-21 15:14+0000\n"
 "PO-Revision-Date: 2022-11-05 17:21+0000\n"
 "Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2023\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -525,6 +525,9 @@ msgid ""
 "Unlike the ``es`` format, this variant allows input data which contains NUL "
 "characters."
 msgstr ""
+"Esta variante de ``s#``se utiliza para codificar Unicode en un búfer de "
+"caracteres. A diferencia del formato ``es``, esta variante permite la "
+"entrada de datos que contienen caracteres NUL."
 
 #: ../../c-api/arg.rst:235
 msgid ""
@@ -538,10 +541,20 @@ msgid ""
 "The third argument must be a pointer to an integer; the referenced integer "
 "will be set to the number of bytes in the output buffer."
 msgstr ""
+"Requiere tres argumentos. El primero solo se usa como entrada y debe ser un :"
+"c:expr:`const char*`que apunta al nombre de una codificación como una cadena "
+"terminada en NUL, o ``NULL``, en cuyo caso se utiliza la codificación "
+"``'utf-8'``. Se genera una excepción si Python no conoce la codificación "
+"nombrada. El segundo argumento ha de ser un :c:expr:`char**`; el valor del "
+"puntero al que hace referencia se establecerá en un búfer con el contenido "
+"del texto del argumento. El texto se codificará en la codificación "
+"especificada por el primer argumento. El tercer argumento debe ser un "
+"puntero a un entero; el entero referenciado se establecerá en el número de "
+"bytes en el búfer de salida."
 
 #: ../../c-api/arg.rst:245
 msgid "There are two modes of operation:"
-msgstr ""
+msgstr "Existen dos modos de operación:"
 
 #: ../../c-api/arg.rst:247
 msgid ""
@@ -551,6 +564,11 @@ msgid ""
 "responsible for calling :c:func:`PyMem_Free` to free the allocated buffer "
 "after usage."
 msgstr ""
+"Si *\\*buffer* apunta a un puntero ``NULL`` , la función asignará un búfer "
+"del tamaño necesario, copiará los datos codificados en este búfer y "
+"establecerá *\\*buffer * para referenciar al almacenamiento recién "
+"asignado.  Calleres responsable de llamar a :c:func:`PyMem_Free`para liberar "
+"el búfer asignado después del uso."
 
 #: ../../c-api/arg.rst:252
 msgid ""
@@ -560,18 +578,28 @@ msgid ""
 "will then copy the encoded data into the buffer and NUL-terminate it.  If "
 "the buffer is not large enough, a :exc:`ValueError` will be set."
 msgstr ""
+"Si *\\*buffer* apunta a un puntero no-``NULL`` (un búfer ya asignado), :c:"
+"func:`PyArg_ParseTuple` usará esta ubicación como búfer e interpretará el "
+"valor inicial de * \\ * buffer_length * como el tamaño del búfer. A "
+"continuación, copiará los datos codificados en el búfer y los terminará en "
+"NULL. .Si el búfer no es lo suficientemente grande, se fijará a :exc:"
+"`ValueError`."
 
 #: ../../c-api/arg.rst:258
 msgid ""
 "In both cases, *\\*buffer_length* is set to the length of the encoded data "
 "without the trailing NUL byte."
 msgstr ""
+"En ambos casos, *\\*buffer_length * se establece en la longitud de los datos "
+"codificados sin el byte NUL final."
 
 #: ../../c-api/arg.rst:264
 msgid ""
 "``et#`` (:class:`str`, :class:`bytes` or :class:`bytearray`) [const char "
 "\\*encoding, char \\*\\*buffer, :c:type:`Py_ssize_t` \\*buffer_length]"
 msgstr ""
+"``et#`` (:class:`str`, :class:`bytes` o :class:`bytearray`) [const char "
+"\\*encoding, char \\*\\*buffer, :c:type:`Py_ssize_t` \\*buffer_length]"
 
 #: ../../c-api/arg.rst:262
 msgid ""
@@ -579,166 +607,188 @@ msgid ""
 "recoding them. Instead, the implementation assumes that the byte string "
 "object uses the encoding passed in as parameter."
 msgstr ""
+"Igual que ``es#`` excepto que los objetos de cadena de bytes se pasan sin "
+"recodificarlos, la implementación supone que el objeto de cadena de bytes "
+"utiliza la codificación pasada como parámetro."
 
 #: ../../c-api/arg.rst:267
 msgid "Numbers"
-msgstr ""
+msgstr "Numeros"
 
 #: ../../c-api/arg.rst:271
 msgid "``b`` (:class:`int`) [unsigned char]"
-msgstr ""
+msgstr "``b`` (:class:`int`) [caracteres sin firmar]"
 
 #: ../../c-api/arg.rst:270
 msgid ""
 "Convert a nonnegative Python integer to an unsigned tiny int, stored in a C :"
 "c:expr:`unsigned char`."
 msgstr ""
+"Convertir un entero de Python no negativo en un tiny int sin signo, "
+"almacenado en un C:c: expr:`unsigned char'."
 
 #: ../../c-api/arg.rst:275 ../../c-api/arg.rst:615
 msgid "``B`` (:class:`int`) [unsigned char]"
-msgstr ""
+msgstr "``B`` (:class:`int`) [unsigned char]"
 
 #: ../../c-api/arg.rst:274
 msgid ""
 "Convert a Python integer to a tiny int without overflow checking, stored in "
 "a C :c:expr:`unsigned char`."
 msgstr ""
+"Convertir un entero de Python en un tiny int sin comprobación de "
+"desbordamiento, almacenado en un C:c: expr:`unsigned char'."
 
 #: ../../c-api/arg.rst:278 ../../c-api/arg.rst:609
 msgid "``h`` (:class:`int`) [short int]"
-msgstr ""
+msgstr "``h`` (:class:`int`) [short int]"
 
 #: ../../c-api/arg.rst:278
 msgid "Convert a Python integer to a C :c:expr:`short int`."
-msgstr ""
+msgstr "Convertir un entero de Python en un C: c: expr: 'short int'."
 
 #: ../../c-api/arg.rst:282 ../../c-api/arg.rst:618
 msgid "``H`` (:class:`int`) [unsigned short int]"
-msgstr ""
+msgstr "``H`` (:class:`int`) [unsigned short int]"
 
 #: ../../c-api/arg.rst:281
 msgid ""
 "Convert a Python integer to a C :c:expr:`unsigned short int`, without "
 "overflow checking."
 msgstr ""
+"Convertir un entero de Python en un C: c: expr` 'unsigned short int', sin "
+"comprobación de desbordamiento."
 
 #: ../../c-api/arg.rst:285 ../../c-api/arg.rst:603
 msgid "``i`` (:class:`int`) [int]"
-msgstr ""
+msgstr "``i`` (:class:`int`) [int]"
 
 #: ../../c-api/arg.rst:285
 msgid "Convert a Python integer to a plain C :c:expr:`int`."
-msgstr ""
+msgstr "Convertir un entero de Python en C plano :c:expr:`int`."
 
 #: ../../c-api/arg.rst:289 ../../c-api/arg.rst:621
 msgid "``I`` (:class:`int`) [unsigned int]"
-msgstr ""
+msgstr "``I`` (:class:`int`) [unsigned int]"
 
 #: ../../c-api/arg.rst:288
 msgid ""
 "Convert a Python integer to a C :c:expr:`unsigned int`, without overflow "
 "checking."
 msgstr ""
+"Convertir un entero de Python en un C: c: expr` 'unsigned int', sin "
+"comprobación de desbordamiento."
 
 #: ../../c-api/arg.rst:292 ../../c-api/arg.rst:612
 msgid "``l`` (:class:`int`) [long int]"
-msgstr ""
+msgstr "``l`` (:class:`int`) [long int]"
 
 #: ../../c-api/arg.rst:292
 msgid "Convert a Python integer to a C :c:expr:`long int`."
-msgstr ""
+msgstr "Convertir un entero de Python en un C: c: expr: 'long int'."
 
 #: ../../c-api/arg.rst:296 ../../c-api/arg.rst:624
 msgid "``k`` (:class:`int`) [unsigned long]"
-msgstr ""
+msgstr "``k`` (:class:`int`) [unsigned long]"
 
 #: ../../c-api/arg.rst:295
 msgid ""
 "Convert a Python integer to a C :c:expr:`unsigned long` without overflow "
 "checking."
 msgstr ""
+"Convertir un entero de Python en un C: c: expr` 'unsigned long', sin "
+"comprobación de desbordamiento."
 
 #: ../../c-api/arg.rst:299 ../../c-api/arg.rst:627
 msgid "``L`` (:class:`int`) [long long]"
-msgstr ""
+msgstr "``L`` (:class:`int`) [long long]"
 
 #: ../../c-api/arg.rst:299
 msgid "Convert a Python integer to a C :c:expr:`long long`."
-msgstr ""
+msgstr "Convertir un entero de Python en un C: c: expr: 'long long'."
 
 #: ../../c-api/arg.rst:303 ../../c-api/arg.rst:630
 msgid "``K`` (:class:`int`) [unsigned long long]"
-msgstr ""
+msgstr "``K`` (:class:`int`) [unsigned long long]"
 
 #: ../../c-api/arg.rst:302
 msgid ""
 "Convert a Python integer to a C :c:expr:`unsigned long long` without "
 "overflow checking."
 msgstr ""
+"Convertir un entero de Python en un C: c: expr` 'unsigned long long', sin "
+"comprobación de desbordamiento."
 
 #: ../../c-api/arg.rst:306 ../../c-api/arg.rst:633
 msgid "``n`` (:class:`int`) [:c:type:`Py_ssize_t`]"
-msgstr ""
+msgstr "``n`` (:class:`int`) [:c:type:`Py_ssize_t`]"
 
 #: ../../c-api/arg.rst:306
 msgid "Convert a Python integer to a C :c:type:`Py_ssize_t`."
-msgstr ""
+msgstr "Convertir un entero de Python en un C :c:type:`Py_ssize_t`."
 
 #: ../../c-api/arg.rst:313
 msgid "``c`` (:class:`bytes` or :class:`bytearray` of length 1) [char]"
-msgstr ""
+msgstr "``c`` (:class:`bytes` o :class:`bytearray` de longitud 1) [char]"
 
 #: ../../c-api/arg.rst:309
 msgid ""
 "Convert a Python byte, represented as a :class:`bytes` or :class:`bytearray` "
 "object of length 1, to a C :c:expr:`char`."
 msgstr ""
+"Convertir un byte de Python, representado como un objeto  :class:`bytes` o :"
+"class:`bytearray` de longitud 1, en un C :c:expr:`char`."
 
 #: ../../c-api/arg.rst:312
 msgid "Allow :class:`bytearray` objects."
-msgstr ""
+msgstr "Permitir objetos :class:`bytearray`."
 
 #: ../../c-api/arg.rst:317 ../../c-api/arg.rst:641
 msgid "``C`` (:class:`str` of length 1) [int]"
-msgstr ""
+msgstr "``C`` (:class:`str` de longitud 1) [int]"
 
 #: ../../c-api/arg.rst:316
 msgid ""
 "Convert a Python character, represented as a :class:`str` object of length "
 "1, to a C :c:expr:`int`."
 msgstr ""
+"Convertir un byte de Python, representado como un objeto :class:`str` de "
+"longitud 1, en un C :c:expr:`int`."
 
 #: ../../c-api/arg.rst:320 ../../c-api/arg.rst:647
 msgid "``f`` (:class:`float`) [float]"
-msgstr ""
+msgstr "``f`` (:class:`float`) [float]"
 
 #: ../../c-api/arg.rst:320
 msgid "Convert a Python floating point number to a C :c:expr:`float`."
 msgstr ""
+"Convertir un número de coma flotante de Python en un C :c:expr:`float`."
 
 #: ../../c-api/arg.rst:323 ../../c-api/arg.rst:644
 msgid "``d`` (:class:`float`) [double]"
-msgstr ""
+msgstr "``d`` (:class:`float`) [double]"
 
 #: ../../c-api/arg.rst:323
 msgid "Convert a Python floating point number to a C :c:expr:`double`."
 msgstr ""
+"Convertir un número de coma flotante de Python en un C :c:expr:`double`."
 
 #: ../../c-api/arg.rst:326
 msgid "``D`` (:class:`complex`) [Py_complex]"
-msgstr ""
+msgstr "``D`` (:class:`complex`) [Py_complex]"
 
 #: ../../c-api/arg.rst:326
 msgid "Convert a Python complex number to a C :c:type:`Py_complex` structure."
 msgstr ""
+"Convertir un entero de Python en una estructura C :c:type:`Py_complex`."
 
 #: ../../c-api/arg.rst:329
 msgid "Other objects"
-msgstr ""
+msgstr "Otros objetos"
 
 #: ../../c-api/arg.rst:334 ../../c-api/arg.rst:658
 msgid "``O`` (object) [PyObject \\*]"
-msgstr ""
+msgstr "``O`` (object) [PyObject \\*]"
 
 #: ../../c-api/arg.rst:332
 msgid ""
@@ -746,10 +796,13 @@ msgid ""
 "program thus receives the actual object that was passed.  The object's "
 "reference count is not increased.  The pointer stored is not ``NULL``."
 msgstr ""
+"Almacenar un objeto Python (sin ninguna conversión) en un puntero de objeto "
+"C. El programa C recibe así el objeto real que se pasó. El recuento de "
+"referencias del objeto no aumenta. El puntero almacenado no es ``NULL``."
 
 #: ../../c-api/arg.rst:341
 msgid "``O!`` (object) [*typeobject*, PyObject \\*]"
-msgstr ""
+msgstr "``O!`` (object) [*typeobject*, PyObject \\*]"
 
 #: ../../c-api/arg.rst:337
 msgid ""
@@ -759,10 +812,15 @@ msgid ""
 "which the object pointer is stored.  If the Python object does not have the "
 "required type, :exc:`TypeError` is raised."
 msgstr ""
+"Almacenar un objeto Python en un puntero de objeto C. Esto es similar "
+"a``O``, pero toma dos argumentos C: el primero es la dirección de un objeto "
+"de tipo Python, el segundo es la dirección de la variable C (de tipo :c:expr:"
+"`PyObject*`) en el que se almacena el puntero del objeto. Si el objeto de "
+"Python no tiene el tipo requerido, se genera:exc:`TypeError`."
 
 #: ../../c-api/arg.rst:366 ../../c-api/arg.rst:672
 msgid "``O&`` (object) [*converter*, *anything*]"
-msgstr ""
+msgstr "``O&`` (object) [*converter*, *anything*]"
 
 #: ../../c-api/arg.rst:346
 msgid ""
@@ -771,6 +829,11 @@ msgid ""
 "of a C variable (of arbitrary type), converted to :c:expr:`void *`.  The "
 "*converter* function in turn is called as follows::"
 msgstr ""
+"Convertir un objeto Python en una variable de C a través de una función de "
+"*convertidor*. Esto toma dos argumentos: el primero es una función, el "
+"segundo es la dirección de una variable C (de tipo arbitrario), convertida "
+"a :c:expr:`void *`. La función *convertidor* a su vez se llama de la "
+"siguiente manera:"
 
 #: ../../c-api/arg.rst:353
 msgid ""
@@ -781,6 +844,12 @@ msgid ""
 "function should raise an exception and leave the content of *address* "
 "unmodified."
 msgstr ""
+"donde *objeto* es el objeto Python a convertir y *dirección* es el "
+"argumento :c:expr:`void*` argument que se pasó a la función "
+"``PyArg_Parse*``. El *estado* devuelto debe ser ``1`` para una conversión "
+"con éxito y ``0`` si la conversión falla.  Cuando la conversión falla, la "
+"función *convertidor* debe generar una excepción y dejar el contenido de "
+"*dirección* sin modificar."
 
 #: ../../c-api/arg.rst:359
 msgid ""
