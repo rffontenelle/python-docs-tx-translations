@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 14:49+0000\n"
+"POT-Creation-Date: 2023-07-21 14:44+0000\n"
 "PO-Revision-Date: 2023-05-24 02:08+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -45,18 +45,17 @@ msgstr ""
 #: ../../c-api/gcsupport.rst:15
 msgid ""
 "To create a container type, the :c:member:`~PyTypeObject.tp_flags` field of "
-"the type object must include the :const:`Py_TPFLAGS_HAVE_GC` and provide an "
-"implementation of the :c:member:`~PyTypeObject.tp_traverse` handler.  If "
+"the type object must include the :c:macro:`Py_TPFLAGS_HAVE_GC` and provide "
+"an implementation of the :c:member:`~PyTypeObject.tp_traverse` handler.  If "
 "instances of the type are mutable, a :c:member:`~PyTypeObject.tp_clear` "
 "implementation must also be provided."
 msgstr ""
-"コンテナ型を作るには、型オブジェクトの :c:member:`~PyTypeObject.tp_flags` "
-"フィールドに :const:`Py_TPFLAGS_HAVE_GC` フラグが立っており、 :c:member:"
-"`~PyTypeObject.tp_traverse` ハンドラの実装を提供しなければなりません。実装す"
-"る型のインスタンスが変更可能な場合は、 :c:member:`~PyTypeObject.tp_clear` の"
-"実装も提供しなければなりません。"
 
 #: ../../c-api/gcsupport.rst:24
+msgid ":c:macro:`Py_TPFLAGS_HAVE_GC`"
+msgstr ""
+
+#: ../../c-api/gcsupport.rst:22
 msgid ""
 "Objects with a type with this flag set must conform with the rules "
 "documented here.  For convenience these objects will be referred to as "
@@ -66,12 +65,12 @@ msgstr ""
 "なりません。簡単のため、このフラグをセットした型のオブジェクトをコンテナオブ"
 "ジェクトと呼びます。"
 
-#: ../../c-api/gcsupport.rst:28
+#: ../../c-api/gcsupport.rst:26
 msgid "Constructors for container types must conform to two rules:"
 msgstr ""
 "コンテナ型のコンストラクタは以下の二つの規則に適合しなければなりません:"
 
-#: ../../c-api/gcsupport.rst:30
+#: ../../c-api/gcsupport.rst:28
 msgid ""
 "The memory for the object must be allocated using :c:func:`PyObject_GC_New` "
 "or :c:func:`PyObject_GC_NewVar`."
@@ -79,7 +78,7 @@ msgstr ""
 "オブジェクトのメモリは :c:func:`PyObject_GC_New` または :c:func:"
 "`PyObject_GC_NewVar` で確保しなければなりません。"
 
-#: ../../c-api/gcsupport.rst:33
+#: ../../c-api/gcsupport.rst:31
 msgid ""
 "Once all the fields which may contain references to other containers are "
 "initialized, it must call :c:func:`PyObject_GC_Track`."
@@ -87,7 +86,7 @@ msgstr ""
 "他のコンテナへの参照が入るかもしれないフィールドが全て初期化されたら、すぐ"
 "に :c:func:`PyObject_GC_Track` を呼び出さなければなりません。"
 
-#: ../../c-api/gcsupport.rst:36
+#: ../../c-api/gcsupport.rst:34
 msgid ""
 "Similarly, the deallocator for the object must conform to a similar pair of "
 "rules:"
@@ -95,7 +94,7 @@ msgstr ""
 "同様に、オブジェクトのメモリ解放関数も以下の二つの規則に適合しなければなりま"
 "せん:"
 
-#: ../../c-api/gcsupport.rst:39
+#: ../../c-api/gcsupport.rst:37
 msgid ""
 "Before fields which refer to other containers are invalidated, :c:func:"
 "`PyObject_GC_UnTrack` must be called."
@@ -103,20 +102,20 @@ msgstr ""
 "他のコンテナを参照しているフィールドを無効化する前に、 :c:func:"
 "`PyObject_GC_UnTrack` を呼び出さなければなりません。"
 
-#: ../../c-api/gcsupport.rst:42
+#: ../../c-api/gcsupport.rst:40
 msgid ""
 "The object's memory must be deallocated using :c:func:`PyObject_GC_Del`."
 msgstr ""
 "オブジェクトのメモリは :c:func:`PyObject_GC_Del` で解放しなければなりません。"
 
-#: ../../c-api/gcsupport.rst:45
+#: ../../c-api/gcsupport.rst:43
 msgid ""
 "If a type adds the Py_TPFLAGS_HAVE_GC, then it *must* implement at least a :"
 "c:member:`~PyTypeObject.tp_traverse` handler or explicitly use one from its "
 "subclass or subclasses."
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:49
+#: ../../c-api/gcsupport.rst:47
 msgid ""
 "When calling :c:func:`PyType_Ready` or some of the APIs that indirectly call "
 "it like :c:func:`PyType_FromSpecWithBases` or :c:func:`PyType_FromSpec` the "
@@ -124,26 +123,22 @@ msgid ""
 "tp_flags`, :c:member:`~PyTypeObject.tp_traverse` and :c:member:"
 "`~PyTypeObject.tp_clear` fields if the type inherits from a class that "
 "implements the garbage collector protocol and the child class does *not* "
-"include the :const:`Py_TPFLAGS_HAVE_GC` flag."
+"include the :c:macro:`Py_TPFLAGS_HAVE_GC` flag."
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:59
+#: ../../c-api/gcsupport.rst:57
 msgid ""
-"Analogous to :c:func:`PyObject_New` but for container objects with the :"
-"const:`Py_TPFLAGS_HAVE_GC` flag set."
+"Analogous to :c:func:`PyObject_New` but for container objects with the :c:"
+"macro:`Py_TPFLAGS_HAVE_GC` flag set."
 msgstr ""
-":c:func:`PyObject_New` に似ていますが、 :const:`Py_TPFLAGS_HAVE_GC` のセット"
-"されたコンテナオブジェクト用です。"
 
-#: ../../c-api/gcsupport.rst:65
+#: ../../c-api/gcsupport.rst:63
 msgid ""
-"Analogous to :c:func:`PyObject_NewVar` but for container objects with the :"
-"const:`Py_TPFLAGS_HAVE_GC` flag set."
+"Analogous to :c:func:`PyObject_NewVar` but for container objects with the :c:"
+"macro:`Py_TPFLAGS_HAVE_GC` flag set."
 msgstr ""
-":c:func:`PyObject_NewVar` に似ていますが、 :const:`Py_TPFLAGS_HAVE_GC` のセッ"
-"トされたコンテナオブジェクト用です。"
 
-#: ../../c-api/gcsupport.rst:71
+#: ../../c-api/gcsupport.rst:69
 msgid ""
 "Resize an object allocated by :c:func:`PyObject_NewVar`.  Returns the "
 "resized object or ``NULL`` on failure.  *op* must not be tracked by the "
@@ -153,7 +148,7 @@ msgstr ""
 "リサイズされたオブジェクトを返します。失敗すると ``NULL`` を返します。\n"
 "*op* はコレクタに追跡されていてはなりません。"
 
-#: ../../c-api/gcsupport.rst:77
+#: ../../c-api/gcsupport.rst:75
 msgid ""
 "Adds the object *op* to the set of container objects tracked by the "
 "collector.  The collector can run at unexpected times so objects must be "
@@ -167,39 +162,39 @@ msgstr ""
 "対象となる全てのフィールドが正しい状態になってすぐに、たいていはコンストラク"
 "タの末尾付近で、呼び出すべきです。"
 
-#: ../../c-api/gcsupport.rst:86
+#: ../../c-api/gcsupport.rst:84
 msgid ""
 "Returns non-zero if the object implements the garbage collector protocol, "
 "otherwise returns 0."
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:89
+#: ../../c-api/gcsupport.rst:87
 msgid ""
 "The object cannot be tracked by the garbage collector if this function "
 "returns 0."
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:94
+#: ../../c-api/gcsupport.rst:92
 msgid ""
 "Returns 1 if the object type of *op* implements the GC protocol and *op* is "
 "being currently tracked by the garbage collector and 0 otherwise."
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:97
+#: ../../c-api/gcsupport.rst:95
 msgid "This is analogous to the Python function :func:`gc.is_tracked`."
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:104
+#: ../../c-api/gcsupport.rst:102
 msgid ""
 "Returns 1 if the object type of *op* implements the GC protocol and *op* has "
 "been already finalized by the garbage collector and 0 otherwise."
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:107
+#: ../../c-api/gcsupport.rst:105
 msgid "This is analogous to the Python function :func:`gc.is_finalized`."
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:114
+#: ../../c-api/gcsupport.rst:112
 msgid ""
 "Releases memory allocated to an object using :c:func:`PyObject_GC_New` or :c:"
 "func:`PyObject_GC_NewVar`."
@@ -207,7 +202,7 @@ msgstr ""
 ":c:func:`PyObject_GC_New` や :c:func:`PyObject_GC_NewVar` を使って確保された"
 "メモリを解放します。"
 
-#: ../../c-api/gcsupport.rst:120
+#: ../../c-api/gcsupport.rst:118
 msgid ""
 "Remove the object *op* from the set of container objects tracked by the "
 "collector.  Note that :c:func:`PyObject_GC_Track` can be called again on "
@@ -223,7 +218,7 @@ msgstr ""
 "ケータ (:c:member:`~PyTypeObject.tp_dealloc` ハンドラ) はオブジェクトに対し"
 "て、この関数を呼び出すべきです。"
 
-#: ../../c-api/gcsupport.rst:129
+#: ../../c-api/gcsupport.rst:127
 msgid ""
 "The :c:func:`_PyObject_GC_TRACK` and :c:func:`_PyObject_GC_UNTRACK` macros "
 "have been removed from the public C API."
@@ -231,7 +226,7 @@ msgstr ""
 ":c:func:`_PyObject_GC_TRACK` マクロと :c:func:`_PyObject_GC_UNTRACK` マクロは"
 "公開 C API から外されました。"
 
-#: ../../c-api/gcsupport.rst:132
+#: ../../c-api/gcsupport.rst:130
 msgid ""
 "The :c:member:`~PyTypeObject.tp_traverse` handler accepts a function "
 "parameter of this type:"
@@ -239,7 +234,7 @@ msgstr ""
 ":c:member:`~PyTypeObject.tp_traverse` ハンドラはこの型の関数パラメータを受け"
 "取ります:"
 
-#: ../../c-api/gcsupport.rst:137
+#: ../../c-api/gcsupport.rst:135
 msgid ""
 "Type of the visitor function passed to the :c:member:`~PyTypeObject."
 "tp_traverse` handler. The function should be called with an object to "
@@ -255,7 +250,7 @@ msgstr ""
 "循環参照を検出する仕組みを実装します; ユーザが自身のためにビジター関数を書く"
 "必要が出てくることはないでしょう。"
 
-#: ../../c-api/gcsupport.rst:144
+#: ../../c-api/gcsupport.rst:142
 msgid ""
 "The :c:member:`~PyTypeObject.tp_traverse` handler must have the following "
 "type:"
@@ -263,7 +258,7 @@ msgstr ""
 ":c:member:`~PyTypeObject.tp_traverse` ハンドラは次の型を持っていなければなり"
 "ません:"
 
-#: ../../c-api/gcsupport.rst:149
+#: ../../c-api/gcsupport.rst:147
 msgid ""
 "Traversal function for a container object.  Implementations must call the "
 "*visit* function for each object directly contained by *self*, with the "
@@ -281,7 +276,7 @@ msgstr ""
 "*visit* が非ゼロの値を返す場合、エラーが発生し、戻り値をそのまま返すようにし"
 "なければなりません。"
 
-#: ../../c-api/gcsupport.rst:156
+#: ../../c-api/gcsupport.rst:154
 msgid ""
 "To simplify writing :c:member:`~PyTypeObject.tp_traverse` handlers, a :c:"
 "func:`Py_VISIT` macro is provided.  In order to use this macro, the :c:"
@@ -293,7 +288,7 @@ msgstr ""
 "`~PyTypeObject.tp_traverse` の実装関数の引数は、一文字も違わず *visit* と "
 "*arg* でなければなりません:"
 
-#: ../../c-api/gcsupport.rst:163
+#: ../../c-api/gcsupport.rst:161
 msgid ""
 "If *o* is not ``NULL``, call the *visit* callback, with arguments *o* and "
 "*arg*.  If *visit* returns a non-zero value, then return it. Using this "
@@ -305,7 +300,7 @@ msgstr ""
 "このマクロを使うと、 :c:member:`~PyTypeObject.tp_traverse` ハンドラは次のよう"
 "になります::"
 
-#: ../../c-api/gcsupport.rst:176
+#: ../../c-api/gcsupport.rst:174
 msgid ""
 "The :c:member:`~PyTypeObject.tp_clear` handler must be of the :c:type:"
 "`inquiry` type, or ``NULL`` if the object is immutable."
@@ -313,7 +308,7 @@ msgstr ""
 ":c:member:`~PyTypeObject.tp_clear` ハンドラは :c:type:`inquiry` 型であるか、"
 "オブジェクトが不変 (immutable) な場合は ``NULL`` でなければなりません。"
 
-#: ../../c-api/gcsupport.rst:182
+#: ../../c-api/gcsupport.rst:180
 msgid ""
 "Drop references that may have created reference cycles.  Immutable objects "
 "do not have to define this method since they can never directly create "
@@ -329,23 +324,23 @@ msgstr ""
 "ください)。ガベージコレクタは、オブジェクトが循環参照を形成していることを検出"
 "した際にこのメソッドを呼び出します。"
 
-#: ../../c-api/gcsupport.rst:191
+#: ../../c-api/gcsupport.rst:189
 msgid "Controlling the Garbage Collector State"
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:193
+#: ../../c-api/gcsupport.rst:191
 msgid ""
 "The C-API provides the following functions for controlling garbage "
 "collection runs."
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:198
+#: ../../c-api/gcsupport.rst:196
 msgid ""
 "Perform a full garbage collection, if the garbage collector is enabled. "
 "(Note that :func:`gc.collect` runs it unconditionally.)"
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:201
+#: ../../c-api/gcsupport.rst:199
 msgid ""
 "Returns the number of collected + unreachable objects which cannot be "
 "collected. If the garbage collector is disabled or already collecting, "
@@ -353,19 +348,19 @@ msgid ""
 "data:`sys.unraisablehook`. This function does not raise exceptions."
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:211
+#: ../../c-api/gcsupport.rst:209
 msgid ""
 "Enable the garbage collector: similar to :func:`gc.enable`. Returns the "
 "previous state, 0 for disabled and 1 for enabled."
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:219
+#: ../../c-api/gcsupport.rst:217
 msgid ""
 "Disable the garbage collector: similar to :func:`gc.disable`. Returns the "
 "previous state, 0 for disabled and 1 for enabled."
 msgstr ""
 
-#: ../../c-api/gcsupport.rst:227
+#: ../../c-api/gcsupport.rst:225
 msgid ""
 "Query the state of the garbage collector: similar to :func:`gc.isenabled`. "
 "Returns the current state, 0 for disabled and 1 for enabled."

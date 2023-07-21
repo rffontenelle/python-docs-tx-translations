@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 14:49+0000\n"
+"POT-Creation-Date: 2023-07-21 14:44+0000\n"
 "PO-Revision-Date: 2023-05-24 02:09+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -245,26 +245,28 @@ msgstr "関数のシグネチャは次のとおりです ::"
 #: ../../c-api/structures.rst:200
 msgid ""
 "Type of the functions used to implement Python callables in C with "
-"signature :const:`METH_VARARGS | METH_KEYWORDS`. The function signature is::"
+"signature :ref:`METH_VARARGS | METH_KEYWORDS <METH_VARARGS-METH_KEYWORDS>`. "
+"The function signature is::"
 msgstr ""
 
 #: ../../c-api/structures.rst:211
 msgid ""
 "Type of the functions used to implement Python callables in C with "
-"signature :const:`METH_FASTCALL`. The function signature is::"
+"signature :c:macro:`METH_FASTCALL`. The function signature is::"
 msgstr ""
 
 #: ../../c-api/structures.rst:221
 msgid ""
 "Type of the functions used to implement Python callables in C with "
-"signature :const:`METH_FASTCALL | METH_KEYWORDS`. The function signature is::"
+"signature :ref:`METH_FASTCALL | METH_KEYWORDS <METH_FASTCALL-"
+"METH_KEYWORDS>`. The function signature is::"
 msgstr ""
 
 #: ../../c-api/structures.rst:232
 msgid ""
 "Type of the functions used to implement Python callables in C with "
-"signature :const:`METH_METHOD | METH_FASTCALL | METH_KEYWORDS`. The function "
-"signature is::"
+"signature :ref:`METH_METHOD | METH_FASTCALL | METH_KEYWORDS <METH_METHOD-"
+"METH_FASTCALL-METH_KEYWORDS>`. The function signature is::"
 msgstr ""
 
 #: ../../c-api/structures.rst:247
@@ -287,7 +289,7 @@ msgstr "C 実装へのポインタ"
 msgid "flags bits indicating how the call should be constructed"
 msgstr ""
 
-#: ../../c-api/structures.rst:264 ../../c-api/structures.rst:426
+#: ../../c-api/structures.rst:264 ../../c-api/structures.rst:444
 msgid "points to the contents of the docstring"
 msgstr "docstring の内容を指すポインタ"
 
@@ -336,6 +338,19 @@ msgstr ""
 
 #: ../../c-api/structures.rst:291
 msgid ""
+"Can only be used in certain combinations with other flags: :ref:"
+"`METH_VARARGS | METH_KEYWORDS <METH_VARARGS-METH_KEYWORDS>`, :ref:"
+"`METH_FASTCALL | METH_KEYWORDS <METH_FASTCALL-METH_KEYWORDS>` and :ref:"
+"`METH_METHOD | METH_FASTCALL | METH_KEYWORDS <METH_METHOD-METH_FASTCALL-"
+"METH_KEYWORDS>`."
+msgstr ""
+
+#: ../../c-api/structures.rst:305
+msgid ":c:expr:`METH_VARARGS | METH_KEYWORDS`"
+msgstr ""
+
+#: ../../c-api/structures.rst:300
+msgid ""
 "Methods with these flags must be of type :c:type:`PyCFunctionWithKeywords`. "
 "The function expects three parameters: *self*, *args*, *kwargs* where "
 "*kwargs* is a dictionary of all the keyword arguments or possibly ``NULL`` "
@@ -343,7 +358,7 @@ msgid ""
 "using :c:func:`PyArg_ParseTupleAndKeywords`."
 msgstr ""
 
-#: ../../c-api/structures.rst:300
+#: ../../c-api/structures.rst:309
 msgid ""
 "Fast calling convention supporting only positional arguments. The methods "
 "have the type :c:type:`_PyCFunctionFast`. The first parameter is *self*, the "
@@ -352,70 +367,76 @@ msgid ""
 "the array)."
 msgstr ""
 
-#: ../../c-api/structures.rst:310
+#: ../../c-api/structures.rst:319
 msgid "``METH_FASTCALL`` is now part of the stable ABI."
 msgstr ""
 
-#: ../../c-api/structures.rst:315
-msgid ""
-"Extension of :const:`METH_FASTCALL` supporting also keyword arguments, with "
-"methods of type :c:type:`_PyCFunctionFastWithKeywords`. Keyword arguments "
-"are passed the same way as in the :ref:`vectorcall protocol <vectorcall>`: "
-"there is an additional fourth :c:expr:`PyObject*` parameter which is a tuple "
-"representing the names of the keyword arguments (which are guaranteed to be "
-"strings) or possibly ``NULL`` if there are no keywords.  The values of the "
-"keyword arguments are stored in the *args* array, after the positional "
-"arguments."
+#: ../../c-api/structures.rst:336
+msgid ":c:expr:`METH_FASTCALL | METH_KEYWORDS`"
 msgstr ""
 
-#: ../../c-api/structures.rst:330
+#: ../../c-api/structures.rst:325
 msgid ""
-"Extension of :const:`METH_FASTCALL | METH_KEYWORDS` supporting the *defining "
-"class*, that is, the class that contains the method in question. The "
-"defining class might be a superclass of ``Py_TYPE(self)``."
+"Extension of :c:macro:`METH_FASTCALL` supporting also keyword arguments, "
+"with methods of type :c:type:`_PyCFunctionFastWithKeywords`. Keyword "
+"arguments are passed the same way as in the :ref:`vectorcall protocol "
+"<vectorcall>`: there is an additional fourth :c:expr:`PyObject*` parameter "
+"which is a tuple representing the names of the keyword arguments (which are "
+"guaranteed to be strings) or possibly ``NULL`` if there are no keywords.  "
+"The values of the keyword arguments are stored in the *args* array, after "
+"the positional arguments."
 msgstr ""
 
-#: ../../c-api/structures.rst:334
+#: ../../c-api/structures.rst:340
+msgid ""
+"Can only be used in the combination with other flags: :ref:`METH_METHOD | "
+"METH_FASTCALL | METH_KEYWORDS <METH_METHOD-METH_FASTCALL-METH_KEYWORDS>`."
+msgstr ""
+
+#: ../../c-api/structures.rst:357
+msgid ":c:expr:`METH_METHOD | METH_FASTCALL | METH_KEYWORDS`"
+msgstr ""
+
+#: ../../c-api/structures.rst:347
+msgid ""
+"Extension of :ref:`METH_FASTCALL | METH_KEYWORDS <METH_FASTCALL-"
+"METH_KEYWORDS>` supporting the *defining class*, that is, the class that "
+"contains the method in question. The defining class might be a superclass of "
+"``Py_TYPE(self)``."
+msgstr ""
+
+#: ../../c-api/structures.rst:352
 msgid ""
 "The method needs to be of type :c:type:`PyCMethod`, the same as for "
 "``METH_FASTCALL | METH_KEYWORDS`` with ``defining_class`` argument added "
 "after ``self``."
 msgstr ""
 
-#: ../../c-api/structures.rst:343
+#: ../../c-api/structures.rst:361
 msgid ""
 "Methods without parameters don't need to check whether arguments are given "
-"if they are listed with the :const:`METH_NOARGS` flag.  They need to be of "
+"if they are listed with the :c:macro:`METH_NOARGS` flag.  They need to be of "
 "type :c:type:`PyCFunction`.  The first parameter is typically named *self* "
 "and will hold a reference to the module or object instance.  In all cases "
 "the second parameter will be ``NULL``."
 msgstr ""
-"引数のないメソッドは、 :const:`METH_NOARGS` フラグをつけた場合、必要な引数が"
-"指定されているかをチェックしなくなります。こうしたメソッドは :c:type:"
-"`PyCFunction` 型でなくてはなりません。第一のパラメタは *self* になり、モ"
-"ジュールかオブジェクトインスタンスへの参照を保持することになります。いずれに"
-"せよ、第二のパラメタは ``NULL`` になります。"
 
-#: ../../c-api/structures.rst:349
+#: ../../c-api/structures.rst:367
 msgid ""
 "The function must have 2 parameters. Since the second parameter is unused, :"
 "c:macro:`Py_UNUSED` can be used to prevent a compiler warning."
 msgstr ""
 
-#: ../../c-api/structures.rst:355
+#: ../../c-api/structures.rst:373
 msgid ""
-"Methods with a single object argument can be listed with the :const:`METH_O` "
-"flag, instead of invoking :c:func:`PyArg_ParseTuple` with a ``\"O\"`` "
-"argument. They have the type :c:type:`PyCFunction`, with the *self* "
-"parameter, and a :c:expr:`PyObject*` parameter representing the single "
-"argument."
+"Methods with a single object argument can be listed with the :c:macro:"
+"`METH_O` flag, instead of invoking :c:func:`PyArg_ParseTuple` with a "
+"``\"O\"`` argument. They have the type :c:type:`PyCFunction`, with the "
+"*self* parameter, and a :c:expr:`PyObject*` parameter representing the "
+"single argument."
 msgstr ""
-"単一のオブジェクト引数だけをとるメソッドは、 :c:func:`PyArg_ParseTuple` を引"
-"数 ``\"O\"`` にして呼び出す代わりに、 :const:`METH_O` フラグつきで指定できま"
-"す。メソッドは :c:type:`PyCFunction` 型で、 *self* パラメタと単一の引数を表現"
-"する :c:expr:`PyObject*` パラメタを伴います。"
 
-#: ../../c-api/structures.rst:361
+#: ../../c-api/structures.rst:379
 msgid ""
 "These two constants are not used to indicate the calling convention but the "
 "binding when use with methods of classes.  These may not be used for "
@@ -426,7 +447,7 @@ msgstr ""
 "う際の束縛方式を示すものです。モジュールに対して定義された関数で用いてはなり"
 "ません。メソッドに対しては、最大で一つしかこのフラグをセットできません。"
 
-#: ../../c-api/structures.rst:371
+#: ../../c-api/structures.rst:389
 msgid ""
 "The method will be passed the type object as the first parameter rather than "
 "an instance of the type.  This is used to create *class methods*, similar to "
@@ -436,7 +457,7 @@ msgstr ""
 "す。このフラグは組み込み関数 :func:`classmethod` を使って生成するのと同じ *ク"
 "ラスメソッド (class method)* を生成するために使われます。"
 
-#: ../../c-api/structures.rst:381
+#: ../../c-api/structures.rst:399
 msgid ""
 "The method will be passed ``NULL`` as the first parameter rather than an "
 "instance of the type.  This is used to create *static methods*, similar to "
@@ -446,7 +467,7 @@ msgstr ""
 "のフラグは、 :func:`staticmethod` を使って生成するのと同じ *静的メソッド "
 "(static method)* を生成するために使われます。"
 
-#: ../../c-api/structures.rst:385
+#: ../../c-api/structures.rst:403
 msgid ""
 "One other constant controls whether a method is loaded in place of another "
 "definition with the same method name."
@@ -454,7 +475,7 @@ msgstr ""
 "もう一つの定数は、あるメソッドを同名の別のメソッド定義と置き換えるかどうかを"
 "制御します。"
 
-#: ../../c-api/structures.rst:391
+#: ../../c-api/structures.rst:409
 msgid ""
 "The method will be loaded in place of existing definitions.  Without "
 "*METH_COEXIST*, the default is to skip repeated definitions.  Since slot "
@@ -475,11 +496,11 @@ msgstr ""
 "します。 PyCFunctions の呼び出しはラッパーオブジェクトの呼び出しよりも最適化"
 "されているので、こうした仕様が便利になります。"
 
-#: ../../c-api/structures.rst:403
+#: ../../c-api/structures.rst:421
 msgid "Accessing attributes of extension types"
 msgstr ""
 
-#: ../../c-api/structures.rst:407
+#: ../../c-api/structures.rst:425
 msgid ""
 "Structure which describes an attribute of a type which corresponds to a C "
 "struct member.  Its fields are:"
@@ -487,71 +508,71 @@ msgstr ""
 "type の C 構造体のメンバとして格納されている、ある型の属性を表す構造体です。"
 "この構造体のフィールドは以下のとおりです:"
 
-#: ../../c-api/structures.rst:411 ../../c-api/structures.rst:507
+#: ../../c-api/structures.rst:429 ../../c-api/structures.rst:525
 msgid "Field"
 msgstr "フィールド"
 
-#: ../../c-api/structures.rst:411 ../../c-api/structures.rst:507
+#: ../../c-api/structures.rst:429 ../../c-api/structures.rst:525
 msgid "C Type"
 msgstr "C の型"
 
-#: ../../c-api/structures.rst:411 ../../c-api/structures.rst:507
+#: ../../c-api/structures.rst:429 ../../c-api/structures.rst:525
 msgid "Meaning"
 msgstr "意味"
 
-#: ../../c-api/structures.rst:413
+#: ../../c-api/structures.rst:431
 msgid ":attr:`name`"
 msgstr ":attr:`name`"
 
-#: ../../c-api/structures.rst:413 ../../c-api/structures.rst:426
-#: ../../c-api/structures.rst:442 ../../c-api/structures.rst:509
-#: ../../c-api/structures.rst:517
+#: ../../c-api/structures.rst:431 ../../c-api/structures.rst:444
+#: ../../c-api/structures.rst:460 ../../c-api/structures.rst:527
+#: ../../c-api/structures.rst:535
 msgid "const char \\*"
 msgstr ""
 
-#: ../../c-api/structures.rst:413
+#: ../../c-api/structures.rst:431
 msgid "name of the member"
 msgstr "メンバ名"
 
-#: ../../c-api/structures.rst:415
+#: ../../c-api/structures.rst:433
 msgid ":attr:`!type`"
 msgstr ":attr:`!type`"
 
-#: ../../c-api/structures.rst:415 ../../c-api/structures.rst:422
-#: ../../c-api/structures.rst:438
+#: ../../c-api/structures.rst:433 ../../c-api/structures.rst:440
+#: ../../c-api/structures.rst:456
 msgid "int"
 msgstr "int"
 
-#: ../../c-api/structures.rst:415
+#: ../../c-api/structures.rst:433
 msgid "the type of the member in the C struct"
 msgstr "C 構造体の中のメンバの型"
 
-#: ../../c-api/structures.rst:418
+#: ../../c-api/structures.rst:436
 msgid ":attr:`offset`"
 msgstr ":attr:`offset`"
 
-#: ../../c-api/structures.rst:418 ../../c-api/structures.rst:454
+#: ../../c-api/structures.rst:436 ../../c-api/structures.rst:472
 msgid "Py_ssize_t"
 msgstr "Py_ssize_t"
 
-#: ../../c-api/structures.rst:418
+#: ../../c-api/structures.rst:436
 msgid ""
 "the offset in bytes that the member is located on the type's object struct"
 msgstr "そのメンバの type object 構造体中の場所の offset バイト数"
 
-#: ../../c-api/structures.rst:422
+#: ../../c-api/structures.rst:440
 msgid ":attr:`flags`"
 msgstr ":attr:`flags`"
 
-#: ../../c-api/structures.rst:422
+#: ../../c-api/structures.rst:440
 msgid "flag bits indicating if the field should be read-only or writable"
 msgstr "フィールドが読み出し専用か書込み可能なのかを示すビットフラグ"
 
-#: ../../c-api/structures.rst:426
+#: ../../c-api/structures.rst:444
 msgid ":attr:`doc`"
 msgstr ":attr:`doc`"
 
-#: ../../c-api/structures.rst:430
+#: ../../c-api/structures.rst:448
 msgid ""
 ":attr:`!type` can be one of many ``T_`` macros corresponding to various C "
 "types.  When the member is accessed in Python, it will be converted to the "
@@ -561,136 +582,136 @@ msgstr ""
 "バが Python からアクセスされるとき、そのメンバは対応する Python の型に変換さ"
 "れます。"
 
-#: ../../c-api/structures.rst:435
+#: ../../c-api/structures.rst:453
 msgid "Macro name"
 msgstr "マクロ名"
 
-#: ../../c-api/structures.rst:435
+#: ../../c-api/structures.rst:453
 msgid "C type"
 msgstr "C の型"
 
-#: ../../c-api/structures.rst:437
+#: ../../c-api/structures.rst:455
 msgid "T_SHORT"
 msgstr "T_SHORT"
 
-#: ../../c-api/structures.rst:437
+#: ../../c-api/structures.rst:455
 msgid "short"
 msgstr "short"
 
-#: ../../c-api/structures.rst:438
+#: ../../c-api/structures.rst:456
 msgid "T_INT"
 msgstr "T_INT"
 
-#: ../../c-api/structures.rst:439
+#: ../../c-api/structures.rst:457
 msgid "T_LONG"
 msgstr "T_LONG"
 
-#: ../../c-api/structures.rst:439
+#: ../../c-api/structures.rst:457
 msgid "long"
 msgstr "long"
 
-#: ../../c-api/structures.rst:440
+#: ../../c-api/structures.rst:458
 msgid "T_FLOAT"
 msgstr "T_FLOAT"
 
-#: ../../c-api/structures.rst:440
+#: ../../c-api/structures.rst:458
 msgid "float"
 msgstr "浮動小数点数"
 
-#: ../../c-api/structures.rst:441
+#: ../../c-api/structures.rst:459
 msgid "T_DOUBLE"
 msgstr "T_DOUBLE"
 
-#: ../../c-api/structures.rst:441
+#: ../../c-api/structures.rst:459
 msgid "double"
 msgstr "double"
 
-#: ../../c-api/structures.rst:442
+#: ../../c-api/structures.rst:460
 msgid "T_STRING"
 msgstr "T_STRING"
 
-#: ../../c-api/structures.rst:443
+#: ../../c-api/structures.rst:461
 msgid "T_OBJECT"
 msgstr "T_OBJECT"
 
-#: ../../c-api/structures.rst:443 ../../c-api/structures.rst:444
+#: ../../c-api/structures.rst:461 ../../c-api/structures.rst:462
 msgid "PyObject \\*"
 msgstr "PyObject \\*"
 
-#: ../../c-api/structures.rst:444
+#: ../../c-api/structures.rst:462
 msgid "T_OBJECT_EX"
 msgstr "T_OBJECT_EX"
 
-#: ../../c-api/structures.rst:445
+#: ../../c-api/structures.rst:463
 msgid "T_CHAR"
 msgstr "T_CHAR"
 
-#: ../../c-api/structures.rst:445 ../../c-api/structures.rst:446
-#: ../../c-api/structures.rst:451
+#: ../../c-api/structures.rst:463 ../../c-api/structures.rst:464
+#: ../../c-api/structures.rst:469
 msgid "char"
 msgstr "char"
 
-#: ../../c-api/structures.rst:446
+#: ../../c-api/structures.rst:464
 msgid "T_BYTE"
 msgstr "T_BYTE"
 
-#: ../../c-api/structures.rst:447
+#: ../../c-api/structures.rst:465
 msgid "T_UBYTE"
 msgstr "T_UBYTE"
 
-#: ../../c-api/structures.rst:447
+#: ../../c-api/structures.rst:465
 msgid "unsigned char"
 msgstr "unsigned char"
 
-#: ../../c-api/structures.rst:448
+#: ../../c-api/structures.rst:466
 msgid "T_UINT"
 msgstr "T_UINT"
 
-#: ../../c-api/structures.rst:448
+#: ../../c-api/structures.rst:466
 msgid "unsigned int"
 msgstr "unsigned int"
 
-#: ../../c-api/structures.rst:449
+#: ../../c-api/structures.rst:467
 msgid "T_USHORT"
 msgstr "T_USHORT"
 
-#: ../../c-api/structures.rst:449
+#: ../../c-api/structures.rst:467
 msgid "unsigned short"
 msgstr "unsigned short"
 
-#: ../../c-api/structures.rst:450
+#: ../../c-api/structures.rst:468
 msgid "T_ULONG"
 msgstr "T_ULONG"
 
-#: ../../c-api/structures.rst:450
+#: ../../c-api/structures.rst:468
 msgid "unsigned long"
 msgstr "unsigned long"
 
-#: ../../c-api/structures.rst:451
+#: ../../c-api/structures.rst:469
 msgid "T_BOOL"
 msgstr "T_BOOL"
 
-#: ../../c-api/structures.rst:452
+#: ../../c-api/structures.rst:470
 msgid "T_LONGLONG"
 msgstr "T_LONGLONG"
 
-#: ../../c-api/structures.rst:452
+#: ../../c-api/structures.rst:470
 msgid "long long"
 msgstr "long long"
 
-#: ../../c-api/structures.rst:453
+#: ../../c-api/structures.rst:471
 msgid "T_ULONGLONG"
 msgstr "T_ULONGLONG"
 
-#: ../../c-api/structures.rst:453
+#: ../../c-api/structures.rst:471
 msgid "unsigned long long"
 msgstr "unsigned long long"
 
-#: ../../c-api/structures.rst:454
+#: ../../c-api/structures.rst:472
 msgid "T_PYSSIZET"
 msgstr "T_PYSSIZET"
 
-#: ../../c-api/structures.rst:457
+#: ../../c-api/structures.rst:475
 msgid ""
 ":c:macro:`T_OBJECT` and :c:macro:`T_OBJECT_EX` differ in that :c:macro:"
 "`T_OBJECT` returns ``None`` if the member is ``NULL`` and :c:macro:"
@@ -706,7 +727,7 @@ msgstr ""
 "`del` 文を正しくあつかうので、できれば :c:macro:`T_OBJECT` ではなく :c:macro:"
 "`T_OBJECT_EX` を使ってください。"
 
-#: ../../c-api/structures.rst:464
+#: ../../c-api/structures.rst:482
 msgid ""
 ":attr:`flags` can be ``0`` for write and read access or :c:macro:`READONLY` "
 "for read-only access.  Using :c:macro:`T_STRING` for :attr:`type` implies :c:"
@@ -715,7 +736,7 @@ msgid ""
 "are set to ``NULL``)."
 msgstr ""
 
-#: ../../c-api/structures.rst:472
+#: ../../c-api/structures.rst:490
 msgid ""
 "Heap allocated types (created using :c:func:`PyType_FromSpec` or similar), "
 "``PyMemberDef`` may contain definitions for the special members "
@@ -726,20 +747,20 @@ msgid ""
 "``T_PYSSIZET`` and ``READONLY``, for example::"
 msgstr ""
 
-#: ../../c-api/structures.rst:489
+#: ../../c-api/structures.rst:507
 msgid ""
 "Get an attribute belonging to the object at address *obj_addr*.  The "
 "attribute is described by ``PyMemberDef`` *m*.  Returns ``NULL`` on error."
 msgstr ""
 
-#: ../../c-api/structures.rst:496
+#: ../../c-api/structures.rst:514
 msgid ""
 "Set an attribute belonging to the object at address *obj_addr* to object "
 "*o*. The attribute to set is described by ``PyMemberDef`` *m*.  Returns "
 "``0`` if successful and a negative value on failure."
 msgstr ""
 
-#: ../../c-api/structures.rst:503
+#: ../../c-api/structures.rst:521
 msgid ""
 "Structure to define property-like access for a type. See also description of "
 "the :c:member:`PyTypeObject.tp_getset` slot."
@@ -747,35 +768,35 @@ msgstr ""
 "型のプロパティのようなアクセスを定義するための構造体です。 :c:member:"
 "`PyTypeObject.tp_getset` スロットの説明も参照してください。"
 
-#: ../../c-api/structures.rst:509
+#: ../../c-api/structures.rst:527
 msgid "name"
 msgstr "name"
 
-#: ../../c-api/structures.rst:509
+#: ../../c-api/structures.rst:527
 msgid "attribute name"
 msgstr "属性名"
 
-#: ../../c-api/structures.rst:511
+#: ../../c-api/structures.rst:529
 msgid "get"
 msgstr "get"
 
-#: ../../c-api/structures.rst:511
+#: ../../c-api/structures.rst:529
 msgid "getter"
 msgstr "getter"
 
-#: ../../c-api/structures.rst:511
+#: ../../c-api/structures.rst:529
 msgid "C function to get the attribute"
 msgstr ""
 
-#: ../../c-api/structures.rst:513
+#: ../../c-api/structures.rst:531
 msgid "set"
 msgstr "集合"
 
-#: ../../c-api/structures.rst:513
+#: ../../c-api/structures.rst:531
 msgid "setter"
 msgstr "setter"
 
-#: ../../c-api/structures.rst:513
+#: ../../c-api/structures.rst:531
 msgid ""
 "optional C function to set or delete the attribute, if omitted the attribute "
 "is readonly"
@@ -783,28 +804,28 @@ msgstr ""
 "属性をセット/削除する任意のC言語関数。省略された場合、属性は読み取り専用にな"
 "ります。"
 
-#: ../../c-api/structures.rst:517
+#: ../../c-api/structures.rst:535
 msgid "doc"
 msgstr "doc"
 
-#: ../../c-api/structures.rst:517
+#: ../../c-api/structures.rst:535
 msgid "optional docstring"
 msgstr "任意のドキュメンテーション文字列"
 
-#: ../../c-api/structures.rst:519
+#: ../../c-api/structures.rst:537
 msgid "closure"
 msgstr "closure"
 
-#: ../../c-api/structures.rst:519
+#: ../../c-api/structures.rst:537
 msgid "void \\*"
 msgstr "void \\*"
 
-#: ../../c-api/structures.rst:519
+#: ../../c-api/structures.rst:537
 msgid ""
 "optional function pointer, providing additional data for getter and setter"
 msgstr "getterとsetterの追加データを提供する、オプションの関数ポインタ。"
 
-#: ../../c-api/structures.rst:524
+#: ../../c-api/structures.rst:542
 msgid ""
 "The ``get`` function takes one :c:expr:`PyObject*` parameter (the instance) "
 "and a function pointer (the associated ``closure``)::"
@@ -812,14 +833,14 @@ msgstr ""
 "``get`` 関数は :c:expr:`PyObject*` パラメータ (インスタンス) と関数ポインタ "
 "(関連する``closure``) を1つ受け取ります。"
 
-#: ../../c-api/structures.rst:529
+#: ../../c-api/structures.rst:547
 msgid ""
 "It should return a new reference on success or ``NULL`` with a set exception "
 "on failure."
 msgstr ""
 "成功または失敗時に ``NULL`` と例外の集合にされたときは新しい参照を返します。"
 
-#: ../../c-api/structures.rst:532
+#: ../../c-api/structures.rst:550
 msgid ""
 "``set`` functions take two :c:expr:`PyObject*` parameters (the instance and "
 "the value to be set) and a function pointer (the associated ``closure``)::"
@@ -827,7 +848,7 @@ msgstr ""
 "``set`` 関数は :c:expr:`PyObject*` パラメータ (インスタンスとセットされるべき"
 "値) と関数ポインタ (関連する``closure``) を受け取ります。"
 
-#: ../../c-api/structures.rst:537
+#: ../../c-api/structures.rst:555
 msgid ""
 "In case the attribute should be deleted the second parameter is ``NULL``. "
 "Should return ``0`` on success or ``-1`` with a set exception on failure."
@@ -835,14 +856,14 @@ msgstr ""
 "属性を削除する場合は、2 番目のパラメータに ``NULL`` を指定します。成功した場"
 "合は ``0`` を、失敗した場合は ``-1`` を例外として返します。"
 
-#: ../../c-api/structures.rst:369 ../../c-api/structures.rst:379
+#: ../../c-api/structures.rst:387 ../../c-api/structures.rst:397
 msgid "built-in function"
 msgstr "組み込み関数"
 
-#: ../../c-api/structures.rst:369
+#: ../../c-api/structures.rst:387
 msgid "classmethod"
 msgstr "クラスメソッド"
 
-#: ../../c-api/structures.rst:379
+#: ../../c-api/structures.rst:397
 msgid "staticmethod"
 msgstr "静的メソッド"

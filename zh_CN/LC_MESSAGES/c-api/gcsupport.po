@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 14:49+0000\n"
+"POT-Creation-Date: 2023-07-21 14:44+0000\n"
 "PO-Revision-Date: 2023-05-24 02:08+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -42,17 +42,17 @@ msgstr ""
 #: ../../c-api/gcsupport.rst:15
 msgid ""
 "To create a container type, the :c:member:`~PyTypeObject.tp_flags` field of "
-"the type object must include the :const:`Py_TPFLAGS_HAVE_GC` and provide an "
-"implementation of the :c:member:`~PyTypeObject.tp_traverse` handler.  If "
+"the type object must include the :c:macro:`Py_TPFLAGS_HAVE_GC` and provide "
+"an implementation of the :c:member:`~PyTypeObject.tp_traverse` handler.  If "
 "instances of the type are mutable, a :c:member:`~PyTypeObject.tp_clear` "
 "implementation must also be provided."
 msgstr ""
-"若要创建一个容器类，类型对象的 :c:member:`~PyTypeObject.tp_flags` 字段必须包"
-"含 :const:`Py_TPFLAGS_HAVE_GC` 并提供一个 :c:member:`~PyTypeObject."
-"tp_traverse` 处理的实现。如果该类型的实例是可变的，还需要实现 :c:member:"
-"`~PyTypeObject.tp_clear` 。"
 
 #: ../../c-api/gcsupport.rst:24
+msgid ":c:macro:`Py_TPFLAGS_HAVE_GC`"
+msgstr ""
+
+#: ../../c-api/gcsupport.rst:22
 msgid ""
 "Objects with a type with this flag set must conform with the rules "
 "documented here.  For convenience these objects will be referred to as "
@@ -61,11 +61,11 @@ msgstr ""
 "设置了此标志位的类型的对象必须符合此处记录的规则。为方便起见，下文把这些对象"
 "称为容器对象。"
 
-#: ../../c-api/gcsupport.rst:28
+#: ../../c-api/gcsupport.rst:26
 msgid "Constructors for container types must conform to two rules:"
 msgstr "容器类型的构造函数必须符合两个规则："
 
-#: ../../c-api/gcsupport.rst:30
+#: ../../c-api/gcsupport.rst:28
 msgid ""
 "The memory for the object must be allocated using :c:func:`PyObject_GC_New` "
 "or :c:func:`PyObject_GC_NewVar`."
@@ -73,7 +73,7 @@ msgstr ""
 "必须使用 :c:func:`PyObject_GC_New` 或 :c:func:`PyObject_GC_NewVar` 为这些对象"
 "分配内存。"
 
-#: ../../c-api/gcsupport.rst:33
+#: ../../c-api/gcsupport.rst:31
 msgid ""
 "Once all the fields which may contain references to other containers are "
 "initialized, it must call :c:func:`PyObject_GC_Track`."
@@ -81,24 +81,24 @@ msgstr ""
 "初始化了所有可能包含其他容器的引用的字段后，它必须调用 :c:func:"
 "`PyObject_GC_Track` 。"
 
-#: ../../c-api/gcsupport.rst:36
+#: ../../c-api/gcsupport.rst:34
 msgid ""
 "Similarly, the deallocator for the object must conform to a similar pair of "
 "rules:"
 msgstr "同样的，对象的释放器必须符合两个类似的规则："
 
-#: ../../c-api/gcsupport.rst:39
+#: ../../c-api/gcsupport.rst:37
 msgid ""
 "Before fields which refer to other containers are invalidated, :c:func:"
 "`PyObject_GC_UnTrack` must be called."
 msgstr "在引用其它容器的字段失效前，必须调用 :c:func:`PyObject_GC_UnTrack` 。"
 
-#: ../../c-api/gcsupport.rst:42
+#: ../../c-api/gcsupport.rst:40
 msgid ""
 "The object's memory must be deallocated using :c:func:`PyObject_GC_Del`."
 msgstr "必须使用 :c:func:`PyObject_GC_Del` 释放对象的内存。"
 
-#: ../../c-api/gcsupport.rst:45
+#: ../../c-api/gcsupport.rst:43
 msgid ""
 "If a type adds the Py_TPFLAGS_HAVE_GC, then it *must* implement at least a :"
 "c:member:`~PyTypeObject.tp_traverse` handler or explicitly use one from its "
@@ -107,7 +107,7 @@ msgstr ""
 "如果一个类型添加了 Py_TPFLAGS_HAVE_GC，则它 *必须* 实现至少一个 :c:member:"
 "`~PyTypeObject.tp_traverse` 句柄或显式地使用来自其一个或多个子类的句柄。"
 
-#: ../../c-api/gcsupport.rst:49
+#: ../../c-api/gcsupport.rst:47
 msgid ""
 "When calling :c:func:`PyType_Ready` or some of the APIs that indirectly call "
 "it like :c:func:`PyType_FromSpecWithBases` or :c:func:`PyType_FromSpec` the "
@@ -115,31 +115,22 @@ msgid ""
 "tp_flags`, :c:member:`~PyTypeObject.tp_traverse` and :c:member:"
 "`~PyTypeObject.tp_clear` fields if the type inherits from a class that "
 "implements the garbage collector protocol and the child class does *not* "
-"include the :const:`Py_TPFLAGS_HAVE_GC` flag."
+"include the :c:macro:`Py_TPFLAGS_HAVE_GC` flag."
 msgstr ""
-"当调用 :c:func:`PyType_Ready` 或者 API 中某些间接调用它的函数例如 :c:func:"
-"`PyType_FromSpecWithBases` 或 :c:func:`PyType_FromSpec` 时解释器就自动填充 :"
-"c:member:`~PyTypeObject.tp_flags`, :c:member:`~PyTypeObject.tp_traverse` 和 :"
-"c:member:`~PyTypeObject.tp_clear` 字段，如果该类型是继承自实现了垃圾回收器协"
-"议的类并且该子类 *没有* 包括 :const:`Py_TPFLAGS_HAVE_GC` 旗标的话。"
 
-#: ../../c-api/gcsupport.rst:59
+#: ../../c-api/gcsupport.rst:57
 msgid ""
-"Analogous to :c:func:`PyObject_New` but for container objects with the :"
-"const:`Py_TPFLAGS_HAVE_GC` flag set."
+"Analogous to :c:func:`PyObject_New` but for container objects with the :c:"
+"macro:`Py_TPFLAGS_HAVE_GC` flag set."
 msgstr ""
-"类似于 :c:func:`PyObject_New` ，适用于设置了 :const:`Py_TPFLAGS_HAVE_GC` 标签"
-"的容器对象。"
 
-#: ../../c-api/gcsupport.rst:65
+#: ../../c-api/gcsupport.rst:63
 msgid ""
-"Analogous to :c:func:`PyObject_NewVar` but for container objects with the :"
-"const:`Py_TPFLAGS_HAVE_GC` flag set."
+"Analogous to :c:func:`PyObject_NewVar` but for container objects with the :c:"
+"macro:`Py_TPFLAGS_HAVE_GC` flag set."
 msgstr ""
-"类似于 :c:func:`PyObject_NewVar` ，适用于设置了 :const:`Py_TPFLAGS_HAVE_GC` "
-"标签的容器对象。"
 
-#: ../../c-api/gcsupport.rst:71
+#: ../../c-api/gcsupport.rst:69
 msgid ""
 "Resize an object allocated by :c:func:`PyObject_NewVar`.  Returns the "
 "resized object or ``NULL`` on failure.  *op* must not be tracked by the "
@@ -148,7 +139,7 @@ msgstr ""
 "为 :c:func:`PyObject_NewVar` 所分配对象重新调整大小。 返回调整大小后的对象或"
 "在失败时返回 ``NULL``。 *op* 必须尚未被垃圾回收器追踪。"
 
-#: ../../c-api/gcsupport.rst:77
+#: ../../c-api/gcsupport.rst:75
 msgid ""
 "Adds the object *op* to the set of container objects tracked by the "
 "collector.  The collector can run at unexpected times so objects must be "
@@ -161,19 +152,19 @@ msgstr ""
 "tp_traverse` 处理前的所有字段变为有效后，必须调用此函数，通常在靠近构造函数末"
 "尾的位置。"
 
-#: ../../c-api/gcsupport.rst:86
+#: ../../c-api/gcsupport.rst:84
 msgid ""
 "Returns non-zero if the object implements the garbage collector protocol, "
 "otherwise returns 0."
 msgstr "如果对象实现了垃圾回收器协议则返回非零值，否则返回 0。"
 
-#: ../../c-api/gcsupport.rst:89
+#: ../../c-api/gcsupport.rst:87
 msgid ""
 "The object cannot be tracked by the garbage collector if this function "
 "returns 0."
 msgstr "如果此函数返回 0 则对象无法被垃圾回收器追踪。"
 
-#: ../../c-api/gcsupport.rst:94
+#: ../../c-api/gcsupport.rst:92
 msgid ""
 "Returns 1 if the object type of *op* implements the GC protocol and *op* is "
 "being currently tracked by the garbage collector and 0 otherwise."
@@ -181,11 +172,11 @@ msgstr ""
 "如果 *op* 对象的类型实现了 GC 协议且 *op* 目前正被垃圾回收器追踪则返回 1， 否"
 "则返回 0。"
 
-#: ../../c-api/gcsupport.rst:97
+#: ../../c-api/gcsupport.rst:95
 msgid "This is analogous to the Python function :func:`gc.is_tracked`."
 msgstr "这类似于 Python 函数 :func:`gc.is_tracked`。"
 
-#: ../../c-api/gcsupport.rst:104
+#: ../../c-api/gcsupport.rst:102
 msgid ""
 "Returns 1 if the object type of *op* implements the GC protocol and *op* has "
 "been already finalized by the garbage collector and 0 otherwise."
@@ -193,11 +184,11 @@ msgstr ""
 "如果 *op* 对象的类型实现了 GC 协议且 *op* 已经被垃圾回收器终结则返回 1， 否则"
 "返回 0。"
 
-#: ../../c-api/gcsupport.rst:107
+#: ../../c-api/gcsupport.rst:105
 msgid "This is analogous to the Python function :func:`gc.is_finalized`."
 msgstr "这类似于 Python 函数 :func:`gc.is_finalized`。"
 
-#: ../../c-api/gcsupport.rst:114
+#: ../../c-api/gcsupport.rst:112
 msgid ""
 "Releases memory allocated to an object using :c:func:`PyObject_GC_New` or :c:"
 "func:`PyObject_GC_NewVar`."
@@ -205,7 +196,7 @@ msgstr ""
 "释放对象的内存，该对象初始化时由 :c:func:`PyObject_GC_New` 或 :c:func:"
 "`PyObject_GC_NewVar` 分配内存。"
 
-#: ../../c-api/gcsupport.rst:120
+#: ../../c-api/gcsupport.rst:118
 msgid ""
 "Remove the object *op* from the set of container objects tracked by the "
 "collector.  Note that :c:func:`PyObject_GC_Track` can be called again on "
@@ -219,7 +210,7 @@ msgstr ""
 "`~PyTypeObject.tp_dealloc` 句柄) 应当在 :c:member:`~PyTypeObject."
 "tp_traverse` 句柄所使用的任何字段失效之前为对象调用此函数。"
 
-#: ../../c-api/gcsupport.rst:129
+#: ../../c-api/gcsupport.rst:127
 msgid ""
 "The :c:func:`_PyObject_GC_TRACK` and :c:func:`_PyObject_GC_UNTRACK` macros "
 "have been removed from the public C API."
@@ -227,13 +218,13 @@ msgstr ""
 ":c:func:`_PyObject_GC_TRACK` 和 :c:func:`_PyObject_GC_UNTRACK` 宏已从公有 C "
 "API 中移除。"
 
-#: ../../c-api/gcsupport.rst:132
+#: ../../c-api/gcsupport.rst:130
 msgid ""
 "The :c:member:`~PyTypeObject.tp_traverse` handler accepts a function "
 "parameter of this type:"
 msgstr ":c:member:`~PyTypeObject.tp_traverse` 处理接收以下类型的函数形参。"
 
-#: ../../c-api/gcsupport.rst:137
+#: ../../c-api/gcsupport.rst:135
 msgid ""
 "Type of the visitor function passed to the :c:member:`~PyTypeObject."
 "tp_traverse` handler. The function should be called with an object to "
@@ -247,13 +238,13 @@ msgstr ""
 "tp_traverse` 处理的 *arg* 。Python核心使用多个访问者函数实现循环引用的垃圾检"
 "测，不需要用户自行实现访问者函数。"
 
-#: ../../c-api/gcsupport.rst:144
+#: ../../c-api/gcsupport.rst:142
 msgid ""
 "The :c:member:`~PyTypeObject.tp_traverse` handler must have the following "
 "type:"
 msgstr ":c:member:`~PyTypeObject.tp_traverse` 处理必须是以下类型："
 
-#: ../../c-api/gcsupport.rst:149
+#: ../../c-api/gcsupport.rst:147
 msgid ""
 "Traversal function for a container object.  Implementations must call the "
 "*visit* function for each object directly contained by *self*, with the "
@@ -267,7 +258,7 @@ msgstr ""
 "函数调用不可附带 ``NULL`` 对象作为参数。 如果 *visit* 返回非零值，则该值应当"
 "被立即返回。"
 
-#: ../../c-api/gcsupport.rst:156
+#: ../../c-api/gcsupport.rst:154
 msgid ""
 "To simplify writing :c:member:`~PyTypeObject.tp_traverse` handlers, a :c:"
 "func:`Py_VISIT` macro is provided.  In order to use this macro, the :c:"
@@ -278,7 +269,7 @@ msgstr ""
 "c:func:`Py_VISIT` 宏。若要使用这个宏，必须把 :c:member:`~PyTypeObject."
 "tp_traverse` 的参数命名为 *visit* 和 *arg* 。"
 
-#: ../../c-api/gcsupport.rst:163
+#: ../../c-api/gcsupport.rst:161
 msgid ""
 "If *o* is not ``NULL``, call the *visit* callback, with arguments *o* and "
 "*arg*.  If *visit* returns a non-zero value, then return it. Using this "
@@ -288,7 +279,7 @@ msgstr ""
 "果 *visit* 返回一个非零值，则返回该值。 使用此宏之后，:c:member:"
 "`~PyTypeObject.tp_traverse` 处理程序的形式如下::"
 
-#: ../../c-api/gcsupport.rst:176
+#: ../../c-api/gcsupport.rst:174
 msgid ""
 "The :c:member:`~PyTypeObject.tp_clear` handler must be of the :c:type:"
 "`inquiry` type, or ``NULL`` if the object is immutable."
@@ -296,7 +287,7 @@ msgstr ""
 ":c:member:`~PyTypeObject.tp_clear` 处理程序必须为 :c:type:`inquiry` 类型，如"
 "果对象不可变则为 ``NULL``。"
 
-#: ../../c-api/gcsupport.rst:182
+#: ../../c-api/gcsupport.rst:180
 msgid ""
 "Drop references that may have created reference cycles.  Immutable objects "
 "do not have to define this method since they can never directly create "
@@ -310,17 +301,17 @@ msgstr ""
 "func:`Py_DECREF` 方法）。当垃圾回收器检测到该对象在循环引用中时，此方法会被调"
 "用。"
 
-#: ../../c-api/gcsupport.rst:191
+#: ../../c-api/gcsupport.rst:189
 msgid "Controlling the Garbage Collector State"
 msgstr "控制垃圾回收器状态"
 
-#: ../../c-api/gcsupport.rst:193
+#: ../../c-api/gcsupport.rst:191
 msgid ""
 "The C-API provides the following functions for controlling garbage "
 "collection runs."
 msgstr "这个 C-API 提供了以下函数用于控制垃圾回收的运行。"
 
-#: ../../c-api/gcsupport.rst:198
+#: ../../c-api/gcsupport.rst:196
 msgid ""
 "Perform a full garbage collection, if the garbage collector is enabled. "
 "(Note that :func:`gc.collect` runs it unconditionally.)"
@@ -328,7 +319,7 @@ msgstr ""
 "执行完全的垃圾回收，如果垃圾回收器已启用的话。 （请注意 :func:`gc.collect` 会"
 "无条件地执行它。）"
 
-#: ../../c-api/gcsupport.rst:201
+#: ../../c-api/gcsupport.rst:199
 msgid ""
 "Returns the number of collected + unreachable objects which cannot be "
 "collected. If the garbage collector is disabled or already collecting, "
@@ -339,7 +330,7 @@ msgstr ""
 "回收，则立即返回 ``0``。 在垃圾回收期间发生的错误会被传给 :data:`sys."
 "unraisablehook`。 此函数不会引发异常。"
 
-#: ../../c-api/gcsupport.rst:211
+#: ../../c-api/gcsupport.rst:209
 msgid ""
 "Enable the garbage collector: similar to :func:`gc.enable`. Returns the "
 "previous state, 0 for disabled and 1 for enabled."
@@ -347,7 +338,7 @@ msgstr ""
 "启用垃圾回收器：类似于 :func:`gc.enable`。 返回之前的状态，0 为禁用而 1 为启"
 "用。"
 
-#: ../../c-api/gcsupport.rst:219
+#: ../../c-api/gcsupport.rst:217
 msgid ""
 "Disable the garbage collector: similar to :func:`gc.disable`. Returns the "
 "previous state, 0 for disabled and 1 for enabled."
@@ -355,7 +346,7 @@ msgstr ""
 "禁用垃圾回收器：类似于 :func:`gc.disable`。 返回之前的状态，0 为禁用而 1 为启"
 "用。"
 
-#: ../../c-api/gcsupport.rst:227
+#: ../../c-api/gcsupport.rst:225
 msgid ""
 "Query the state of the garbage collector: similar to :func:`gc.isenabled`. "
 "Returns the current state, 0 for disabled and 1 for enabled."
