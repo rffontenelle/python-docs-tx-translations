@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-09 14:13+0000\n"
+"POT-Creation-Date: 2023-07-14 14:14+0000\n"
 "PO-Revision-Date: 2021-06-28 01:19+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -272,6 +272,10 @@ msgid ""
 "any enclosing function scope. :ref:`Type parameters <type-params>` cannot be "
 "rebound with the :keyword:`!nonlocal` statement."
 msgstr ""
+":keyword:`nonlocal` 语句会使得相应的名称指向之前在最近包含函数作用域中绑定的"
+"变量。 如果指定的名称不存在于任何包含函数作用域中则将在编译时引发 :exc:"
+"`SyntaxError`。 :ref:`类型形参 <type-params>` 不能使用 :keyword:`!nonlocal` "
+"语句来重新绑定。"
 
 #: ../../reference/executionmodel.rst:159
 msgid ""
@@ -295,6 +299,13 @@ msgid ""
 "scopes>`, which have access to their enclosing class scopes. This means that "
 "the following will fail::"
 msgstr ""
+"类定义代码块以及传给 :func:`exec` 和 :func:`eval` 的参数是名称解析的上下文中"
+"的特殊情况。 类定义是可能使用并定义名称的可执行语句。 这些引用遵循正常的名称"
+"解析规则，例外之处在于未绑定的局部变量会在全局命名空间中查找。 类定义的命名空"
+"间会成为该类的属性字典。 在类代码块中定义的名称的作用域会被限制在类代码块中；"
+"它不会扩展到方法的代码块中。 这包括推导式和生成器表达式，但不包括 :ref:`标注"
+"作用域 <annotation-scopes>`，因为它可以访问所包含的类作用域。 这意味着以下代"
+"码将会失败::"
 
 #: ../../reference/executionmodel.rst:179
 msgid "However, the following will succeed::"
@@ -312,15 +323,19 @@ msgid ""
 "currently do not use annotation scopes, but they are expected to use "
 "annotation scopes in Python 3.13 when :pep:`649` is implemented."
 msgstr ""
+":ref:`类型形参列表 <type-params>` 和 :keyword:`type` 语句引入了 *标注作用域"
+"*，其行为很像函数作用域，但具有下述的几处例外。 :term:`标注 <annotation>` 目"
+"前没有使用标注作用域，但它们预期会在实现了 :pep:`649` 的 Python 3.13 中使用标"
+"注作用域。"
 
 #: ../../reference/executionmodel.rst:198
 msgid "Annotation scopes are used in the following contexts:"
-msgstr ""
+msgstr "标注作用域将在下列情况中使用:"
 
 #: ../../reference/executionmodel.rst:200
 msgid ""
 "Type parameter lists for :ref:`generic type aliases <generic-type-aliases>`."
-msgstr ""
+msgstr "针对 :ref:`泛型类型别名 <generic-type-aliases>` 的类型形参列表。"
 
 #: ../../reference/executionmodel.rst:201
 msgid ""
@@ -328,6 +343,8 @@ msgid ""
 "generic function's annotations are executed within the annotation scope, but "
 "its defaults and decorators are not."
 msgstr ""
+"针对 :ref:`泛型函数 <generic-functions>` 的类型形参列表。 泛型函数的标注会在"
+"标注作用域内执行，但其默认值和装饰器则不会。"
 
 #: ../../reference/executionmodel.rst:204
 msgid ""
@@ -335,20 +352,22 @@ msgid ""
 "class's base classes and keyword arguments are executed within the "
 "annotation scope, but its decorators are not."
 msgstr ""
+"针对 :ref:`泛型类 <generic-classes>` 的类型形参列表。 泛型类的基类和关键字参"
+"数会在标注作用域内执行，但其装饰器则不会。"
 
 #: ../../reference/executionmodel.rst:207
 msgid ""
 "The bounds and constraints for type variables (:ref:`lazily evaluated <lazy-"
 "evaluation>`)."
-msgstr ""
+msgstr "针对类型变量的绑定和约束 (:ref:`惰性求值 <lazy-evaluation>`)。"
 
 #: ../../reference/executionmodel.rst:209
 msgid "The value of type aliases (:ref:`lazily evaluated <lazy-evaluation>`)."
-msgstr ""
+msgstr "类型别名的值 (:ref:`惰性求值 <lazy-evaluation>`)。"
 
 #: ../../reference/executionmodel.rst:211
 msgid "Annotation scopes differ from function scopes in the following ways:"
-msgstr ""
+msgstr "标注作用域在以下几个方面不同于函数作用域:"
 
 #: ../../reference/executionmodel.rst:213
 msgid ""
@@ -360,6 +379,10 @@ msgid ""
 "functions defined within classes, which cannot access names defined in the "
 "class scope."
 msgstr ""
+"标注作用域能够访问其所包含的类命名空间。 如果某个标注作用域紧接在一个类作用域"
+"之内，或是位于紧接一个类作用域的另一个标注作用域之内，则该标注作用域中的代码"
+"将能使用在该类作用域中定义的名称，就像它是在该类内部直接执行一样。 这不同于在"
+"类中定义的常规函数，后者无法访问在类作用域中定义的名称。"
 
 #: ../../reference/executionmodel.rst:219
 msgid ""
@@ -368,6 +391,9 @@ msgid ""
 "assignment_expression>` expressions. (These expressions are allowed in other "
 "scopes contained within the annotation scope.)"
 msgstr ""
+"标注作用域中的表达式不能包含 :keyword:`yield`, ``yield from``, :keyword:"
+"`await` 或 :token:`:= <python-grammar:assignment_expression>` 表达式。 （这些"
+"表达式在包含于标注作用域之内的其他作用域中则是允许的。）"
 
 #: ../../reference/executionmodel.rst:223
 msgid ""
@@ -376,6 +402,9 @@ msgid ""
 "as no other syntactic elements that can appear within annotation scopes can "
 "introduce new names."
 msgstr ""
+"在标注作用域中定义的名称不能在内部作用域中通过 :keyword:`nonlocal` 语句来重新"
+"绑定。 这只包括类型形参，因为没有其他可以在标注作用域内部出现的语法元素能够引"
+"入新的名称。"
 
 #: ../../reference/executionmodel.rst:226
 msgid ""
@@ -384,14 +413,17 @@ msgid ""
 "scope. Instead, the :attr:`!__qualname__` of such objects is as if the "
 "object were defined in the enclosing scope."
 msgstr ""
+"虽然标注作用域具有其内部名称，但该名称不会在作用域内部定义对象的 :term:"
+"`__qualname__ <qualified name>` 中反映出来。 这些对象的 :attr:`!"
+"__qualname__` 就像他们是定义在包含作用域中的对象一样。"
 
 #: ../../reference/executionmodel.rst:231
 msgid "Annotation scopes were introduced in Python 3.12 as part of :pep:`695`."
-msgstr ""
+msgstr "标注作用域是在 Python 3.12 中作为 :pep:`695` 的一部分引入的。"
 
 #: ../../reference/executionmodel.rst:237
 msgid "Lazy evaluation"
-msgstr ""
+msgstr "惰性求值"
 
 #: ../../reference/executionmodel.rst:239
 msgid ""

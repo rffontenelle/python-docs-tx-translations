@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-16 14:12+0000\n"
+"POT-Creation-Date: 2023-07-14 14:14+0000\n"
 "PO-Revision-Date: 2021-06-28 01:49+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -561,16 +561,19 @@ msgid ""
 "will continue to work without change, the import machinery will try it only "
 "if the finder does not implement ``find_spec()``."
 msgstr ""
+"元路径查找器的 :meth:`~importlib.abc.MetaPathFinder.find_spec` 方法替代了 :"
+"meth:`!find_module`，后者现已被弃用。 虽然它将继续可用但不会再做改变，导入机"
+"制仅会在查找器未实现 ``find_spec()`` 时尝试使用它。"
 
 #: ../../reference/import.rst:332
 msgid ""
 "Use of :meth:`!find_module` by the import system now raises :exc:"
 "`ImportWarning`."
-msgstr ""
+msgstr "导入系统使用 :meth:`!find_module` 现在将引发 :exc:`ImportWarning`。"
 
 #: ../../reference/import.rst:336
 msgid "``find_module()`` has been removed.  Use :meth:`find_spec` instead."
-msgstr ""
+msgstr "``find_module()`` 已被移除。 请改用 :meth:`find_spec`。"
 
 #: ../../reference/import.rst:341
 msgid "Loading"
@@ -897,6 +900,8 @@ msgid ""
 "It is **strongly** recommended that you rely on :attr:`__spec__` and its "
 "attributes instead of any of the other individual attributes listed below."
 msgstr ""
+"**强烈** 建议你使用 :attr:`__spec__` 及其属性来代替下面列出的任何其他单独属"
+"性。"
 
 #: ../../reference/import.rst:550
 msgid ""
@@ -921,7 +926,7 @@ msgstr ""
 msgid ""
 "It is **strongly** recommended that you rely on :attr:`__spec__` instead "
 "instead of this attribute."
-msgstr ""
+msgstr "**强烈** 建议你使用 :attr:`__spec__` 来代替这个属性。"
 
 #: ../../reference/import.rst:564
 msgid ""
@@ -929,6 +934,8 @@ msgid ""
 "loader``.  The use of ``__loader__`` is deprecated and slated for removal in "
 "Python 3.14."
 msgstr ""
+"``__loader__`` 的值应当与 ``__spec__.loader`` 相同。 ``__loader__`` 已被弃用"
+"并将在 Python 3.14 中被移除。"
 
 #: ../../reference/import.rst:571
 msgid ""
@@ -939,12 +946,18 @@ msgid ""
 "string for top-level modules, or for submodules, to the parent package's "
 "name.  See :pep:`366` for further details."
 msgstr ""
+"模块的 ``__package__`` 属性可以被设置。 其值必须为一个字符串，但可以与 "
+"``__name__`` 取相同的值。 当模块是一个包时，其 ``__package__`` 值应当设为其 "
+"``__name__`` 值。 当模块不是包时，对于最高层级模块 ``__package__`` 应当设为空"
+"字符串，对于子模块则应当设为其父包名。 请参阅 :pep:`366` 了解更多细节。"
 
 #: ../../reference/import.rst:579
 msgid ""
 "This attribute is used instead of ``__name__`` to calculate explicit "
 "relative imports for main modules, as defined in :pep:`366`."
 msgstr ""
+"该属性取代 ``__name__`` 被用来为主模块计算显式相对导入，相关定义见 :pep:"
+"`366`。"
 
 #: ../../reference/import.rst:585
 msgid ""
@@ -957,12 +970,16 @@ msgid ""
 ":exc:`ImportWarning` is raised if import falls back to ``__package__`` "
 "instead of :attr:`~importlib.machinery.ModuleSpec.parent`."
 msgstr ""
+":exc:`ImportWarning` 将在导入回退至 ``__package__`` 代替 :attr:`~importlib."
+"machinery.ModuleSpec.parent` 时被引发。"
 
 #: ../../reference/import.rst:594
 msgid ""
 "Raise :exc:`DeprecationWarning` instead of :exc:`ImportWarning` when falling "
 "back to ``__package__``."
 msgstr ""
+"当回退至 ``__package__`` 时将引发 :exc:`DeprecationWarning` 而不是 :exc:"
+"`ImportWarning`。"
 
 #: ../../reference/import.rst:601
 msgid ""
@@ -980,7 +997,7 @@ msgstr ""
 #: ../../reference/import.rst:607
 msgid ""
 "When ``__spec__.parent`` is not set, ``__package__`` is used as a fallback."
-msgstr ""
+msgstr "当 ``__spec__.parent`` 未设置时，将使用 ``__package__`` 作用回退项。"
 
 #: ../../reference/import.rst:612
 msgid ""
@@ -1051,7 +1068,7 @@ msgstr ""
 msgid ""
 "It is **strongly** recommended that you rely on :attr:`__spec__` instead "
 "instead of ``__cached__``."
-msgstr ""
+msgstr "**强烈** 建议你使用 :attr:`__spec__` 来代替 ``__cached__``。"
 
 #: ../../reference/import.rst:658
 msgid "module.__path__"
@@ -1163,6 +1180,8 @@ msgid ""
 "removed in Python 3.12 and is no longer called during the resolution of a "
 "module's repr."
 msgstr ""
+":meth:`!module_repr` 自 Python 3.4 起已被弃用，在 Python 3.12 中已被移除且不"
+"会在模块的 repr 计算期间被调用。"
 
 #: ../../reference/import.rst:716
 msgid "Cached bytecode invalidation"
@@ -1390,6 +1409,15 @@ msgid ""
 "cache entries from :data:`sys.path_importer_cache` forcing the path based "
 "finder to perform the path entry search again."
 msgstr ""
+"基于路径的查找器会迭代搜索路径中的每个条目，并且每次都查找与路径条目对应的 :"
+"term:`path entry finder` (:class:`~importlib.abc.PathEntryFinder`)。 因为这种"
+"操作可能很耗费资源 (例如搜索会有 ``stat()`` 调用的开销)，基于路径的查找器会维"
+"持一个将路径条目映射到路径条目查找器的缓存。 这个缓存是在 :data:`sys."
+"path_importer_cache` 中维护的 (尽管如此命名，但这个缓存实际存放的是查找器对象"
+"而非仅限于 :term:`importer` 对象)。 通过这种方式，对特定 :term:`path entry` "
+"位置的 :term:`path entry finder` 的高耗费搜索只需进行一次。 用户代码可以自由"
+"地从 :data:`sys.path_importer_cache` 移除缓存条目以强制基于路径的查找器再次执"
+"行路径条目搜索。"
 
 #: ../../reference/import.rst:845
 msgid ""
@@ -1489,6 +1517,8 @@ msgid ""
 "term:`portion`, the path entry finder sets ``submodule_search_locations`` to "
 "a list containing the portion."
 msgstr ""
+"为了向导入机制提示该规格说明代表一个命名空间 :term:`portion`，路径条目查找器"
+"会将 ``submodule_search_locations`` 设为一个包含该部分的列表。"
 
 #: ../../reference/import.rst:896
 msgid ""
@@ -1496,6 +1526,9 @@ msgid ""
 "find_loader` and :meth:`!find_module`, both of which are now deprecated, but "
 "will be used if ``find_spec()`` is not defined."
 msgstr ""
+":meth:`~importlib.abc.PathEntryFinder.find_spec` 替代了 :meth:`!find_loader` "
+"和 :meth:`!find_module`，这两者现在都已被弃用，但会在 ``find_spec()`` 未定义"
+"时被使用。"
 
 #: ../../reference/import.rst:902
 msgid ""
@@ -1514,6 +1547,9 @@ msgid ""
 "module being imported.  ``find_loader()`` returns a 2-tuple where the first "
 "item is the loader and the second item is a namespace :term:`portion`."
 msgstr ""
+":meth:`!find_loader` 接受一个参数，即要导入模块的完整限定名称。 "
+"``find_loader()`` 返回一个 2 元组，其中第一项是加载器而第二项是命名空间 :"
+"term:`portion`。"
 
 #: ../../reference/import.rst:912
 msgid ""
@@ -1547,10 +1583,12 @@ msgid ""
 "Calls to :meth:`!find_module` and :meth:`!find_loader` by the import system "
 "will raise :exc:`ImportWarning`."
 msgstr ""
+"导入系统对 :meth:`!find_module` 和 :meth:`!find_loader` 的调用将引发 :exc:"
+"`ImportWarning`。"
 
 #: ../../reference/import.rst:930
 msgid "``find_module()`` and ``find_loader()`` have been removed."
-msgstr ""
+msgstr "``find_module()`` 和 ``find_loader()`` 已被移除。"
 
 #: ../../reference/import.rst:935
 msgid "Replacing the standard import system"
@@ -1752,6 +1790,9 @@ msgid ""
 "Python 3.3.  :pep:`420` also introduced the :meth:`!find_loader` protocol as "
 "an alternative to :meth:`!find_module`."
 msgstr ""
+":pep:`420` 为 Python 3.3 引入了 :term:`命名空间包 <namespace package>`。 :"
+"pep:`420` 还引入了 :meth:`!find_loader` 协议作为 :meth:`!find_module` 的替"
+"代。"
 
 #: ../../reference/import.rst:1057
 msgid ""

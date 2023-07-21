@@ -8,19 +8,20 @@
 # Alpha Du <alphanow@gmail.com>, 2021
 # Shengjing Zhu <zsj950618@gmail.com>, 2021
 # df2dc1c92e792f7ae8417c51df43db8f_594d92a <0f49be28017426edb1db1a2ab6e67088_717605>, 2021
-# ppcfish <ppcfish@gmail.com>, 2021
 # Dai Xu <daixu61@hotmail.com>, 2022
 # Bryan不可思议, 2023
 # Freesand Leo <yuqinju@163.com>, 2023
+# stone jing <stonejing1817@gmail.com>, 2023
+# ppcfish <ppcfish@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 14:14+0000\n"
+"POT-Creation-Date: 2023-07-21 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 00:52+0000\n"
-"Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
+"Last-Translator: ppcfish <ppcfish@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +42,7 @@ msgstr "作者"
 msgid "Larry Hastings"
 msgstr "Larry Hastings"
 
-#: ../../howto/clinic.rstNone
+#: ../../howto/clinic.rst:7
 msgid "Abstract"
 msgstr "摘要"
 
@@ -49,34 +50,46 @@ msgstr "摘要"
 msgid ""
 "Argument Clinic is a preprocessor for CPython C files. Its purpose is to "
 "automate all the boilerplate involved with writing argument parsing code for "
-"\"builtins\". This document shows you how to convert your first C function "
-"to work with Argument Clinic, and then introduces some advanced topics on "
-"Argument Clinic usage."
+"\"builtins\", module level functions, and class methods. This document is "
+"divided in three major sections:"
 msgstr ""
-"Argument Clinic 是 CPython 的一个 C 文件预处理器。旨在自动处理所有与“内置”参"
-"数解析有关的代码。本文展示了将 C 函数转换为配合 Argument Clinic 工作的做法，"
-"还介绍了一些关于 Argument Clinic 用法的进阶内容。"
 
-#: ../../howto/clinic.rst:21
+#: ../../howto/clinic.rst:20
 msgid ""
-"Currently Argument Clinic is considered internal-only for CPython.  Its use "
-"is not supported for files outside CPython, and no guarantees are made "
-"regarding backwards compatibility for future versions.  In other words: if "
-"you maintain an external C extension for CPython, you're welcome to "
-"experiment with Argument Clinic in your own code.  But the version of "
-"Argument Clinic that ships with the next version of CPython *could* be "
-"totally incompatible and break all your code."
+":ref:`clinic-background` talks about the basic concepts and goals of "
+"Argument Clinic."
 msgstr ""
-"目前 Argument Clinic 视作仅供 CPython 内部使用。不支持在 CPython 之外的文件中"
-"使用，也不保证未来版本会向下兼容。换句话说：如果维护的是 CPython 的外部 C 语"
-"言扩展，欢迎在自己的代码中试用 Argument Clinic。但 Argument Clinic 与新版 "
-"CPython 中的版本 *可能* 完全不兼容，且会打乱全部代码。"
 
-#: ../../howto/clinic.rst:31
-msgid "The Goals Of Argument Clinic"
-msgstr "Argument Clinic 的设计目标"
+#: ../../howto/clinic.rst:22
+msgid ""
+":ref:`clinic-tutorial` guides you through all the steps required to adapt an "
+"existing C function to Argument Clinic."
+msgstr ""
 
-#: ../../howto/clinic.rst:33
+#: ../../howto/clinic.rst:24
+msgid ":ref:`clinic-howtos` details how to handle specific tasks."
+msgstr ""
+
+#: ../../howto/clinic.rst:29
+msgid ""
+"Argument Clinic is considered internal-only for CPython.  Its use is not "
+"supported for files outside CPython, and no guarantees are made regarding "
+"backwards compatibility for future versions.  In other words: if you "
+"maintain an external C extension for CPython, you're welcome to experiment "
+"with Argument Clinic in your own code.  But the version of Argument Clinic "
+"that ships with the next version of CPython *could* be totally incompatible "
+"and break all your code."
+msgstr ""
+
+#: ../../howto/clinic.rst:42
+msgid "Background"
+msgstr "背景"
+
+#: ../../howto/clinic.rst:46
+msgid "The goals of Argument Clinic"
+msgstr ""
+
+#: ../../howto/clinic.rst:48
 msgid ""
 "Argument Clinic's primary goal is to take over responsibility for all "
 "argument parsing code inside CPython.  This means that, when you convert a "
@@ -92,7 +105,7 @@ msgstr ""
 "底部则调用自己的代码， ``PyObject *args`` （也许还有 ``PyObject *kwargs`` ）"
 "会神奇地转换成所需的 C 变量和类型。"
 
-#: ../../howto/clinic.rst:43
+#: ../../howto/clinic.rst:58
 msgid ""
 "In order for Argument Clinic to accomplish its primary goal, it must be easy "
 "to use.  Currently, working with CPython's argument parsing library is a "
@@ -103,7 +116,7 @@ msgstr ""
 "解析库是一件苦差事，需要在很多地方维护冗余信息。如果使用 Argument Clinic，则"
 "不必再重复代码了。"
 
-#: ../../howto/clinic.rst:49
+#: ../../howto/clinic.rst:64
 msgid ""
 "Obviously, no one would want to use Argument Clinic unless it's solving "
 "their problem—and without creating new problems of its own. So it's "
@@ -120,7 +133,7 @@ msgstr ""
 "以实现较大的速度提升——代码生成器可以重写一下，以产生量身定做的参数解析代码，"
 "而不是调用通用的 CPython 参数解析库。 这会让参数解析达到最佳速度！）"
 
-#: ../../howto/clinic.rst:61
+#: ../../howto/clinic.rst:76
 msgid ""
 "Additionally, Argument Clinic must be flexible enough to work with any "
 "approach to argument parsing.  Python has some functions with some very "
@@ -130,7 +143,7 @@ msgstr ""
 "有一些函数具备一些非常奇怪的解析行为；Argument Clinic 的目标是支持所有这些函"
 "数。"
 
-#: ../../howto/clinic.rst:66
+#: ../../howto/clinic.rst:81
 msgid ""
 "Finally, the original motivation for Argument Clinic was to provide "
 "introspection \"signatures\" for CPython builtins. It used to be, the "
@@ -141,7 +154,7 @@ msgstr ""
 "一个内置函数，内省查询函数会抛出异常。有了 Argument Clinic，再不会发生这种问"
 "题了！"
 
-#: ../../howto/clinic.rst:72
+#: ../../howto/clinic.rst:87
 msgid ""
 "One idea you should keep in mind, as you work with Argument Clinic: the more "
 "information you give it, the better job it'll be able to do. Argument Clinic "
@@ -153,11 +166,11 @@ msgstr ""
 "好。诚然，Argument Clinic 现在还比较简单。但会演变得越来越复杂，应该能够利用"
 "给出的全部信息干很多聪明而有趣的事情。"
 
-#: ../../howto/clinic.rst:82
-msgid "Basic Concepts And Usage"
-msgstr "基本概念和用法"
+#: ../../howto/clinic.rst:97
+msgid "Basic concepts and usage"
+msgstr ""
 
-#: ../../howto/clinic.rst:84
+#: ../../howto/clinic.rst:99
 msgid ""
 "Argument Clinic ships with CPython; you'll find it in ``Tools/clinic/clinic."
 "py``. If you run that script, specifying a C file as an argument:"
@@ -165,19 +178,19 @@ msgstr ""
 "Argument Clinic 与 CPython 一起提供，位于 ``Tools/clinic/clinic.py`` 。若要运"
 "行它，请指定一个 C 文件作为参数。"
 
-#: ../../howto/clinic.rst:91
+#: ../../howto/clinic.rst:106
 msgid ""
 "Argument Clinic will scan over the file looking for lines that look exactly "
 "like this:"
 msgstr "Argument Clinic 会扫描 C 文件，精确查找以下代码："
 
-#: ../../howto/clinic.rst:98
+#: ../../howto/clinic.rst:113
 msgid ""
 "When it finds one, it reads everything up to a line that looks exactly like "
 "this:"
 msgstr "一旦找到一条后，就会读取所有内容，直至遇到以下代码："
 
-#: ../../howto/clinic.rst:105
+#: ../../howto/clinic.rst:120
 msgid ""
 "Everything in between these two lines is input for Argument Clinic. All of "
 "these lines, including the beginning and ending comment lines, are "
@@ -186,7 +199,7 @@ msgstr ""
 "这两行之间的所有内容都是 Argument Clinic 的输入。所有行，包括开始和结束的注释"
 "行，统称为 Argument Clinic “块”。"
 
-#: ../../howto/clinic.rst:109
+#: ../../howto/clinic.rst:124
 msgid ""
 "When Argument Clinic parses one of these blocks, it generates output.  This "
 "output is rewritten into the C file immediately after the block, followed by "
@@ -196,7 +209,7 @@ msgstr ""
 "Argument Clinic 在解析某一块时，会生成输出信息。输出信息会紧跟着该块写入 C 文"
 "件中，后面还会跟着包含校验和的注释。现在 Argument Clinic 块看起来应如下所示："
 
-#: ../../howto/clinic.rst:122
+#: ../../howto/clinic.rst:137
 msgid ""
 "If you run Argument Clinic on the same file a second time, Argument Clinic "
 "will discard the old output and write out the new output with a fresh "
@@ -206,7 +219,7 @@ msgstr ""
 "如果对同一文件第二次运行 Argument Clinic，则它会丢弃之前的输出信息，并写入带"
 "有新校验行的输出信息。不过如果输入没有变化，则输出也不会有变化。"
 
-#: ../../howto/clinic.rst:126
+#: ../../howto/clinic.rst:141
 msgid ""
 "You should never modify the output portion of an Argument Clinic block.  "
 "Instead, change the input until it produces the output you want.  (That's "
@@ -218,39 +231,39 @@ msgstr ""
 "息。（这就是校验和的用途——检测是否有人改动了输出信息，因为在 Argument Clinic "
 "下次写入新的输出时，这些改动都会丢失）。"
 
-#: ../../howto/clinic.rst:131
+#: ../../howto/clinic.rst:146
 msgid ""
 "For the sake of clarity, here's the terminology we'll use with Argument "
 "Clinic:"
 msgstr "为了清晰起见，下面列出了 Argument Clinic 用到的术语："
 
-#: ../../howto/clinic.rst:133
+#: ../../howto/clinic.rst:148
 msgid ""
 "The first line of the comment (``/*[clinic input]``) is the *start line*."
 msgstr "注释的第一行 ``/*[clinic input]`` 是 *起始行* 。"
 
-#: ../../howto/clinic.rst:134
+#: ../../howto/clinic.rst:149
 msgid ""
 "The last line of the initial comment (``[clinic start generated code]*/``) "
 "is the *end line*."
 msgstr "注释（``[clinic start generated code]*/``）的最后一行是 *结束行*。"
 
-#: ../../howto/clinic.rst:135
+#: ../../howto/clinic.rst:150
 msgid ""
 "The last line (``/*[clinic end generated code: checksum=...]*/``) is the "
 "*checksum line*."
 msgstr ""
 "最后一行（``/*[clinic end generated code: checksum=...]*/``）是 *校验和行* 。"
 
-#: ../../howto/clinic.rst:136
+#: ../../howto/clinic.rst:151
 msgid "In between the start line and the end line is the *input*."
 msgstr "在起始行和结束行之间是 *输入数据*。"
 
-#: ../../howto/clinic.rst:137
+#: ../../howto/clinic.rst:152
 msgid "In between the end line and the checksum line is the *output*."
 msgstr "在结束行和校验和行之间是 *输出数据* 。"
 
-#: ../../howto/clinic.rst:138
+#: ../../howto/clinic.rst:153
 msgid ""
 "All the text collectively, from the start line to the checksum line "
 "inclusively, is the *block*.  (A block that hasn't been successfully "
@@ -260,11 +273,11 @@ msgstr ""
 "从开始行到校验和行的所有文本，都是 *块*。（Argument Clinic 尚未处理成功的块，"
 "没有输出或校验和行，但仍视作一个块）。"
 
-#: ../../howto/clinic.rst:145
-msgid "Converting Your First Function"
-msgstr "函数的转换"
+#: ../../howto/clinic.rst:162
+msgid "Tutorial"
+msgstr "教程"
 
-#: ../../howto/clinic.rst:147
+#: ../../howto/clinic.rst:164
 msgid ""
 "The best way to get a sense of how Argument Clinic works is to convert a "
 "function to work with it.  Here, then, are the bare minimum steps you'd need "
@@ -279,17 +292,17 @@ msgstr ""
 "深入的转换，使用一些本文后续会介绍到的高级概念（比如 “返回转换” 和 “自转"
 "换”）。但以下例子将维持简单，以供学习。"
 
-#: ../../howto/clinic.rst:156
+#: ../../howto/clinic.rst:173
 msgid "Let's dive in!"
 msgstr "就此开始"
 
-#: ../../howto/clinic.rst:158
+#: ../../howto/clinic.rst:175
 msgid ""
 "Make sure you're working with a freshly updated checkout of the CPython "
 "trunk."
 msgstr "请确保 CPython 是最新的已签出版本。"
 
-#: ../../howto/clinic.rst:161
+#: ../../howto/clinic.rst:178
 msgid ""
 "Find a Python builtin that calls either :c:func:`PyArg_ParseTuple` or :c:"
 "func:`PyArg_ParseTupleAndKeywords`, and hasn't been converted to work with "
@@ -299,13 +312,13 @@ msgstr ""
 "`PyArg_ParseTupleAndKeywords` ，且未被转换为采用 Argument Clinic 的 Python 内"
 "置程序。这里用了 ``_pickle.Pickler.dump()``。"
 
-#: ../../howto/clinic.rst:166
+#: ../../howto/clinic.rst:183
 msgid ""
 "If the call to the ``PyArg_Parse`` function uses any of the following format "
 "units:"
 msgstr "如果对 ``PyArg_Parse`` 函数的调用采用了以下格式化单元："
 
-#: ../../howto/clinic.rst:178
+#: ../../howto/clinic.rst:195
 msgid ""
 "or if it has multiple calls to :c:func:`PyArg_ParseTuple`, you should choose "
 "a different function.  Argument Clinic *does* support all of these "
@@ -315,7 +328,7 @@ msgstr ""
 "或者多次调用 :c:func:`PyArg_ParseTuple`，则应再选一个函数。Argument Clinic *"
 "确实* 支持上述这些状况。 但这些都是高阶内容——第一次就简单一些吧。"
 
-#: ../../howto/clinic.rst:183
+#: ../../howto/clinic.rst:200
 msgid ""
 "Also, if the function has multiple calls to :c:func:`PyArg_ParseTuple` or :c:"
 "func:`PyArg_ParseTupleAndKeywords` where it supports different types for the "
@@ -329,11 +342,11 @@ msgstr ""
 "PyArg_Parse 以外的函数来解析参数，则可能不适合转换为 Argument Clinic 形式。 "
 "Argument Clinic 不支持通用函数或多态参数。"
 
-#: ../../howto/clinic.rst:190
+#: ../../howto/clinic.rst:207
 msgid "Add the following boilerplate above the function, creating our block::"
 msgstr "在函数上方添加以下模板，创建块："
 
-#: ../../howto/clinic.rst:195
+#: ../../howto/clinic.rst:212
 msgid ""
 "Cut the docstring and paste it in between the ``[clinic]`` lines, removing "
 "all the junk that makes it a properly quoted C string. When you're done you "
@@ -344,7 +357,7 @@ msgstr ""
 "正确引用的 C 字符串。最有应该只留下带有左侧缩进的文本，且行宽不大于 80 个字"
 "符。（参数 Clinic 将保留文档字符串中的缩进。）"
 
-#: ../../howto/clinic.rst:201
+#: ../../howto/clinic.rst:218
 msgid ""
 "If the old docstring had a first line that looked like a function signature, "
 "throw that line away.  (The docstring doesn't need it anymore—when you use "
@@ -355,14 +368,14 @@ msgstr ""
 "要用到它——将来对内置函数调用 ``help()`` 时，第一行将根据函数的签名自动建"
 "立。）"
 
-#: ../../howto/clinic.rst:207 ../../howto/clinic.rst:228
-#: ../../howto/clinic.rst:252 ../../howto/clinic.rst:310
-#: ../../howto/clinic.rst:350 ../../howto/clinic.rst:377
-#: ../../howto/clinic.rst:483 ../../howto/clinic.rst:535
+#: ../../howto/clinic.rst:224 ../../howto/clinic.rst:245
+#: ../../howto/clinic.rst:269 ../../howto/clinic.rst:327
+#: ../../howto/clinic.rst:367 ../../howto/clinic.rst:394
+#: ../../howto/clinic.rst:500 ../../howto/clinic.rst:552
 msgid "Sample::"
 msgstr "示例："
 
-#: ../../howto/clinic.rst:213
+#: ../../howto/clinic.rst:230
 msgid ""
 "If your docstring doesn't have a \"summary\" line, Argument Clinic will "
 "complain.  So let's make sure it has one.  The \"summary\" line should be a "
@@ -372,13 +385,13 @@ msgstr ""
 "如果文档字符串中没有“摘要”行，Argument Clinic 会报错。所以应确保带有摘要行。 "
 "“摘要”行应为在文档字符串开头的一个段落，由一个80列的单行构成。"
 
-#: ../../howto/clinic.rst:218
+#: ../../howto/clinic.rst:235
 msgid ""
 "(Our example docstring consists solely of a summary line, so the sample code "
 "doesn't have to change for this step.)"
 msgstr "（示例的文档字符串只包括一个摘要行，所以示例代码这一步不需改动）。"
 
-#: ../../howto/clinic.rst:221
+#: ../../howto/clinic.rst:238
 msgid ""
 "Above the docstring, enter the name of the function, followed by a blank "
 "line.  This should be the Python name of the function, and should be the "
@@ -390,7 +403,7 @@ msgstr ""
 "应是句点分隔的完整路径——以模块的名称开始，包含所有子模块名，若函数为类方法则"
 "还应包含类名。"
 
-#: ../../howto/clinic.rst:236
+#: ../../howto/clinic.rst:253
 msgid ""
 "If this is the first time that module or class has been used with Argument "
 "Clinic in this C file, you must declare the module and/or class.  Proper "
@@ -404,7 +417,7 @@ msgstr ""
 "include 文件和 statics 放在顶部一样。（在这里的示例代码中，将这两个块相邻给"
 "出。)"
 
-#: ../../howto/clinic.rst:244
+#: ../../howto/clinic.rst:261
 msgid ""
 "The name of the class and module should be the same as the one seen by "
 "Python.  Check the name defined in the :c:type:`PyModuleDef` or :c:type:"
@@ -413,7 +426,7 @@ msgstr ""
 "类和模块的名称应与暴露给 Python 的相同。请适时检查 :c:type:`PyModuleDef` 或 :"
 "c:type:`PyTypeObject` 中定义的名称。"
 
-#: ../../howto/clinic.rst:248
+#: ../../howto/clinic.rst:265
 msgid ""
 "When you declare a class, you must also specify two aspects of its type in "
 "C: the type declaration you'd use for a pointer to an instance of this "
@@ -422,7 +435,7 @@ msgstr ""
 "在声明某个类时，还必须指定其 C 语言类型的两个部分：用于指向该类实例的指针的类"
 "型声明，和指向该类 :c:type:`PyTypeObject` 的指针。"
 
-#: ../../howto/clinic.rst:268
+#: ../../howto/clinic.rst:285
 msgid ""
 "Declare each of the parameters to the function.  Each parameter should get "
 "its own line.  All the parameter lines should be indented from the function "
@@ -431,15 +444,15 @@ msgstr ""
 "声明函数的所有参数。每个参数都应另起一行。所有的参数行都应对齐函数名和文档字"
 "符串进行缩进。"
 
-#: ../../howto/clinic.rst:272
+#: ../../howto/clinic.rst:289
 msgid "The general form of these parameter lines is as follows:"
 msgstr "这些参数行的常规形式如下："
 
-#: ../../howto/clinic.rst:278
+#: ../../howto/clinic.rst:295
 msgid "If the parameter has a default value, add that after the converter:"
 msgstr "如果参数带有缺省值，请加在转换器之后："
 
-#: ../../howto/clinic.rst:285
+#: ../../howto/clinic.rst:302
 msgid ""
 "Argument Clinic's support for \"default values\" is quite sophisticated; "
 "please see :ref:`the section below on default values <default_values>` for "
@@ -448,11 +461,11 @@ msgstr ""
 "Argument Clinic 对 “缺省值” 的支持方式相当复杂；更多信息请参见 :ref:`关于缺省"
 "值的部分 <default_values>` 。"
 
-#: ../../howto/clinic.rst:289
+#: ../../howto/clinic.rst:306
 msgid "Add a blank line below the parameters."
 msgstr "在参数行下面添加一个空行。"
 
-#: ../../howto/clinic.rst:291
+#: ../../howto/clinic.rst:308
 msgid ""
 "What's a \"converter\"?  It establishes both the type of the variable used "
 "in C, and the method to convert the Python value into a C value at runtime. "
@@ -464,7 +477,7 @@ msgstr ""
 "值转换成 C 语言值的方法。现在需用到的是所谓“传统转换器”——快捷语法，旨在让旧代"
 "码更容易移植到 Argument Clinic。"
 
-#: ../../howto/clinic.rst:298
+#: ../../howto/clinic.rst:315
 msgid ""
 "For each parameter, copy the \"format unit\" for that parameter from the "
 "``PyArg_Parse()`` format argument and specify *that* as its converter, as a "
@@ -478,13 +491,13 @@ msgstr ""
 "于让参数解析函数知晓该变量的类型及转换方法。关于格式单位的更多信息，请参阅 :"
 "ref:`arg-parsing` ）。"
 
-#: ../../howto/clinic.rst:307
+#: ../../howto/clinic.rst:324
 msgid ""
 "For multicharacter format units like ``z#``, use the entire two-or-three "
 "character string."
 msgstr "对于像 ``z#`` 这样的多字符格式单元，要使用2-3个字符组成的整个字符串。"
 
-#: ../../howto/clinic.rst:325
+#: ../../howto/clinic.rst:342
 msgid ""
 "If your function has ``|`` in the format string, meaning some parameters "
 "have default values, you can ignore it.  Argument Clinic infers which "
@@ -493,7 +506,7 @@ msgstr ""
 "如果函数的格式字符串包含 ``|``，意味着有些参数带有缺省值，这可以忽略。"
 "Argument Clinic 根据参数是否有缺省值来推断哪些参数是可选的。"
 
-#: ../../howto/clinic.rst:330
+#: ../../howto/clinic.rst:347
 msgid ""
 "If your function has ``$`` in the format string, meaning it takes keyword-"
 "only arguments, specify ``*`` on a line by itself before the first keyword-"
@@ -502,12 +515,12 @@ msgstr ""
 "如果函数的格式字符串中包含 $，意味着只接受关键字参数，请在第一个关键字参数之"
 "前单独给出一行 ``*``，缩进与参数行对齐。"
 
-#: ../../howto/clinic.rst:335
+#: ../../howto/clinic.rst:352
 msgid "(``_pickle.Pickler.dump`` has neither, so our sample is unchanged.)"
 msgstr ""
 "（``_pickle.Pickler.dump`` 两种格式字符串都没有，所以这里的示例不用改动。）"
 
-#: ../../howto/clinic.rst:338
+#: ../../howto/clinic.rst:355
 msgid ""
 "If the existing C function calls :c:func:`PyArg_ParseTuple` (as opposed to :"
 "c:func:`PyArg_ParseTupleAndKeywords`), then all its arguments are positional-"
@@ -516,7 +529,7 @@ msgstr ""
 "如果 C 函数调用的是 :c:func:`PyArg_ParseTuple` (而不是 :c:func:"
 "`PyArg_ParseTupleAndKeywords`)，那么其所有参数均是仅限位置参数。"
 
-#: ../../howto/clinic.rst:342
+#: ../../howto/clinic.rst:359
 msgid ""
 "To mark all parameters as positional-only in Argument Clinic, add a ``/`` on "
 "a line by itself after the last parameter, indented the same as the "
@@ -525,7 +538,7 @@ msgstr ""
 "若要在 Argument Clinic 中把所有参数都标记为只认位置，请在最后一个参数后面一行"
 "加入一个 ``/``，缩进程度与参数行对齐。"
 
-#: ../../howto/clinic.rst:346
+#: ../../howto/clinic.rst:363
 msgid ""
 "Currently this is all-or-nothing; either all parameters are positional-only, "
 "or none of them are.  (In the future Argument Clinic may relax this "
@@ -534,14 +547,14 @@ msgstr ""
 "目前这个标记是全体生效；要么所有参数都是只认位置，要么都不是。（以后 "
 "Argument Clinic 可能会放宽这一限制。）"
 
-#: ../../howto/clinic.rst:366
+#: ../../howto/clinic.rst:383
 msgid ""
 "It's helpful to write a per-parameter docstring for each parameter. But per-"
 "parameter docstrings are optional; you can skip this step if you prefer."
 msgstr ""
 "为每个参数都编写一个文档字符串，这很有意义。但这是可选项；可以跳过这一步。"
 
-#: ../../howto/clinic.rst:370
+#: ../../howto/clinic.rst:387
 msgid ""
 "Here's how to add a per-parameter docstring.  The first line of the per-"
 "parameter docstring must be indented further than the parameter definition.  "
@@ -554,7 +567,7 @@ msgstr ""
 "缩进一层。第一行的左边距即确定了所有逐参数文档字符串的左边距；所有文档字符串"
 "文本都要同等缩进。文本可以用多行编写。"
 
-#: ../../howto/clinic.rst:394
+#: ../../howto/clinic.rst:411
 msgid ""
 "Save and close the file, then run ``Tools/clinic/clinic.py`` on it.  With "
 "luck everything worked---your block now has output, and a ``.c.h`` file has "
@@ -564,7 +577,7 @@ msgstr ""
 "——程序块现在有了输出信息，并且生成了一个 ``.c.h`` 文件！在文本编辑器中重新打"
 "开该文件，可以看到："
 
-#: ../../howto/clinic.rst:413
+#: ../../howto/clinic.rst:430
 msgid ""
 "Obviously, if Argument Clinic didn't produce any output, it's because it "
 "found an error in your input.  Keep fixing your errors and retrying until "
@@ -573,7 +586,7 @@ msgstr ""
 "显然，如果 Argument Clinic 未产生任何输出，那是因为在输入信息中发现了错误。继"
 "续修正错误并重试，直至 Argument Clinic 正确地处理好文件。"
 
-#: ../../howto/clinic.rst:417
+#: ../../howto/clinic.rst:434
 msgid ""
 "For readability, most of the glue code has been generated to a ``.c.h`` "
 "file.  You'll need to include that in your original ``.c`` file, typically "
@@ -582,14 +595,14 @@ msgstr ""
 "为了便于阅读，大部分“胶水”代码已写入 ``.c.h`` 文件中。需在原 ``.c`` 文件中包"
 "含这个文件，通常是在 clinic  模块之后："
 
-#: ../../howto/clinic.rst:423
+#: ../../howto/clinic.rst:440
 msgid ""
 "Double-check that the argument-parsing code Argument Clinic generated looks "
 "basically the same as the existing code."
 msgstr ""
 "请仔细检查 Argument Clinic 生成的参数解析代码，是否与原有代码基本相同。"
 
-#: ../../howto/clinic.rst:426
+#: ../../howto/clinic.rst:443
 msgid ""
 "First, ensure both places use the same argument-parsing function. The "
 "existing code must call either :c:func:`PyArg_ParseTuple` or :c:func:"
@@ -600,7 +613,7 @@ msgstr ""
 "`PyArg_ParseTuple` 或 :c:func:`PyArg_ParseTupleAndKeywords` ；确保 Argument "
 "Clinic 生成的代码调用 *完全* 相同的函数。"
 
-#: ../../howto/clinic.rst:432
+#: ../../howto/clinic.rst:449
 msgid ""
 "Second, the format string passed in to :c:func:`PyArg_ParseTuple` or :c:func:"
 "`PyArg_ParseTupleAndKeywords` should be *exactly* the same as the hand-"
@@ -610,7 +623,7 @@ msgstr ""
 "`PyArg_ParseTupleAndKeywords` 的格式字符串应该 *完全* 与原有函数中的相同，直"
 "到冒号或分号为止。"
 
-#: ../../howto/clinic.rst:437
+#: ../../howto/clinic.rst:454
 msgid ""
 "(Argument Clinic always generates its format strings with a ``:`` followed "
 "by the name of the function.  If the existing code's format string ends with "
@@ -619,7 +632,7 @@ msgstr ""
 "（Argument Clinic 生成的格式串一定是函数名后跟着 ``:``。如果现有代码的格式串"
 "以 ``;`` 结尾，这种改动不会影响使用，因此不必担心。）"
 
-#: ../../howto/clinic.rst:442
+#: ../../howto/clinic.rst:459
 msgid ""
 "Third, for parameters whose format units require two arguments (like a "
 "length variable, or an encoding string, or a pointer to a conversion "
@@ -629,7 +642,7 @@ msgstr ""
 "第三，如果格式单元需要指定两个参数（比如长度、编码字符串或指向转换函数的指"
 "针），请确保第二个参数在两次调用时 *完全* 相同。"
 
-#: ../../howto/clinic.rst:447
+#: ../../howto/clinic.rst:464
 msgid ""
 "Fourth, inside the output portion of the block you'll find a preprocessor "
 "macro defining the appropriate static :c:type:`PyMethodDef` structure for "
@@ -638,14 +651,14 @@ msgstr ""
 "第四，在输出部分会有一个预处理器宏，为该内置函数定义合适的静态 :c:type:"
 "`PyMethodDef` 结构："
 
-#: ../../howto/clinic.rst:454
+#: ../../howto/clinic.rst:471
 msgid ""
 "This static structure should be *exactly* the same as the existing static :c:"
 "type:`PyMethodDef` structure for this builtin."
 msgstr ""
 "此静态结构应与本内置函数现有的静态结构 :c:type:`PyMethodDef` *完全* 相同。"
 
-#: ../../howto/clinic.rst:457
+#: ../../howto/clinic.rst:474
 msgid ""
 "If any of these items differ in *any way*, adjust your Argument Clinic "
 "function specification and rerun ``Tools/clinic/clinic.py`` until they *are* "
@@ -654,7 +667,7 @@ msgstr ""
 "只要上述这几点存在不一致，请调整 Argument Clinic 函数定义，并重新运行 "
 "``Tools/clinic/clinic.py`` ，直至 *完全* 相同。"
 
-#: ../../howto/clinic.rst:462
+#: ../../howto/clinic.rst:479
 msgid ""
 "Notice that the last line of its output is the declaration of your \"impl\" "
 "function.  This is where the builtin's implementation goes. Delete the "
@@ -669,13 +682,13 @@ msgstr ""
 "变量的所有声明。注意现在 Python 所见的参数即为此实现函数的参数；如果实现代码"
 "给这些变量采用了不同的命名，请进行修正。"
 
-#: ../../howto/clinic.rst:470
+#: ../../howto/clinic.rst:487
 msgid ""
 "Let's reiterate, just because it's kind of weird.  Your code should now look "
 "like this::"
 msgstr "因为稍显怪异，所以还是重申一下。现在的代码应该如下所示："
 
-#: ../../howto/clinic.rst:479
+#: ../../howto/clinic.rst:496
 msgid ""
 "Argument Clinic generated the checksum line and the function prototype just "
 "above it.  You should write the opening (and closing) curly braces for the "
@@ -684,7 +697,7 @@ msgstr ""
 "上面是 Argument Clinic 生成的校验值和函数原型。函数应该带有闭合的大括号，实现"
 "代码位于其中。"
 
-#: ../../howto/clinic.rst:524
+#: ../../howto/clinic.rst:541
 msgid ""
 "Remember the macro with the :c:type:`PyMethodDef` structure for this "
 "function?  Find the existing :c:type:`PyMethodDef` structure for this "
@@ -697,7 +710,7 @@ msgstr ""
 "`PyMethodDef` 结构，并替换为宏的引用。（如果函数是模块级的，可能会在文件的末"
 "尾附近；如果函数是个类方法，则可能会在靠近实现代码的下方。)"
 
-#: ../../howto/clinic.rst:531
+#: ../../howto/clinic.rst:548
 msgid ""
 "Note that the body of the macro contains a trailing comma.  So when you "
 "replace the existing static :c:type:`PyMethodDef` structure with the macro, "
@@ -706,11 +719,11 @@ msgstr ""
 "注意，宏尾部带有一个逗号。所以若用宏替换已有的静态结构  :c:type:"
 "`PyMethodDef` 时，*请勿* 在结尾添加逗号了。"
 
-#: ../../howto/clinic.rst:544
+#: ../../howto/clinic.rst:561
 msgid "Argument Clinic may generate new instances of ``_Py_ID``. For example::"
 msgstr "Argument Clinic 可能生成新的 ``_Py_ID`` 实例。 举例来说::"
 
-#: ../../howto/clinic.rst:548
+#: ../../howto/clinic.rst:565
 msgid ""
 "If it does, you'll have to run ``Tools/scripts/generate_global_objects.py`` "
 "to regenerate the list of precompiled identifiers at this point."
@@ -718,7 +731,7 @@ msgstr ""
 "如果它确实这样做了，你必须运行 ``Tools/scripts/generate_global_objects.py`` "
 "来重新生成当前的预编译标识符列表。"
 
-#: ../../howto/clinic.rst:552
+#: ../../howto/clinic.rst:569
 msgid ""
 "Compile, then run the relevant portions of the regression-test suite. This "
 "change should not introduce any new compile-time warnings or errors, and "
@@ -727,7 +740,7 @@ msgstr ""
 "先编译，然后运行回归测试套件中的相关测试程序。 不应引入新的编译警告或错误，并"
 "且对 Python 的行为也不应有外部可见的改变。"
 
-#: ../../howto/clinic.rst:556
+#: ../../howto/clinic.rst:573
 msgid ""
 "Well, except for one difference: ``inspect.signature()`` run on your "
 "function should now provide a valid signature!"
@@ -735,62 +748,21 @@ msgstr ""
 "差别只有一个，即 ``inspect.signature()`` 运行于新的函数上，现在应该新提供一个"
 "有效的签名！"
 
-#: ../../howto/clinic.rst:559
+#: ../../howto/clinic.rst:576
 msgid ""
 "Congratulations, you've ported your first function to work with Argument "
 "Clinic!"
 msgstr "祝贺你，现在已经用 Argument Clinic 移植了第一个函数。"
 
-#: ../../howto/clinic.rst:562
-msgid "Advanced Topics"
-msgstr "进阶"
+#: ../../howto/clinic.rst:582
+msgid "How-to guides"
+msgstr "常用方案指引"
 
-#: ../../howto/clinic.rst:564
-msgid ""
-"Now that you've had some experience working with Argument Clinic, it's time "
-"for some advanced topics."
-msgstr "现在 Argument Clinic 的使用经验已具备了一些，该介绍一些高级内容了。"
-
-#: ../../howto/clinic.rst:569
-msgid "Symbolic default values"
-msgstr "符号化默认值"
-
-#: ../../howto/clinic.rst:571
-msgid ""
-"The default value you provide for a parameter can't be any arbitrary "
-"expression.  Currently the following are explicitly supported:"
-msgstr "提供给参数的默认值不能是表达式。目前明确支持以下形式："
-
-#: ../../howto/clinic.rst:574
-msgid "Numeric constants (integer and float)"
-msgstr "数值型常数（整数和浮点数）。"
-
-#: ../../howto/clinic.rst:575
-msgid "String constants"
-msgstr "字符串常量"
-
-#: ../../howto/clinic.rst:576
-msgid "``True``, ``False``, and ``None``"
-msgstr "``True`` 、 ``False`` 和 ``None`` 。"
-
-#: ../../howto/clinic.rst:577
-msgid ""
-"Simple symbolic constants like ``sys.maxsize``, which must start with the "
-"name of the module"
-msgstr "以模块名开头的简单符号常量，如 ``sys.maxsize``。"
-
-#: ../../howto/clinic.rst:580
-msgid ""
-"(In the future, this may need to get even more elaborate, to allow full "
-"expressions like ``CONSTANT - 1``.)"
+#: ../../howto/clinic.rst:586
+msgid "How to to rename C functions and variables generated by Argument Clinic"
 msgstr ""
-"（未来可能需要加以细化，以便可以采用 ``CONSTANT - 1`` 之类的完整表达式。）"
 
-#: ../../howto/clinic.rst:585
-msgid "Renaming the C functions and variables generated by Argument Clinic"
-msgstr "对 Argument Clinic 生成的 C 函数和变量进行重命名"
-
-#: ../../howto/clinic.rst:587
+#: ../../howto/clinic.rst:588
 msgid ""
 "Argument Clinic automatically names the functions it generates for you. "
 "Occasionally this may cause a problem, if the generated name collides with "
@@ -807,14 +779,14 @@ msgstr ""
 "数名为基础作为（生成的）函数名，然后在后面加上 ``\"_impl\"``，并用作实现函数"
 "的名称。"
 
-#: ../../howto/clinic.rst:595
+#: ../../howto/clinic.rst:596
 msgid ""
 "For example, if we wanted to rename the C function names generated for "
 "``pickle.Pickler.dump``, it'd look like this::"
 msgstr ""
 "例如，若对 ``pickle.Pickler.dump`` 生成的 C 函数进行重命名，应如下所示："
 
-#: ../../howto/clinic.rst:603
+#: ../../howto/clinic.rst:604
 msgid ""
 "The base function would now be named ``pickler_dumper()``, and the impl "
 "function would now be named ``pickler_dumper_impl()``."
@@ -822,7 +794,7 @@ msgstr ""
 "原函数会被命名为 ``pickler_dumper()``，而实现函数现在被命名为 "
 "``pickler_dumper_impl()``。"
 
-#: ../../howto/clinic.rst:607
+#: ../../howto/clinic.rst:608
 msgid ""
 "Similarly, you may have a problem where you want to give a parameter a "
 "specific Python name, but that name may be inconvenient in C.  Argument "
@@ -833,7 +805,7 @@ msgstr ""
 "Argument Clinic 允许在 Python 和 C 中为同一个参数取不同的名字，依然是利用 "
 "``\"as\"`` 语法："
 
-#: ../../howto/clinic.rst:621
+#: ../../howto/clinic.rst:622
 msgid ""
 "Here, the name used in Python (in the signature and the ``keywords`` array) "
 "would be ``file``, but the C variable would be named ``file_obj``."
@@ -841,15 +813,15 @@ msgstr ""
 "这里 Python（签名和 ``keywords`` 数组中）中用的名称是 ``file``，而 C 语言中的"
 "变量命名为 ``file_obj``。"
 
-#: ../../howto/clinic.rst:624
+#: ../../howto/clinic.rst:625
 msgid "You can use this to rename the ``self`` parameter too!"
 msgstr "``self`` 参数也可以进行重命名。"
 
-#: ../../howto/clinic.rst:628
-msgid "Converting functions using PyArg_UnpackTuple"
-msgstr "函数转换会用到 PyArg_UnpackTuple"
+#: ../../howto/clinic.rst:629
+msgid "How to convert functions using ``PyArg_UnpackTuple``"
+msgstr ""
 
-#: ../../howto/clinic.rst:630
+#: ../../howto/clinic.rst:631
 msgid ""
 "To convert a function parsing its arguments with :c:func:"
 "`PyArg_UnpackTuple`, simply write out all the arguments, specifying each as "
@@ -861,18 +833,18 @@ msgstr ""
 "数，并将每个参数定义为 ``object``。可以指定 ``type`` 参数，以便能转换为合适的"
 "类型。所有参数都应标记为只认位置（在最后一个参数后面加上 ``/``）。"
 
-#: ../../howto/clinic.rst:636
+#: ../../howto/clinic.rst:637
 msgid ""
 "Currently the generated code will use :c:func:`PyArg_ParseTuple`, but this "
 "will change soon."
 msgstr ""
 "目前，所生成的代码将会用到 :c:func:`PyArg_ParseTuple` ，但很快会做出改动。"
 
-#: ../../howto/clinic.rst:640
-msgid "Optional Groups"
-msgstr "可选参数组"
-
 #: ../../howto/clinic.rst:642
+msgid "How to use optional groups"
+msgstr ""
+
+#: ../../howto/clinic.rst:644
 msgid ""
 "Some legacy functions have a tricky approach to parsing their arguments: "
 "they count the number of positional arguments, then use a ``switch`` "
@@ -887,7 +859,7 @@ msgstr ""
 "接受只认关键字的参数。）在没有 :c:func:`PyArg_ParseTupleAndKeywords` 之前，这"
 "种方式曾被用于模拟可选参数。"
 
-#: ../../howto/clinic.rst:649
+#: ../../howto/clinic.rst:651
 msgid ""
 "While functions using this approach can often be converted to use :c:func:"
 "`PyArg_ParseTupleAndKeywords`, optional arguments, and default values, it's "
@@ -908,7 +880,7 @@ msgstr ""
 "``y``；如果调用函数时传入了 ``x``，则必须同时传入 ``y``；如果未传入 ``x`` ，"
 "则也不能传入 ``y``）。"
 
-#: ../../howto/clinic.rst:661
+#: ../../howto/clinic.rst:663
 msgid ""
 "In any case, the goal of Argument Clinic is to support argument parsing for "
 "all existing CPython builtins without changing their semantics. Therefore "
@@ -922,7 +894,7 @@ msgstr ""
 "这种解析方式。可选组是必须一起传入的参数组。他们可以在必需参数的左边或右边，*"
 "只能* 用于只认位置的参数。"
 
-#: ../../howto/clinic.rst:669
+#: ../../howto/clinic.rst:671
 msgid ""
 "Optional groups are *only* intended for use when converting functions that "
 "make multiple calls to :c:func:`PyArg_ParseTuple`! Functions that use *any* "
@@ -937,7 +909,7 @@ msgstr ""
 "前，采用可选组的函数在 Python 中无法获得准确的签名，因为 Python 不能理解这个"
 "概念。请尽可能避免使用可选组。"
 
-#: ../../howto/clinic.rst:678
+#: ../../howto/clinic.rst:680
 msgid ""
 "To specify an optional group, add a ``[`` on a line by itself before the "
 "parameters you wish to group together, and a ``]`` on a line by itself after "
@@ -949,11 +921,11 @@ msgstr ""
 "同一行上。举个例子，下面是 ``curses.window.addch`` 采用可选组的用法，前两个参"
 "数和最后一个参数可选："
 
-#: ../../howto/clinic.rst:707
+#: ../../howto/clinic.rst:709
 msgid "Notes:"
 msgstr "注："
 
-#: ../../howto/clinic.rst:709
+#: ../../howto/clinic.rst:711
 msgid ""
 "For every optional group, one additional parameter will be passed into the "
 "impl function representing the group.  The parameter will be an int named "
@@ -972,33 +944,34 @@ msgstr ""
 "零，若用到了参数组则该参数为非零。 所谓的用到或未用到，是指在本次调用中形参是"
 "否收到了实参。"
 
-#: ../../howto/clinic.rst:720
+#: ../../howto/clinic.rst:722
 msgid ""
 "If there are no required arguments, the optional groups will behave as if "
 "they're to the right of the required arguments."
 msgstr "如果不存在必需参数，可选组的行为等同于出现在必需参数的右侧。"
 
-#: ../../howto/clinic.rst:723
+#: ../../howto/clinic.rst:725
 msgid ""
 "In the case of ambiguity, the argument parsing code favors parameters on the "
 "left (before the required parameters)."
 msgstr "在模棱两可的情况下，参数解析代码更倾向于参数左侧（在必需参数之前）。"
 
-#: ../../howto/clinic.rst:726
+#: ../../howto/clinic.rst:728
 msgid "Optional groups can only contain positional-only parameters."
 msgstr "可选组只能包含只认位置的参数。"
 
-#: ../../howto/clinic.rst:728
+#: ../../howto/clinic.rst:730
 msgid ""
 "Optional groups are *only* intended for legacy code.  Please do not use "
 "optional groups for new code."
 msgstr "可选组 *仅限* 用于过时代码。请勿在新的代码中使用可选组。"
 
-#: ../../howto/clinic.rst:733
-msgid "Using real Argument Clinic converters, instead of \"legacy converters\""
-msgstr "采用真正的 Argument Clinic 转换器，而不是 “传统转换器”"
-
 #: ../../howto/clinic.rst:735
+msgid ""
+"How to use real Argument Clinic converters, instead of \"legacy converters\""
+msgstr ""
+
+#: ../../howto/clinic.rst:737
 msgid ""
 "To save time, and to minimize how much you need to learn to achieve your "
 "first port to Argument Clinic, the walkthrough above tells you to use "
@@ -1011,7 +984,7 @@ msgstr ""
 "易地让现有代码移植为适用于 Argument Clinic 。说白了，在移植 Python 3.4 的代码"
 "时，可以考虑采用。"
 
-#: ../../howto/clinic.rst:742
+#: ../../howto/clinic.rst:744
 msgid ""
 "However, in the long term we probably want all our blocks to use Argument "
 "Clinic's real syntax for converters.  Why?  A couple reasons:"
@@ -1019,12 +992,12 @@ msgstr ""
 "不过从长远来看，可能希望所有代码块都采用真正的 Argument Clinic 转换器语法。原"
 "因如下："
 
-#: ../../howto/clinic.rst:746
+#: ../../howto/clinic.rst:748
 msgid ""
 "The proper converters are far easier to read and clearer in their intent."
 msgstr "合适的转换器可读性更好，意图也更清晰。"
 
-#: ../../howto/clinic.rst:747
+#: ../../howto/clinic.rst:749
 msgid ""
 "There are some format units that are unsupported as \"legacy converters\", "
 "because they require arguments, and the legacy converter syntax doesn't "
@@ -1033,7 +1006,7 @@ msgstr ""
 "有些格式单元是“传统转换器”无法支持的，因为这些格式需要带上参数，而传统转换器"
 "的语法不支持指定参数。"
 
-#: ../../howto/clinic.rst:750
+#: ../../howto/clinic.rst:752
 msgid ""
 "In the future we may have a new argument parsing library that isn't "
 "restricted to what :c:func:`PyArg_ParseTuple` supports; this flexibility "
@@ -1042,13 +1015,13 @@ msgstr ""
 "后续可能会有新版的参数解析库，提供超过 :c:func:`PyArg_ParseTuple` 支持的功"
 "能；而这种灵活性将无法适用于传统转换器转换的参数。"
 
-#: ../../howto/clinic.rst:754
+#: ../../howto/clinic.rst:756
 msgid ""
 "Therefore, if you don't mind a little extra effort, please use the normal "
 "converters instead of legacy converters."
 msgstr "因此，若是不介意多花一点精力，请使用正常的转换器，而不是传统转换器。"
 
-#: ../../howto/clinic.rst:757
+#: ../../howto/clinic.rst:759
 msgid ""
 "In a nutshell, the syntax for Argument Clinic (non-legacy) converters looks "
 "like a Python function call.  However, if there are no explicit arguments to "
@@ -1059,7 +1032,7 @@ msgstr ""
 "如果函数没有明确的参数（所有函数都取默认值），则可以省略括号。因此 ``bool`` "
 "和 ``bool()`` 是完全相同的转换器。"
 
-#: ../../howto/clinic.rst:763
+#: ../../howto/clinic.rst:765
 msgid ""
 "All arguments to Argument Clinic converters are keyword-only. All Argument "
 "Clinic converters accept the following arguments:"
@@ -1067,11 +1040,11 @@ msgstr ""
 "Argument Clinic 转换器的所有参数都只认关键字。所有 Argument Clinic 转换器均可"
 "接受以下参数："
 
-#: ../../howto/clinic.rst:771 ../../howto/clinic.rst:1334
+#: ../../howto/clinic.rst:773 ../../howto/clinic.rst:1353
 msgid "``c_default``"
 msgstr "``c_default``"
 
-#: ../../howto/clinic.rst:767
+#: ../../howto/clinic.rst:769
 msgid ""
 "The default value for this parameter when defined in C. Specifically, this "
 "will be the initializer for the variable declared in the \"parse "
@@ -1082,36 +1055,36 @@ msgstr ""
 "用法参见 :ref:`the section on default values <default_values>` 。定义为字符"
 "串。"
 
-#: ../../howto/clinic.rst:776
+#: ../../howto/clinic.rst:778
 msgid "``annotation``"
 msgstr "``annotation``"
 
-#: ../../howto/clinic.rst:774
+#: ../../howto/clinic.rst:776
 msgid ""
 "The annotation value for this parameter.  Not currently supported, because :"
 "pep:`8` mandates that the Python library may not use annotations."
 msgstr "参数的注解值。目前尚不支持，因为 :pep:`8` 规定 Python 库不得使用注解。"
 
-#: ../../howto/clinic.rst:779
+#: ../../howto/clinic.rst:781
 msgid "``unused``"
 msgstr "``unused``"
 
-#: ../../howto/clinic.rst:779
+#: ../../howto/clinic.rst:781
 msgid ""
 "Wrap the argument with :c:macro:`Py_UNUSED` in the impl function signature."
 msgstr "在 impl 函数签名中用 :c:macro:`Py_UNUSED` 来包装函数。"
 
-#: ../../howto/clinic.rst:781
+#: ../../howto/clinic.rst:783
 msgid ""
 "In addition, some converters accept additional arguments.  Here is a list of "
 "these arguments, along with their meanings:"
 msgstr "此外，某些转换器还可接受额外的参数。下面列出了这些额外参数及其含义："
 
-#: ../../howto/clinic.rst:790
+#: ../../howto/clinic.rst:792
 msgid "``accept``"
 msgstr "``accept``"
 
-#: ../../howto/clinic.rst:785
+#: ../../howto/clinic.rst:787
 msgid ""
 "A set of Python types (and possibly pseudo-types); this restricts the "
 "allowable Python argument to values of these types. (This is not a general-"
@@ -1121,15 +1094,15 @@ msgstr ""
 "一些 Python 类型的集合（可能还有伪类型）；用于限制只接受这些类型的 Python 参"
 "数。（并非通用特性；只支持传统转换器列表中给出的类型）。"
 
-#: ../../howto/clinic.rst:790
+#: ../../howto/clinic.rst:792
 msgid "To accept ``None``, add ``NoneType`` to this set."
 msgstr "若要能接受 ``None``，请在集合中添加 ``NoneType``。"
 
-#: ../../howto/clinic.rst:795
+#: ../../howto/clinic.rst:797
 msgid "``bitwise``"
 msgstr "``bitwise``"
 
-#: ../../howto/clinic.rst:793
+#: ../../howto/clinic.rst:795
 msgid ""
 "Only supported for unsigned integers.  The native integer value of this "
 "Python argument will be written to the parameter without any range checking, "
@@ -1138,11 +1111,11 @@ msgstr ""
 "仅用于无符号整数。写入形参的将是 Python 实参的原生整数值，不做任何越界检查，"
 "即便是负值也一样。"
 
-#: ../../howto/clinic.rst:800 ../../howto/clinic.rst:1348
+#: ../../howto/clinic.rst:802 ../../howto/clinic.rst:1367
 msgid "``converter``"
 msgstr "``converter``"
 
-#: ../../howto/clinic.rst:798
+#: ../../howto/clinic.rst:800
 msgid ""
 "Only supported by the ``object`` converter.  Specifies the name of a :ref:`C "
 "\"converter function\" <o_ampersand>` to use to convert this object to a "
@@ -1151,11 +1124,11 @@ msgstr ""
 "仅用于 ``object`` 转换器。为某个 :ref:`C 转换函数 <o_ampersand>` 指定名称，用"
 "于将对象转换为原生类型。"
 
-#: ../../howto/clinic.rst:805
+#: ../../howto/clinic.rst:807
 msgid "``encoding``"
 msgstr "``encoding``"
 
-#: ../../howto/clinic.rst:803
+#: ../../howto/clinic.rst:805
 msgid ""
 "Only supported for strings.  Specifies the encoding to use when converting "
 "this string from a Python str (Unicode) value into a C ``char *`` value."
@@ -1163,22 +1136,22 @@ msgstr ""
 "仅用于字符串。指定将 Python str(Unicode) 转换为 C 语言的 ``char *`` 时应该采"
 "用的编码。"
 
-#: ../../howto/clinic.rst:809
+#: ../../howto/clinic.rst:811
 msgid "``subclass_of``"
 msgstr "``subclass_of``"
 
-#: ../../howto/clinic.rst:808
+#: ../../howto/clinic.rst:810
 msgid ""
 "Only supported for the ``object`` converter.  Requires that the Python value "
 "be a subclass of a Python type, as expressed in C."
 msgstr ""
 "仅用于 ``object`` 转换器。要求 Python 值是 Python 类型的子类，用 C 语言表示。"
 
-#: ../../howto/clinic.rst:814 ../../howto/clinic.rst:1320
+#: ../../howto/clinic.rst:816 ../../howto/clinic.rst:1339
 msgid "``type``"
 msgstr "``type``"
 
-#: ../../howto/clinic.rst:812
+#: ../../howto/clinic.rst:814
 msgid ""
 "Only supported for the ``object`` and ``self`` converters.  Specifies the C "
 "type that will be used to declare the variable.  Default value is "
@@ -1187,11 +1160,11 @@ msgstr ""
 "仅用于 ``object`` 和 ``self`` 转换器。指定用于声明变量的 C 类型。 默认值是 "
 "``\"PyObject *\"``。"
 
-#: ../../howto/clinic.rst:820
+#: ../../howto/clinic.rst:822
 msgid "``zeroes``"
 msgstr "``zeroes``"
 
-#: ../../howto/clinic.rst:817
+#: ../../howto/clinic.rst:819
 msgid ""
 "Only supported for strings.  If true, embedded NUL bytes (``'\\\\0'``) are "
 "permitted inside the value.  The length of the string will be passed in to "
@@ -1201,7 +1174,7 @@ msgstr ""
 "仅用于字符串。如果为 True，则允许在值中嵌入 NUL 字节（``'\\\\0'``）。字符串的"
 "长度将通过名为 ``<parameter_name>_length`` 的参数传入，跟在字符串参数的后面。"
 
-#: ../../howto/clinic.rst:822
+#: ../../howto/clinic.rst:824
 msgid ""
 "Please note, not every possible combination of arguments will work. Usually "
 "these arguments are implemented by specific ``PyArg_ParseTuple`` *format "
@@ -1217,7 +1190,7 @@ msgstr ""
 "这些语义并没有映射到任何现有的格式单元。所以 Argument Clinic 并不支持。（或者"
 "说，至少目前还不支持。）"
 
-#: ../../howto/clinic.rst:830
+#: ../../howto/clinic.rst:832
 msgid ""
 "Below is a table showing the mapping of legacy converters into real Argument "
 "Clinic converters.  On the left is the legacy converter, on the right is the "
@@ -1226,83 +1199,83 @@ msgstr ""
 "下表列出了传统转换器与真正的 Argument Clinic 转换器之间的映射关系。左边是传统"
 "的转换器，右边是应该换成的文本。"
 
-#: ../../howto/clinic.rst:835
+#: ../../howto/clinic.rst:837
 msgid "``'B'``"
 msgstr "``'B'``"
 
-#: ../../howto/clinic.rst:835
+#: ../../howto/clinic.rst:837
 msgid "``unsigned_char(bitwise=True)``"
 msgstr "``unsigned_char(bitwise=True)``"
 
-#: ../../howto/clinic.rst:836
+#: ../../howto/clinic.rst:838
 msgid "``'b'``"
 msgstr "``'b'``"
 
-#: ../../howto/clinic.rst:836
+#: ../../howto/clinic.rst:838
 msgid "``unsigned_char``"
 msgstr "``unsigned_char``"
 
-#: ../../howto/clinic.rst:837
+#: ../../howto/clinic.rst:839
 msgid "``'c'``"
 msgstr "``'c'``"
 
-#: ../../howto/clinic.rst:837
+#: ../../howto/clinic.rst:839
 msgid "``char``"
 msgstr "``char``"
 
-#: ../../howto/clinic.rst:838
+#: ../../howto/clinic.rst:840
 msgid "``'C'``"
 msgstr "``'C'``"
 
-#: ../../howto/clinic.rst:838
+#: ../../howto/clinic.rst:840
 msgid "``int(accept={str})``"
 msgstr "``int(accept={str})``"
 
-#: ../../howto/clinic.rst:839
+#: ../../howto/clinic.rst:841
 msgid "``'d'``"
 msgstr "``'d'``"
 
-#: ../../howto/clinic.rst:839
+#: ../../howto/clinic.rst:841
 msgid "``double``"
 msgstr "``double``"
 
-#: ../../howto/clinic.rst:840
+#: ../../howto/clinic.rst:842
 msgid "``'D'``"
 msgstr "``'D'``"
 
-#: ../../howto/clinic.rst:840
+#: ../../howto/clinic.rst:842
 msgid "``Py_complex``"
 msgstr "``Py_complex``"
 
-#: ../../howto/clinic.rst:841
+#: ../../howto/clinic.rst:843
 msgid "``'es'``"
 msgstr "``'es'``"
 
-#: ../../howto/clinic.rst:841
+#: ../../howto/clinic.rst:843
 msgid "``str(encoding='name_of_encoding')``"
 msgstr "``str(encoding='name_of_encoding')``"
 
-#: ../../howto/clinic.rst:842
+#: ../../howto/clinic.rst:844
 msgid "``'es#'``"
 msgstr "``'es#'``"
 
-#: ../../howto/clinic.rst:842
+#: ../../howto/clinic.rst:844
 msgid "``str(encoding='name_of_encoding', zeroes=True)``"
 msgstr "``str(encoding='name_of_encoding', zeroes=True)``"
 
-#: ../../howto/clinic.rst:843
+#: ../../howto/clinic.rst:845
 msgid "``'et'``"
 msgstr "``'et'``"
 
-#: ../../howto/clinic.rst:843
+#: ../../howto/clinic.rst:845
 msgid "``str(encoding='name_of_encoding', accept={bytes, bytearray, str})``"
 msgstr "``str(encoding='name_of_encoding', accept={bytes, bytearray, str})``"
 
-#: ../../howto/clinic.rst:844
+#: ../../howto/clinic.rst:846
 msgid "``'et#'``"
 msgstr "``'et#'``"
 
-#: ../../howto/clinic.rst:844
+#: ../../howto/clinic.rst:846
 msgid ""
 "``str(encoding='name_of_encoding', accept={bytes, bytearray, str}, "
 "zeroes=True)``"
@@ -1310,261 +1283,261 @@ msgstr ""
 "``str(encoding='name_of_encoding', accept={bytes, bytearray, str}, "
 "zeroes=True)``"
 
-#: ../../howto/clinic.rst:845
+#: ../../howto/clinic.rst:847
 msgid "``'f'``"
 msgstr "``'f'``"
 
-#: ../../howto/clinic.rst:845
+#: ../../howto/clinic.rst:847
 msgid "``float``"
 msgstr "``float``"
 
-#: ../../howto/clinic.rst:846
+#: ../../howto/clinic.rst:848
 msgid "``'h'``"
 msgstr "``'h'``"
 
-#: ../../howto/clinic.rst:846
+#: ../../howto/clinic.rst:848
 msgid "``short``"
 msgstr "``short``"
 
-#: ../../howto/clinic.rst:847
+#: ../../howto/clinic.rst:849
 msgid "``'H'``"
 msgstr "``'H'``"
 
-#: ../../howto/clinic.rst:847
+#: ../../howto/clinic.rst:849
 msgid "``unsigned_short(bitwise=True)``"
 msgstr "``unsigned_short(bitwise=True)``"
 
-#: ../../howto/clinic.rst:848
+#: ../../howto/clinic.rst:850
 msgid "``'i'``"
 msgstr "``'i'``"
 
-#: ../../howto/clinic.rst:848
+#: ../../howto/clinic.rst:850
 msgid "``int``"
 msgstr "``int``"
 
-#: ../../howto/clinic.rst:849
+#: ../../howto/clinic.rst:851
 msgid "``'I'``"
 msgstr "``'I'``"
 
-#: ../../howto/clinic.rst:849
+#: ../../howto/clinic.rst:851
 msgid "``unsigned_int(bitwise=True)``"
 msgstr "``unsigned_int(bitwise=True)``"
 
-#: ../../howto/clinic.rst:850
+#: ../../howto/clinic.rst:852
 msgid "``'k'``"
 msgstr "``'k'``"
 
-#: ../../howto/clinic.rst:850
+#: ../../howto/clinic.rst:852
 msgid "``unsigned_long(bitwise=True)``"
 msgstr "``unsigned_long(bitwise=True)``"
 
-#: ../../howto/clinic.rst:851
+#: ../../howto/clinic.rst:853
 msgid "``'K'``"
 msgstr "``'K'``"
 
-#: ../../howto/clinic.rst:851
+#: ../../howto/clinic.rst:853
 msgid "``unsigned_long_long(bitwise=True)``"
 msgstr "``unsigned_long_long(bitwise=True)``"
 
-#: ../../howto/clinic.rst:852
+#: ../../howto/clinic.rst:854
 msgid "``'l'``"
 msgstr "``'l'``"
 
-#: ../../howto/clinic.rst:852
+#: ../../howto/clinic.rst:854
 msgid "``long``"
 msgstr "``long``"
 
-#: ../../howto/clinic.rst:853
+#: ../../howto/clinic.rst:855
 msgid "``'L'``"
 msgstr "``'L'``"
 
-#: ../../howto/clinic.rst:853
+#: ../../howto/clinic.rst:855
 msgid "``long long``"
 msgstr "``long long``"
 
-#: ../../howto/clinic.rst:854
+#: ../../howto/clinic.rst:856
 msgid "``'n'``"
 msgstr "``'n'``"
 
-#: ../../howto/clinic.rst:854
+#: ../../howto/clinic.rst:856
 msgid "``Py_ssize_t``"
 msgstr "``Py_ssize_t``"
 
-#: ../../howto/clinic.rst:855
+#: ../../howto/clinic.rst:857
 msgid "``'O'``"
 msgstr "``'O'``"
 
-#: ../../howto/clinic.rst:855
+#: ../../howto/clinic.rst:857
 msgid "``object``"
 msgstr "``object``"
 
-#: ../../howto/clinic.rst:856
+#: ../../howto/clinic.rst:858
 msgid "``'O!'``"
 msgstr "``'O!'``"
 
-#: ../../howto/clinic.rst:856
+#: ../../howto/clinic.rst:858
 msgid "``object(subclass_of='&PySomething_Type')``"
 msgstr "``object(subclass_of='&PySomething_Type')``"
 
-#: ../../howto/clinic.rst:857
+#: ../../howto/clinic.rst:859
 msgid "``'O&'``"
 msgstr "``'O&'``"
 
-#: ../../howto/clinic.rst:857
+#: ../../howto/clinic.rst:859
 msgid "``object(converter='name_of_c_function')``"
 msgstr "``object(converter='name_of_c_function')``"
 
-#: ../../howto/clinic.rst:858
+#: ../../howto/clinic.rst:860
 msgid "``'p'``"
 msgstr "``'p'``"
 
-#: ../../howto/clinic.rst:858
+#: ../../howto/clinic.rst:860
 msgid "``bool``"
 msgstr "``bool``"
 
-#: ../../howto/clinic.rst:859
+#: ../../howto/clinic.rst:861
 msgid "``'S'``"
 msgstr "``'S'``"
 
-#: ../../howto/clinic.rst:859
+#: ../../howto/clinic.rst:861
 msgid "``PyBytesObject``"
 msgstr "``PyBytesObject``"
 
-#: ../../howto/clinic.rst:860
+#: ../../howto/clinic.rst:862
 msgid "``'s'``"
 msgstr "``'s'``"
 
-#: ../../howto/clinic.rst:860
+#: ../../howto/clinic.rst:862
 msgid "``str``"
 msgstr "``str``"
 
-#: ../../howto/clinic.rst:861
+#: ../../howto/clinic.rst:863
 msgid "``'s#'``"
 msgstr "``'s#'``"
 
-#: ../../howto/clinic.rst:861
+#: ../../howto/clinic.rst:863
 msgid "``str(zeroes=True)``"
 msgstr "``str(zeroes=True)``"
 
-#: ../../howto/clinic.rst:862
+#: ../../howto/clinic.rst:864
 msgid "``'s*'``"
 msgstr "``'s*'``"
 
-#: ../../howto/clinic.rst:862
+#: ../../howto/clinic.rst:864
 msgid "``Py_buffer(accept={buffer, str})``"
 msgstr "``Py_buffer(accept={buffer, str})``"
 
-#: ../../howto/clinic.rst:863
+#: ../../howto/clinic.rst:865
 msgid "``'U'``"
 msgstr "``'U'``"
 
-#: ../../howto/clinic.rst:863
+#: ../../howto/clinic.rst:865
 msgid "``unicode``"
 msgstr "``unicode``"
 
-#: ../../howto/clinic.rst:864
+#: ../../howto/clinic.rst:866
 msgid "``'u'``"
 msgstr "``'u'``"
 
-#: ../../howto/clinic.rst:864
+#: ../../howto/clinic.rst:866
 msgid "``wchar_t``"
 msgstr "``wchar_t``"
 
-#: ../../howto/clinic.rst:865
+#: ../../howto/clinic.rst:867
 msgid "``'u#'``"
 msgstr "``'u#'``"
 
-#: ../../howto/clinic.rst:865
+#: ../../howto/clinic.rst:867
 msgid "``wchar_t(zeroes=True)``"
 msgstr "``wchar_t(zeroes=True)``"
 
-#: ../../howto/clinic.rst:866
+#: ../../howto/clinic.rst:868
 msgid "``'w*'``"
 msgstr "``'w*'``"
 
-#: ../../howto/clinic.rst:866
+#: ../../howto/clinic.rst:868
 msgid "``Py_buffer(accept={rwbuffer})``"
 msgstr "``Py_buffer(accept={rwbuffer})``"
 
-#: ../../howto/clinic.rst:867
+#: ../../howto/clinic.rst:869
 msgid "``'Y'``"
 msgstr "``'Y'``"
 
-#: ../../howto/clinic.rst:867
+#: ../../howto/clinic.rst:869
 msgid "``PyByteArrayObject``"
 msgstr "``PyByteArrayObject``"
 
-#: ../../howto/clinic.rst:868
+#: ../../howto/clinic.rst:870
 msgid "``'y'``"
 msgstr "``'y'``"
 
-#: ../../howto/clinic.rst:868
+#: ../../howto/clinic.rst:870
 msgid "``str(accept={bytes})``"
 msgstr "``str(accept={bytes})``"
 
-#: ../../howto/clinic.rst:869
+#: ../../howto/clinic.rst:871
 msgid "``'y#'``"
 msgstr "``'y#'``"
 
-#: ../../howto/clinic.rst:869
+#: ../../howto/clinic.rst:871
 msgid "``str(accept={robuffer}, zeroes=True)``"
 msgstr "``str(accept={robuffer}, zeroes=True)``"
 
-#: ../../howto/clinic.rst:870
+#: ../../howto/clinic.rst:872
 msgid "``'y*'``"
 msgstr "``'y*'``"
 
-#: ../../howto/clinic.rst:870
+#: ../../howto/clinic.rst:872
 msgid "``Py_buffer``"
 msgstr "``Py_buffer``"
 
-#: ../../howto/clinic.rst:871
+#: ../../howto/clinic.rst:873
 msgid "``'Z'``"
 msgstr "``'Z'``"
 
-#: ../../howto/clinic.rst:871
+#: ../../howto/clinic.rst:873
 msgid "``wchar_t(accept={str, NoneType})``"
 msgstr "``wchar_t(accept={str, NoneType})``"
 
-#: ../../howto/clinic.rst:872
+#: ../../howto/clinic.rst:874
 msgid "``'Z#'``"
 msgstr "``'Z#'``"
 
-#: ../../howto/clinic.rst:872
+#: ../../howto/clinic.rst:874
 msgid "``wchar_t(accept={str, NoneType}, zeroes=True)``"
 msgstr "``wchar_t(accept={str, NoneType}, zeroes=True)``"
 
-#: ../../howto/clinic.rst:873
+#: ../../howto/clinic.rst:875
 msgid "``'z'``"
 msgstr "``'z'``"
 
-#: ../../howto/clinic.rst:873
+#: ../../howto/clinic.rst:875
 msgid "``str(accept={str, NoneType})``"
 msgstr "``str(accept={str, NoneType})``"
 
-#: ../../howto/clinic.rst:874
+#: ../../howto/clinic.rst:876
 msgid "``'z#'``"
 msgstr "``'z#'``"
 
-#: ../../howto/clinic.rst:874
+#: ../../howto/clinic.rst:876
 msgid "``str(accept={str, NoneType}, zeroes=True)``"
 msgstr "``str(accept={str, NoneType}, zeroes=True)``"
 
-#: ../../howto/clinic.rst:875
+#: ../../howto/clinic.rst:877
 msgid "``'z*'``"
 msgstr "``'z*'``"
 
-#: ../../howto/clinic.rst:875
+#: ../../howto/clinic.rst:877
 msgid "``Py_buffer(accept={buffer, str, NoneType})``"
 msgstr "``Py_buffer(accept={buffer, str, NoneType})``"
 
-#: ../../howto/clinic.rst:878
+#: ../../howto/clinic.rst:880
 msgid ""
 "As an example, here's our sample ``pickle.Pickler.dump`` using the proper "
 "converter::"
 msgstr "举个例子，下面是采用合适的转换器的例子 ``pickle.Pickler.dump``："
 
-#: ../../howto/clinic.rst:891
+#: ../../howto/clinic.rst:893
 msgid ""
 "One advantage of real converters is that they're more flexible than legacy "
 "converters.  For example, the ``unsigned_int`` converter (and all the "
@@ -1576,7 +1549,7 @@ msgstr ""
 "换器（以及所有 ``unsigned_`` 转换器）可以不设置 ``bitwise=True`` 。 他们默认"
 "会对数值进行范围检查，而且不会接受负数。 用传统转换器就做不到这一点。"
 
-#: ../../howto/clinic.rst:897
+#: ../../howto/clinic.rst:899
 msgid ""
 "Argument Clinic will show you all the converters it has available.  For each "
 "converter it'll show you all the parameters it accepts, along with the "
@@ -1587,11 +1560,11 @@ msgstr ""
 "每个参数的默认值。只要运行 ``Tools/clinic/clinic.py --converters`` 就能得到完"
 "整的列表。"
 
-#: ../../howto/clinic.rst:903
-msgid "Py_buffer"
-msgstr "Py_buffer"
+#: ../../howto/clinic.rst:906
+msgid "How to use the ``Py_buffer`` converter"
+msgstr ""
 
-#: ../../howto/clinic.rst:905
+#: ../../howto/clinic.rst:908
 msgid ""
 "When using the ``Py_buffer`` converter (or the ``'s*'``, ``'w*'``, ``'*y'``, "
 "or ``'z*'`` legacy converters), you *must* not call :c:func:"
@@ -1602,11 +1575,11 @@ msgstr ""
 "统转换器）时，*不可* 在所提供的缓冲区上调用 :c:func:`PyBuffer_Release`。 "
 "Argument Clinic 生成的代码会自动完成此操作（在解析函数中）。"
 
-#: ../../howto/clinic.rst:913
-msgid "Advanced converters"
-msgstr "高级转换器"
-
 #: ../../howto/clinic.rst:915
+msgid "How to use advanced converters"
+msgstr ""
+
+#: ../../howto/clinic.rst:917
 msgid ""
 "Remember those format units you skipped for your first time because they "
 "were advanced?  Here's how to handle those too."
@@ -1614,7 +1587,7 @@ msgstr ""
 "还记得编写第一个函数时跳过的那些格式单元吗，因为他们是高级内容？下面就来介绍"
 "这些内容。"
 
-#: ../../howto/clinic.rst:918
+#: ../../howto/clinic.rst:920
 msgid ""
 "The trick is, all those format units take arguments—either conversion "
 "functions, or types, or strings specifying an encoding. (But \"legacy "
@@ -1630,7 +1603,7 @@ msgstr ""
 "``converter`` （对于 ``O&`` ）、``subclass_of`` （对于 ``O!`` ），或者是 "
 "``encoding`` （对于 ``e`` 开头的格式单元）。"
 
-#: ../../howto/clinic.rst:926
+#: ../../howto/clinic.rst:928
 msgid ""
 "When using ``subclass_of``, you may also want to use the other custom "
 "argument for ``object()``: ``type``, which lets you set the type actually "
@@ -1643,7 +1616,7 @@ msgstr ""
 "子类，可能想采用转换器 ``object(type='PyUnicodeObject *', "
 "subclass_of='&PyUnicode_Type')``。"
 
-#: ../../howto/clinic.rst:932
+#: ../../howto/clinic.rst:934
 msgid ""
 "One possible problem with using Argument Clinic: it takes away some possible "
 "flexibility for the format units starting with ``e``.  When writing a "
@@ -1662,32 +1635,32 @@ msgstr ""
 "后进行优化。这个限制似乎并不合理；CPython 本身总是为 ``e`` 开头的格式单位参数"
 "传入静态的硬编码字符串。"
 
-#: ../../howto/clinic.rst:945
-msgid "Parameter default values"
-msgstr "参数的默认值"
-
 #: ../../howto/clinic.rst:947
+msgid "How to assign default values to parameter"
+msgstr ""
+
+#: ../../howto/clinic.rst:949
 msgid ""
 "Default values for parameters can be any of a number of values. At their "
 "simplest, they can be string, int, or float literals:"
 msgstr ""
 "参数的默认值可以是多个值中的一个。最简单的可以是字符串、int 或 float 字面量。"
 
-#: ../../howto/clinic.rst:956
+#: ../../howto/clinic.rst:958
 msgid "They can also use any of Python's built-in constants:"
 msgstr "还可以使用 Python 的任何内置常量。"
 
-#: ../../howto/clinic.rst:964
+#: ../../howto/clinic.rst:966
 msgid ""
 "There's also special support for a default value of ``NULL``, and for simple "
 "expressions, documented in the following sections."
 msgstr "对默认值 ``NULL`` 和简单表达式还提供特别的支持，下面将一一介绍。"
 
-#: ../../howto/clinic.rst:969
+#: ../../howto/clinic.rst:971
 msgid "The ``NULL`` default value"
 msgstr "默认值 ``NULL``"
 
-#: ../../howto/clinic.rst:971
+#: ../../howto/clinic.rst:973
 msgid ""
 "For string and object parameters, you can set them to ``None`` to indicate "
 "that there's no default.  However, that means the C variable will be "
@@ -1700,11 +1673,46 @@ msgstr ""
 "C 变量初始化为 ``Py_None``。为了方便起见，提供了一个特殊值 ``NULL``，目的就是"
 "为了让 Python 认为默认值就是 ``None``，而 C 变量则会初始化为 ``NULL``。"
 
-#: ../../howto/clinic.rst:979
-msgid "Expressions specified as default values"
-msgstr "设为默认值的表达式"
+#: ../../howto/clinic.rst:982
+msgid "Symbolic default values"
+msgstr "符号化默认值"
 
-#: ../../howto/clinic.rst:981
+#: ../../howto/clinic.rst:984
+msgid ""
+"The default value you provide for a parameter can't be any arbitrary "
+"expression.  Currently the following are explicitly supported:"
+msgstr "提供给参数的默认值不能是表达式。目前明确支持以下形式："
+
+#: ../../howto/clinic.rst:987
+msgid "Numeric constants (integer and float)"
+msgstr "数值型常数（整数和浮点数）。"
+
+#: ../../howto/clinic.rst:988
+msgid "String constants"
+msgstr "字符串常量"
+
+#: ../../howto/clinic.rst:989
+msgid "``True``, ``False``, and ``None``"
+msgstr "``True`` 、 ``False`` 和 ``None`` 。"
+
+#: ../../howto/clinic.rst:990
+msgid ""
+"Simple symbolic constants like ``sys.maxsize``, which must start with the "
+"name of the module"
+msgstr "以模块名开头的简单符号常量，如 ``sys.maxsize``。"
+
+#: ../../howto/clinic.rst:993
+msgid ""
+"(In the future, this may need to get even more elaborate, to allow full "
+"expressions like ``CONSTANT - 1``.)"
+msgstr ""
+"（未来可能需要加以细化，以便可以采用 ``CONSTANT - 1`` 之类的完整表达式。）"
+
+#: ../../howto/clinic.rst:998
+msgid "Expressions as default values"
+msgstr ""
+
+#: ../../howto/clinic.rst:1000
 msgid ""
 "The default value for a parameter can be more than just a literal value. It "
 "can be an entire expression, using math operators and looking up attributes "
@@ -1714,11 +1722,11 @@ msgstr ""
 "参数的默认值不仅可以是字面量。还可以是一个完整的表达式，可采用数学运算符及对"
 "象的属性。但这种支持并没有那么简单，因为存在一些不明显的语义。"
 
-#: ../../howto/clinic.rst:986
+#: ../../howto/clinic.rst:1005
 msgid "Consider the following example:"
 msgstr "请考虑以下例子："
 
-#: ../../howto/clinic.rst:992
+#: ../../howto/clinic.rst:1011
 msgid ""
 "``sys.maxsize`` can have different values on different platforms.  Therefore "
 "Argument Clinic can't simply evaluate that expression locally and hard-code "
@@ -1729,7 +1737,7 @@ msgstr ""
 "单地在本底环境对表达式求值并用 C 语言硬编码。所以默认值将用表达式的方式存储下"
 "来，运行的时候在请求函数签名时会被求值。"
 
-#: ../../howto/clinic.rst:997
+#: ../../howto/clinic.rst:1016
 msgid ""
 "What namespace is available when the expression is evaluated?  It's "
 "evaluated in the context of the module the builtin came from.  So, if your "
@@ -1738,7 +1746,7 @@ msgstr ""
 "在对表达式进行求值时，可以使用什么命名空间呢？求值过程运行于内置模块的上下文"
 "中。 因此，如果模块带有名为 ``max_widgets`` 的属性，直接引用即可。"
 
-#: ../../howto/clinic.rst:1005
+#: ../../howto/clinic.rst:1024
 msgid ""
 "If the symbol isn't found in the current module, it fails over to looking in "
 "``sys.modules``.  That's how it can find ``sys.maxsize`` for example.  "
@@ -1750,7 +1758,7 @@ msgstr ""
 "就是如此找到的。（因为事先不知道用户会加载哪些模块到解释器中，所以最好只用到 "
 "Python 会预加载的模块。）"
 
-#: ../../howto/clinic.rst:1010
+#: ../../howto/clinic.rst:1029
 msgid ""
 "Evaluating default values only at runtime means Argument Clinic can't "
 "compute the correct equivalent C default value.  So you need to tell it "
@@ -1761,7 +1769,7 @@ msgstr ""
 "所以需显式给出。在使用表达式时，必须同时用转换器的 ``c_default`` 参数指定 C "
 "语言中的等价表达式。"
 
-#: ../../howto/clinic.rst:1019
+#: ../../howto/clinic.rst:1038
 msgid ""
 "Another complication: Argument Clinic can't know in advance whether or not "
 "the expression you supply is valid.  It parses it to make sure it looks "
@@ -1772,7 +1780,7 @@ msgstr ""
 "保证看起来是有效值，但无法 *实际* 知晓。在用表达式时须十分小心，确保在运行时"
 "能得到有效值。"
 
-#: ../../howto/clinic.rst:1024
+#: ../../howto/clinic.rst:1043
 msgid ""
 "Finally, because expressions must be representable as static C values, there "
 "are many restrictions on legal expressions.  Here's a list of Python "
@@ -1781,31 +1789,31 @@ msgstr ""
 "最后一点，由于表达式必须能表示为静态的 C 语言值，所以存在许多限制。 以下列出"
 "了不得使用的 Python 特性："
 
-#: ../../howto/clinic.rst:1028
+#: ../../howto/clinic.rst:1047
 msgid "Function calls."
 msgstr "功能"
 
-#: ../../howto/clinic.rst:1029
+#: ../../howto/clinic.rst:1048
 msgid "Inline if statements (``3 if foo else 5``)."
 msgstr "行内 if 语句（``3 if foo else 5`` ）"
 
-#: ../../howto/clinic.rst:1030
+#: ../../howto/clinic.rst:1049
 msgid "Automatic sequence unpacking (``*[1, 2, 3]``)."
 msgstr "序列类自动解包（``*[1, 2, 3]``）"
 
-#: ../../howto/clinic.rst:1031
+#: ../../howto/clinic.rst:1050
 msgid "List/set/dict comprehensions and generator expressions."
 msgstr "列表、集合、字典的解析和生成器表达式。"
 
-#: ../../howto/clinic.rst:1032
+#: ../../howto/clinic.rst:1051
 msgid "Tuple/list/set/dict literals."
 msgstr "元组、列表、集合、字典的字面量"
 
-#: ../../howto/clinic.rst:1037
-msgid "Using a return converter"
-msgstr "返回值转换器"
+#: ../../howto/clinic.rst:1055
+msgid "How to use return converters"
+msgstr ""
 
-#: ../../howto/clinic.rst:1039
+#: ../../howto/clinic.rst:1057
 msgid ""
 "By default, the impl function Argument Clinic generates for you returns :c:"
 "type:`PyObject * <PyObject>`. But your C function often computes some C "
@@ -1819,7 +1827,7 @@ msgstr ""
 "type:`!PyObject *`。 Argument Clinic 会负责将你的输入由 Python 类型转换为原"
 "生 C 类型 — 为什么不让它将你的返回值也由原生 C 类型转换为 Python 类型呢？"
 
-#: ../../howto/clinic.rst:1047
+#: ../../howto/clinic.rst:1065
 msgid ""
 "That's what a \"return converter\" does.  It changes your impl function to "
 "return some C type, then adds code to the generated (non-impl) function to "
@@ -1829,7 +1837,7 @@ msgstr ""
 "在生成的type, then adds code to the generated (非 impl) 函数中添加代码来处理"
 "该值到相应 :c:type:`!PyObject *` 的转换。"
 
-#: ../../howto/clinic.rst:1051
+#: ../../howto/clinic.rst:1069
 msgid ""
 "The syntax for return converters is similar to that of parameter converters. "
 "You specify the return converter like it was a return annotation on the "
@@ -1838,11 +1846,11 @@ msgstr ""
 "返回值转换器的语法类似于形参转换器。 你以为函数自身添加返回标注的形式来指定返"
 "回值转换器，即使用 ``->`` 标注。"
 
-#: ../../howto/clinic.rst:1055
+#: ../../howto/clinic.rst:1073
 msgid "For example:"
 msgstr "例如:"
 
-#: ../../howto/clinic.rst:1068
+#: ../../howto/clinic.rst:1086
 msgid ""
 "Return converters behave much the same as parameter converters; they take "
 "arguments, the arguments are all keyword-only, and if you're not changing "
@@ -1851,7 +1859,7 @@ msgstr ""
 "返回值转换器的行为和形参转换器基本一致；它们都接受一些参数，这些参数全部是仅"
 "限关键字的，如果你不修改任何默认参数则可以省略括号。"
 
-#: ../../howto/clinic.rst:1072
+#: ../../howto/clinic.rst:1090
 msgid ""
 "(If you use both ``\"as\"`` *and* a return converter for your function, the "
 "``\"as\"`` should come before the return converter.)"
@@ -1859,7 +1867,7 @@ msgstr ""
 "（如果函数同时用到了 ``\"as\"`` 和返回值转换器， ``\"as\"`` 应位于返回值转换"
 "器之前。）"
 
-#: ../../howto/clinic.rst:1075
+#: ../../howto/clinic.rst:1093
 msgid ""
 "There's one additional complication when using return converters: how do you "
 "indicate an error has occurred?  Normally, a function returns a valid (non-"
@@ -1878,18 +1886,18 @@ msgstr ""
 "（ ``PyErr_Occurred()`` 返回 True），那么生成的代码会传递该错误。否则，会对返"
 "回值进行正常编码。"
 
-#: ../../howto/clinic.rst:1084
+#: ../../howto/clinic.rst:1102
 msgid "Currently Argument Clinic supports only a few return converters:"
 msgstr "目前 Argument Clinic 只支持少数几种返回值转换器。"
 
-#: ../../howto/clinic.rst:1098
+#: ../../howto/clinic.rst:1116
 msgid ""
 "None of these take parameters. For all of these, return ``-1`` to indicate "
 "error."
 msgstr ""
 "它们全都不接受形参。 它们全都返回 ``-1`` 来表示错误。to indicate error."
 
-#: ../../howto/clinic.rst:1101
+#: ../../howto/clinic.rst:1119
 msgid ""
 "To see all the return converters Argument Clinic supports, along with their "
 "parameters (if any), just run ``Tools/clinic/clinic.py --converters`` for "
@@ -1898,11 +1906,11 @@ msgstr ""
 "只要运行 ``Tools/clinic/clinic.py --converters`` ，即可查看 Argument Clinic "
 "支持的所有返回值转换器，包括其参数。"
 
-#: ../../howto/clinic.rst:1107
-msgid "Cloning existing functions"
-msgstr "克隆已有的函数"
+#: ../../howto/clinic.rst:1125
+msgid "How to clone existing functions"
+msgstr ""
 
-#: ../../howto/clinic.rst:1109
+#: ../../howto/clinic.rst:1127
 msgid ""
 "If you have a number of functions that look similar, you may be able to use "
 "Clinic's \"clone\" feature.  When you clone an existing function, you reuse:"
@@ -1910,47 +1918,47 @@ msgstr ""
 "如果已有一些函数比较相似，或许可以采用 Clinic 的“克隆”功能。 克隆之后能够复用"
 "以下内容："
 
-#: ../../howto/clinic.rst:1113
+#: ../../howto/clinic.rst:1131
 msgid "its parameters, including"
 msgstr "参数，包括："
 
-#: ../../howto/clinic.rst:1115
+#: ../../howto/clinic.rst:1133
 msgid "their names,"
 msgstr "名称"
 
-#: ../../howto/clinic.rst:1117
+#: ../../howto/clinic.rst:1135
 msgid "their converters, with all parameters,"
 msgstr "转换器（带有全部参数）"
 
-#: ../../howto/clinic.rst:1119
+#: ../../howto/clinic.rst:1137
 msgid "their default values,"
 msgstr "默认值"
 
-#: ../../howto/clinic.rst:1121
+#: ../../howto/clinic.rst:1139
 msgid "their per-parameter docstrings,"
 msgstr "参数前的文档字符串"
 
-#: ../../howto/clinic.rst:1123
+#: ../../howto/clinic.rst:1141
 msgid ""
 "their *kind* (whether they're positional only, positional or keyword, or "
 "keyword only), and"
 msgstr "*类别* （只认位置、位置或关键字、只认关键字）"
 
-#: ../../howto/clinic.rst:1126
+#: ../../howto/clinic.rst:1144
 msgid "its return converter."
 msgstr "返回值转换器"
 
-#: ../../howto/clinic.rst:1128
+#: ../../howto/clinic.rst:1146
 msgid ""
 "The only thing not copied from the original function is its docstring; the "
 "syntax allows you to specify a new docstring."
 msgstr "唯一不从原函数中复制的是文档字符串；这样就能指定一个新的文档串。"
 
-#: ../../howto/clinic.rst:1131
+#: ../../howto/clinic.rst:1149
 msgid "Here's the syntax for cloning a function::"
 msgstr "下面是函数的克隆方法："
 
-#: ../../howto/clinic.rst:1139
+#: ../../howto/clinic.rst:1157
 msgid ""
 "(The functions can be in different modules or classes.  I wrote ``module."
 "class`` in the sample just to illustrate that you must use the full path to "
@@ -1959,7 +1967,7 @@ msgstr ""
 "（原函数可以位于不同的模块或类中。示例中的 ``module.class`` 只是为了说明，*两"
 "个* 函数都必须使用全路径）。"
 
-#: ../../howto/clinic.rst:1143
+#: ../../howto/clinic.rst:1161
 msgid ""
 "Sorry, there's no syntax for partially cloning a function, or cloning a "
 "function then modifying it.  Cloning is an all-or nothing proposition."
@@ -1967,17 +1975,17 @@ msgstr ""
 "对不起，没有用于部分克隆某个函数、或克隆某个函数并对其进行修改的语法。 克隆是"
 "一个只有全部和全无两种选项的操作。"
 
-#: ../../howto/clinic.rst:1146
+#: ../../howto/clinic.rst:1164
 msgid ""
 "Also, the function you are cloning from must have been previously defined in "
 "the current file."
 msgstr "另外，要克隆的函数必须在当前文件中已有定义。"
 
-#: ../../howto/clinic.rst:1150
-msgid "Calling Python code"
-msgstr "调用 Python 代码"
+#: ../../howto/clinic.rst:1169
+msgid "How to call Python code"
+msgstr ""
 
-#: ../../howto/clinic.rst:1152
+#: ../../howto/clinic.rst:1171
 msgid ""
 "The rest of the advanced topics require you to write Python code which lives "
 "inside your C file and modifies Argument Clinic's runtime state.  This is "
@@ -1986,13 +1994,13 @@ msgstr ""
 "下面的高级内容需要编写 Python 代码，存于 C 文件中，并修改 Argument Clinic 的"
 "运行状态。其实很简单：只需定义一个 Python 块。"
 
-#: ../../howto/clinic.rst:1156
+#: ../../howto/clinic.rst:1175
 msgid ""
 "A Python block uses different delimiter lines than an Argument Clinic "
 "function block.  It looks like this::"
 msgstr "Python 块的分隔线与 Argument Clinic 函数块不同。如下所示："
 
-#: ../../howto/clinic.rst:1163
+#: ../../howto/clinic.rst:1182
 msgid ""
 "All the code inside the Python block is executed at the time it's parsed.  "
 "All text written to stdout inside the block is redirected into the "
@@ -2001,17 +2009,17 @@ msgstr ""
 "Python 块内的所有代码都会在解析时执行。块内写入 stdout 的所有文本都被重定向到"
 "块后的“输出”部分。"
 
-#: ../../howto/clinic.rst:1167
+#: ../../howto/clinic.rst:1186
 msgid ""
 "As an example, here's a Python block that adds a static integer variable to "
 "the C code::"
 msgstr "以下例子包含了 Python 块，用于在 C 代码中添加一个静态整数变量："
 
-#: ../../howto/clinic.rst:1178
-msgid "Using a \"self converter\""
-msgstr "self 转换器的用法"
+#: ../../howto/clinic.rst:1197
+msgid "How to use the \"self converter\""
+msgstr ""
 
-#: ../../howto/clinic.rst:1180
+#: ../../howto/clinic.rst:1199
 msgid ""
 "Argument Clinic automatically adds a \"self\" parameter for you using a "
 "default converter.  It automatically sets the ``type`` of this parameter to "
@@ -2026,13 +2034,13 @@ msgstr ""
 "可被覆盖，也即自己指定一个转换器。只要将自己的 ``self`` 参数作为块的第一个参"
 "数即可，并确保其转换器是 ``self_converter`` 的实例或其子类。"
 
-#: ../../howto/clinic.rst:1189
+#: ../../howto/clinic.rst:1208
 msgid ""
 "What's the point?  This lets you override the type of ``self``, or give it a "
 "different default name."
 msgstr "这有什么用呢？可用于覆盖 ``self`` 的类型，或为其给个不同的默认名称。"
 
-#: ../../howto/clinic.rst:1192
+#: ../../howto/clinic.rst:1211
 msgid ""
 "How do you specify the custom type you want to cast ``self`` to? If you only "
 "have one or two functions with the same type for ``self``, you can directly "
@@ -2043,7 +2051,7 @@ msgstr ""
 "数，可以直接使用 Argument Clinic 现有的 ``self`` 转换器，把要用的类型作为 "
 "``type`` 参数传入："
 
-#: ../../howto/clinic.rst:1208
+#: ../../howto/clinic.rst:1227
 msgid ""
 "On the other hand, if you have a lot of functions that will use the same "
 "type for ``self``, it's best to create your own converter, subclassing "
@@ -2052,11 +2060,11 @@ msgstr ""
 "如果有很多函数将使用同一类型的 ``self``，则最好创建自己的转换器，继承自 "
 "``self_converter`` 类但要覆盖其 ``type`` 成员："
 
-#: ../../howto/clinic.rst:1230
-msgid "Using a \"defining class\" converter"
-msgstr "“定义类”转换器"
+#: ../../howto/clinic.rst:1249
+msgid "How to use the \"defining class\" converter"
+msgstr ""
 
-#: ../../howto/clinic.rst:1232
+#: ../../howto/clinic.rst:1251
 msgid ""
 "Argument Clinic facilitates gaining access to the defining class of a "
 "method. This is useful for :ref:`heap type <heap-types>` methods that need "
@@ -2070,7 +2078,7 @@ msgstr ""
 "`PyType_FromModuleAndSpec` 会将堆类型与模块关联起来。然后类就可用 :c:func:"
 "`PyType_GetModuleState` 获取模块状态了，比如利用模块的方法进行获取。"
 
-#: ../../howto/clinic.rst:1238
+#: ../../howto/clinic.rst:1257
 msgid ""
 "Example from ``Modules/zlibmodule.c``.  First, ``defining_class`` is added "
 "to the clinic input::"
@@ -2078,19 +2086,19 @@ msgstr ""
 "示例来自 ``Modules/zlibmodule.c``。首先，在 clinic 的输入块添加 "
 "``defining_class`` ："
 
-#: ../../howto/clinic.rst:1250
+#: ../../howto/clinic.rst:1269
 msgid ""
 "After running the Argument Clinic tool, the following function signature is "
 "generated::"
 msgstr "运行 Argument Clinic 工具后，会生成以下函数签名："
 
-#: ../../howto/clinic.rst:1260
+#: ../../howto/clinic.rst:1279
 msgid ""
 "The following code can now use ``PyType_GetModuleState(cls)`` to fetch the "
 "module state::"
 msgstr "现在，以下代码可以用 ``PyType_GetModuleState(cls)`` 获取模块状态了："
 
-#: ../../howto/clinic.rst:1266
+#: ../../howto/clinic.rst:1285
 msgid ""
 "Each method may only have one argument using this converter, and it must "
 "appear after ``self``, or, if ``self`` is not used, as the first argument.  "
@@ -2101,7 +2109,7 @@ msgstr ""
 "则为第一个参数。该参数的类型为 ``PyTypeObject *``。``__text_signature__`` 中"
 "不会包含该参数。"
 
-#: ../../howto/clinic.rst:1271
+#: ../../howto/clinic.rst:1290
 msgid ""
 "The ``defining_class`` converter is not compatible with ``__init__`` and "
 "``__new__`` methods, which cannot use the ``METH_METHOD`` convention."
@@ -2109,7 +2117,7 @@ msgstr ""
 "``defining_class`` 转换器与 ``__init__`` 及 ``__new__``  方法不兼容，他们不能"
 "使用 ``METH_METHOD`` 。"
 
-#: ../../howto/clinic.rst:1274
+#: ../../howto/clinic.rst:1293
 msgid ""
 "It is not possible to use ``defining_class`` with slot methods.  In order to "
 "fetch the module state from such methods, use :c:func:"
@@ -2122,15 +2130,15 @@ msgstr ""
 "`PyModule_GetState` 来获取模块状态。 以下是来自 ``Modules/_threadmodule.c`` "
 "的 ``setattro`` 插槽方法示例::"
 
-#: ../../howto/clinic.rst:1289
+#: ../../howto/clinic.rst:1308
 msgid "See also :pep:`573`."
 msgstr "参见  :pep:`573`。"
 
-#: ../../howto/clinic.rst:1293
-msgid "Writing a custom converter"
-msgstr "编写自定义转换器"
+#: ../../howto/clinic.rst:1312
+msgid "How to write a custom converter"
+msgstr ""
 
-#: ../../howto/clinic.rst:1295
+#: ../../howto/clinic.rst:1314
 msgid ""
 "As we hinted at in the previous section... you can write your own "
 "converters! A converter is simply a Python class that inherits from "
@@ -2142,7 +2150,7 @@ msgstr ""
 "的 Python 类。假如有个参数采用了 ``O&`` 格式，对此参数进行解析就会去调用某"
 "个“转换器函数” :c:func:`PyArg_ParseTuple` ，也就会用到自定义转换器。"
 
-#: ../../howto/clinic.rst:1301
+#: ../../howto/clinic.rst:1320
 msgid ""
 "Your converter class should be named ``*something*_converter``. If the name "
 "follows this convention, then your converter class will be automatically "
@@ -2154,7 +2162,7 @@ msgstr ""
 "换器类就会在 Argument Clinic 中自动注册；转换器的名称就是去除了 "
 "``_converter`` 后缀的类名。（通过元类完成）。"
 
-#: ../../howto/clinic.rst:1307
+#: ../../howto/clinic.rst:1326
 msgid ""
 "You shouldn't subclass ``CConverter.__init__``.  Instead, you should write a "
 "``converter_init()`` function.  ``converter_init()`` always accepts a "
@@ -2167,7 +2175,7 @@ msgstr ""
 "须* 是只认关键字的参数。传给 Argument Clinic 转换器的所有参数都会传入自定义 "
 "``converter_init()`` 函数。"
 
-#: ../../howto/clinic.rst:1314
+#: ../../howto/clinic.rst:1333
 msgid ""
 "There are some additional members of ``CConverter`` you may wish to specify "
 "in your subclass.  Here's the current list:"
@@ -2175,7 +2183,7 @@ msgstr ""
 "``CConverter`` 的其他一些成员，可能需要在自定义子类中定义。下面列出了目前的成"
 "员："
 
-#: ../../howto/clinic.rst:1318
+#: ../../howto/clinic.rst:1337
 msgid ""
 "The C type to use for this variable. ``type`` should be a Python string "
 "specifying the type, e.g. ``int``. If this is a pointer type, the type "
@@ -2184,39 +2192,39 @@ msgstr ""
 "变量要采用的 C 语言数据类型。``type`` 应为 ``int`` 之类的 Python 字符串，用于"
 "指定变量的类型。若为指针类型，则字符串应以 ``' *'`` 结尾。"
 
-#: ../../howto/clinic.rst:1324
+#: ../../howto/clinic.rst:1343
 msgid "``default``"
 msgstr "``default``"
 
-#: ../../howto/clinic.rst:1323
+#: ../../howto/clinic.rst:1342
 msgid ""
 "The Python default value for this parameter, as a Python value. Or the magic "
 "value ``unspecified`` if there is no default."
 msgstr "该参数的缺省值，为 Python 数据类型。若无缺省值，则为 ``unspecified``。"
 
-#: ../../howto/clinic.rst:1329
+#: ../../howto/clinic.rst:1348
 msgid "``py_default``"
 msgstr "``py_default``"
 
-#: ../../howto/clinic.rst:1327
+#: ../../howto/clinic.rst:1346
 msgid ""
 "``default`` as it should appear in Python code, as a string. Or ``None`` if "
 "there is no default."
 msgstr ""
 "用 Python 代码表示的 ``default`` ，为字符串类型。若无缺省值，则为 ``None`` 。"
 
-#: ../../howto/clinic.rst:1332
+#: ../../howto/clinic.rst:1351
 msgid ""
 "``default`` as it should appear in C code, as a string. Or ``None`` if there "
 "is no default."
 msgstr ""
 "用 C 代码表示的 ``default``， 为字符串类型。若无缺省值，则为 ``None`` 。"
 
-#: ../../howto/clinic.rst:1345
+#: ../../howto/clinic.rst:1364
 msgid "``c_ignored_default``"
 msgstr "``c_ignored_default``"
 
-#: ../../howto/clinic.rst:1337
+#: ../../howto/clinic.rst:1356
 msgid ""
 "The default value used to initialize the C variable when there is no "
 "default, but not specifying a default may result in an \"uninitialized "
@@ -2231,15 +2239,15 @@ msgstr ""
 "个值，但该变量确实会被传入 impl，而 C 编译器将会报告 \"使用了\" 未初始化的"
 "值。 这个值应当总是一个非空字符串。"
 
-#: ../../howto/clinic.rst:1348
+#: ../../howto/clinic.rst:1367
 msgid "The name of the C converter function, as a string."
 msgstr "C 转换器的名称，字符串类型。"
 
-#: ../../howto/clinic.rst:1353
+#: ../../howto/clinic.rst:1372
 msgid "``impl_by_reference``"
 msgstr "``impl_by_reference``"
 
-#: ../../howto/clinic.rst:1351
+#: ../../howto/clinic.rst:1370
 msgid ""
 "A boolean value.  If true, Argument Clinic will add a ``&`` in front of the "
 "name of the variable when passing it into the impl function."
@@ -2247,11 +2255,11 @@ msgstr ""
 "布尔值。如果为 True，则 Argument Clinic 在将变量传入 impl 函数时，会在其名称"
 "前加上一个 ``&``。"
 
-#: ../../howto/clinic.rst:1359
+#: ../../howto/clinic.rst:1378
 msgid "``parse_by_reference``"
 msgstr "``parse_by_reference``"
 
-#: ../../howto/clinic.rst:1356
+#: ../../howto/clinic.rst:1375
 msgid ""
 "A boolean value.  If true, Argument Clinic will add a ``&`` in front of the "
 "name of the variable when passing it into :c:func:`PyArg_ParseTuple`."
@@ -2259,13 +2267,13 @@ msgstr ""
 "一个布尔值。 如果为真，则 Argument Clinic 在将其传入 :c:func:"
 "`PyArg_ParseTuple` 时将在变量名之前添加一个 ``&``。"
 
-#: ../../howto/clinic.rst:1361
+#: ../../howto/clinic.rst:1380
 msgid ""
 "Here's the simplest example of a custom converter, from ``Modules/zlibmodule."
 "c``::"
 msgstr "下面是最简单的自定义转换器示例，取自 ``Modules/zlibmodule.c`` ："
 
-#: ../../howto/clinic.rst:1372
+#: ../../howto/clinic.rst:1391
 msgid ""
 "This block adds a converter to Argument Clinic named ``ssize_t``.  "
 "Parameters declared as ``ssize_t`` will be declared as type :c:type:"
@@ -2278,7 +2286,7 @@ msgstr ""
 "单元来解析，它将调用 ``ssize_t_converter`` 转换器函数。 ``ssize_t`` 变量会自"
 "动支持默认值。"
 
-#: ../../howto/clinic.rst:1378
+#: ../../howto/clinic.rst:1397
 msgid ""
 "More sophisticated custom converters can insert custom C code to handle "
 "initialization and cleanup. You can see more examples of custom converters "
@@ -2288,11 +2296,11 @@ msgstr ""
 "CPython 源码中看到自定义转换器的更多例子；只要在 C 文件中搜索字符串 "
 "``CConverter`` 即可。"
 
-#: ../../howto/clinic.rst:1384
-msgid "Writing a custom return converter"
-msgstr "编写自定义的返回值转换器"
+#: ../../howto/clinic.rst:1404
+msgid "How to write a custom return converter"
+msgstr ""
 
-#: ../../howto/clinic.rst:1386
+#: ../../howto/clinic.rst:1406
 msgid ""
 "Writing a custom return converter is much like writing a custom converter.  "
 "Except it's somewhat simpler, because return converters are themselves much "
@@ -2301,7 +2309,7 @@ msgstr ""
 "自定义的返回值转换器的写法，与自定义的转换器十分类似。因为返回值转换器本身就"
 "很简单，编写起来就简单一些。"
 
-#: ../../howto/clinic.rst:1390
+#: ../../howto/clinic.rst:1410
 msgid ""
 "Return converters must subclass ``CReturnConverter``. There are no examples "
 "yet of custom return converters, because they are not widely used yet.  If "
@@ -2313,11 +2321,11 @@ msgstr ""
 "有广泛应用，目前还没有示例。若要编写返回值转换器，请阅读 ``Tools/clinic/"
 "clinic.py`` ，特别是 ``CReturnConverter`` 及其所有子类的实现代码。"
 
-#: ../../howto/clinic.rst:1398
-msgid "METH_O and METH_NOARGS"
-msgstr "METH_O 和 METH_NOARGS"
+#: ../../howto/clinic.rst:1419
+msgid "How to convert ``METH_O`` and ``METH_NOARGS`` functions"
+msgstr ""
 
-#: ../../howto/clinic.rst:1400
+#: ../../howto/clinic.rst:1421
 msgid ""
 "To convert a function using ``METH_O``, make sure the function's single "
 "argument is using the ``object`` converter, and mark the arguments as "
@@ -2326,13 +2334,13 @@ msgstr ""
 "若要用 ``METH_O`` 对函数进行转换，请确保对该函数的单个参数使用 ``object`` 转"
 "换器，并将参数标为只认位置的："
 
-#: ../../howto/clinic.rst:1412
+#: ../../howto/clinic.rst:1433
 msgid ""
 "To convert a function using ``METH_NOARGS``, just don't specify any "
 "arguments."
 msgstr "若要用 ``METH_NOARGS`` 对函数进行转换，只需不定义参数即可。"
 
-#: ../../howto/clinic.rst:1415
+#: ../../howto/clinic.rst:1436
 msgid ""
 "You can still use a self converter, a return converter, and specify a "
 "``type`` argument to the object converter for ``METH_O``."
@@ -2340,11 +2348,11 @@ msgstr ""
 "依然可以采用一个 self 转换器、一个返回值转换器，并为 ``METH_O`` 的对象转换器"
 "指定一个 ``type`` 参数。"
 
-#: ../../howto/clinic.rst:1419
-msgid "tp_new and tp_init functions"
-msgstr "tp_new 和 tp_init functions"
+#: ../../howto/clinic.rst:1441
+msgid "How to convert ``tp_new`` and ``tp_init`` functions"
+msgstr ""
 
-#: ../../howto/clinic.rst:1421
+#: ../../howto/clinic.rst:1443
 msgid ""
 "You can convert ``tp_new`` and ``tp_init`` functions.  Just name them "
 "``__new__`` or ``__init__`` as appropriate.  Notes:"
@@ -2352,7 +2360,7 @@ msgstr ""
 "``tp_new`` 和 ``tp_init`` 函数也可以转换。只要命名为 ``__new__`` 或 "
 "``__init__`` 即可。注意："
 
-#: ../../howto/clinic.rst:1424
+#: ../../howto/clinic.rst:1446
 msgid ""
 "The function name generated for ``__new__`` doesn't end in ``__new__`` like "
 "it would by default.  It's just the name of the class, converted into a "
@@ -2361,19 +2369,19 @@ msgstr ""
 "为转换 ``__new__`` 而生成的函数名不会以其默认名称结尾。只会是转换为合法 C 标"
 "识符的类名。"
 
-#: ../../howto/clinic.rst:1428
+#: ../../howto/clinic.rst:1450
 msgid "No ``PyMethodDef`` ``#define`` is generated for these functions."
 msgstr "转换这些函数不会生成 ``PyMethodDef`` 、``#define``。"
 
-#: ../../howto/clinic.rst:1430
+#: ../../howto/clinic.rst:1452
 msgid "``__init__`` functions return ``int``, not ``PyObject *``."
 msgstr "``__init__`` 函数将返回 ``int`` ，而不是 ``PyObject *`` 。"
 
-#: ../../howto/clinic.rst:1432
+#: ../../howto/clinic.rst:1454
 msgid "Use the docstring as the class docstring."
 msgstr "将文档字符串用作类文档字符串。"
 
-#: ../../howto/clinic.rst:1434
+#: ../../howto/clinic.rst:1456
 msgid ""
 "Although ``__new__`` and ``__init__`` functions must always accept both the "
 "``args`` and ``kwargs`` objects, when converting you may specify any "
@@ -2385,11 +2393,11 @@ msgstr ""
 "数，但在转换时可按个人喜好定义函数签名。（如果原函数不支持关键字参数，则生成"
 "的解析函数在收到关键字参数时会抛出异常）。"
 
-#: ../../howto/clinic.rst:1441
-msgid "Changing and redirecting Clinic's output"
-msgstr "改变和重定向 Clinic 的输出"
+#: ../../howto/clinic.rst:1464
+msgid "How to change and redirect Clinic's output"
+msgstr ""
 
-#: ../../howto/clinic.rst:1443
+#: ../../howto/clinic.rst:1466
 msgid ""
 "It can be inconvenient to have Clinic's output interspersed with your "
 "conventional hand-edited C code.  Luckily, Clinic is configurable: you can "
@@ -2401,7 +2409,7 @@ msgstr ""
 "以对 Clinic 进行配置：可以将输出结果缓存起来以供输出，或将输出结果写入文件"
 "中。针对 Clinic 生成的输出结果，还可以为每一行都加上前缀或后缀。"
 
-#: ../../howto/clinic.rst:1449
+#: ../../howto/clinic.rst:1472
 msgid ""
 "While changing Clinic's output in this manner can be a boon to readability, "
 "it may result in Clinic code using types before they are defined, or your "
@@ -2418,15 +2426,15 @@ msgstr ""
 "部输出到当前代码块的原因；虽然许多人认为降低了可读性，但这样就根本不用重新编"
 "排代码来解决提前引用的问题）。"
 
-#: ../../howto/clinic.rst:1458
+#: ../../howto/clinic.rst:1481
 msgid "Let's start with defining some terminology:"
 msgstr "就从定义一些术语开始吧："
 
-#: ../../howto/clinic.rst:1485
+#: ../../howto/clinic.rst:1508
 msgid "*field*"
 msgstr "** 区块（field）**"
 
-#: ../../howto/clinic.rst:1461
+#: ../../howto/clinic.rst:1484
 msgid ""
 "A field, in this context, is a subsection of Clinic's output. For example, "
 "the ``#define`` for the ``PyMethodDef`` structure is a field, called "
@@ -2437,7 +2445,7 @@ msgstr ""
 "``#define`` 是一个区块，名为 ``methoddef_define``。Clinic 可为每个函数定义输"
 "出7个区块。"
 
-#: ../../howto/clinic.rst:1476
+#: ../../howto/clinic.rst:1499
 msgid ""
 "All the names are of the form ``\"<a>_<b>\"``, where ``\"<a>\"`` is the "
 "semantic object represented (the parsing function, the impl function, the "
@@ -2456,33 +2464,33 @@ msgstr ""
 "数体和数据。（``\"methoddef\"`` 比较特殊，是唯一一个以 ``\"_define\"`` 结尾的"
 "区块名，表明这是一个预处理器 #define。）"
 
-#: ../../howto/clinic.rst:1519
+#: ../../howto/clinic.rst:1542
 msgid "*destination*"
 msgstr "** 输出目标（destination）**"
 
-#: ../../howto/clinic.rst:1488
+#: ../../howto/clinic.rst:1511
 msgid ""
 "A destination is a place Clinic can write output to.  There are five built-"
 "in destinations:"
 msgstr "输出目标是 Clinic 可以进行输出的地方。内置的输出目标有5种："
 
-#: ../../howto/clinic.rst:1493 ../../howto/clinic.rst:1568
-#: ../../howto/clinic.rst:1646
+#: ../../howto/clinic.rst:1516 ../../howto/clinic.rst:1591
+#: ../../howto/clinic.rst:1669
 msgid "``block``"
 msgstr "``block``"
 
-#: ../../howto/clinic.rst:1492
+#: ../../howto/clinic.rst:1515
 msgid ""
 "The default destination: printed in the output section of the current Clinic "
 "block."
 msgstr "默认的输出目标：在 Clinic 当前代码块的输出区域进行输出。"
 
-#: ../../howto/clinic.rst:1499 ../../howto/clinic.rst:1595
-#: ../../howto/clinic.rst:1649
+#: ../../howto/clinic.rst:1522 ../../howto/clinic.rst:1618
+#: ../../howto/clinic.rst:1672
 msgid "``buffer``"
 msgstr "``buffer``"
 
-#: ../../howto/clinic.rst:1496
+#: ../../howto/clinic.rst:1519
 msgid ""
 "A text buffer where you can save text for later.  Text sent here is appended "
 "to the end of any existing text.  It's an error to have any text left in the "
@@ -2491,12 +2499,12 @@ msgstr ""
 "文本缓冲区，可将文本保存起来以便后续使用。输出的文本会加入现有文本的末尾。如"
 "果 Clinic 处理完文件后缓冲区中还留有文本，则会报错。"
 
-#: ../../howto/clinic.rst:1510 ../../howto/clinic.rst:1581
-#: ../../howto/clinic.rst:1675
+#: ../../howto/clinic.rst:1533 ../../howto/clinic.rst:1604
+#: ../../howto/clinic.rst:1698
 msgid "``file``"
 msgstr "``file``"
 
-#: ../../howto/clinic.rst:1502
+#: ../../howto/clinic.rst:1525
 msgid ""
 "A separate \"clinic file\" that will be created automatically by Clinic. The "
 "filename chosen for the file is ``{basename}.clinic{extension}``, where "
@@ -2509,7 +2517,7 @@ msgstr ""
 "行 ``os.path.splitext()`` 后的结果。（比如：``_pickle.c`` 的 ``file`` 目的地"
 "将会是 ``_pickle.clinic.c``)。"
 
-#: ../../howto/clinic.rst:1509
+#: ../../howto/clinic.rst:1532
 msgid ""
 "**Important: When using a** ``file`` **destination, you** *must check in* "
 "**the generated file!**"
@@ -2517,12 +2525,12 @@ msgstr ""
 "**重点：若要使用 ** ``file`` ** 作为输出目标，你 ** *必须签入* ** 生成的文"
 "件！**"
 
-#: ../../howto/clinic.rst:1515 ../../howto/clinic.rst:1608
-#: ../../howto/clinic.rst:1679
+#: ../../howto/clinic.rst:1538 ../../howto/clinic.rst:1631
+#: ../../howto/clinic.rst:1702
 msgid "``two-pass``"
 msgstr "``two-pass``"
 
-#: ../../howto/clinic.rst:1513
+#: ../../howto/clinic.rst:1536
 msgid ""
 "A buffer like ``buffer``.  However, a two-pass buffer can only be dumped "
 "once, and it prints out all text sent to it during all processing, even from "
@@ -2531,23 +2539,23 @@ msgstr ""
 "类似于 ``buffer`` 的缓冲区。不过 two-pass 缓冲区只能转储一次，将会输出处理过"
 "程中发送给它的所有文本，甚至包括转储点**之后**的 Clinic 块。"
 
-#: ../../howto/clinic.rst:1519 ../../howto/clinic.rst:1642
+#: ../../howto/clinic.rst:1542 ../../howto/clinic.rst:1665
 msgid "``suppress``"
 msgstr "``suppress``"
 
-#: ../../howto/clinic.rst:1518
+#: ../../howto/clinic.rst:1541
 msgid "The text is suppressed—thrown away."
 msgstr "禁止输出文本——抛弃输出。"
 
-#: ../../howto/clinic.rst:1521
+#: ../../howto/clinic.rst:1544
 msgid "Clinic defines five new directives that let you reconfigure its output."
 msgstr "Clinic 定义了5个新的指令，以便修改输出方式。"
 
-#: ../../howto/clinic.rst:1523
+#: ../../howto/clinic.rst:1546
 msgid "The first new directive is ``dump``:"
 msgstr "第一个新指令是 ``dump``："
 
-#: ../../howto/clinic.rst:1529
+#: ../../howto/clinic.rst:1552
 msgid ""
 "This dumps the current contents of the named destination into the output of "
 "the current block, and empties it.  This only works with ``buffer`` and "
@@ -2556,13 +2564,13 @@ msgstr ""
 "将指定输出目标的当前内容转储到当前块的输出中，并清空输出目标。仅适用于 "
 "``buffer`` 和 ``two-pass`` 目标。"
 
-#: ../../howto/clinic.rst:1533
+#: ../../howto/clinic.rst:1556
 msgid ""
 "The second new directive is ``output``.  The most basic form of ``output`` "
 "is like this:"
 msgstr "第二个新指令是 ``output``。``output`` 最简单的格式如下所示："
 
-#: ../../howto/clinic.rst:1540
+#: ../../howto/clinic.rst:1563
 msgid ""
 "This tells Clinic to output *field* to *destination*.  ``output`` also "
 "supports a special meta-destination, called ``everything``, which tells "
@@ -2572,11 +2580,11 @@ msgstr ""
 "持一个特殊的元目标 ``everything``，通知 Clinic 将**所有**区块都输出到该**目标"
 "**。"
 
-#: ../../howto/clinic.rst:1544
+#: ../../howto/clinic.rst:1567
 msgid "``output`` has a number of other functions:"
 msgstr "``output`` 还包含一些函数："
 
-#: ../../howto/clinic.rst:1553
+#: ../../howto/clinic.rst:1576
 msgid ""
 "``output push`` and ``output pop`` allow you to push and pop configurations "
 "on an internal configuration stack, so that you can temporarily modify the "
@@ -2588,19 +2596,19 @@ msgstr ""
 "以临时修改输出配置，然后再轻松恢复之前的配置。只需在修改前入栈保存当前配置，"
 "在恢复配置时再弹出即可。"
 
-#: ../../howto/clinic.rst:1560
+#: ../../howto/clinic.rst:1583
 msgid ""
 "``output preset`` sets Clinic's output to one of several built-in preset "
 "configurations, as follows:"
 msgstr "``output preset`` 将 Clinic 的输出目标设为内置预设目标之一，如下所示："
 
-#: ../../howto/clinic.rst:1564
+#: ../../howto/clinic.rst:1587
 msgid ""
 "Clinic's original starting configuration.  Writes everything immediately "
 "after the input block."
 msgstr "Clinic 的初始设置。输入块后面紧接着写入所有内容。"
 
-#: ../../howto/clinic.rst:1567
+#: ../../howto/clinic.rst:1590
 msgid ""
 "Suppress the ``parser_prototype`` and ``docstring_prototype``, write "
 "everything else to ``block``."
@@ -2608,7 +2616,7 @@ msgstr ""
 "关闭 ``parser_prototype`` 和 ``docstring_prototype``，并将其他所有内容写入 "
 "``block``。"
 
-#: ../../howto/clinic.rst:1571
+#: ../../howto/clinic.rst:1594
 msgid ""
 "Designed to write everything to the \"clinic file\" that it can. You then "
 "``#include`` this file near the top of your file. You may need to rearrange "
@@ -2619,7 +2627,7 @@ msgstr ""
 "能需要重新调整代码顺序才能正常运行，通常只要为  ``typedef``和"
 "``PyTypeObject`` 定义创建前向声明即可。"
 
-#: ../../howto/clinic.rst:1577
+#: ../../howto/clinic.rst:1600
 msgid ""
 "Suppress the ``parser_prototype`` and ``docstring_prototype``, write the "
 "``impl_definition`` to ``block``, and write everything else to ``file``."
@@ -2627,11 +2635,11 @@ msgstr ""
 "关闭 ``parser_prototype`` 和 ``docstring_prototype`` ，将 "
 "``impl_definition`` 写入 ``block``，其他内容写入 ``file`` 。"
 
-#: ../../howto/clinic.rst:1581
+#: ../../howto/clinic.rst:1604
 msgid "The default filename is ``\"{dirname}/clinic/{basename}.h\"``."
 msgstr "默认文件名为 ``\"{dirname}/clinic/{basename}.h\"`` 。"
 
-#: ../../howto/clinic.rst:1584
+#: ../../howto/clinic.rst:1607
 msgid ""
 "Save up most of the output from Clinic, to be written into your file near "
 "the end.  For Python files implementing modules or builtin types, it's "
@@ -2646,7 +2654,7 @@ msgstr ""
 "``PyMethodDef`` 数组，采用 ``buffer`` 输出所需的代码编辑工作可能比用 "
 "``file`` 要多些。"
 
-#: ../../howto/clinic.rst:1593
+#: ../../howto/clinic.rst:1616
 msgid ""
 "Suppress the ``parser_prototype``, ``impl_prototype``, and "
 "``docstring_prototype``, write the ``impl_definition`` to ``block``, and "
@@ -2655,7 +2663,7 @@ msgstr ""
 "关闭 ``parser_prototype`` 、``impl_prototype`` 和 ``docstring_prototype``，"
 "将 ``impl_definition`` 写入 ``block``，其他输出都写入 ``file``。"
 
-#: ../../howto/clinic.rst:1598
+#: ../../howto/clinic.rst:1621
 msgid ""
 "Similar to the ``buffer`` preset, but writes forward declarations to the "
 "``two-pass`` buffer, and definitions to the ``buffer``. This is similar to "
@@ -2668,7 +2676,7 @@ msgstr ""
 "少。将 ``two-pass`` 缓冲区转储到文件的顶部，将 ``buffer`` 转储到文件末尾，就"
 "像预设的 ``buffer`` 一样。"
 
-#: ../../howto/clinic.rst:1605
+#: ../../howto/clinic.rst:1628
 msgid ""
 "Suppresses the ``impl_prototype``, write the ``impl_definition`` to "
 "``block``, write ``docstring_prototype``, ``methoddef_define``, and "
@@ -2678,11 +2686,11 @@ msgstr ""
 "``docstring_prototype`` 、 ``methoddef_define`` 和 ``parser_prototype`` 写入 "
 "``two-pass``，其他输出都写入 ``buffer`` 。"
 
-#: ../../howto/clinic.rst:1619
+#: ../../howto/clinic.rst:1642
 msgid "``partial-buffer``"
 msgstr "``partial-buffer``"
 
-#: ../../howto/clinic.rst:1611
+#: ../../howto/clinic.rst:1634
 msgid ""
 "Similar to the ``buffer`` preset, but writes more things to ``block``, only "
 "writing the really big chunks of generated code to ``buffer``. This avoids "
@@ -2696,7 +2704,7 @@ msgstr ""
 "代码块中的内容会稍有增加。在快结束时会转储 ``buffer``，就像采用预设的 "
 "``buffer`` 配置一样。"
 
-#: ../../howto/clinic.rst:1618
+#: ../../howto/clinic.rst:1641
 msgid ""
 "Suppresses the ``impl_prototype``, write the ``docstring_definition`` and "
 "``parser_definition`` to ``buffer``, write everything else to ``block``."
@@ -2704,105 +2712,105 @@ msgstr ""
 "关闭 ``impl_prototype``，将 ``docstring_definition`` 和 "
 "``parser_definition`` 写入 ``buffer``，其他输出都写入 ``block``。"
 
-#: ../../howto/clinic.rst:1621
+#: ../../howto/clinic.rst:1644
 msgid "The third new directive is ``destination``:"
 msgstr "第三个新指令是 ``destination``："
 
-#: ../../howto/clinic.rst:1627
+#: ../../howto/clinic.rst:1650
 msgid "This performs an operation on the destination named ``name``."
 msgstr "向名为 ``name`` 的目标执行输出。"
 
-#: ../../howto/clinic.rst:1629
+#: ../../howto/clinic.rst:1652
 msgid "There are two defined subcommands: ``new`` and ``clear``."
 msgstr "定义了两个子命令：``new`` 和 ``clear``。"
 
-#: ../../howto/clinic.rst:1631
+#: ../../howto/clinic.rst:1654
 msgid "The ``new`` subcommand works like this:"
 msgstr "子命令 ``new`` 工作方式如下："
 
-#: ../../howto/clinic.rst:1637
+#: ../../howto/clinic.rst:1660
 msgid ""
 "This creates a new destination with name ``<name>`` and type ``<type>``."
 msgstr "新建一个目标，名称为 ``<name>``，类型为 ``<type>`` 。"
 
-#: ../../howto/clinic.rst:1639
+#: ../../howto/clinic.rst:1662
 msgid "There are five destination types:"
 msgstr "输出目标的类型有5种："
 
-#: ../../howto/clinic.rst:1642
+#: ../../howto/clinic.rst:1665
 msgid "Throws the text away."
 msgstr "忽略文本。"
 
-#: ../../howto/clinic.rst:1645
+#: ../../howto/clinic.rst:1668
 msgid ""
 "Writes the text to the current block.  This is what Clinic originally did."
 msgstr "将文本写入当前代码块中。 这就是 Clinic 原来的做法。"
 
-#: ../../howto/clinic.rst:1649
+#: ../../howto/clinic.rst:1672
 msgid "A simple text buffer, like the \"buffer\" builtin destination above."
 msgstr "简单的文本缓冲区，就像上述的内置 “buffer” 目标。"
 
-#: ../../howto/clinic.rst:1652
+#: ../../howto/clinic.rst:1675
 msgid ""
 "A text file.  The file destination takes an extra argument, a template to "
 "use for building the filename, like so:"
 msgstr "文本文件。文件目标多了一个参数，模板用于生成文件名，类似于："
 
-#: ../../howto/clinic.rst:1655
+#: ../../howto/clinic.rst:1678
 msgid "destination <name> new <type> <file_template>"
 msgstr "destination <name> new <type> <file_template>"
 
-#: ../../howto/clinic.rst:1657
+#: ../../howto/clinic.rst:1680
 msgid ""
 "The template can use three strings internally that will be replaced by bits "
 "of the filename:"
 msgstr "模版可以引用3个内部字符串，将会用文件名的对应部分替代："
 
-#: ../../howto/clinic.rst:1660
+#: ../../howto/clinic.rst:1683
 msgid "{path}"
 msgstr "{path}"
 
-#: ../../howto/clinic.rst:1661
+#: ../../howto/clinic.rst:1684
 msgid "The full path to the file, including directory and full filename."
 msgstr "文件的全路径，包含文件夹和完整的文件名。"
 
-#: ../../howto/clinic.rst:1662
+#: ../../howto/clinic.rst:1685
 msgid "{dirname}"
 msgstr "{dirname}"
 
-#: ../../howto/clinic.rst:1663
+#: ../../howto/clinic.rst:1686
 msgid "The name of the directory the file is in."
 msgstr "文件所在文件夹名。"
 
-#: ../../howto/clinic.rst:1664
+#: ../../howto/clinic.rst:1687
 msgid "{basename}"
 msgstr "{basename}"
 
-#: ../../howto/clinic.rst:1665
+#: ../../howto/clinic.rst:1688
 msgid "Just the name of the file, not including the directory."
 msgstr "只有文件名，不含文件夹。"
 
-#: ../../howto/clinic.rst:1667
+#: ../../howto/clinic.rst:1690
 msgid "{basename_root}"
 msgstr "{basename_root}"
 
-#: ../../howto/clinic.rst:1667
+#: ../../howto/clinic.rst:1690
 msgid ""
 "Basename with the extension clipped off (everything up to but not including "
 "the last '.')."
 msgstr "去除了扩展名后的文件名（不含最后一个“.”）。"
 
-#: ../../howto/clinic.rst:1671
+#: ../../howto/clinic.rst:1694
 msgid "{basename_extension}"
 msgstr "{basename_extension}"
 
-#: ../../howto/clinic.rst:1670
+#: ../../howto/clinic.rst:1693
 msgid ""
 "The last '.' and everything after it.  If the basename does not contain a "
 "period, this will be the empty string."
 msgstr "包含最后一个“.”及后面的字符。如果文件名中不含句点，则为空字符串。"
 
-#: ../../howto/clinic.rst:1673
+#: ../../howto/clinic.rst:1696
 msgid ""
 "If there are no periods in the filename, {basename} and {filename} are the "
 "same, and {extension} is empty.  \"{basename}{extension}\" is always exactly "
@@ -2812,26 +2820,26 @@ msgstr ""
 "{basename_extension} 则为空。“{basename_root}{basename_extension}” "
 "与“{basename}”一定是完全相同的。（英文原文貌似有误）"
 
-#: ../../howto/clinic.rst:1678
+#: ../../howto/clinic.rst:1701
 msgid "A two-pass buffer, like the \"two-pass\" builtin destination above."
 msgstr "two-pass 缓冲区，类似于上述的内置“two-pass”输出目标。"
 
-#: ../../howto/clinic.rst:1681
+#: ../../howto/clinic.rst:1704
 msgid "The ``clear`` subcommand works like this:"
 msgstr "子命令 ``clear`` 的工作方式如下："
 
-#: ../../howto/clinic.rst:1687
+#: ../../howto/clinic.rst:1710
 msgid ""
 "It removes all the accumulated text up to this point in the destination. (I "
 "don't know what you'd need this for, but I thought maybe it'd be useful "
 "while someone's experimenting.)"
 msgstr "清空输出目标中所有文本。（不知用途何在，但也许做实验时会有用吧。)"
 
-#: ../../howto/clinic.rst:1691
+#: ../../howto/clinic.rst:1714
 msgid "The fourth new directive is ``set``:"
 msgstr "第4个新指令是 ``set`` ："
 
-#: ../../howto/clinic.rst:1698
+#: ../../howto/clinic.rst:1721
 msgid ""
 "``set`` lets you set two internal variables in Clinic. ``line_prefix`` is a "
 "string that will be prepended to every line of Clinic's output; "
@@ -2841,35 +2849,35 @@ msgstr ""
 "`set' 能设置 Clinic 的两个内部变量值。``line_prefix`` 是 Clinic 每行输出的前"
 "缀字符串；``line_suffix`` 是 Clinic 每行输出的后缀字符串。"
 
-#: ../../howto/clinic.rst:1702
+#: ../../howto/clinic.rst:1725
 msgid "Both of these support two format strings:"
 msgstr "两者都支持两种格式字符串："
 
-#: ../../howto/clinic.rst:1705
+#: ../../howto/clinic.rst:1728
 msgid "``{block comment start}``"
 msgstr "``{block comment start}``"
 
-#: ../../howto/clinic.rst:1705
+#: ../../howto/clinic.rst:1728
 msgid ""
 "Turns into the string ``/*``, the start-comment text sequence for C files."
 msgstr "转成字符串 ``/*``，是 C 文件的注释起始标记。"
 
-#: ../../howto/clinic.rst:1708
+#: ../../howto/clinic.rst:1731
 msgid "``{block comment end}``"
 msgstr "``{block comment end}``"
 
-#: ../../howto/clinic.rst:1708
+#: ../../howto/clinic.rst:1731
 msgid ""
 "Turns into the string ``*/``, the end-comment text sequence for C files."
 msgstr "转成字符串 ``*/``，是 C 文件的注释结束标记。"
 
-#: ../../howto/clinic.rst:1710
+#: ../../howto/clinic.rst:1733
 msgid ""
 "The final new directive is one you shouldn't need to use directly, called "
 "``preserve``:"
 msgstr "最后一个新指令是无需直接使用的 ``preserve``。"
 
-#: ../../howto/clinic.rst:1717
+#: ../../howto/clinic.rst:1740
 msgid ""
 "This tells Clinic that the current contents of the output should be kept, "
 "unmodified. This is used internally by Clinic when dumping output into "
@@ -2881,11 +2889,11 @@ msgstr ""
 "部使用的；以便 Clinic 能利用已有的校验函数，确保文件在被覆盖之前没进行人工修"
 "改过。"
 
-#: ../../howto/clinic.rst:1724
-msgid "The #ifdef trick"
-msgstr "#ifdef 使用技巧"
+#: ../../howto/clinic.rst:1747
+msgid "How to use the ``#ifdef`` trick"
+msgstr ""
 
-#: ../../howto/clinic.rst:1726
+#: ../../howto/clinic.rst:1749
 msgid ""
 "If you're converting a function that isn't available on all platforms, "
 "there's a trick you can use to make life a little easier.  The existing code "
@@ -2893,26 +2901,26 @@ msgid ""
 msgstr ""
 "若要转换的函数并非通用于所有平台，可以采用一个技巧。当前代码可能如下所示："
 
-#: ../../howto/clinic.rst:1737
+#: ../../howto/clinic.rst:1760
 msgid ""
 "And then in the ``PyMethodDef`` structure at the bottom the existing code "
 "will have:"
 msgstr "在底部的 ``PyMethodDef`` 结构中，当前代码如下："
 
-#: ../../howto/clinic.rst:1746
+#: ../../howto/clinic.rst:1769
 msgid ""
 "In this scenario, you should enclose the body of your impl function inside "
 "the ``#ifdef``, like so::"
 msgstr "这时应将 impl 函数体用 ``#ifdef`` 包裹起来，如下所示："
 
-#: ../../howto/clinic.rst:1760
+#: ../../howto/clinic.rst:1783
 msgid ""
 "Then, remove those three lines from the ``PyMethodDef`` structure, replacing "
 "them with the macro Argument Clinic generated:"
 msgstr ""
 "然后，从 ``PyMethodDef`` 结构中删除以下3行，替换成 Argument Clinic 生成的宏："
 
-#: ../../howto/clinic.rst:1767
+#: ../../howto/clinic.rst:1790
 msgid ""
 "(You can find the real name for this macro inside the generated code. Or you "
 "can calculate it yourself: it's the name of your function as defined on the "
@@ -2922,7 +2930,7 @@ msgstr ""
 "（在生成的代码中可找到宏的真实名称。或者可以自行求一下值：块的第一行定义的函"
 "数名，句点改为下划线，全部大写，并在末尾加上 ``\"_METHODDEF\"`` ）"
 
-#: ../../howto/clinic.rst:1772
+#: ../../howto/clinic.rst:1795
 msgid ""
 "Perhaps you're wondering: what if ``HAVE_FUNCTIONNAME`` isn't defined? The "
 "``MODULE_FUNCTIONNAME_METHODDEF`` macro won't be defined either!"
@@ -2930,7 +2938,7 @@ msgstr ""
 "如果 ``HAVE_FUNCTIONNAME`` 未定义怎么办？ 那么 "
 "``MODULE_FUNCTIONNAME_METHODDEF`` 宏也不会定义。"
 
-#: ../../howto/clinic.rst:1775
+#: ../../howto/clinic.rst:1798
 msgid ""
 "Here's where Argument Clinic gets very clever.  It actually detects that the "
 "Argument Clinic block might be deactivated by the ``#ifdef``.  When that "
@@ -2939,7 +2947,7 @@ msgstr ""
 "这正是 Argument Clinic 变聪明的地方。它其实能检测到 ``#ifdef`` 屏蔽了"
 "Argument Clinic 块。于是会额外生成一小段代码，如下所示："
 
-#: ../../howto/clinic.rst:1783
+#: ../../howto/clinic.rst:1806
 msgid ""
 "That means the macro always works.  If the function is defined, this turns "
 "into the correct structure, including the trailing comma.  If the function "
@@ -2948,7 +2956,7 @@ msgstr ""
 "这样宏总是会生效。如果定义了函数，则会转换为正确的结构，包括尾部的逗号。如果"
 "函数未定义，就不做什么转换。"
 
-#: ../../howto/clinic.rst:1787
+#: ../../howto/clinic.rst:1810
 msgid ""
 "However, this causes one ticklish problem: where should Argument Clinic put "
 "this extra code when using the \"block\" output preset?  It can't go in the "
@@ -2959,7 +2967,7 @@ msgstr ""
 "该把额外的代码放到哪里呢？ 它不能放在输出代码块中，因为它可能会被 ``#ifdef`` "
 "停用。 （它的作用就是这个！）"
 
-#: ../../howto/clinic.rst:1791
+#: ../../howto/clinic.rst:1814
 msgid ""
 "In this situation, Argument Clinic writes the extra code to the \"buffer\" "
 "destination. This may mean that you get a complaint from Argument Clinic:"
@@ -2967,7 +2975,7 @@ msgstr ""
 "在此情况下，Argument Clinic 会将额外的代码的写入目标设为 \"buffer\"。 这意味"
 "着你可能会收到来自 Argument Clinic 的抱怨:"
 
-#: ../../howto/clinic.rst:1799
+#: ../../howto/clinic.rst:1822
 msgid ""
 "When this happens, just open your file, find the ``dump buffer`` block that "
 "Argument Clinic added to your file (it'll be at the very bottom), then move "
@@ -2977,11 +2985,11 @@ msgstr ""
 "``dump buffer`` 代码块（它将位于文件末尾），并将其移到使用了那个宏的 "
 "``PyMethodDef`` 结构体之上。"
 
-#: ../../howto/clinic.rst:1806
-msgid "Using Argument Clinic in Python files"
-msgstr "在 Python 文件中使用 Argument Clinic"
+#: ../../howto/clinic.rst:1828
+msgid "How to use Argument Clinic in Python files"
+msgstr ""
 
-#: ../../howto/clinic.rst:1808
+#: ../../howto/clinic.rst:1830
 msgid ""
 "It's actually possible to use Argument Clinic to preprocess Python files. "
 "There's no point to using Argument Clinic blocks, of course, as the output "
@@ -2993,7 +3001,7 @@ msgstr ""
 "意义的。 但是使用 Argument Clinic 来运行 Python 代码块可以让你将 Python 当作 "
 "Python 预处理器来使用！"
 
-#: ../../howto/clinic.rst:1813
+#: ../../howto/clinic.rst:1835
 msgid ""
 "Since Python comments are different from C comments, Argument Clinic blocks "
 "embedded in Python files look slightly different.  They look like this:"

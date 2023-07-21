@@ -11,17 +11,17 @@
 # Zxilly Chou <zhouxinyu1001@gmail.com>, 2021
 # Jiuh-star <jiuh.star@gmail.com>, 2021
 # helloworldSB <warningfor163@foxmail.com>, 2021
+# Freesand Leo <yuqinju@163.com>, 2022
 # Bryan不可思议, 2023
-# Freesand Leo <yuqinju@163.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 14:14+0000\n"
+"POT-Creation-Date: 2023-07-21 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 00:47+0000\n"
-"Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
+"Last-Translator: Bryan不可思议, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -117,18 +117,13 @@ msgstr ""
 
 #: ../../c-api/call.rst:62
 msgid ""
-"The :const:`Py_TPFLAGS_HAVE_VECTORCALL` flag is now removed from a class "
+"The :c:macro:`Py_TPFLAGS_HAVE_VECTORCALL` flag is now removed from a class "
 "when the class's :py:meth:`~object.__call__` method is reassigned. (This "
 "internally sets :c:member:`~PyTypeObject.tp_call` only, and thus may make it "
 "behave differently than the vectorcall function.) In earlier Python "
-"versions, vectorcall should only be used with :const:`immutable "
+"versions, vectorcall should only be used with :c:macro:`immutable "
 "<Py_TPFLAGS_IMMUTABLETYPE>` or static types."
 msgstr ""
-"现在 :const:`Py_TPFLAGS_HAVE_VECTORCALL` 旗标在类的 :py:meth:`~object."
-"__call__` 方法被重新赋值时将会从类中移除。 （这将仅在内部设置 :c:member:"
-"`~PyTypeObject.tp_call`，因此可能使其行为不同于 vectorcall 函数。） 在更早的 "
-"Python 版本中，vectorcall 应当仅被用于 :const:`不可变对象 "
-"<Py_TPFLAGS_IMMUTABLETYPE>` 或静态类型。"
 
 #: ../../c-api/call.rst:69
 msgid ""
@@ -142,15 +137,12 @@ msgstr ""
 
 #: ../../c-api/call.rst:74
 msgid ""
-"Classes can implement the vectorcall protocol by enabling the :const:"
+"Classes can implement the vectorcall protocol by enabling the :c:macro:"
 "`Py_TPFLAGS_HAVE_VECTORCALL` flag and setting :c:member:`~PyTypeObject."
 "tp_vectorcall_offset` to the offset inside the object structure where a "
 "*vectorcallfunc* appears. This is a pointer to a function with the following "
 "signature:"
 msgstr ""
-"类可以通过启用 :const:`Py_TPFLAGS_HAVE_VECTORCALL` 标志并将 :c:member:"
-"`~PyTypeObject.tp_vectorcall_offset` 设置为对象结构中的 *vectorcallfunc* 的 "
-"offset 来实现 vectorcall 协议。这是一个指向具有以下签名的函数的指针:"
 
 #: ../../c-api/call.rst:82
 msgid "*callable* is the object being called."
@@ -173,11 +165,9 @@ msgstr "*nargsf* 是位置参数的数量加上可能的"
 
 #: ../../c-api/call.rst:87
 msgid ""
-":const:`PY_VECTORCALL_ARGUMENTS_OFFSET` flag. To get the actual number of "
+":c:macro:`PY_VECTORCALL_ARGUMENTS_OFFSET` flag. To get the actual number of "
 "positional arguments from *nargsf*, use :c:func:`PyVectorcall_NARGS`."
 msgstr ""
-":const:`PY_VECTORCALL_ARGUMENTS_OFFSET` 标志。 要从 *nargsf* 获得实际的位置参"
-"数数，请使用 :c:func:`PyVectorcall_NARGS`。"
 
 #: ../../c-api/call.rst:94
 msgid "*kwnames* is a tuple containing the names of the keyword arguments;"
@@ -215,13 +205,10 @@ msgstr ""
 #: ../../c-api/call.rst:106
 msgid ""
 "Whenever they can do so cheaply (without additional allocation), callers are "
-"encouraged to use :const:`PY_VECTORCALL_ARGUMENTS_OFFSET`. Doing so will "
+"encouraged to use :c:macro:`PY_VECTORCALL_ARGUMENTS_OFFSET`. Doing so will "
 "allow callables such as bound methods to make their onward calls (which "
 "include a prepended *self* argument) very efficiently."
 msgstr ""
-"当调用方可以以几乎无代价的方式（无额外的内存申请），那么调用者被推荐适用： :"
-"const:`PY_VECTORCALL_ARGUMENTS_OFFSET`。这样做将允许诸如绑定方法之类的可调用"
-"函数非常有效地进行向前调用（其中包括一个带前缀的 *self* 参数）。"
 
 #: ../../c-api/call.rst:111
 msgid ""
@@ -321,12 +308,9 @@ msgstr ""
 msgid ""
 "This is a specialized function, intended to be put in the :c:member:"
 "`~PyTypeObject.tp_call` slot or be used in an implementation of ``tp_call``. "
-"It does not check the :const:`Py_TPFLAGS_HAVE_VECTORCALL` flag and it does "
+"It does not check the :c:macro:`Py_TPFLAGS_HAVE_VECTORCALL` flag and it does "
 "not fall back to ``tp_call``."
 msgstr ""
-"这是一个专门函数，其目的是被放入 :c:member:`~PyTypeObject.tp_call` 槽位或是用"
-"于 ``tp_call`` 的实现。 它不会检查 :const:`Py_TPFLAGS_HAVE_VECTORCALL` 旗标并"
-"且它不会回退到 ``tp_call``。"
 
 #: ../../c-api/call.rst:186
 msgid "Object Calling API"
@@ -660,25 +644,17 @@ msgid ""
 "method is given as a Python string *name*. The object whose method is called "
 "is *args[0]*, and the *args* array starting at *args[1]* represents the "
 "arguments of the call. There must be at least one positional argument. "
-"*nargsf* is the number of positional arguments including *args[0]*, plus :"
-"const:`PY_VECTORCALL_ARGUMENTS_OFFSET` if the value of ``args[0]`` may "
+"*nargsf* is the number of positional arguments including *args[0]*, plus :c:"
+"macro:`PY_VECTORCALL_ARGUMENTS_OFFSET` if the value of ``args[0]`` may "
 "temporarily be changed. Keyword arguments can be passed just like in :c:func:"
 "`PyObject_Vectorcall`."
 msgstr ""
-"使用 vectorcall 调用惯例来调用一个方法。 方法的名称以 Python 字符串 *name* 的"
-"形式给出。 调用方法的对象为 *args[0]*，而 *args* 数组从 *args[1]* 开始的部分"
-"则代表调用的参数。 必须传入至少一个位置参数。 *nargsf* 为包括 *args[0]* 在内"
-"的位置参数的数量，如果 ``args[0]`` 的值可能被临时改变则要再加上 :const:"
-"`PY_VECTORCALL_ARGUMENTS_OFFSET`。 关键字参数可以像在 :c:func:"
-"`PyObject_Vectorcall` 中一样被传入。"
 
 #: ../../c-api/call.rst:399
 msgid ""
-"If the object has the :const:`Py_TPFLAGS_METHOD_DESCRIPTOR` feature, this "
+"If the object has the :c:macro:`Py_TPFLAGS_METHOD_DESCRIPTOR` feature, this "
 "will call the unbound method object with the full *args* vector as arguments."
 msgstr ""
-"如果对象具有 :const:`Py_TPFLAGS_METHOD_DESCRIPTOR` 特性，此函数将调用调用未绑"
-"定的方法对象并附带完整的 *args* vector 作为参数。"
 
 #: ../../c-api/call.rst:410
 msgid "Call Support API"
