@@ -11,6 +11,15 @@ import requests
 import sys
 
 
+def get_stable_from_versions(data: dict) -> list:
+    """
+    Extract bug-fixes and security-fixes Python versions
+    from a dict containing all released versions.
+    """
+    return [k for k, v in data.items()
+            if v['status'] in ['bugfix', 'security']]
+
+
 def get_from_devguide() -> list:
     """
     Returns a list of bug-fix and security-fix releases from
@@ -32,9 +41,7 @@ def get_from_devguide() -> list:
 
     try:
         data = json.loads(r.content.decode(r.apparent_encoding))
-        versions = [k for k, v in data.items()
-                    if v['status'] in ['bugfix', 'security']]
-        return versions
+        return get_stable_from_versions(data)
     except json.JSONDecodeError:
         sys.exit("ERROR: Unable to parse response as a JSON object")
 
@@ -102,7 +109,7 @@ def get_versions_from_file(file: str) -> list:
     """Read versions file and return then as a list."""
     versions = []
     try:
-        with open(file,'r') as f:
+        with open(file, 'r') as f:
             for line in f:
                 versions.append(line.strip())
         return versions
