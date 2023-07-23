@@ -46,6 +46,8 @@ def get_latest_version() -> str:
     This function scrapes the Python download page to gather version
     information and selects the latest one.
     Versions that are either alpha or stable are excluded from the results.
+
+    A workaround for https://github.com/python/devguide/issues/998
     
     Returns:
         str: The latest beta or release candidate version of Python.
