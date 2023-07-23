@@ -48,7 +48,9 @@ def get_from_devguide() -> list:
 
 def get_latest_version() -> str:
     """
-    Returns the latest beta or release candidate version of Python.
+    Returns the latest beta or release candidate version of Python,
+    in the major.minor version format. If no version is found, or if the
+    latest version is either alpha or stable, returns 'None'.
 
     This function scrapes the Python download page to gather version
     information and selects the latest one.
@@ -57,9 +59,7 @@ def get_latest_version() -> str:
     A workaround for https://github.com/python/devguide/issues/998
     
     Returns:
-        str: The latest beta or release candidate version of Python.
-             If no version is found, or if the latest version is
-             either alpha or stable, returns 'None'.
+        str: The latest beta or release candidate version of Python or 'None'
     """
     url = 'https://www.python.org/downloads/source/'
     pattern = r'Python 3.[\d]+.[\d]+((rc|b)[\d]+)? '
@@ -80,6 +80,7 @@ def get_latest_version() -> str:
     latest = max(versions, default=None, key=lambda v: parse(v))
     
     if parse(latest).pre and parse(latest).pre[0] in ['b', 'rc']:
+        latest = re.match(r'3.[\d]+', latest).group()
         return latest
     else:
         return None
@@ -92,16 +93,11 @@ def update_versions_file(versions_file: str):
     """
     versions = get_from_devguide()
     latest = get_latest_version()
-
-    # Store version in major.minor versioning scheme (e.g. 3.11)
     if latest:
-        major_version = re.match(r'3.[\d]+', latest).group()
-        versions.insert(0, major_version)
-
+        versions.insert(0, latest)
     with open(versions_file, 'w') as f:
         for item in versions:
             f.write(f'{item}\n')
-
     print('Contents stored:\n', "\n ".join(map(str, versions)))
 
 
