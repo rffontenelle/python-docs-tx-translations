@@ -21,7 +21,7 @@ if __name__ == "__main__":
     parser.add_argument('--git-root', default=os.getcwd(), required=False)
     args = parser.parse_args()
 
-    git_root = git.Repo(args.git-root, search_parent_directories=True).working_dir
+    git_root = git.Repo(args.git_root, search_parent_directories=True).working_dir
     ignored_entries = ['.tx', 'pot']
 
     tracked_files = list_tracked_dirs(git_root)
