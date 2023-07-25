@@ -210,14 +210,14 @@ jobs:
       - name: Checkout branch ${{ needs.trigger.outputs.current }}
         uses: actions/checkout@v3.5.3
         with:
-          branch: ${{ needs.trigger.outputs.current }}
+          ref: ${{ needs.trigger.outputs.current }}
           path: ${{ needs.trigger.outputs.current }}
     
-      - name: Checkout branch ${{ strategy.matrix.branch }}
+      - name: Checkout branch ${{ matrix.branch }}
         uses: actions/checkout@v3.5.3
         with:
-          branch: ${{ strategy.matrix.branch }}
-          path: ${{ strategy.matrix.branch }}
+          ref: ${{ matrix.branch }}
+          path: ${{ matrix.branch }}
       
       - name: Set up Python 3
         uses: actions/setup-python@v4.7.0
@@ -232,16 +232,16 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install pomerge
 
-      - name: Merge ${{ strategy.matrix.language }} translations from ${{ needs.trigger.outputs.current }} into ${{ strategy.matrix.branch }}
+      - name: Merge ${{ matrix.language }} translations from ${{ needs.trigger.outputs.current }} into ${{ matrix.branch }}
         run: | 
-          cd ${{ needs.trigger.outputs.current }}/${{ strategy.matrix.language }}
+          cd ${{ needs.trigger.outputs.current }}/${{ matrix.language }}
           pomerge --from-files *.po **/*.po
-          cd ${{ strategy.matrix.branch }}/${{ strategy.matrix.language }}
+          cd ${{ matrix.branch }}/${{ matrix.language }}
           pomerge --to-files *.po **/*.po
 
-      - name: Push ${{ strategy.matrix.language }} translations for Python ${{ strategy.matrix.branch }} documentation
+      - name: Push ${{ matrix.language }} translations for Python ${{ matrix.branch }} documentation
         if: ${{ github.event_name == 'schedule' ||
                (github.event_name == 'workflow_dispatch' && github.event.inputs.push == 'true') }}
         run: |
-          cd ${{ strategy.matrix.branch }}/${{ strategy.matrix.language }}
-          echo "tx push -t -l ${{ strategy.matrix.language }}"
+          cd ${{ matrix.branch }}/${{ matrix.language }}
+          echo "tx push -t -l ${{ matrix.language }}"
