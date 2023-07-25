@@ -62,8 +62,14 @@ jobs:
     
     - id: languages
       run: |
-        cd ${{ steps.version.outputs.current }}  
+        cd ${{ steps.version.outputs.current }}
         echo "languages=$(python -c "import os; l = sorted(os.listdir()); l.remove('.tx'); l.remove('.git'); print(l)")" >> $GITHUB_OUTPUT
+
+    - run: |
+        echo all_versions: ${{ steps.version.outputs.all_versions }}
+        echo current: ${{ steps.version.outputs.current }}
+        echo oldversions: ${{ steps.version.outputs.oldversions }}
+        echo languages: ${{ steps.languages.outputs.languages }}
 
 
   update:
