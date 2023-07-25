@@ -235,10 +235,13 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install pomerge
 
-      - name: Merge ${{ matrix.language }} translations from ${{ needs.trigger.outputs.current }} into ${{ matrix.branch }}
+      - name: Merge ${{ matrix.language }} translations from ${{ needs.trigger.outputs.current }} ...
         run: | 
           cd ${{ needs.trigger.outputs.current }}/${{ matrix.language }}
           pomerge --from-files *.po **/*.po
+      
+      - name: ... into ${{ matrix.branch }}
+        run: |
           cd ${{ matrix.branch }}/${{ matrix.language }}
           pomerge --to-files *.po **/*.po
 
@@ -247,4 +250,6 @@ jobs:
                (github.event_name == 'workflow_dispatch' && github.event.inputs.push == 'true') }}
         run: |
           cd ${{ matrix.branch }}/${{ matrix.language }}
-          echo "tx push -t -l ${{ matrix.language }}"
+          tx push -t -l ${{ matrix.language }}
+        env:
+          TX_TOKEN: ${{ secrets.TX_TOKEN }}
