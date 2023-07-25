@@ -51,7 +51,6 @@ jobs:
         python3 -m pip install -r requirements.txt
 
     - id: version
-      shell: bash
       run: |
         echo "all_versions=$(scripts/manage_versions.py all)" >> $GITHUB_OUTPUT
         echo "current=$(scripts/manage_versions.py current)" >> $GITHUB_OUTPUT
@@ -64,7 +63,7 @@ jobs:
     - id: languages
       run: |
         cd ${{ steps.version.outputs.current }}  
-        echo "languages=$(python -c "import os; l = sorted(os.listdir()); l.remove('.tx'); l.remove('git'); print(l)")" >> $GITHUB_OUTPUT
+        echo "languages=$(python -c "import os; l = sorted(os.listdir()); l.remove('.tx'); l.remove('.git'); print(l)")" >> $GITHUB_OUTPUT
 
 
   update:
