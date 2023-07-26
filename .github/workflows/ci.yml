@@ -62,8 +62,9 @@ jobs:
         path: ${{ steps.version.outputs.current }}
     
     - id: languages
+      working-directory: ${{ steps.version.outputs.current }}
       run: |
-        echo "languages=$(scripts/list-langs.py --git-root ${{ steps.version.outputs.current }})" >> $GITHUB_OUTPUT
+        echo "languages=$(scripts/list-langs.py)" >> $GITHUB_OUTPUT
 
     - run: |
         echo all_versions: ${{ steps.version.outputs.all_versions }}
@@ -235,21 +236,16 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install pomerge
 
-      - name: Merge ${{ matrix.language }} translations from ${{ needs.trigger.outputs.current }} ...
-        run: | 
-          cd ${{ needs.trigger.outputs.current }}/${{ matrix.language }}
-          pomerge --from-files *.po **/*.po
-      
-      - name: ... into ${{ matrix.branch }}
+      - name: Merge ${{ matrix.language }} translations from ${{ needs.trigger.outputs.current }} into ${{ matrix.branch }}
         run: |
-          cd ${{ matrix.branch }}/${{ matrix.language }}
-          pomerge --to-files *.po **/*.po
+          pomerge --from-files ${{ needs.trigger.outputs.current }}/${{ matrix.language }}/**/*.po --to-files ${{ matrix.branch }}/${{ matrix.language }}/**/*.po
 
       - name: Push ${{ matrix.language }} translations for Python ${{ matrix.branch }} documentation
         if: ${{ github.event_name == 'schedule' ||
                (github.event_name == 'workflow_dispatch' && github.event.inputs.push == 'true') }}
+        working-directory: ${{ matrix.branch }}/${{ matrix.language }}
         run: |
-          cd ${{ matrix.branch }}/${{ matrix.language }}
           tx push -t -l ${{ matrix.language }}
         env:
           TX_TOKEN: ${{ secrets.TX_TOKEN }}
+        
