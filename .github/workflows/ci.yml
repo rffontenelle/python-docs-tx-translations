@@ -238,7 +238,11 @@ jobs:
 
       - name: Merge ${{ matrix.language }} translations from ${{ needs.trigger.outputs.current }} into ${{ matrix.branch }}
         run: |
-          pomerge --from-files ${{ needs.trigger.outputs.current }}/${{ matrix.language }}/**/*.po --to-files ${{ matrix.branch }}/${{ matrix.language }}/**/*.po
+          if test -d ${{ matrix.branch }}/${{ matrix.language }}; then
+            pomerge --from-files ${{ needs.trigger.outputs.current }}/${{ matrix.language }}/**/*.po --to-files ${{ matrix.branch }}/${{ matrix.language }}/**/*.po
+          else
+            echo "Branch ${{ matrix.branch }} has no lang code ${{ matrix.language }}."
+          fi
 
       - name: Push ${{ matrix.language }} translations for Python ${{ matrix.branch }} documentation
         if: ${{ github.event_name == 'schedule' ||
