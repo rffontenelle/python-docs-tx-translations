@@ -50,23 +50,27 @@ jobs:
         python3 -m pip install --upgrade pip
         python3 -m pip install -r requirements.txt
 
-    - id: version
+    - name: Set version variables
+      id: version
       run: |
         echo "all_versions=$(scripts/manage_versions.py all)" >> $GITHUB_OUTPUT
         echo "current=$(scripts/manage_versions.py current)" >> $GITHUB_OUTPUT
         echo "oldversions=$(scripts/manage_versions.py others)" >> $GITHUB_OUTPUT
     
-    - uses: actions/checkout@v3.5.3
+    - name: Check out branch ${{ steps.version.outputs.current }}
+      uses: actions/checkout@v3.5.3
       with:
         ref: ${{ steps.version.outputs.current }}      
         path: ${{ steps.version.outputs.current }}
     
-    - id: languages
+    - name: Set languages variable
+      id: languages
       working-directory: ${{ steps.version.outputs.current }}
       run: |
         echo "languages=$(../scripts/list-langs.py)" >> $GITHUB_OUTPUT
 
-    - run: |
+    - name: Print variables values
+      run: |
         echo all_versions: ${{ steps.version.outputs.all_versions }}
         echo current: ${{ steps.version.outputs.current }}
         echo oldversions: ${{ steps.version.outputs.oldversions }}
@@ -208,16 +212,16 @@ jobs:
         language: ${{fromJson(needs.trigger.outputs.languages)}}
 
     steps:
-      - name: Checkout main
+      - name: Check out main
         uses: actions/checkout@v3.5.3
         
-      - name: Checkout branch ${{ needs.trigger.outputs.current }}
+      - name: Check out branch ${{ needs.trigger.outputs.current }}
         uses: actions/checkout@v3.5.3
         with:
           ref: ${{ needs.trigger.outputs.current }}
           path: ${{ needs.trigger.outputs.current }}
     
-      - name: Checkout branch ${{ matrix.branch }}
+      - name: Check out branch ${{ matrix.branch }}
         uses: actions/checkout@v3.5.3
         with:
           ref: ${{ matrix.branch }}
@@ -245,10 +249,10 @@ jobs:
             echo "Branch ${{ matrix.branch }} has no lang code ${{ matrix.language }}."
           fi
 
-      - name: Push ${{ matrix.language }} translations for Python ${{ matrix.branch }} documentation
+      - name: Push ${{ matrix.language }} translations for Python ${{ matrix.branch }} documentation to Transifex
         if: ${{ github.event_name == 'schedule' ||
                (github.event_name == 'workflow_dispatch' && github.event.inputs.push == 'true') }}
-        working-directory: ${{ matrix.branch }}/${{ matrix.language }}
+        working-directory: ${{ matrix.branch }}
         run: |
           tx push -t -l ${{ matrix.language }}
         env:
