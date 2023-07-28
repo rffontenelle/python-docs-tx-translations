@@ -31,7 +31,7 @@ jobs:
     outputs:
       all_versions: ${{ steps.version.outputs.all_versions }}
       current: ${{ steps.version.outputs.current }}
-      oldversions: ${{ steps.version.outputs.oldversions }}
+      old_versions: ${{ steps.version.outputs.old_versions }}
       languages: ${{ steps.languages.outputs.languages }}
     steps:
     - name: Check out ${{ github.repository }}
@@ -55,7 +55,7 @@ jobs:
       run: |
         echo "all_versions=$(scripts/manage_versions.py all)" >> $GITHUB_OUTPUT
         echo "current=$(scripts/manage_versions.py current)" >> $GITHUB_OUTPUT
-        echo "oldversions=$(scripts/manage_versions.py others)" >> $GITHUB_OUTPUT
+        echo "old_versions=$(scripts/manage_versions.py others)" >> $GITHUB_OUTPUT
     
     - name: Check out branch ${{ steps.version.outputs.current }}
       uses: actions/checkout@v3.5.3
@@ -73,7 +73,7 @@ jobs:
       run: |
         echo all_versions: ${{ steps.version.outputs.all_versions }}
         echo current: ${{ steps.version.outputs.current }}
-        echo oldversions: ${{ steps.version.outputs.oldversions }}
+        echo old_versions: ${{ steps.version.outputs.old_versions }}
         echo languages: ${{ steps.languages.outputs.languages }}
 
 
@@ -208,7 +208,7 @@ jobs:
       max-parallel: 4
       fail-fast: false
       matrix:
-        branch: ${{fromJson(needs.trigger.outputs.oldversions)}}
+        branch: ${{fromJson(needs.trigger.outputs.old_versions)}}
         language: ${{fromJson(needs.trigger.outputs.languages)}}
 
     steps:
