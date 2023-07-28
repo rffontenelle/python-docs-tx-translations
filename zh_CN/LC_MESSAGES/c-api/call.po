@@ -11,8 +11,8 @@
 # Zxilly Chou <zhouxinyu1001@gmail.com>, 2021
 # Jiuh-star <jiuh.star@gmail.com>, 2021
 # helloworldSB <warningfor163@foxmail.com>, 2021
-# Freesand Leo <yuqinju@163.com>, 2022
 # Bryan不可思议, 2023
+# Freesand Leo <yuqinju@163.com>, 2023
 #
 #, fuzzy
 msgid ""
@@ -21,7 +21,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-21 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 00:47+0000\n"
-"Last-Translator: Bryan不可思议, 2023\n"
+"Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -124,6 +124,11 @@ msgid ""
 "versions, vectorcall should only be used with :c:macro:`immutable "
 "<Py_TPFLAGS_IMMUTABLETYPE>` or static types."
 msgstr ""
+"现在 :c:macro:`Py_TPFLAGS_HAVE_VECTORCALL` 旗标在类的 :py:meth:`~object."
+"__call__` 方法被重新赋值时将会从类中移除。 （这将仅在内部设置 :c:member:"
+"`~PyTypeObject.tp_call`，因此可能使其行为不同于 vectorcall 函数。） 在更早的 "
+"Python 版本中，vectorcall 应当仅被用于 :c:macro:`不可变对象 "
+"<Py_TPFLAGS_IMMUTABLETYPE>` 或静态类型。"
 
 #: ../../c-api/call.rst:69
 msgid ""
@@ -143,6 +148,9 @@ msgid ""
 "*vectorcallfunc* appears. This is a pointer to a function with the following "
 "signature:"
 msgstr ""
+"类可以通过启用 :c:macro:`Py_TPFLAGS_HAVE_VECTORCALL` 旗标并将 :c:member:"
+"`~PyTypeObject.tp_vectorcall_offset` 设为对象结构体中 *vectorcallfunc* 出现位"
+"置偏移量来实现 vectorcall 协议。 这是一个指向具有以下签名的函数的指针:"
 
 #: ../../c-api/call.rst:82
 msgid "*callable* is the object being called."
@@ -168,6 +176,8 @@ msgid ""
 ":c:macro:`PY_VECTORCALL_ARGUMENTS_OFFSET` flag. To get the actual number of "
 "positional arguments from *nargsf*, use :c:func:`PyVectorcall_NARGS`."
 msgstr ""
+":c:macro:`PY_VECTORCALL_ARGUMENTS_OFFSET` 旗标。 要从 *nargsf* 获得位置参数的"
+"实际数量，请使用 :c:func:`PyVectorcall_NARGS`。"
 
 #: ../../c-api/call.rst:94
 msgid "*kwnames* is a tuple containing the names of the keyword arguments;"
@@ -209,6 +219,9 @@ msgid ""
 "allow callables such as bound methods to make their onward calls (which "
 "include a prepended *self* argument) very efficiently."
 msgstr ""
+"只要调用方能以低代价（不额外分配内存）这样做，就推荐使用 :c:macro:"
+"`PY_VECTORCALL_ARGUMENTS_OFFSET`。 这样做将允许诸如绑定方法之类的可调用对象非"
+"常高效地执行前向调用（这种调用将包括一个加在开头的 *self* 参数）。"
 
 #: ../../c-api/call.rst:111
 msgid ""
@@ -311,6 +324,9 @@ msgid ""
 "It does not check the :c:macro:`Py_TPFLAGS_HAVE_VECTORCALL` flag and it does "
 "not fall back to ``tp_call``."
 msgstr ""
+"这是一个专用函数，用于放入 :c:member:`~PyTypeObject.tp_call` 槽位或是用于 "
+"``tp_call`` 的实现。 它不会检查 :c:macro:`Py_TPFLAGS_HAVE_VECTORCALL` 旗标并"
+"且它也不会回退到 ``tp_call``。"
 
 #: ../../c-api/call.rst:186
 msgid "Object Calling API"
@@ -649,12 +665,20 @@ msgid ""
 "temporarily be changed. Keyword arguments can be passed just like in :c:func:"
 "`PyObject_Vectorcall`."
 msgstr ""
+"使用 vectorcall 调用惯例来调用一个方法。 方法的名称以 Python 字符串 *name* 的"
+"形式给出。 调用方法的对象为 *args[0]*，而 *args* 数组从 *args[1]* 开始的部分"
+"则代表调用的参数。 必须传入至少一个位置参数。 *nargsf* 为包括 *args[0]* 在内"
+"的位置参数的数量，如果 ``args[0]`` 的值可能被临时改变则还要加上 :c:macro:"
+"`PY_VECTORCALL_ARGUMENTS_OFFSET`。 关键字参数可以像在 :c:func:"
+"`PyObject_Vectorcall` 中那样传入。"
 
 #: ../../c-api/call.rst:399
 msgid ""
 "If the object has the :c:macro:`Py_TPFLAGS_METHOD_DESCRIPTOR` feature, this "
 "will call the unbound method object with the full *args* vector as arguments."
 msgstr ""
+"如果对象具有 :c:macro:`Py_TPFLAGS_METHOD_DESCRIPTOR` 特性，此函数将调用未绑定"
+"的方法对象并传入完整的 *args* vector 作为参数。"
 
 #: ../../c-api/call.rst:410
 msgid "Call Support API"

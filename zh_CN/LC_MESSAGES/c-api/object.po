@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-21 14:13+0000\n"
+"POT-Creation-Date: 2023-07-28 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 00:49+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -53,6 +53,9 @@ msgid ""
 "currently supported is :c:macro:`Py_PRINT_RAW`; if given, the :func:`str` of "
 "the object is written instead of the :func:`repr`."
 msgstr ""
+"打印对象 *o* 到文件 *fp*。 出错时返回 ``-1``。 flags 参数被用于启用特定的打印"
+"选项。 目前唯一支持的选项是 :c:macro:`Py_PRINT_RAW`；如果给出该选项，则将写入"
+"对象的 :func:`str` 而不是 :func:`repr`。"
 
 #: ../../c-api/object.rst:32 ../../c-api/object.rst:45
 msgid ""
@@ -222,6 +225,11 @@ msgid ""
 "operator corresponding to *opid*. Returns the value of the comparison on "
 "success, or ``NULL`` on failure."
 msgstr ""
+"使用由 *opid* 指定的操作来比较 *o1* 和 *o2* 的值，操作必须为 :c:macro:"
+"`Py_LT`, :c:macro:`Py_LE`, :c:macro:`Py_EQ`, :c:macro:`Py_NE`, :c:macro:"
+"`Py_GT` 或 :c:macro:`Py_GE` 中的一个，分别对应于 ``<``, ``<=``, ``==``, ``!"
+"=``, ``>`` 或 ``>=``。 这等价于 Python 表达式 ``o1 op o2``，其中 ``op`` 是与 "
+"*opid* 对应的运算符。 成功时返回比较结果值，失败时返回 ``NULL``。"
 
 #: ../../c-api/object.rst:174
 msgid ""
@@ -233,12 +241,20 @@ msgid ""
 "equivalent of the Python expression ``o1 op o2``, where ``op`` is the "
 "operator corresponding to *opid*."
 msgstr ""
+"使用由 *opid* 指定的操作来比较 *o1* 和 *o2* 的值，操作必须为 :c:macro:"
+"`Py_LT`, :c:macro:`Py_LE`, :c:macro:`Py_EQ`, :c:macro:`Py_NE`, :c:macro:"
+"`Py_GT` 或 :c:macro:`Py_GE` 中的一个，分别对应于 ``<``, ``<=``, ``==``, ``!"
+"=``, ``>`` 或 ``>=``。 失败时返回 ``-1``，结果为假值时返回 ``0``，否则返回 "
+"``1``。 这等价于 Python 表达式 ``o1 op o2``，其中 ``op`` 是与 *opid* 对应的运"
+"算符。"
 
 #: ../../c-api/object.rst:183
 msgid ""
 "If *o1* and *o2* are the same object, :c:func:`PyObject_RichCompareBool` "
 "will always return ``1`` for :c:macro:`Py_EQ` and ``0`` for :c:macro:`Py_NE`."
 msgstr ""
+"如果 *o1* 和 *o2* 是同一个对象，:c:func:`PyObject_RichCompareBool` 将总是为 :"
+"c:macro:`Py_EQ` 返回 ``1`` 并为 :c:macro:`Py_NE` 返回 ``0``。"
 
 #: ../../c-api/object.rst:188
 msgid ""
@@ -341,10 +357,8 @@ msgstr ""
 msgid ""
 "Normally only class objects, i.e. instances of :class:`type` or a derived "
 "class, are considered classes.  However, objects can override this by having "
-"a :attr:`__bases__` attribute (which must be a tuple of base classes)."
+"a :attr:`~class.__bases__` attribute (which must be a tuple of base classes)."
 msgstr ""
-"通常只有类对象才会被视为类，即 :class:`type` 或派生类的实例。然而，对象可以通"
-"过拥有 :attr:`__bases__` 属性（必须是基类的元组）来覆盖这一点。"
 
 #: ../../c-api/object.rst:264
 msgid ""
@@ -367,17 +381,15 @@ msgstr ""
 #: ../../c-api/object.rst:275
 msgid ""
 "An instance *inst* can override what is considered its class by having a :"
-"attr:`__class__` attribute."
-msgstr "实例 *inst* 可以通过 :attr:`__class__` 属性来覆盖其所属类。"
+"attr:`~instance.__class__` attribute."
+msgstr ""
 
 #: ../../c-api/object.rst:278
 msgid ""
 "An object *cls* can override if it is considered a class, and what its base "
-"classes are, by having a :attr:`__bases__` attribute (which must be a tuple "
-"of base classes)."
+"classes are, by having a :attr:`~class.__bases__` attribute (which must be a "
+"tuple of base classes)."
 msgstr ""
-"对象 *cls* 是否被认作类，以及基类是什么，均可通过 :attr:`__bases__` 属性（必"
-"须是基类的元组）进行覆盖。"
 
 #: ../../c-api/object.rst:287
 msgid ""
@@ -584,12 +596,15 @@ msgid ""
 "Get a pointer to per-item data for a class with :c:macro:"
 "`Py_TPFLAGS_ITEMS_AT_END`."
 msgstr ""
+"使用 :c:macro:`Py_TPFLAGS_ITEMS_AT_END` 获取一个指向类的单独条目数据的指针。"
 
 #: ../../c-api/object.rst:436
 msgid ""
 "On error, set an exception and return ``NULL``. :py:exc:`TypeError` is "
 "raised if *o* does not have :c:macro:`Py_TPFLAGS_ITEMS_AT_END` set."
 msgstr ""
+"出错时，将设置异常并返回 ``NULL``。 如果 *o* 没有设置 :c:macro:"
+"`Py_TPFLAGS_ITEMS_AT_END` 则会引发 :py:exc:`TypeError`。"
 
 #: ../../c-api/object.rst:197 ../../c-api/object.rst:209
 #: ../../c-api/object.rst:234 ../../c-api/object.rst:285

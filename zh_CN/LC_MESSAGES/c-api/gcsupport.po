@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-21 14:13+0000\n"
+"POT-Creation-Date: 2023-07-28 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 00:48+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -48,10 +48,14 @@ msgid ""
 "instances of the type are mutable, a :c:member:`~PyTypeObject.tp_clear` "
 "implementation must also be provided."
 msgstr ""
+"要创建一个容器类，类型对象的 :c:member:`~PyTypeObject.tp_flags` 字段必须包"
+"括 :c:macro:`Py_TPFLAGS_HAVE_GC` 并提供一个 :c:member:`~PyTypeObject."
+"tp_traverse` 处理句柄的实现。 如果该类型的实例是可变的，则还必须提供 :c:"
+"member:`~PyTypeObject.tp_clear` 的实现。"
 
 #: ../../c-api/gcsupport.rst:24
 msgid ":c:macro:`Py_TPFLAGS_HAVE_GC`"
-msgstr ""
+msgstr ":c:macro:`Py_TPFLAGS_HAVE_GC`"
 
 #: ../../c-api/gcsupport.rst:22
 msgid ""
@@ -68,11 +72,9 @@ msgstr "容器类型的构造函数必须符合两个规则："
 
 #: ../../c-api/gcsupport.rst:28
 msgid ""
-"The memory for the object must be allocated using :c:func:`PyObject_GC_New` "
-"or :c:func:`PyObject_GC_NewVar`."
+"The memory for the object must be allocated using :c:macro:`PyObject_GC_New` "
+"or :c:macro:`PyObject_GC_NewVar`."
 msgstr ""
-"必须使用 :c:func:`PyObject_GC_New` 或 :c:func:`PyObject_GC_NewVar` 为这些对象"
-"分配内存。"
 
 #: ../../c-api/gcsupport.rst:31
 msgid ""
@@ -118,29 +120,31 @@ msgid ""
 "implements the garbage collector protocol and the child class does *not* "
 "include the :c:macro:`Py_TPFLAGS_HAVE_GC` flag."
 msgstr ""
+"当调用 :c:func:`PyType_Ready` 或者某些间接调用该函数的 API 如 :c:func:"
+"`PyType_FromSpecWithBases` 或 :c:func:`PyType_FromSpec` 时解释器将自动填充 :"
+"c:member:`~PyTypeObject.tp_flags`, :c:member:`~PyTypeObject.tp_traverse` 和 :"
+"c:member:`~PyTypeObject.tp_clear` 字段，如果该类型是继承自实现了垃圾回收器协"
+"议的类并且该子类 *没有* 包括 :c:macro:`Py_TPFLAGS_HAVE_GC` 旗标的话。"
 
 #: ../../c-api/gcsupport.rst:57
 msgid ""
-"Analogous to :c:func:`PyObject_New` but for container objects with the :c:"
+"Analogous to :c:macro:`PyObject_New` but for container objects with the :c:"
 "macro:`Py_TPFLAGS_HAVE_GC` flag set."
 msgstr ""
 
 #: ../../c-api/gcsupport.rst:62
 msgid ""
-"Analogous to :c:func:`PyObject_NewVar` but for container objects with the :c:"
-"macro:`Py_TPFLAGS_HAVE_GC` flag set."
+"Analogous to :c:macro:`PyObject_NewVar` but for container objects with the :"
+"c:macro:`Py_TPFLAGS_HAVE_GC` flag set."
 msgstr ""
 
 #: ../../c-api/gcsupport.rst:67
 msgid ""
-"Analogous to :c:func:`PyObject_GC_New` but allocates *extra_size* bytes at "
+"Analogous to :c:macro:`PyObject_GC_New` but allocates *extra_size* bytes at "
 "the end of the object (at offset :c:member:`~PyTypeObject.tp_basicsize`). "
 "The allocated memory is initialized to zeros, except for the :c:type:`Python "
 "object header <PyObject>`."
 msgstr ""
-"类似于 :c:func:`PyObject_GC_New` 但会在对象的末尾分配 *extra_size* 个字节 (偏"
-"移位置 :c:member:`~PyTypeObject.tp_basicsize`)。 分配的内存将初始化为零，但 :"
-"c:type:`Python 对象标头 <PyObject>` 除外。"
 
 #: ../../c-api/gcsupport.rst:73
 msgid ""
@@ -161,12 +165,10 @@ msgstr ""
 
 #: ../../c-api/gcsupport.rst:88
 msgid ""
-"Resize an object allocated by :c:func:`PyObject_NewVar`.  Returns the "
+"Resize an object allocated by :c:macro:`PyObject_NewVar`.  Returns the "
 "resized object or ``NULL`` on failure.  *op* must not be tracked by the "
 "collector yet."
 msgstr ""
-"为 :c:func:`PyObject_NewVar` 所分配对象重新调整大小。 返回调整大小后的对象或"
-"在失败时返回 ``NULL``。 *op* 必须尚未被垃圾回收器追踪。"
 
 #: ../../c-api/gcsupport.rst:94
 msgid ""
@@ -219,11 +221,9 @@ msgstr "这类似于 Python 函数 :func:`gc.is_finalized`。"
 
 #: ../../c-api/gcsupport.rst:131
 msgid ""
-"Releases memory allocated to an object using :c:func:`PyObject_GC_New` or :c:"
-"func:`PyObject_GC_NewVar`."
+"Releases memory allocated to an object using :c:macro:`PyObject_GC_New` or :"
+"c:macro:`PyObject_GC_NewVar`."
 msgstr ""
-"释放对象的内存，该对象初始化时由 :c:func:`PyObject_GC_New` 或 :c:func:"
-"`PyObject_GC_NewVar` 分配内存。"
 
 #: ../../c-api/gcsupport.rst:137
 msgid ""
@@ -241,11 +241,9 @@ msgstr ""
 
 #: ../../c-api/gcsupport.rst:146
 msgid ""
-"The :c:func:`_PyObject_GC_TRACK` and :c:func:`_PyObject_GC_UNTRACK` macros "
+"The :c:func:`!_PyObject_GC_TRACK` and :c:func:`!_PyObject_GC_UNTRACK` macros "
 "have been removed from the public C API."
 msgstr ""
-":c:func:`_PyObject_GC_TRACK` 和 :c:func:`_PyObject_GC_UNTRACK` 宏已从公有 C "
-"API 中移除。"
 
 #: ../../c-api/gcsupport.rst:149
 msgid ""

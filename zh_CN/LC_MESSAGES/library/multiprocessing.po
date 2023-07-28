@@ -72,6 +72,11 @@ msgid ""
 "module allows the programmer to fully leverage multiple processors on a "
 "given machine.  It runs on both POSIX and Windows."
 msgstr ""
+":mod:`multiprocessing` 是一个支持使用与 :mod:`threading` 模块类似的 API 来产"
+"生进程的包。 :mod:`multiprocessing` 包同时提供了本地和远程并发操作，通过使用"
+"子进程而非线程有效地绕过了 :term:`全局解释器锁 <global interpreter lock>`。 "
+"因此，:mod:`multiprocessing` 模块允许程序员充分利用给定机器上的多个处理器。 "
+"它在 POSIX 和 Windows 上均可运行。"
 
 #: ../../library/multiprocessing.rst:25
 msgid ""
@@ -191,7 +196,7 @@ msgstr ""
 #: ../../library/multiprocessing.rst:127
 msgid ""
 "Available on POSIX systems.  Currently the default on POSIX except macOS."
-msgstr ""
+msgstr "在 POSIX 系统上可用。 目前在除 macOS 之外的 POSIX 上为默认值。"
 
 #: ../../library/multiprocessing.rst:130
 msgid ""
@@ -199,6 +204,8 @@ msgid ""
 "that requires *fork* should explicitly specify that via :func:`get_context` "
 "or :func:`set_start_method`."
 msgstr ""
+"在 Python 3.14 上默认的启动方法将不再为 *fork*。 需要 *fork* 的代码应当显式地"
+"通过 :func:`get_context` 或 :func:`set_start_method` 来指定。"
 
 #: ../../library/multiprocessing.rst:145
 msgid "*forkserver*"
@@ -213,12 +220,16 @@ msgid ""
 "or preloaded imports spawn threads as a side-effect so it is generally safe "
 "for it to use :func:`os.fork`. No unnecessary resources are inherited."
 msgstr ""
+"当程序启动并选择 *forkserver* 启动方法时，将产生一个服务器进程。 从那时起，每"
+"当需要一个新进程时，父进程就会连接到该服务器并请求它分叉一个新进程。 分叉服务"
+"器进程是单线程的，除非因系统库或预加载导入的附带影响改变了这一点，因此使用 :"
+"func:`os.fork` 通常是安全的。 没有不必要的资源被继承。"
 
 #: ../../library/multiprocessing.rst:143
 msgid ""
 "Available on POSIX platforms which support passing file descriptors over "
 "Unix pipes such as Linux."
-msgstr ""
+msgstr "在支持通过 Unix 管道传递文件描述符的 POSIX 平台上可用，例如 Linux。"
 
 #: ../../library/multiprocessing.rst:149
 msgid ""
@@ -226,6 +237,9 @@ msgid ""
 "method should be considered unsafe as it can lead to crashes of the "
 "subprocess as macOS system libraries may start threads. See :issue:`33725`."
 msgstr ""
+"在 macOS 上，现在 *spawn* 启动方法是默认值。 由于 *fork* 启动方法可能因 "
+"macOS 系统库也许会启动线程导致子进程崩溃因而应当被视为是不安全的。 参见 :"
+"issue:`33725`。"
 
 #: ../../library/multiprocessing.rst:153
 msgid ""
@@ -233,6 +247,8 @@ msgid ""
 "platforms. Child processes no longer inherit all of the parents inheritable "
 "handles on Windows."
 msgstr ""
+"在所有 POSIX 平台上添加了 *spawn*，并为某些 POSIX 平台添加了 *forkserver*。 "
+"在 Windows 上子进程将不再继承父进程的所有可继承句柄。"
 
 #: ../../library/multiprocessing.rst:159
 msgid ""
@@ -248,6 +264,14 @@ msgid ""
 "a limited number of named semaphores, and shared memory segments occupy some "
 "space in the main memory.)"
 msgstr ""
+"在 POSIX 上使用 *spawn* 或 *forkserver* 启动方法将同时启动一个 *资源追踪器* "
+"进程，负责追踪当前程序的进程产生的已取消连接的命名系统资源（如命名信号量或 :"
+"class:`~multiprocessing.shared_memory.SharedMemory` 对象）。 当所有进程退出后"
+"资源追踪器会负责取消链接任何仍然被追踪的对象。 在通常情况下应该是没有此种对象"
+"的，但是如果一个子进程是被某个信号杀掉的则可能存在一些“泄露”的资源。 （泄露的"
+"信号量或共享的内存段不会被自动取消链接直到下一次重启。 对于这两种对象来说会有"
+"问题因为系统只允许有限数量的命名信号量，而共享的内存段在主内存中占用一些空"
+"间。）"
 
 #: ../../library/multiprocessing.rst:172
 msgid ""
@@ -295,6 +319,9 @@ msgid ""
 "**PyInstaller** and **cx_Freeze**) on POSIX systems. The ``'fork'`` start "
 "method may work if code does not use threads."
 msgstr ""
+"``'spawn'`` 和 ``'forkserver'`` 启动方法在 POSIX 系统上通常不能与“已冻结”可执"
+"行程序一同使用（例如由 **PyInstaller** 和 **cx_Freeze** 等软件包产生的二进制"
+"文件）。 如果代码没有使用线程则可以使用 ``'fork'`` 启动方法。"
 
 #: ../../library/multiprocessing.rst:228
 msgid "Exchanging objects between processes"
@@ -775,6 +802,9 @@ msgid ""
 "``WaitForMultipleObjects`` family of API calls.  On POSIX, this is a file "
 "descriptor usable with primitives from the :mod:`select` module."
 msgstr ""
+"在 Windows 上，这是一个可以与 ``WaitForSingleObject`` 和 "
+"``WaitForMultipleObjects`` API 调用族一起使用的 OS 句柄。 在 POSIX 上，这是一"
+"个可以与来自 :mod:`select` 模块的原语一起使用的文件描述符。"
 
 #: ../../library/multiprocessing.rst:646
 msgid ""
@@ -782,6 +812,9 @@ msgid ""
 "on Windows :c:func:`TerminateProcess` is used.  Note that exit handlers and "
 "finally clauses, etc., will not be executed."
 msgstr ""
+"终结进程。 在 POSIX 上这是使用 ``SIGTERM`` 信号来完成的；在 Windows 上则会使"
+"用 :c:func:`TerminateProcess`。 请注意 exit 处理句柄和 finally 子句等将不会被"
+"执行。"
 
 #: ../../library/multiprocessing.rst:650
 msgid ""
@@ -803,7 +836,7 @@ msgstr ""
 
 #: ../../library/multiprocessing.rst:663
 msgid "Same as :meth:`terminate()` but using the ``SIGKILL`` signal on POSIX."
-msgstr ""
+msgstr "与 :meth:`terminate()` 相同但在 POSIX 上将使用 ``SIGKILL`` 信号。"
 
 #: ../../library/multiprocessing.rst:669
 msgid ""
@@ -1059,6 +1092,8 @@ msgid ""
 "Note that this may raise :exc:`NotImplementedError` on platforms like macOS "
 "where ``sem_getvalue()`` is not implemented."
 msgstr ""
+"请注意这可能会在未实现 ``sem_getvalue()`` 的平台如 macOS 上引发 :exc:"
+"`NotImplementedError`。"
 
 #: ../../library/multiprocessing.rst:831
 msgid ""
@@ -1381,6 +1416,9 @@ msgid ""
 "``'forkserver'``.  Not all platforms support all methods.  See :ref:"
 "`multiprocessing-start-methods`."
 msgstr ""
+"返回由受支持的启动方法组成的列表，其中第一项将为默认值。 可用的启动方法有 "
+"``'fork'``, ``'spawn'`` 和 ``'forkserver'``。 并非所有的平台都支持所有的方"
+"法。 参见 :ref:`multiprocessing-start-methods`。"
 
 #: ../../library/multiprocessing.rst:1052
 msgid ""
@@ -1396,6 +1434,9 @@ msgid ""
 "`ValueError` is raised if the specified start method is not available.  See :"
 "ref:`multiprocessing-start-methods`."
 msgstr ""
+"如果 *method* 为 ``None`` 则将返回默认的上下文。 否则 *method* 应为 "
+"``'fork'``, ``'spawn'``, ``'forkserver'``。 如果指定的启动方法不可用则将引"
+"发 :exc:`ValueError`。 参见 :ref:`multiprocessing-start-methods`。"
 
 #: ../../library/multiprocessing.rst:1064
 msgid "Return the name of start method used for starting processes."
@@ -1416,6 +1457,8 @@ msgid ""
 "The return value can be ``'fork'``, ``'spawn'``, ``'forkserver'`` or "
 "``None``.  See :ref:`multiprocessing-start-methods`."
 msgstr ""
+"返回值可以为 ``'fork'``, ``'spawn'``, ``'forkserver'`` 或 ``None``。 参见 :"
+"ref:`multiprocessing-start-methods`。"
 
 #: ../../library/multiprocessing.rst:1076
 msgid ""
@@ -1441,7 +1484,7 @@ msgstr "以使他们可以创建子进程。"
 
 #: ../../library/multiprocessing.rst:1092
 msgid "Now supported on POSIX when the ``'spawn'`` start method is used."
-msgstr ""
+msgstr "当使用 ``'spawn'`` 启动方法时在 POSIX 上受到支持。"
 
 #: ../../library/multiprocessing.rst:1095
 msgid "Accepts a :term:`path-like object`."
@@ -1455,18 +1498,25 @@ msgid ""
 "can be used as a performance enhancement to avoid repeated work in every "
 "process."
 msgstr ""
+"为 forkserver 主进程设置一个可尝试导入的模块名称列表以使得它们已导入的状态被"
+"分叉进程所继承。 当执行操作时引发的任何 :exc:`ImportError` 会被静默地忽略。 "
+"这可被用作一种性能增强措施以避免在每个进程中的重复操作。"
 
 #: ../../library/multiprocessing.rst:1106
 msgid ""
 "For this to work, it must be called before the forkserver process has been "
 "launched (before creating a :class:`Pool` or starting a :class:`Process`)."
 msgstr ""
+"要让此方法发挥作用，它必须在 forkserver 进程执行之前被调用（在创建 :class:"
+"`Pool` 或启动 :class:`Process` 之前）。"
 
 #: ../../library/multiprocessing.rst:1109
 msgid ""
 "Only meaningful when using the ``'forkserver'`` start method. See :ref:"
 "`multiprocessing-start-methods`."
 msgstr ""
+"仅在使用 ``'forkserver'`` 启动方法时是有意义的。 参见 :ref:`multiprocessing-"
+"start-methods`。"
 
 #: ../../library/multiprocessing.rst:1116
 msgid ""
@@ -1493,7 +1543,7 @@ msgstr ""
 
 #: ../../library/multiprocessing.rst:1127
 msgid "See :ref:`multiprocessing-start-methods`."
-msgstr ""
+msgstr "参见 :ref:`multiprocessing-start-methods`。"
 
 #: ../../library/multiprocessing.rst:1133
 msgid ""
@@ -3438,7 +3488,7 @@ msgstr ""
 #: ../../library/multiprocessing.rst:2548
 msgid ""
 "For both POSIX and Windows, an object can appear in *object_list* if it is"
-msgstr ""
+msgstr "对于 POSIX 和 Windows，满足下列条件的对象可以出现在 *object_list* 中"
 
 #: ../../library/multiprocessing.rst:2551
 msgid "a readable :class:`~multiprocessing.connection.Connection` object;"
@@ -3471,6 +3521,9 @@ msgid ""
 "`select.select` is interrupted by a signal, it can raise :exc:`OSError` with "
 "an error number of ``EINTR``, whereas :func:`wait` will not."
 msgstr ""
+"**POSIX**: ``wait(object_list, timeout)`` 和 ``select.select(object_list, "
+"[], [], timeout)`` 几乎相同。 差别在于，如果 :func:`select.select` 被信号中"
+"断，它会引发 :exc:`OSError` 并附带错误号 ``EINTR``，而 :func:`wait` 则不会。"
 
 #: ../../library/multiprocessing.rst:2565
 msgid ""
@@ -3625,6 +3678,8 @@ msgid ""
 "default handler. Messages sent to this logger will not by default propagate "
 "to the root logger."
 msgstr ""
+"当首次创建时日志记录器级别为 :const:`logging.NOTSET` 并且没有默认处理句柄。 "
+"发送到这个日志记录器的消息默认将不会传播到根日志记录器。"
 
 #: ../../library/multiprocessing.rst:2714
 msgid ""
@@ -3804,6 +3859,11 @@ msgid ""
 "is_alive>` will join the process.  Even so it is probably good practice to "
 "explicitly join all the processes that you start."
 msgstr ""
+"在 POSIX 上当一个进程结束但没有被合并则它将变成僵尸进程。 这样的进程应该不会"
+"很多因为每次启动新进程（或 :func:`~multiprocessing.active_children` 被调用）"
+"时所有尚未被合并的已完成进程都将被合并。 而且调用一个已结束进程的 :meth:"
+"`Process.is_alive <multiprocessing.Process.is_alive>` 也会合并这个进程。 虽然"
+"如此但显式地合并你所启动的所有进程仍然是个好习惯。"
 
 #: ../../library/multiprocessing.rst:2839
 msgid "Better to inherit than pickle/unpickle"
@@ -3897,6 +3957,8 @@ msgid ""
 "However, it is better to pass the object as an argument to the constructor "
 "for the child process."
 msgstr ""
+"在 POSIX 上使用 *fork* 启动方法，子进程将能够访问使用全局资源在父进程中创建的"
+"共享资源。 但是，更好的做法是将对象作为子进程构造器的参数来传入。"
 
 #: ../../library/multiprocessing.rst:2899
 msgid ""

@@ -1216,12 +1216,16 @@ msgid ""
 "Booleans represent truth values. The :class:`bool` type has exactly two "
 "constant instances: ``True`` and ``False``."
 msgstr ""
+"代表真值的布尔对象。 :class:`bool` 类型只有两个常量实例: ``True`` 和 "
+"``False``。"
 
 #: ../../library/stdtypes.rst:818
 msgid ""
 "The built-in function :func:`bool`  converts any value to a boolean, if the "
 "value can be interpreted as a truth value (see section :ref:`truth` above)."
 msgstr ""
+"内置函数 :func:`bool` 可将任意值转换为布尔值，如果该值可以被解读为逻辑值的话"
+"（参见上面的 :ref:`truth` 小节）。"
 
 #: ../../library/stdtypes.rst:821
 msgid ""
@@ -1231,12 +1235,16 @@ msgid ""
 "\"and\", \"or\", \"xor\". However, the logical operators ``and``, ``or`` and "
 "``!=`` should be preferred over ``&``, ``|`` and ``^``."
 msgstr ""
+"对于逻辑运算，请使用 :ref:`布尔运算符 <boolean>` ``and``, ``or`` 和 "
+"``not``。 当于两个布尔值应用按位运算符 ``&``, ``|``, ``^`` 时，它们将返回一个"
+"等价于逻辑运算 \"与\", \"或\", \"异或\" 的布尔值。 但是，更推荐使用逻辑运算"
+"符 ``and``, ``or`` 和 ``!=`` 而不是 ``&``, ``|`` 和 ``^``。"
 
 #: ../../library/stdtypes.rst:830
 msgid ""
 "The use of the bitwise inversion operator ``~`` is deprecated and will raise "
 "an error in Python 3.14."
-msgstr ""
+msgstr "按位取反运算符 ``~`` 已被弃用并将在 Python 3.14 中引发异常。"
 
 #: ../../library/stdtypes.rst:833
 msgid ""
@@ -1245,6 +1253,9 @@ msgid ""
 "1, respectively. However, relying on this is discouraged; explicitly convert "
 "using :func:`int` instead."
 msgstr ""
+":class:`bool` 是 :class:`int` 的子类 (参见 :ref:`typesnumeric`)。 在许多数字"
+"场景下，``False`` 和 ``True`` 的行为分别与整数 0 和 1 类似。 但是，不建议这样"
+"使用；请使用 :func:`int` 显式地执行转换。"
 
 #: ../../library/stdtypes.rst:841
 msgid "Iterator Types"
@@ -2402,6 +2413,11 @@ msgid ""
 "__str__` method, then :func:`str` falls back to returning :func:"
 "`repr(object) <repr>`."
 msgstr ""
+"如果 *encoding* 或 *errors* 均未给出，则 ``str(object)`` 将返回 :meth:"
+"`type(object).__str__(object) <object.__str__>`，这是 *object* 的“非正式”而适"
+"合显示的字符串表示形式。 对于字符串对象，这就是该字符串本身。 如果 *object* "
+"没有 :meth:`~object.__str__` 方法，则 :func:`str` 将回退为返回 :func:"
+"`repr(object) <repr>`。"
 
 #: ../../library/stdtypes.rst:1571
 msgid ""
@@ -2520,6 +2536,8 @@ msgid ""
 "Folding' of the Unicode Standard <https://www.unicode.org/versions/"
 "Unicode15.0.0/ch03.pdf>`__."
 msgstr ""
+"大小写折叠算法 `在 Unicode 标准 3.13 节 'Default Case Folding' 中描述 "
+"<https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf>`__。"
 
 #: ../../library/stdtypes.rst:1649
 msgid ""
@@ -2730,6 +2748,12 @@ msgid ""
 "of the Unicode Standard <https://www.unicode.org/versions/Unicode15.0.0/ch04."
 "pdf>`_."
 msgstr ""
+"如果字符串中的所有字符都为字母并且至少有一个字符则返回 ``True``，否则返回 "
+"``False``。 字母字符是指在 Unicode 字符数据库中被定义为 \"Letter\" 的字符，即"
+"具有通用类型属性 \"Lm\", \"Lt\", \"Lu\", \"Ll\" 或 \"Lo\" 之一的字符。 请注意"
+"这不同于 `Unicode 标准 4.10 节 'Letters, Alphabetic, and Ideographic' 中定义"
+"的 Alphabetic 属性 <https://www.unicode.org/versions/Unicode15.0.0/ch04."
+"pdf>`_。"
 
 #: ../../library/stdtypes.rst:1811
 msgid ""
@@ -2780,6 +2804,8 @@ msgid ""
 ":func:`keyword.iskeyword` can be used to test whether string ``s`` is a "
 "reserved identifier, such as :keyword:`def` and :keyword:`class`."
 msgstr ""
+":func:`keyword.iskeyword` 可被用来测试字符串 ``s`` 是否为保留的标识符，如 :"
+"keyword:`def` 和 :keyword:`class`。"
 
 #: ../../library/stdtypes.rst:1846
 msgid "Example: ::"
@@ -2893,6 +2919,8 @@ msgid ""
 "Folding' of the Unicode Standard <https://www.unicode.org/versions/"
 "Unicode15.0.0/ch03.pdf>`__."
 msgstr ""
+"所使用的小写算法 `在 Unicode 标准 3.13 节 'Default Case Folding' 中描述 "
+"<https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf>`__。"
 
 #: ../../library/stdtypes.rst:1947
 msgid ""
@@ -3355,6 +3383,8 @@ msgid ""
 "Folding' of the Unicode Standard <https://www.unicode.org/versions/"
 "Unicode15.0.0/ch03.pdf>`__."
 msgstr ""
+"所使用的大写算法 `在 Unicode 标准 3.13 'Default Case Folding' 中描述 "
+"<https://www.unicode.org/versions/Unicode15.0.0/ch03.pdf>`__。"
 
 #: ../../library/stdtypes.rst:2293
 msgid ""
@@ -4926,18 +4956,22 @@ msgid ""
 "is the nested list representation of the view. If ``view.ndim = 1``, this is "
 "equal to the number of elements in the view."
 msgstr ""
+"``len(view)`` 等于 :class:`~memoryview.tolist` 的长度，即视图的嵌套列表表示形"
+"式。 如果 ``view.ndim = 1``，它将等于视图中元素的数量。"
 
 #: ../../library/stdtypes.rst:3755
 msgid ""
 "If ``view.ndim == 0``, ``len(view)`` now raises :exc:`TypeError` instead of "
 "returning 1."
 msgstr ""
+"如果 ``view.ndim == 0``，现在 ``len(view)`` 将引发 :exc:`TypeError` 而不是返"
+"回 1."
 
 #: ../../library/stdtypes.rst:3758
 msgid ""
 "The :class:`~memoryview.itemsize` attribute will give you the number of "
 "bytes in a single element."
-msgstr ""
+msgstr ":class:`~memoryview.itemsize` 属性将给出单个元素的字节数。"
 
 #: ../../library/stdtypes.rst:3761
 msgid ""
@@ -5157,6 +5191,9 @@ msgid ""
 "'c'). The byte length of the result must be the same as the original length. "
 "Note that all byte lengths may depend on the operating system."
 msgstr ""
+"目标格式被限制为 :mod:`struct` 语法中的单一元素的原生格式。 这些格式中的一种"
+"必须为字节格式 ('B', 'b' 或 'c')。 结果的字节长度必须与原始长度相同。 请注意"
+"全部字节长度可能取决于具体操作系统。"
 
 #: ../../library/stdtypes.rst:4011
 msgid "Cast 1D/long to 1D/unsigned bytes::"
@@ -6028,6 +6065,12 @@ msgid ""
 "iterable as the other operand, unlike sets which only accept sets as the "
 "input."
 msgstr ""
+"键视图与集合类似因为它们的条目是唯一并且为 :term:`hashable`。 如果所有值都是"
+"可哈希对象，因而 ``(key, value)`` 对也是唯一并且为可哈希对象，那么条目视图也"
+"将与集合类似。 （值视图不会被认为与集合类似因为其条目通常都不是唯一的。） 对"
+"于与集合类似的视图，为抽象基类 :class:`collections.abc.Set` 定义的所有操作都"
+"将是可用的 (例如 ``==``, ``<`` 或 ``^``)。 虽然使用了集合运算符，但与集合类似"
+"的视图接受任何可迭代对象作为其操作数，而不像集合哪样只接受集合作为输入。"
 
 #: ../../library/stdtypes.rst:4761
 msgid "An example of dictionary view usage::"
@@ -6686,6 +6729,10 @@ msgid ""
 "For unions which include forward references, present the whole expression as "
 "a string, e.g. ``\"int | Foo\"``."
 msgstr ""
+"不可在运行时使用 ``|`` 操作数来定义有一个或多个成员为前向引用的并集。 例如，"
+"``int | \"Foo\"``，其中 ``\"Foo\"`` 是指向某个尚未定义的类的引用，在运行时将"
+"会失败。 对于包括前向引用的并集，请将整个表达式用字符串来表示，例如 ``\"int "
+"| Foo\"``。"
 
 #: ../../library/stdtypes.rst:5176
 msgid ""
@@ -6722,7 +6769,7 @@ msgstr ":func:`isinstance` 和 :func:`issubclass` 也支持 union 对象："
 msgid ""
 "However, :ref:`parameterized generics <types-genericalias>` in union objects "
 "cannot be checked::"
-msgstr ""
+msgstr "但是联合对象中的 :ref:`参数化泛型 <types-genericalias>` 将无法被检测::"
 
 #: ../../library/stdtypes.rst:5217
 msgid ""
@@ -7047,6 +7094,8 @@ msgid ""
 "The :ref:`type parameters <type-params>` of generic classes, functions, and :"
 "ref:`type aliases <type-aliases>`."
 msgstr ""
+"以下对象的 :ref:`类型形参 <type-params>`: 泛型类、函数和 :ref:`类型别名 "
+"<type-aliases>`。"
 
 #: ../../library/stdtypes.rst:5500
 msgid ""
@@ -7262,7 +7311,7 @@ msgstr ""
 msgid ""
 "Information about the default and minimum can be found in :data:`sys."
 "int_info`:"
-msgstr ""
+msgstr "有关默认值和最小值的信息可在 :data:`sys.int_info` 中找到:"
 
 #: ../../library/stdtypes.rst:5634
 msgid ""
@@ -7320,6 +7369,10 @@ msgid ""
 "limit, set it from your main entry point using Python version agnostic code "
 "as these APIs were added in security patch releases in versions before 3.12."
 msgstr ""
+"默认的 :data:`sys.int_info.default_max_str_digits` 被预期对于大多数应用程序来"
+"说都是合理的。 如果你的应用程序需要不同的限制值，请使用不预设 Python 版本的代"
+"码从你的主入口点进行设置，因为这些 API 是在 3.12 之前的版本所发布的安全补丁中"
+"添加的。"
 
 #: ../../library/stdtypes.rst:5665
 msgid "Example::"
