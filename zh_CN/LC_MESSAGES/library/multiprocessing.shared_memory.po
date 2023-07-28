@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-09 14:40+0000\n"
+"POT-Creation-Date: 2023-07-28 14:44+0000\n"
 "PO-Revision-Date: 2023-05-24 02:17+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -273,21 +273,15 @@ msgstr ""
 msgid ""
 "Provides a mutable list-like object where all values stored within are "
 "stored in a shared memory block.  This constrains storable values to only "
-"the ``int``, ``float``, ``bool``, ``str`` (less than 10M bytes each), "
-"``bytes`` (less than 10M bytes each), and ``None`` built-in data types. It "
-"also notably differs from the built-in ``list`` type in that these lists can "
-"not change their overall length (i.e. no append, insert, etc.) and do not "
-"support the dynamic creation of new :class:`ShareableList` instances via "
-"slicing."
+"the ``int`` (signed 64-bit), ``float``, ``bool``, ``str`` (less than 10M "
+"bytes each when encoded as utf-8), ``bytes`` (less than 10M bytes each), and "
+"``None`` built-in data types.  It also notably differs from the built-in "
+"``list`` type in that these lists can not change their overall length (i.e. "
+"no append, insert, etc.) and do not support the dynamic creation of new :"
+"class:`ShareableList` instances via slicing."
 msgstr ""
-"提供一个可修改的类 list 对象，其中所有值都存放在共享内存块中。这限制了可被存"
-"储在其中的值只能是 ``int``, ``float``, ``bool``, ``str``  （每条数据小于"
-"10M）, ``bytes`` （每条数据小于10M）以及 ``None`` 这些内置类型。它另一个显著"
-"区别于内置 ``list`` 类型的地方在于它的长度无法修改（比如，没有 append, "
-"insert 等操作）且不支持通过切片操作动态创建新的 :class:`ShareableList`  实"
-"例。"
 
-#: ../../library/multiprocessing.shared_memory.rst:269
+#: ../../library/multiprocessing.shared_memory.rst:270
 msgid ""
 "*sequence* is used in populating a new ``ShareableList`` full of values. Set "
 "to ``None`` to instead attach to an already existing ``ShareableList`` by "
@@ -296,7 +290,7 @@ msgstr ""
 "*sequence* 会被用来为一个新的 ``ShareableList`` 填充值。 设为 ``None`` 则会基"
 "于唯一的共享内存名称关联到已经存在的 ``ShareableList``。"
 
-#: ../../library/multiprocessing.shared_memory.rst:273
+#: ../../library/multiprocessing.shared_memory.rst:274
 msgid ""
 "*name* is the unique name for the requested shared memory, as described in "
 "the definition for :class:`SharedMemory`.  When attaching to an existing "
@@ -307,11 +301,27 @@ msgstr ""
 "的一致。 当关联到现有的 ``ShareableList`` 时，则指明其共享内存块的唯一名称并"
 "将 ``sequence`` 设为 ``None``。"
 
-#: ../../library/multiprocessing.shared_memory.rst:280
+#: ../../library/multiprocessing.shared_memory.rst:281
+msgid ""
+"A known issue exists for :class:`bytes` and :class:`str` values. If they end "
+"with ``\\x00`` nul bytes or characters, those may be *silently stripped* "
+"when fetching them by index from the :class:`ShareableList`. This ``."
+"rstrip(b'\\x00')`` behavior is considered a bug and may go away in the "
+"future. See :gh:`106939`."
+msgstr ""
+
+#: ../../library/multiprocessing.shared_memory.rst:287
+msgid ""
+"For applications where rstripping of trailing nulls is a problem, work "
+"around it by always unconditionally appending an extra non-0 byte to the end "
+"of such values when storing and unconditionally removing it when fetching:"
+msgstr ""
+
+#: ../../library/multiprocessing.shared_memory.rst:310
 msgid "Returns the number of occurrences of ``value``."
 msgstr "返回 ``value`` 出现的次数。"
 
-#: ../../library/multiprocessing.shared_memory.rst:284
+#: ../../library/multiprocessing.shared_memory.rst:314
 msgid ""
 "Returns first index position of ``value``.  Raises :exc:`ValueError` if "
 "``value`` is not present."
@@ -319,23 +329,23 @@ msgstr ""
 "返回 ``value`` 首次出现的位置，如果 ``value`` 不存在, 则抛出 :exc:"
 "`ValueError` 异常。"
 
-#: ../../library/multiprocessing.shared_memory.rst:289
+#: ../../library/multiprocessing.shared_memory.rst:319
 msgid ""
 "Read-only attribute containing the :mod:`struct` packing format used by all "
 "currently stored values."
 msgstr "包含由所有当前存储值所使用的 :mod:`struct` 打包格式的只读属性。"
 
-#: ../../library/multiprocessing.shared_memory.rst:294
+#: ../../library/multiprocessing.shared_memory.rst:324
 msgid "The :class:`SharedMemory` instance where the values are stored."
 msgstr "存储了值的 :class:`SharedMemory` 实例。"
 
-#: ../../library/multiprocessing.shared_memory.rst:297
+#: ../../library/multiprocessing.shared_memory.rst:327
 msgid ""
 "The following example demonstrates basic use of a :class:`ShareableList` "
 "instance:"
 msgstr "下面的例子演示了 :class:`ShareableList` 实例的基本用法:"
 
-#: ../../library/multiprocessing.shared_memory.rst:330
+#: ../../library/multiprocessing.shared_memory.rst:360
 msgid ""
 "The following example depicts how one, two, or many processes may access the "
 "same :class:`ShareableList` by supplying the name of the shared memory block "
@@ -344,7 +354,7 @@ msgstr ""
 "下面的例子演示了一个、两个或多个进程如何通过提供下层的共享内存块名称来访问同"
 "一个 :class:`ShareableList`:"
 
-#: ../../library/multiprocessing.shared_memory.rst:345
+#: ../../library/multiprocessing.shared_memory.rst:375
 msgid ""
 "The following examples demonstrates that ``ShareableList`` (and underlying "
 "``SharedMemory``) objects can be pickled and unpickled if needed. Note, that "
