@@ -1,30 +1,31 @@
 #!/usr/bin/env python3
-"""Prints the list of languages tracked in the repository."""
+"""Prints the list of languages in a repository."""
 
 from argparse import ArgumentParser
-import git
+from json import dumps
+from pathlib import Path
+
 import os
 
-def list_tracked_dirs(git_root):
-    """Get the list of tracked directories in the repository in *git_root*"""
-    repo = git.Repo(git_root)
-    tracked_files = repo.git.ls_tree("--full-tree", "--name-only", "HEAD").splitlines()
-    return tracked_files
 
-def filter_ignored_entries(file_list: list, ignored_entries: list) -> list:
+def list_dirs(root):
+    """Get the list of not empty and not hidden directories in the repository in *root*"""
+    return [el.name for el in root.iterdir() if any(el.glob("**/*.po")) and not el.name.startswith(".")]
+
+def filter_ignored_entries(dirs: list, ignored_entries: list) -> list:
     """Filter out the ignored entries, to return the valid languages codes"""
-    filtered_files = [file_name for file_name in file_list if file_name not in ignored_entries]
-    return filtered_files
+    filtered_dirs = [dir_name for dir_name in dirs if dir_name not in ignored_entries]
+    return filtered_dirs
 
 if __name__ == "__main__":
     parser = ArgumentParser(description=__doc__)
-    parser.add_argument('--git-root', default=os.getcwd(), required=False)
+    parser.add_argument('--root', default=os.getcwd(), required=False)
     args = parser.parse_args()
 
-    git_root = git.Repo(args.git_root, search_parent_directories=True).working_dir
-    ignored_entries = ['.tx', 'pot']
+    root = Path(args.root)
+    ignored_entries = ['pot']
 
-    tracked_files = list_tracked_dirs(git_root)
-    languages = filter_ignored_entries(tracked_files, ignored_entries)
+    dirs = list_dirs(root)
+    languages = filter_ignored_entries(dirs, ignored_entries)
     
-    print(languages)
+    print(dumps(languages))
