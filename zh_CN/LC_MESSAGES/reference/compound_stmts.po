@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-28 14:13+0000\n"
+"POT-Creation-Date: 2023-07-29 02:08+0000\n"
 "PO-Revision-Date: 2021-06-28 01:19+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -1928,6 +1928,9 @@ msgid ""
 "retrieved from the class's ``__type_params__`` attribute. See :ref:`generic-"
 "classes` for more."
 msgstr ""
+"可以在类名之后的方括号中列出 :ref:`类型形参 <type-params>`。 这将向静态类型检"
+"查器指明该类是泛型类。 在运行时，可以从类的 ``__type_params__`` 属性中获取类"
+"型参数。 请参阅 :ref:`generic-classes` 了解详情。"
 
 #: ../../reference/compound_stmts.rst:1455
 msgid ""
@@ -2103,6 +2106,8 @@ msgid ""
 "type checkers, and at runtime, generic objects behave much like their non-"
 "generic counterparts."
 msgstr ""
+"从语义上讲，这表明函数、类或类型别名是类型变量的泛型。 此信息主要供静态类型检"
+"查器使用，并且在运行时，泛型对象的行为与其对应的非泛型对象非常相似。"
 
 #: ../../reference/compound_stmts.rst:1651
 msgid ""
@@ -2115,22 +2120,32 @@ msgid ""
 "function (technically, an :ref:`annotation scope <annotation-scopes>`) that "
 "wraps the creation of the generic object."
 msgstr ""
+"类型参数是紧接在函数、类或类型别名的名称之后的方括号 (``[]``) 中声明的。 类型"
+"参数可在泛型对象的作用域内访问，但不能在其他地方访问。 因此，在声明 ``def "
+"func[T](): pass`` 之后，模块作用域中就不能再使用 ``T`` 这个名称。 在下文中，"
+"将更精确地描述泛型对象的语义。 类型形参的作用域是用一个特殊函数 (从技术上说，"
+"是一个 :ref:`标注作用域 <annotation-scopes>`) 来模拟的，它封装了泛型对象的创"
+"建操作。"
 
 #: ../../reference/compound_stmts.rst:1660
 msgid ""
 "Generic functions, classes, and type aliases have a :attr:`!__type_params__` "
 "attribute listing their type parameters."
 msgstr ""
+"泛型函数、类和类型别名都有一个 :attr:`!__type_params__` 属性用于列出它们的类"
+"型形参。"
 
 #: ../../reference/compound_stmts.rst:1663
 msgid "Type parameters come in three kinds:"
-msgstr ""
+msgstr "类型形参可分为三种:"
 
 #: ../../reference/compound_stmts.rst:1665
 msgid ""
 ":data:`typing.TypeVar`, introduced by a plain name (e.g., ``T``). "
 "Semantically, this represents a single type to a type checker."
 msgstr ""
+":data:`typing.TypeVar`，由一个普通名称 (例如``T``) 引入。 从语义上讲，这对类"
+"型检查器来说代表了一个单独类型。"
 
 #: ../../reference/compound_stmts.rst:1667
 msgid ""
@@ -2138,12 +2153,16 @@ msgid ""
 "asterisk (e.g., ``*Ts``). Semantically, this stands for a tuple of any "
 "number of types."
 msgstr ""
+":data:`typing.TypeVarTuple`，通过在前面添加一个星号的名称来引入 (例如 "
+"``*Ts``)。 从语义上讲，它代表由任意多个类型组成的元组。"
 
 #: ../../reference/compound_stmts.rst:1670
 msgid ""
 ":data:`typing.ParamSpec`, introduced by a name prefixed with two asterisks "
 "(e.g., ``**P``). Semantically, this stands for the parameters of a callable."
 msgstr ""
+":data:`typing.ParamSpec`，通过在前面添加两个星号的名称来引入 (例如 "
+"``**P``)。 从语义上讲，它代表一个可调用对象的形参。"
 
 #: ../../reference/compound_stmts.rst:1673
 msgid ""
@@ -2156,6 +2175,12 @@ msgid ""
 "should be a type (again, this is not enforced at runtime). Constrained type "
 "variables can only take on one of the types in the list of constraints."
 msgstr ""
+":data:`typing.TypeVar` 声明可以通过在冒号 (``:`` ) 后跟一个表达式来定义 *范围"
+"* 和 *约束*。 冒号后的单独表达式表示一个范围 (例如 ``T: int``)。 从语义上讲，"
+"这意味着 :data:`!typing.TypeVar` 能表示的类型只能是该范围的子类型。 冒号后在"
+"圆括号内的表达式元组指定了一组约束 (例如 ``T: (str, bytes)``)。 元组中的每个"
+"成员都应为一个类型 (同样，在运行时并不强制要求这一点)。 约束的类型变量只能使"
+"用约束列表内的类型中选择一种。 "
 
 #: ../../reference/compound_stmts.rst:1682
 msgid ""
@@ -2166,31 +2191,36 @@ msgid ""
 "bounds or constraints are evaluated in a separate :ref:`annotation scope "
 "<annotation-scopes>`."
 msgstr ""
+"对于使用类型形参列表语法声明的 :data:`!typing.TypeVar`，范围和约束在创建泛型"
+"对象时并不会被求值，只有在通过属性 ``__bound__`` 和 ``__constraints__`` 显式"
+"地访问它时才会被求值。 要做到这一点，需要在单独的 :ref:`标注作用域 "
+"<annotation-scopes>` 中对范围和约束进行求值。"
 
 #: ../../reference/compound_stmts.rst:1688
 msgid ""
 ":data:`typing.TypeVarTuple`\\ s and :data:`typing.ParamSpec`\\ s cannot have "
 "bounds or constraints."
 msgstr ""
+":data:`typing.TypeVarTuple` 和 :data:`typing.ParamSpec` 不能拥有范围或约束。"
 
 #: ../../reference/compound_stmts.rst:1691
 msgid ""
 "The following example indicates the full set of allowed type parameter "
 "declarations::"
-msgstr ""
+msgstr "下面的例子显示了所有被允许的类型形参声明::"
 
 #: ../../reference/compound_stmts.rst:1709
 msgid "Generic functions"
-msgstr ""
+msgstr "泛型函数"
 
 #: ../../reference/compound_stmts.rst:1711
 msgid "Generic functions are declared as follows::"
-msgstr ""
+msgstr "泛型函数的声明方式如下::"
 
 #: ../../reference/compound_stmts.rst:1715
 #: ../../reference/compound_stmts.rst:1775
 msgid "This syntax is equivalent to::"
-msgstr ""
+msgstr "该语法等价于::"
 
 #: ../../reference/compound_stmts.rst:1724
 msgid ""
@@ -2200,6 +2230,10 @@ msgid ""
 "attribute access on the :mod:`typing` module, but creates an instance of :"
 "data:`typing.TypeVar` directly.)"
 msgstr ""
+"这里 ``annotation-def`` 指定了一个 :ref:`标注作用域 <annotation-scopes>`，它"
+"在运行时并不会实际绑定到任何名称。 （另一项自由是在翻译中达成的：该语法没有通"
+"过 :mod:`typing` 模块的属性访问，而是直接创建了一个 :data:`typing.TypeVar` 的"
+"实例）。"
 
 #: ../../reference/compound_stmts.rst:1730
 msgid ""
@@ -2207,24 +2241,28 @@ msgid ""
 "scope used for declaring the type parameters, but the function's defaults "
 "and decorators are not."
 msgstr ""
+"泛型函数的标注会在用于声明类型形参的标注作用域内进行求值，但函数的默认值和装"
+"饰器则不会。"
 
 #: ../../reference/compound_stmts.rst:1734
 msgid ""
 "The following example illustrates the scoping rules for these cases, as well "
 "as for additional flavors of type parameters::"
-msgstr ""
+msgstr "下面的例子演示了针对这些场景，以及类型形参的变化形式的作用域规则::"
 
 #: ../../reference/compound_stmts.rst:1741
 msgid ""
 "Except for the :ref:`lazy evaluation <lazy-evaluation>` of the :class:"
 "`~typing.TypeVar` bound, this is equivalent to::"
 msgstr ""
+"除了 :class:`~typing.TypeVar` 绑定的 :ref:`惰性求值 <lazy-evaluation>` 以外，"
+"这等同于::"
 
 #: ../../reference/compound_stmts.rst:1763
 msgid ""
 "The capitalized names like ``DEFAULT_OF_arg`` are not actually bound at "
 "runtime."
-msgstr ""
+msgstr "大写形式的名称如 ``DEFAULT_OF_arg`` 在运行时不会被实际绑定。"
 
 #: ../../reference/compound_stmts.rst:1769
 msgid "Generic classes"
@@ -2250,6 +2288,9 @@ msgid ""
 "type scope for the type parameters, and decorators are evaluated outside "
 "that scope. This is illustrated by this example::"
 msgstr ""
+"泛型类隐式地继承自 :data:`typing.Generic`。 泛型类的基类和关键字参数在类型形"
+"参的类型作用域内进行求值，而装饰器则在该作用域之外进行求值。 以下示例对此进行"
+"了说明::"
 
 #: ../../reference/compound_stmts.rst:1798
 msgid "This is equivalent to::"
@@ -2269,7 +2310,7 @@ msgstr ":keyword:`type` 语句也可被用来创建泛型类型别名::"
 msgid ""
 "Except for the :ref:`lazy evaluation <lazy-evaluation>` of the value, this "
 "is equivalent to::"
-msgstr ""
+msgstr "除了会对值执行 :ref:`惰性求值 <lazy-evaluation>` 以外，这等同于::"
 
 #: ../../reference/compound_stmts.rst:1829
 msgid ""
@@ -2277,6 +2318,9 @@ msgid ""
 "scope <annotation-scopes>`. The capitalized names like "
 "``TYPE_PARAMS_OF_ListOrSet`` are not actually bound at runtime."
 msgstr ""
+"这里，``annotation-def`` (不是一个真正的关键字) 指明 :ref:`标注作用域 "
+"<annotation-scopes>`。 像 ``TYPE_PARAMS_OF_ListOrSet`` 这样的大写名称不会在运"
+"行时实际被绑定。"
 
 #: ../../reference/compound_stmts.rst:1834
 msgid "Footnotes"
@@ -2307,7 +2351,7 @@ msgstr "注册为 :class:`collections.abc.Sequence` 的 Python 类"
 #: ../../reference/compound_stmts.rst:1843
 msgid ""
 "a builtin class that has its (CPython) :c:macro:`Py_TPFLAGS_SEQUENCE` bit set"
-msgstr ""
+msgstr "设置了 (CPython) :c:macro:`Py_TPFLAGS_SEQUENCE` 比特位的内置类"
 
 #: ../../reference/compound_stmts.rst:1844
 #: ../../reference/compound_stmts.rst:1863
@@ -2356,7 +2400,7 @@ msgstr "注册为 :class:`collections.abc.Mapping` 的 Python 类"
 #: ../../reference/compound_stmts.rst:1862
 msgid ""
 "a builtin class that has its (CPython) :c:macro:`Py_TPFLAGS_MAPPING` bit set"
-msgstr ""
+msgstr "设置了 (CPython) :c:macro:`Py_TPFLAGS_MAPPING` 比特位的内置类"
 
 #: ../../reference/compound_stmts.rst:1865
 msgid ""
