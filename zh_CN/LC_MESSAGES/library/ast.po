@@ -12,17 +12,17 @@
 # Dai Xu <daixu61@hotmail.com>, 2021
 # Alpha Du <alphanow@gmail.com>, 2021
 # Bryan不可思议, 2022
-# Nyuan Zhang, 2022
 # Freesand Leo <yuqinju@163.com>, 2022
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 15:52+0000\n"
+"POT-Creation-Date: 2023-07-29 03:34+0000\n"
 "PO-Revision-Date: 2017-02-16 17:48+0000\n"
-"Last-Translator: Freesand Leo <yuqinju@163.com>, 2022\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgid ""
 "what the current grammar looks like."
 msgstr ""
 ":mod:`ast` 模块帮助 Python 程序处理 Python 语法的抽象语法树。抽象语法或许会随"
-"着 Python 的更新发布而改变；该模块能够帮助理解当前语法在编程层面的样貌。"
+"着 Python 的更新版发行而改变；该模块能够帮助理解当前语法在编程层面的样貌。"
 
 #: ../../library/ast.rst:23
 msgid ""
@@ -60,8 +60,8 @@ msgid ""
 msgstr ""
 "抽象语法树可通过将 :data:`ast.PyCF_ONLY_AST` 作为旗标传递给 :func:`compile` "
 "内置函数来生成，或是使用此模块中提供的 :func:`parse` 辅助函数。返回结果将是一"
-"个对象树，，其中的类都继承自 :class:`ast.AST`。抽象语法树可被内置的 :func:"
-"`compile` 函数编译为一个 Python 代码对象。"
+"个由许多对象构成的树，这些对象所属的类都继承自 :class:`ast.AST`。抽象语法树可"
+"被内置的 :func:`compile` 函数编译为一个 Python 代码对象。"
 
 #: ../../library/ast.rst:33
 msgid "Abstract Grammar"
@@ -96,17 +96,17 @@ msgid ""
 "rules with alternatives (aka \"sums\"), the left-hand side class is "
 "abstract: only instances of specific constructor nodes are ever created."
 msgstr ""
-"抽象语法定义的每个左侧符号(比方说，  :class:`ast.stmt` 或者 :class:`ast."
-"expr`)定义了一个类。另外，在抽象语法定义的右侧，对每一个构造器也定义了一个"
-"类；这些类继承自树左侧的类。比如，:class:`ast.BinOp` 继承自 :class:`ast."
-"expr`。对于多分支产生式(也就是\"和规则\")，树右侧的类是抽象的；只有特定构造器"
-"结点的实例能被构造。"
+"抽象文法中的每个等号左边的符号（比方说， :class:`ast.stmt` 或者 :class:`ast."
+"expr`）定义了一个类。另外，在等号右边，对每一个构造器也定义了一个类；这些类继"
+"承自等号左边的类。比如，:class:`ast.BinOp` 继承自 :class:`ast.expr`。对于多分"
+"支产生式（也就是含有“ | ”的产生式），左边的类是抽象的；只有具体构造器类的实例"
+"能够被 compile 函数构造。"
 
 #: ../../library/ast.rst:64
 msgid ""
 "Each concrete class has an attribute :attr:`_fields` which gives the names "
 "of all child nodes."
-msgstr "每个具体类都有个属性 :attr:`_fields`, 用来给出所有子节点的名字。 "
+msgstr "每个具体类都有属性 :attr:`_fields`，用来给出所有子节点的名字。"
 
 #: ../../library/ast.rst:67
 msgid ""
@@ -114,8 +114,9 @@ msgid ""
 "the type as defined in the grammar.  For example, :class:`ast.BinOp` "
 "instances have an attribute :attr:`left` of type :class:`ast.expr`."
 msgstr ""
-"每个具体类的实例对它每个子节点都有一个属性，对应类型如文法中所定义。比如，:"
-"class:`ast.BinOp` 的实例有个属性 :attr:`left`，类型是 :class:`ast.expr`."
+"每个具体类的实例为自己的每个子节点都准备了一个属性来引用该子节点，属性的类型"
+"就是文法中所定义的。比如，:class:`ast.BinOp` 的实例有个属性 :attr:`left`，类"
+"型是 :class:`ast.expr`。"
 
 #: ../../library/ast.rst:71
 msgid ""
@@ -125,9 +126,9 @@ msgid ""
 "lists.  All possible attributes must be present and have valid values when "
 "compiling an AST with :func:`compile`."
 msgstr ""
-"如果这些属性在文法中标记为可选（使用问号），对应值可能会是 ``None``。如果这些"
-"属性有零或多个（用星号标记），对应值会用Python的列表来表示。所有可能的属性必"
-"须在用 :func:`compile` 编译得到AST时给出，且是有效的值。"
+"如果这些属性在文法中标记为可选（用问号标记），对应值可能会是 ``None``。如果这"
+"些属性可有零或多个值（用星号标记），对应值会用Python的列表来表示。在用 :func:"
+"`compile` 将AST编译为可执行代码时，所有的属性必须已经被赋值为有效的值。"
 
 #: ../../library/ast.rst:82
 msgid ""
@@ -148,28 +149,28 @@ msgid ""
 "one can get the source segment of a one-line expression node using "
 "``source_line[node.col_offset : node.end_col_offset]``."
 msgstr ""
-"注意编译器不需要结束位置，所以结束位置是可选的。结束偏移在最后一个符号*之后"
-"*，例如你可以通过 ``source_line[node.col_offset : node.end_col_offset]`` 获得"
-"一个单行表达式节点的源码片段。"
+"注意编译器不需要结束位置，所以结束位置是可选的。结束偏移在最后一个符号 *之后"
+"* ，例如你可以通过 ``source_line[node.col_offset : node.end_col_offset]`` 获"
+"得一个单行表达式节点的源码片段。"
 
 #: ../../library/ast.rst:96
 msgid ""
 "The constructor of a class :class:`ast.T` parses its arguments as follows:"
-msgstr "一个类的构造器 :class:`ast.T` 像下面这样parse它的参数。"
+msgstr ":class:`ast.T` 类的构造器像下面这样解析它的参数："
 
 #: ../../library/ast.rst:98
 msgid ""
 "If there are positional arguments, there must be as many as there are items "
 "in :attr:`T._fields`; they will be assigned as attributes of these names."
 msgstr ""
-"如果有位置参数，它们必须和 :attr:`T._fields` 中的元素一样多；他们会像这些名字"
-"的属性一样被赋值。"
+"如果只用位置参数，参数的数量必须和 :attr:`T._fields` 中的项一样多；它们会按顺"
+"序赋值到这些属性上。"
 
 #: ../../library/ast.rst:100
 msgid ""
 "If there are keyword arguments, they will set the attributes of the same "
 "names to the given values."
-msgstr "如果有关键字参数，它们必须被设为和给定值同名的属性。"
+msgstr "如果有关键字参数，它们会为与其关键字同名的属性赋值。"
 
 #: ../../library/ast.rst:103
 msgid ""
@@ -183,7 +184,7 @@ msgstr "或者更紧凑点 ::"
 
 #: ../../library/ast.rst:122
 msgid "Class :class:`ast.Constant` is now used for all constants."
-msgstr "类 :class:`ast.Constant` 现在用于所有常量。"
+msgstr ":class:`ast.Constant` 类现在用于所有常量。"
 
 #: ../../library/ast.rst:126
 msgid ""
@@ -198,7 +199,7 @@ msgid ""
 "will be removed in future Python releases.  In the meantime, instantiating "
 "them will return an instance of a different class."
 msgstr ""
-"旧的类 :class:`ast.Num`,、:class:`ast.Str`、 :class:`ast.Bytes`、:class:`ast."
+"旧的类 :class:`ast.Num`、:class:`ast.Str`、 :class:`ast.Bytes`、:class:`ast."
 "NameConstant` 和 :class:`ast.Ellipsis` 仍然有效，但是它们会在未来的 Python 版"
 "本中被移除。同时，实例化它们会返回一个不同类的实例。"
 
@@ -234,7 +235,7 @@ msgid ""
 msgstr ""
 "一个常量。 ``Constant`` 字面值的 ``value`` 属性即为其代表的 Python 对象。它可"
 "以代表简单的数字，字符串或者 ``None`` 对象，但是也可以代表所有元素都是常量的"
-"不可变容器，例如元组（tuple）或冻结集合（frozenset）。"
+"不可变容器（例如元组或冻结集合）。"
 
 #: ../../library/ast.rst:168
 msgid ""
@@ -856,7 +857,7 @@ msgstr "``type_comment`` 是一个可选的将注释用作类型标注的字符�
 
 #: ../../library/ast.rst:1357
 msgid "A ``return`` statement."
-msgstr "A ``return`` 语句。"
+msgstr "一条 ``return`` 语句。"
 
 #: ../../library/ast.rst:1372
 msgid ""
@@ -1123,7 +1124,7 @@ msgstr ""
 
 #: ../../library/ast.rst:1624
 msgid ":class:`AsyncFunctionDef` is now supported."
-msgstr "目前支持 :class:`AsyncFunctionDef` "
+msgstr "目前支持 :class:`AsyncFunctionDef`"
 
 #: ../../library/ast.rst:1630
 msgid ""
@@ -1280,7 +1281,7 @@ msgid ""
 "Here is an example transformer that rewrites all occurrences of name lookups "
 "(``foo``) to ``data['foo']``::"
 msgstr ""
-"如下是一个转换器示例，它将所有出现的名称 (``foo``) 重写为 ``data['foo']``:: "
+"如下是一个转换器示例，它将所有出现的名称 (``foo``) 重写为 ``data['foo']``::"
 
 #: ../../library/ast.rst:1740
 msgid ""
@@ -1289,7 +1290,7 @@ msgid ""
 "method for the node first."
 msgstr ""
 "请记住，如果您正在操作的节点具有子节点，则必须先转换其子节点或为该节点调用 :"
-"meth:`generic_visit` 方法。"
+"meth:`generic_visit`  方法。"
 
 #: ../../library/ast.rst:1744
 msgid ""
@@ -1313,7 +1314,7 @@ msgstr ""
 
 #: ../../library/ast.rst:1756
 msgid "Usually you use the transformer like this::"
-msgstr "通常你可以像这样使用转换器:: "
+msgstr "通常你可以像这样使用转换器::"
 
 #: ../../library/ast.rst:1763
 msgid ""
@@ -1472,4 +1473,4 @@ msgid ""
 msgstr ""
 "`Parso <https://parso.readthedocs.io>`_ 是一个支持错误恢复和不同 Python 版本"
 "的（在多个 Python 版本中）往返解析的 Python 解析器。 Parso 还能列出你的 "
-"Python 文件中的许多错误。"
+"Python 文件中的许多语法错误。"
