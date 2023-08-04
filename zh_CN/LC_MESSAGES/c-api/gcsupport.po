@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-28 14:44+0000\n"
+"POT-Creation-Date: 2023-07-29 02:37+0000\n"
 "PO-Revision-Date: 2023-05-24 02:08+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -47,10 +47,14 @@ msgid ""
 "instances of the type are mutable, a :c:member:`~PyTypeObject.tp_clear` "
 "implementation must also be provided."
 msgstr ""
+"要创建一个容器类，类型对象的 :c:member:`~PyTypeObject.tp_flags` 字段必须包"
+"括 :c:macro:`Py_TPFLAGS_HAVE_GC` 并提供一个 :c:member:`~PyTypeObject."
+"tp_traverse` 处理句柄的实现。 如果该类型的实例是可变的，则还必须提供 :c:"
+"member:`~PyTypeObject.tp_clear` 的实现。"
 
 #: ../../c-api/gcsupport.rst:24
 msgid ":c:macro:`Py_TPFLAGS_HAVE_GC`"
-msgstr ""
+msgstr ":c:macro:`Py_TPFLAGS_HAVE_GC`"
 
 #: ../../c-api/gcsupport.rst:22
 msgid ""
@@ -70,6 +74,8 @@ msgid ""
 "The memory for the object must be allocated using :c:macro:`PyObject_GC_New` "
 "or :c:macro:`PyObject_GC_NewVar`."
 msgstr ""
+"该对象的内在必须使用 :c:macro:`PyObject_GC_New` 或 :c:macro:"
+"`PyObject_GC_NewVar` 来分配。"
 
 #: ../../c-api/gcsupport.rst:31
 msgid ""
@@ -115,12 +121,19 @@ msgid ""
 "implements the garbage collector protocol and the child class does *not* "
 "include the :c:macro:`Py_TPFLAGS_HAVE_GC` flag."
 msgstr ""
+"当调用 :c:func:`PyType_Ready` 或者某些间接调用该函数的 API 如 :c:func:"
+"`PyType_FromSpecWithBases` 或 :c:func:`PyType_FromSpec` 时解释器将自动填充 :"
+"c:member:`~PyTypeObject.tp_flags`, :c:member:`~PyTypeObject.tp_traverse` 和 :"
+"c:member:`~PyTypeObject.tp_clear` 字段，如果该类型是继承自实现了垃圾回收器协"
+"议的类并且该子类 *没有* 包括 :c:macro:`Py_TPFLAGS_HAVE_GC` 旗标的话。"
 
 #: ../../c-api/gcsupport.rst:57
 msgid ""
 "Analogous to :c:macro:`PyObject_New` but for container objects with the :c:"
 "macro:`Py_TPFLAGS_HAVE_GC` flag set."
 msgstr ""
+"类似于 :c:macro:`PyObject_New` 但专用于设置了 :c:macro:`Py_TPFLAGS_HAVE_GC` "
+"旗标的容器对象。"
 
 #: ../../c-api/gcsupport.rst:63
 msgid ""

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-28 14:44+0000\n"
+"POT-Creation-Date: 2023-07-29 02:37+0000\n"
 "PO-Revision-Date: 2023-05-24 02:09+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -230,6 +230,9 @@ msgid ""
 "and :c:func:`!free`; call ``malloc(1)`` (or ``calloc(1, 1)``) when "
 "requesting zero bytes."
 msgstr ""
+":ref:`默认原始内存分配器 <default-memory-allocators>` 使用以下函数: :c:func:"
+"`malloc`, :c:func:`calloc`, :c:func:`realloc` 和 :c:func:`!free`；当请求零个"
+"字节时则调用 ``malloc(1)`` (或 ``calloc(1, 1)``)。"
 
 #: ../../c-api/memory.rst:146 ../../c-api/memory.rst:217
 #: ../../c-api/memory.rst:325
@@ -807,6 +810,8 @@ msgid ""
 "safe: the :term:`GIL <global interpreter lock>` is not held when the "
 "allocator is called."
 msgstr ""
+"对于 :c:macro:`PYMEM_DOMAIN_RAW` 域，分配器必须是线程安全的：当分配器被调用时"
+"将不持有 :term:`GIL <global interpreter lock>`。"
 
 #: ../../c-api/memory.rst:479
 msgid ""
@@ -934,6 +939,9 @@ msgid ""
 "and :c:macro:`PYMEM_DOMAIN_MEM` (ex: :c:func:`PyMem_Malloc`) domains are "
 "called."
 msgstr ""
+"检测当调用 :c:macro:`PYMEM_DOMAIN_OBJ` (如: :c:func:`PyObject_Malloc`) 和 :c:"
+"macro:`PYMEM_DOMAIN_MEM` (如: :c:func:`PyMem_Malloc`) 域的分配器函数时是否持"
+"有 :term:`GIL <global interpreter lock>`。"
 
 #: ../../c-api/memory.rst:545
 msgid ""
@@ -981,15 +989,15 @@ msgstr "API 标识符（ASCII 字符）:"
 
 #: ../../c-api/memory.rst:562
 msgid "``'r'`` for :c:macro:`PYMEM_DOMAIN_RAW`."
-msgstr ""
+msgstr "``'r'`` 表示 :c:macro:`PYMEM_DOMAIN_RAW`。"
 
 #: ../../c-api/memory.rst:563
 msgid "``'m'`` for :c:macro:`PYMEM_DOMAIN_MEM`."
-msgstr ""
+msgstr "``'m'`` 表示 :c:macro:`PYMEM_DOMAIN_MEM`。"
 
 #: ../../c-api/memory.rst:564
 msgid "``'o'`` for :c:macro:`PYMEM_DOMAIN_OBJ`."
-msgstr ""
+msgstr "``'o'`` 表示 :c:macro:`PYMEM_DOMAIN_OBJ`。"
 
 #: ../../c-api/memory.rst:567
 msgid "``p[-S+1:0]``"
@@ -1075,6 +1083,10 @@ msgid ""
 "debug hooks now also check if the GIL is held when functions of :c:macro:"
 "`PYMEM_DOMAIN_OBJ` and :c:macro:`PYMEM_DOMAIN_MEM` domains are called."
 msgstr ""
+":c:func:`PyMem_SetupDebugHooks` 函数现在也能在使用发布模式编译的 Python 上工"
+"作。 当发生错误时，调试钩子现在会使用 :mod:`tracemalloc` 来获取已分配内存块的"
+"回溯信息。 调试钩子现在还会在 :c:macro:`PYMEM_DOMAIN_OBJ` 和 :c:macro:"
+"`PYMEM_DOMAIN_MEM` 作用域的函数被调用时检查是否持有 GIL。"
 
 #: ../../c-api/memory.rst:609
 msgid ""
@@ -1109,6 +1121,9 @@ msgid ""
 "the :c:macro:`PYMEM_DOMAIN_MEM` (ex: :c:func:`PyMem_Malloc`) and :c:macro:"
 "`PYMEM_DOMAIN_OBJ` (ex: :c:func:`PyObject_Malloc`) domains."
 msgstr ""
+"*pymalloc* 是 :c:macro:`PYMEM_DOMAIN_MEM` (例如: :c:func:`PyMem_Malloc`) 和 :"
+"c:macro:`PYMEM_DOMAIN_OBJ` (例如: :c:func:`PyObject_Malloc`) 域的 :ref:`默认"
+"分配器 <default-memory-allocators>`。"
 
 #: ../../c-api/memory.rst:630
 msgid "The arena allocator uses the following functions:"
