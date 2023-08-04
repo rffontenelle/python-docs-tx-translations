@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2022
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 15:19+0000\n"
+"POT-Creation-Date: 2023-08-04 15:17+0000\n"
 "PO-Revision-Date: 2022-11-05 17:22+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2022\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
 "teams/5390/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -160,7 +160,7 @@ msgstr "``x or y``"
 
 #: ../../library/stdtypes.rst:87
 msgid "if *x* is true, then *x*, else *y*"
-msgstr ""
+msgstr "se *x* é true, então *x*, do contrário *y*"
 
 #: ../../library/stdtypes.rst:87 ../../library/stdtypes.rst:285
 #: ../../library/stdtypes.rst:884 ../../library/stdtypes.rst:887
@@ -231,7 +231,7 @@ msgid ""
 msgstr ""
 "``not`` tem uma prioridade mais baixa do que operadores não booleanos, então "
 "``not a == b`` é interpretado como ``not (a == b)`` e ``a == not b`` é um "
-"erro de sintaxe. "
+"erro de sintaxe."
 
 #: ../../library/stdtypes.rst:120
 msgid "Comparisons"
@@ -347,6 +347,8 @@ msgid ""
 "Non-identical instances of a class normally compare as non-equal unless the "
 "class defines the :meth:`~object.__eq__` method."
 msgstr ""
+"Instâncias não idênticas de uma classe normalmente comparam-se como "
+"desiguais ao menos que a classe defina o método :meth:`~object.__eq__`."
 
 #: ../../library/stdtypes.rst:183
 msgid ""
@@ -357,6 +359,12 @@ msgid ""
 "meth:`~object.__eq__` are sufficient, if you want the conventional meanings "
 "of the comparison operators)."
 msgstr ""
+"Instâncias de uma classe não podem ser ordenadas com respeito a outras "
+"instâncias da mesma classe, ou outros tipos de objeto, ao menos que a classe "
+"defina o suficiente dos métodos :meth:`~object.__lt__`, :meth:`~object."
+"__le__`, :meth:`~object.__gt__` e :meth:`~object.__ge__` (no geral, :meth:"
+"`~object.__lt__` e :meth:`~object.__eq__` são suficientes, se você quiser o "
+"significado convencional dos operadores de comparação)."
 
 #: ../../library/stdtypes.rst:190
 msgid ""
@@ -396,6 +404,18 @@ msgid ""
 "numeric types :mod:`fractions.Fraction`, for rationals, and :mod:`decimal."
 "Decimal`, for floating-point numbers with user-definable precision.)"
 msgstr ""
+"Existem três tipos numéricos distintos: :dfn:`inteiros`, :dfn:`números de "
+"ponto flutuante` e :dfn:`números complexos`. Além disso, os booleanos são um "
+"subtipo de números inteiros. Inteiros têm precisão ilimitada. Números de "
+"ponto flutuante são geralmente implementados usando :c:expr:`double` em C; "
+"informações sobre a precisão e representação interna dos números de ponto "
+"flutuante para a máquina na qual seu programa está sendo executado estão "
+"disponíveis em :data:`sys.float_info`. Números complexos têm uma parte real "
+"e imaginária, cada um com um número de ponto flutuante. Para extrair essas "
+"partes de um número complexo *z*, use ``z.real`` e ``z.imag``. (A biblioteca "
+"padrão inclui os tipos numéricos adicionais :mod:`fractions.Fraction`, para "
+"racionais, e :mod:`decimal.Decimal`, para números de ponto flutuante com "
+"precisão definida pelo usuário.)"
 
 #: ../../library/stdtypes.rst:237
 msgid ""
@@ -652,6 +672,9 @@ msgid ""
 "fractional part. See functions :func:`math.floor` and :func:`math.ceil` for "
 "alternative conversions."
 msgstr ""
+"Conversão de :class:`float` para :class:`int` trunca, descartando a parte "
+"fracionária. Veja as funções :func:`math.floor` e :func:`math.ceil` para "
+"conversões alternativas."
 
 #: ../../library/stdtypes.rst:344
 msgid ""
@@ -896,7 +919,7 @@ msgid ""
 "bit_length()`` returns ``0``."
 msgstr ""
 "Mais precisamente, se ``x`` for diferente de zero, então ``x.bit_length()`` "
-"é o único positivo inteiro ``k`` tal que``2**(k-1) <= abs(x) < 2**k``. "
+"é o único positivo inteiro ``k`` tal que ``2**(k-1) <= abs(x) < 2**k``. "
 "Equivalentemente, quando ``abs(x)`` for pequeno o suficiente para ter um "
 "logaritmo corretamente arrendondado, então ``k = 1 + int(log(abs(x), 2))``. "
 "Se ``x`` é zero, então ``x.bit_length()`` retorna ``0``."
@@ -1126,6 +1149,19 @@ msgid ""
 "value of ``P`` is made available to Python as the :attr:`modulus` attribute "
 "of :data:`sys.hash_info`."
 msgstr ""
+"Para números ``x`` e ``y``, possivelmente de diferentes tipos, é um "
+"requisito que ``hash(x) == hash(y)`` sempre que ``x == y`` (veja a "
+"documentação do método :meth:`~object.__hash__` para mais detalhes). Para "
+"facilitar a implementação e eficiência através de uma variedade de tipos "
+"numéricos (incluindo :class:`int`, :class:`float`, :class:`decimal.Decimal` "
+"e :class:`fractions.Fraction`), o hash do Python para tipos numéricos é "
+"baseado em uma única função matemática que é definida para qualquer número "
+"racional e, portanto, se aplica para todas as instâncias de :class:`int` e :"
+"class:`fractions.Fraction`, e todas as instâncias finitas das classes :class:"
+"`float` e :class:`decimal.Decimal`. Essencialmente, essa função é dada pelo "
+"módulo de redução ``P`` para um primo fixado ``P``. O valor de ``P`` é "
+"disponibilizado ao Python como um atributo :attr:`modulus` do :data:`sys."
+"hash_info`."
 
 #: ../../library/stdtypes.rst:677
 msgid ""
@@ -1224,6 +1260,8 @@ msgid ""
 "One method needs to be defined for container objects to provide :term:"
 "`iterable` support:"
 msgstr ""
+"Um método necessita ser definido para objetos contêineres afim destes "
+"proverem suporte a :term:`iterável`:"
 
 #: ../../library/stdtypes.rst:782
 msgid ""
@@ -1236,6 +1274,14 @@ msgid ""
 "member:`~PyTypeObject.tp_iter` slot of the type structure for Python objects "
 "in the Python/C API."
 msgstr ""
+"Retorna um objeto :term:`iterador`. O objeto deve suportar o protocolo "
+"iterador descrito abaixo. Se um contêiner suporta diferentes tipos de "
+"iterador, métodos adicionais podem ser providenciados para requisitar "
+"especificamente iteradores para aqueles tipos de iterações. (Um exemplo de "
+"um objeto suportando múltiplas formas de iteração seria uma estrutura em "
+"árvore a qual suporta ambas travessias de travessia em largura e em "
+"profundidade.) Esse método corresponde ao slot :c:member:`~PyTypeObject."
+"tp_iter` da estrutura de tipos para objetos Python na API Python/C."
 
 #: ../../library/stdtypes.rst:791
 msgid ""
@@ -1252,6 +1298,11 @@ msgid ""
 "`in` statements.  This method corresponds to the :c:member:`~PyTypeObject."
 "tp_iter` slot of the type structure for Python objects in the Python/C API."
 msgstr ""
+"Retorna o próprio objeto :term:`iterador` em si. Isso é necessário para "
+"permitir que ambos os contêineres e iteradores sejam usados com as "
+"instruções :keyword:`for` e :keyword:`in`. Este método corresponde ao slot :"
+"c:member:`~PyTypeObject.tp_iter` da estrutura de tipos para objetos Python "
+"na API Python/C."
 
 #: ../../library/stdtypes.rst:806
 msgid ""
@@ -1260,6 +1311,10 @@ msgid ""
 "the :c:member:`~PyTypeObject.tp_iternext` slot of the type structure for "
 "Python objects in the Python/C API."
 msgstr ""
+"Retorna o próximo item do :term:`iterador`. Se não houver itens além, a "
+"exceção :exc:`StopIteration` é levantada. Esse método corresponde ao slot :c:"
+"member:`~PyTypeObject.tp_iternext` da estrutura de tipos para objetos Python "
+"na API Python/C."
 
 #: ../../library/stdtypes.rst:811
 msgid ""
@@ -1334,7 +1389,7 @@ msgstr ""
 "As operações nas seguintes tabelas são suportadas pela maioria dos tipos "
 "sequências, ambos mutáveis e imutáveis. A classe ABC :class:`collections.abc."
 "Sequence` é fornecida para tornar fácil a correta implementação desses "
-"operadores em tipos sequências personalizados. "
+"operadores em tipos sequências personalizados."
 
 #: ../../library/stdtypes.rst:858
 msgid ""
@@ -1503,6 +1558,11 @@ msgid ""
 "`IndexError` or a :exc:`StopIteration` is encountered (or when the index "
 "drops below zero)."
 msgstr ""
+"Iteradores para frente e reversos sobre sequências mutáveis acessam valores "
+"usando um índice. Esse índice continuará avançando (ou retrocedendo) mesmo "
+"que a sequência subjacente seja alterada. O iterador termina somente quando "
+"um :exc:`IndexError` ou um :exc:`StopIteration` é encontrado (ou quando o "
+"índice cai abaixo de zero)."
 
 #: ../../library/stdtypes.rst:936
 msgid ""
@@ -2182,6 +2242,11 @@ msgid ""
 "If the *start* argument is omitted, it defaults to ``0``. If *step* is "
 "zero, :exc:`ValueError` is raised."
 msgstr ""
+"Os argumentos para o construtor de intervalo devem ser inteiros (:class:"
+"`int` embutido ou qualquer objeto que implemente o método especial :meth:"
+"`~object.__index__`). Se o argumento *step* for omitido, será usado o padrão "
+"``1``. Se o argumento *start* for omitido, será usado o padrão ``0``. Se "
+"*step* for zero, uma exceção :exc:`ValueError` será levantada."
 
 #: ../../library/stdtypes.rst:1314
 msgid ""
@@ -2328,6 +2393,9 @@ msgid ""
 "how to implement a lazy version of range suitable for floating point "
 "applications."
 msgstr ""
+"A `receita de linspace <https://code.activestate.com/recipes/579000/>`_ "
+"mostra como implementar uma versão preguiçosa de um intervalo adequado para "
+"aplicações de ponto flutuante."
 
 #: ../../library/stdtypes.rst:1429
 msgid "Text Sequence Type --- :class:`str`"
@@ -2349,7 +2417,7 @@ msgstr "Aspas simples: ``'permitem aspas \"duplas\" internas'``"
 
 #: ../../library/stdtypes.rst:1437
 msgid "Double quotes: ``\"allows embedded 'single' quotes\"``"
-msgstr ""
+msgstr "Aspas duplas: ``\"permitem aspas 'simples' internas\"``"
 
 #: ../../library/stdtypes.rst:1438
 msgid ""
@@ -2602,16 +2670,20 @@ msgid ""
 "If *sub* is empty, returns the number of empty strings between characters "
 "which is the length of the string plus one."
 msgstr ""
+"Se *sub* estiver vazio, retorna o número de strings vazias entre os "
+"caracteres, que é o comprimento da string mais um."
 
 #: ../../library/stdtypes.rst:1587
 msgid "Return the string encoded to :class:`bytes`."
-msgstr ""
+msgstr "Retorna a string codificada para :class:`bytes`."
 
 #: ../../library/stdtypes.rst:1589 ../../library/stdtypes.rst:2722
 msgid ""
 "*encoding* defaults to ``'utf-8'``; see :ref:`standard-encodings` for "
 "possible values."
 msgstr ""
+"*encoding* tem como padrão ``'utf-8'``; veja :ref:`standard-encodings` para "
+"valores possíveis."
 
 #: ../../library/stdtypes.rst:1592
 msgid ""
@@ -2621,6 +2693,11 @@ msgid ""
 "``'backslashreplace'`` and any other name registered via :func:`codecs."
 "register_error`. See :ref:`error-handlers` for details."
 msgstr ""
+"*errors* controla como os erros de codificação são tratados. Se ``'strict'`` "
+"(o padrão), uma exceção :exc:`UnicodeError` é levantada. Outros valores "
+"possíveis são ``'ignore'``, ``'replace'``, ``'xmlcharrefreplace'``, "
+"``'backslashreplace'`` e qualquer outro nome registrado via :func:`codecs."
+"register_error`. Veja :ref:`error-handlers` para detalhes."
 
 #: ../../library/stdtypes.rst:1599
 msgid ""
@@ -2628,6 +2705,10 @@ msgid ""
 "unless an encoding error actually occurs, :ref:`devmode` is enabled or a :"
 "ref:`debug build <debug-build>` is used."
 msgstr ""
+"Por motivos de desempenho, o valor de *errors* não é verificado quanto à "
+"validade, a menos que um erro de codificação realmente ocorra, :ref:"
+"`devmode` esteja ativado ou uma :ref:`construção de depuração <debug-build>` "
+"seja usada."
 
 #: ../../library/stdtypes.rst:1604 ../../library/stdtypes.rst:2741
 msgid "Added support for keyword arguments."
@@ -2638,6 +2719,8 @@ msgid ""
 "The value of the *errors* argument is now checked in :ref:`devmode` and in :"
 "ref:`debug mode <debug-build>`."
 msgstr ""
+"O valor do argumento *errors* agora é verificado em :ref:`devmode` e no :ref:"
+"`modo de depuração <debug-build>`."
 
 #: ../../library/stdtypes.rst:1614
 msgid ""
@@ -3426,12 +3509,16 @@ msgid ""
 "The :func:`string.capwords` function does not have this problem, as it "
 "splits words on spaces only."
 msgstr ""
+"A função :func:`string.capwords` não tem esse problema, pois ela divide "
+"palavras apenas em espaços."
 
 #: ../../library/stdtypes.rst:2162
 msgid ""
 "Alternatively, a workaround for apostrophes can be constructed using regular "
 "expressions::"
 msgstr ""
+"Alternativamente, uma solução alternativa para os apóstrofes pode ser "
+"construída usando expressões regulares::"
 
 #: ../../library/stdtypes.rst:2177
 msgid ""
@@ -3508,7 +3595,7 @@ msgstr ""
 
 #: ../../library/stdtypes.rst:2225
 msgid "``printf``-style String Formatting"
-msgstr "Formatação de String no Formato ``printf``-style "
+msgstr "Formatação de String no Formato no estilo ``printf``"
 
 #: ../../library/stdtypes.rst:2238
 msgid ""
@@ -3992,7 +4079,7 @@ msgstr "Aspas simples: ``b'still allows embedded \"double\" quotes'``"
 
 #: ../../library/stdtypes.rst:2456
 msgid "Double quotes: ``b\"still allows embedded 'single' quotes\"``"
-msgstr ""
+msgstr "Aspas duplas: ``b\"still allows embedded 'single' quotes\"``"
 
 #: ../../library/stdtypes.rst:2457
 msgid ""
@@ -4127,6 +4214,12 @@ msgid ""
 "*bytes_per_sep* parameter controls the spacing. Positive values calculate "
 "the separator position from the right, negative values from the left."
 msgstr ""
+"Se você quiser tornar a string hexadecimal mais fácil de ler, você pode "
+"especificar um caractere separador através do parâmetro *sep*, que será "
+"incluído no resultado. Por padrão, este separador será incluído entre cada "
+"byte. Um segundo parâmetro opcional *bytes_per_sep* controla o espaçamento. "
+"Valores positivos calculam a posição do separador a partir da direita, "
+"valores negativos calculam a partir da esquerda."
 
 #: ../../library/stdtypes.rst:2531
 msgid ""
@@ -4374,6 +4467,8 @@ msgid ""
 "If *sub* is empty, returns the number of empty slices between characters "
 "which is the length of the bytes object plus one."
 msgstr ""
+"Se *sub* estiver vazio, retorna o número de fatias vazias entre os "
+"caracteres, que é o comprimento do objeto bytes mais um."
 
 #: ../../library/stdtypes.rst:2669 ../../library/stdtypes.rst:2780
 #: ../../library/stdtypes.rst:2793 ../../library/stdtypes.rst:2859
@@ -4432,7 +4527,7 @@ msgstr ""
 
 #: ../../library/stdtypes.rst:2720
 msgid "Return the bytes decoded to a :class:`str`."
-msgstr ""
+msgstr "Retorna os bytes decodificados para uma :class:`str`."
 
 #: ../../library/stdtypes.rst:2725
 msgid ""
@@ -4441,6 +4536,11 @@ msgid ""
 "are ``'ignore'``, ``'replace'``, and any other name registered via :func:"
 "`codecs.register_error`. See :ref:`error-handlers` for details."
 msgstr ""
+"*errors* controla como os erros de decodificação são tratados. Se "
+"``'strict'`` (o padrão), uma exceção :exc:`UnicodeError` é levantada. Outros "
+"valores possíveis são ``'ignore'``, ``'replace'`` e qualquer outro nome "
+"registrado via :func:`codecs.register_error`. Veja :ref:`error-handlers` "
+"para detalhes."
 
 #: ../../library/stdtypes.rst:2731
 msgid ""
@@ -4448,6 +4548,10 @@ msgid ""
 "unless a decoding error actually occurs, :ref:`devmode` is enabled or a :ref:"
 "`debug build <debug-build>` is used."
 msgstr ""
+"Por motivos de desempenho, o valor de *errors* não é verificado quanto à "
+"validade, a menos que um erro de decodificação realmente ocorra, :ref:"
+"`devmode` esteja ativado ou uma :ref:`construção de depuração <debug-build>` "
+"seja usada."
 
 #: ../../library/stdtypes.rst:2737
 msgid ""
@@ -4455,6 +4559,9 @@ msgid ""
 "`bytes-like object` directly, without needing to make a temporary :class:`!"
 "bytes` or :class:`!bytearray` object."
 msgstr ""
+"Passar o argumento *encoding* para :class:`str` permite decodificar qualquer "
+"objeto :term:`objeto byte ou similar` diretamente, sem a necessidade de "
+"criar um objeto :class:`!bytes` ou :class:`!bytearray` temporário."
 
 #: ../../library/stdtypes.rst:2752
 msgid ""
@@ -5195,6 +5302,8 @@ msgid ""
 "Bytes (converts any Python object using ``repr(obj).encode('ascii', "
 "'backslashreplace')``)."
 msgstr ""
+"Bytes (converte qualquer objeto Python usando ``repr(obj).encode('ascii', "
+"'backslashreplace')``)."
 
 #: ../../library/stdtypes.rst:3591
 msgid ""
@@ -5319,12 +5428,18 @@ msgid ""
 "formats 'B', 'b' or 'c' are also hashable. The hash is defined as ``hash(m) "
 "== hash(m.tobytes())``::"
 msgstr ""
+"Memoryviews unidimensionais de tipos :term:`hasheáveis <hasheável>` (somente "
+"leitura) com formatos 'B', 'b' ou 'c' também são hasheáveis. O hash é "
+"definido como ``hash(m) == hash(m.tobytes())``::"
 
 #: ../../library/stdtypes.rst:3739
 msgid ""
 "One-dimensional memoryviews can now be sliced. One-dimensional memoryviews "
 "with formats 'B', 'b' or 'c' are now :term:`hashable`."
 msgstr ""
+"Memoryviews unidimensionais agora podem ser fatiadas. Memoryviews "
+"unidimensionais com formatos 'B', 'b' ou 'c' agora são :term:`hasheáveis "
+"<hasheável>`."
 
 #: ../../library/stdtypes.rst:3743
 msgid ""
@@ -6009,6 +6124,12 @@ msgid ""
 "may not be used as keys. Values that compare equal (such as ``1``, ``1.0``, "
 "and ``True``) can be used interchangeably to index the same dictionary entry."
 msgstr ""
+"As chaves de um dicionário são *quase* valores arbitrários. Valores que não "
+"são :term:`hasheáveis <hasheável>`, ou seja, valores contendo listas, "
+"dicionários ou outros tipos mutáveis (que são comparados por valor e não por "
+"identidade de objeto) não podem ser usados como chaves. Valores que comparam "
+"iguais (como ``1``, ``1.0`` e ``True``) podem ser usados alternadamente para "
+"indexar a mesma entrada do dicionário."
 
 #: ../../library/stdtypes.rst:4352
 msgid ""
@@ -6615,6 +6736,13 @@ msgid ""
 "`~contextmanager.__enter__` and :meth:`~contextmanager.__exit__` methods, "
 "rather than the iterator produced by an undecorated generator function."
 msgstr ""
+"Os :term:`gerador`\\es do Python e o decorador :class:`contextlib."
+"contextmanager` fornecem uma maneira conveniente de implementar esses "
+"protocolos. Se uma função geradora for decorada com o decorador :class:"
+"`contextlib.contextmanager`, ela retornará um gerenciador de contexto "
+"implementando os métodos necessários :meth:`~contextmanager.__enter__` e :"
+"meth:`~contextmanager.__exit__`, em vez de o iterador produzido por uma "
+"função geradora não decorada."
 
 #: ../../library/stdtypes.rst:4774
 msgid ""
@@ -6661,18 +6789,29 @@ msgid ""
 "the ``list`` class with the argument :class:`int`. ``GenericAlias`` objects "
 "are intended primarily for use with :term:`type annotations <annotation>`."
 msgstr ""
+"Objetos ``GenericAlias`` são geralmente criados :ref:`subscrevendo "
+"<subscriptions>` uma classe. Eles são mais usados com :ref:`classes "
+"contêineres <sequence-types>`, como :class:`list` ou :class:`dict`. Por "
+"exemplo, ``list[int]`` é um objeto ``GenericAlias`` criado pela subscrição "
+"da classe ``list`` com o argumento :class:`int`. Objetos ``GenericAlias`` "
+"são destinados principalmente para uso com :term:`anotações de tipo "
+"<annotation>`."
 
 #: ../../library/stdtypes.rst:4810
 msgid ""
 "It is generally only possible to subscript a class if the class implements "
 "the special method :meth:`~object.__class_getitem__`."
 msgstr ""
+"Geralmente só é possível subscrever uma classe se a classe implementar o "
+"método especial :meth:`~object.__class_getitem__`."
 
 #: ../../library/stdtypes.rst:4813
 msgid ""
 "A ``GenericAlias`` object acts as a proxy for a :term:`generic type`, "
 "implementing *parameterized generics*."
 msgstr ""
+"Um objeto ``GenericAlias`` atua como um proxy para um :term:`tipo genérico`, "
+"implementando *genéricos parametrizados*."
 
 #: ../../library/stdtypes.rst:4816
 msgid ""
@@ -6682,6 +6821,11 @@ msgid ""
 "to signify a :class:`set` in which all the elements are of type :class:"
 "`bytes`."
 msgstr ""
+"Para uma classe contêiner, o(s) argumento(s) fornecido(s) para uma :ref:"
+"`subscrição <subscriptions>` da classe pode indicar o(s) tipo(s) dos "
+"elementos que um objeto contém. Por exemplo, ``set[bytes]`` pode ser usado "
+"em anotações de tipo para significar um :class:`set` em que todos os "
+"elementos são do tipo :class:`bytes`."
 
 #: ../../library/stdtypes.rst:4822
 msgid ""
@@ -6691,6 +6835,11 @@ msgid ""
 "object. For example, :mod:`regular expressions <re>` can be used on both "
 "the :class:`str` data type and the :class:`bytes` data type:"
 msgstr ""
+"Para uma classe que define :meth:`~object.__class_getitem__`, mas não é um "
+"contêiner, o(s) argumento(s) fornecido(s) para uma subscrição da classe "
+"geralmente indicará o(s) tipo(s) de retorno de um ou mais métodos definidos "
+"em um objeto. Por exemplo, :mod:`expressões regulares <re>` podem ser usadas "
+"tanto no tipo de dados :class:`str` quanto no tipo de dados :class:`bytes`:"
 
 #: ../../library/stdtypes.rst:4828
 msgid ""
@@ -6699,6 +6848,10 @@ msgid ""
 "both be of type :class:`str`. We can represent this kind of object in type "
 "annotations with the ``GenericAlias`` ``re.Match[str]``."
 msgstr ""
+"Se ``x = re.search('foo', 'foo')``, ``x`` será um objeto :ref:`re.Match "
+"<match-objects>` onde os valores de retorno de ``x.group(0)`` e ``x[0]`` "
+"serão ambos do tipo :class:`str`. Podemos representar este tipo de objeto em "
+"anotações de tipo com o ``GenericAlias`` ``re.Match[str]``."
 
 #: ../../library/stdtypes.rst:4834
 msgid ""
@@ -6708,6 +6861,11 @@ msgid ""
 "annotations, we would represent this variety of :ref:`re.Match <match-"
 "objects>` objects with ``re.Match[bytes]``."
 msgstr ""
+"Se ``y = re.search(b'bar', b'bar')`` (observe o ``b`` para :class:`bytes`), "
+"``y`` também será uma instância de ``re.Match``, mas os valores de retorno "
+"de ``y.group(0)`` e ``y[0]`` serão ambos do tipo :class:`bytes`. Em "
+"anotações de tipo, representaríamos esta variedade de objetos :ref:`re.Match "
+"<match-objects>` com ``re.Match[bytes]``."
 
 #: ../../library/stdtypes.rst:4840
 msgid ""
@@ -6715,6 +6873,9 @@ msgid ""
 "GenericAlias`, which can also be used to create ``GenericAlias`` objects "
 "directly."
 msgstr ""
+"Objetos ``GenericAlias`` são instâncias da classe :class:`types."
+"GenericAlias`, que também podem ser usadas para criar objetos "
+"``GenericAlias`` diretamente."
 
 #: ../../library/stdtypes.rst:4846
 msgid ""
@@ -6722,6 +6883,9 @@ msgid ""
 "*X*, *Y*, and more depending on the ``T`` used. For example, a function "
 "expecting a :class:`list` containing :class:`float` elements::"
 msgstr ""
+"Cria um ``GenericAlias`` representando um tipo ``T`` parametrizado por tipos "
+"*X*, *Y* e mais, dependendo do ``T`` usados. Por exemplo, uma função "
+"esperando uma :class:`list` contendo elementos :class:`float`::"
 
 #: ../../library/stdtypes.rst:4854
 msgid ""
@@ -6752,6 +6916,11 @@ msgid ""
 "not checked against their type. For example, the following code is "
 "discouraged, but will run without errors::"
 msgstr ""
+"O runtime Python não obriga :term:`anotações de tipo <annotation>`. Isso se "
+"aplica a tipos genéricos e seus parâmetros tipados. Ao criar um objeto "
+"contêiner a partir de um ``GenericAlias``, os elementos no contêiner não são "
+"verificados pelo seu tipo. Por exemplo, o seguinte código é desencorajado, "
+"mas irá executar sem erros::"
 
 #: ../../library/stdtypes.rst:4880
 msgid ""
@@ -6774,6 +6943,8 @@ msgid ""
 "The :meth:`~object.__getitem__` method of generic containers will raise an "
 "exception to disallow mistakes like ``dict[str][str]``::"
 msgstr ""
+"O método :meth:`~object.__getitem__` de contêineres genéricos irá levantar "
+"uma exceção para não permitir erros como ``dict[str][str]``::"
 
 #: ../../library/stdtypes.rst:4907
 msgid ""
@@ -6781,16 +6952,22 @@ msgid ""
 "are used.  The index must have as many elements as there are type variable "
 "items in the ``GenericAlias`` object's :attr:`~genericalias.__args__`. ::"
 msgstr ""
+"Entretanto, tais expressões são válidas quando :ref:`type variáveis "
+"<generics>` são usadas. O índice deve ter tantos elementos quantos forem os "
+"itens de variável de tipo no objeto ``GenericAlias`` :attr:`~genericalias."
+"__args__`. ::"
 
 #: ../../library/stdtypes.rst:4918
 msgid "Standard Generic Classes"
-msgstr ""
+msgstr "Classes genéricas padrão"
 
 #: ../../library/stdtypes.rst:4920
 msgid ""
 "The following standard library classes support parameterized generics. This "
 "list is non-exhaustive."
 msgstr ""
+"As seguintes classes de biblioteca padrão oferecem suporte a genéricos "
+"parametrizados. Esta lista não é exaustiva."
 
 #: ../../library/stdtypes.rst:4923
 msgid ":class:`tuple`"
@@ -6938,35 +7115,35 @@ msgstr ":class:`contextlib.AbstractAsyncContextManager`"
 
 #: ../../library/stdtypes.rst:4959
 msgid ":class:`dataclasses.Field`"
-msgstr ""
+msgstr ":class:`dataclasses.Field`"
 
 #: ../../library/stdtypes.rst:4960
 msgid ":class:`functools.cached_property`"
-msgstr ""
+msgstr ":class:`functools.cached_property`"
 
 #: ../../library/stdtypes.rst:4961
 msgid ":class:`functools.partialmethod`"
-msgstr ""
+msgstr ":class:`functools.partialmethod`"
 
 #: ../../library/stdtypes.rst:4962
 msgid ":class:`os.PathLike`"
-msgstr ""
+msgstr ":class:`os.PathLike`"
 
 #: ../../library/stdtypes.rst:4963
 msgid ":class:`queue.LifoQueue`"
-msgstr ""
+msgstr ":class:`queue.LifoQueue`"
 
 #: ../../library/stdtypes.rst:4964
 msgid ":class:`queue.Queue`"
-msgstr ""
+msgstr ":class:`queue.Queue`"
 
 #: ../../library/stdtypes.rst:4965
 msgid ":class:`queue.PriorityQueue`"
-msgstr ""
+msgstr ":class:`queue.PriorityQueue`"
 
 #: ../../library/stdtypes.rst:4966
 msgid ":class:`queue.SimpleQueue`"
-msgstr ""
+msgstr ":class:`queue.SimpleQueue`"
 
 #: ../../library/stdtypes.rst:4967
 msgid ":ref:`re.Pattern <re-objects>`"
@@ -6978,39 +7155,39 @@ msgstr ":ref:`re.Match <match-objects>`"
 
 #: ../../library/stdtypes.rst:4969
 msgid ":class:`shelve.BsdDbShelf`"
-msgstr ""
+msgstr ":class:`shelve.BsdDbShelf`"
 
 #: ../../library/stdtypes.rst:4970
 msgid ":class:`shelve.DbfilenameShelf`"
-msgstr ""
+msgstr ":class:`shelve.DbfilenameShelf`"
 
 #: ../../library/stdtypes.rst:4971
 msgid ":class:`shelve.Shelf`"
-msgstr ""
+msgstr ":class:`shelve.Shelf`"
 
 #: ../../library/stdtypes.rst:4972
 msgid ":class:`types.MappingProxyType`"
-msgstr ""
+msgstr ":class:`types.MappingProxyType`"
 
 #: ../../library/stdtypes.rst:4973
 msgid ":class:`weakref.WeakKeyDictionary`"
-msgstr ""
+msgstr ":class:`weakref.WeakKeyDictionary`"
 
 #: ../../library/stdtypes.rst:4974
 msgid ":class:`weakref.WeakMethod`"
-msgstr ""
+msgstr ":class:`weakref.WeakMethod`"
 
 #: ../../library/stdtypes.rst:4975
 msgid ":class:`weakref.WeakSet`"
-msgstr ""
+msgstr ":class:`weakref.WeakSet`"
 
 #: ../../library/stdtypes.rst:4976
 msgid ":class:`weakref.WeakValueDictionary`"
-msgstr ""
+msgstr ":class:`weakref.WeakValueDictionary`"
 
 #: ../../library/stdtypes.rst:4981
 msgid "Special Attributes of ``GenericAlias`` objects"
-msgstr ""
+msgstr "Atributos especiais de objetos ``GenericAlias``"
 
 #: ../../library/stdtypes.rst:4983
 msgid "All parameterized generics implement special read-only attributes."
@@ -7028,6 +7205,9 @@ msgid ""
 "passed to the original :meth:`~object.__class_getitem__` of the generic "
 "class::"
 msgstr ""
+"Este atributo é uma :class:`tuple` (possivelmente de comprimento 1) de tipos "
+"genéricos passado para o método :meth:`~object.__class_getitem__` original "
+"da classe genérica::"
 
 #: ../../library/stdtypes.rst:5005
 msgid ""
@@ -7049,15 +7229,15 @@ msgstr ""
 
 #: ../../library/stdtypes.rst:5023
 msgid ":pep:`484` - Type Hints"
-msgstr ""
+msgstr ":pep:`484` - Dicas de tipo"
 
 #: ../../library/stdtypes.rst:5023
 msgid "Introducing Python's framework for type annotations."
-msgstr ""
+msgstr "Apresentando a estrutura do Python para anotações de tipo."
 
 #: ../../library/stdtypes.rst:5028
 msgid ":pep:`585` - Type Hinting Generics In Standard Collections"
-msgstr ""
+msgstr ":pep:`585` - Sugestão de tipo para Genéricos em coleções padrão"
 
 #: ../../library/stdtypes.rst:5026
 msgid ""
@@ -7065,18 +7245,26 @@ msgid ""
 "provided they implement the special class method :meth:`~object."
 "__class_getitem__`."
 msgstr ""
+"Apresentando a capacidade de parametrizar nativamente as classes da "
+"biblioteca padrão, desde que implementem o método de classe especial :meth:"
+"`~object.__class_getitem__`."
 
 #: ../../library/stdtypes.rst:5031
 msgid ""
 ":ref:`Generics`, :ref:`user-defined generics <user-defined-generics>` and :"
 "class:`typing.Generic`"
 msgstr ""
+":ref:`Generics`, :ref:`genéricos definidos pelo usuário <user-defined-"
+"generics>` e :class:`typing.Generic`"
 
 #: ../../library/stdtypes.rst:5031
 msgid ""
 "Documentation on how to implement generic classes that can be parameterized "
 "at runtime and understood by static type-checkers."
 msgstr ""
+"Documentação sobre como implementar classes genéricas que podem ser "
+"parametrizadas em tempo de execução e compreendidas por verificadores de "
+"tipo estático"
 
 #: ../../library/stdtypes.rst:5040
 msgid "Union Type"
@@ -7568,6 +7756,11 @@ msgid ""
 "decimal or other non-power-of-two number bases. Hexadecimal, octal, and "
 "binary conversions are unlimited. The limit can be configured."
 msgstr ""
+"CPython tem um limite global para conversão entre :class:`int` e :class:"
+"`str` para mitigar ataques de negação de serviço. Esse limite *somente* se "
+"aplica a bases numéricas decimais ou outras que não sejam potência de dois. "
+"As conversões hexadecimais, octais e binárias são ilimitadas. O limite pode "
+"ser configurado."
 
 #: ../../library/stdtypes.rst:5429
 msgid ""
@@ -7578,12 +7771,22 @@ msgid ""
 "algorithms for base 10 have sub-quadratic complexity. Converting a large "
 "value such as ``int('1' * 500_000)`` can take over a second on a fast CPU."
 msgstr ""
+"O tipo :class:`int` no CPython é um número de comprimento arbitrário "
+"armazenado em formato binário (comumente conhecido como \"bignum\"). Não "
+"existe nenhum algoritmo que possa converter uma string em um inteiro binário "
+"ou um inteiro binário em uma string em tempo linear, *a menos que* a base "
+"seja uma potência de 2. Mesmo os algoritmos mais conhecidos para a base 10 "
+"têm complexidade subquadrática. Converter um valor grande como ``int('1' * "
+"500_000)`` pode levar mais de um segundo em uma CPU rápida."
 
 #: ../../library/stdtypes.rst:5436
 msgid ""
 "Limiting conversion size offers a practical way to avoid `CVE-2020-10735 "
 "<https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-10735>`_."
 msgstr ""
+"A limitação do tamanho da conversão oferece uma maneira prática de evitar "
+"`CVE-2020-10735 <https://cve.mitre.org/cgi-bin/cvename.cgi?"
+"name=CVE-2020-10735>`_."
 
 #: ../../library/stdtypes.rst:5439
 msgid ""
@@ -7591,11 +7794,16 @@ msgid ""
 "output string when a non-linear conversion algorithm would be involved.  "
 "Underscores and the sign are not counted towards the limit."
 msgstr ""
+"O limite é aplicado ao número de caracteres de dígitos na string de entrada "
+"ou saída quando um algoritmo de conversão não linear estiver envolvido. "
+"Sublinhados e o sinal não são contados para o limite."
 
 #: ../../library/stdtypes.rst:5443
 msgid ""
 "When an operation would exceed the limit, a :exc:`ValueError` is raised:"
 msgstr ""
+"Quando uma operação excede o limite, uma exceção :exc:`ValueError` é "
+"levantada:"
 
 #: ../../library/stdtypes.rst:5465
 msgid ""
@@ -7604,80 +7812,91 @@ msgid ""
 "configured is 640 digits as provided in :data:`sys.int_info."
 "str_digits_check_threshold <sys.int_info>`."
 msgstr ""
+"O limite padrão é de 4300 dígitos conforme fornecido em :data:`sys.int_info."
+"default_max_str_digits <sys.int_info>`. O limite mínimo que pode ser "
+"configurado é de 640 dígitos conforme fornecido em :data:`sys.int_info."
+"str_digits_check_threshold <sys.int_info>`."
 
 #: ../../library/stdtypes.rst:5470
 msgid "Verification:"
-msgstr ""
+msgstr "Verificação:"
 
 #: ../../library/stdtypes.rst:5485
 msgid "Affected APIs"
-msgstr ""
+msgstr "APIs afetadas"
 
 #: ../../library/stdtypes.rst:5487
 msgid ""
 "The limitation only applies to potentially slow conversions between :class:"
 "`int` and :class:`str` or :class:`bytes`:"
 msgstr ""
+"A limitação só se aplica a conversões potencialmente lentas entre :class:"
+"`int` e :class:`str` ou :class:`bytes`:"
 
 #: ../../library/stdtypes.rst:5490
 msgid "``int(string)`` with default base 10."
-msgstr ""
+msgstr "``int(string)`` com padrão sendo base 10."
 
 #: ../../library/stdtypes.rst:5491
 msgid "``int(string, base)`` for all bases that are not a power of 2."
 msgstr ""
+"``int(string, base)`` para todas as bases que não são uma potência de 2."
 
 #: ../../library/stdtypes.rst:5492
 msgid "``str(integer)``."
-msgstr ""
+msgstr "``str(integer)``."
 
 #: ../../library/stdtypes.rst:5493
 msgid "``repr(integer)``."
-msgstr ""
+msgstr "``repr(integer)``."
 
 #: ../../library/stdtypes.rst:5494
 msgid ""
 "any other string conversion to base 10, for example ``f\"{integer}\"``, "
 "``\"{}\".format(integer)``, or ``b\"%d\" % integer``."
 msgstr ""
+"qualquer outra conversão de string para base 10 como, por exemplo, "
+"``f\"{integer}\"``, ``\"{}\".format(integer)`` ou ``b\"%d\" % integer``."
 
 #: ../../library/stdtypes.rst:5497
 msgid "The limitations do not apply to functions with a linear algorithm:"
-msgstr ""
+msgstr "As limitações não se aplicam a funções com um algoritmo linear:"
 
 #: ../../library/stdtypes.rst:5499
 msgid "``int(string, base)`` with base 2, 4, 8, 16, or 32."
-msgstr ""
+msgstr "``int(string, base)`` com base 2, 4, 8, 16 ou 32."
 
 #: ../../library/stdtypes.rst:5500
 msgid ":func:`int.from_bytes` and :func:`int.to_bytes`."
-msgstr ""
+msgstr ":func:`int.from_bytes` e :func:`int.to_bytes`."
 
 #: ../../library/stdtypes.rst:5501
 msgid ":func:`hex`, :func:`oct`, :func:`bin`."
-msgstr ""
+msgstr ":func:`hex`, :func:`oct`, :func:`bin`."
 
 #: ../../library/stdtypes.rst:5502
 msgid ":ref:`formatspec` for hex, octal, and binary numbers."
-msgstr ""
+msgstr ":ref:`formatspec` para números hexa, octal e binários"
 
 #: ../../library/stdtypes.rst:5503
 msgid ":class:`str` to :class:`float`."
-msgstr ""
+msgstr ":class:`str` para :class:`float`."
 
 #: ../../library/stdtypes.rst:5504
 msgid ":class:`str` to :class:`decimal.Decimal`."
-msgstr ""
+msgstr ":class:`str` para :class:`decimal.Decimal`."
 
 #: ../../library/stdtypes.rst:5507
 msgid "Configuring the limit"
-msgstr ""
+msgstr "Configurando o limiter"
 
 #: ../../library/stdtypes.rst:5509
 msgid ""
 "Before Python starts up you can use an environment variable or an "
 "interpreter command line flag to configure the limit:"
 msgstr ""
+"Antes de iniciar o Python, você pode usar uma variável de ambiente ou um "
+"sinalizador de linha de comando do interpretador para configurar o limite:"
 
 #: ../../library/stdtypes.rst:5512
 msgid ""
@@ -7685,12 +7904,17 @@ msgid ""
 "to set the limit to 640 or ``PYTHONINTMAXSTRDIGITS=0 python3`` to disable "
 "the limitation."
 msgstr ""
+":envvar:`PYTHONINTMAXSTRDIGITS`, por exemplo ``PYTHONINTMAXSTRDIGITS=640 "
+"python3`` para definir o limite para 640 ou ``PYTHONINTMAXSTRDIGITS=0 "
+"python3`` para desabilitar a limitação."
 
 #: ../../library/stdtypes.rst:5515
 msgid ""
 ":option:`-X int_max_str_digits <-X>`, e.g. ``python3 -X "
 "int_max_str_digits=640``"
 msgstr ""
+":option:`-X int_max_str_digits <-X>`, por exemplo ``python3 -X "
+"int_max_str_digits=640``"
 
 #: ../../library/stdtypes.rst:5517
 msgid ""
@@ -7700,12 +7924,20 @@ msgid ""
 "value of *-1* indicates that both were unset, thus a value of :data:`sys."
 "int_info.default_max_str_digits` was used during initialization."
 msgstr ""
+":data:`sys.flags.int_max_str_digits` contém o valor de :envvar:"
+"`PYTHONINTMAXSTRDIGITS` ou :option:`-X int_max_str_digits <-X>`. Se a "
+"variável env e a opção ``-X`` estiverem definidas, a opção ``-X`` terá "
+"precedência. Um valor de *-1* indica que ambos não foram definidos, "
+"portanto, um valor de :data:`sys.int_info.default_max_str_digits` foi usado "
+"durante a inicialização."
 
 #: ../../library/stdtypes.rst:5523
 msgid ""
 "From code, you can inspect the current limit and set a new one using these :"
 "mod:`sys` APIs:"
 msgstr ""
+"A partir do código, você pode inspecionar o limite atual e definir um novo "
+"usando estas APIs :mod:`sys`:"
 
 #: ../../library/stdtypes.rst:5526
 msgid ""
@@ -7713,6 +7945,9 @@ msgid ""
 "are a getter and setter for the interpreter-wide limit. Subinterpreters have "
 "their own limit."
 msgstr ""
+":func:`sys.get_int_max_str_digits` e :func:`sys.set_int_max_str_digits` são "
+"um getter e um setter para o limite de todo o interpretador. Os "
+"subinterpretadores têm seu próprio limite."
 
 #: ../../library/stdtypes.rst:5530
 msgid ""
@@ -7725,12 +7960,16 @@ msgid ""
 ":data:`sys.int_info.default_max_str_digits <sys.int_info>` is the compiled-"
 "in default limit."
 msgstr ""
+":data:`sys.int_info.default_max_str_digits <sys.int_info>` é o limite padrão "
+"compilado."
 
 #: ../../library/stdtypes.rst:5534
 msgid ""
 ":data:`sys.int_info.str_digits_check_threshold <sys.int_info>` is the lowest "
 "accepted value for the limit (other than 0 which disables it)."
 msgstr ""
+":data:`sys.int_info.str_digits_check_threshold <sys.int_info>` é o menor "
+"valor aceito para o limite (diferente de 0 que o desabilita)."
 
 #: ../../library/stdtypes.rst:5541
 msgid ""
@@ -7743,6 +7982,15 @@ msgid ""
 "exist for the code. A workaround for source that contains such large "
 "constants is to convert them to ``0x`` hexadecimal form as it has no limit."
 msgstr ""
+"Definir um limite baixo *pode* levar a problemas. Embora raro, existe um "
+"código que contém constantes inteiras em decimal em sua origem que excedem o "
+"limite mínimo. Uma consequência de definir o limite é que o código-fonte do "
+"Python contendo literais inteiros decimais maiores que o limite encontrará "
+"um erro durante a análise, geralmente no momento da inicialização ou no "
+"momento da importação ou até mesmo no momento da instalação -- sempre que um "
+"``.pyc`` atualizado ainda não existe para o código. Uma solução alternativa "
+"para source que contém tais constantes grandes é convertê-las para a forma "
+"hexadecimal ``0x``, pois não há limite."
 
 #: ../../library/stdtypes.rst:5550
 msgid ""
@@ -7751,10 +7999,15 @@ msgid ""
 "during startup and even during any installation step that may invoke Python "
 "to precompile ``.py`` sources to ``.pyc`` files."
 msgstr ""
+"Teste sua aplicação completamente se você usar um limite baixo. Certifique-"
+"se de que seus testes sejam executados com o limite definido anteriormente "
+"por meio do ambiente ou sinalizador para que ele seja aplicado durante a "
+"inicialização e até mesmo durante qualquer etapa de instalação que possa "
+"invocar o Python para pré-compilar fontes ``.py`` para arquivos ``.pyc``."
 
 #: ../../library/stdtypes.rst:5556
 msgid "Recommended configuration"
-msgstr ""
+msgstr "Configuração recomendada"
 
 #: ../../library/stdtypes.rst:5558
 msgid ""
@@ -7770,7 +8023,7 @@ msgstr "Exemplo::"
 
 #: ../../library/stdtypes.rst:5575
 msgid "If you need to disable it entirely, set it to ``0``."
-msgstr ""
+msgstr "Se você precisar desativá-lo totalmente, defina-o como ``0``."
 
 #: ../../library/stdtypes.rst:5579
 msgid "Footnotes"

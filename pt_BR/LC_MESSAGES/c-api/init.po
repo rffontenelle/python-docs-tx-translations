@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2022
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 15:19+0000\n"
+"POT-Creation-Date: 2023-08-04 15:17+0000\n"
 "PO-Revision-Date: 2022-11-05 17:21+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2022\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
 "teams/5390/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +53,7 @@ msgid ""
 "The following functions can be safely called before Python is initialized:"
 msgstr ""
 "As seguintes funções podem ser seguramente chamadas antes da inicialização "
-"do Python. "
+"do Python."
 
 #: ../../c-api/init.rst:24
 msgid "Configuration functions:"
@@ -212,7 +212,7 @@ msgid ""
 "2."
 msgstr ""
 "Quando um sinalizador é definido por uma opção, o valor do sinalizador é o "
-"número de vezes que a opção foi definida. Por exemplo,``-b``define :c:data:"
+"número de vezes que a opção foi definida. Por exemplo,``-b`` define :c:data:"
 "`Py_BytesWarningFlag` para 1 e ``-bb`` define :c:data:`Py_BytesWarningFlag` "
 "para 2."
 
@@ -384,7 +384,7 @@ msgstr ""
 
 #: ../../c-api/init.rst:173
 msgid "See :pep:`528` for more details."
-msgstr "Veja :pep:`528` para mais detalhes. "
+msgstr "Veja :pep:`528` para mais detalhes."
 
 #: ../../c-api/init.rst:179
 msgid ""
@@ -430,8 +430,7 @@ msgstr ""
 msgid ""
 "Don't display the copyright and version messages even in interactive mode."
 msgstr ""
-"Não exibe as mensagens de direito autoral e de versão nem mesmo no modo "
-"interativo. "
+"Não exibe as mensagens de copyright e de versão nem mesmo no modo interativo."
 
 #: ../../c-api/init.rst:203
 msgid "Set by the :option:`-q` option."
@@ -980,6 +979,8 @@ msgid ""
 "hidden local variable; the :c:macro:`Py_END_ALLOW_THREADS` macro closes the "
 "block."
 msgstr ""
+"A macro :c:macro:`Py_BEGIN_ALLOW_THREADS` abre um novo bloco e declara uma "
+"variável local oculta; a macro :c:macro:`Py_END_ALLOW_THREADS` fecha o bloco."
 
 #: ../../c-api/init.rst:740
 msgid "The block above expands to the following code::"
@@ -1127,7 +1128,7 @@ msgstr ""
 
 #: ../../c-api/init.rst:882
 msgid "Deprecated function which does nothing."
-msgstr ""
+msgstr "Função descontinuada que não faz nada."
 
 #: ../../c-api/init.rst:884
 msgid ""
@@ -1221,6 +1222,15 @@ msgid ""
 "c:macro:`Py_BEGIN_ALLOW_THREADS` and :c:macro:`Py_END_ALLOW_THREADS` macros "
 "is acceptable."
 msgstr ""
+"Certifique-se de que a thread atual esteja pronta para chamar a API Python "
+"C, independentemente do estado atual do Python ou do bloqueio global do "
+"interpretador (GIL). Isso pode ser chamado quantas vezes desejar por uma "
+"thread, desde que cada chamada corresponda a uma chamada para :c:func:"
+"`PyGILState_Release`. Em geral, outras APIs relacionadas a threads podem ser "
+"usadas entre chamadas :c:func:`PyGILState_Ensure` e :c:func:"
+"`PyGILState_Release` desde que o estado da thread seja restaurado ao seu "
+"estado anterior antes de Release(). Por exemplo, o uso normal das macros :c:"
+"macro:`Py_BEGIN_ALLOW_THREADS` e :c:macro:`Py_END_ALLOW_THREADS` é aceitável."
 
 #: ../../c-api/init.rst:964
 msgid ""
@@ -1284,6 +1294,10 @@ msgid ""
 "following :c:macro:`Py_END_ALLOW_THREADS` macro.  See above for further "
 "discussion of this macro."
 msgstr ""
+"Esta macro se expande para ``{ PyThreadState *_save; _save = "
+"PyEval_SaveThread();``. Observe que ele contém uma chave de abertura; ele "
+"deve ser combinado com a seguinte macro :c:macro:`Py_END_ALLOW_THREADS`. "
+"Veja acima para uma discussão mais aprofundada desta macro."
 
 #: ../../c-api/init.rst:1028
 msgid ""
@@ -1292,12 +1306,18 @@ msgid ""
 "`Py_BEGIN_ALLOW_THREADS` macro.  See above for further discussion of this "
 "macro."
 msgstr ""
+"Esta macro se expande para ``PyEval_RestoreThread(_save); }``. Observe que "
+"ele contém uma chave de fechamento; ele deve ser combinado com uma macro :c:"
+"macro:`Py_BEGIN_ALLOW_THREADS` anterior. Veja acima para uma discussão mais "
+"aprofundada desta macro."
 
 #: ../../c-api/init.rst:1036
 msgid ""
 "This macro expands to ``PyEval_RestoreThread(_save);``: it is equivalent to :"
 "c:macro:`Py_END_ALLOW_THREADS` without the closing brace."
 msgstr ""
+"Esta macro se expande para ``PyEval_RestoreThread(_save);``: é equivalente "
+"a :c:macro:`Py_END_ALLOW_THREADS` sem a chave de fechamento."
 
 #: ../../c-api/init.rst:1042
 msgid ""
@@ -1305,6 +1325,9 @@ msgid ""
 "c:macro:`Py_BEGIN_ALLOW_THREADS` without the opening brace and variable "
 "declaration."
 msgstr ""
+"Esta macro se expande para ``_save = PyEval_SaveThread();``: é equivalente "
+"a :c:macro:`Py_BEGIN_ALLOW_THREADS` sem a chave de abertura e declaração de "
+"variável."
 
 #: ../../c-api/init.rst:1048
 msgid "Low-level API"
@@ -1701,7 +1724,7 @@ msgstr ""
 
 #: ../../c-api/init.rst:1422
 msgid "Asynchronous Notifications"
-msgstr ""
+msgstr "Notificações assíncronas"
 
 #: ../../c-api/init.rst:1424
 msgid ""
@@ -2050,6 +2073,8 @@ msgid ""
 "When :ref:`Py_LIMITED_API <stable>` is not defined, static allocation of "
 "this type by :c:macro:`Py_tss_NEEDS_INIT` is allowed."
 msgstr ""
+"Quando :ref:`Py_LIMITED_API <stable>` não é definido, a alocação estática "
+"deste tipo por :c:macro:`Py_tss_NEEDS_INIT` é permitida."
 
 #: ../../c-api/init.rst:1701
 msgid ""
@@ -2059,7 +2084,7 @@ msgstr ""
 
 #: ../../c-api/init.rst:1706
 msgid "Dynamic Allocation"
-msgstr ""
+msgstr "Alocação dinâmica"
 
 #: ../../c-api/init.rst:1708
 msgid ""
@@ -2073,6 +2098,8 @@ msgid ""
 "Return a value which is the same state as a value initialized with :c:macro:"
 "`Py_tss_NEEDS_INIT`, or ``NULL`` in the case of dynamic allocation failure."
 msgstr ""
+"Retorna um valor que é o mesmo estado de um valor inicializado com :c:macro:"
+"`Py_tss_NEEDS_INIT`, ou ``NULL`` no caso de falha de alocação dinâmica."
 
 #: ../../c-api/init.rst:1722
 msgid ""
@@ -2112,6 +2139,11 @@ msgid ""
 "repeatedly on the same key -- calling it on an already initialized key is a "
 "no-op and immediately returns success."
 msgstr ""
+"Retorna um valor zero na inicialização bem-sucedida de uma chave TSS. O "
+"comportamento é indefinido se o valor apontado pelo argumento *key* não for "
+"inicializado por :c:macro:`Py_tss_NEEDS_INIT`. Essa função pode ser chamada "
+"repetidamente na mesma tecla -- chamá-la em uma tecla já inicializada não "
+"funciona e retorna imediatamente com sucesso."
 
 #: ../../c-api/init.rst:1758
 msgid ""

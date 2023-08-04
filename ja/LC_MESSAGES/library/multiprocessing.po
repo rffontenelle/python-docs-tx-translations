@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2022
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 15:19+0000\n"
+"POT-Creation-Date: 2023-08-04 15:17+0000\n"
 "PO-Revision-Date: 2022-11-05 17:22+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2022\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
 "ja/)\n"
 "MIME-Version: 1.0\n"
@@ -145,6 +145,11 @@ msgid ""
 "Starting a process using this method is rather slow compared to using *fork* "
 "or *forkserver*."
 msgstr ""
+"親プロセスは新たに Python インタープリタープロセスを開始します。子プロセスは"
+"プロセスオブジェクトの :meth:`~Process.run` メソッドの実行に必要なリソースの"
+"み継承します。特に、親プロセスからの不要なファイル記述子とハンドルは継承され"
+"ません。この方式を使用したプロセスの開始は *fork* や *forkserver* に比べ遅く"
+"なります。"
 
 #: ../../library/multiprocessing.rst:116
 msgid "Available on Unix and Windows.  The default on Windows and macOS."
@@ -851,8 +856,8 @@ msgid ""
 msgstr ""
 ":class:`Process` オブジェクトを閉じ、関連付けられていたすべてのリソースを開放"
 "します。中のプロセスが実行中であった場合、:exc:`ValueError` を送出します。:"
-"meth:`close` が成功した場合、class:`Process` オブジェクトの他のメソッドや属性"
-"は、ほとんどが :exc:`ValueError` を送出します。"
+"meth:`close` が成功した場合、:class:`Process` オブジェクトの他のメソッドや属"
+"性は、ほとんどが :exc:`ValueError` を送出します。"
 
 #: ../../library/multiprocessing.rst:653
 msgid ""
@@ -1249,6 +1254,11 @@ msgid ""
 "to exit immediately without waiting to flush enqueued data to the underlying "
 "pipe, and you don't care about lost data."
 msgstr ""
+"このメソッドは ``allow_exit_without_flush()`` という名前のほうがよかったかも"
+"しれません。キューに追加されたデータが失われてしまいがちなため、このメソッド"
+"を使う必要はほぼ確実にないでしょう。本当にこれが必要になるのは、キューに追加"
+"されたデータを下位層のパイプにフラッシュすることなくカレントプロセスを直ちに"
+"終了する必要があり、かつ失われるデータに関心がない場合です。"
 
 #: ../../library/multiprocessing.rst:887
 msgid ""
@@ -1502,6 +1512,9 @@ msgid ""
 "(By default :data:`sys.executable` is used).  Embedders will probably need "
 "to do some thing like ::"
 msgstr ""
+"子プロセスを開始するときに、使用する Python インタープリターのパスを設定しま"
+"す。(デフォルトでは :data:`sys.executable` が使用されます)。コードに組み込む"
+"ときは、おそらく次のようにする必要があります ::"
 
 #: ../../library/multiprocessing.rst:1067
 msgid "before they can create child processes."
@@ -1798,6 +1811,8 @@ msgid ""
 "On macOS, this is indistinguishable from :class:`Semaphore` because "
 "``sem_getvalue()`` is not implemented on that platform."
 msgstr ""
+"macOS では ``sem_getvalue()`` が実装されていないので :class:`Semaphore` と区"
+"別がつきません。"
 
 #: ../../library/multiprocessing.rst:1265
 msgid "A condition variable: an alias for :class:`threading.Condition`."
@@ -2043,6 +2058,9 @@ msgid ""
 "On macOS, ``sem_timedwait`` is unsupported, so calling ``acquire()`` with a "
 "timeout will emulate that function's behavior using a sleeping loop."
 msgstr ""
+"macOS では ``sem_timedwait`` がサポートされていないので、``acquire()`` にタイ"
+"ムアウトを与えて呼ぶと、ループ内でスリープすることでこの関数がエミュレートさ"
+"れます。"
 
 #: ../../library/multiprocessing.rst:1404
 msgid ""
@@ -3160,6 +3178,8 @@ msgid ""
 "A variant of the :meth:`apply` method which returns a :class:"
 "`~multiprocessing.pool.AsyncResult` object."
 msgstr ""
+":meth:`apply` メソッドの派生版で :class:`~multiprocessing.pool.AsyncResult` "
+"オブジェクトを返します。"
 
 #: ../../library/multiprocessing.rst:2205
 #: ../../library/multiprocessing.rst:2236
@@ -3200,6 +3220,9 @@ msgid ""
 "one *iterable* argument though, for multiple iterables see :meth:`starmap`). "
 "It blocks until the result is ready."
 msgstr ""
+":func:`map` 組み込み関数の並列版です (*iterable* な引数を1つだけサポートする"
+"という違いはあります。もしも複数のイテラブルを使いたいのならば :meth:"
+"`starmap` を参照)。結果が出るまでブロックします。"
 
 #: ../../library/multiprocessing.rst:2223
 msgid ""
@@ -3267,6 +3290,8 @@ msgid ""
 "Like :meth:`~multiprocessing.pool.Pool.map` except that the elements of the "
 "*iterable* are expected to be iterables that are unpacked as arguments."
 msgstr ""
+"*iterable* の要素が、引数として unpack されるイテレート可能オブジェクトである"
+"と期待される以外は、 :meth:`~multiprocessing.pool.Pool.map` と似ています。"
 
 #: ../../library/multiprocessing.rst:2274
 msgid ""
@@ -3687,6 +3712,11 @@ msgid ""
 "the form :samp:`r'\\\\\\\\\\\\\\\\{ServerName}\\\\pipe\\\\\\\\{PipeName}'` "
 "instead."
 msgstr ""
+"``'AF_PIPE'`` アドレスは :samp:`r'\\\\\\\\\\\\.\\\\pipe\\\\\\\\{PipeName}'` "
+"という形式の文字列です。 *ServerName* という名前のリモートコンピューター上の"
+"名前付きパイプに接続するために :func:`Client` を使用するには、代わりに :samp:"
+"`r'\\\\\\\\\\\\\\\\{ServerName}\\\\pipe\\\\\\\\{PipeName}'` 形式のアドレスを"
+"使用する必要があります。"
 
 #: ../../library/multiprocessing.rst:2602
 msgid ""
@@ -3798,6 +3828,11 @@ msgid ""
 "%(message)s'``. You can modify ``levelname`` of the logger by passing a "
 "``level`` argument."
 msgstr ""
+"この関数は :func:`get_logger` に対する呼び出しを実行しますが、 get_logger に"
+"よって作成されるロガーを返すことに加えて、 ``'[%(levelname)s/"
+"%(processName)s] %(message)s'`` のフォーマットを使用して :data:`sys.stderr` "
+"へ出力を送るハンドラーを追加します。``level`` 引数を渡すことによってロガーの "
+"``levelname`` を変更できます。"
 
 #: ../../library/multiprocessing.rst:2664
 msgid "Below is an example session with logging turned on::"
@@ -4194,8 +4229,8 @@ msgid ""
 "interpreter without causing unintended side effects (such a starting a new "
 "process)."
 msgstr ""
-"新たな Python インタプリタによるメインモジュールのインポートが、意図しない副"
-"作用 (新たなプロセスを開始する等) を起こさずできるようにしてください。"
+"新たな Python インタープリタによるメインモジュールのインポートが、意図しない"
+"副作用 (新たなプロセスを開始する等) を起こさずできるようにしてください。"
 
 #: ../../library/multiprocessing.rst:2931
 msgid ""

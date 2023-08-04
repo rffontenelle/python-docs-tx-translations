@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2022
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 15:19+0000\n"
+"POT-Creation-Date: 2023-08-04 15:17+0000\n"
 "PO-Revision-Date: 2022-11-05 17:21+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2022\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
 "ja/)\n"
 "MIME-Version: 1.0\n"
@@ -64,6 +64,15 @@ msgid ""
 "to a :c:expr:`PyObject*`.  Access to the members must be done by using the "
 "macros :c:macro:`Py_REFCNT` and :c:macro:`Py_TYPE`."
 msgstr ""
+"全てのオブジェクト型はこの型を拡張したものです。\n"
+"この型には、あるオブジェクトを指すポインタをオブジェクトとして Python から扱"
+"うのに必要な情報が入っています。\n"
+"通常の \"リリース\" ビルドでは、この構造体にはオブジェクトの参照カウントとオ"
+"ブジェクトに対応する型オブジェクトだけが入っています。\n"
+"実際には :c:type:`PyObject` であることは宣言されていませんが、全ての Python "
+"オブジェクトへのポインタは :c:expr:`PyObject*` へキャストできます。\n"
+"メンバにアクセスするには :c:macro:`Py_REFCNT` マクロと :c:macro:`Py_TYPE` マ"
+"クロを使わなければなりません。"
 
 #: ../../c-api/structures.rst:37
 msgid ""
@@ -293,6 +302,12 @@ msgid ""
 "representing all arguments. This parameter is typically processed using :c:"
 "func:`PyArg_ParseTuple` or :c:func:`PyArg_UnpackTuple`."
 msgstr ""
+":c:type:`PyCFunction` 型のメソッドで典型的に使われる呼び出し規約です。関数"
+"は :c:expr:`PyObject*` 型の引数値を二つ要求します。最初の引数はメソッドの "
+"*self* オブジェクトです; モジュール関数の場合、これはモジュールオブジェクトで"
+"す。第二のパラメタ (よく *args* と呼ばれます) は、全ての引数を表現するタプル"
+"オブジェクトです。パラメタは通常、 :c:func:`PyArg_ParseTuple` や :c:func:"
+"`PyArg_UnpackTuple` で処理されます。"
 
 #: ../../c-api/structures.rst:279
 msgid ""
@@ -694,7 +709,7 @@ msgid ""
 "Structure to define property-like access for a type. See also description of "
 "the :c:member:`PyTypeObject.tp_getset` slot."
 msgstr ""
-"型のプロパティのようなアクセスを定義するための構造体です。 c:member:"
+"型のプロパティのようなアクセスを定義するための構造体です。 :c:member:"
 "`PyTypeObject.tp_getset` スロットの説明も参照してください。"
 
 #: ../../c-api/structures.rst:494
@@ -759,21 +774,28 @@ msgid ""
 "The ``get`` function takes one :c:expr:`PyObject*` parameter (the instance) "
 "and a function pointer (the associated ``closure``)::"
 msgstr ""
+"``get`` 関数は :c:expr:`PyObject*` パラメータ (インスタンス) と関数ポインタ "
+"(関連する``closure``) を1つ受け取ります。"
 
 #: ../../c-api/structures.rst:514
 msgid ""
 "It should return a new reference on success or ``NULL`` with a set exception "
 "on failure."
 msgstr ""
+"成功または失敗時に ``NULL`` と例外の集合にされたときは新しい参照を返します。"
 
 #: ../../c-api/structures.rst:517
 msgid ""
 "``set`` functions take two :c:expr:`PyObject*` parameters (the instance and "
 "the value to be set) and a function pointer (the associated ``closure``)::"
 msgstr ""
+"``set`` 関数は :c:expr:`PyObject*` パラメータ (インスタンスとセットされるべき"
+"値) と関数ポインタ (関連する``closure``) を受け取ります。"
 
 #: ../../c-api/structures.rst:522
 msgid ""
 "In case the attribute should be deleted the second parameter is ``NULL``. "
 "Should return ``0`` on success or ``-1`` with a set exception on failure."
 msgstr ""
+"属性を削除する場合は、2 番目のパラメータに ``NULL`` を指定します。成功した場"
+"合は ``0`` を、失敗した場合は ``-1`` を例外として返します。"

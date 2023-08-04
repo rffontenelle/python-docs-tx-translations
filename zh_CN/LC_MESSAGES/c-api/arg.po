@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2022
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 15:19+0000\n"
+"POT-Creation-Date: 2023-07-29 03:05+0000\n"
 "PO-Revision-Date: 2022-11-05 17:21+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2022\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -87,7 +87,7 @@ msgstr "除非另有说明，缓冲区是不会以空终止的。"
 
 #: ../../c-api/arg.rst:39
 msgid "There are three ways strings and buffers can be converted to C:"
-msgstr ""
+msgstr "有三种办法可以将字符串和缓冲区转换到 C 类型:"
 
 #: ../../c-api/arg.rst:41
 msgid ""
@@ -98,6 +98,11 @@ msgid ""
 "call** :c:func:`PyBuffer_Release` after you have finished processing the "
 "data (or in any early abort case)."
 msgstr ""
+"像 ``y*`` 和 ``s*`` 这样的格式会填充一个 :c:type:`Py_buffer` 结构体。 这将锁"
+"定下层缓冲区以便调用者随后使用这个缓冲区即使是在 :c:type:"
+"`Py_BEGIN_ALLOW_THREADS` 块中也不会有可变数据因大小调整或销毁所带来的风险。 "
+"因此，在你结束处理数据（或任何更早的中止场景）之前 **你必须调用** :c:func:"
+"`PyBuffer_Release`。"
 
 #: ../../c-api/arg.rst:48
 msgid ""
@@ -105,6 +110,8 @@ msgid ""
 "**You have to call** :c:func:`PyMem_Free` after you have finished processing "
 "the data (or in any early abort case)."
 msgstr ""
+"``es``, ``es#``, ``et`` 和 ``et#`` 等格式会分配结果缓冲区。 在你结束处理数据"
+"（或任何更早的中止场景）之后 **你必须调用** :c:func:`PyMem_Free`。"
 
 #: ../../c-api/arg.rst:54
 msgid ""
@@ -114,6 +121,10 @@ msgid ""
 "corresponding Python object, and shares the lifetime of this object. You "
 "won't have to release any memory yourself."
 msgstr ""
+"其他格式接受一个 :class:`str` 或只读的 :term:`bytes-like object`，如 :class:"
+"`bytes`，并向其缓冲区提供一个 ``const char *`` 指针。 在缓冲区是“被借入”的情"
+"况下：它将由对应的 Python 对象来管理，并共享此对象的生命期。 你不需要自行释放"
+"任何内存。"
 
 #: ../../c-api/arg.rst:61
 msgid ""
@@ -122,6 +133,9 @@ msgid ""
 "disallows common mutable objects such as :class:`bytearray`, but also some "
 "read-only objects such as :class:`memoryview` of :class:`bytes`."
 msgstr ""
+"为确保下层缓冲区可以安全地被借入，对象的 :c:member:`PyBufferProcs."
+"bf_releasebuffer` 字段必须为 ``NULL``。 这将不允许普通的可变对象如 :class:"
+"`bytearray`，以及某些只读对象如 :class:`bytes` 的 :class:`memoryview`。"
 
 #: ../../c-api/arg.rst:67
 msgid ""
@@ -129,6 +143,8 @@ msgid ""
 "whether the input object is immutable (e.g. whether it would honor a request "
 "for a writable buffer, or whether another thread can mutate the data)."
 msgstr ""
+"在这个 ``bf_releasebuffer`` 要求以外，没有用于验证输入对象是否为不可变对象的"
+"检查（例如它是否会接受可写缓冲区的请求，或者另一个线程是否能改变此数据）。"
 
 #: ../../c-api/arg.rst:73
 msgid ""
@@ -211,6 +227,10 @@ msgid ""
 "null bytes. Unicode objects are converted to C strings using ``'utf-8'`` "
 "encoding."
 msgstr ""
+"像是 ``s*``，区别在于它提供了一个 :ref:`借入的缓冲区 <c-arg-borrowed-"
+"buffer>`。 结果存储在两个 C 变量中，第一个是指向 C 字符串的指针，第二个是其长"
+"度。 该字符串可能包含嵌入的空字节。 Unicode 对象会使用 ``'utf-8'`` 编码格式转"
+"换为 C 字符串。"
 
 #: ../../c-api/arg.rst:115 ../../c-api/arg.rst:581
 msgid "``z`` (:class:`str` or ``None``) [const char \\*]"
@@ -265,6 +285,10 @@ msgid ""
 "objects.  The bytes buffer must not contain embedded null bytes; if it does, "
 "a :exc:`ValueError` exception is raised."
 msgstr ""
+"这个格式会将一个类字节对象转换为一个指向 :ref:`借入的 <c-arg-borrowed-"
+"buffer>` 字符串的 C 指针；它不接受 Unicode 对象。 字节缓冲区不可包含嵌入的空"
+"字节；如果包含这样的内容，将会引发 :exc:`ValueError` 异常。exception is "
+"raised."
 
 #: ../../c-api/arg.rst:132
 msgid ""
@@ -308,6 +332,9 @@ msgid ""
 "attempting any conversion.  Raises :exc:`TypeError` if the object is not a "
 "bytes object.  The C variable may also be declared as :c:expr:`PyObject*`."
 msgstr ""
+"要求 Python 对象为 :class:`bytes` 对象，不尝试进行任何转换。 如果该对象不为 "
+"bytes 对象则会引发 :exc:`TypeError`。 C 变量也可被声明为 :c:expr:"
+"`PyObject*`。"
 
 #: ../../c-api/arg.rst:153
 msgid "``Y`` (:class:`bytearray`) [PyByteArrayObject \\*]"
@@ -320,6 +347,9 @@ msgid ""
 "class:`bytearray` object. The C variable may also be declared as :c:expr:"
 "`PyObject*`."
 msgstr ""
+"要求 Python 对象为 :class:`bytearray` 对象，不尝试进行任何转换。 如果该对象不"
+"为 :class:`bytearray` 对象则会引发 :exc:`TypeError`。 C 变量也可被声明为 :c:"
+"expr:`PyObject*`。"
 
 #: ../../c-api/arg.rst:170
 msgid "``u`` (:class:`str`) [const Py_UNICODE \\*]"
@@ -401,6 +431,8 @@ msgid ""
 "conversion.  Raises :exc:`TypeError` if the object is not a Unicode object.  "
 "The C variable may also be declared as :c:expr:`PyObject*`."
 msgstr ""
+"要求 Python 对象为 Unicode 对象，不尝试进行任何转换。 如果该对象不为 Unicode "
+"对象则会引发 :exc:`TypeError`。 C 变量也可被声明为 :c:expr:`PyObject*`。"
 
 #: ../../c-api/arg.rst:206
 msgid "``w*`` (read-write :term:`bytes-like object`) [Py_buffer]"
@@ -439,6 +471,11 @@ msgid ""
 "references will be set to a buffer with the contents of the argument text. "
 "The text will be encoded in the encoding specified by the first argument."
 msgstr ""
+"此格式需要两个参数。 第一个仅用作输入，并且必须为 :c:expr:`const char*`，它指"
+"向一个以 NUL 结束的字符串表示的编码格式名称，或者为 ``NULL``，这种情况会使用 "
+"``'utf-8'`` 编码格式。 如果 Python 无法识别指定的编码格式则会引发异常。 第二"
+"个参数必须为 :c:expr:`char**`；它所引用的指针值将被设为带有参数文本内容的缓冲"
+"区。 文本将以第一个参数所指定的编码格式进行编码。"
 
 #: ../../c-api/arg.rst:220
 msgid ""
@@ -497,6 +534,12 @@ msgid ""
 "The third argument must be a pointer to an integer; the referenced integer "
 "will be set to the number of bytes in the output buffer."
 msgstr ""
+"它需要三个参数。 第一个仅用作输入，并且必须为 :c:expr:`const char*`，它指向一"
+"个以  NUL 结束的字符串表示的编码格式名称，或者为 ``NULL``，这种情况会使用 "
+"``'utf-8'`` 编码格式。 如果 Python 无法识别指定的编码格式则会引发异常。 第二"
+"个参数必须为 :c:expr:`char**`；它所引用的指针值将被设为带有参数文本内容的缓冲"
+"区。 文本将以第一个参数所指定的编码格式进行编码。 第三个参数必须为指向一个整"
+"数的指针；被引用的整数将被设为输出缓冲区中的字节数。"
 
 #: ../../c-api/arg.rst:245
 msgid "There are two modes of operation:"
@@ -564,6 +607,8 @@ msgid ""
 "Convert a nonnegative Python integer to an unsigned tiny int, stored in a C :"
 "c:expr:`unsigned char`."
 msgstr ""
+"将非负的 Python 整数转换为无符号的微整数，存储为一个 C :c:expr:`unsigned "
+"char`。"
 
 #: ../../c-api/arg.rst:275 ../../c-api/arg.rst:615
 msgid "``B`` (:class:`int`) [unsigned char]"
@@ -574,6 +619,8 @@ msgid ""
 "Convert a Python integer to a tiny int without overflow checking, stored in "
 "a C :c:expr:`unsigned char`."
 msgstr ""
+"将 Python 整数转换为微整数并且不进行溢出检查，存储为一个 C :c:expr:`unsigned "
+"char`。"
 
 #: ../../c-api/arg.rst:278 ../../c-api/arg.rst:609
 msgid "``h`` (:class:`int`) [short int]"
@@ -581,7 +628,7 @@ msgstr "``h`` (:class:`int`) [short int]"
 
 #: ../../c-api/arg.rst:278
 msgid "Convert a Python integer to a C :c:expr:`short int`."
-msgstr ""
+msgstr "将 Python 整数转换为 C :c:expr:`short int`。"
 
 #: ../../c-api/arg.rst:282 ../../c-api/arg.rst:618
 msgid "``H`` (:class:`int`) [unsigned short int]"
@@ -591,7 +638,7 @@ msgstr "``H`` (:class:`int`) [unsigned short int]"
 msgid ""
 "Convert a Python integer to a C :c:expr:`unsigned short int`, without "
 "overflow checking."
-msgstr ""
+msgstr "将 Python 整数转换为 C :c:expr:`unsigned short int`，不进行溢出检查。"
 
 #: ../../c-api/arg.rst:285 ../../c-api/arg.rst:603
 msgid "``i`` (:class:`int`) [int]"
@@ -599,7 +646,7 @@ msgstr "``i`` (:class:`int`) [int]"
 
 #: ../../c-api/arg.rst:285
 msgid "Convert a Python integer to a plain C :c:expr:`int`."
-msgstr ""
+msgstr "将 Python 整数转换为 C :c:expr:`int`。"
 
 #: ../../c-api/arg.rst:289 ../../c-api/arg.rst:621
 msgid "``I`` (:class:`int`) [unsigned int]"
@@ -609,7 +656,7 @@ msgstr "``I`` (:class:`int`) [unsigned int]"
 msgid ""
 "Convert a Python integer to a C :c:expr:`unsigned int`, without overflow "
 "checking."
-msgstr ""
+msgstr "将 Python 整数转换为 C :c:expr:`unsigned int`，不进行溢出检查。"
 
 #: ../../c-api/arg.rst:292 ../../c-api/arg.rst:612
 msgid "``l`` (:class:`int`) [long int]"
@@ -617,7 +664,7 @@ msgstr "``l`` (:class:`int`) [long int]"
 
 #: ../../c-api/arg.rst:292
 msgid "Convert a Python integer to a C :c:expr:`long int`."
-msgstr ""
+msgstr "将 Python 整数转换为 C :c:expr:`long int`。"
 
 #: ../../c-api/arg.rst:296 ../../c-api/arg.rst:624
 msgid "``k`` (:class:`int`) [unsigned long]"
@@ -627,7 +674,7 @@ msgstr "``k`` (:class:`int`) [unsigned long]"
 msgid ""
 "Convert a Python integer to a C :c:expr:`unsigned long` without overflow "
 "checking."
-msgstr ""
+msgstr "将 Python 整数转换为 C :c:expr:`unsigned long`，不进行溢出检查。"
 
 #: ../../c-api/arg.rst:299 ../../c-api/arg.rst:627
 msgid "``L`` (:class:`int`) [long long]"
@@ -635,7 +682,7 @@ msgstr "``L`` (:class:`int`) [long long]"
 
 #: ../../c-api/arg.rst:299
 msgid "Convert a Python integer to a C :c:expr:`long long`."
-msgstr ""
+msgstr "将 Python 整数转换为 C :c:expr:`long long`。"
 
 #: ../../c-api/arg.rst:303 ../../c-api/arg.rst:630
 msgid "``K`` (:class:`int`) [unsigned long long]"
@@ -645,7 +692,7 @@ msgstr "``K`` (:class:`int`) [unsigned long long]"
 msgid ""
 "Convert a Python integer to a C :c:expr:`unsigned long long` without "
 "overflow checking."
-msgstr ""
+msgstr "将Python整数转换为C:C:expr:'unsigned long-long'，而不进行溢出检查。"
 
 #: ../../c-api/arg.rst:306 ../../c-api/arg.rst:633
 msgid "``n`` (:class:`int`) [:c:type:`Py_ssize_t`]"
@@ -665,6 +712,8 @@ msgid ""
 "Convert a Python byte, represented as a :class:`bytes` or :class:`bytearray` "
 "object of length 1, to a C :c:expr:`char`."
 msgstr ""
+"将一个 Python 字节类型，如一个长度为 1 的 :class:`bytes` 或 :class:"
+"`bytearray` 对象，转换为 C :c:expr:`char` 。"
 
 #: ../../c-api/arg.rst:312
 msgid "Allow :class:`bytearray` objects."
@@ -679,6 +728,8 @@ msgid ""
 "Convert a Python character, represented as a :class:`str` object of length "
 "1, to a C :c:expr:`int`."
 msgstr ""
+"将一个 Python 字符，如一个长度为 1 的 :class:`str` 对象，转换为 C :c:expr:"
+"`int`。"
 
 #: ../../c-api/arg.rst:320 ../../c-api/arg.rst:647
 msgid "``f`` (:class:`float`) [float]"
@@ -686,7 +737,7 @@ msgstr "``f`` (:class:`float`) [float]"
 
 #: ../../c-api/arg.rst:320
 msgid "Convert a Python floating point number to a C :c:expr:`float`."
-msgstr ""
+msgstr "将一个 Python 浮点数转换为 C :c:expr:`float`。"
 
 #: ../../c-api/arg.rst:323 ../../c-api/arg.rst:644
 msgid "``d`` (:class:`float`) [double]"
@@ -694,7 +745,7 @@ msgstr "``d`` (:class:`float`) [double]"
 
 #: ../../c-api/arg.rst:323
 msgid "Convert a Python floating point number to a C :c:expr:`double`."
-msgstr ""
+msgstr "将一个 Python 浮点数转换为 C :c:expr:`double`。"
 
 #: ../../c-api/arg.rst:326
 msgid "``D`` (:class:`complex`) [Py_complex]"
@@ -734,6 +785,10 @@ msgid ""
 "which the object pointer is stored.  If the Python object does not have the "
 "required type, :exc:`TypeError` is raised."
 msgstr ""
+"将一个 Python 对象存入一个 C 对象指针。 这类似于 ``O``，但是接受两个 C 参数："
+"第一个是 Python 类型对象的地址，第二个是存储对象指针的 C 变量 (类型为 :c:"
+"expr:`PyObject*`)。 如果 Python 对象不具有所要求的类型，则会引发 :exc:"
+"`TypeError`。"
 
 #: ../../c-api/arg.rst:366 ../../c-api/arg.rst:672
 msgid "``O&`` (object) [*converter*, *anything*]"
@@ -746,6 +801,9 @@ msgid ""
 "of a C variable (of arbitrary type), converted to :c:expr:`void *`.  The "
 "*converter* function in turn is called as follows::"
 msgstr ""
+"通过 *converter* 函数将 Python 对象转换为 C 变量。这需要两个参数：第一个是函"
+"数，第二个是 C 变量（任意类型）的地址，转换为 :c:expr:`void *`。*转换器* 函数"
+"依次调用如下："
 
 #: ../../c-api/arg.rst:353
 msgid ""
@@ -756,6 +814,10 @@ msgid ""
 "function should raise an exception and leave the content of *address* "
 "unmodified."
 msgstr ""
+"其中 *object* 是待转换的 Python 对象而 *address* 为传给 ``PyArg_Parse*`` 函数"
+"的 :c:expr:`void*` 参数。 返回的 *status* 应当以 ``1`` 代表转换成功而以 "
+"``0`` 代表转换失败。 当转换失败时，*converter* 函数应当引发异常并让 "
+"*address* 的内容保持未修改状态。"
 
 #: ../../c-api/arg.rst:359
 msgid ""
@@ -765,11 +827,11 @@ msgid ""
 "call, the *object* parameter will be ``NULL``; *address* will have the same "
 "value as in the original call."
 msgstr ""
-"如果 *converter* 返回 ``Py_CLEANUP_SUPPORTED``，则如果参数解析最终失败，它可"
+"如果 *converter* 返回 ``Py_CLEANUP_SUPPORTED`` ，则如果参数解析最终失败，它可"
 "能会再次调用该函数，从而使转换器有机会释放已分配的任何内存。在第二个调用中，"
-"*object* 参数将为 ``NULL``;因此，该参数将为 ``NULL``;因此，该参数将为 "
-"``NULL``，因此，该参数将为 ``NULL``（如果值）为 ``NULL`` *address* 的值与原始"
-"呼叫中的值相同。"
+"*object* 参数将为 ``NULL`` ;因此，该参数将为 ``NULL`` ;因此，该参数将为 "
+"``NULL`` ，因此，该参数将为 ``NULL`` （如果值）为 ``NULL`` *address* 的值与原"
+"始呼叫中的值相同。"
 
 #: ../../c-api/arg.rst:365
 msgid "``Py_CLEANUP_SUPPORTED`` was added."
@@ -911,6 +973,10 @@ msgid ""
 "the format units, the variables at the addresses corresponding to that and "
 "the following format units are left untouched."
 msgstr ""
+"为了让转换成功，*arg* 对象必须匹配格式并且格式必须被用尽。 当成功时，"
+"``PyArg_Parse*`` 函数将返回真值，否则将返回假值并引发适当的异常。 当 "
+"``PyArg_Parse*`` 函数由于某个格式单元转换出错而失败时，该格式单元及其后续格式"
+"单元对应的地址上的变量都将保持原样。"
 
 #: ../../c-api/arg.rst:435
 msgid "API Functions"
@@ -1029,6 +1095,9 @@ msgid ""
 "value or ``NULL`` in the case of an error; an exception will be raised if "
 "``NULL`` is returned."
 msgstr ""
+"基于类似 ``PyArg_Parse*`` 函数族所接受内容的格式字符串和一个值序列来创建一个"
+"新值。 返回该值或在发生错误的情况下返回 ``NULL``；如果返回 ``NULL`` 则将引发"
+"一个异常。"
 
 #: ../../c-api/arg.rst:541
 msgid ""
@@ -1179,7 +1248,7 @@ msgstr ""
 
 #: ../../c-api/arg.rst:603
 msgid "Convert a plain C :c:expr:`int` to a Python integer object."
-msgstr ""
+msgstr "将一个基本 C :c:expr:`int` 转换为 Python 整数对象。"
 
 #: ../../c-api/arg.rst:606
 msgid "``b`` (:class:`int`) [char]"
@@ -1187,39 +1256,39 @@ msgstr "``b`` (:class:`int`) [char]"
 
 #: ../../c-api/arg.rst:606
 msgid "Convert a plain C :c:expr:`char` to a Python integer object."
-msgstr ""
+msgstr "将一个基本 C :c:expr:`char` 转换为 Python 整数对象。"
 
 #: ../../c-api/arg.rst:609
 msgid "Convert a plain C :c:expr:`short int` to a Python integer object."
-msgstr ""
+msgstr "将一个基本 C :c:expr:`short int` 转换为 Python 整数对象。"
 
 #: ../../c-api/arg.rst:612
 msgid "Convert a C :c:expr:`long int` to a Python integer object."
-msgstr ""
+msgstr "将一个 C :c:expr:`long int` 转换为 Python 整数对象。"
 
 #: ../../c-api/arg.rst:615
 msgid "Convert a C :c:expr:`unsigned char` to a Python integer object."
-msgstr ""
+msgstr "将一个 C :c:expr:`unsigned char` 转换为 Python 整数对象。"
 
 #: ../../c-api/arg.rst:618
 msgid "Convert a C :c:expr:`unsigned short int` to a Python integer object."
-msgstr ""
+msgstr "将一个 C :c:expr:`unsigned short int` 转换为 Python 整数对象。"
 
 #: ../../c-api/arg.rst:621
 msgid "Convert a C :c:expr:`unsigned int` to a Python integer object."
-msgstr ""
+msgstr "将一个 C :c:expr:`unsigned int` 转换为 Python 整数对象。"
 
 #: ../../c-api/arg.rst:624
 msgid "Convert a C :c:expr:`unsigned long` to a Python integer object."
-msgstr ""
+msgstr "将一个 C :c:expr:`unsigned long` 转换为 Python 整数对象。"
 
 #: ../../c-api/arg.rst:627
 msgid "Convert a C :c:expr:`long long` to a Python integer object."
-msgstr ""
+msgstr "将一个 C :c:expr:`long long` 转换为 Python 整数对象。"
 
 #: ../../c-api/arg.rst:630
 msgid "Convert a C :c:expr:`unsigned long long` to a Python integer object."
-msgstr ""
+msgstr "将一个 C :c:expr:`unsigned long long` 转换为 Python 整数对象。"
 
 #: ../../c-api/arg.rst:633
 msgid "Convert a C :c:type:`Py_ssize_t` to a Python integer."
@@ -1234,20 +1303,24 @@ msgid ""
 "Convert a C :c:expr:`int` representing a byte to a Python :class:`bytes` "
 "object of length 1."
 msgstr ""
+"将一个代表单个字节的 C :c:expr:`int` 转换为长度为 1 的 Python :class:`bytes` "
+"对象。"
 
 #: ../../c-api/arg.rst:640
 msgid ""
 "Convert a C :c:expr:`int` representing a character to Python :class:`str` "
 "object of length 1."
 msgstr ""
+"将一个代表单个字符的 C :c:expr:`int` 转换为长度为 1 的 Python :class:`str` 对"
+"象。"
 
 #: ../../c-api/arg.rst:644
 msgid "Convert a C :c:expr:`double` to a Python floating point number."
-msgstr ""
+msgstr "将一个 C :c:expr:`double` 转换为 Python 浮点数。"
 
 #: ../../c-api/arg.rst:647
 msgid "Convert a C :c:expr:`float` to a Python floating point number."
-msgstr ""
+msgstr "将一个 C :c:expr:`float` 转换为 Python 浮点数。"
 
 #: ../../c-api/arg.rst:650
 msgid "``D`` (:class:`complex`) [Py_complex \\*]"
@@ -1299,6 +1372,9 @@ msgid ""
 "`void*`) as its argument and should return a \"new\" Python object, or "
 "``NULL`` if an error occurred."
 msgstr ""
+"通过 *converter* 函数将 *anything* 转换为 Python 对象。 该函数在调用时附带 "
+"*anything* (它应当兼容 :c:expr:`void*`) 作为其参数并且应返回一个 \"新的\" "
+"Python 对象，或者如果发生错误则返回 ``NULL``。"
 
 #: ../../c-api/arg.rst:675
 msgid ""

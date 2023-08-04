@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2022
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 15:19+0000\n"
+"POT-Creation-Date: 2023-07-29 03:05+0000\n"
 "PO-Revision-Date: 2022-11-05 17:22+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2022\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -131,13 +131,13 @@ msgid ""
 "getLogger(__name__)``.  That's because in a module, ``__name__`` is the "
 "module's name in the Python package namespace."
 msgstr ""
-"``name`` 一般是句点分割的层级值, 像``foo.bar.baz`` (尽管也可以只是普通的 "
+"``name`` 一般是句点分割的层级值, 像 ``foo.bar.baz`` (尽管也可以只是普通的 "
 "``foo``)。层次结构列表中位于下方的记录器是列表中较高位置的记录器的子级。例"
-"如，有个名叫 ``foo`` 的记录器，而名字是 ``foo.bar``，``foo.bar.baz``，和 "
+"如，有个名叫 ``foo`` 的记录器，而名字是 ``foo.bar``， ``foo.bar.baz``，和 "
 "``foo.bam`` 的记录器都是 ``foo`` 的子级。记录器的名字分级类似 Python 包的层"
 "级，如果您使用建议的结构 ``logging.getLogger(__name__)`` 在每个模块的基础上组"
-"织记录器，则与之完全相同。这是因为在模块里，``__name__`` 是该模块在 Python 包"
-"命名空间中的名字。"
+"织记录器，则与之完全相同。这是因为在模块里， ``__name__`` 是该模块在 Python "
+"包命名空间中的名字。"
 
 #: ../../library/logging.rst:82
 msgid ""
@@ -404,6 +404,9 @@ msgid ""
 "used by the logging system. (See the section on :ref:`logrecord-attributes` "
 "for more information on which keys are used by the logging system.)"
 msgstr ""
+"在The keys in the dictionary passed in *extra* 传入的字典的键不应与日志系统所"
+"使用的键相冲突。 （请参阅 :ref:`logrecord-attributes` 一节了解有关日志系统所"
+"使用的键的更多信息。）"
 
 #: ../../library/logging.rst:239
 msgid ""
@@ -817,12 +820,17 @@ msgid ""
 "logging API which might do locking, because that might result in a deadlock. "
 "Specifically:"
 msgstr ""
+"此方法会在获得一个处理句柄层级的锁之后被调用，在此方法返回之后锁将被释放。 当"
+"你重载此方法时，请注意在调用任何可能执行锁定操作的日志记录 API 的其他部分的方"
+"法时务必小心谨慎，因为这可能会导致死锁。 具体来说:"
 
 #: ../../library/logging.rst:531
 msgid ""
 "Logging configuration APIs acquire the module-level lock, and then "
 "individual handler-level locks as those handlers are configured."
 msgstr ""
+"日志记录配置 API 会获取模块层级锁，然后还会在配置处理句柄时获取处理句柄层级"
+"锁。"
 
 #: ../../library/logging.rst:534
 msgid ""
@@ -833,6 +841,10 @@ msgid ""
 "the module-level lock *after* the handler-level lock (because in this "
 "method, the handler-level lock has already been acquired)."
 msgstr ""
+"许多日志记录 API 都会锁定模块级锁。 如果这样的 API 在此方法中被调用，则它可能"
+"会在另一个线程执行配置调用时导致死锁，因为那个线程将试图在处理句柄级锁 *之前"
+"* 获取模块级锁，而这个线程将试图在处理句柄级锁 *之后* 获取模块级锁（因为在此"
+"方法中，处理句柄级锁已经被获取了）。"
 
 #: ../../library/logging.rst:541
 msgid ""
@@ -1058,6 +1070,9 @@ msgid ""
 "specified, the default formatter (which just outputs the event message) is "
 "used as the line formatter."
 msgstr ""
+"适合用来在你想要格式化多条记录时进行子类化的格式化器。 你可以传入一个 :class:"
+"`Formatter` 实例用来格式化每一行（每一行对应一条记录）。 如果未被指定，则会使"
+"用默认的格式化器（仅输出事件消息）作为行格式化器。"
 
 #: ../../library/logging.rst:681
 msgid ""
@@ -1066,6 +1081,8 @@ msgid ""
 "specific behaviour, e.g. to show the count of records, a title or a "
 "separator line."
 msgstr ""
+"为 *records* 列表返回一个标头。 基本实现只是返回空字符串。 如果你想要指明特定"
+"行为则需要重载此方法，例如显示记录条数、标题或分隔行等。"
 
 #: ../../library/logging.rst:688
 msgid ""
@@ -1073,6 +1090,8 @@ msgid ""
 "returns the empty string. You will need to override this method if you want "
 "specific behaviour, e.g. to show the count of records or a separator line."
 msgstr ""
+"为 *records* 列表返回一个结束标记。 基本实现只是返回空字符串。 如果你想要指明"
+"特定行为则需要重载此方法，例如显示记录条数或分隔行等。"
 
 #: ../../library/logging.rst:695
 msgid ""
@@ -1081,6 +1100,8 @@ msgid ""
 "concatenation of the header, each record formatted with the line formatter, "
 "and the footer."
 msgstr ""
+"为 *records* 列表返回已格式化文本。 基本实现在没有记录时只是返回空字符串；在"
+"其他情况下，它将返回标头、使用行格式化器执行格式化的每行记录以及结束标记。"
 
 #: ../../library/logging.rst:703
 msgid "Filter Objects"
@@ -1199,6 +1220,8 @@ msgid ""
 "The primary information is passed in *msg* and *args*, which are combined "
 "using ``msg % args`` to create the :attr:`!message` attribute of the record."
 msgstr ""
+"主要信息是在 *msg* 中 *args* 传递的，它们使用 ``msg % args`` 组合到一起以创建"
+"记录的 :attr:`!message` 属性。"
 
 #: ../../library/logging.rst:0
 msgid "Parameters"
@@ -1211,6 +1234,9 @@ msgid ""
 "have this value, even though it may be emitted by a handler attached to a "
 "different (ancestor) logger."
 msgstr ""
+"用于记录此 :class:`!LogRecord` 所表示事件的记录器名称。 请注意 :class:`!"
+"LogRecord` 中的记录器名称将始终为该值，即使它可能是由附加到不同（上级）日志记"
+"录器的处理句柄所发出的。"
 
 #: ../../library/logging.rst:783
 msgid ""
@@ -1219,11 +1245,14 @@ msgid ""
 "attributes of the LogRecord: :attr:`!levelno` for the numeric value and :"
 "attr:`!levelname` for the corresponding level name."
 msgstr ""
+"日志记录事件的 :ref:`数字层级 <levels>` (如 ``10`` 表示 ``DEBUG``, ``20`` 表"
+"示 ``INFO`` 等等)。 请注意这会转换为 LogRecord 的 *两个* 属性: :attr:`!"
+"levelno` 表示数字值而 :attr:`!levelname` 表示对应的层级名。"
 
 #: ../../library/logging.rst:790
 msgid ""
 "The full string path of the source file where the logging call was made."
-msgstr ""
+msgstr "日志记录调用所在源文件的完整路径字符串。"
 
 #: ../../library/logging.rst:794
 msgid "The line number in the source file where the logging call was made."
@@ -1235,6 +1264,8 @@ msgid ""
 "placeholders for variable data, or an arbitrary object (see :ref:`arbitrary-"
 "object-messages`)."
 msgstr ""
+"事件描述消息，这可以是一个带有 % 形式可变数据占位符的格式字符串，或是任意对"
+"象 (参见 :ref:`arbitrary-object-messages`)。"
 
 #: ../../library/logging.rst:803
 msgid ""
@@ -1247,6 +1278,8 @@ msgid ""
 "An exception tuple with the current exception information, as returned by :"
 "func:`sys.exc_info`, or ``None`` if no exception information is available."
 msgstr ""
+"包含当前异常信息的异常元组，就如 :func:`sys.exc_info` 所返回的，或者如果没有"
+"可用异常信息则为 ``None``。"
 
 #: ../../library/logging.rst:812
 msgid ""
@@ -1416,7 +1449,7 @@ msgstr "异常元组（例如 ``sys.exc_info``）或者如未发生异常则为 
 
 #: ../../library/logging.rst:899
 msgid "filename"
-msgstr "filename"
+msgstr "文件名"
 
 #: ../../library/logging.rst:899
 msgid "``%(filename)s``"

@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2022
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 15:19+0000\n"
+"POT-Creation-Date: 2023-08-04 15:17+0000\n"
 "PO-Revision-Date: 2022-11-05 17:21+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2022\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
 "teams/5390/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgid ""
 "pep:`526` type annotations.  For example, this code::"
 msgstr ""
 "Variáveis-membro a serem usadas nesses métodos gerados são definidas usando "
-"as anotações de tipo da :pep:`526` . Por exemplo, esse código::"
+"as anotações de tipo da :pep:`526`. Por exemplo, esse código::"
 
 #: ../../library/dataclasses.rst:34
 msgid "will add, among other things, a :meth:`__init__` that looks like::"
@@ -71,8 +71,8 @@ msgid ""
 "This function is a :term:`decorator` that is used to add generated :term:"
 "`special method`\\s to classes, as described below."
 msgstr ""
-"Esta função é um :term:`decorador` que é usado para adicionar :term:`método "
-"especial`\\s para classes, conforme descrito abaixo."
+"Esta função é um :term:`decorador` que é usado para adicionar :term:`métodos "
+"especiais <método especial>` para classes, conforme descrito abaixo."
 
 #: ../../library/dataclasses.rst:54
 msgid ""
@@ -81,11 +81,11 @@ msgid ""
 "<variable annotation>`.  With two exceptions described below, nothing in :"
 "func:`dataclass` examines the type specified in the variable annotation."
 msgstr ""
-"O decorador :func:`dataclass` examina a classe para encontrar ``field``\\s.  "
-"Um ``field`` é definido como uma variável de classe que tem uma :term:"
-"`anotação de tipo <variable annotation>`.  Com duas exceções, descritas mais "
-"adiante, :func:`dataclass` não examina o tipo especificado na anotação de "
-"variável."
+"O decorador :func:`dataclass` examina a classe para encontrar campos "
+"(``field``.  Um ``field`` é definido como uma variável de classe que tem "
+"uma :term:`anotação de tipo <variable annotation>`.  Com duas exceções, "
+"descritas mais adiante, :func:`dataclass` não examina o tipo especificado na "
+"anotação de variável."
 
 #: ../../library/dataclasses.rst:60
 msgid ""
@@ -367,6 +367,11 @@ msgid ""
 "because ``None`` is a valid value for some parameters with a distinct "
 "meaning.  No code should directly use the :const:`MISSING` value."
 msgstr ""
+"Como mostrado acima, o valor :const:`MISSING` é um objeto sentinela usado "
+"para detectar se alguns parâmetros são fornecidos pelo usuário. Este "
+"sentinela é usado porque ``None`` é um valor válido para alguns parâmetros "
+"com um significado distinto.  Nenhum código deve usar diretamente o valor :"
+"const:`MISSING`."
 
 #: ../../library/dataclasses.rst:229
 msgid "The parameters to :func:`field` are:"
@@ -378,6 +383,9 @@ msgid ""
 "This is needed because the :meth:`field` call itself replaces the normal "
 "position of the default value."
 msgstr ""
+"``default``: Se fornecido, este será o valor padrão para este campo. Isso é "
+"necessário porque a própria chamada :meth:`field` substitui a posição normal "
+"do valor padrão."
 
 #: ../../library/dataclasses.rst:235
 msgid ""
@@ -387,6 +395,11 @@ msgid ""
 "discussed below.  It is an error to specify both ``default`` and "
 "``default_factory``."
 msgstr ""
+"``default_factory``: Se fornecido, deve ser um chamável sem argumento que "
+"será chamado quando um valor padrão for necessário para este campo. Entre "
+"outras finalidades, isso pode ser usado para especificar campos com valores "
+"padrão mutáveis, conforme discutido abaixo. É um erro especificar ambos "
+"``default`` e ``default_factory``."
 
 #: ../../library/dataclasses.rst:241
 msgid ""
@@ -417,6 +430,11 @@ msgid ""
 "hash value.  Even if a field is excluded from the hash, it will still be "
 "used for comparisons."
 msgstr ""
+"Uma possível razão para definir ``hash=False`` mas ``compare=True`` seria se "
+"um campo for caro para calcular um valor de hash, esse campo for necessário "
+"para teste de igualdade e houver outros campos que contribuem para o valor "
+"de hash do tipo. Mesmo que um campo seja excluído do hash, ele ainda será "
+"usado para comparações."
 
 #: ../../library/dataclasses.rst:260
 msgid ""
@@ -433,6 +451,12 @@ msgid ""
 "Multiple third-parties can each have their own key, to use as a namespace in "
 "the metadata."
 msgstr ""
+"``metadata``: Pode ser um mapeamento ou None. None é tratado como um "
+"dicionário vazio. Este valor é agrupado em :func:`~types.MappingProxyType` "
+"para torná-lo somente leitura e exposto no objeto :class:`Field`. Ele não é "
+"usado por Data Classes e é fornecido como um mecanismo de extensão de "
+"terceiros. Vários terceiros podem ter sua própria chave, para usar como um "
+"espaço de nomes nos metadados."
 
 #: ../../library/dataclasses.rst:272
 msgid ""
@@ -450,12 +474,21 @@ msgid ""
 "fields, just as if the default value itself were specified.  For example, "
 "after::"
 msgstr ""
+"Se o valor padrão de um campo for especificado por uma chamada para :func:"
+"`field()`, então o atributo de classe para este campo será substituído pelo "
+"valor de ``default`` especificado. Se ``default`` não for fornecido, o "
+"atributo de classe será excluído. A intenção é que, após a execução do "
+"decorador :func:`dataclass`, todos os atributos de classe conterão os "
+"valores padrão para os campos, como se o próprio valor padrão fosse "
+"especificado. Por exemplo, depois de::"
 
 #: ../../library/dataclasses.rst:294
 msgid ""
 "The class attribute ``C.z`` will be ``10``, the class attribute ``C.t`` will "
 "be ``20``, and the class attributes ``C.x`` and ``C.y`` will not be set."
 msgstr ""
+"O atributo de classe ``C.z`` será ``10``, o atributo de classe ``C.t`` será "
+"``20`` e os atributos de classe ``C.x`` e ``C.y`` não serão definidos."
 
 #: ../../library/dataclasses.rst:300
 msgid ""
@@ -464,6 +497,10 @@ msgid ""
 "method (see below).  Users should never instantiate a :class:`Field` object "
 "directly.  Its documented attributes are:"
 msgstr ""
+"Objetos :class:`Field` descrevem cada campo definido. Esses objetos são "
+"criados internamente e são retornados pelo método de nível de módulo :func:"
+"`fields` (veja abaixo). Os usuários nunca devem instanciar um objeto :class:"
+"`Field` diretamente. Seus atributos documentados são:"
 
 #: ../../library/dataclasses.rst:305
 msgid "``name``: The name of the field."
@@ -479,12 +516,17 @@ msgid ""
 "``metadata``, and ``kw_only`` have the identical meaning and values as they "
 "do in the :func:`field` function."
 msgstr ""
+"``default``, ``default_factory``, ``init``, ``repr``, ``hash``, ``compare``, "
+"``metadata`` e ``kw_only`` têm significado e valores idênticos aos da "
+"função :func:`field`."
 
 #: ../../library/dataclasses.rst:313
 msgid ""
 "Other attributes may exist, but they are private and must not be inspected "
 "or relied on."
 msgstr ""
+"Outros atributos podem existir, mas são privados e não devem ser "
+"inspecionados ou confiáveis."
 
 #: ../../library/dataclasses.rst:318
 msgid ""
@@ -493,6 +535,11 @@ msgid ""
 "Raises :exc:`TypeError` if not passed a dataclass or instance of one. Does "
 "not return pseudo-fields which are ``ClassVar`` or ``InitVar``."
 msgstr ""
+"Retorna uma tupla de objetos :class:`Field` que definem os campos para esta "
+"classe de dados. Aceita uma classe de dados ou uma instância de uma classe "
+"de dados. Levanta :exc:`TypeError` se não for passada uma classe de dados ou "
+"instância de uma. Não retorna pseudocampos que são ``ClassVar`` ou "
+"``InitVar``."
 
 #: ../../library/dataclasses.rst:325
 msgid ""
@@ -501,20 +548,28 @@ msgid ""
 "``name: value`` pairs.  dataclasses, dicts, lists, and tuples are recursed "
 "into.  Other objects are copied with :func:`copy.deepcopy`."
 msgstr ""
+"Converte a classe de dados ``obj`` em um dicionário (usando a função de "
+"fábrica ``dict_factory``). Cada classe de dados é convertida em um "
+"dicionário de seus campos, como pares ``nome: valor``. Pode-se fazer "
+"recursividade em classes de dados, dicionários, listas e tuplas. Outros "
+"objetos são copiados com :func:`copy.deepcopy`."
 
 #: ../../library/dataclasses.rst:331
 msgid "Example of using :func:`asdict` on nested dataclasses::"
-msgstr ""
+msgstr "Exemplo de uso de :func:`asdict` em classes de dados aninhadas::"
 
 #: ../../library/dataclasses.rst:348 ../../library/dataclasses.rst:368
 msgid "To create a shallow copy, the following workaround may be used::"
 msgstr ""
+"Para criar uma cópia rasa, a seguinte solução alternativa pode ser usada::"
 
 #: ../../library/dataclasses.rst:352
 msgid ""
 ":func:`asdict` raises :exc:`TypeError` if ``obj`` is not a dataclass "
 "instance."
 msgstr ""
+":func:`asdict` levanta :exc:`TypeError` se ``obj`` não é uma instância de "
+"classe de dados."
 
 #: ../../library/dataclasses.rst:357
 msgid ""
@@ -523,6 +578,10 @@ msgid ""
 "values.  dataclasses, dicts, lists, and tuples are recursed into. Other "
 "objects are copied with :func:`copy.deepcopy`."
 msgstr ""
+"Converte a classe de dados ``obj`` em uma tupla (usando a função de fábrica "
+"``tuple_factory``). Cada classe de dados é convertida em uma tupla de seus "
+"campos. Pode-se fazer recursividade em classes de dados, dicionários, listas "
+"e tuplas. Outros objetos são copiados com :func:`copy.deepcopy`."
 
 #: ../../library/dataclasses.rst:363
 msgid "Continuing from the previous example::"
@@ -533,6 +592,8 @@ msgid ""
 ":func:`astuple` raises :exc:`TypeError` if ``obj`` is not a dataclass "
 "instance."
 msgstr ""
+":func:`astuple` levanta :exc:`TypeError` se ``obj`` não é uma instância de "
+"classe de dados."
 
 #: ../../library/dataclasses.rst:377
 msgid ""

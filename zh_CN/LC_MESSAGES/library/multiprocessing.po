@@ -4,18 +4,18 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2022
-# Nyuan Zhang, 2023
 # Freesand Leo <yuqinju@163.com>, 2023
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
+# Nyuan Zhang, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-04 11:19+0000\n"
+"POT-Creation-Date: 2023-07-29 03:05+0000\n"
 "PO-Revision-Date: 2022-11-05 17:22+0000\n"
-"Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
+"Last-Translator: Nyuan Zhang, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -84,6 +84,10 @@ msgid ""
 "allows the submission of work to the underlying process pool to be separated "
 "from waiting for the results."
 msgstr ""
+":class:`concurrent.futures.ProcessPoolExecutor` 提供了一个更高层级的接口用来"
+"将任务推送到后台进程而不会阻塞调用方进程的执行。 与直接使用 :class:"
+"`~multiprocessing.pool.Pool` 接口相比，:mod:`concurrent.futures` API 能更好地"
+"允许将工作单元发往无需等待结果的下层进程池。"
 
 #: ../../library/multiprocessing.rst:57
 msgid "The :class:`Process` class"
@@ -138,6 +142,10 @@ msgid ""
 "Starting a process using this method is rather slow compared to using *fork* "
 "or *forkserver*."
 msgstr ""
+"父进程会启动一个新的 Python 解释器进程。 子进程将只继承那些运行进程对象的 :"
+"meth:`~Process.run` 方法所必须的资源。 特别地，来自父进程的非必需文件描述符和"
+"句柄将不会被继承。 使用此方法启动进程相比使用 *fork* 或 *forkserver* 要慢上许"
+"多。"
 
 #: ../../library/multiprocessing.rst:116
 msgid "Available on Unix and Windows.  The default on Windows and macOS."
@@ -976,7 +984,7 @@ msgid ""
 "Connection` objects representing the ends of a pipe."
 msgstr ""
 "返回一对 :class:`~multiprocessing.connection.Connection` 对象 ``(conn1, "
-"conn2)`` ， 分别表示管道的两端。 "
+"conn2)`` ， 分别表示管道的两端。"
 
 #: ../../library/multiprocessing.rst:778
 msgid ""
@@ -1104,7 +1112,7 @@ msgid ""
 "class:`queue.Queue`.  These methods are usually unnecessary for most code:"
 msgstr ""
 ":class:`multiprocessing.Queue` 类有一些在 :class:`queue.Queue` 类中没有出现的"
-"方法。这些方法在大多数情形下并不是必须的。 "
+"方法。这些方法在大多数情形下并不是必须的。"
 
 #: ../../library/multiprocessing.rst:857
 msgid ""
@@ -1339,7 +1347,7 @@ msgid ""
 "``freeze_support()`` has no effect."
 msgstr ""
 "对  ``freeze_support()`` 的调用在非 Windows 平台上是无效的。如果该模块在 "
-"Windows 平台的 Python 解释器中正常运行 (该程序没有被冻结)， 调用"
+"Windows 平台的 Python 解释器中正常运行 (该程序没有被冻结)， 调用 "
 "``freeze_support()`` 也是无效的。"
 
 #: ../../library/multiprocessing.rst:1018
@@ -1906,7 +1914,7 @@ msgid ""
 "timeout will emulate that function's behavior using a sleeping loop."
 msgstr ""
 "在 macOS 上，不支持  ``sem_timedwait`` ，所以，调用 ``acquire()`` 时如果使用 "
-"timeout 参数，会通过循环sleep来模拟这个函数的行为。 "
+"timeout 参数，会通过循环sleep来模拟这个函数的行为。"
 
 #: ../../library/multiprocessing.rst:1404
 msgid ""
@@ -2936,7 +2944,7 @@ msgid ""
 msgstr ""
 "使用 *args* 参数以及 *kwds* 命名参数调用 *func* , 它会返回结果前阻塞。这种情"
 "况下，:meth:`apply_async` 更适合并行化工作。另外 *func* 只会在一个进程池中的"
-"一个工作进程中执行。 "
+"一个工作进程中执行。"
 
 #: ../../library/multiprocessing.rst:2202
 msgid ""
@@ -2999,7 +3007,7 @@ msgid ""
 "option for better efficiency."
 msgstr ""
 "注意对于很长的迭代对象，可能消耗很多内存。可以考虑使用 :meth:`imap` 或 :meth:"
-"`imap_unordered` 并且显示指定 *chunksize* 以提升效率。"
+"`imap_unordered` 并且显式指定 *chunksize* 以提升效率。"
 
 #: ../../library/multiprocessing.rst:2233
 msgid ""
@@ -3031,8 +3039,8 @@ msgid ""
 msgstr ""
 "同样，如果 *chunksize* 是 ``1`` , 那么 :meth:`imap` 方法所返回的迭代器的 :"
 "meth:`!next` 方法拥有一个可选的 *timeout* 参数： 如果无法在 *timeout* 秒内执"
-"行得到结果，则``next(timeout)`` 会抛出 :exc:`multiprocessing.TimeoutError` 异"
-"常。"
+"行得到结果，则 ``next(timeout)`` 会抛出 :exc:`multiprocessing.TimeoutError` "
+"异常。"
 
 #: ../../library/multiprocessing.rst:2264
 msgid ""
@@ -3269,8 +3277,8 @@ msgstr ""
 "``None`` ,那么 family 会根据 *address* 的格式自动推导出来。如果 *address* 也"
 "是 ``None`` , 则取默认值。默认值为可用类型中速度最快的。见 :ref:"
 "`multiprocessing-address-formats` 。注意，如果 *family* 是 ``'AF_UNIX'`` 而"
-"address是``None`` ,套接字会在一个 :func:`tempfile.mkstemp` 创建的私有临时目录"
-"中创建。"
+"address是 ``None`` ,套接字会在一个 :func:`tempfile.mkstemp` 创建的私有临时目"
+"录中创建。"
 
 #: ../../library/multiprocessing.rst:2438
 msgid ""
@@ -3444,6 +3452,10 @@ msgid ""
 "the form :samp:`r'\\\\\\\\\\\\\\\\{ServerName}\\\\pipe\\\\\\\\{PipeName}'` "
 "instead."
 msgstr ""
+"``'AF_PIPE'`` 地址是一个 :samp:`r'\\\\\\\\\\\\.\\\\pipe\\\\\\\\{PipeName}'` "
+"形式的字符串。 要使用 :func:`Client` 来连接到远程计算机上一个名为 "
+"*ServerName* 的命名管道则应当改用 :samp:`r'\\\\\\\\\\\\\\\\{ServerName}\\"
+"\\pipe\\\\\\\\{PipeName}'` 形式的地址。"
 
 #: ../../library/multiprocessing.rst:2602
 msgid ""

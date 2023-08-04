@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2022
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-07 15:18+0000\n"
+"POT-Creation-Date: 2023-08-04 15:17+0000\n"
 "PO-Revision-Date: 2022-11-05 17:23+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2022\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
 "ja/)\n"
 "MIME-Version: 1.0\n"
@@ -592,6 +592,13 @@ msgid ""
 "keyword:`async def` function's body causes that coroutine function to be an "
 "asynchronous generator function. For example::"
 msgstr ""
+"yield 式は :term:`ジェネレータ <generator>` 関数や :term:`非同期ジェネレータ "
+"<asynchronous generator>` 関数を定義するときに使われます。従って、関数定義の"
+"本体でのみ使えます。\n"
+"関数の本体で yield 式 を使用するとその関数はジェネレータ関数になり、 :"
+"keyword:`async def` 関数の本体で使用するとそのコルーチン関数は非同期ジェネ"
+"レータ関数になります。\n"
+"例えば次のようになります::"
 
 #: ../../reference/expressions.rst:435
 msgid ""
@@ -640,6 +647,19 @@ msgid ""
 "`None`.  Otherwise, if :meth:`~generator.send` is used, then the result will "
 "be the value passed in to that method."
 msgstr ""
+"ジェネレータ関数が呼び出された時、ジェネレータとしてのイテレータを返します。"
+"ジェネレータはその後ジェネレータ関数の実行を制御します。ジェネレータのメソッ"
+"ドが呼び出されると実行が開始されます。開始されると、最初の yield 式まで処理し"
+"て一時停止し、呼び出し元へ :token:`~python-grammar:expression_list` の値を、"
+"または :token:`~python-grammar:expression_list` が省略されていれば ``None`` "
+"を返します。ここで言う一時停止とは、ローカル変数の束縛、命令ポインタや内部の"
+"評価スタック、そして例外処理のを含むすべてのローカル状態が保持されることを意"
+"味します。再度、ジェネレータのメソッドが呼び出されて実行を再開した時、ジェネ"
+"レータは yield 式がただの外部呼び出しであったかのように処理を継続します。再開"
+"後の yield 式の値は実行を再開するメソッドに依存します。:meth:`~generator."
+"__next__` を使用した場合 (一般に :keyword:`for` 文や組み込み関数 :func:"
+"`next` など) の結果は :const:`None` となり、:meth:`~generator.send` を使用し"
+"た場合はそのメソッドに渡された値が結果になります。"
 
 #: ../../reference/expressions.rst:467
 msgid ""
@@ -678,6 +698,13 @@ msgid ""
 "exc:`AttributeError` or :exc:`TypeError`, while :meth:`~generator.throw` "
 "will just raise the passed in exception immediately."
 msgstr ""
+"``yield from <expr>`` を使用した場合、与えられた式はイテラブルでなければなり"
+"ません。そのイテラブルをイテレートすることで生成された値は現在のジェネレータ"
+"のメソッドの呼び出し元へ直接渡されます。:meth:`~generator.send` で渡されたあ"
+"らゆる値と :meth:`~generator.throw` で渡されたあらゆる例外は根底のイテレータ"
+"に適切なメソッドがあれば渡されます。適切なメソッドがない場合、:meth:"
+"`~generator.send` は :exc:`AttributeError` か :exc:`TypeError` を、:meth:"
+"`~generator.throw` は渡された例外を即座に送出します。"
 
 #: ../../reference/expressions.rst:491
 msgid ""
@@ -736,6 +763,8 @@ msgid ""
 "The proposal to introduce the :token:`~python-grammar:yield_from` syntax, "
 "making delegation to subgenerators easy."
 msgstr ""
+"サブジェネレータの委譲を簡単にするための、 :token:`~python-grammar:"
+"yield_from` 構文の導入提案。"
 
 #: ../../reference/expressions.rst:517
 msgid ":pep:`525` - Asynchronous Generators"
@@ -779,6 +808,13 @@ msgid ""
 "caller.  If the generator exits without yielding another value, a :exc:"
 "`StopIteration` exception is raised."
 msgstr ""
+"ジェネレータ関数の実行を開始するか、最後に yield 式が実行されたところから再開"
+"します。ジェネレータ関数が :meth:`~generator.__next__` メソッドによって再開さ"
+"れた時、その時点の :keyword:`yield` 式の値は常に :const:`None` と評価されま"
+"す。その後次の :keyword:`yield` 式まで実行し、ジェネレータは一時停止し、:"
+"token:`~python-grammar:expression_list` の値を :meth:`__next__` メソッドの呼"
+"び出し元に返します。ジェネレータが次の値を yield せずに終了した場合、:exc:"
+"`StopIteration` 例外が送出されます。"
 
 #: ../../reference/expressions.rst:546
 msgid ""
@@ -813,6 +849,10 @@ msgid ""
 "If the generator function does not catch the passed-in exception, or raises "
 "a different exception, then that exception propagates to the caller."
 msgstr ""
+"ジェネレータが中断した位置で例外を発生させて、そのジェネレータ関数が生成する"
+"次の値を返します。ジェネレータが値を生成することなく終了すると :exc:"
+"`StopIteration` が発生します。ジェネレータ関数が渡された例外を捕捉しない、も"
+"しくは違う例外を発生させるなら、その例外は呼び出し元へ伝搬されます。"
 
 #: ../../reference/expressions.rst:570
 msgid ""
@@ -917,6 +957,20 @@ msgid ""
 "`~agen.asend` is used, then the result will be the value passed in to that "
 "method."
 msgstr ""
+"非同期ジェネレータのメソッドの 1 つを呼び出すと :term:`awaitable` オブジェク"
+"トが返され、このオブジェクトが動く番になったときに実行が開始されます。\n"
+"そのときに実行は最初の yield 式まで進み、そこで再び中断され、 :token:"
+"`~python-grammar:expression_list` の値を待機中のコルーチンに返します。\n"
+"ジェネレータと同様に、中断とは、現在のローカル変数束縛、命令ポインタ、内部評"
+"価スタック、および例外処理の状態など、すべてのローカルな状態が保たれることを"
+"意味します。\n"
+"非同期ジェネレータのメソッドから次のオブジェクトが返されたことで実行が再開さ"
+"れると、関数はあたかも yield 式が単なる外部呼び出しであるかのように処理を進め"
+"ていきます。\n"
+"再開後の yield 式の値は、実行を再開したメソッドによって異なります。\n"
+":meth:`~agen.__anext__` を使った場合は、結果は :const:`None` になります。\n"
+"そうではなく、 :meth:`~agen.asend` が使用された場合は、結果はそのメソッドに渡"
+"された値になります。"
 
 #: ../../reference/expressions.rst:661
 msgid ""
@@ -1129,6 +1183,8 @@ msgid ""
 "For built-in objects, there are two types of objects that support "
 "subscription via :meth:`~object.__getitem__`:"
 msgstr ""
+"組み込みオブジェクトでは、:meth:`~object.__getitem__`　によって添字表記をサ"
+"ポートするオブジェクトには 2 種類あります:"
 
 #: ../../reference/expressions.rst:854
 msgid ""
@@ -1137,6 +1193,10 @@ msgid ""
 "subscription selects the value in the mapping that corresponds to that key. "
 "An example of a builtin mapping class is the :class:`dict` class."
 msgstr ""
+"マッピング。プライマリが :term:`マッピング <mapping>` であれば、式リストの値"
+"評価結果はマップ内のいずれかのキー値に相当するオブジェクトにならなければなり"
+"ません。添字表記は、そのキーに対応するマッピング内の値 (value) を選択します。"
+"組み込みのマッピングクラスの例は :class:`dict` クラスです。"
 
 #: ../../reference/expressions.rst:858
 msgid ""
@@ -1145,6 +1205,10 @@ msgid ""
 "following section). Examples of builtin sequence classes include the :class:"
 "`str`, :class:`list` and :class:`tuple` classes."
 msgstr ""
+"シーケンス。プライマリが :term:`シーケンス <sequence>` であれば、式リストの評"
+"価結果は :class:`int` または :class:`slice` (以下の節で論じます) でなければな"
+"りません。組み込みのシーケンスクラスの例には :class:`str`、:class:`list`、:"
+"class:`tuple` クラスが含まれます。"
 
 #: ../../reference/expressions.rst:863
 msgid ""
@@ -1159,6 +1223,15 @@ msgid ""
 "method, subclasses overriding this method will need to explicitly add that "
 "support."
 msgstr ""
+"形式的な構文は :term:`シーケンス <sequence>` の負のインデックスにいかなる特例"
+"も与えません。しかし、すべての組み込みのシーケンスが与える :meth:`~object."
+"__getitem__` メソッドは、負のインデックスを、インデックスにシーケンスの長さを"
+"加えて解釈するので、例えば、 ``x[-1]`` は ``x`` の最後の要素を選択します。結"
+"果の値はシーケンスの要素数より小さな非負の整数でなければなりません。添字表記"
+"は、(0 から数えた) インデックスを持つ要素を選択します。負のインデックスのサ"
+"ポートは、オブジェクトの :meth:`__getitem__` メソッドに現れるので、このメソッ"
+"ドをオーバーライドするサブクラスは、明示的にこのサポートを追加する必要があり"
+"ます。"
 
 #: ../../reference/expressions.rst:877
 msgid ""
@@ -1166,6 +1239,8 @@ msgid ""
 "*characters*. A character is not a separate data type but a string of "
 "exactly one character."
 msgstr ""
+":class:`文字列 <str>` は文字 (*character*) を要素とする特別な種類のシーケンス"
+"です。文字は個別の型ではなく、 1 文字だけからなる文字列です。"
 
 #: ../../reference/expressions.rst:885
 msgid "Slicings"
@@ -1382,6 +1457,11 @@ msgid ""
 "given a value (by an explicit keyword argument, or from another unpacking), "
 "a :exc:`TypeError` exception is raised."
 msgstr ""
+"関数呼び出しで ``**expression`` 構文が使われた場合、 ``expression`` の評価結"
+"果は :term:`マッピング <mapping>` でなければなりません。その内容は追加のキー"
+"ワード引数として扱われます。\n"
+"キーにマッチする引数が (明示的なキーワード引数によって、あるいは他のアンパッ"
+"クの中で) 既に値を与えられていたなら、 :exc:`TypeError` 例外が送出されます。"
 
 #: ../../reference/expressions.rst:1059
 msgid ""
@@ -1592,6 +1672,10 @@ msgid ""
 "It only applies to integral numbers or to custom objects that override the :"
 "meth:`__invert__` special method."
 msgstr ""
+"単項演算子 ``~`` (反転) は、整数引数をビット単位反転 (bitwise invert) したも"
+"のを与えます。``x`` のビット単位反転は、``-(x+1)`` として定義されています。こ"
+"の演算子は整数や :meth:`__invert__` 特殊メソッドをオーバーライドするカスタム"
+"オブジェクトにのみ適用されます。"
 
 #: ../../reference/expressions.rst:1231
 msgid ""
@@ -2087,6 +2171,9 @@ msgid ""
 "equal ``(key, value)`` pairs. Equality comparison of the keys and values "
 "enforces reflexivity."
 msgstr ""
+"マッピング (:class:`dict` のインスタンス) の比較の結果が等価となるのは、同じ "
+"``(key, value)`` を持っているときかつそのときに限ります。\n"
+"キーと値の等価比較では反射性が強制されます。"
 
 #: ../../reference/expressions.rst:1553
 msgid ""
@@ -2292,6 +2379,10 @@ msgid ""
 "iterating over ``y``. If an exception is raised during the iteration, it is "
 "as if :keyword:`in` raised that exception."
 msgstr ""
+":meth:`__contains__` を定義していないが :meth:`__iter__` は定義しているユーザ"
+"定義クラスでは、 ``x in y`` は ``x is z or x == z`` が真となるようなある値 "
+"``z`` が ``y`` 内にわたる反復で生成された場合、 ``True`` となります。もし、反"
+"復の間に例外が発生すれば、 :keyword:`in` が例外を発生させたようにみえます。"
 
 #: ../../reference/expressions.rst:1648
 msgid ""
@@ -2301,6 +2392,12 @@ msgid ""
 "index raises the :exc:`IndexError` exception.  (If any other exception is "
 "raised, it is as if :keyword:`in` raised that exception)."
 msgstr ""
+"最終的には、旧式の反復プロトコルの実行を試みます、もし :meth:`__getitem__` を"
+"定義しているようなユーザ定義クラスでは、 ``x in y`` は ``x is y[i] or x == "
+"y[i]`` となるような非負の整数インデクス *i* が存在し、それより小さい整数イン"
+"デクスが :exc:`IndexError` を送出しないとき、かつそのときにかぎり ``True`` と"
+"なります。 (別の何らかの例外が送出された場合、例外は :keyword:`in` から送出さ"
+"れたかのようになります)。"
 
 #: ../../reference/expressions.rst:1660
 msgid ""
@@ -2593,7 +2690,7 @@ msgstr "添字指定、スライス操作、呼び出し、属性参照"
 
 #: ../../reference/expressions.rst:1920
 msgid ":keyword:`await x <await>`"
-msgstr ""
+msgstr ":keyword:`await x <await>`"
 
 #: ../../reference/expressions.rst:1922
 msgid "``**``"
@@ -2675,7 +2772,7 @@ msgstr "所属や同一性のテストを含む比較"
 
 #: ../../reference/expressions.rst:1944
 msgid ":keyword:`not x <not>`"
-msgstr ""
+msgstr ":keyword:`not x <not>`"
 
 #: ../../reference/expressions.rst:1944
 msgid "Boolean NOT"

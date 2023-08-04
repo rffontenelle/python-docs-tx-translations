@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2022
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 15:19+0000\n"
+"POT-Creation-Date: 2023-07-29 03:05+0000\n"
 "PO-Revision-Date: 2022-11-05 17:23+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2022\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -493,6 +493,13 @@ msgid ""
 "`bytes` using the given text encoding, and :meth:`bytes.decode` can be used "
 "to achieve the opposite."
 msgstr ""
+"字符串是由代表 Unicode 码位的值组成的序列。 取值范围在 ``U+0000 - U+10FFFF`` "
+"之内的所有码位都可在字符串中使用。 Python 没有 :c:expr:`char` 类型；而是将字"
+"符串中的每个码位表示为一个长度为 ``1`` 的字符串对象。 内置函数 :func:`ord` 可"
+"将一个码位由字符串形式转换为取值范围在 ``0 - 10FFFF`` 之内的整数；:func:"
+"`chr` 可将一个取值范围在 ``0 - 10FFFF`` 之内的整数转换为长度为 ``1`` 的对应字"
+"符串对象。 :meth:`str.encode` 可以使用给定的文本编码格式将 :class:`str` 转换"
+"为 :class:`bytes`，而 :meth:`bytes.decode` 则可以被用来实现相反的解码操作。"
 
 #: ../../reference/datamodel.rst:340
 msgid "Tuples"
@@ -1854,6 +1861,9 @@ msgid ""
 "with appropriate arguments and then modifying the newly created instance as "
 "necessary before returning it."
 msgstr ""
+"典型的实现会附带适当的参数使用 ``super().__new__(cls[, ...])`` 通过发起调用超"
+"类的 :meth:`__new__` 方法来创建一个新的类实例然后在返回它之前根据需要修改新创"
+"建的实例。"
 
 #: ../../reference/datamodel.rst:1241
 msgid ""
@@ -1960,6 +1970,10 @@ msgid ""
 "references its own traceback, which references the locals of all frames "
 "caught in the traceback."
 msgstr ""
+"一个引用循环可以阻止对象的引用计数归零。 在这种情况下，循环将稍后被检测到并"
+"被 :term:`循环垃圾回收器 <garbage collection>` 删除。 导致引用循环的一个常见"
+"原因是当一个异常在局部变量中被捕获。 帧的局部变量将会引用该异常，这将引用它自"
+"己的回溯信息，它会又引用在回溯中捕获的所有帧的局部变量。"
 
 #: ../../reference/datamodel.rst:1311
 msgid "Documentation for the :mod:`gc` module."
@@ -2220,6 +2234,12 @@ msgid ""
 "value is immutable (if the object's hash value changes, it will be in the "
 "wrong hash bucket)."
 msgstr ""
+"如果一个类没有定义 :meth:`__eq__` 方法那么它也不应该定义 :meth:`__hash__` 操"
+"作；如果它定义了 :meth:`__eq__` 但没有定义 :meth:`__hash__`，则其实例将不可被"
+"用作可哈希多项集的条目。 如果一个类定义了可变对象并实现了 :meth:`__eq__` 方"
+"法，则它不应该实现 :meth:`__hash__`，因为 :term:`hashable` 多项集的实现要求键"
+"的哈希值是不可变的（如果对象的哈希值发生改变，它将位于错误的哈希桶中）。 "
+"hash bucket)."
 
 #: ../../reference/datamodel.rst:1497
 msgid ""
@@ -2883,6 +2903,9 @@ msgid ""
 "<PyTypeObject.tp_itemsize>` such as :class:`int`, :class:`bytes`, and :class:"
 "`tuple`."
 msgstr ""
+"如果为派生自 :c:member:`\"variable-length\" 内置类型 <PyTypeObject."
+"tp_itemsize>` 如 :class:`int`, :class:`bytes` 和 :class:`tuple` 的类定义了非"
+"空的*__slots__* 则将引发 :exc:`TypeError`。"
 
 #: ../../reference/datamodel.rst:1884
 msgid "Any non-string :term:`iterable` may be assigned to *__slots__*."
@@ -3143,7 +3166,7 @@ msgid ""
 "``__new__``, but when the final class object is created the namespace is "
 "copied into a new ``dict``."
 msgstr ""
-"一旦确定了适当的元类，就将准备好类的命名空间。 如果元类具有 ``__prepare__`` "
+"一旦确定了适当的元类，就开始准备类的命名空间。 如果元类具有 ``__prepare__`` "
 "属性，它将以 ``namespace = metaclass.__prepare__(name, bases, **kwds)`` 的形"
 "式被调用（其中如果存在任何额外关键字参数，则应来自类定义）。 ``__prepare__`` "
 "方法应当被实现为 :func:`类方法 <classmethod>`。 ``__prepare__`` 所返回的命名"
@@ -3507,8 +3530,8 @@ msgid ""
 "follows something like the following process to decide whether :meth:"
 "`~object.__getitem__` or :meth:`~object.__class_getitem__` should be called::"
 msgstr ""
-"使用 :term:`expression` ``obj[x]`` 来呈现，Python 解释器会遵循下面这样的过程"
-"来确定应当调用 :meth:`~object.__getitem__` 还是 :meth:`~object."
+"使用 :term:`表达式 <expression>` ``obj[x]`` 来呈现，Python 解释器会遵循下面这"
+"样的过程来确定应当调用 :meth:`~object.__getitem__` 还是 :meth:`~object."
 "__class_getitem__`::"
 
 #: ../../reference/datamodel.rst:2294
@@ -4058,6 +4081,9 @@ msgid ""
 "without special support in ``MyClass``. To be able to use that kind of "
 "pattern, the class needs to define a *__match_args__* attribute."
 msgstr ""
+"当在模式中使用类名称时，默认不允许模式中出现位置参数，例如在 ``MyClass`` 没有"
+"特别支持的情况下 ``case MyClass(x, y)`` 通常是无效的。 要能使用这样的模式，类"
+"必须定义一个 *__match_args__* 属性。"
 
 #: ../../reference/datamodel.rst:2762
 msgid ""
@@ -4192,6 +4218,9 @@ msgid ""
 "specific to the implementation of the asynchronous execution framework (e."
 "g. :mod:`asyncio`) that will be managing the :term:`awaitable` object."
 msgstr ""
+"本语言不会对 ``__await__`` 所返回的迭代器产生的对象的类型或值施加任何限制，因"
+"为这是负责管理 :term:`awaitable` 对象的异步执行框架的具体实现 (如 :mod:"
+"`asyncio`) 专属特性。"
 
 #: ../../reference/datamodel.rst:2894
 msgid ":pep:`492` for additional information about awaitable objects."

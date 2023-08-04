@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2022
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-28 15:15+0000\n"
+"POT-Creation-Date: 2023-07-29 03:05+0000\n"
 "PO-Revision-Date: 2022-11-05 17:22+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2022\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -69,7 +69,7 @@ msgid ""
 "more general information about TLS, SSL, and certificates, the reader is "
 "referred to the documents in the \"See Also\" section at the bottom."
 msgstr ""
-"文档本文档记录``ssl`` 模块的对象和函数；更多关于TLS,SSL,和证书的信息，请参阅"
+"文档本文档记录 ``ssl`` 模块的对象和函数；更多关于TLS,SSL,和证书的信息，请参阅"
 "下方的“详情”选项"
 
 #: ../../library/ssl.rst:41
@@ -983,7 +983,7 @@ msgstr "选择 SSL 版本 3 作为通道加密协议。"
 msgid ""
 "This protocol is not available if OpenSSL is compiled with the ``no-ssl3`` "
 "option."
-msgstr "如果OpenSSL是用``no-ssl3``选项编译的，则该协议不可用。"
+msgstr "如果OpenSSL是用 ``no-ssl3`` 选项编译的，则该协议不可用。"
 
 #: ../../library/ssl.rst:736
 msgid "SSL version 3 is insecure.  Its use is highly discouraged."
@@ -1476,6 +1476,8 @@ msgid ""
 "received or sent. The socket timeout is now the maximum total duration of "
 "the shutdown."
 msgstr ""
+":meth:`shutdown` 不会在每次接收或发送字节数据后重置套接字超时。 现在套接字超"
+"时为关闭的最大总持续时间。"
 
 #: ../../library/ssl.rst:1150
 msgid ""
@@ -1537,6 +1539,8 @@ msgid ""
 "The socket timeout is now the maximum total duration to read up to *len* "
 "bytes."
 msgstr ""
+"套接字超时在每次接收或发送字节数据后不会再被重置。 现在套接字超时为读取至多 "
+"*len* 个字节数据的最大总持续时间。"
 
 #: ../../library/ssl.rst:1184
 msgid "Use :meth:`~SSLSocket.recv` instead of :meth:`~SSLSocket.read`."
@@ -1570,6 +1574,8 @@ msgid ""
 "The socket timeout is no longer reset each time bytes are received or sent. "
 "The socket timeout is now the maximum total duration to write *buf*."
 msgstr ""
+"套接字超时在每次接收或发送字节数据后不会再被重置。 现在套接字超时为写入 "
+"*buf* 的最大总持续时间。"
 
 #: ../../library/ssl.rst:1202
 msgid "Use :meth:`~SSLSocket.send` instead of :meth:`~SSLSocket.write`."
@@ -1613,6 +1619,8 @@ msgid ""
 "The socket timeout is no longer reset each time bytes are received or sent. "
 "The socket timeout is now the maximum total duration of the handshake."
 msgstr ""
+"套接字超时在每次接收或发送字节数据时不会再被重置。 现在套接字超时为握手的最大"
+"总持续时间。"
 
 #: ../../library/ssl.rst:1230
 msgid ""
@@ -1621,6 +1629,9 @@ msgid ""
 "or IP address, the handshake is aborted early and a TLS alert message is "
 "sent to the peer."
 msgstr ""
+"主机名或 IP 地址会在握手期间由 OpenSSL 进行匹配。 函数 :func:"
+"`match_hostname` 不再被使用。 在 OpenSSL 拒绝主机名或 IP 地址的情况下，握手将"
+"提前被中止并向对等方发送 TLS 警告消息。"
 
 #: ../../library/ssl.rst:1238
 msgid ""
@@ -1733,6 +1744,10 @@ msgid ""
 "``None`` if no connection has been established or the socket is a client "
 "socket."
 msgstr ""
+"返回在客户端和服务器均可用的密码列表。 所返回列表的每个条目都是由三个值组成的"
+"元组其中包含密码名称、定义其使用方式的 SSL 协议版本，以及密码所使用的加密比特"
+"位数量。 如果连接尚未建立或套接字为客户端套接字则 :meth:`~SSLSocket."
+"shared_ciphers` 将返回 ``None``。"
 
 #: ../../library/ssl.rst:1325
 msgid ""
@@ -2669,6 +2684,10 @@ msgid ""
 "their numeric values.  For example, here is the total number of hits and "
 "misses in the session cache since the context was created::"
 msgstr ""
+"获取由该上下文创建或管理的 SSL 会话的统计数据。 返回一个将每个 `信息块 "
+"<https://www.openssl.org/docs/man1.1.1/man3/SSL_CTX_sess_number.html>`_ 映射"
+"到其数字值的字典。 例如，下面是自该上下文创建以来会话缓存中的总点击数和失误"
+"数。::"
 
 #: ../../library/ssl.rst:1923
 msgid ""
@@ -3703,6 +3722,13 @@ msgid ""
 "by a given cipher list, use :meth:`SSLContext.get_ciphers` or the ``openssl "
 "ciphers`` command on your system."
 msgstr ""
+"如果你有更高级的安全要求，也可以通过 :meth:`SSLContext.set_ciphers` 方法在协"
+"商 SSL 会话时对所启用的加密进行微调。 从 Python 3.2.3 开始，ssl 模块默认禁用"
+"了某些较弱的加密，但你还可能希望进一步限制加密选项。 请确保仔细阅读 OpenSSL "
+"文档中有关 `加密列表格式 <https://www.openssl.org/docs/man1.1.1/man1/ciphers."
+"html#CIPHER-LIST-FORMAT>`_ 的部分。 如果你想要检查给定的加密列表启用了哪些加"
+"密，可以使用 :meth:`SSLContext.get_ciphers` 或所在系统的 ``openssl ciphers`` "
+"命令。"
 
 #: ../../library/ssl.rst:2713
 msgid "Multi-processing"

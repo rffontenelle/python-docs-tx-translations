@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2022
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 15:19+0000\n"
+"POT-Creation-Date: 2023-07-29 03:05+0000\n"
 "PO-Revision-Date: 2022-11-05 17:22+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2022\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -834,6 +834,9 @@ msgid ""
 "``cfg://foo`` or ``ext://bar``, because they will not be processed by the "
 "configuration machinery, but passed to the callable as-is."
 msgstr ""
+"上面示例中 ``bar``, ``spam`` 和 ``answer`` 等键的值不应是配置目录或引用如 "
+"``cfg://foo`` 或 ``ext://bar``，因为它们将不会被配置机制所处理，而是被原样传"
+"给可调用对象。"
 
 #: ../../library/logging.config.rst:527
 msgid ""
@@ -853,12 +856,17 @@ msgid ""
 "will be set on the user-defined object before it is returned. Thus, with the "
 "following configuration::"
 msgstr ""
+"你还可以指定一个特殊键 ``'.'`` 其值应为一个将属性名称映射到对应值的字典。 如"
+"果找到，则指定的属性在被返回之前将在用户定义的对象上设置。 因此，使用以下配"
+"置::"
 
 #: ../../library/logging.config.rst:548
 msgid ""
 "the returned formatter will have attribute ``foo`` set to ``'bar'`` and "
 "attribute ``baz`` set to ``'bozz'``."
 msgstr ""
+"被返回的格式化器的 ``foo`` 属性将设为 ``'bar'`` 而 ``baz`` 属性将设为 "
+"``'bozz'``。"
 
 #: ../../library/logging.config.rst:551
 msgid ""
@@ -867,10 +875,12 @@ msgid ""
 "or ``ext://bar``, because they will not be processed by the configuration "
 "machinery, but set as attribute values as-is."
 msgstr ""
+"上面示例中 ``foo`` 和 ``baz`` 等属性的值不应是配置目录或引用如 ``cfg://foo`` "
+"或 ``ext://bar``，因为它们将不会被配置机制所处理，而是被原样设置为属性。"
 
 #: ../../library/logging.config.rst:560
 msgid "Handler configuration order"
-msgstr ""
+msgstr "处理句柄配置顺序"
 
 #: ../../library/logging.config.rst:562
 msgid ""
@@ -892,6 +902,18 @@ msgid ""
 "foo`` would resolve to configured handler ``foo``, and not its configuration "
 "dictionary."
 msgstr ""
+"处理句柄按其键的字母顺序进行配置，而已配置的处理句柄将替换配置方案内部 "
+"``handlers`` 字典（的一个工作副本）中的配置字典。 如果你使用 ``cfg://"
+"handlers.foo`` 这样的构造，那么在初始状态下 ``handlers['foo']`` 会指向名为 "
+"``foo`` 的处理句柄的配置字典，随后（一旦配置了该处理句柄）它将指向已配置的处"
+"理句柄实例。 因此，``cfg://handlers.foo`` 可以解析为一个字典或处理句柄实例。 "
+"通常来说，对于带依赖的处理句柄采用在它们所依赖的任何处理句柄完成配置 _之后_ "
+"再进行配置的方式来命名处理句柄是一种明智的做法；这将允许使用 ``cfg://"
+"handlers.foo`` 这样的构造来配置依赖于处理句柄 ``foo`` 的处理句柄。 如果这个带"
+"依赖的处理句柄被命名为 ``bar``，则会导致问题，因为 ``bar`` 的配置将在 "
+"``foo`` 的配置之前被尝试使用，而 ``foo`` 将尚未配置完成。 但是，如果带依赖的"
+"处理句柄被命名为 ``foobar``，则它将在 ``foo`` 之后被配置，结果就是 ``cfg://"
+"handlers.foo`` 将被解析为已配置的处理句柄 ``foo``，而不是其配置字典。"
 
 #: ../../library/logging.config.rst:583
 msgid "Access to external objects"
