@@ -6,26 +6,25 @@
 # Translators:
 # cdarlint <cdarling@126.com>, 2020
 # allenjuly7 <allenjuly7@astu.fun>, 2020
-# 1lin24 <1lin24@sina.com>, 2020
 # 叶浚安 <ye.pandaaaa906@gmail.com>, 2020
 # ppcfish <ppcfish@gmail.com>, 2020
 # Ziqi Wang <ziqiwang.xust@gmail.com>, 2020
 # Yi Cao <1783250036@qq.com>, 2020
 # jsgang <jsgang9@gmail.com>, 2020
-# Dankinder <2535262279@qq.com>, 2021
 # Jiuh-star <jiuh.star@gmail.com>, 2021
 # helloworldSB <warningfor163@foxmail.com>, 2021
 # Dai Xu <daixu61@hotmail.com>, 2022
 # Freesand Leo <yuqinju@163.com>, 2022
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 16:32+0000\n"
+"POT-Creation-Date: 2023-07-29 04:03+0000\n"
 "PO-Revision-Date: 2020-05-30 11:48+0000\n"
-"Last-Translator: Freesand Leo <yuqinju@163.com>, 2022\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -83,10 +82,10 @@ msgid ""
 msgstr ""
 "当一个函数由于它调用的某个函数失败而必须失败时，通常不会设置错误指示器；它调"
 "用的那个函数已经设置了它。而它负责处理错误和清理异常，或在清除其拥有的所有资"
-"源后返回（如对象应用或内存分配）。如果不准备处理异常，则*不*应该正常地继续。"
-"如果是由于一个错误返回，那么一定要向调用者表明已经设置了错误。如果错误没有得"
-"到处理或小心传播，对 Python/C API的其它调用可能不会有预期的行为，并且可能会以"
-"某种神秘的方式失败。"
+"源后返回（如对象应用或内存分配）。如果不准备处理异常，则 *不* 应该正常地继"
+"续。如果是由于一个错误返回，那么一定要向调用者表明已经设置了错误。如果错误没"
+"有得到处理或小心传播，对 Python/C API的其它调用可能不会有预期的行为，并且可能"
+"会以某种神秘的方式失败。"
 
 #: ../../c-api/exceptions.rst:37
 msgid ""
@@ -106,7 +105,7 @@ msgstr "打印和清理"
 msgid ""
 "Clear the error indicator.  If the error indicator is not set, there is no "
 "effect."
-msgstr "清楚错误指示器。如果没有设置错误指示器，则不会有作用。"
+msgstr "清除错误指示器。如果没有设置错误指示器，则不会有作用。"
 
 #: ../../c-api/exceptions.rst:55
 msgid ""
@@ -208,10 +207,10 @@ msgid ""
 "help format the error message; they have the same meaning and values as in :"
 "c:func:`PyUnicode_FromFormat`. *format* is an ASCII-encoded string."
 msgstr ""
-"这个函数设置了一个错误的指针并且返回了\"NULL\".“exception”应当是一个python中"
-"的异常类。The \"format\" 和随后的参数帮助格式化这个错误的信息;他们与  :c:"
-"func:`PyUnicode_FromFormat`   有着相同的含义和值。\"format\"是一个ASCII编码的"
-"字符串"
+"这个函数设置了一个错误指示器并且返回了 ``NULL``，*exception* 应当是一个 "
+"Python 中的异常类。*format* 和随后的形参会帮助格式化这个错误的信息；它们与 :"
+"c:func:`PyUnicode_FromFormat` 有着相同的含义和值。*format* 是一个ASCII编码的"
+"字符串。"
 
 #: ../../c-api/exceptions.rst:123
 msgid ""
@@ -282,8 +281,8 @@ msgid ""
 "second filename object, for raising errors when a function that takes two "
 "filenames fails."
 msgstr ""
-"类似于 :c:func:`PyErr_SetFromErrnoWithFilenameObject` ，但接受第二个文件名对"
-"象，用于当一个接受两个文件名的函数失败时触发错误。"
+"类似于 :c:func:`PyErr_SetFromErrnoWithFilenameObject` ，但接受第二个 "
+"filename 对象，用于当一个接受两个 filename 的函数失败时触发错误。"
 
 #: ../../c-api/exceptions.rst:184
 msgid ""
@@ -408,7 +407,7 @@ msgstr ""
 
 #: ../../c-api/exceptions.rst:289
 msgid "Issuing warnings"
-msgstr "警告"
+msgstr "发出警告"
 
 #: ../../c-api/exceptions.rst:291
 msgid ""
@@ -426,11 +425,11 @@ msgid ""
 "return an error value)."
 msgstr ""
 "这些函数可以从 C 代码中发出警告。它们仿照了由 Python 模块 :mod:`warnings` 导"
-"出的函数。它们通常向 *sys.stderr* 打印一条警告信息；当然，用户也有可能已经指"
-"定将警告转换为错误，在这种情况下，它们将触发异常。也有可能由于警告机制出现问"
-"题，使得函数触发异常。如果没有触发异常，返回值为 ``0`` ；如果触发异常，返回值"
-"为 ``-1``。（无法确定是否实际打印了警告信息，也无法确定异常触发的原因。这是故"
-"意为之）。如果触发了异常，调用者应该进行正常的异常处理（例如，:c:func:"
+"出的那些函数。它们通常向 *sys.stderr* 打印一条警告信息；当然，用户也有可能已"
+"经指定将警告转换为错误，在这种情况下，它们将触发异常。也有可能由于警告机制出"
+"现问题，使得函数触发异常。如果没有触发异常，返回值为 ``0`` ；如果触发异常，返"
+"回值为 ``-1``。（无法确定是否实际打印了警告信息，也无法确定异常触发的原因。这"
+"是故意为之）。如果触发了异常，调用者应该进行正常的异常处理（例如，:c:func:"
 "`Py_DECREF` 持有引用并返回一个错误值）。"
 
 #: ../../c-api/exceptions.rst:306
@@ -731,7 +730,7 @@ msgstr "在 Windows 上，此函数现在也支持套接字处理。"
 
 #: ../../c-api/exceptions.rst:546
 msgid "Exception Classes"
-msgstr "异常类"
+msgstr "Exception 类"
 
 #: ../../c-api/exceptions.rst:550
 msgid ""
@@ -786,7 +785,7 @@ msgstr ""
 msgid ""
 "Set the traceback associated with the exception to *tb*.  Use ``Py_None`` to "
 "clear it."
-msgstr "将异常关联的回溯设置为 *tb* 。使用``Py_None``清除它。"
+msgstr "将异常关联的回溯设置为 *tb* 。使用 ``Py_None`` 清除它。"
 
 #: ../../c-api/exceptions.rst:590
 msgid ""
@@ -1075,7 +1074,7 @@ msgstr "Python 名称"
 #: ../../c-api/exceptions.rst:833 ../../c-api/exceptions.rst:966
 #: ../../c-api/exceptions.rst:1011
 msgid "Notes"
-msgstr "注释"
+msgstr "备注"
 
 #: ../../c-api/exceptions.rst:835
 msgid ":c:data:`PyExc_BaseException`"
@@ -1565,7 +1564,7 @@ msgstr "这些别名曾经是单独的异常类型。"
 
 #: ../../c-api/exceptions.rst:978 ../../c-api/exceptions.rst:1039
 msgid "Notes:"
-msgstr "注释:"
+msgstr "注释："
 
 #: ../../c-api/exceptions.rst:981
 msgid "This is a base class for other standard exceptions."

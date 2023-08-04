@@ -8,15 +8,16 @@
 # tomo, 2021
 # 渋川よしき <yoshiki@shibu.jp>, 2021
 # Arihiro TAKASE, 2023
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 16:32+0000\n"
+"POT-Creation-Date: 2023-08-04 16:27+0000\n"
 "PO-Revision-Date: 2020-05-30 12:15+0000\n"
-"Last-Translator: Arihiro TAKASE, 2023\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
 "ja/)\n"
 "MIME-Version: 1.0\n"
@@ -54,10 +55,10 @@ msgid ""
 "two objects; the :func:`id` function returns an integer representing its "
 "identity."
 msgstr ""
-"すべての属性は、同一性 (identity)、型、値をもっています。 *同一性* は生成され"
-"たあとは変更されません。これはオブジェクトのアドレスのようなものだと考えられ"
-"るかもしれません。 ':keyword:`is`' 演算子は2つのオブジェクトの同一性を比較し"
-"ます。 :func:`id` 関数は同一性を表す整数を返します。"
+"すべてのオブジェクトは、同一性 (identity)、型、値をもっています。 *同一性* は"
+"生成されたあとは変更されません。これはオブジェクトのアドレスのようなものだと"
+"考えられるかもしれません。 ':keyword:`is`' 演算子は2つのオブジェクトの同一性"
+"を比較します。 :func:`id` 関数は同一性を表す整数を返します。"
 
 #: ../../reference/datamodel.rst:42
 msgid "For CPython, ``id(x)`` is the memory address where ``x`` is stored."
@@ -111,9 +112,9 @@ msgid ""
 msgstr ""
 "オブジェクトを明示的に破壊することはできません; しかし、オブジェクトに到達不"
 "能 (unreachable) になると、ガベージコレクション (garbage-collection) によって"
-"処理されます。実装では、ごみ収集を遅らせたり、全く行わないようにすることがで"
-"きます --- 到達可能なオブジェクトをごみ収集処理してしまわないかぎり、どう実装"
-"するかは実装品質の問題です。"
+"処理されるかもしれません。ガベージコレクションを遅らせたり、全く行わない実装"
+"も許されています --- 到達可能なオブジェクトを処理してしまわないかぎり、ガベー"
+"ジコレクションをどう実装するかは実装品質の問題です。"
 
 #: ../../reference/datamodel.rst:73
 msgid ""
@@ -126,15 +127,15 @@ msgid ""
 "on immediate finalization of objects when they become unreachable (so you "
 "should always close files explicitly)."
 msgstr ""
-"現在の CPython 実装では参照カウント(reference-counting) 方式を使っており、(オ"
-"プションとして) 循環参照を行っているごみオブジェクトを遅延検出します。この実"
-"装ではほとんどのオブジェクトを到達不能になると同時に処理することができます"
-"が、循環参照を含むごみオブジェクトの収集が確実に行われるよう保証しているわけ"
-"ではありません。循環参照を持つごみオブジェクト収集の制御については、 :mod:"
-"`gc` モジュールを参照してください。 CPython以外の実装は別の方式を使っており、"
-"CPythonも将来は別の方式を使うかもしれません。オブジェクトが到達不能になったと"
-"きに即座に終了処理されることに頼らないでください (ですからファイルは必ず明示"
-"的に閉じてください)。"
+"現在の CPython 実装では参照カウント (reference-counting) 方式を使っており、"
+"(オプションとして) 循環参照を行っているガベージオブジェクトを遅延検出します。"
+"この実装ではほとんどのオブジェクトを到達不能になると同時に処理することができ"
+"ますが、循環参照を含むガベージオブジェクトの収集が確実に行われるよう保証して"
+"いるわけではありません。循環参照を持つガベージオブジェクト収集の制御について"
+"は、 :mod:`gc` モジュールを参照してください。 CPython以外の実装は別の方式を"
+"使っており、CPythonも将来は別の方式を使うかもしれません。オブジェクトが到達不"
+"能になったときに即座に終了処理されることに頼らないでください (ですからファイ"
+"ルは必ず明示的に閉じてください)。"
 
 #: ../../reference/datamodel.rst:82
 msgid ""
@@ -159,13 +160,14 @@ msgid ""
 "`finally`' statement and the ':keyword:`with`' statement provide convenient "
 "ways to do this."
 msgstr ""
-"オブジェクトには、開かれたファイルやウィンドウといった、 \"外部 (external) の"
-"\" リソースへの参照を含むものがあります。これらのリソースは、オブジェクトがご"
-"み収集された際に解放されるものと理解されていますが、ごみ収集が行われる保証は"
-"ないので、こうしたオブジェクトは外部リソースを明示的に解放する方法、大抵は :"
-"meth:`close` メソッドも提供しています。こうしたオブジェクトは明示的に close "
-"するよう強く奨めます。この操作をする際には、':keyword:`try`...\\ :keyword:"
-"`finally`' 文や、 ':keyword:`with`' 文を使うと便利です。"
+"オブジェクトには、開かれたファイルやウィンドウといった、 \"外部の (external) "
+"\" リソースへの参照を含むものがあります。これらのリソースは、オブジェクトがガ"
+"ベージコレクションされた際に解放されるものと理解されていますが、ガベージコレ"
+"クションが行われる保証はないので、こうしたオブジェクトは外部リソースを明示的"
+"に解放する方法、大抵は :meth:`close` メソッドも提供しています。こうしたオブ"
+"ジェクトは明示的に close するよう強く推奨されます。この操作をする際には、':"
+"keyword:`try`...\\ :keyword:`finally`' 文や、 ':keyword:`with`' 文を使うと便"
+"利です。"
 
 #: ../../reference/datamodel.rst:97
 msgid ""
@@ -295,8 +297,8 @@ msgid ""
 "``Ellipsis``.  Its truth value is true."
 msgstr ""
 "この型には単一の値しかありません。この値を持つオブジェクトはただ一つしか存在"
-"しません。このオブジェクトはリテラル ``...`` または組み込み名 ``Ellipsis`` で"
-"アクセスされます。真理値は真 (true)です。"
+"しません。このオブジェクトはリテラル ``...`` またはPythonで決められている名"
+"前 ``Ellipsis`` でアクセスされます。真理値は真 (true)です。"
 
 #: ../../reference/datamodel.rst:261
 msgid ":class:`numbers.Number`"
@@ -334,13 +336,13 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:193
 msgid "The representation is in base 10, when possible."
-msgstr "できるなら、10進法で表現されます。"
+msgstr "できるなら、10を底として表現されます。"
 
 #: ../../reference/datamodel.rst:195
 msgid ""
 "Leading zeros, possibly excepting a single zero before a decimal point, are "
 "not shown."
-msgstr "小数点の前にある 1 つのゼロを除いて、下に連なるゼロは表示されません。"
+msgstr "小数点の前にある 1 つのゼロを除いて、上に連なるゼロは表示されません。"
 
 #: ../../reference/datamodel.rst:198
 msgid ""
@@ -1271,7 +1273,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:767
 msgid "Modules"
-msgstr "モジュール (module)"
+msgstr "モジュール"
 
 #: ../../reference/datamodel.rst:724
 msgid ""
@@ -1527,7 +1529,7 @@ msgstr ""
 "オブジェクト ``sys.stdin`` 、 ``sys.stdout`` および ``sys.stderr`` は、インタ"
 "プリタの標準入力、標準出力、および標準エラー出力ストリームに対応するファイル"
 "オブジェクトに初期化されます。これらはすべてテキストモードで開かれ、 :class:"
-"`io.TextIOBase` 抽象クラスによって定義されたインタフェースに従います。"
+"`io.TextIOBase` 抽象クラスによって定義されたインターフェースに従います。"
 
 #: ../../reference/datamodel.rst:1146
 msgid "Internal types"
@@ -1692,8 +1694,8 @@ msgid ""
 "__getattr__`` with arguments ``obj`` and ``\"f_code\"``."
 msgstr ""
 "``f_code`` へのアクセスは ``object.__getattr__`` に ``obj`` と "
-"``\"f_code\"`` を渡して行いますが、 :ref:`監査イベント <auditing>` が送出され"
-"ます。"
+"``\"f_code\"`` を渡して行いますが、 :ref:`監査イベント <auditing>` を送出しま"
+"す。"
 
 #: ../../reference/datamodel.rst:1012
 msgid ""
@@ -1926,11 +1928,11 @@ msgid ""
 "objects are created by the built-in :func:`classmethod` constructor."
 msgstr ""
 "クラスメソッドオブジェクトは、静的メソッドオブジェクトに似て、別のオブジェク"
-"トを包むラッパであり、そのオブジェクトをクラスやクラスインスタンスから取り出"
-"す方法を代替します。このようにして取得したクラスメソッドオブジェクトの動作に"
-"ついては、上の \"ユーザ定義メソッド (user-defined method)\" で説明されていま"
-"す。クラスメソッドオブジェクトは組み込みのコンストラクタ :func:`classmethod` "
-"で生成されます。"
+"トを包むラッパーであり、そのオブジェクトをクラスやクラスインスタンスから取り"
+"出す方法を代替します。このようにして取得したクラスメソッドオブジェクトの動作"
+"については、上の \"ユーザ定義メソッド (user-defined method)\" で説明されてい"
+"ます。クラスメソッドオブジェクトは組み込みのコンストラクタ :func:"
+"`classmethod` で生成されます。"
 
 #: ../../reference/datamodel.rst:1151
 msgid "Special method names"
@@ -2542,9 +2544,9 @@ msgid ""
 "access (use of, assignment to, or deletion of ``x.name``) for class "
 "instances."
 msgstr ""
-"以下のメソッドを定義して、クラスインスタンスへの属性値アクセス ( 属性値の使"
-"用、属性値への代入、 ``x.name`` の削除) の意味をカスタマイズすることができま"
-"す。"
+"以下のメソッドを定義して、クラスインスタンスへの属性アクセス ( ``x.name`` の"
+"使用、 ``x.name`` への代入、 ``x.name`` の削除) の意味をカスタマイズすること"
+"ができます。"
 
 #: ../../reference/datamodel.rst:1528
 msgid ""
@@ -3583,8 +3585,8 @@ msgid ""
 "locking/synchronization."
 msgstr ""
 "メタクラスは限りない潜在的利用価値を持っています。これまで試されてきたアイデ"
-"アには、列挙型、ログ記録、インタフェースのチェック、 自動デリゲーション、自動"
-"プロパティ生成、プロキシ、フレームワーク、そして自動リソースロック／同期と"
+"アには、列挙型、ログ記録、インターフェースのチェック、 自動デリゲーション、自"
+"動プロパティ生成、プロキシ、フレームワーク、そして自動リソースロック／同期と"
 "いったものがあります。"
 
 #: ../../reference/datamodel.rst:2100
@@ -3701,9 +3703,9 @@ msgid ""
 "defined, ``x(arg1, arg2, ...)`` roughly translates to ``type(x).__call__(x, "
 "arg1, ...)``."
 msgstr ""
-"インスタンスがカンストして \"呼ばれた\" 際に呼び出されます。このメソッドが "
-"``x(arg1, arg2, ...)`` 定義されている場合、これは大まかには ``type(x)."
-"__call__(x, arg1, ...)`` に変換されます。"
+"インスタンスが関数として \"呼ばれた\" 際に呼び出されます。このメソッドが定義"
+"されている場合、 ``x(arg1, arg2, ...)`` は大まかには ``type(x).__call__(x, "
+"arg1, ...)`` に変換されます。"
 
 #: ../../reference/datamodel.rst:2177
 msgid "Emulating container types"
@@ -4242,7 +4244,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:2560
 msgid ":pep:`343` - The \"with\" statement"
-msgstr ":pep:`343` - \"with\" 文"
+msgstr ":pep:`343` - \"with\" ステートメント"
 
 #: ../../reference/datamodel.rst:2560
 msgid ""
