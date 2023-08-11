@@ -6,15 +6,16 @@
 # Translators:
 # Dmytro Kazanzhy, 2022
 # Anastasiia Derevianko <anastasiia1010@gmail.com>, 2023
+# Ivan Prytula, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-28 14:13+0000\n"
+"POT-Creation-Date: 2023-08-11 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 00:47+0000\n"
-"Last-Translator: Anastasiia Derevianko <anastasiia1010@gmail.com>, 2023\n"
+"Last-Translator: Ivan Prytula, 2023\n"
 "Language-Team: Ukrainian (https://app.transifex.com/python-doc/teams/5390/"
 "uk/)\n"
 "MIME-Version: 1.0\n"
@@ -55,12 +56,13 @@ msgstr ""
 msgid ""
 "Allocate a new Python object using the C structure type *TYPE* and the "
 "Python type object *typeobj* (``PyTypeObject*``). Fields not defined by the "
-"Python object header are not initialized; the object's reference count will "
-"be one.  The size of the memory allocation is determined from the :c:member:"
-"`~PyTypeObject.tp_basicsize` field of the type object."
+"Python object header are not initialized. The caller will own the only "
+"reference to the object (i.e. its reference count will be one). The size of "
+"the memory allocation is determined from the :c:member:`~PyTypeObject."
+"tp_basicsize` field of the type object."
 msgstr ""
 
-#: ../../c-api/allocation.rst:42
+#: ../../c-api/allocation.rst:43
 msgid ""
 "Allocate a new Python object using the C structure type *TYPE* and the "
 "Python type object *typeobj* (``PyTypeObject*``). Fields not defined by the "
@@ -72,8 +74,16 @@ msgid ""
 "same allocation decreases the number of allocations, improving the memory "
 "management efficiency."
 msgstr ""
+"Виділяє новий об'єкт Python, використовуючи структурний тип C *TYPE* та "
+"об'єкт типу Python *typeobj* (``PyTypeObject*``). Поля, не визначені в "
+"заголовку об'єкта Python, не ініціалізуються.  Виділена пам'ять дозволяє "
+"розмістити структуру *TYPE* плюс поля *size* (``Py_ssize_t``) розміром, "
+"заданим полем :c:member:`~PyTypeObject.tp_itemsize` об'єкта *typeobj*.  Це "
+"корисно для реалізації об'єктів типу кортежів, які можуть визначати свій "
+"розмір під час конструювання.  Вбудовування масиву полів в один розподіл "
+"зменшує кількість розподілів, покращуючи ефективність управління пам'яттю."
 
-#: ../../c-api/allocation.rst:56
+#: ../../c-api/allocation.rst:57
 msgid ""
 "Releases memory allocated to an object using :c:macro:`PyObject_New` or :c:"
 "macro:`PyObject_NewVar`.  This is normally called from the :c:member:"
@@ -81,8 +91,13 @@ msgid ""
 "fields of the object should not be accessed after this call as the memory is "
 "no longer a valid Python object."
 msgstr ""
+"Звільняє пам'ять, виділену для об'єкта за допомогою :c:macro:`PyObject_New` "
+"або :c:macro:`PyObject_NewVar`. Зазвичай викликається з обробника :c:member:"
+"`~PyTypeObject.tp_dealloc`, вказаного в типі об'єкта.  Після цього виклику "
+"не слід звертатися до полів об'єкта, оскільки пам'ять більше не є дійсним "
+"об'єктом Python."
 
-#: ../../c-api/allocation.rst:65
+#: ../../c-api/allocation.rst:66
 msgid ""
 "Object which is visible in Python as ``None``.  This should only be accessed "
 "using the :c:macro:`Py_None` macro, which evaluates to a pointer to this "
@@ -91,10 +106,10 @@ msgstr ""
 "Об’єкт, видимий у Python як ``None``. Доступ до нього можна отримати лише за "
 "допомогою макросу :c:macro:`Py_None`, який обчислює вказівник на цей об’єкт."
 
-#: ../../c-api/allocation.rst:72
+#: ../../c-api/allocation.rst:73
 msgid ":c:func:`PyModule_Create`"
 msgstr ":c:func:`PyModule_Create`"
 
-#: ../../c-api/allocation.rst:73
+#: ../../c-api/allocation.rst:74
 msgid "To allocate and create extension modules."
 msgstr "Для розміщення та створення модулів розширення."
