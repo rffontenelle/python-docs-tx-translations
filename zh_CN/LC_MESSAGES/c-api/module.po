@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-29 02:37+0000\n"
+"POT-Creation-Date: 2023-08-11 14:43+0000\n"
 "PO-Revision-Date: 2023-05-24 02:09+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -188,7 +188,7 @@ msgstr ""
 
 #: ../../c-api/module.rst:148
 msgid "Always initialize this member to :c:macro:`PyModuleDef_HEAD_INIT`."
-msgstr ""
+msgstr "始终将此成员初始化为 :c:macro:`PyModuleDef_HEAD_INIT`。"
 
 #: ../../c-api/module.rst:152
 msgid "Name for the new module."
@@ -218,6 +218,8 @@ msgid ""
 "freed when the module object is deallocated, after the :c:member:"
 "`~PyModuleDef.m_free` function has been called, if present."
 msgstr ""
+"这个内存区域将在创建模块时根据 *m_size* 分配，并在调用 :c:member:"
+"`~PyModuleDef.m_free` 函数（如果存在）在取消分配模块对象时释放。"
 
 #: ../../c-api/module.rst:169
 msgid ""
@@ -280,6 +282,10 @@ msgid ""
 "greater than 0 and the module state (as returned by :c:func:"
 "`PyModule_GetState`) is ``NULL``."
 msgstr ""
+"如果模块状态已被请求但尚未分配则不会调用此函数。 在模块创建之后至模块执行之前"
+"（调用 :c:data:`Py_mod_exec` 函数）就属于这种情况。 更确切地说，如果 :c:"
+"member:`~PyModuleDef.m_size` 大于 0 且模块状态（由 :c:func:"
+"`PyModule_GetState` 返回）为 ``NULL`` 则不会调用此函数。"
 
 #: ../../c-api/module.rst:209 ../../c-api/module.rst:230
 #: ../../c-api/module.rst:245
@@ -374,6 +380,10 @@ msgid ""
 "The distinction is similar to the :py:meth:`!__new__` and :py:meth:`!"
 "__init__` methods of classes."
 msgstr ""
+"指定扩展的另一种方式是请求“多阶段初始化”。 以这种方式创建的扩展模块的行为更类"
+"似 Python 模块：初始化分为 *创建阶段* 即创建模块对象时和 *执行阶段* 即填充模"
+"块对象时。 这种区分类似于类的 :py:meth:`!__new__` 和 :py:meth:`!__init__` 方"
+"法。"
 
 #: ../../c-api/module.rst:288
 msgid ""
@@ -387,6 +397,13 @@ msgid ""
 "`PyModule_GetState`), or its contents (such as the module's :attr:`~object."
 "__dict__` or individual classes created with :c:func:`PyType_FromSpec`)."
 msgstr ""
+"与使用单阶段初始化创建的模块不同，这些模块不是单例：如果移除 *sys.modules* 条"
+"目并重新导入模块，将会创建一个新的模块对象，而旧的模块则会成为常规的垃圾回收"
+"目标 —— 就像 Python 模块那样。 默认情况下，根据同一个定义创建的多个模块应该是"
+"相互独立的：对其中一个模块的更改不应影响其他模块。 这意味着所有状态都应该是模"
+"块对象 (例如使用 :c:func:`PyModule_GetState` ) 或其内容 (例如模块的 :attr:"
+"`~object.__dict__` 或使用 :c:func:`PyType_FromSpec` 创建的单独类) 的特定状"
+"态。"
 
 #: ../../c-api/module.rst:298
 msgid ""
@@ -668,10 +685,8 @@ msgstr ""
 #: ../../c-api/module.rst:500
 msgid ""
 "Unlike other functions that steal references, ``PyModule_AddObject()`` only "
-"decrements the reference count of *value* **on success**."
+"releases the reference to *value* **on success**."
 msgstr ""
-"和其它窃取引用的函数不同，``PyModule_AddObject()`` 只在**成功**时减少*value*"
-"的引用计数。"
 
 #: ../../c-api/module.rst:503
 msgid ""

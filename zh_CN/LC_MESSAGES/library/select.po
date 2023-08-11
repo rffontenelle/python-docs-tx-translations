@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-29 02:37+0000\n"
+"POT-Creation-Date: 2023-08-04 14:46+0000\n"
 "PO-Revision-Date: 2023-05-24 02:19+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -95,6 +95,9 @@ msgid ""
 "func:`!devpoll` will fail. If your program increases this value, :c:func:`!"
 "devpoll` may return an incomplete list of active file descriptors."
 msgstr ""
+":c:func:`!devpoll` 对象与实例化时允许的文件描述符数量相关联。 如果你的程序减"
+"少该值，:c:func:`!devpoll` 将会失败。 如果你的程序增加该值，:c:func:`!"
+"devpoll` 可能会返回不完整的活动文件描述符列表。"
 
 #: ../../library/select.rst:50 ../../library/select.rst:79
 #: ../../library/select.rst:106
@@ -120,6 +123,9 @@ msgid ""
 "used on older systems where :c:func:`!epoll_create1` is not available; "
 "otherwise it has no effect (though its value is still checked)."
 msgstr ""
+"*sizehint* 通知 epoll 预计要注册的事件数量。 该值必须为正数，或为 ``-1`` 以使"
+"用默认值。 它仅在 :c:func:`!epoll_create1` 不可用的旧系统上会被使用，在其他情"
+"况下它没有任何作用（尽管仍会检查其值）。"
 
 #: ../../library/select.rst:68
 msgid ""
@@ -197,6 +203,9 @@ msgid ""
 "integers representing file descriptors or objects with a parameterless "
 "method named :meth:`~io.IOBase.fileno` returning such an integer:"
 msgstr ""
+"这是一个明白直观的 Unix :c:func:`!select` 系统调用接口。 前三个参数是产生“可"
+"等待对象”的可迭代对象：可以是代表文件描述符的整数，或是带有名为 :meth:`~io."
+"IOBase.fileno` 的返回这样的整数的无形参方法的对象:"
 
 #: ../../library/select.rst:125
 msgid "*rlist*: wait until ready for reading"
@@ -258,6 +267,9 @@ msgid ""
 "library, and does not handle file descriptors that don't originate from "
 "WinSock."
 msgstr ""
+"在 Windows 上不接受文件对象，但可以接受套接字。 在 Windows 上，底层的 :c:"
+"func:`!select` 函数由 WinSock 库提供，且不会处理不是源自 WinSock 的文件描述"
+"符。"
 
 #: ../../library/select.rst:161 ../../library/select.rst:267
 #: ../../library/select.rst:367 ../../library/select.rst:455
@@ -278,6 +290,9 @@ msgid ""
 "select`, :func:`!poll` or another interface in this module.  This doesn't "
 "apply to other kind of file-like objects such as sockets."
 msgstr ""
+"当 :func:`~select.select`、:func:`!poll` 或本模块中的其他接口报告管道已准备就"
+"绪可以写入时，可以在不阻塞该管道的情况下的最小字节数。 它这不适用于其他文件类"
+"对象，例如如套接字。"
 
 #: ../../library/select.rst:175
 msgid "This value is guaranteed by POSIX to be at least 512."
@@ -297,11 +312,14 @@ msgid ""
 "O(highest file descriptor) and :c:func:`!poll` is O(number of file "
 "descriptors), ``/dev/poll`` is O(active file descriptors)."
 msgstr ""
+"Solaris 及其衍生版本有 ``/dev/poll``。 :c:func:`!select` 为 O(最高文件描述"
+"符)，:c:func:`!poll` 为 O(文件描述符数量)，``/dev/poll`` 为 O(活动的文件描述"
+"符)。"
 
 #: ../../library/select.rst:191
 msgid ""
 "``/dev/poll`` behaviour is very close to the standard :c:func:`!poll` object."
-msgstr ""
+msgstr "``/dev/poll`` 的行为非常接近标准 :c:func:`!poll` 对象。"
 
 #: ../../library/select.rst:197
 msgid "Close the file descriptor of the polling object."
@@ -335,6 +353,9 @@ msgid ""
 "default value is a combination of the constants :const:`POLLIN`, :const:"
 "`POLLPRI`, and :const:`POLLOUT`."
 msgstr ""
+"*eventmask* 是可选的位掩码，用于描述要检查的事件类型。 这些常量与 :c:func:`!"
+"poll` 对象的相同。 默认值是常量 :const:`POLLIN`、:const:`POLLPRI` 和 :const:"
+"`POLLOUT` 的组合。"
 
 #: ../../library/select.rst:231
 msgid ""
@@ -342,6 +363,8 @@ msgid ""
 "the result is undefined. The appropriate action is to unregister or modify "
 "it first. This is an important difference compared with :c:func:`!poll`."
 msgstr ""
+"注册已注册的文件描述符不会报错，但结果是未定义的。 适当的做法是先注销或修改"
+"它。 这是与:c:func:`!poll` 的一个重要区别。"
 
 #: ../../library/select.rst:239
 msgid ""
@@ -590,6 +613,12 @@ msgid ""
 "O(highest file descriptor), while :c:func:`!poll` is O(number of file "
 "descriptors)."
 msgstr ""
+"大多数 Unix 系统都支持 :c:func:`!poll` 系统调用，它为网络服务器提供了更好的可"
+"伸缩性，可以同时为非常大数量的客户端提供服务。 :c:func:`!poll` 的伸缩性更好，"
+"因为该系统调用只需要列出需要关注的文件描述符，而 :c:func:`!select` 则会构建一"
+"个位图，打开其中需要关注的描述符所对应的比特位，然后再次线性扫描整个位图。 :"
+"c:func:`!select` 为 O(最高文件描述符)，而 :c:func:`!poll` 是 O(文件描述符的数"
+"量)。"
 
 #: ../../library/select.rst:396
 msgid ""
