@@ -5,6 +5,7 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2023
+# Freesand Leo <yuqinju@163.com>, 2023
 # LeeWendao <LeeWendao@outlook.com>, 2023
 #
 #, fuzzy
@@ -12,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-29 02:37+0000\n"
+"POT-Creation-Date: 2023-08-11 14:43+0000\n"
 "PO-Revision-Date: 2023-05-24 02:19+0000\n"
 "Last-Translator: LeeWendao <LeeWendao@outlook.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -340,7 +341,7 @@ msgid ""
 "create an `SQLite database existing only in memory <https://sqlite.org/"
 "inmemorydb.html>`_, and open a connection to it."
 msgstr ""
-"要撕开的数据库文件的路径。 你可以传入 ``\":memory:\"`` 来创建一个 `仅存在于内"
+"要打开的数据库文件的路径。 你可以传入 ``\":memory:\"`` 来创建一个 `仅存在于内"
 "存中的 SQLite 数据库 <https://sqlite.org/inmemorydb.html>`_，并打开它的一个连"
 "接。"
 
@@ -367,14 +368,12 @@ msgid ""
 "class:`str` will be returned instead. By default (``0``), type detection is "
 "disabled."
 msgstr ""
-"控制是否以及如何使用由 :func:`register_converter` 注册的转换器 (converter) 将"
-"并非由 :ref:`SQLite 原生支持的数据类型 <sqlite3-types>` 转换为 Python 类型。"
-"将它设置为常量 :const:`PARSE_DECLTYPES` 与 常量 :const:`PARSE_COLNAMES` 的任"
-"意联合（combination，使用位运算符按位或 ``|`` 创建）以启用它。如果两个常量标"
-"志 (flags) 都被设置，那么列名将优先于声明的类型。同样，请注意，即使您设置了 "
-"*detect_types* ，您依然无法对生成的字段（例如 ``max(data)`` ）进行类型检测，"
-"此时它将会返回一个字符串 :class:`str`。该参数的默认值为(``0``)，类型检测被禁"
-"用。"
+"控制是否以及如何使用由 :func:`register_converter` 注册的转换器将并非由 :ref:"
+"`SQLite 原生支持的 <sqlite3-types>` 数据类型转换为 Python 类型。 将它设置为 :"
+"const:`PARSE_DECLTYPES` 和 :const:`PARSE_COLNAMES` 的任意组合 (使用 ``|``，即"
+"按位或) 来启动它。 如果两个旗标都被设置则列名将优先于声明的类型。 即使设置了 "
+"*detect_types*，依然无法对生成的字段 (例如 ``max(data)``) 进行类型检测；此时"
+"它将改为返回 :class:`str`。 当使用默认值 (``0``) 时，类型检测将被禁用。"
 
 #: ../../library/sqlite3.rst:294
 msgid ""
@@ -384,11 +383,10 @@ msgid ""
 "opening transactions implicitly. See :ref:`sqlite3-controlling-transactions` "
 "for more."
 msgstr ""
-"该参数代表数据库连接的事务控制级别 ( :attr:`~Connection.isolation_level` ) ，"
-"它将控制数据库事务 (transactions) 是否以及如何隐式创建 。它的可取值为 "
-"``\"DEFERRED\"``（默认值），``\"EXCLUSIVE\"``，``\"IMMEDIATE\"`` 或 ``None``"
-"（取用该值将禁止事务的隐式创建）。请参阅 :ref:`sqlite3-controlling-"
-"transactions` 以获取更多信息。"
+"该参数代表数据库连接的事务控制级别 (:attr:`~Connection.isolation_level`)，它"
+"将控制数据库事务是否以及如何隐式创建 。 它的可取值为 ``\"DEFERRED\"`` (默认"
+"值)，``\"EXCLUSIVE\"``，``\"IMMEDIATE\"`` 或 ``None`` (取用该值将禁止事务的隐"
+"式创建)。 请参阅 :ref:`sqlite3-controlling-transactions` 以获取更多信息。"
 
 #: ../../library/sqlite3.rst:302
 msgid ""
@@ -522,9 +520,9 @@ msgid ""
 "its sole argument, and must return a value of a :ref:`type that SQLite "
 "natively understands <sqlite3-types>`."
 msgstr ""
-"注册一个可调用的适配器 (adapter) 以将一个 Python 类型适配为一个 SQLite 类型。"
-"适配器应该以一个类型为 *type* 的 Python 对象作为它的唯一参数传入调用，并且必"
-"需返回能被 :ref:`SQLite 原生支持的类型的一个值 <sqlite3-types>` 。"
+"注册一个 *adapter* :term:`callable` 以将 Python 类型 *type* 适配至 SQLite 类"
+"型。 该适配器被调用时要以一个类型为 *type* 的 Python 对象作为其唯一参数，并且"
+"必须回返一个 :ref:`SQLite 原生支持的类型 <sqlite3-types>` 的值。"
 
 #: ../../library/sqlite3.rst:406
 msgid ""
@@ -535,6 +533,11 @@ msgid ""
 "parameter *detect_types* of :func:`connect` for information regarding how "
 "type detection works."
 msgstr ""
+"注册 *converter* :term:`callable` 将 *typename* 类型的 SQLite 对象转换为特定"
+"类型的 Python 对象。 转换器将会对所有类型为 *typename* 的 SQLite 值进行调用；"
+"它会传递一个 :class:`bytes` 对象且应该返回一个所需的 Python 类型的对象。 有关"
+"类型检测如何工作的信息，请参阅 :func:`connect` 的形参 *detect_types* 以了解有"
+"关类型检测工作方式的信息。"
 
 #: ../../library/sqlite3.rst:414
 msgid ""
@@ -586,6 +589,8 @@ msgid ""
 "Flags that should be returned by the *authorizer_callback* :term:`callable` "
 "passed to :meth:`Connection.set_authorizer`, to indicate whether:"
 msgstr ""
+"传给 :meth:`Connection.set_authorizer` 的 *authorizer_callback* :term:"
+"`callable` 应当返回的旗标，用于指明是否:"
 
 #: ../../library/sqlite3.rst:466
 msgid "Access is allowed (:const:`!SQLITE_OK`),"
@@ -779,6 +784,9 @@ msgid ""
 "single optional parameter *factory*. If supplied, this must be a :term:"
 "`callable` returning an instance of :class:`Cursor` or its subclasses."
 msgstr ""
+"创建并返回一个 :class:`Cursor` 对象。 cursor 方法接受一个可选形参 "
+"*factory*。 如果有提供的话，它必须是一个返回 :class:`Cursor` 或其子类的实例"
+"的 :term:`callable`。"
 
 #: ../../library/sqlite3.rst:571
 msgid ""
@@ -830,6 +838,7 @@ msgid ""
 "Commit any pending transaction to the database. If there is no open "
 "transaction, this method is a no-op."
 msgstr ""
+"向数据库提交任何待处理的事务。 如果没有已开启的事务，则此方法不执行任何操作。"
 
 #: ../../library/sqlite3.rst:611
 msgid ""
@@ -1902,8 +1911,8 @@ msgid ""
 "if this exception is raised, it probably indicates a bug in the :mod:`!"
 "sqlite3` module. ``InterfaceError`` is a subclass of :exc:`Error`."
 msgstr ""
-"因错误使用低层级 SQLite C API 而引发的异常，换句话说，如果此异常被引发，则可"
-"能表明 :mod:`!sqlite3` 模块中存在错误。 ``InterfaceError`` 是 :exc:`Error` 的"
+"因错误使用低层级 SQLite C API 而引发的异常，换句话说，如果此异常被引发，则表"
+"明 :mod:`!sqlite3` 模块中可能存在错误。 ``InterfaceError`` 是 :exc:`Error` 的"
 "一个子类。"
 
 #: ../../library/sqlite3.rst:1708
@@ -1986,7 +1995,7 @@ msgid ""
 "SQLite natively supports the following types: ``NULL``, ``INTEGER``, "
 "``REAL``, ``TEXT``, ``BLOB``."
 msgstr ""
-"SQLite 原生支持如下的类型： ``NULL``，``INTEGER``，``REAL``，``TEXT``，"
+"SQLite 原生支持如下类型： ``NULL``，``INTEGER``，``REAL``，``TEXT``，"
 "``BLOB``。"
 
 #: ../../library/sqlite3.rst:1763
