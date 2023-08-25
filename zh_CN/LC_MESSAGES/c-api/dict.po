@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-29 02:37+0000\n"
+"POT-Creation-Date: 2023-08-25 20:36+0000\n"
 "PO-Revision-Date: 2023-05-24 02:08+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -100,13 +100,10 @@ msgstr ""
 #: ../../c-api/dict.rst:75
 msgid ""
 "Insert *val* into the dictionary *p* using *key* as a key. *key* should be "
-"a :c:expr:`const char*`.  The key object is created using "
-"``PyUnicode_FromString(key)``.  Return ``0`` on success or ``-1`` on "
-"failure.  This function *does not* steal a reference to *val*."
+"a :c:expr:`const char*` UTF-8 encoded bytes string.  The key object is "
+"created using ``PyUnicode_FromString(key)``.  Return ``0`` on success or "
+"``-1`` on failure.  This function *does not* steal a reference to *val*."
 msgstr ""
-"使用 *key* 作为键将 *val* 插入到字典 *p* 中。 *key* 应为 :c:expr:`const "
-"char*`。 键对象是使用 ``PyUnicode_FromString(key)`` 创建的。成功时返回 "
-"``0``，失败时返回 ``-1``。 此函数 *不会* 窃取对 *val* 的引用。"
 
 #: ../../c-api/dict.rst:83
 msgid ""
@@ -121,14 +118,12 @@ msgstr ""
 
 #: ../../c-api/dict.rst:91
 msgid ""
-"Remove the entry in dictionary *p* which has a key specified by the string "
-"*key*. If *key* is not in the dictionary, :exc:`KeyError` is raised. Return "
-"``0`` on success or ``-1`` on failure."
+"Remove the entry in dictionary *p* which has a key specified by the UTF-8 "
+"encoded bytes string *key*. If *key* is not in the dictionary, :exc:"
+"`KeyError` is raised. Return ``0`` on success or ``-1`` on failure."
 msgstr ""
-"移除字典 *p* 中由字符串 *key* 指定的键的条目。 如果字典中没有 *key*，则会引"
-"发 :exc:`KeyError`。 成功时返回 ``0``，失败时返回 ``-1``。"
 
-#: ../../c-api/dict.rst:98
+#: ../../c-api/dict.rst:99
 msgid ""
 "Return the object from dictionary *p* which has a key *key*.  Return "
 "``NULL`` if the key *key* is not present, but *without* setting an exception."
@@ -136,7 +131,7 @@ msgstr ""
 "从字典 *p* 中返回以 *key* 为键的对象。 如果键名 *key* 不存在但 *没有* 设置一"
 "个异常则返回 ``NULL``。"
 
-#: ../../c-api/dict.rst:103
+#: ../../c-api/dict.rst:104
 msgid ""
 "Exceptions that occur while this calls :meth:`~object.__hash__` and :meth:"
 "`~object.__eq__` methods are silently ignored. Prefer the :c:func:"
@@ -145,7 +140,7 @@ msgstr ""
 "在调用 :meth:`~object.__hash__` 和 :meth:`~object.__eq__` 方法时发生的异常将"
 "被静默地忽略。 建议改用 :c:func:`PyDict_GetItemWithError` 函数。"
 
-#: ../../c-api/dict.rst:107
+#: ../../c-api/dict.rst:108
 msgid ""
 "Calling this API without :term:`GIL` held had been allowed for historical "
 "reason. It is no longer allowed."
@@ -153,7 +148,7 @@ msgstr ""
 "在不保持 :term:`GIL` 的情况下调用此 API 曾因历史原因而被允许。 现在已不再被允"
 "许。"
 
-#: ../../c-api/dict.rst:114
+#: ../../c-api/dict.rst:115
 msgid ""
 "Variant of :c:func:`PyDict_GetItem` that does not suppress exceptions. "
 "Return ``NULL`` **with** an exception set if an exception occurred.  Return "
@@ -163,15 +158,14 @@ msgstr ""
 "``NULL`` **并且** 设置一个异常。 如果键不存在则返回 ``NULL`` **并且不会** 设"
 "置一个异常。"
 
-#: ../../c-api/dict.rst:122
+#: ../../c-api/dict.rst:123
 msgid ""
 "This is the same as :c:func:`PyDict_GetItem`, but *key* is specified as a :c:"
-"expr:`const char*`, rather than a :c:expr:`PyObject*`."
+"expr:`const char*` UTF-8 encoded bytes string, rather than a :c:expr:"
+"`PyObject*`."
 msgstr ""
-"这与 :c:func:`PyDict_GetItem` 一样，但是 *key* 被指定为 :c:expr:`const "
-"char*`，而不是 :c:expr:`PyObject*`。"
 
-#: ../../c-api/dict.rst:127
+#: ../../c-api/dict.rst:129
 msgid ""
 "Exceptions that occur while this calls :meth:`~object.__hash__` and :meth:"
 "`~object.__eq__` methods or while creating the temporary :class:`str` object "
@@ -183,7 +177,7 @@ msgstr ""
 "`PyDict_GetItemWithError` 函数并附带你自己的 :c:func:`PyUnicode_FromString` "
 "*key*。"
 
-#: ../../c-api/dict.rst:136
+#: ../../c-api/dict.rst:138
 msgid ""
 "This is the same as the Python-level :meth:`dict.setdefault`.  If present, "
 "it returns the value corresponding to *key* from the dictionary *p*.  If the "
@@ -197,29 +191,29 @@ msgstr ""
 "*defaultobj* 。这个函数只计算 *key* 的哈希函数一次，而不是在查找和插入时分别"
 "计算它。"
 
-#: ../../c-api/dict.rst:146
+#: ../../c-api/dict.rst:148
 msgid ""
 "Return a :c:type:`PyListObject` containing all the items from the dictionary."
 msgstr "返回一个包含字典中所有键值项的 :c:type:`PyListObject`。"
 
-#: ../../c-api/dict.rst:151
+#: ../../c-api/dict.rst:153
 msgid ""
 "Return a :c:type:`PyListObject` containing all the keys from the dictionary."
 msgstr "返回一个包含字典中所有键(keys)的 :c:type:`PyListObject`。"
 
-#: ../../c-api/dict.rst:156
+#: ../../c-api/dict.rst:158
 msgid ""
 "Return a :c:type:`PyListObject` containing all the values from the "
 "dictionary *p*."
 msgstr "返回一个包含字典中所有值(values)的 :c:type:`PyListObject`。"
 
-#: ../../c-api/dict.rst:164
+#: ../../c-api/dict.rst:166
 msgid ""
 "Return the number of items in the dictionary.  This is equivalent to "
 "``len(p)`` on a dictionary."
 msgstr "返回字典中项目数，等价于对字典 *p* 使用 ``len(p)``。"
 
-#: ../../c-api/dict.rst:170
+#: ../../c-api/dict.rst:172
 msgid ""
 "Iterate over all key-value pairs in the dictionary *p*.  The :c:type:"
 "`Py_ssize_t` referred to by *ppos* must be initialized to ``0`` prior to the "
@@ -239,11 +233,11 @@ msgstr ""
 "``NULL``。 通过它们返回的任何引用都是暂借的。 *ppos* 在迭代期间不应被更改。 "
 "它的值表示内部字典结构中的偏移量，并且由于结构是稀疏的，因此偏移量并不连续。"
 
-#: ../../c-api/dict.rst:181
+#: ../../c-api/dict.rst:183
 msgid "For example::"
 msgstr "例如："
 
-#: ../../c-api/dict.rst:191
+#: ../../c-api/dict.rst:193
 msgid ""
 "The dictionary *p* should not be mutated during iteration.  It is safe to "
 "modify the values of the keys as you iterate over the dictionary, but only "
@@ -252,7 +246,7 @@ msgstr ""
 "字典 *p* 不应该在遍历期间发生改变。在遍历字典时，改变键中的值是安全的，但仅限"
 "于键的集合不发生改变。例如::"
 
-#: ../../c-api/dict.rst:216
+#: ../../c-api/dict.rst:218
 msgid ""
 "Iterate over mapping object *b* adding key-value pairs to dictionary *a*. "
 "*b* may be a dictionary, or any object supporting :c:func:`PyMapping_Keys` "
@@ -267,7 +261,7 @@ msgstr ""
 "替换，否则如果在 *a* 中没有相同的键则只是添加键值对。 当成功时返回 ``0`` 或者"
 "当引发异常时返回 ``-1``。"
 
-#: ../../c-api/dict.rst:226
+#: ../../c-api/dict.rst:228
 msgid ""
 "This is the same as ``PyDict_Merge(a, b, 1)`` in C, and is similar to ``a."
 "update(b)`` in Python except that :c:func:`PyDict_Update` doesn't fall back "
@@ -280,7 +274,7 @@ msgstr ""
 "时不会回退到迭代键值对的序列。 当成功时返回 ``0`` 或者当引发异常时返回 "
 "``-1``。"
 
-#: ../../c-api/dict.rst:235
+#: ../../c-api/dict.rst:237
 msgid ""
 "Update or merge into dictionary *a*, from the key-value pairs in *seq2*. "
 "*seq2* must be an iterable object producing iterable objects of length 2, "
@@ -305,10 +299,10 @@ msgstr "dictionary -- 字典"
 msgid "PyUnicode_FromString()"
 msgstr "PyUnicode_FromString()"
 
-#: ../../c-api/dict.rst:162
+#: ../../c-api/dict.rst:164
 msgid "built-in function"
 msgstr "内置函数"
 
-#: ../../c-api/dict.rst:162
+#: ../../c-api/dict.rst:164
 msgid "len"
 msgstr "len"
