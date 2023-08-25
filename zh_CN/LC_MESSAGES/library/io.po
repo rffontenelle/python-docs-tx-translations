@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-18 14:13+0000\n"
+"POT-Creation-Date: 2023-08-25 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 01:08+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -75,6 +75,9 @@ msgid ""
 "binary stream will raise a :exc:`TypeError`.  So will giving a :class:"
 "`bytes` object to the :meth:`!write` method of a text stream."
 msgstr ""
+"所有流对提供给它们的数据类型都很敏感。 例如将 :class:`str` 对象提供给二进制流"
+"的 :meth:`!write` 方法将引发 :exc:`TypeError`。 将 :class:`bytes` 对象提供给"
+"文本流的 :meth:`!write` 方法也是如此。"
 
 #: ../../library/io.rst:45
 msgid ""
@@ -84,7 +87,7 @@ msgstr ""
 "由于 :exc:`IOError` 现在是 :exc:`OSError` 的别名，因此用于引发 :exc:"
 "`IOError` 的操作现在会引发 :exc:`OSError` 。"
 
-#: ../../library/io.rst:51 ../../library/io.rst:856 ../../library/io.rst:1123
+#: ../../library/io.rst:51 ../../library/io.rst:856 ../../library/io.rst:1139
 msgid "Text I/O"
 msgstr "文本 I/O"
 
@@ -116,7 +119,7 @@ msgid ""
 "`TextIOBase`."
 msgstr ":class:`TextIOBase` 的文档中详细描述了文本流的API"
 
-#: ../../library/io.rst:72 ../../library/io.rst:1111
+#: ../../library/io.rst:72 ../../library/io.rst:1127
 msgid "Binary I/O"
 msgstr "二进制 I/O"
 
@@ -249,6 +252,10 @@ msgid ""
 "envvar:`PYTHONWARNDEFAULTENCODING` environment variable, which will emit an :"
 "exc:`EncodingWarning` when the default encoding is used."
 msgstr ""
+"要找出哪里使用了默认语言区域的编码格式，你可以启用 :option:`-X "
+"warn_default_encoding <-X>` 命令行选项或设置 :envvar:"
+"`PYTHONWARNDEFAULTENCODING` 环境变量，这将在使用默认编码格式时发出 :exc:"
+"`EncodingWarning`。"
 
 #: ../../library/io.rst:153
 msgid ""
@@ -294,6 +301,9 @@ msgid ""
 "arguments *path*, *mode* and *flags*. The *mode* and *flags* arguments may "
 "have been modified or inferred from the original call."
 msgstr ""
+"此函数将引发一个 :ref:`审计事件 <auditing>` ``open`` 并附带参数 *path*, "
+"*mode* 和 *flags*。 *mode* 和 *flags* 参数可能在原始调用的基础上修改或推断得"
+"到。"
 
 #: ../../library/io.rst:184
 msgid ""
@@ -305,7 +315,7 @@ msgstr ""
 
 #: ../../library/io.rst:187
 msgid "*path* should be a :class:`str` and an absolute path."
-msgstr ""
+msgstr "*path* 应当为 :class:`str` 类型并且是一个绝对路径。"
 
 #: ../../library/io.rst:189
 msgid ""
@@ -315,6 +325,10 @@ msgid ""
 "same as ``open(path, 'rb')``. Overriding the behavior is intended for "
 "additional validation or preprocessing of the file."
 msgstr ""
+"该函数的行为可通过先期调用 :c:func:`PyFile_SetOpenCodeHook` 来重载。 不过，假"
+"如 *path* 为 :class:`str` 类型并且是一个绝对路径，``open_code(path)`` 的行为"
+"应当总是与 ``open(path, 'rb')`` 一致。 重载行为的目的是为了给文件附加额外的验"
+"证或预处理。"
 
 #: ../../library/io.rst:200
 msgid ""
@@ -408,6 +422,8 @@ msgid ""
 "example, :class:`BufferedIOBase` provides unoptimized implementations of :"
 "meth:`!readinto` and :meth:`!readline`."
 msgstr ""
+"这些抽象基类还提供了一些方法的默认实现，以帮助实现具体的流类。 例如，:class:"
+"`BufferedIOBase` 提供了 :meth:`!readinto` 和 :meth:`!readline` 的未优化实现。"
 
 #: ../../library/io.rst:263
 msgid ""
@@ -568,6 +584,9 @@ msgid ""
 "raise a :exc:`ValueError` (or :exc:`UnsupportedOperation`) when operations "
 "they do not support are called."
 msgstr ""
+"尽管 :class:`IOBase` 并未声明 :meth:`!read` 或 :meth:`!write`，因为它们的签名"
+"会有所不同，但是实现和客户端应该将这些方法视为接口的一部分。 此外，当调用不支"
+"持的操作时实现可能会引发 :exc:`ValueError` (或 :exc:`UnsupportedOperation`)。"
 
 #: ../../library/io.rst:329
 msgid ""
@@ -658,6 +677,8 @@ msgid ""
 "Return ``True`` if the stream can be read from. If ``False``, :meth:`!read` "
 "will raise :exc:`OSError`."
 msgstr ""
+"如果可以读取流则返回 ``True``。 如果返回 ``False``，则 :meth:`!read` 将引发 :"
+"exc:`OSError`。"
 
 #: ../../library/io.rst:387
 msgid ""
@@ -693,6 +714,8 @@ msgid ""
 "Note that it's already possible to iterate on file objects using ``for line "
 "in file: ...`` without calling :meth:`!file.readlines`."
 msgstr ""
+"请注意，在不调用 :meth:`!file.readlines` 的情况下使用 ``for line in file: ..."
+"`` 来遍历文件对象已经成为可能。"
 
 #: ../../library/io.rst:408
 msgid ""
@@ -700,23 +723,26 @@ msgid ""
 "interpreted relative to the position indicated by *whence*.  The default "
 "value for *whence* is :data:`!SEEK_SET`.  Values for *whence* are:"
 msgstr ""
+"将流位置修改到给定的字节 *offset*。 *offset* 将相对于 *whence* 所指定的位置进"
+"行解析。 *whence* 的默认值为 :data:`!SEEK_SET`。 *whence* 的可用值有:"
 
 #: ../../library/io.rst:412
 msgid ""
 ":data:`!SEEK_SET` or ``0`` -- start of the stream (the default); *offset* "
 "should be zero or positive"
 msgstr ""
+":data:`!SEEK_SET` 或 ``0`` -- 流的开头（默认值）；*offset* 应为零或正值"
 
 #: ../../library/io.rst:414
 msgid ""
 ":data:`!SEEK_CUR` or ``1`` -- current stream position; *offset* may be "
 "negative"
-msgstr ""
+msgstr ":data:`!SEEK_CUR` 或 ``1`` -- 当前流位置；*offset* 可以为负值"
 
 #: ../../library/io.rst:416
 msgid ""
 ":data:`!SEEK_END` or ``2`` -- end of the stream; *offset* is usually negative"
-msgstr ""
+msgstr ":data:`!SEEK_END` 或 ``2`` -- 流的末尾；*offset* 通常为负值"
 
 #: ../../library/io.rst:419
 msgid "Return the new absolute position."
@@ -724,7 +750,7 @@ msgstr "返回新的绝对位置。"
 
 #: ../../library/io.rst:421 ../../library/io.rst:931
 msgid "The :data:`!SEEK_*` constants."
-msgstr ""
+msgstr ":data:`!SEEK_*` 常量。"
 
 #: ../../library/io.rst:424
 msgid ""
@@ -769,6 +795,8 @@ msgid ""
 "Return ``True`` if the stream supports writing.  If ``False``, :meth:`!"
 "write` and :meth:`truncate` will raise :exc:`OSError`."
 msgstr ""
+"如果流支持写入则返回 ``True``。 如为 ``False``，则 :meth:`!write` 和 :meth:"
+"`truncate` 将引发 :exc:`OSError`。"
 
 #: ../../library/io.rst:457
 msgid ""
@@ -1106,6 +1134,8 @@ msgid ""
 "`~RawIOBase.readinto` and :meth:`~RawIOBase.write` methods on this class "
 "will only make one system call."
 msgstr ""
+"该类的 :meth:`~RawIOBase.read` (当附带为正值的参数调用时), :meth:`~RawIOBase."
+"readinto` 和 :meth:`~RawIOBase.write` 方法将只执行一次系统调用。"
 
 #: ../../library/io.rst:661
 msgid ""
@@ -1307,13 +1337,14 @@ msgstr "当缓冲区对于所有挂起数据而言太小时；"
 
 #: ../../library/io.rst:795
 msgid "when :meth:`flush` is called;"
-msgstr ""
+msgstr "当 :meth:`flush` 被调用时；"
 
 #: ../../library/io.rst:796
 msgid ""
 "when a :meth:`~IOBase.seek` is requested (for :class:`BufferedRandom` "
 "objects);"
 msgstr ""
+"当 :meth:`~IOBase.seek` 被请求时（针对 :class:`BufferedRandom` 对象）；"
 
 #: ../../library/io.rst:797
 msgid "when the :class:`BufferedWriter` object is closed or destroyed."
@@ -1377,6 +1408,9 @@ msgid ""
 "class:`BufferedWriter` can do.  In addition, :meth:`~IOBase.seek` and :meth:"
 "`~IOBase.tell` are guaranteed to be implemented."
 msgstr ""
+":class:`BufferedRandom` 能做到 :class:`BufferedReader` 或 :class:"
+"`BufferedWriter` 所能做的任何事。 此外，还会确保实现 :meth:`~IOBase.seek` "
+"和 :meth:`~IOBase.tell`。"
 
 #: ../../library/io.rst:836
 msgid ""
@@ -1493,6 +1527,8 @@ msgid ""
 "Read until newline or EOF and return a single :class:`str`.  If the stream "
 "is already at EOF, an empty string is returned."
 msgstr ""
+"读取至换行符或 EOF 并返回单个 :class:`str`。 如果流已经到达 EOF，则将返回一个"
+"空字符串。, an empty string is returned."
 
 #: ../../library/io.rst:911
 msgid "If *size* is specified, at most *size* characters will be read."
@@ -1503,6 +1539,8 @@ msgid ""
 "Change the stream position to the given *offset*.  Behaviour depends on the "
 "*whence* parameter.  The default value for *whence* is :data:`!SEEK_SET`."
 msgstr ""
+"将流位置改为给定的 *offset*。 具体行为取决于 *whence* 形参。 *whence* 的默认"
+"值为 :data:`!SEEK_SET`。"
 
 #: ../../library/io.rst:919
 msgid ""
@@ -1510,18 +1548,25 @@ msgid ""
 "*offset* must either be a number returned by :meth:`TextIOBase.tell`, or "
 "zero.  Any other *offset* value produces undefined behaviour."
 msgstr ""
+":data:`!SEEK_SET` 或 ``0``: 从流的起始位置开始查找（默认值）；*offset* 必须"
+"为 :meth:`TextIOBase.tell` 所返回的数值或为零。 任何其他 *offset* 值都将导致"
+"未定义的行为。"
 
 #: ../../library/io.rst:923
 msgid ""
 ":data:`!SEEK_CUR` or ``1``: \"seek\" to the current position; *offset* must "
 "be zero, which is a no-operation (all other values are unsupported)."
 msgstr ""
+":data:`!SEEK_CUR` 或 ``1``: \"查找\" 到当前位置；*offset* 必须为零，表示无操"
+"作（所有其他值均不受支持）。"
 
 #: ../../library/io.rst:926
 msgid ""
 ":data:`!SEEK_END` or ``2``: seek to the end of the stream; *offset* must be "
 "zero (all other values are unsupported)."
 msgstr ""
+":data:`!SEEK_END` 或 ``2``: 查找到流的末尾；*offset* 必须为零（所有其他值均不"
+"受支持）。"
 
 #: ../../library/io.rst:929
 msgid "Return the new absolute position as an opaque number."
@@ -1627,6 +1672,8 @@ msgid ""
 "If *line_buffering* is ``True``, :meth:`~IOBase.flush` is implied when a "
 "call to write contains a newline character or a carriage return."
 msgstr ""
+"如果 *line_buffering* 为 ``True``，则当一个写入调用包含换行或回车符时将会应"
+"用 :meth:`~IOBase.flush`。"
 
 #: ../../library/io.rst:995
 msgid ""
@@ -1635,6 +1682,9 @@ msgid ""
 "`TextIOWrapper` object is immediately handled to its underlying binary "
 "*buffer*."
 msgstr ""
+"如果 *write_through* 为 ``True``，则对 :meth:`~BufferedIOBase.write` 的调用会"
+"确保不被缓冲：在 :class:`TextIOWrapper` 对象上写入的任何数据会立即交给其下层"
+"的 *buffer* 来处理。"
 
 #: ../../library/io.rst:999
 msgid "The *write_through* argument has been added."
@@ -1706,18 +1756,50 @@ msgstr "此方法会在设置新的形参之前执行隐式的流刷新。"
 msgid "The method supports ``encoding=\"locale\"`` option."
 msgstr "此方法支持 ``encoding=\"locale\"`` 选项。"
 
-#: ../../library/io.rst:1050
+#: ../../library/io.rst:1049
+msgid ""
+"Set the stream position. Return the new stream position as an :class:`int`."
+msgstr ""
+
+#: ../../library/io.rst:1052
+msgid ""
+"Four operations are supported, given by the following argument combinations:"
+msgstr ""
+
+#: ../../library/io.rst:1055
+msgid "``seek(0, SEEK_SET)``: Rewind to the start of the stream."
+msgstr ""
+
+#: ../../library/io.rst:1056
+msgid ""
+"``seek(cookie, SEEK_SET)``: Restore a previous position; *cookie* **must "
+"be** a number returned by :meth:`!tell`."
+msgstr ""
+
+#: ../../library/io.rst:1058
+msgid "``seek(0, SEEK_END)``: Fast-forward to the end of the stream."
+msgstr ""
+
+#: ../../library/io.rst:1059
+msgid "``seek(0, SEEK_CUR)``: Leave the current stream position unchanged."
+msgstr ""
+
+#: ../../library/io.rst:1061
+msgid "Any other argument combinations are invalid, and may raise exceptions."
+msgstr ""
+
+#: ../../library/io.rst:1066
 msgid ""
 "A text stream using an in-memory text buffer.  It inherits :class:"
 "`TextIOBase`."
 msgstr "一个使用内存文本缓冲的文本流。 它继承自 :class:`TextIOBase`。"
 
-#: ../../library/io.rst:1053
+#: ../../library/io.rst:1069
 msgid ""
 "The text buffer is discarded when the :meth:`~IOBase.close` method is called."
 msgstr "当 :meth:`~IOBase.close` 方法被调用时将会丢弃文本缓冲区。"
 
-#: ../../library/io.rst:1056
+#: ../../library/io.rst:1072
 msgid ""
 "The initial value of the buffer can be set by providing *initial_value*. If "
 "newline translation is enabled, newlines will be encoded as if by :meth:"
@@ -1734,7 +1816,7 @@ msgstr ""
 "入或是将要覆盖初始值的写入。 要模拟以 ``a+`` 模式打开一个文件准备好追加内容，"
 "请使用 ``f.seek(0, io.SEEK_END)`` 来将流重新定位到缓冲区的末尾。"
 
-#: ../../library/io.rst:1065
+#: ../../library/io.rst:1081
 msgid ""
 "The *newline* argument works like that of :class:`TextIOWrapper`, except "
 "that when writing output to the stream, if *newline* is ``None``, newlines "
@@ -1744,7 +1826,7 @@ msgstr ""
 "出写入到流时，如果 *newline* 为 ``None``，则在所有平台上换行符都会被写入为 "
 "``\\n``。"
 
-#: ../../library/io.rst:1069
+#: ../../library/io.rst:1085
 msgid ""
 ":class:`StringIO` provides this method in addition to those from :class:"
 "`TextIOBase` and :class:`IOBase`:"
@@ -1752,18 +1834,20 @@ msgstr ""
 ":class:`StringIO` 在继承自 :class:`TextIOBase` 和 :class:`IOBase` 的现有成员"
 "以外还提供了以下方法:"
 
-#: ../../library/io.rst:1074
+#: ../../library/io.rst:1090
 msgid ""
 "Return a :class:`str` containing the entire contents of the buffer. Newlines "
 "are decoded as if by :meth:`~TextIOBase.read`, although the stream position "
 "is not changed."
 msgstr ""
+"返回一个 包含缓冲区全部内容的 :class:`str`。 换行符会以与 :meth:`~TextIOBase."
+"read` 相同的方式被编码，但是流位置不会改变。"
 
-#: ../../library/io.rst:1078
+#: ../../library/io.rst:1094
 msgid "Example usage::"
 msgstr "用法示例："
 
-#: ../../library/io.rst:1100
+#: ../../library/io.rst:1116
 msgid ""
 "A helper codec that decodes newlines for :term:`universal newlines` mode. It "
 "inherits :class:`codecs.IncrementalDecoder`."
@@ -1771,17 +1855,17 @@ msgstr ""
 "用于在 :term:`universal newlines` 模式下解码换行符的辅助编解码器。 它继承自 :"
 "class:`codecs.IncrementalDecoder`。"
 
-#: ../../library/io.rst:1105
+#: ../../library/io.rst:1121
 msgid "Performance"
 msgstr "性能"
 
-#: ../../library/io.rst:1107
+#: ../../library/io.rst:1123
 msgid ""
 "This section discusses the performance of the provided concrete I/O "
 "implementations."
 msgstr "本节讨论所提供的具体 I/O 实现的性能。"
 
-#: ../../library/io.rst:1113
+#: ../../library/io.rst:1129
 msgid ""
 "By reading and writing only large chunks of data even when the user asks for "
 "a single byte, buffered I/O hides any inefficiency in calling and executing "
@@ -1799,7 +1883,7 @@ msgstr ""
 "冲 I/O 一样快。但最重要的是，无论平台和支持设备如何，缓冲 I/O 都能提供可预测"
 "的性能。因此，对于二进制数据，应首选使用缓冲的 I/O 而不是未缓冲的 I/O 。"
 
-#: ../../library/io.rst:1125
+#: ../../library/io.rst:1141
 msgid ""
 "Text I/O over a binary storage (such as a file) is significantly slower than "
 "binary I/O over the same storage, because it requires conversions between "
@@ -1808,26 +1892,32 @@ msgid ""
 "`~TextIOBase.tell` and :meth:`~TextIOBase.seek` are both quite slow due to "
 "the reconstruction algorithm used."
 msgstr ""
+"二进制存储（如文件）上的文本 I/O 比同一存储上的文本 I/O 慢得多，因为它需要使"
+"用字符编解码器在 unicode 和二进制数据之间进行转换。 在处理大量文本数据（如大"
+"型日志文件）时这种情况会非常明显。 此外，由于使用了重构算法因而 :meth:"
+"`~TextIOBase.tell` 和 :meth:`~TextIOBase.seek` 的速度都相当慢。"
 
-#: ../../library/io.rst:1132
+#: ../../library/io.rst:1148
 msgid ""
 ":class:`StringIO`, however, is a native in-memory unicode container and will "
 "exhibit similar speed to :class:`BytesIO`."
 msgstr ""
 ":class:`StringIO` 是原生的内存 Unicode 容器，速度与 :class:`BytesIO` 相似。"
 
-#: ../../library/io.rst:1136
+#: ../../library/io.rst:1152
 msgid "Multi-threading"
 msgstr "多线程"
 
-#: ../../library/io.rst:1138
+#: ../../library/io.rst:1154
 msgid ""
 ":class:`FileIO` objects are thread-safe to the extent that the operating "
 "system calls (such as :manpage:`read(2)` under Unix) they wrap are thread-"
 "safe too."
 msgstr ""
+":class:`FileIO` 对象在它们封装的操作系统调用 (如 Unix 下的 :manpage:"
+"`read(2)`) 是线程安全的情况下也是线程安全的。"
 
-#: ../../library/io.rst:1141
+#: ../../library/io.rst:1157
 msgid ""
 "Binary buffered objects (instances of :class:`BufferedReader`, :class:"
 "`BufferedWriter`, :class:`BufferedRandom` and :class:`BufferedRWPair`) "
@@ -1838,15 +1928,15 @@ msgstr ""
 "class:`BufferedRandom` 和 :class:`BufferedRWPair`）使用锁来保护其内部结构；因"
 "此，可以安全地一次从多个线程中调用它们。"
 
-#: ../../library/io.rst:1146
+#: ../../library/io.rst:1162
 msgid ":class:`TextIOWrapper` objects are not thread-safe."
 msgstr ":class:`TextIOWrapper` 对象不再是线程安全的。"
 
-#: ../../library/io.rst:1149
+#: ../../library/io.rst:1165
 msgid "Reentrancy"
 msgstr "可重入性"
 
-#: ../../library/io.rst:1151
+#: ../../library/io.rst:1167
 msgid ""
 "Binary buffered objects (instances of :class:`BufferedReader`, :class:"
 "`BufferedWriter`, :class:`BufferedRandom` and :class:`BufferedRWPair`) are "
@@ -1862,7 +1952,7 @@ msgstr ""
 "时产生。如果线程尝试重入已经访问的缓冲对象，则会引发 :exc:`RuntimeError` 。注"
 "意，这并不禁止其他线程进入缓冲对象。"
 
-#: ../../library/io.rst:1159
+#: ../../library/io.rst:1175
 msgid ""
 "The above implicitly extends to text files, since the :func:`open()` "
 "function will wrap a buffered object inside a :class:`TextIOWrapper`.  This "
@@ -1881,7 +1971,7 @@ msgstr "file object -- 文件对象"
 msgid "io module"
 msgstr "io 模块"
 
-#: ../../library/io.rst:971 ../../library/io.rst:1095
+#: ../../library/io.rst:971 ../../library/io.rst:1111
 msgid "universal newlines"
 msgstr "universal newlines -- 通用换行"
 
@@ -1889,6 +1979,6 @@ msgstr "universal newlines -- 通用换行"
 msgid "io.TextIOWrapper class"
 msgstr "io.TextIOWrapper 类"
 
-#: ../../library/io.rst:1095
+#: ../../library/io.rst:1111
 msgid "io.IncrementalNewlineDecoder class"
 msgstr "io.IncrementalNewlineDecoder 类"

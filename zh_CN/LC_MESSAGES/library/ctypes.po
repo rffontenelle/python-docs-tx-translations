@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-18 14:13+0000\n"
+"POT-Creation-Date: 2023-08-25 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 01:03+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -94,6 +94,10 @@ msgid ""
 "The error code is used to automatically raise an :class:`OSError` exception "
 "when the function call fails."
 msgstr ""
+"您可以通过访问这些对象的属性来加载库。 *cdll* 加载使用标准 ``cdecl`` 调用约定"
+"导出函数的库，而 *windll* 库则使用 ``stdcall`` 调用约定调用函数。 *oledll* 也"
+"使用 ``stdcall`` 调用约定，并假定函数返回 Windows :c:type:`!HRESULT` 错误代"
+"码。 当函数调用失败时会使用错误代码自动引发 :class:`OSError` 异常。"
 
 #: ../../library/ctypes.rst:48
 msgid ""
@@ -695,6 +699,8 @@ msgid ""
 "return types can be specified by setting the :attr:`~_FuncPtr.restype` "
 "attribute of the function object."
 msgstr ""
+"默认情况下都会假定函数返回 C :c:expr:`int` 类型。 其他返回类型可通过设置函数"
+"对象的 :attr:`~_FuncPtr.restype` 属性来指定。"
 
 #: ../../library/ctypes.rst:483
 msgid ""
@@ -721,6 +727,8 @@ msgid ""
 "Here is a more advanced example, it uses the :func:`!strchr` function, which "
 "expects a string pointer and a char, and returns a pointer to a string::"
 msgstr ""
+"下面是一个更高级的示例，它使用了 :func:`!strchr` 函数，该函数接收一个字符串指"
+"针和一个字符，并返回一个字符串指针::"
 
 #: ../../library/ctypes.rst:511
 msgid ""
@@ -741,6 +749,10 @@ msgid ""
 "your function call. This is useful to check for error return values and "
 "automatically raise an exception::"
 msgstr ""
+"如果外部函数返回一个整数，你也可以使用一个 Python 可调用对象（例如函数或类）"
+"作为 :attr:`~_FuncPtr.restype` 属性。 可调用对象调用时将附带 C 函数返回的 *整"
+"数*，其调用结果将被用作函数调用的结果值。 这对于检查错误返回值并自动引发异常"
+"来说很有用处::"
 
 #: ../../library/ctypes.rst:553
 msgid ""
@@ -759,6 +771,8 @@ msgid ""
 "through the :attr:`~_FuncPtr.errcheck` attribute; see the reference manual "
 "for details."
 msgstr ""
+"请注意使用 :attr:`~_FuncPtr.errcheck` 属性可提供更强大的错误检查机制；详情参"
+"见参考手册。"
 
 #: ../../library/ctypes.rst:566
 msgid "Passing pointers (or: passing parameters by reference)"
@@ -799,6 +813,10 @@ msgid ""
 "_fields_` must be a list of *2-tuples*, containing a *field name* and a "
 "*field type*."
 msgstr ""
+"结构体和联合必须派生自 :class:`Structure` 和 :class:`Union` 基类，这两个基类"
+"是在 :mod:`ctypes` 模块中定义的。 每个子类都必须定义 :attr:`~Structure."
+"_fields_` 属性。 :attr:`!_fields_` 必须是一个 *2元组* 的列表，其中包含一个 *"
+"字段名称* 和一个 *字段类型*。"
 
 #: ../../library/ctypes.rst:601
 msgid ""
@@ -869,6 +887,9 @@ msgid ""
 "must be set to a positive integer and specifies the maximum alignment for "
 "the fields. This is what ``#pragma pack(n)`` also does in MSVC."
 msgstr ""
+"默认情况下，结构体和联合字段的对齐方式与 C 编译器的相同。 通过在子类定义中指"
+"定 :attr:`~Structure._pack_` 类属性可以重载此行为。 该属性必须设置为一个正整"
+"数并指定字段的最大对齐字节。 这也是 ``#pragma pack(n)`` 在 MSVC 中的做法。"
 
 #: ../../library/ctypes.rst:674
 msgid ""
@@ -893,6 +914,8 @@ msgid ""
 "fields are only possible for integer fields, the bit width is specified as "
 "the third item in the :attr:`~Structure._fields_` tuples::"
 msgstr ""
+"可以创建包含位字段的结构体和联合。 位字段只适用于整数字段，位宽度是由 :attr:"
+"`~Structure._fields_` 元组中的第三项来指定的::"
 
 #: ../../library/ctypes.rst:704
 msgid "Arrays"
@@ -1040,6 +1063,9 @@ msgid ""
 "ctypes will apply the required :func:`byref` conversion in this case "
 "automatically."
 msgstr ""
+"此外，如果函数参数在 :attr:`~_FuncPtr.argtypes` 中明确声明为指针类型 (如"
+"``POINTER(c_int)``)，则可以向函数传递所指向的类型的对象 (在本例中为 "
+"``c_int``)。 在这种情况下，ctypes 将自动应用所需的 :func:`byref` 转换。"
 
 #: ../../library/ctypes.rst:884
 msgid "To set a POINTER type field to ``NULL``, you can assign ``None``::"
@@ -1106,6 +1132,9 @@ msgid ""
 "itself. In :mod:`ctypes`, we can define the ``cell`` class and set the :attr:"
 "`~Structure._fields_` attribute later, after the class statement::"
 msgstr ""
+"因为新的 ``class cell`` 在 class 语句本身中是不可用的。 在 :mod:`ctypes` 中，"
+"我们可以定义 ``cell`` 类再在 class 语句之后设置 :attr:`~Structure._fields_` "
+"属性::"
 
 #: ../../library/ctypes.rst:967
 msgid ""
@@ -1160,6 +1189,8 @@ msgid ""
 "qsort` function, that is used to sort items with the help of a callback "
 "function.  :c:func:`!qsort` will be used to sort an array of integers::"
 msgstr ""
+"这里展示一个使用标准 C 库的 :c:func:`!qsort` 函数例子，使用它在一个回调函数的"
+"协助下对条目进行排序。 :c:func:`!qsort` 将被用来给一个整数的数组排序::"
 
 #: ../../library/ctypes.rst:1016
 msgid ""
@@ -1170,6 +1201,10 @@ msgid ""
 "is smaller than the second, a zero if they are equal, and a positive integer "
 "otherwise."
 msgstr ""
+":func:`!qsort` 被调用时必须传入一个指向要排序的数据的指针、数据数组中的条目"
+"数、每条目的大小以及一个指向比较函数即回调函数的指针。 回调函数将附带两个指向"
+"条目的指针进行调用，如果第一个条目小于第二个条目则它必须返回一个负整数，如果"
+"两者相等则返回零，在其他情况下则返回一个正整数。"
 
 #: ../../library/ctypes.rst:1022
 msgid ""
@@ -1246,6 +1281,8 @@ msgid ""
 "class methods of the type.  *pythonapi* is a predefined symbol giving access "
 "to the Python C api::"
 msgstr ""
+":mod:`ctypes` 可以通过类型的 :meth:`~_CData.in_dll` 类方法访问这样的值。 "
+"*pythonapi* 是一个用于访问 Python C api 预定义符号::"
 
 #: ../../library/ctypes.rst:1116
 msgid ""
@@ -1443,12 +1480,15 @@ msgid ""
 "be loaded), while the ctypes library loaders act like when a program is run, "
 "and call the runtime loader directly."
 msgstr ""
+":func:`~ctypes.util.find_library` 函数的目的是以类似于编译器或运行时加载器的"
+"方式来定位库（在有多个共享库版本的平台上应当加载最新的版本），而 ctypes 库加"
+"载器的行为类似于程序已经运行时直接调用运行时加载器。"
 
 #: ../../library/ctypes.rst:1304
 msgid ""
 "The :mod:`!ctypes.util` module provides a function which can help to "
 "determine the library to load."
-msgstr ""
+msgstr ":mod:`!ctypes.util` 模块提供了一个函数，可以帮助确定要加载的库。"
 
 #: ../../library/ctypes.rst:1312
 msgid ""
@@ -1471,6 +1511,9 @@ msgid ""
 "(``/sbin/ldconfig``, ``gcc``, ``objdump`` and ``ld``) to find the library "
 "file. It returns the filename of the library file."
 msgstr ""
+"在 Linux 中，:func:`~ctypes.util.find_library` 会尝试运行外部程序 (``/sbin/"
+"ldconfig``, ``gcc``, ``objdump``  和 ``ld``) 来查找库文件。 它会返回库文件的"
+"文件名。"
 
 #: ../../library/ctypes.rst:1323
 msgid ""
@@ -1491,6 +1534,8 @@ msgid ""
 "schemes and paths to locate the library, and returns a full pathname if "
 "successful::"
 msgstr ""
+"在 macOS 上，:func:`~ctypes.util.find_library` 会尝试几种预定义的命名方案和路"
+"径来定位库，如果成功则将返回完整的路径名称::"
 
 #: ../../library/ctypes.rst:1352
 msgid ""
@@ -1499,6 +1544,9 @@ msgid ""
 "naming scheme a call like ``find_library(\"c\")`` will fail and return "
 "``None``."
 msgstr ""
+"在 Windows 中，:func:`~ctypes.util.find_library` 会沿着系统搜索路径进行搜索，"
+"并返回完整的路径名称，但由于没有预定义的命名方案因此像 "
+"``find_library(\"c\")`` 这样的调用会失败并返回 ``None``。"
 
 #: ../../library/ctypes.rst:1356
 msgid ""
@@ -1507,6 +1555,9 @@ msgid ""
 "into the wrapper module instead of using :func:`~ctypes.util.find_library` "
 "to locate the library at runtime."
 msgstr ""
+"如果使用 :mod:`ctypes` 包装一个共享库，则更好的做法 *可能* 是开发时就确定好共"
+"享库的名称，并将其硬编码到包装模块中而不是在运行时使用 :func:`~ctypes.util."
+"find_library` 来定位库。"
 
 #: ../../library/ctypes.rst:1364
 msgid "Loading shared libraries"
@@ -1619,6 +1670,10 @@ msgid ""
 "dlopen` or :c:func:`!LoadLibrary` function is used to load the library into "
 "the process, and to get a handle to it."
 msgstr ""
+"所有这些类都可以通过附带至少一个参数，即共享库的路径名来实例化。 如果你有一个"
+"指向已加载共享库的现有句柄，则可以将其作为以 ``handle`` 命名的参数传入，否则"
+"将使用底层平台的 :c:func:`!dlopen` 或 :c:func:`!LoadLibrary` 函数将库加载到进"
+"程中，并获取其句柄。"
 
 #: ../../library/ctypes.rst:1447
 msgid ""
@@ -1663,6 +1718,10 @@ msgid ""
 "and :func:`ctypes.set_last_error` are used to request and change the ctypes "
 "private copy of the windows error code."
 msgstr ""
+"当 *use_last_error* 形参设为真值时，为 Windows 错误代码也启用与由 :func:"
+"`GetLastError` 和 :func:`!SetLastError` Windows API 函数管理相同的机制；:"
+"func:`ctypes.get_last_error` 和 :func:`ctypes.set_last_error` 会被用于请求和"
+"更改 Windows 错误代码的 ctypes 私有副本。"
 
 #: ../../library/ctypes.rst:1469
 msgid ""
@@ -1942,7 +2001,7 @@ msgstr ""
 msgid ""
 "*result* is what the foreign function returns, as specified by the :attr:`!"
 "restype` attribute."
-msgstr ""
+msgstr "*result* 是外部函数返回的结果，由 :attr:`!restype` 属性指明。"
 
 #: ../../library/ctypes.rst:1668
 msgid ""
@@ -2111,6 +2170,8 @@ msgid ""
 "COM interface as first argument, in addition to those parameters that are "
 "specified in the :attr:`!argtypes` tuple."
 msgstr ""
+"COM 方法使用特殊的调用约定：除了在 :attr:`!argtypes` 元组中指定的形参，它们还"
+"要求一个指向 COM 接口的指针作为第一个参数。"
 
 #: ../../library/ctypes.rst:1778
 msgid ""
@@ -2221,6 +2282,9 @@ msgid ""
 "failure, so this function could do the error checking, and raises an "
 "exception when the api call failed::"
 msgstr ""
+"输出形参数可以与 :attr:`~_FuncPtr.errcheck` 协议相结合以执行进一步的输出处理"
+"和错误检查。  Win32``GetWindowRect`` API 函数返回一个 ``BOOL`` 来表示成功或失"
+"败，因此该函数可以执行错误检查，并在 API 调用失败时引发异常::"
 
 #: ../../library/ctypes.rst:1864
 msgid ""
@@ -2230,6 +2294,9 @@ msgid ""
 "instead of a ``RECT`` instance, you can retrieve the fields in the function "
 "and return them instead, the normal processing will no longer take place::"
 msgstr ""
+"如果 :attr:`~_FuncPtr.errcheck` 函数原封不动地返回它所接收的参数元组，则 :"
+"mod:`ctypes` 会继续对输出形参执行正常处理。 如果你希望返回一个窗口坐标的元组"
+"而非 ``RECT`` 实例，可以在函数中检索字段并返回它们，常规处理将不会再执行::"
 
 #: ../../library/ctypes.rst:1883
 msgid "Utility functions"
@@ -2442,6 +2509,8 @@ msgid ""
 "Windows only: returns the current value of the ctypes-private copy of the "
 "system :data:`!LastError` variable in the calling thread."
 msgstr ""
+"仅限 Windows：返回调用线程中系统 :data:`!LastError` 变量的 ctypes 私有副本的"
+"当前值。"
 
 #: ../../library/ctypes.rst:2016
 msgid ""
@@ -2471,20 +2540,16 @@ msgstr ""
 
 #: ../../library/ctypes.rst:2034
 msgid ""
-"This factory function creates and returns a new ctypes pointer type. Pointer "
-"types are cached and reused internally, so calling this function repeatedly "
-"is cheap. *type* must be a ctypes type."
+"Create and return a new ctypes pointer type. Pointer types are cached and "
+"reused internally, so calling this function repeatedly is cheap. *type* must "
+"be a ctypes type."
 msgstr ""
-"这个工厂函数创建并返回一个新的 ctypes 指针类型。 指针类型会被缓存并在内部重"
-"用，因此重复调用此函数耗费不大。 *type* 必须为 ctypes 类型。"
 
 #: ../../library/ctypes.rst:2041
 msgid ""
-"This function creates a new pointer instance, pointing to *obj*. The "
-"returned object is of the type ``POINTER(type(obj))``."
+"Create a new pointer instance, pointing to *obj*. The returned object is of "
+"the type ``POINTER(type(obj))``."
 msgstr ""
-"此函数会创建一个新的指向 *obj* 的指针实例。 返回的对象类型为 "
-"``POINTER(type(obj))``。"
 
 #: ../../library/ctypes.rst:2044
 msgid ""
@@ -2526,6 +2591,8 @@ msgid ""
 "system :data:`!LastError` variable in the calling thread to *value* and "
 "return the previous value."
 msgstr ""
+"仅限 Windows：设置调用线程中系统 :data:`!LastError` 变量的 ctypes 私有副本的"
+"当前值为 *value* 并返回原来的值。"
 
 #: ../../library/ctypes.rst:2070
 msgid ""
@@ -3042,6 +3109,8 @@ msgid ""
 "Windows only: Represents a :c:type:`!HRESULT` value, which contains success "
 "or error information for a function or method call."
 msgstr ""
+"仅限 Windows：代表一个 :c:type:`!HRESULT` 值，它包含某个函数或方法调用的成功"
+"或错误信息。"
 
 #: ../../library/ctypes.rst:2440
 msgid ""
@@ -3058,6 +3127,9 @@ msgid ""
 "type:`!DWORD`. Some useful structures like :c:type:`!MSG` or :c:type:`!RECT` "
 "are also defined."
 msgstr ""
+":mod:`!ctypes.wintypes` 模块提供了其他许多 Windows 专属的数据类型，例如 :c:"
+"type:`!HWND`, :c:type:`!WPARAM` 或 :c:type:`!DWORD`。 还定义了一些有用的结构"
+"体如 :c:type:`!MSG` 或 :c:type:`!RECT`。"
 
 #: ../../library/ctypes.rst:2451
 msgid "Structured data types"
