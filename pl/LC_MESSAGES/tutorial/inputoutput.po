@@ -5,17 +5,18 @@
 #
 # Translators:
 # Krzysztof Abramowicz, 2022
-# Maciej Olko <maciej.olko@gmail.com>, 2023
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2023
+# haaritsubaki, 2023
+# Maciej Olko <maciej.olko@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-04 15:48+0000\n"
+"POT-Creation-Date: 2023-08-25 15:42+0000\n"
 "PO-Revision-Date: 2017-02-16 23:40+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
+"Last-Translator: Maciej Olko <maciej.olko@gmail.com>, 2023\n"
 "Language-Team: Polish (https://app.transifex.com/python-doc/teams/5390/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -365,6 +366,14 @@ msgid ""
 "reading and writing. The *mode* argument is optional; ``'r'`` will be "
 "assumed if it's omitted."
 msgstr ""
+"Pierwszy argument to ciąg znaków zawierający nazwę pliku. Drugi argument to "
+"kolejny ciąg znaków zawierający kilka znaków opisujących sposób, w jaki plik "
+"będzie używany. *Tryb* może być ``'r'`` gdy plik będzie tylko do odczytu, "
+"``'w'`` tylko do zapisu (istniejący plik o tej samej nazwie zostanie "
+"usunięty), a ``'a'`` otwiera plik do dołączania; wszelkie dane zapisane do "
+"pliku są automatycznie dodawane na koniec.``'r+'`` otwiera plik zarówno do "
+"odczytu, jak i zapisu. Argument *trybu* jest opcjonalny; jeśli zostanie "
+"pominięty, zakłada się, że domyślnie został wybrany ``'r'``."
 
 #: ../../tutorial/inputoutput.rst:303
 msgid ""
@@ -377,6 +386,15 @@ msgid ""
 "`binary mode`. Binary mode data is read and written as :class:`bytes` "
 "objects. You can not specify *encoding* when opening file in binary mode."
 msgstr ""
+"Zwykle pliki są otwierane w trybie tekstowym :dfn:`text mode`, co oznacza, "
+"że czytasz i zapisujesz ciągi znaków do i z pliku, które są kodowane w "
+"określonym *kodowaniu*. Jeśli *kodowanie* nie jest określone, domyślne jest "
+"zależne od platformy (patrz :func:`open`). Ponieważ UTF-8 jest współczesnym "
+"standardem, zaleca się stosowanie ``encoding=\"utf-8\"``, chyba że wiesz, że "
+"musisz użyć innego kodowania. Dodanie ``'b'`` do trybu otwiera plik w trybie "
+"binarnym :dfn:`binary mode`. Dane w trybie binarnym są odczytywane i "
+"zapisywane jako obiekty :class:`bytes`. Nie możesz określić kodowania "
+"podczas otwierania pliku w trybie binarnym."
 
 #: ../../tutorial/inputoutput.rst:313
 msgid ""
@@ -388,6 +406,14 @@ msgid ""
 "file:`JPEG` or :file:`EXE` files.  Be very careful to use binary mode when "
 "reading and writing such files."
 msgstr ""
+"W trybie tekstowym domyślnym podczas odczytywania następuje konwersja "
+"końcówek linii specyficznych dla platformy (``\\n`` na systemie Unix, "
+"``\\r\\n`` na systemie Windows) na pojedynczy znak ``\\n``. Podczas zapisu w "
+"trybie tekstowym domyślnym jest konwersja wystąpień ``\\n`` z powrotem na "
+"końcówki linii specyficzne dla platformy. Ta niewidoczna modyfikacja danych "
+"pliku jest odpowiednia dla plików tekstowych, ale uszkodzi dane binarne, "
+"takie jak te w plikach :file:`JPEG` lub :file:`EXE`. Bądź bardzo ostrożny, "
+"używając trybu binarnego podczas odczytywania i zapisywania takich plików."
 
 #: ../../tutorial/inputoutput.rst:321
 msgid ""
@@ -397,6 +423,11 @@ msgid ""
 "keyword:`!with` is also much shorter than writing equivalent :keyword:"
 "`try`\\ -\\ :keyword:`finally` blocks::"
 msgstr ""
+"Używanie :keyword:`with` podczas pracy z obiektami plików należy do dobrych "
+"praktyk. Zaletą jest to, że plik jest prawidłowo zamykany po zakończeniu "
+"jego bloku, nawet jeśli w pewnym momencie zostanie zgłoszony wyjątek. "
+"Użycie :keyword:`!with` jest również znacznie krótsze niż pisanie "
+"równoważnych bloków :keyword:`try` - :keyword:`finally`::"
 
 #: ../../tutorial/inputoutput.rst:334
 msgid ""
@@ -404,6 +435,9 @@ msgid ""
 "close()`` to close the file and immediately free up any system resources "
 "used by it."
 msgstr ""
+"Jeśli nie używasz :keyword:`with` to powinieneś wywołać ``f.close()`` w celu "
+"zamknięcia pliku i natychmiastowego zwolnienia wszystkich zasobów "
+"systemowych wykorzystywanych przez ten plik."
 
 #: ../../tutorial/inputoutput.rst:339
 msgid ""
@@ -411,6 +445,9 @@ msgid ""
 "``f.close()`` **might** result in the arguments of ``f.write()`` not being "
 "completely written to the disk, even if the program exits successfully."
 msgstr ""
+"Wywołanie ``f.write()`` bez użycia :keyword:`!with` lub wywołania ``f."
+"close()`` **może** spowodować, że argumenty ``f.write()`` nie zostaną w "
+"pełni zapisane na dysku, nawet jeśli program zakończy się pomyślnie."
 
 #: ../../tutorial/inputoutput.rst:347
 msgid ""
@@ -418,16 +455,21 @@ msgid ""
 "calling ``f.close()``, attempts to use the file object will automatically "
 "fail. ::"
 msgstr ""
+"Po zamknięciu obiektu pliku, zarówno przez instrukcję :keyword:`with`, jak "
+"i``f.close()``, wszystkie próby użycia obiektu pliku automatycznie się nie "
+"powiodą. ::"
 
 #: ../../tutorial/inputoutput.rst:361
 msgid "Methods of File Objects"
-msgstr ""
+msgstr "Metody obiektów plików"
 
 #: ../../tutorial/inputoutput.rst:363
 msgid ""
 "The rest of the examples in this section will assume that a file object "
 "called ``f`` has already been created."
 msgstr ""
+"Reszta przykładów w tej sekcji zakłada, że obiekt pliku o nazwie ``f`` "
+"został już utworzony."
 
 #: ../../tutorial/inputoutput.rst:366
 msgid ""
@@ -440,6 +482,15 @@ msgid ""
 "binary mode) are read and returned. If the end of the file has been reached, "
 "``f.read()`` will return an empty string (``''``).  ::"
 msgstr ""
+"Aby odczytać zawartość pliku, należy wywołać polecenie ``f.read(size)``, "
+"które odczytuje pewną ilość danych i zwraca je jako ciąg znaków (w trybie "
+"tekstowym) lub obiekt bajtowy (w trybie binarnym). *size* jest opcjonalnym "
+"argumentem numerycznym.  Gdy *size* jest pominięty lub ujemny, zostanie "
+"odczytana i zwrócona cała zawartość pliku; to twój problem, jeśli plik jest "
+"dwa razy większy niż pamięć twojego komputera. W przeciwnym razie odczytane "
+"i zwrócone zostanie co najwyżej *size* znaków (w trybie tekstowym) lub "
+"*size* bajtów (w trybie binarnym). Jeśli został osiągnięty koniec pliku, ``f."
+"read()`` zwróci pusty ciąg znaków (``''``). ::"
 
 #: ../../tutorial/inputoutput.rst:380
 msgid ""
