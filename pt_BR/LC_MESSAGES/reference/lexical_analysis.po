@@ -5,15 +5,16 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2023
+# Rodrigo Cendamore, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-18 14:42+0000\n"
+"POT-Creation-Date: 2023-08-25 14:43+0000\n"
 "PO-Revision-Date: 2023-05-24 02:22+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
+"Last-Translator: Rodrigo Cendamore, 2023\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
 "teams/5390/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -34,8 +35,8 @@ msgid ""
 "the lexical analyzer breaks a file into tokens."
 msgstr ""
 "Um programa Python é lido por um *analisador*. A entrada para o analisador é "
-"um fluxo de *tokens*, gerado pelo *analisador lexical*. Este capítulo "
-"descreve como o analisador lexical divide um arquivo em tokens."
+"um fluxo de *tokens*, gerado pelo *analisador léxico*. Este capítulo "
+"descreve como o analisador léxico divide um arquivo em tokens."
 
 #: ../../reference/lexical_analysis.rst:14
 msgid ""
@@ -47,8 +48,8 @@ msgstr ""
 "Python lê o texto do programa como pontos de código Unicode; a codificação "
 "de um arquivo de origem pode ser fornecida por uma declaração de codificação "
 "que por padrão é UTF-8, consulte :pep:`3120` para obter detalhes. Se o "
-"arquivo de origem não puder ser decodificado, um :exc:`SyntaxError` será "
-"gerado."
+"arquivo de origem não puder ser decodificado, uma exceção :exc:`SyntaxError` "
+"será levantada."
 
 #: ../../reference/lexical_analysis.rst:23
 msgid "Line structure"
@@ -74,8 +75,7 @@ msgstr ""
 "não podem cruzar os limites da linha lógica, exceto onde NEWLINE for "
 "permitido pela sintaxe (por exemplo, entre as declarações de declarações "
 "compostas). Uma linha lógica é construída a partir de uma ou mais *linhas "
-"físicas* seguindo a linha explícita ou implícita que *junta as linhas* das "
-"regras."
+"físicas* seguindo as regras explícitas ou implícitas que *juntam as linhas*."
 
 #: ../../reference/lexical_analysis.rst:47
 msgid "Physical lines"
@@ -91,11 +91,11 @@ msgid ""
 "All of these forms can be used equally, regardless of platform. The end of "
 "input also serves as an implicit terminator for the final physical line."
 msgstr ""
-"Uma linha física é uma sequência de caracteres terminados por uma sequência "
-"de quebra de linha. Nos arquivos de origem e cadeias de caracteres, qualquer "
+"Uma linha física é uma sequência de caracteres terminada por uma sequência "
+"de fim de linha. Nos arquivos de origem e cadeias de caracteres, qualquer "
 "uma das sequências de terminação de linha de plataforma padrão pode ser "
 "usada - o formato Unix usando ASCII LF (linefeed), o formato Windows usando "
-"a sequência ASCII CR LF (return followed by linefeed) ou o antigo formato "
+"a sequência ASCII CR LF (return seguido de linefeed) ou o antigo formato "
 "Macintosh usando o caractere ASCII CR (return). Todos esses formatos podem "
 "ser usados ​​igualmente, independentemente da plataforma. O final da entrada "
 "também serve como um finalizador implícito para a linha física final."
@@ -106,9 +106,9 @@ msgid ""
 "using the standard C conventions for newline characters (the ``\\n`` "
 "character, representing ASCII LF, is the line terminator)."
 msgstr ""
-"Ao incorporar o Python, o código-fonte das Strings devem ser passadas para "
-"APIs do Python usando as convenções C padrão para caracteres de nova linha "
-"(o caractere ``\\n``, representando ASCII LF, será o terminador de linha)."
+"Ao incorporar o Python, strings de código-fonte devem ser passadas para APIs "
+"do Python usando as convenções C padrão para caracteres de nova linha (o "
+"caractere ``\\n``, representando ASCII LF, será o terminador de linha)."
 
 #: ../../reference/lexical_analysis.rst:65
 msgid "Comments"
@@ -121,6 +121,10 @@ msgid ""
 "end of the logical line unless the implicit line joining rules are invoked. "
 "Comments are ignored by the syntax."
 msgstr ""
+"Um  comentário inicia com um caracter cerquilha (``#``) que não é parte de "
+"uma string literal, e termina com o fim da linha física.  Um comentário "
+"significa o fim da linha lógica a menos que regras de junção de linha "
+"implicitas sejam invocadas. Comentários são ignorados pela sintaxe."
 
 #: ../../reference/lexical_analysis.rst:79
 msgid "Encoding declarations"
@@ -135,6 +139,13 @@ msgid ""
 "line of its own. If it is the second line, the first line must also be a "
 "comment-only line. The recommended forms of an encoding expression are ::"
 msgstr ""
+"Se um comentário na primeira ou segunda linha de um script Python "
+"corresponde com a expressão regular  ``coding[=:]\\s*([-\\w.]+)``, esse "
+"comentário é processado com uma declaração de codificação; o primeiro grupo "
+"dessa expressão indica a codificação do arquivo do código-fonte. A "
+"declaração de codificação deve aparecer em uma linha exclusiva para tal. Se "
+"está na segunda linha, a primeira linha também deve ser uma linha somente "
+"com comentário. As formas recomendadas de uma declaração de codificação são:"
 
 #: ../../reference/lexical_analysis.rst:93
 msgid "which is recognized also by GNU Emacs, and ::"
@@ -151,6 +162,11 @@ msgid ""
 "(``b'\\xef\\xbb\\xbf'``), the declared file encoding is UTF-8 (this is "
 "supported, among others, by Microsoft's :program:`notepad`)."
 msgstr ""
+"Se nenhuma declaração de codificação é encontrada, a codificação padrão é "
+"UTF-8.  Adicionalmente, se os primeiros bytes do arquivo são a marca de "
+"ordem de byte (BOM) UTF-8 (``b'\\xef\\xbb\\xbf'``), a codificação de arquivo "
+"declarada é UTF-8 (isto é  suportado, entre outros, pelo  :program:"
+"`notepad`da Microsoft)."
 
 #: ../../reference/lexical_analysis.rst:104
 msgid ""
@@ -158,6 +174,9 @@ msgid ""
 "(see :ref:`standard-encodings`). The encoding is used for all lexical "
 "analysis, including string literals, comments and identifiers."
 msgstr ""
+"Se uma codificação é declarada, o nome da codificação deve ser reconhecida "
+"pelo Python (veja :ref:`standard-encodings`). A codificação é usada por toda "
+"análise léxica, incluindo literais strings, comment and identificadores."
 
 #: ../../reference/lexical_analysis.rst:113
 msgid "Explicit line joining"
@@ -1509,7 +1528,7 @@ msgstr ""
 
 #: ../../reference/lexical_analysis.rst:682
 msgid "{} (curly brackets)"
-msgstr ""
+msgstr "{} (chaves)"
 
 #: ../../reference/lexical_analysis.rst:682
 msgid "in formatted string literal"
@@ -1517,7 +1536,7 @@ msgstr ""
 
 #: ../../reference/lexical_analysis.rst:682
 msgid "! (exclamation)"
-msgstr ""
+msgstr "! (exclamação)"
 
 #: ../../reference/lexical_analysis.rst:682
 msgid ": (colon)"
@@ -1525,7 +1544,7 @@ msgstr ": (dois pontos)"
 
 #: ../../reference/lexical_analysis.rst:682
 msgid "= (equals)"
-msgstr ""
+msgstr "= (igual)"
 
 #: ../../reference/lexical_analysis.rst:682
 msgid "for help in debugging using string literals"
@@ -1597,7 +1616,7 @@ msgstr ""
 
 #: ../../reference/lexical_analysis.rst:904
 msgid ". (dot)"
-msgstr ""
+msgstr ". (ponto)"
 
 #: ../../reference/lexical_analysis.rst:904
 msgid "e"
