@@ -14,6 +14,7 @@
 # Jason Ren, 2023
 # Nyuan Zhang, 2023
 # LeeWendao <LeeWendao@outlook.com>, 2023
+# Qinyu Chen, 2023
 # Freesand Leo <yuqinju@163.com>, 2023
 #
 #, fuzzy
@@ -1599,16 +1600,20 @@ msgid ""
 "Changing :attr:`!autocommit` to ``False`` will open a new transaction, and "
 "changing it to ``True`` will commit any pending transaction."
 msgstr ""
+"将 :attr:`!autocommit` 更改为 ``False`` 将开启一个新事务，而将其更改为 "
+"``True`` 将提交任何待处理事务。"
 
 #: ../../library/sqlite3.rst:1357
 msgid "See :ref:`sqlite3-transaction-control-autocommit` for more details."
-msgstr ""
+msgstr "详情参见 :ref:`sqlite3-transaction-control-autocommit`。"
 
 #: ../../library/sqlite3.rst:1361
 msgid ""
 "The :attr:`isolation_level` attribute has no effect unless :attr:"
 "`autocommit` is :data:`LEGACY_TRANSACTION_CONTROL`."
 msgstr ""
+"除非 :attr:`autocommit` 为 :data:`LEGACY_TRANSACTION_CONTROL` 否则 :attr:"
+"`isolation_level` 属性将不起作用。"
 
 #: ../../library/sqlite3.rst:1368
 msgid ""
@@ -1632,6 +1637,11 @@ msgid ""
 "`SQLite transaction behaviour`_, :ref:`implicit transaction management "
 "<sqlite3-transaction-control-isolation-level>` is performed."
 msgstr ""
+"控制 :mod:`!sqlite3` 的 :ref:`旧式事务处理模式 <sqlite3-transaction-control-"
+"isolation-level>`。 如果设为 ``None``，则绝不会隐式地开启事务。如果设为 "
+"``\"DEFERRED\"``、``\"IMMEDIATE\"`` 或 ``\"EXCLUSIVE\"`` 中的一个，对应于下层"
+"的 `SQLite transaction behaviour`_，会执行 :ref:`隐式事务管理 <sqlite3-"
+"transaction-control-isolation-level>`。"
 
 #: ../../library/sqlite3.rst:1386
 msgid ""
@@ -1648,6 +1658,10 @@ msgid ""
 "unless :attr:`autocommit` is set to :data:`LEGACY_TRANSACTION_CONTROL` (the "
 "default)."
 msgstr ""
+"建议使用 :attr:`autocommit` 来控制事务处理而不是使用 :attr:`!"
+"isolation_level`。 除非 :attr:`autocommit` 设为 :data:"
+"`LEGACY_TRANSACTION_CONTROL` (默认值) 否则 :attr:`!isolation_level` 将不起作"
+"用。"
 
 #: ../../library/sqlite3.rst:1398
 msgid ""
@@ -1673,6 +1687,10 @@ msgid ""
 "the ``TEXT`` data type. By default, this attribute is set to :class:`str`. "
 "If you want to return ``bytes`` instead, set *text_factory* to ``bytes``."
 msgstr ""
+"一个接受 :class:`bytes` 形参并返回其文本表示的 :term:`callable`。 该可调用对"
+"象将针对数据类型为 ``TEXT`` 的 SQLite 值发起调用。 在默认情况下，该属性将被设"
+"为 :class:`str`。 如果你想要返回 ``bytes``，请将 *text_factory* 设为 "
+"``bytes``。"
 
 #: ../../library/sqlite3.rst:1449
 msgid ""
@@ -1741,6 +1759,10 @@ msgid ""
 "``UPDATE``, ``DELETE``, or ``REPLACE`` statement, and there is no open "
 "transaction, a transaction is implicitly opened before executing *sql*."
 msgstr ""
+"如果 :attr:`~Connection.autocommit` 为 :data:`LEGACY_TRANSACTION_CONTROL`，:"
+"attr:`~Connection.isolation_level` 不为 ``None``，*sql* 为一条 ``INSERT``, "
+"``UPDATE``, ``DELETE`` 或 ``REPLACE`` 语句，并且没有开启事务，则会在执行 "
+"*sql* 之前隐式地开启事务。"
 
 #: ../../library/sqlite3.rst:1523
 msgid ""
@@ -1749,6 +1771,9 @@ msgid ""
 "`dict`. Starting with Python 3.14, :exc:`ProgrammingError` will be raised "
 "instead."
 msgstr ""
+"如果使用了 :ref:`命名占位符 <sqlite3-placeholders>` 并且 *parameters* 是一个"
+"序列而非 :class:`dict` 则会发出 :exc:`DeprecationWarning`。 从 Python 3.14 "
+"起，将改为引发 :exc:`ProgrammingError`。"
 
 #: ../../library/sqlite3.rst:1529
 msgid "Use :meth:`executescript` to execute multiple SQL statements."
@@ -1782,7 +1807,7 @@ msgstr ""
 #: ../../library/sqlite3.rst:1548
 msgid ""
 "If *sql* contains more than one SQL statement, or is not a DML statement."
-msgstr ""
+msgstr "如果 *sql* 包含多条 SQL 语句，或者不属于 DML 语句。"
 
 #: ../../library/sqlite3.rst:1565
 msgid ""
@@ -1797,6 +1822,9 @@ msgid ""
 "of :class:`dict`\\s. Starting with Python 3.14, :exc:`ProgrammingError` will "
 "be raised instead."
 msgstr ""
+"如果使用了 :ref:`命名占位符 <sqlite3-placeholders>` 并且 *parameters* 中的每"
+"个条目都是序列而非 :class:`dict` 则会发出 :exc:`DeprecationWarning`。 从 "
+"Python 3.14 起，将改为引发 :exc:`ProgrammingError`。"
 
 #: ../../library/sqlite3.rst:1581
 msgid ""
@@ -1806,6 +1834,10 @@ msgid ""
 "implicit transaction control is performed; any transaction control must be "
 "added to *sql_script*."
 msgstr ""
+"执行 *sql_script* 中的 SQL 语句。 如果 :attr:`~Connection.autocommit` 为 :"
+"data:`LEGACY_TRANSACTION_CONTROL` 并且存在待处理的事务，则首先隐式执行一条 "
+"``COMMIT`` 语句。 不会执行其他隐式事务控制；任何事务控制都必须添加至 "
+"*sql_script*。"
 
 #: ../../library/sqlite3.rst:1589
 msgid "*sql_script* must be a :class:`string <str>`."
@@ -2068,6 +2100,9 @@ msgid ""
 "values for *origin* are :const:`os.SEEK_CUR` (seek relative to the current "
 "position) and :const:`os.SEEK_END` (seek relative to the blob’s end)."
 msgstr ""
+"将 Blob 的当前访问位置设为 *offset*。 *origin* 参数默认为 :const:`os."
+"SEEK_SET` (blob 的绝对位置)。 *origin* 的其他值包括 :const:`os.SEEK_CUR` （相"
+"对于当前位置寻址) 和 :const:`os.SEEK_END` (相对于 blob 末尾寻址)。"
 
 #: ../../library/sqlite3.rst:1831
 msgid "PrepareProtocol objects"
@@ -2307,10 +2342,12 @@ msgid ""
 "Instead, use the :ref:`sqlite3-adapter-converter-recipes` and tailor them to "
 "your needs."
 msgstr ""
+"自 Python 3.12 起，默认适配器和转换器已被弃用。取而代之的是使用 :ref:"
+"`sqlite3-adapter-converter-recipes` ，并根据您的需要定制它们。"
 
 #: ../../library/sqlite3.rst:1993
 msgid "The deprecated default adapters and converters consist of:"
-msgstr ""
+msgstr "弃用的默认适配器和转换器包括："
 
 #: ../../library/sqlite3.rst:1995
 msgid ""
@@ -2322,13 +2359,15 @@ msgstr ""
 msgid ""
 "An adapter for :class:`datetime.datetime` objects to strings in ISO 8601 "
 "format."
-msgstr ""
+msgstr "将 :class:`datetime.datetime` 对象转换为 ISO 8601 格式字符串的适配器。"
 
 #: ../../library/sqlite3.rst:1999
 msgid ""
 "A converter for :ref:`declared <sqlite3-converters>` \"date\" types to :"
 "class:`datetime.date` objects."
 msgstr ""
+"从 :ref:`已声明的 <sqlite3-converters>` \"date\" 类型到 :class:`datetime."
+"date` 对象的转换器。"
 
 #: ../../library/sqlite3.rst:2001
 msgid ""
