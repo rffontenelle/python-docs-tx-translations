@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-01 14:13+0000\n"
+"POT-Creation-Date: 2023-09-08 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 01:13+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -2354,6 +2354,8 @@ msgid ""
 "An adapter for :class:`datetime.date` objects to :class:`strings <str>` in "
 "`ISO 8601`_ format."
 msgstr ""
+"将 :class:`datetime.date` 对象转换为 `ISO 8601`_ 格式 :class:`字符串 <str>` "
+"的适配器。"
 
 #: ../../library/sqlite3.rst:1997
 msgid ""
@@ -2375,6 +2377,8 @@ msgid ""
 "objects. Fractional parts will be truncated to 6 digits (microsecond "
 "precision)."
 msgstr ""
+"将已声明的 \"timestamp\" 类型转成 :class:`datetime.datetime` 对象的转换器。 "
+"小数部分将截断至 6 位（微秒精度）。"
 
 #: ../../library/sqlite3.rst:2007
 msgid ""
@@ -2389,7 +2393,7 @@ msgstr ""
 
 #: ../../library/sqlite3.rst:2020
 msgid "Command-line interface"
-msgstr ""
+msgstr "命令行接口"
 
 #: ../../library/sqlite3.rst:2022
 msgid ""
@@ -2397,18 +2401,20 @@ msgid ""
 "interpreter's :option:`-m` switch, in order to provide a simple SQLite "
 "shell. The argument signature is as follows::"
 msgstr ""
+":mod:`!sqlite3` 模块可以作为脚本发起调用，使用解释器的 :option:`-m` 开关选"
+"项，以提供一个简单的 SQLite shell。 参数签名如下::"
 
 #: ../../library/sqlite3.rst:2029
 msgid "Type ``.quit`` or CTRL-D to exit the shell."
-msgstr ""
+msgstr "输入 ``.quit`` 或 CTRL-D 退出 shell。"
 
 #: ../../library/sqlite3.rst:2035
 msgid "Print CLI help."
-msgstr ""
+msgstr "打印 CLI 帮助。"
 
 #: ../../library/sqlite3.rst:2039
 msgid "Print underlying SQLite library version."
-msgstr ""
+msgstr "打印下层 SQLite 库版本。"
 
 #: ../../library/sqlite3.rst:2047
 msgid "How-to guides"
@@ -2450,6 +2456,11 @@ msgid ""
 "which must contain keys for all named parameters; any extra items are "
 "ignored. Here's an example of both styles:"
 msgstr ""
+"SQL 语句可以使用两种占位符之一：问号占位符（问号风格）或命名占位符（命名风"
+"格）。 对于问号风格，*parameters* 要是一个长度必须与占位符的数量相匹配的 :"
+"term:`sequence`，否则将引发 :exc:`ProgrammingError`。 对于命名风格，"
+"*parameters* 必须是 :class:`dict` （或其子类）的实例，它必须包含与所有命名参"
+"数相对应的键；任何额外的条目都将被忽略。 下面是一个同时使用这两种风格的示例："
 
 #: ../../library/sqlite3.rst:2109
 msgid ""
@@ -2630,6 +2641,11 @@ msgid ""
 "is ``False``, a new transaction is implicitly opened after committing or "
 "rolling back."
 msgstr ""
+":class:`Connection` 对象可被用作上下文管理器以便在离开上下文管理器代码块时自"
+"动提交或回滚开启的事务。 如果 :keyword:`with` 语句体无异常地结束，事务将被提"
+"交。 如果提交失败，或者如果 ``with`` 语句体引发了未捕获的异常，则事务将被回"
+"滚。 如果 :attr:`~Connection.autocommit` 为 ``False``，则会在提交或回滚后隐式"
+"地开启一个新事务。"
 
 #: ../../library/sqlite3.rst:2404
 msgid ""
@@ -2637,6 +2653,8 @@ msgid ""
 "statement, or if :attr:`~Connection.autocommit` is ``True``, the context "
 "manager does nothing."
 msgstr ""
+"如果在离开 ``with`` 语句体时没有开启的事务，或者如果 :attr:`~Connection."
+"autocommit` 为 ``True``，则上下文管理器将不做任何操作。"
 
 #: ../../library/sqlite3.rst:2410
 msgid ""
@@ -2723,6 +2741,9 @@ msgid ""
 "defined by expressions, e.g. literals, with the given aliases ``expr AS "
 "alias``."
 msgstr ""
+"``FROM`` 子句可以在 ``SELECT`` 语句中省略，像在上面的示例中那样。 在这种情况"
+"下，SQLite 将返回单独的行，其中的列由表达式来定义，例如使用字面量并给出相应的"
+"别名 ``expr AS alias``。"
 
 #: ../../library/sqlite3.rst:2533
 msgid ""
@@ -2769,10 +2790,14 @@ msgid ""
 "control-autocommit` is recommended, while :ref:`sqlite3-transaction-control-"
 "isolation-level` retains the pre-Python 3.12 behaviour."
 msgstr ""
+":mod:`!sqlite3` 提供了多个方法来控制在何时以及怎样控制数据库事务的开启和关"
+"闭。 推荐使用 :ref:`sqlite3-transaction-control-autocommit` ，而 :ref:"
+"`sqlite3-transaction-control-isolation-level` 则保留了 Python 3.12 之前的行"
+"为。"
 
 #: ../../library/sqlite3.rst:2603
 msgid "Transaction control via the ``autocommit`` attribute"
-msgstr ""
+msgstr "通过 ``autocommit`` 属性进行事务控制"
 
 #: ../../library/sqlite3.rst:2605
 msgid ""
@@ -2780,12 +2805,16 @@ msgid ""
 "attr:`Connection.autocommit` attribute, which should preferably be set using "
 "the *autocommit* parameter of :func:`connect`."
 msgstr ""
+"控制事务行为的推荐方式是通过 :attr:`Connection.autocommit` 属性，最好是使用 :"
+"func:`connect` 的 *autocommit* 形参来设置该属性。"
 
 #: ../../library/sqlite3.rst:2610
 msgid ""
 "It is suggested to set *autocommit* to ``False``, which implies :pep:`249`-"
 "compliant transaction control. This means:"
 msgstr ""
+"建议将 *autocommit* 设为 ``False``，表示使用兼容 :pep:`249` 的事务控制。 这意"
+"味着："
 
 #: ../../library/sqlite3.rst:2614
 msgid ""
@@ -2795,20 +2824,25 @@ msgid ""
 "one, for the latter two). :mod:`!sqlite3` uses ``BEGIN DEFERRED`` statements "
 "when opening transactions."
 msgstr ""
+":mod:`!sqlite3` 会确保事务始终处于开启状态，因此 :func:`connect` 、:meth:"
+"`Connection.commit` 和 :meth:`Connection.rollback` 将隐式地开启一个新事务（对"
+"于后两者，在关闭待处理事务后会立即执行）。 开启事务时 :mod:`!sqlite3` 会使用 "
+"``BEGIN DEFERRED`` 语句。"
 
 #: ../../library/sqlite3.rst:2619
 msgid "Transactions should be committed explicitly using :meth:`!commit`."
-msgstr ""
+msgstr "事务应当显式地使用 :meth:`!commit` 执行提交。"
 
 #: ../../library/sqlite3.rst:2620
 msgid "Transactions should be rolled back explicitly using :meth:`!rollback`."
-msgstr ""
+msgstr "事务应当显式地使用 :meth:`!rollback` 执行回滚。"
 
 #: ../../library/sqlite3.rst:2621
 msgid ""
 "An implicit rollback is performed if the database is :meth:`~Connection."
 "close`-ed with pending changes."
 msgstr ""
+"如果数据库执行 :meth:`~Connection.close` 时有待处理的更改则会隐式地执行回滚。"
 
 #: ../../library/sqlite3.rst:2624
 msgid ""
@@ -2818,6 +2852,11 @@ msgid ""
 "compliant :attr:`Connection.autocommit` attribute; use :attr:`Connection."
 "in_transaction` to query the low-level SQLite autocommit mode."
 msgstr ""
+"将 *autocommit* 设为 ``True`` 以启用 SQLite 的 `autocommit mode`_。 在此模式"
+"下，:meth:`Connection.commit` 和 :meth:`Connection.rollback` 将没有任何作"
+"用。 请注意 SQLite 的自动提交模式与兼容 :pep:`249` 的 :attr:`Connection."
+"autocommit` 属性不同；请使用 :attr:`Connection.in_transaction` 查询底层的 "
+"SQLite 自动提交模式。"
 
 #: ../../library/sqlite3.rst:2632
 msgid ""
@@ -2825,10 +2864,13 @@ msgid ""
 "control behaviour to the :attr:`Connection.isolation_level` attribute. See :"
 "ref:`sqlite3-transaction-control-isolation-level` for more information."
 msgstr ""
+"将 *autocommit* 设为 :data:`LEGACY_TRANSACTION_CONTROL` 以将事务控制行为保留"
+"给 :attr:`Connection.isolation_level` 属性。 更多信息参见 :ref:`sqlite3-"
+"transaction-control-isolation-level`。"
 
 #: ../../library/sqlite3.rst:2641
 msgid "Transaction control via the ``isolation_level`` attribute"
-msgstr ""
+msgstr "通过 ``isolation_level`` 属性进行事务控制"
 
 #: ../../library/sqlite3.rst:2645
 msgid ""
@@ -2836,6 +2878,8 @@ msgid ""
 "`~Connection.autocommit` attribute. See :ref:`sqlite3-transaction-control-"
 "autocommit`."
 msgstr ""
+"推荐的控制事务方式是通过 :attr:`~Connection.autocommit` 属性。 参见 :ref:"
+"`sqlite3-transaction-control-autocommit`。"
 
 #: ../../library/sqlite3.rst:2649
 msgid ""
@@ -2844,6 +2888,9 @@ msgid ""
 "controlled using the :attr:`Connection.isolation_level` attribute. "
 "Otherwise, :attr:`!isolation_level` has no effect."
 msgstr ""
+"如果 :attr:`Connection.autocommit` 被设为 :data:`LEGACY_TRANSACTION_CONTROL` "
+"(默认值)，则事务行为由 :attr:`Connection.isolation_level` 属性控制。 否则，:"
+"attr:`!isolation_level` 将没有任何作用。"
 
 #: ../../library/sqlite3.rst:2655
 msgid ""
@@ -2902,7 +2949,7 @@ msgstr ""
 msgid ""
 "The recommended way of controlling transactions is now via the :attr:"
 "`~Connection.autocommit` attribute."
-msgstr ""
+msgstr "现在推荐的控制事务方式是通过 :attr:`~Connection.autocommit` 属性。"
 
 #: ../../library/sqlite3.rst:1492
 msgid "? (question mark)"
