@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-25 22:29+0000\n"
+"POT-Creation-Date: 2023-09-15 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 00:52+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -289,22 +289,28 @@ msgid ""
 "to the appropriate default values, including :c:member:`~PyObject.ob_type` "
 "that we initially set to ``NULL``. ::"
 msgstr ""
+"这将初始化 :class:`!Custom` 类型，为一些成员填充适当的默认值，包括我们在初始"
+"时设为 ``NULL`` 的 :c:member:`~PyObject.ob_type`。 ::"
 
 #: ../../extending/newtypes_tutorial.rst:190
 msgid ""
 "This adds the type to the module dictionary.  This allows us to create :"
 "class:`!Custom` instances by calling the :class:`!Custom` class:"
 msgstr ""
+"这将把类型添加到模块字典中。 这样我们就能通过调用 :class:`!Custom` 类来创建 :"
+"class:`!Custom` 实例："
 
 #: ../../extending/newtypes_tutorial.rst:198
 msgid ""
 "That's it!  All that remains is to build it; put the above code in a file "
 "called :file:`custom.c`,"
 msgstr ""
+"就是这样！ 剩下的工作就是编译它；将上述代码放入名为 :file:`custom.c` 的文件"
+"中，"
 
 #: ../../extending/newtypes_tutorial.rst:203
 msgid "in a file called :file:`pyproject.toml`, and"
-msgstr ""
+msgstr "名为 :file:`pyproject.toml` 的文件中，并且"
 
 #: ../../extending/newtypes_tutorial.rst:210
 msgid "in a file called :file:`setup.py`; then typing"
@@ -316,6 +322,8 @@ msgid ""
 "install it; now fire up Python --- you should be able to ``import custom`` "
 "and play around with ``Custom`` objects."
 msgstr ""
+"在 shell 中应该会在子目录下产生一个文件 :file:`custom.so` 并安装它；现在启动 "
+"Python --- 你应当能够执行 ``import custom`` 并尝试使用 ``Custom`` 对象。"
 
 #: ../../extending/newtypes_tutorial.rst:220
 msgid "That wasn't so hard, was it?"
@@ -339,6 +347,8 @@ msgid ""
 "make the type usable as a base class. We'll create a new module, :mod:`!"
 "custom2` that adds these capabilities:"
 msgstr ""
+"让我们通过添加一些数据和方法来扩展这个基本示例。 让我们再使该类型可以作为基类"
+"使用。 我们将创建一个新模块 :mod:`!custom2` 来添加这些功能："
 
 #: ../../extending/newtypes_tutorial.rst:236
 msgid "This version of the module has a number of changes."
@@ -351,6 +361,9 @@ msgid ""
 "strings containing first and last names.  The *number* attribute is a C "
 "integer."
 msgstr ""
+"现在 :class:`!Custom` 类型的 C 结构体中有三个数据属性，*first*、*last* 和 "
+"*number*。 其中 *first* 和 *last* 变量是包含名字和姓氏的 Python 字符串。 "
+"*number* 属性是一个 C 整数。"
 
 #: ../../extending/newtypes_tutorial.rst:242
 msgid "The object structure is updated accordingly::"
@@ -378,6 +391,11 @@ msgid ""
 "object's type might not be :class:`!CustomType`, because the object may be "
 "an instance of a subclass."
 msgstr ""
+"此方法会先清空两个 Python 属性的引用计数。 :c:func:`Py_XDECREF` 可以正确处理"
+"参数为 ``NULL`` 的情况（这可能在 ``tp_new`` 中途失败时发生）。 随后它将调用对"
+"象类型的 :c:member:`~PyTypeObject.tp_free` 成员（通过 ``Py_TYPE(self)`` 计算"
+"得到）来释放对象的内存。 请注意对象类型可以不是 :class:`!CustomType`，因为对"
+"象可能是一个子类的实例。"
 
 #: ../../extending/newtypes_tutorial.rst:275
 msgid ""
@@ -413,6 +431,11 @@ msgid ""
 "type above.  In this case, we use the ``tp_new`` handler to initialize the "
 "``first`` and ``last`` attributes to non-``NULL`` default values."
 msgstr ""
+"``tp_new`` 处理句柄负责创建（而不是初始化）该类型的对象。 它在 Python 中被暴"
+"露为 :meth:`~object.__new__` 方法。 它不需要定义 ``tp_new`` 成员，实际上许多"
+"扩展类型会简单地重用 :c:func:`PyType_GenericNew`，就像上面 :class:`!Custom` "
+"类型的第一个版本所做的那样。 在此情况下，我们使用 ``tp_new`` 处理句柄来将 "
+"``first`` 和 ``last`` 属性初始化为非 ``NULL`` 的默认值。"
 
 #: ../../extending/newtypes_tutorial.rst:317
 msgid ""
@@ -473,6 +496,13 @@ msgid ""
 "correctly. (Specifically, you may not be able to create instances of such "
 "subclasses without getting a :exc:`TypeError`.)"
 msgstr ""
+"如果您要创建一个协作式 :c:member:`~PyTypeObject.tp_new` (它会调用基类型的 :c:"
+"member:`~PyTypeObject.tp_new` 或 :meth:`~object.__new__`)，那么你 *不能* 在运"
+"行时尝试使用方法解析顺序来确定要调用的方法。 必须总是静态地确定你要调用的类"
+"型，并直接调用它的 :c:member:`~PyTypeObject.tp_new`，或是通过 ``type-"
+">tp_base->tp_new``。 如果你不这样做，你的类型的同样继承自其它由 Python 定义的"
+"类的 Python 子类可能无法正常工作。 (具体地说，你可能无法创建这样的子类的实例"
+"而是会引发 :exc:`TypeError`。)"
 
 #: ../../extending/newtypes_tutorial.rst:353
 msgid ""
@@ -491,6 +521,9 @@ msgid ""
 "created.  Initializers always accept positional and keyword arguments, and "
 "they should return either ``0`` on success or ``-1`` on error."
 msgstr ""
+":c:member:`~PyTypeObject.tp_init` 槽位在 Python 中暴露为 :meth:`~object."
+"__init__` 方法。 它被用来在创建对象后对其进行初始化。 初始化器总是接受位置和"
+"关键字参数，它们应当在成功时返回 ``0`` 而在出错时返回 ``-1``。"
 
 #: ../../extending/newtypes_tutorial.rst:391
 msgid ""
@@ -502,6 +535,10 @@ msgid ""
 "new attribute values.  We might be tempted, for example to assign the "
 "``first`` member like this::"
 msgstr ""
+"不同于 ``tp_new`` 处理句柄，``tp_init`` 不保证一定会被调用 (例如，在默认情况"
+"下 :mod:`pickle` 模块不会在未解封的实例上调用 :meth:`~object.__init__`)。 它"
+"还可能被多次调用。 任何人都可以在我们的对象上调用 :meth:`!__init__` 方法。 因"
+"此，我们在为属性赋新值时必须格外小心。 例如像这样给 ``first`` 成员赋值::"
 
 #: ../../extending/newtypes_tutorial.rst:405
 msgid ""
@@ -590,6 +627,8 @@ msgid ""
 "We define a single method, :meth:`!Custom.name()`, that outputs the objects "
 "name as the concatenation of the first and last names. ::"
 msgstr ""
+"我们定义了一个单独的方法，:meth:`!Custom.name()`，它将对象名称输出为 first "
+"和 last 的拼接。 ::"
 
 #: ../../extending/newtypes_tutorial.rst:469
 msgid ""
@@ -600,6 +639,10 @@ msgid ""
 "to accept a positional argument tuple or keyword argument dictionary. This "
 "method is equivalent to the Python method:"
 msgstr ""
+"该方法以的实现形式是一个接受 :class:`!Custom` (或:class:`!Custom` 的子类) 实"
+"例作为第一个参数的 C 函数。 方法总是接受一个实例作为第一个参数。 方法往往也接"
+"受位置和关键字参数，但在本例中我们未接受任何参数也不需要接受位置参数元组或关"
+"键字参数字典。 该方法等价于以下 Python 方法："
 
 #: ../../extending/newtypes_tutorial.rst:481
 msgid ""
@@ -609,6 +652,9 @@ msgid ""
 "of these attributes and to restrict the attribute values to be strings.  "
 "We'll see how to do that in the next section."
 msgstr ""
+"请注意我们必须检查 :attr:`!first` 和 :attr:`!last` 成员是否可能为 ``NULL``。 "
+"这是因为它们可以被删除，在此情况下它们会被设为 ``NULL``。 更好的做法是防止删"
+"除这些属性并将属性的值限制为字符串。 我们将在下一节了解如何做到这一点。"
 
 #: ../../extending/newtypes_tutorial.rst:487
 msgid ""
@@ -645,19 +691,21 @@ msgid ""
 "module name in the :c:type:`PyModuleDef` struct, and update the full class "
 "name in the :c:type:`PyTypeObject` struct."
 msgstr ""
+"我们将 :c:func:`!PyInit_custom` 重命名为 :c:func:`!PyInit_custom2`，更新 :c:"
+"type:`PyModuleDef` 结构体中的模块名称，并更新 :c:type:`PyTypeObject` 结构体中"
+"的完整类名。"
 
 #: ../../extending/newtypes_tutorial.rst:515
 msgid "Finally, we update our :file:`setup.py` file to include the new module,"
-msgstr ""
+msgstr "最后，我们更新 :file:`setup.py` 文件来包括新的模块，"
 
 #: ../../extending/newtypes_tutorial.rst:525
 msgid "and then we re-install so that we can ``import custom2``:"
-msgstr ""
+msgstr "然后我们重新安装以便能够 ``import custom2``:"
 
 #: ../../extending/newtypes_tutorial.rst:532
 msgid "Providing finer control over data attributes"
-msgstr ""
-"提供对于数据属性的更精细控制Providing finer control over data attributes"
+msgstr "提供对于数据属性的更精细控制"
 
 #: ../../extending/newtypes_tutorial.rst:534
 msgid ""
@@ -667,6 +715,10 @@ msgid ""
 "attr:`!last` could be set to non-string values or even deleted. We want to "
 "make sure that these attributes always contain strings."
 msgstr ""
+"在本节中，我们将对 :class:`!Custom` 示例中 :attr:`!first` 和 :attr:`!last` 属"
+"性的设置进行更精细的控制。 在我们上一版本的模块中，实例变量 :attr:`!first` "
+"和 :attr:`!last` 可以被设为非字符串值甚至被删除。 我们希望确保这些属性始终包"
+"含字符串。"
 
 #: ../../extending/newtypes_tutorial.rst:543
 msgid ""
@@ -674,6 +726,8 @@ msgid ""
 "attributes, we'll use custom getter and setter functions.  Here are the "
 "functions for getting and setting the :attr:`!first` attribute::"
 msgstr ""
+"为了更好地控制 :attr:`!first` 和 :attr:`!last` 属性，我们将使用自定义的读取器"
+"和设置器函数。 以下就是用于读取和设置 :attr:`!first` 属性的函数::"
 
 #: ../../extending/newtypes_tutorial.rst:574
 msgid ""
@@ -684,6 +738,10 @@ msgid ""
 "getter and setter functions that decide the attribute to get or set based on "
 "data in the closure.)"
 msgstr ""
+"读取器函数接受一个 :class:`!Custom` 对象和一个“闭包”，后者是一个空指针。 在本"
+"例中，该闭包将被忽略。 （闭包支持将定义数据传递给 读取器和设置器的高级用法。 "
+"例如，这可以被用来允许一组获取器和设置器函数根据闭包中的数据来决定要读取或设"
+"置的属性）。"
 
 #: ../../extending/newtypes_tutorial.rst:580
 msgid ""
@@ -692,6 +750,9 @@ msgid ""
 "is being deleted.  In our setter, we raise an error if the attribute is "
 "deleted or if its new value is not a string."
 msgstr ""
+"设置器函数接受传入 :class:`!Custom` 对象、新值和闭包。 新值可能为 ``NULL``，"
+"在这种情况下属性将被删除。 在我们的设置器中，如果属性被删除或者如果其新值不是"
+"字符串则会引发一个错误。"
 
 #: ../../extending/newtypes_tutorial.rst:585
 msgid "We create an array of :c:type:`PyGetSetDef` structures::"
@@ -779,6 +840,10 @@ msgid ""
 "class:`!Custom`, and subclasses may add arbitrary attributes.  For any of "
 "those two reasons, :class:`!Custom` objects can participate in cycles:"
 msgstr ""
+"在 :class:`!Custom` 示例的第二个版本中，我们允许任意类型的对象存储到 :attr:`!"
+"first` 或 :attr:`!last` 属性中 [#]_。 此外，在第二和第三个版本中，我们还允许"
+"子类化 :class:`!Custom`，并且子类可以添加任意属性。 出于这两个原因中的任何一"
+"个，:class:`!Custom` 对象都可以加入循环："
 
 #: ../../extending/newtypes_tutorial.rst:683
 msgid ""
@@ -787,6 +852,9 @@ msgid ""
 "type needs to fill two additional slots and to enable a flag that enables "
 "these slots:"
 msgstr ""
+"要允许一个加入引用循环的 :class:`!Custom` 实例能被循环 GC 正确检测和收集，我"
+"们的 :class:`!Custom` 类型需要填充两个额外的槽位并增加一个旗标来启用这些槽"
+"位："
 
 #: ../../extending/newtypes_tutorial.rst:690
 msgid ""
@@ -802,6 +870,9 @@ msgid ""
 "*arg* passed to the traversal method.  It returns an integer value that must "
 "be returned if it is non-zero."
 msgstr ""
+"对于每个可以加入循环的子对象，我们都需要调用 :c:func:`!visit` 函数，它会被传"
+"递给遍历方法。 :c:func:`!visit` 函数接受该子对象和传递给遍历方法的额外参数 "
+"*arg* 作为其参数。 它返回一个在其为非零值时必须被返回的整数值。"
 
 #: ../../extending/newtypes_tutorial.rst:716
 msgid ""
@@ -906,6 +977,9 @@ msgid ""
 "with regular lists, but will have an additional :meth:`!increment` method "
 "that increases an internal counter:"
 msgstr ""
+"在本例中我们将创建一个继承自内置 :class:`list` 类型的 :class:`!SubList` 类"
+"型。 这个新类型将完全兼容常规列表，但将拥有一个额外的 :meth:`!increment` 方法"
+"用于递增内部计数器的值："
 
 #: ../../extending/newtypes_tutorial.rst:814
 msgid ""
@@ -913,6 +987,8 @@ msgid ""
 "examples in previous sections. We will break down the main differences "
 "between them. ::"
 msgstr ""
+"如你所见，此源代码与之前几节中的 :class:`!Custom` 示例非常相似。 我们将逐一分"
+"析它们之间的主要区别。 ::"
 
 #: ../../extending/newtypes_tutorial.rst:822
 msgid ""
@@ -929,12 +1005,15 @@ msgid ""
 "pointer can be safely cast to both ``PyListObject *`` and ``SubListObject "
 "*``::"
 msgstr ""
+"当一个 Python 对象是 :class:`!SubList` 的实例时，它的 ``PyObject *`` 指针可以"
+"被安全地强制转换为 ``PyListObject *`` 和 ``SubListObject *``::"
 
 #: ../../extending/newtypes_tutorial.rst:838
 msgid ""
 "We see above how to call through to the :meth:`~object.__init__` method of "
 "the base type."
 msgstr ""
+"我们可以在上面看到如何将调用传递到基类型的 :meth:`~object.__init__` 方法。"
 
 #: ../../extending/newtypes_tutorial.rst:841
 msgid ""
@@ -979,6 +1058,8 @@ msgid ""
 "After that, calling :c:func:`PyType_Ready` and adding the type object to the "
 "module is the same as with the basic :class:`!Custom` examples."
 msgstr ""
+"在那之后，调用 :c:func:`PyType_Ready` 并将类型对象添加到模块中的过程与基本"
+"的 :class:`!Custom` 示例是一样的。"
 
 #: ../../extending/newtypes_tutorial.rst:886
 msgid "Footnotes"
