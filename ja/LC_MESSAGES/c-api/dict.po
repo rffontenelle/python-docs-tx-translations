@@ -9,15 +9,16 @@
 # 秘湯 <xwhhsprings@gmail.com>, 2017
 # tomo, 2020
 # Arihiro TAKASE, 2023
+# yaakiyu, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 15:52+0000\n"
+"POT-Creation-Date: 2023-10-06 15:23+0000\n"
 "PO-Revision-Date: 2017-02-16 17:35+0000\n"
-"Last-Translator: Arihiro TAKASE, 2023\n"
+"Last-Translator: yaakiyu, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
 "ja/)\n"
 "MIME-Version: 1.0\n"
@@ -116,6 +117,11 @@ msgid ""
 "``PyUnicode_FromString(key)``.  Return ``0`` on success or ``-1`` on "
 "failure.  This function *does not* steal a reference to *val*."
 msgstr ""
+"辞書 *p* に、 *key* をキーとして値 *val* を挿入します。\n"
+"*key* は :c:type:`const char*` 型でなければなりません。\n"
+"キーオブジェクトは ``PyUnicode_FromString(key)`` で生成されます。\n"
+"成功した場合には ``0`` を、失敗した場合には ``-1`` を返します。\n"
+"この関数は *val* への参照を盗み取り *ません*。"
 
 #: ../../c-api/dict.rst:83
 msgid ""
@@ -123,6 +129,10 @@ msgid ""
 "if it isn't, :exc:`TypeError` is raised. If *key* is not in the dictionary, :"
 "exc:`KeyError` is raised. Return ``0`` on success or ``-1`` on failure."
 msgstr ""
+"辞書 *p* から *key* をキーとするエントリを除去します。 *key* は :term:`ハッ"
+"シュ可能でなければなりません;  ハッシュ可能でない場合、 :exc:`TypeError` を送"
+"出します。*key* が辞書になければ、:exc:`KeyError` を送出します。成功した場合"
+"には ``0`` を、失敗した場合には ``-1`` を返します。"
 
 #: ../../c-api/dict.rst:91
 msgid ""
@@ -169,6 +179,8 @@ msgid ""
 "This is the same as :c:func:`PyDict_GetItem`, but *key* is specified as a :c:"
 "type:`const char*`, rather than a :c:type:`PyObject*`."
 msgstr ""
+":c:func:`PyDict_GetItem` と同じですが、 *key* は:c:type:`PyObject*`ではなく :"
+"c:type:`const char*` で指定します。"
 
 #: ../../c-api/dict.rst:119
 msgid ""
@@ -232,6 +244,17 @@ msgid ""
 "represents offsets within the internal dictionary structure, and since the "
 "structure is sparse, the offsets are not consecutive."
 msgstr ""
+"辞書 *p* 内の全てのキー/値のペアにわたる反復処理を行います。\n"
+"*ppos* が参照している :c:type:`Py_ssize_t` 型は、この関数で反復処理を開始する"
+"際に、最初に関数を呼び出すよりも前に ``0`` に初期化しておかなければなりませ"
+"ん。この関数は辞書内の各ペアを取り上げるごとに真を返し、全てのペアを取り上げ"
+"たことが分かると偽を返します。\n"
+"パラメーター *pkey* および *pvalue* には、それぞれ辞書の各々のキーと値が埋め"
+"られた:c:type:`PyObject*`変数を指すポインタか、または ``NULL`` が入ります。\n"
+"この関数から返される参照はすべて借用参照になります。\n"
+"反復処理中に *ppos* を変更してはなりません。\n"
+"この値は内部的な辞書構造体のオフセットを表現しており、構造体はスパースなの"
+"で、オフセットの値に一貫性がないためです。"
 
 #: ../../c-api/dict.rst:172
 msgid "For example::"
