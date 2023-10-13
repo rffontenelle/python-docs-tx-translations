@@ -630,7 +630,7 @@ msgid ""
 "<Type>`) may accept values that are classes themselves -- specifically, it "
 "will accept the *class object* of ``C``. For example::"
 msgstr ""
-"用 ``C`` 注解的变量可以接受类型 ``C`` 的值。然而，用类型 ``type[C]``（或 :"
+"用 ``C`` 注解的变量可以接受类型 ``C`` 的值。然而，用类型 ``type[C]`` （或者 :"
 "class:`typing.Type[C] <Type>` ）注解的变量则可以接受本身是类的值——准确地说，"
 "是接受 ``C`` 的 *类对象* 。例如："
 
@@ -1269,6 +1269,12 @@ msgid ""
 "a :ref:`Callable <annotating-callables>`. The last parameter to "
 "``Concatenate`` must be a :class:`ParamSpec` or ellipsis (``...``)."
 msgstr ""
+"``Concatenate`` 可用于与 :ref:`Callable <annotating-callables>` 和 :class:"
+"`ParamSpec` 连用来注解高阶可调用对象，该可象可以添加、移除或转换另一个可调用"
+"对象的形参。  使用形式为 ``Concatenate[Arg1Type, Arg2Type, ..., "
+"ParamSpecVariable]``。 ``Concatenate`` 目前仅可用作传给 :ref:`Callable "
+"<annotating-callables>` 的第一个参数。传给 ``Concatenate`` 的最后一个形参必须"
+"是 :class:`ParamSpec` 或省略号（ ``...`` ）。"
 
 #: ../../library/typing.rst:1128
 msgid ""
@@ -1291,24 +1297,27 @@ msgid ""
 ":pep:`612` -- Parameter Specification Variables (the PEP which introduced "
 "``ParamSpec`` and ``Concatenate``)"
 msgstr ""
+":pep:`612` -- 参数规范变量（引入 ``ParamSpec`` 和 ``Concatenate`` 的 PEP）"
 
 #: ../../library/typing.rst:1169
 msgid ":class:`ParamSpec`"
-msgstr ""
+msgstr ":class:`ParamSpec`"
 
 #: ../../library/typing.rst:1170 ../../library/typing.rst:1928
 msgid ":ref:`annotating-callables`"
-msgstr ""
+msgstr ":ref:`annotating-callables`"
 
 #: ../../library/typing.rst:1174
 msgid "Special typing form to define \"literal types\"."
-msgstr ""
+msgstr "特殊类型注解形式，用于定义“字面值类型”。"
 
 #: ../../library/typing.rst:1176
 msgid ""
 "``Literal`` can be used to indicate to type checkers that the annotated "
 "object has a value equivalent to one of the provided literals."
 msgstr ""
+"``Literal`` 可以用来向类型检查器说明被注解的对象具有与所提供的字面量之一相同"
+"的值。"
 
 #: ../../library/typing.rst:1192
 msgid ""
@@ -1332,7 +1341,7 @@ msgstr ""
 
 #: ../../library/typing.rst:1206
 msgid "Special type construct to mark class variables."
-msgstr "标记类变量的特殊类型构造器。"
+msgstr "特殊类型注解构造，用于标注类变量。"
 
 #: ../../library/typing.rst:1208
 msgid ""
@@ -1360,13 +1369,15 @@ msgstr ""
 
 #: ../../library/typing.rst:1232
 msgid "Special typing construct to indicate final names to type checkers."
-msgstr ""
+msgstr "特殊类型注解构造，用于向类型检查器表示最终名称。"
 
 #: ../../library/typing.rst:1234
 msgid ""
 "Final names cannot be reassigned in any scope. Final names declared in class "
 "scopes cannot be overridden in subclasses."
 msgstr ""
+"不能在任何作用域中重新分配最终名称。类作用域中声明的最终名称不能在子类中重"
+"写。"
 
 #: ../../library/typing.rst:1248 ../../library/typing.rst:2844
 msgid ""
@@ -1376,19 +1387,21 @@ msgstr "这些属性没有运行时检查。详见 :pep:`591`。"
 
 #: ../../library/typing.rst:1255
 msgid "Special typing construct to mark a :class:`TypedDict` key as required."
-msgstr ""
+msgstr "特殊类型注解构造，用于标记 :class:`TypedDict` 键为必填项。"
 
 #: ../../library/typing.rst:1257
 msgid ""
 "This is mainly useful for ``total=False`` TypedDicts. See :class:`TypedDict` "
 "and :pep:`655` for more details."
 msgstr ""
+"这主要用于 ``total=False`` 的 TypedDict。有关更多详细信息，请参阅 :class:"
+"`TypedDict` 和 :pep:`655` 。"
 
 #: ../../library/typing.rst:1264
 msgid ""
 "Special typing construct to mark a :class:`TypedDict` key as potentially "
 "missing."
-msgstr ""
+msgstr "特殊类型注解构造，用于标记 :class:`TypedDict` 键为可能不存在的键。"
 
 #: ../../library/typing.rst:1267
 msgid "See :class:`TypedDict` and :pep:`655` for more details."
@@ -1396,7 +1409,7 @@ msgstr "详情参见 :class:`TypedDict` 和 :pep:`655`。"
 
 #: ../../library/typing.rst:1273
 msgid "Special typing form to add context-specific metadata to an annotation."
-msgstr ""
+msgstr "特殊类型注解形式，用于向注解添加特定于上下文的元数据。"
 
 #: ../../library/typing.rst:1275
 msgid ""
@@ -1405,6 +1418,9 @@ msgid ""
 "static analysis tools or at runtime. At runtime, the metadata is stored in "
 "a :attr:`!__metadata__` attribute."
 msgstr ""
+"使用注解 ``Annotated[T, x]`` 将元数据 ``x`` 添加到给定类型 ``T`` 。使用 "
+"``Annotated`` 添加的元数据可以被静态分析工具使用，也可以在运行时使用。在运行"
+"时使用的情况下，元数据存储在 :attr:`!__metadata__` 属性中。"
 
 #: ../../library/typing.rst:1280
 msgid ""
@@ -1414,6 +1430,9 @@ msgid ""
 "that wants to use annotations for purposes outside Python's static typing "
 "system."
 msgstr ""
+"如果库或工具遇到注解 ``Annotated[T, x]`` ，并且没有针对这一元数据的特殊处理逻"
+"辑，则应该忽略该元数据，简单地将注解视为 ``T`` 。因此， ``Annotated`` 对于希"
+"望将注解用于 Python 的静态类型注解系统之外的目的的代码很有用。"
 
 #: ../../library/typing.rst:1286
 msgid ""
@@ -1424,6 +1443,10 @@ msgid ""
 "outside the scope of the typing system, but completely disables typechecking "
 "for a function or class."
 msgstr ""
+"使用 ``Annotated[T, x]`` 作为注解仍然允许对 ``T`` 进行静态类型检查，因为类型"
+"检查器将简单地忽略元数据 ``x`` 。因此，``Annotated`` 不同于 :func:"
+"`@no_type_check <no_type_check>` 装饰器，后者虽然也可以用于在类型注解系统范围"
+"之外添加注解，但是会完全禁用对函数或类的类型检查。"
 
 #: ../../library/typing.rst:1293
 msgid ""
@@ -1432,26 +1455,31 @@ msgid ""
 "encountering an ``Annotated`` type can scan through the metadata elements to "
 "determine if they are of interest (e.g., using :func:`isinstance`)."
 msgstr ""
+"具体解释元数据的方式由遇到 ``Annotated`` 注解的工具或库来负责。遇到 "
+"``Annotated`` 类型的工具或库可以扫描元数据的各个元素以确定其是否有意处理（比"
+"如使用 :func:`isinstance` ）。"
 
 #: ../../library/typing.rst:1301
 msgid ""
 "Here is an example of how you might use ``Annotated`` to add metadata to "
 "type annotations if you were doing range analysis:"
 msgstr ""
+"以下示例演示在进行区间范围分析时使用 ``Annotated`` 将元数据添加到类型注解的方"
+"法："
 
 #: ../../library/typing.rst:1314
 msgid "Details of the syntax:"
-msgstr ""
+msgstr "语法细节："
 
 #: ../../library/typing.rst:1316
 msgid "The first argument to ``Annotated`` must be a valid type"
-msgstr "``Annotated`` 的第一个参数必须是有效类型。"
+msgstr "``Annotated`` 的第一个参数必须是有效的类型。"
 
 #: ../../library/typing.rst:1318
 msgid ""
 "Multiple metadata elements can be supplied (``Annotated`` supports variadic "
 "arguments)::"
-msgstr ""
+msgstr "可提供多个元数据的元素（ ``Annotated`` 支持可变参数）："
 
 #: ../../library/typing.rst:1327
 msgid ""
@@ -1459,32 +1487,35 @@ msgid ""
 "is allowed to add multiple metadata elements to one annotation and how to "
 "merge those annotations."
 msgstr ""
+"由处理注解的工具决定是否允许向一个注解中添加多个元数据元素，以及如何合并这些"
+"注解。"
 
 #: ../../library/typing.rst:1331
 msgid ""
 "``Annotated`` must be subscripted with at least two arguments "
 "( ``Annotated[int]`` is not valid)"
-msgstr ""
+msgstr "``Annotated`` 至少要有两个参数（ ``Annotated[int]`` 是无效的）"
 
 #: ../../library/typing.rst:1334
 msgid ""
 "The order of the metadata elements is preserved and matters for equality "
 "checks::"
-msgstr ""
+msgstr "元数据元素的顺序会被保留，且影响等价检查："
 
 #: ../../library/typing.rst:1341
 msgid ""
 "Nested ``Annotated`` types are flattened. The order of the metadata elements "
 "starts with the innermost annotation::"
 msgstr ""
+"嵌套的 ``Annotated`` 类型会被展平。元数据元素从最内层的注解开始依次展开："
 
 #: ../../library/typing.rst:1348
 msgid "Duplicated metadata elements are not removed::"
-msgstr ""
+msgstr "元数据中的重复元素不会被移除："
 
 #: ../../library/typing.rst:1354
 msgid "``Annotated`` can be used with nested and generic aliases:"
-msgstr ""
+msgstr "``Annotated`` 可以与嵌套别名和泛型别名一起使用："
 
 #: ../../library/typing.rst:1368
 msgid "``Annotated`` cannot be used with an unpacked :class:`TypeVarTuple`::"
@@ -1492,22 +1523,22 @@ msgstr "``Annotated`` 不能与已解包的 :class:`TypeVarTuple` 一起使用::
 
 #: ../../library/typing.rst:1372
 msgid "This would be equivalent to::"
-msgstr "这等价于::"
+msgstr "这等价于："
 
 #: ../../library/typing.rst:1376
 msgid ""
 "where ``T1``, ``T2``, etc. are :class:`TypeVars <TypeVar>`. This would be "
 "invalid: only one type should be passed to Annotated."
 msgstr ""
-"其中 ``T1``, ``T2`` 等属于 :class:`TypeVars <TypeVar>`。 这将是无效的：应当只"
-"有一个类型被传递给 Annotated."
+"其中 ``T1`` 、 ``T2`` 等都是 :class:`TypeVars <TypeVar>` 。这种写法无效：应当"
+"只有一个类型被传递给 Annotated。"
 
 #: ../../library/typing.rst:1379
 msgid ""
 "By default, :func:`get_type_hints` strips the metadata from annotations. "
 "Pass ``include_extras=True`` to have the metadata preserved:"
 msgstr ""
-"在默认情况下，:func:`get_type_hints` 会去除标注中的元数据。 传入 "
+"默认情况下， :func:`get_type_hints` 会去除注解中的元数据。传入 "
 "``include_extras=True`` 可以保留元数据："
 
 #: ../../library/typing.rst:1392
@@ -1528,7 +1559,7 @@ msgstr "该 PEP 将 ``Annotated`` 引入到标准库中。"
 
 #: ../../library/typing.rst:1414
 msgid "Special typing construct for marking user-defined type guard functions."
-msgstr ""
+msgstr "用于标记用户自定义类型防护函数的特殊类型构造。"
 
 #: ../../library/typing.rst:1416
 msgid ""
@@ -1642,7 +1673,7 @@ msgstr ""
 
 #: ../../library/typing.rst:1526
 msgid "Building generic types and type aliases"
-msgstr ""
+msgstr "构造泛型类型与类型别名"
 
 #: ../../library/typing.rst:1528
 msgid ""
@@ -3193,6 +3224,10 @@ msgid ""
 "the aliases became redundant in Python 3.9 when the corresponding pre-"
 "existing classes were enhanced to support ``[]`` (see :pep:`585`)."
 msgstr ""
+"本模块为标准库中已有的类定义了许多别名，现已不再建议使用。这些别名在最初引入 "
+"typing 模块的目的是让这些泛型类支持使用 ``[]`` 来参数化。然而，在 Python 3.9 "
+"中，对应的已有的类已支持了 ``[]`` （参见 :pep:`585` ），也就不再需要这些别名"
+"了。"
 
 #: ../../library/typing.rst:3106
 msgid ""
@@ -3201,6 +3236,9 @@ msgid ""
 "currently planned. As such, no deprecation warnings are currently issued by "
 "the interpreter for these aliases."
 msgstr ""
+"从 Python 3.9 起，这些类型被标记为弃用状态，不再建议使用。然而，虽然这些别名"
+"可能会在某一刻被移除，但目前还没有移除这些别名的计划。因此，解释器目前不会为"
+"这些别名发出弃用警告。"
 
 #: ../../library/typing.rst:3111
 msgid ""
@@ -3209,20 +3247,25 @@ msgid ""
 "releases prior to removal. The aliases are guaranteed to remain in the "
 "typing module without deprecation warnings until at least Python 3.14."
 msgstr ""
+"如果在某个时刻决定要移除这些不推荐使用的别名，那么在删除之前，解释器将提前至"
+"少两个发行版本报告弃用警告。\n"
+"至少在 Python 3.14 之前，别名仍然保证会保留在 typing 模块中而不引发弃用警告。"
 
 #: ../../library/typing.rst:3116
 msgid ""
 "Type checkers are encouraged to flag uses of the deprecated types if the "
 "program they are checking targets a minimum Python version of 3.9 or newer."
 msgstr ""
+"如果被类型检查器检查的程序旨在运行于 Python 3.9 或更高版本，则鼓励类型检查器"
+"标记出这些不建议使用的类型。"
 
 #: ../../library/typing.rst:3122
 msgid "Aliases to built-in types"
-msgstr ""
+msgstr "内置类型的别名"
 
 #: ../../library/typing.rst:3126
 msgid "Deprecated alias to :class:`dict`."
-msgstr ""
+msgstr ":class:`dict` 的已弃用别名。"
 
 #: ../../library/typing.rst:3128
 msgid ""
@@ -3230,6 +3273,8 @@ msgid ""
 "collection type such as :class:`Mapping` rather than to use :class:`dict` "
 "or :class:`!typing.Dict`."
 msgstr ""
+"请注意，要注解参数，更推荐使用 :class:`Mapping` 这样的抽象容器类型，而不是使"
+"用 :class:`dict` 或者 :class:`!typing.Dict` 。"
 
 #: ../../library/typing.rst:3132 ../../library/typing.rst:3374
 msgid "This type can be used as follows::"
@@ -3245,7 +3290,7 @@ msgstr ""
 
 #: ../../library/typing.rst:3143
 msgid "Deprecated alias to :class:`list`."
-msgstr ""
+msgstr ":class:`list` 的已弃用别名。"
 
 #: ../../library/typing.rst:3145
 msgid ""
@@ -3253,6 +3298,8 @@ msgid ""
 "collection type such as :class:`Sequence` or :class:`Iterable` rather than "
 "to use :class:`list` or :class:`!typing.List`."
 msgstr ""
+"请注意，要注解参数，更推荐使用 :class:`Sequence` 或者 :class:`Iterable` 这样"
+"的抽象容器类型，而不是使用 :class:`list` 或者 :class:`!typing.List` 。"
 
 #: ../../library/typing.rst:3149
 msgid "This type may be used as follows::"
@@ -3268,7 +3315,7 @@ msgstr ""
 
 #: ../../library/typing.rst:3163
 msgid "Deprecated alias to :class:`builtins.set <set>`."
-msgstr ""
+msgstr ":class:`builtins.set <set>` 的已弃用别名。"
 
 #: ../../library/typing.rst:3165
 msgid ""
@@ -3276,6 +3323,8 @@ msgid ""
 "collection type such as :class:`AbstractSet` rather than to use :class:`set` "
 "or :class:`!typing.Set`."
 msgstr ""
+"请注意，要注解参数，更推荐使用 :class:`AbstractSet` 这样的抽象容器类型，而不"
+"是使用 :class:`set` 或者 :class:`!typing.Set` 。"
 
 #: ../../library/typing.rst:3169
 msgid ""
@@ -3287,7 +3336,7 @@ msgstr ""
 
 #: ../../library/typing.rst:3175
 msgid "Deprecated alias to :class:`builtins.frozenset <frozenset>`."
-msgstr ""
+msgstr ":class:`builtins.frozenset <frozenset>` 的已弃用别名。"
 
 #: ../../library/typing.rst:3177
 msgid ""
@@ -3299,13 +3348,15 @@ msgstr ""
 
 #: ../../library/typing.rst:3184
 msgid "Deprecated alias for :class:`tuple`."
-msgstr ""
+msgstr ":class:`tuple` 的已弃用别名。"
 
 #: ../../library/typing.rst:3186
 msgid ""
 ":class:`tuple` and ``Tuple`` are special-cased in the type system; see :ref:"
 "`annotating-tuples` for more details."
 msgstr ""
+":class:`tuple` 和 ``Tuple`` 是类型系统中的特例；更多详细信息请参见 :ref:"
+"`annotating-tuples`。"
 
 #: ../../library/typing.rst:3189
 msgid ""
@@ -3317,13 +3368,15 @@ msgstr ""
 
 #: ../../library/typing.rst:3195
 msgid "Deprecated alias to :class:`type`."
-msgstr ""
+msgstr ":class:`type` 的已弃用别名。"
 
 #: ../../library/typing.rst:3197
 msgid ""
 "See :ref:`type-of-class-objects` for details on using :class:`type` or "
 "``typing.Type`` in type annotations."
 msgstr ""
+"有关在类型注解中使用 :class:`type` 或 ``typing.Type`` 的详细信息，请参阅 :"
+"ref:`type-of-class-objects` 。"
 
 #: ../../library/typing.rst:3202
 msgid ""
@@ -3335,11 +3388,11 @@ msgstr ""
 
 #: ../../library/typing.rst:3209
 msgid "Aliases to types in :mod:`collections`"
-msgstr ""
+msgstr ":mod:`collections` 中的类型的别名。"
 
 #: ../../library/typing.rst:3213
 msgid "Deprecated alias to :class:`collections.defaultdict`."
-msgstr ""
+msgstr ":class:`collections.defaultdict` 的已弃用别名。"
 
 #: ../../library/typing.rst:3217
 msgid ""
@@ -3351,7 +3404,7 @@ msgstr ""
 
 #: ../../library/typing.rst:3223
 msgid "Deprecated alias to :class:`collections.OrderedDict`."
-msgstr ""
+msgstr ":class:`collections.OrderedDict` 的已弃用别名。"
 
 #: ../../library/typing.rst:3227
 msgid ""
@@ -3363,7 +3416,7 @@ msgstr ""
 
 #: ../../library/typing.rst:3233
 msgid "Deprecated alias to :class:`collections.ChainMap`."
-msgstr ""
+msgstr ":class:`collections.ChainMap` 的已弃用别名。"
 
 #: ../../library/typing.rst:3238
 msgid ""
@@ -3375,7 +3428,7 @@ msgstr ""
 
 #: ../../library/typing.rst:3244
 msgid "Deprecated alias to :class:`collections.Counter`."
-msgstr ""
+msgstr ":class:`collections.Counter` 的已弃用别名。"
 
 #: ../../library/typing.rst:3249
 msgid ""
@@ -3387,7 +3440,7 @@ msgstr ""
 
 #: ../../library/typing.rst:3255
 msgid "Deprecated alias to :class:`collections.deque`."
-msgstr ""
+msgstr ":class:`collections.deque` 的已弃用别名。"
 
 #: ../../library/typing.rst:3260
 msgid ""
@@ -3399,7 +3452,7 @@ msgstr ""
 
 #: ../../library/typing.rst:3267
 msgid "Aliases to other concrete types"
-msgstr ""
+msgstr "其他具体类型的别名"
 
 #: ../../library/typing.rst:3272
 msgid ""
@@ -3468,7 +3521,7 @@ msgstr ""
 
 #: ../../library/typing.rst:3318
 msgid "Aliases to container ABCs in :mod:`collections.abc`"
-msgstr ""
+msgstr ":mod:`collections.abc` 中容器 ABC 的别名"
 
 #: ../../library/typing.rst:3322
 msgid "Deprecated alias to :class:`collections.abc.Set`."
@@ -3925,7 +3978,7 @@ msgstr ":issue:`38291`"
 
 #: ../../library/typing.rst:3669
 msgid "``typing`` versions of standard collections"
-msgstr "标准多项集的 ``typing`` 版本"
+msgstr "标准容器的 ``typing`` 版本"
 
 #: ../../library/typing.rst:3670 ../../library/typing.rst:3674
 msgid "3.9"
