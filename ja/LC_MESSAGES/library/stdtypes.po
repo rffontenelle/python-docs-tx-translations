@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-08 14:42+0000\n"
+"POT-Creation-Date: 2023-10-20 14:41+0000\n"
 "PO-Revision-Date: 2023-05-24 02:19+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -84,6 +84,10 @@ msgid ""
 "method that returns zero, when called with the object. [1]_  Here are most "
 "of the built-in objects considered false:"
 msgstr ""
+"オブジェクトは、デフォルトでは真と判定されます。ただし、そのクラスが :meth:"
+"`~object.__bool__` メソッドを定義していて ``False`` を返す場合、または :meth:"
+"`__len__` メソッドを定義していてゼロを返す場合は偽と判定されます。 [1]_ 以下"
+"は偽と判定される主な組み込みオブジェクトです:"
 
 #: ../../library/stdtypes.rst:55
 msgid "constants defined to be false: ``None`` and ``False``"
@@ -494,7 +498,7 @@ msgstr "*x* と *y* の商を切り下げたもの"
 
 #: ../../library/stdtypes.rst:285
 msgid "\\(1)\\(2)"
-msgstr ""
+msgstr "\\(1)\\(2)"
 
 #: ../../library/stdtypes.rst:288
 msgid "``x % y``"
@@ -636,6 +640,12 @@ msgid ""
 "always rounded towards minus infinity: ``1//2`` is ``0``, ``(-1)//2`` is "
 "``-1``, ``1//(-2)`` is ``-1``, and ``(-1)//(-2)`` is ``0``."
 msgstr ""
+"整数の除算とも呼ばれます。 :class:`int` 型のオペランドに対しては、結果は :"
+"class:`int` 型になります。 :class:`float` 型のオペランドに対しては、結果は :"
+"class:`float` 型になります。一般に結果の型は必ずしも :class:`int` 型ではあり"
+"ませんが、結果は常に整数です。結果は常に負の無限大の方向に丸められます: "
+"``1//2`` は ``0`` 、 ``(-1)//2`` は ``-1`` 、 ``1//(-2)`` は ``-1`` 、そして "
+"``(-1)//(-2)`` は ``0`` です。"
 
 #: ../../library/stdtypes.rst:330
 msgid ""
@@ -1530,6 +1540,11 @@ msgid ""
 "`IndexError` or a :exc:`StopIteration` is encountered (or when the index "
 "drops below zero)."
 msgstr ""
+"ミュータブルなシーケンスに対する前方および逆方向イテレータはインデックスを"
+"使って要素にアクセスします。インデックスは、仮に参照するシーケンスが変化した"
+"としても前方 (または後方) に進み続けます。イテレータは :exc:`IndexError` また"
+"は :exc:`StopIteration` に出会った場合 (またはインデックスがゼロより小さく"
+"なった場合) にのみ終了します。"
 
 #: ../../library/stdtypes.rst:978
 msgid ""
@@ -3383,21 +3398,13 @@ msgstr ""
 msgid ""
 "Return a copy of the string in which each character has been mapped through "
 "the given translation table.  The table must be an object that implements "
-"indexing via :meth:`__getitem__`, typically a :term:`mapping` or :term:"
-"`sequence`.  When indexed by a Unicode ordinal (an integer), the table "
+"indexing via :meth:`~object.__getitem__`, typically a :term:`mapping` or :"
+"term:`sequence`.  When indexed by a Unicode ordinal (an integer), the table "
 "object can do any of the following: return a Unicode ordinal or a string, to "
 "map the character to one or more other characters; return ``None``, to "
 "delete the character from the return string; or raise a :exc:`LookupError` "
 "exception, to map the character to itself."
 msgstr ""
-"与えられた変換テーブルに基づいて文字列を構成する各文字をマッピングし、マッピ"
-"ング後の文字列のコピーを返します。変換テーブルは、:meth:`__getitem__` による"
-"インデックス指定を実装するオブジェクトである必要があります。一般的には、 :"
-"term:`mapping` または :term:`sequence` です。Unicode 序数 (整数) でインデック"
-"ス指定する場合、変換テーブルのオブジェクトは次のいずれも行うことができます。"
-"Unicode 序数または文字列を返して文字を 1 文字以上の別の文字にマッピングするこ"
-"と、``None`` を返して返り値の文字列から指定した文字を削除すること、例外 :exc:"
-"`LookupError` を送出して文字をその文字自身にマッピングすること。"
 
 #: ../../library/stdtypes.rst:2230
 msgid ""
@@ -5831,6 +5838,12 @@ msgid ""
 "may not be used as keys. Values that compare equal (such as ``1``, ``1.0``, "
 "and ``True``) can be used interchangeably to index the same dictionary entry."
 msgstr ""
+"辞書のキーには、*ほぼ*どんな値も使うことができます。\n"
+"キーとして使えないのは、 :term:`hashable` (ハッシュ可能) でない値、すなわちリ"
+"ストや辞書のようなミュータブルな型 (内包する値ではなくオブジェクト自体が同一"
+"であるかによって比較が行われるような型)です。\n"
+"比較した際に等しいとみなされる値 (例えば ``1`` と ``1.0`` と ``True``) は、ど"
+"れを使っても同じエントリーに関連付けられます。"
 
 #: ../../library/stdtypes.rst:4397
 msgid ""
@@ -6015,6 +6028,13 @@ msgid ""
 "an empty list.  To get distinct values, use a :ref:`dict comprehension "
 "<dict>` instead."
 msgstr ""
+":meth:`fromkeys` は新しい辞書を返すクラスメソッドです。\n"
+"*value* はデフォルトで ``None`` となります。\n"
+"作られる辞書内のすべての値が同一のインスタンスを指すことになるため、*value* "
+"にミュータブルなオブジェクト (例えば空のリスト) を指定しても通常意味はありま"
+"せん。\n"
+"別々の値を指すようにしたい場合は、代わりに :ref:`辞書内包表記 <dict>` を使用"
+"してください。"
 
 #: ../../library/stdtypes.rst:4521
 msgid ""
@@ -6130,6 +6150,9 @@ msgid ""
 "always return ``False``. This also applies when comparing ``dict.values()`` "
 "to itself::"
 msgstr ""
+"``dict.values()`` で得られた２つのビューの等しさを比較すると、必ず ``False`` "
+"が返ります。\n"
+"``dict.values()`` どうしを比較したときも同様です::"
 
 #: ../../library/stdtypes.rst:4592
 msgid ""
@@ -6137,6 +6160,8 @@ msgid ""
 "which must both be dictionaries. The values of *other* take priority when "
 "*d* and *other* share keys."
 msgstr ""
+"*d* と *other* のキーと値を統合した新しい辞書を作成します。\n"
+"*d* と *other* のキーに重複がある場合は、 *other* の方の値が優先されます。"
 
 #: ../../library/stdtypes.rst:4600
 msgid ""
@@ -6144,6 +6169,10 @@ msgid ""
 "either a :term:`mapping` or an :term:`iterable` of key/value pairs. The "
 "values of *other* take priority when *d* and *other* share keys."
 msgstr ""
+"辞書 *d* のキーと値を *other* で更新します。\n"
+"*other* は :term:`マッピング <mapping>` か、またはキーと値のペアの :term:`イ"
+"テラブル <iterable>` です。\n"
+"*d* と *other* のキーに重複がある場合は、 *other* の方の値が優先されます。"
 
 #: ../../library/stdtypes.rst:4606
 msgid ""
@@ -6174,11 +6203,11 @@ msgstr ""
 
 #: ../../library/stdtypes.rst:4632
 msgid "Dictionaries and dictionary views are reversible. ::"
-msgstr ""
+msgstr "辞書と辞書のビューは ``reversed()`` で順序を逆にすることができます::"
 
 #: ../../library/stdtypes.rst:4644
 msgid "Dictionaries are now reversible."
-msgstr ""
+msgstr "辞書がリバース可能になりました。"
 
 #: ../../library/stdtypes.rst:4649
 msgid ""
@@ -6261,16 +6290,20 @@ msgid ""
 "Return a reverse iterator over the keys, values or items of the dictionary. "
 "The view will be iterated in reverse order of the insertion."
 msgstr ""
+"辞書のキーもしくは値、項目の順序を逆にしたイテレーターを返します。\n"
+"戻り値のビューは、挿入された順とは逆の順でイテレートします。"
 
 #: ../../library/stdtypes.rst:4696
 msgid "Dictionary views are now reversible."
-msgstr ""
+msgstr "辞書のビューがリバース可能になりました。"
 
 #: ../../library/stdtypes.rst:4701
 msgid ""
 "Return a :class:`types.MappingProxyType` that wraps the original dictionary "
 "to which the view refers."
 msgstr ""
+"ビューの参照先の辞書をラップする :class:`types.MappingProxyType` オブジェク"
+"ト を返します。"
 
 #: ../../library/stdtypes.rst:4706
 msgid ""
@@ -6373,13 +6406,9 @@ msgid ""
 "The exception passed in should never be reraised explicitly - instead, this "
 "method should return a false value to indicate that the method completed "
 "successfully and does not want to suppress the raised exception. This allows "
-"context management code to easily detect whether or not an :meth:`__exit__` "
-"method has actually failed."
+"context management code to easily detect whether or not an :meth:`~object."
+"__exit__` method has actually failed."
 msgstr ""
-"渡された例外を明示的に再送出すべきではありません。その代わりに、このメソッド"
-"が偽の値を返すことでメソッドの正常終了と送出された例外を抑制しないことを伝え"
-"るべきです。このようにすればコンテキストマネージャは :meth:`__exit__` メソッ"
-"ド自体が失敗したのかどうかを簡単に見分けることができます。"
 
 #: ../../library/stdtypes.rst:4808
 msgid ""
@@ -6431,16 +6460,21 @@ msgid ""
 "Type Annotation Types --- :ref:`Generic Alias <types-genericalias>`, :ref:"
 "`Union <types-union>`"
 msgstr ""
+"型アノテーション型 --- :ref:`ジェネリックエイリアス <types-"
+"genericalias>` 、 :ref:`ユニオン <types-union>`"
 
 #: ../../library/stdtypes.rst:4834
 msgid ""
 "The core built-in types for :term:`type annotations <annotation>` are :ref:"
 "`Generic Alias <types-genericalias>` and :ref:`Union <types-union>`."
 msgstr ""
+":term:`型アノテーション <annotation>` の中心となる組み込みの型は :ref:`ジェネ"
+"リックエイリアス <types-genericalias>` と :ref:`ユニオン <types-union>` で"
+"す。"
 
 #: ../../library/stdtypes.rst:4841
 msgid "Generic Alias Type"
-msgstr ""
+msgstr "ジェネリックエイリアス型"
 
 #: ../../library/stdtypes.rst:4847
 msgid ""
@@ -6451,12 +6485,22 @@ msgid ""
 "the ``list`` class with the argument :class:`int`. ``GenericAlias`` objects "
 "are intended primarily for use with :term:`type annotations <annotation>`."
 msgstr ""
+"``GenericAlias`` オブジェクトは一般的に、クラスに :ref:`添字表記 "
+"<subscriptions>` をすることで作られます。\n"
+":class:`list` や :class:`dict` のような :ref:`コンテナ系のクラス <sequence-"
+"types>` に対して使われることがほとんどです。\n"
+"例えば、 ``list[int]`` は ``list`` クラスに :class:`int` という引数を与えた添"
+"字表記をすることで作られる ``GenericAlias`` オブジェクトです。\n"
+"``GenericAlias`` オブジェクトは主に :term:`型アノテーション <annotation>` の"
+"用途で使われます。"
 
 #: ../../library/stdtypes.rst:4857
 msgid ""
 "It is generally only possible to subscript a class if the class implements "
 "the special method :meth:`~object.__class_getitem__`."
 msgstr ""
+"一般に、クラスへの添字表記は、そのクラスが特殊メソッド :meth:`~object."
+"__class_getitem__` を実装しているときに限り可能です。"
 
 #: ../../library/stdtypes.rst:4860
 msgid ""
@@ -8180,7 +8224,7 @@ msgstr ". (ドット)"
 
 #: ../../library/stdtypes.rst:2344 ../../library/stdtypes.rst:3562
 msgid "# (hash)"
-msgstr ""
+msgstr "# (hash)"
 
 #: ../../library/stdtypes.rst:2344 ../../library/stdtypes.rst:3562
 msgid "space"
