@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-20 14:13+0000\n"
+"POT-Creation-Date: 2023-10-27 14:49+0000\n"
 "PO-Revision-Date: 2023-09-08 14:16+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -33,6 +33,9 @@ msgid ""
 "independent module, so there is no need to ``import sys.monitoring``, simply "
 "``import sys`` and then use ``sys.monitoring``."
 msgstr ""
+":mod:`sys.monitoring` 是 :mod:`sys` 模块内部的一个命名空间，而不是一个独立模"
+"块，因此不需要 ``import sys.monitoring``，只要简单地 ``import sys`` 然后使用 "
+"``sys.monitoring``。"
 
 #: ../../library/sys.monitoring.rst:19
 msgid ""
@@ -46,6 +49,8 @@ msgid ""
 "monitor execution. The :mod:`sys.monitoring` namespace provides means to "
 "receive callbacks when events of interest occur."
 msgstr ""
+"在程序执行过程中，会发生对于监控执行的工具来说值得关注的事件。 :mod:`sys."
+"monitoring` 命名空间提供了在相应事件发生时接收回调的操作方式。"
 
 #: ../../library/sys.monitoring.rst:26
 msgid "The monitoring API consists of three components:"
@@ -88,18 +93,18 @@ msgstr "注册和使用工具"
 
 #: ../../library/sys.monitoring.rst:49
 msgid ""
-"Must be called before *id* can be used. *id* must be in the range 0 to 5 "
-"inclusive. Raises a :exc:`ValueError` if *id* is in use."
+"Must be called before *tool_id* can be used. *tool_id* must be in the range "
+"0 to 5 inclusive. Raises a :exc:`ValueError` if *tool_id* is in use."
 msgstr ""
 
 #: ../../library/sys.monitoring.rst:55
-msgid "Should be called once a tool no longer requires *id*."
+msgid "Should be called once a tool no longer requires *tool_id*."
 msgstr ""
 
 #: ../../library/sys.monitoring.rst:59
 msgid ""
-"Returns the name of the tool if *id* is in use, otherwise it returns "
-"``None``. *id* must be in the range 0 to 5 inclusive."
+"Returns the name of the tool if *tool_id* is in use, otherwise it returns "
+"``None``. *tool_id* must be in the range 0 to 5 inclusive."
 msgstr ""
 
 #: ../../library/sys.monitoring.rst:63
@@ -252,43 +257,43 @@ msgstr ""
 
 #: ../../library/sys.monitoring.rst:173
 msgid ":monitoring-event:`PY_START`"
-msgstr ""
+msgstr ":monitoring-event:`PY_START`"
 
 #: ../../library/sys.monitoring.rst:174
 msgid ":monitoring-event:`PY_RESUME`"
-msgstr ""
+msgstr ":monitoring-event:`PY_RESUME`"
 
 #: ../../library/sys.monitoring.rst:175
 msgid ":monitoring-event:`PY_RETURN`"
-msgstr ""
+msgstr ":monitoring-event:`PY_RETURN`"
 
 #: ../../library/sys.monitoring.rst:176
 msgid ":monitoring-event:`PY_YIELD`"
-msgstr ""
+msgstr ":monitoring-event:`PY_YIELD`"
 
 #: ../../library/sys.monitoring.rst:177
 msgid ":monitoring-event:`CALL`"
-msgstr ""
+msgstr ":monitoring-event:`CALL`"
 
 #: ../../library/sys.monitoring.rst:178
 msgid ":monitoring-event:`LINE`"
-msgstr ""
+msgstr ":monitoring-event:`LINE`"
 
 #: ../../library/sys.monitoring.rst:179
 msgid ":monitoring-event:`INSTRUCTION`"
-msgstr ""
+msgstr ":monitoring-event:`INSTRUCTION`"
 
 #: ../../library/sys.monitoring.rst:180
 msgid ":monitoring-event:`JUMP`"
-msgstr ""
+msgstr ":monitoring-event:`JUMP`"
 
 #: ../../library/sys.monitoring.rst:181
 msgid ":monitoring-event:`BRANCH`"
-msgstr ""
+msgstr ":monitoring-event:`BRANCH`"
 
 #: ../../library/sys.monitoring.rst:182
 msgid ":monitoring-event:`STOP_ITERATION`"
-msgstr ""
+msgstr ":monitoring-event:`STOP_ITERATION`"
 
 #: ../../library/sys.monitoring.rst:185
 msgid "Ancillary events"
@@ -302,7 +307,7 @@ msgstr "辅助事件可以像其他事件一样被监视，但是由另一个事
 
 #: ../../library/sys.monitoring.rst:190
 msgid ":monitoring-event:`C_RAISE`"
-msgstr ""
+msgstr ":monitoring-event:`C_RAISE`"
 
 #: ../../library/sys.monitoring.rst:191
 msgid ":monitoring-event:`C_RETURN`"
@@ -332,19 +337,19 @@ msgstr "可以被监视的其他事件包括："
 
 #: ../../library/sys.monitoring.rst:206
 msgid ":monitoring-event:`PY_THROW`"
-msgstr ""
+msgstr ":monitoring-event:`PY_THROW`"
 
 #: ../../library/sys.monitoring.rst:207
 msgid ":monitoring-event:`PY_UNWIND`"
-msgstr ""
+msgstr ":monitoring-event:`PY_UNWIND`"
 
 #: ../../library/sys.monitoring.rst:208
 msgid ":monitoring-event:`RAISE`"
-msgstr ""
+msgstr ":monitoring-event:`RAISE`"
 
 #: ../../library/sys.monitoring.rst:209
 msgid ":monitoring-event:`EXCEPTION_HANDLED`"
-msgstr ""
+msgstr ":monitoring-event:`EXCEPTION_HANDLED`"
 
 #: ../../library/sys.monitoring.rst:213
 msgid "The STOP_ITERATION event"
@@ -455,26 +460,32 @@ msgstr ""
 "禁用特定位置的事件对高性能的监控非常重要。 例如，如果调试器禁用了除几个断点外"
 "的所有监控那么程序在调试器下运行时就不会产生额外的开销。"
 
-#: ../../library/sys.monitoring.rst:291
+#: ../../library/sys.monitoring.rst:289
+msgid ""
+"Enable all the events that were disabled by :data:`sys.monitoring.DISABLE` "
+"for all tools."
+msgstr ""
+
+#: ../../library/sys.monitoring.rst:296
 msgid "Registering callback functions"
 msgstr "注册回调函数"
 
-#: ../../library/sys.monitoring.rst:293
+#: ../../library/sys.monitoring.rst:298
 msgid "To register a callable for events call"
 msgstr "要为事件注册一个可调用对象则要调用"
 
-#: ../../library/sys.monitoring.rst:297
+#: ../../library/sys.monitoring.rst:302
 msgid "Registers the callable *func* for the *event* with the given *tool_id*"
 msgstr ""
 
-#: ../../library/sys.monitoring.rst:299
+#: ../../library/sys.monitoring.rst:304
 msgid ""
 "If another callback was registered for the given *tool_id* and *event*, it "
 "is unregistered and returned. Otherwise :func:`register_callback` returns "
 "``None``."
 msgstr ""
 
-#: ../../library/sys.monitoring.rst:304
+#: ../../library/sys.monitoring.rst:309
 msgid ""
 "Functions can be unregistered by calling ``sys.monitoring."
 "register_callback(tool_id, event, None)``."
@@ -482,27 +493,27 @@ msgstr ""
 "函数可以通过调用 ``sys.monitoring.register_callback(tool_id, event, None)`` "
 "来注销。"
 
-#: ../../library/sys.monitoring.rst:307
+#: ../../library/sys.monitoring.rst:312
 msgid "Callback functions can be registered and unregistered at any time."
 msgstr "回调函数可在任何时候被注册或注销。"
 
-#: ../../library/sys.monitoring.rst:309
+#: ../../library/sys.monitoring.rst:314
 msgid ""
 "Registering or unregistering a callback function will generate a :func:`sys."
 "audit` event."
 msgstr ""
 
-#: ../../library/sys.monitoring.rst:313
+#: ../../library/sys.monitoring.rst:318
 msgid "Callback function arguments"
 msgstr "回调函数参数"
 
-#: ../../library/sys.monitoring.rst:317
+#: ../../library/sys.monitoring.rst:322
 msgid ""
 "A special value that is passed to a callback function to indicate that there "
 "are no arguments to the call."
 msgstr ""
 
-#: ../../library/sys.monitoring.rst:320
+#: ../../library/sys.monitoring.rst:325
 msgid ""
 "When an active event occurs, the registered callback function is called. "
 "Different events will provide the callback function with different "
@@ -511,47 +522,47 @@ msgstr ""
 "当一个激活的事件发生时，已注册的回调函数将被调用。 不同的事件将为回调函数提供"
 "不同的参数，如下所示："
 
-#: ../../library/sys.monitoring.rst:323
+#: ../../library/sys.monitoring.rst:328
 msgid ":monitoring-event:`PY_START` and :monitoring-event:`PY_RESUME`::"
 msgstr ""
 
-#: ../../library/sys.monitoring.rst:327
+#: ../../library/sys.monitoring.rst:332
 msgid ":monitoring-event:`PY_RETURN` and :monitoring-event:`PY_YIELD`::"
 msgstr ""
 
-#: ../../library/sys.monitoring.rst:331
+#: ../../library/sys.monitoring.rst:336
 msgid ""
 ":monitoring-event:`CALL`, :monitoring-event:`C_RAISE` and :monitoring-event:"
 "`C_RETURN`::"
 msgstr ""
 
-#: ../../library/sys.monitoring.rst:335
+#: ../../library/sys.monitoring.rst:340
 msgid ""
 "If there are no arguments, *arg0* is set to :data:`sys.monitoring.MISSING`."
 msgstr ""
 
-#: ../../library/sys.monitoring.rst:337
+#: ../../library/sys.monitoring.rst:342
 msgid ""
 ":monitoring-event:`RAISE`, :monitoring-event:`RERAISE`, :monitoring-event:"
 "`EXCEPTION_HANDLED`, :monitoring-event:`PY_UNWIND`, :monitoring-event:"
 "`PY_THROW` and :monitoring-event:`STOP_ITERATION`::"
 msgstr ""
 
-#: ../../library/sys.monitoring.rst:342
+#: ../../library/sys.monitoring.rst:347
 msgid ":monitoring-event:`LINE`::"
 msgstr ""
 
-#: ../../library/sys.monitoring.rst:346
+#: ../../library/sys.monitoring.rst:351
 msgid ":monitoring-event:`BRANCH` and :monitoring-event:`JUMP`::"
 msgstr ""
 
-#: ../../library/sys.monitoring.rst:350
+#: ../../library/sys.monitoring.rst:355
 msgid ""
 "Note that the *destination_offset* is where the code will next execute. For "
 "an untaken branch this will be the offset of the instruction following the "
 "branch."
 msgstr ""
 
-#: ../../library/sys.monitoring.rst:354
+#: ../../library/sys.monitoring.rst:359
 msgid ":monitoring-event:`INSTRUCTION`::"
 msgstr ""
