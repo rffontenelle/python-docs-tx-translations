@@ -9,7 +9,6 @@
 # ppcfish <ppcfish@gmail.com>, 2021
 # 钢 彭 <szhairui@gmail.com>, 2021
 # Dai Xu <daixu61@hotmail.com>, 2021
-# sgqy <sgqyzh@gmail.com>, 2023
 # WH-2099 <wh2099@outlook.com>, 2023
 # Freesand Leo <yuqinju@163.com>, 2023
 #
@@ -18,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-23 14:14+0000\n"
+"POT-Creation-Date: 2023-11-03 14:14+0000\n"
 "PO-Revision-Date: 2021-06-28 01:08+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -799,16 +798,24 @@ msgid ""
 "conventions."
 msgstr "按照 :const:`LC_NUMERIC` 的约定，将字符串转换为整数。"
 
-#: ../../library/locale.rst:469
+#: ../../library/locale.rst:467
 msgid ""
-"Locale category for the character type functions.  Depending on the settings "
-"of this category, the functions of module :mod:`string` dealing with case "
-"change their behaviour."
+"Locale category for the character type functions.  Most importantly, this "
+"category defines the text encoding, i.e. how bytes are interpreted as "
+"Unicode codepoints.  See :pep:`538` and :pep:`540` for how this variable "
+"might be automatically coerced to ``C.UTF-8`` to avoid issues created by "
+"invalid settings in containers or incompatible settings passed over remote "
+"SSH connections."
 msgstr ""
-"字符型函数的区域类别。根据该类别的设置，模块 :mod:`string` 中处理大小写的函数"
-"会改变操作方式。"
 
-#: ../../library/locale.rst:476
+#: ../../library/locale.rst:474
+msgid ""
+"Python doesn't internally use locale-dependent character transformation "
+"functions from ``ctype.h``. Instead, an internal ``pyctype.h`` provides "
+"locale-independent equivalents like :c:macro:`!Py_TOLOWER`."
+msgstr ""
+
+#: ../../library/locale.rst:481
 msgid ""
 "Locale category for sorting strings.  The functions :func:`strcoll` and :"
 "func:`strxfrm` of the :mod:`locale` module are affected."
@@ -816,21 +823,21 @@ msgstr ""
 "字符串排序会用到的区域类别。 将会影响 :mod:`locale` 模块的 :func:`strcoll` "
 "和 :func:`strxfrm` 函数。"
 
-#: ../../library/locale.rst:482
+#: ../../library/locale.rst:487
 msgid ""
 "Locale category for the formatting of time.  The function :func:`time."
 "strftime` follows these conventions."
 msgstr ""
 "格式化时间时会用到的区域类别。 :func:`time.strftime` 函数会参考这些约定。"
 
-#: ../../library/locale.rst:488
+#: ../../library/locale.rst:493
 msgid ""
 "Locale category for formatting of monetary values.  The available options "
 "are available from the :func:`localeconv` function."
 msgstr ""
 "格式化货币值时会用到的区域类别。可用值可由 :func:`localeconv` 函数获取。"
 
-#: ../../library/locale.rst:494
+#: ../../library/locale.rst:499
 msgid ""
 "Locale category for message display. Python currently does not support "
 "application specific locale-aware messages.  Messages displayed by the "
@@ -840,13 +847,13 @@ msgstr ""
 "显示消息时用到的区域类别。目前 Python 不支持应用定制的本地化消息。 由操作系统"
 "显示的消息，比如由 :func:`os.strerror` 返回的消息可能会受到该类别的影响。"
 
-#: ../../library/locale.rst:499
+#: ../../library/locale.rst:504
 msgid ""
 "This value may not be available on operating systems not conforming to the "
 "POSIX standard, most notably Windows."
 msgstr "这个值在不符合 POSIX 标准的操作系统上可能不可用，最主要是指 Windows。"
 
-#: ../../library/locale.rst:505
+#: ../../library/locale.rst:510
 msgid ""
 "Locale category for formatting numbers.  The functions :func:"
 "`format_string`, :func:`atoi`, :func:`atof` and :func:`.str` of the :mod:"
@@ -857,7 +864,7 @@ msgstr ""
 "func:`atoi`, :func:`atof` 和 :func:`.str` 等函数会受到该类别的影响。 其他所有"
 "数字格式化操作将不受影响。"
 
-#: ../../library/locale.rst:513
+#: ../../library/locale.rst:518
 msgid ""
 "Combination of all locale settings.  If this flag is used when the locale is "
 "changed, setting the locale for all categories is attempted. If that fails "
@@ -870,21 +877,21 @@ msgstr ""
 "数。只要有任何一个类别设置失败，就不会修改任何类别。在使用此标志获取区域设置"
 "时，会返回一个代表所有类别设置的字符串。之后可用此字符串恢复设置。"
 
-#: ../../library/locale.rst:522
+#: ../../library/locale.rst:527
 msgid ""
 "This is a symbolic constant used for different values returned by :func:"
 "`localeconv`."
 msgstr "一个符号常量， :func:`localeconv` 返回多个值时将会用到。"
 
-#: ../../library/locale.rst:526
+#: ../../library/locale.rst:531
 msgid "Example::"
 msgstr "示例："
 
-#: ../../library/locale.rst:539
+#: ../../library/locale.rst:544
 msgid "Background, details, hints, tips and caveats"
 msgstr "背景、细节、提示、技巧和注意事项"
 
-#: ../../library/locale.rst:541
+#: ../../library/locale.rst:546
 msgid ""
 "The C standard defines the locale as a program-wide property that may be "
 "relatively expensive to change.  On top of that, some implementations are "
@@ -895,7 +902,7 @@ msgstr ""
 "现代码写得不好，频繁改变区域可能会导致内核崩溃。于是要想正确使用区域就变得有"
 "些痛苦。"
 
-#: ../../library/locale.rst:546
+#: ../../library/locale.rst:551
 msgid ""
 "Initially, when a program is started, the locale is the ``C`` locale, no "
 "matter what the user's preferred locale is.  There is one exception: the :"
@@ -908,7 +915,7 @@ msgstr ""
 "外，就是在启动时修改 :data:`LC_CTYPE` 类别，设置当前区域编码为用户偏好编码。"
 "程序必须调用 ``setlocale(LC_ALL, '')`` 明确表示用户偏好区域将设为其他类别。"
 
-#: ../../library/locale.rst:553
+#: ../../library/locale.rst:558
 msgid ""
 "It is generally a bad idea to call :func:`setlocale` in some library "
 "routine, since as a side effect it affects the entire program.  Saving and "
@@ -919,7 +926,7 @@ msgstr ""
 "整个程序。保存和恢复区域设置也几乎一样糟糕：不仅代价高昂，而且会影响到恢复之"
 "前运行的其他线程。"
 
-#: ../../library/locale.rst:558
+#: ../../library/locale.rst:563
 msgid ""
 "If, when coding a module for general use, you need a locale independent "
 "version of an operation that is affected by the locale (such as certain "
@@ -934,7 +941,7 @@ msgstr ""
 "说服自己，可以采纳区域设置。只有在万不得已的情况下，才能用文档标注出模块与非 "
 "``C`` 区域设置不兼容。"
 
-#: ../../library/locale.rst:565
+#: ../../library/locale.rst:570
 msgid ""
 "The only way to perform numeric operations according to the locale is to use "
 "the special functions defined by this module: :func:`atof`, :func:`atoi`, :"
@@ -943,7 +950,7 @@ msgstr ""
 "根据语言区域执行数字运算的唯一方式就是使用本模块所定义的特殊函数: :func:"
 "`atof`, :func:`atoi`, :func:`format_string`, :func:`.str`。"
 
-#: ../../library/locale.rst:569
+#: ../../library/locale.rst:574
 msgid ""
 "There is no way to perform case conversions and character classifications "
 "according to the locale.  For (Unicode) text strings these are done "
@@ -958,11 +965,11 @@ msgstr ""
 "值进行的，高位被置位的字节（即非 ASCII 字节）永远不会被转换或被视作字母或空白"
 "符之类。"
 
-#: ../../library/locale.rst:580
+#: ../../library/locale.rst:585
 msgid "For extension writers and programs that embed Python"
 msgstr "针对扩展程序编写人员和嵌入Python 运行的程序"
 
-#: ../../library/locale.rst:582
+#: ../../library/locale.rst:587
 msgid ""
 "Extension modules should never call :func:`setlocale`, except to find out "
 "what the current locale is.  But since the return value can only be used "
@@ -972,7 +979,7 @@ msgstr ""
 "除了要查询当前区域，扩展模块不应去调用 :func:`setlocale`。但由于返回值只能用"
 "于恢复设置，所以也没什么用（也许只能用于确认是否为 ``C``）。"
 
-#: ../../library/locale.rst:587
+#: ../../library/locale.rst:592
 msgid ""
 "When Python code uses the :mod:`locale` module to change the locale, this "
 "also affects the embedding application.  If the embedding application "
@@ -986,11 +993,11 @@ msgstr ""
 "文件的内置模块表中删除 :mod:`_locale` 扩展模块（所有操作均是由它完成的），并"
 "确保 :mod:`_locale` 模块不能成为一个共享库。"
 
-#: ../../library/locale.rst:598
+#: ../../library/locale.rst:603
 msgid "Access to message catalogs"
 msgstr "访问消息目录"
 
-#: ../../library/locale.rst:606
+#: ../../library/locale.rst:611
 msgid ""
 "The locale module exposes the C library's gettext interface on systems that "
 "provide this interface.  It consists of the functions :func:`!gettext`, :"
@@ -1006,7 +1013,7 @@ msgstr ""
 "与 :mod:`gettext` 模块中的同名函数类似，但采用了 C 库二进制格式的消息目录，以"
 "及 C 库的搜索算法来查找消息目录。"
 
-#: ../../library/locale.rst:613
+#: ../../library/locale.rst:618
 msgid ""
 "Python applications should normally find no need to invoke these functions, "
 "and should use :mod:`gettext` instead.  A known exception to this rule are "
@@ -1020,14 +1027,10 @@ msgstr ""
 "或 :c:func:`dcgettext`。对于这些应用程序，可能有必要绑定文本域，以便库可以准"
 "确找到其消息目录。"
 
-#: ../../library/locale.rst:19 ../../library/locale.rst:467
+#: ../../library/locale.rst:19
 msgid "module"
 msgstr "module"
 
 #: ../../library/locale.rst:19
 msgid "_locale"
 msgstr "_locale"
-
-#: ../../library/locale.rst:467
-msgid "string"
-msgstr "string"
