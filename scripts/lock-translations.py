@@ -11,7 +11,7 @@ from transifex.api import transifex_api
 
 def printmsg(type, message):
     """Format message in case it is being run in GitHub Actions"""
-    if CI in os.environ:
+    if "CI" in os.environ:
         type = type.lower()
         print(f'::{type}::{message}')
     else:
