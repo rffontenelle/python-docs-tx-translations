@@ -139,6 +139,7 @@ jobs:
       - name: Generate POT files
         working-directory: cpython/Doc
         run: |
+          (cd locales; git rm -r pot;)
           sphinx-build -E -b gettext -D gettext_compact=0 -d build/.doctrees . locales/pot
 
         # See issue #15
@@ -150,6 +151,7 @@ jobs:
       - name: Generate Transifex configuration file (.tx/config)
         working-directory: cpython/Doc/locales
         run: |
+          rm .tx/config
           sphinx-intl create-txconfig
           sphinx-intl update-txconfig-resources --pot-dir pot --locale-dir . --transifex-organization-name python-doc --transifex-project-name ${{ env.TX_PROJECT }}
           sed -i '/^minimum_perc = 0$/s/0/1/' .tx/config
