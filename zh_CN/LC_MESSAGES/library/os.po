@@ -34,7 +34,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-03 14:14+0000\n"
+"POT-Creation-Date: 2023-11-10 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 01:10+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -4227,6 +4227,10 @@ msgid ""
 "has only 1-day resolution. See your operating system documentation for "
 "details."
 msgstr ""
+":attr:`st_atime`, :attr:`st_mtime`, :attr:`st_ctime` 和 :attr:`st_birthtime` "
+"等属性的确切含义和精度依赖于操作系统和文件系统。 例如，在使用 FAT32 文件系统"
+"的 Windows 系统上，:attr:`st_mtime` 的精度为 2 秒，而 :attr:`st_atime` 的精度"
+"只有 1 天。 请参阅你的操作系统文档了解详情。"
 
 #: ../../library/os.rst:3085
 msgid ""
@@ -4240,6 +4244,12 @@ msgid ""
 "`st_atime_ns`, :attr:`st_mtime_ns`, :attr:`st_ctime_ns` and :attr:"
 "`st_birthtime_ns`."
 msgstr ""
+"类似地，尽管 :attr:`st_atime_ns`, :attr:`st_mtime_ns`, :attr:`st_ctime_ns` "
+"和 :attr:`st_birthtime_ns` 始终以纳秒表示，但许多系统并不提供纳秒级精度。 在"
+"确实提供纳秒级精度的系统上，用于存储 :attr:`st_atime`, :attr:`st_mtime`, :"
+"attr:`st_ctime` 和 :attr:`st_birthtime` 的浮点数对象无法保留所有精度，因此不"
+"是完全准确的。 如果你需要准确的时间戳你应始终使用 :attr:`st_atime_ns`, :attr:"
+"`st_mtime_ns`, :attr:`st_ctime_ns` 和 :attr:`st_birthtime_ns`。"
 
 #: ../../library/os.rst:3095
 msgid ""
@@ -4321,6 +4331,10 @@ msgid ""
 "GetFileInformationByHandle`. See the :const:`!FILE_ATTRIBUTE_* <stat."
 "FILE_ATTRIBUTE_ARCHIVE>` constants in the :mod:`stat` module."
 msgstr ""
+"Windows 文件属性：由 :c:func:`!GetFileInformationByHandle` 返回的 "
+"``BY_HANDLE_FILE_INFORMATION`` 结构体的 ``dwFileAttributes`` 成员。 参见 :"
+"mod:`stat` 模块中的 :const:`!FILE_ATTRIBUTE_* <stat.FILE_ATTRIBUTE_ARCHIVE>` "
+"常量。"
 
 #: ../../library/os.rst:3157
 msgid ""
@@ -4329,6 +4343,10 @@ msgid ""
 "the type of reparse point. See the :const:`IO_REPARSE_TAG_* <stat."
 "IO_REPARSE_TAG_SYMLINK>` constants in the :mod:`stat` module."
 msgstr ""
+"当 :attr:`st_file_attributes` 存在 :const:`~stat."
+"FILE_ATTRIBUTE_REPARSE_POINT` 集合时，本字段将包含标识重解析点的类型的标签。 "
+"请参阅 :mod:`stat` 模块中的 :const:`IO_REPARSE_TAG_* <stat."
+"IO_REPARSE_TAG_SYMLINK>` 常量。"
 
 #: ../../library/os.rst:3162
 msgid ""
@@ -4336,6 +4354,8 @@ msgid ""
 "useful for extracting information from a :c:struct:`stat` structure. (On "
 "Windows, some items are filled with dummy values.)"
 msgstr ""
+"标准模块 :mod:`stat` 定义了一些可用于从 :c:struct:`stat` 结构体中提取信息的函"
+"数和常量。 （在 Windows 上，某些项填充了虚拟值。）"
 
 #: ../../library/os.rst:3166
 msgid ""
@@ -4348,6 +4368,12 @@ msgid ""
 "implementations. For compatibility with older Python versions, accessing :"
 "class:`stat_result` as a tuple always returns integers."
 msgstr ""
+"为了向下兼容，:class:`stat_result` 实例还可以作为至少包含 10 个整数的元组来访"
+"问以提供 :c:struct:`stat` 结构体中最重要（且可移植）的成员，其顺序为 :attr:"
+"`st_mode`, :attr:`st_ino`, :attr:`st_dev`, :attr:`st_nlink`, :attr:"
+"`st_uid`, :attr:`st_gid`, :attr:`st_size`, :attr:`st_atime`, :attr:"
+"`st_mtime`, :attr:`st_ctime`。 某些实现还可能在末尾添加更多条目。 为了与旧版 "
+"Python 兼容，以元组形式访问 :class:`stat_result` 将始终返回整数。"
 
 #: ../../library/os.rst:3175
 msgid ""
@@ -4386,6 +4412,9 @@ msgid ""
 "last metadata change time, for consistency with other platforms, but for now "
 "still contains creation time. Use :attr:`st_birthtime` for the creation time."
 msgstr ""
+"在 Windows 上，:attr:`st_ctime` 已被弃用。 最终，它将包含元数据的最后修改时"
+"间，以与其他平台保持一致，但目前仍包含创建时间。 请使用 :attr:`st_birthtime` "
+"来获取创建时间。"
 
 #: ../../library/os.rst:3203
 msgid ""
@@ -4393,16 +4422,20 @@ msgid ""
 "system. Previously it would not be above 64 bits, and larger file "
 "identifiers would be arbitrarily packed."
 msgstr ""
+"在 Windows 上，现在 :attr:`st_ino` 最多可为 128 比特位，具体取决于文件系统。 "
+"在之前它不会超过 64 比特位，更长的文件标识符会被强制缩减。"
 
 #: ../../library/os.rst:3208
 msgid ""
 "On Windows, :attr:`st_rdev` no longer returns a value. Previously it would "
 "contain the same as :attr:`st_dev`, which was incorrect."
 msgstr ""
+"在 Windows 上，:attr:`st_rdev` 将不再返回值。 在之前它将包含与 :attr:"
+"`st_dev` 相同的值，这是不正确的。"
 
 #: ../../library/os.rst:3212
 msgid "Added the :attr:`st_birthtime` member on Windows."
-msgstr ""
+msgstr "在 Windows 上增加了 :attr:`st_birthtime` 成员。"
 
 #: ../../library/os.rst:3218
 msgid ""
@@ -4413,6 +4446,11 @@ msgid ""
 "`f_bfree`, :attr:`f_bavail`, :attr:`f_files`, :attr:`f_ffree`, :attr:"
 "`f_favail`, :attr:`f_flag`, :attr:`f_namemax`, :attr:`f_fsid`."
 msgstr ""
+"在给定的路径上执行 :c:func:`!statvfs` 系统调用。 返回值是一个对象，其属性描述"
+"了所给路径上的文件系统，并且与 :c:struct:`statvfs` 结构体的成员相对应，即: :"
+"attr:`f_bsize`, :attr:`f_frsize`, :attr:`f_blocks`, :attr:`f_bfree`, :attr:"
+"`f_bavail`, :attr:`f_files`, :attr:`f_ffree`, :attr:`f_favail`, :attr:"
+"`f_flag`, :attr:`f_namemax`, :attr:`f_fsid`。"
 
 #: ../../library/os.rst:3225
 msgid ""
@@ -5355,6 +5393,13 @@ msgid ""
 "absolute or relative path. Relative paths must include at least one slash, "
 "even on Windows, as plain names will not be resolved."
 msgstr ""
+"在结尾位置包括 \"p\" 的变体形式 (:func:`execlp`, :func:`execlpe`, :func:"
+"`execvp` 和 :func:`execvpe`) 将使用 :envvar:`PATH` 环境变量来定位程序 "
+"*file*。 当环境被替换时 (使用某个 :func:`exec\\*e <execl>` 变体形式，将在下一"
+"段中讨论)，将使用新环境作为 :envvar:`PATH` 变量的来源。 其他的变体形式 :func:"
+"`execl`, :func:`execle`, :func:`execv` 和 :func:`execve` 将不使用 :envvar:"
+"`PATH` 变量来定位可执行程序；*path* 必须包含正确的绝对或相对路径。 相对路径必"
+"须包括至少一个斜杠，即使是在 Windows 上，因为简单名称将不会被解析。"
 
 #: ../../library/os.rst:3979
 msgid ""
@@ -5571,6 +5616,10 @@ msgid ""
 "child process when threads existed in the parent (such as ``malloc`` and "
 "``free``)."
 msgstr ""
+"在可以检测时，我们选择将此显示为警告，以便更好地告知开发人员 POSIX 平台明确指"
+"出不支持的设计问题。 在 POSIX 平台上即使在 *看起来* 可行的代码中，将线程与 :"
+"func:`os.fork` 混用也是不安全的。 当父进程中存在线程时 CPython 运行时本身总是"
+"会在子进程中执行不安全的 API 调用 (如 ``malloc`` 和 ``free``)。"
 
 #: ../../library/os.rst:4182
 msgid ""
@@ -5578,6 +5627,8 @@ msgid ""
 "typically found in glibc to date are among those already more likely to "
 "experience deadlocks running such code."
 msgstr ""
+"使用 macOS 的用户或使用 glibc 中可找到的典型实现以外的 libc 或 malloc 实现的"
+"用户在运行此类代码时更容易发生死锁现象。"
 
 #: ../../library/os.rst:4186
 msgid ""
@@ -5585,6 +5636,8 @@ msgid ""
 "discuss.python.org/t/33555>`_ for technical details of why we're surfacing "
 "this longstanding platform compatibility problem to developers."
 msgstr ""
+"请参阅 `有关 fork 与线程不兼容的讨论 <https://discuss.python.org/t/33555>`_ "
+"了解我们为何向开发者公开这个长期存在的平台不兼容性问题的技术细节。"
 
 #: ../../library/os.rst:4191 ../../library/os.rst:4433
 msgid ":ref:`Availability <availability>`: POSIX, not Emscripten, not WASI."
@@ -5614,6 +5667,8 @@ msgid ""
 "raises a :exc:`DeprecationWarning`. See the longer explanation on :func:`os."
 "fork`."
 msgstr ""
+"现在如果 Python 能够检测到你的进程有多个线程，此函数将引发 :exc:"
+"`DeprecationWarning`。 请参阅有关 :func:`os.fork` 的更详细解释。"
 
 #: ../../library/os.rst:4209
 msgid ""
@@ -5640,6 +5695,10 @@ msgid ""
 "be set to *sig*. The Windows version of :func:`kill` additionally takes "
 "process handles to be killed."
 msgstr ""
+"Windows: :const:`signal.CTRL_C_EVENT` 和 :const:`signal.CTRL_BREAK_EVENT` 信"
+"号是只能发送给共享同一个控制台的控制台进程的特殊信号，例如某些子进程。 任何其"
+"他的 *sig* 值都将导致进程被 TerminateProcess API 无条件的杀掉，且退出代码将被"
+"发给 *sig*。 Windows 版本的 :func:`kill` 还额外接受要被杀掉的进程句柄。"
 
 #: ../../library/os.rst:4233
 msgid "See also :func:`signal.pthread_kill`."
@@ -5679,6 +5738,8 @@ msgid ""
 "This descriptor can be used to perform process management without races and "
 "signals."
 msgstr ""
+"返回一个指向设置了 *flags* 的进程 *pid* 的文件描述符。 该描述符可用于执行无需"
+"竞争和信号的进程管理。"
 
 #: ../../library/os.rst:4269
 msgid "See the :manpage:`pidfd_open(2)` man page for more details."
@@ -5695,6 +5756,9 @@ msgid ""
 "attempt to wait on the file descriptor using :manpage:`waitid(2)` will "
 "immediately return the error :const:`~errno.EAGAIN` rather than blocking."
 msgstr ""
+"该旗标表示文件描述符将是非阻塞的。 如果文件描述符所引用的进程尚未终止，那么尝"
+"试使用 :manpage:`waitid(2)` 等待文件描述符将立即返回错误 :const:`~errno."
+"EAGAIN` 而不是阻塞。"
 
 #: ../../library/os.rst:4281
 msgid ":ref:`Availability <availability>`: Linux >= 5.10"
@@ -5780,7 +5844,7 @@ msgstr ""
 
 #: ../../library/os.rst:4337
 msgid "Wraps the :c:func:`!posix_spawn` C library API for use from Python."
-msgstr ""
+msgstr "包装 :c:func:`!posix_spawn` C 库 API 以供 Python 使用。"
 
 #: ../../library/os.rst:4339
 msgid ""
@@ -5849,6 +5913,10 @@ msgid ""
 "posix_spawn_file_actions_adddup2` API calls used to prepare for the :c:func:"
 "`!posix_spawn` call itself."
 msgstr ""
+"这些元组对应于 C 库 :c:func:`!posix_spawn_file_actions_addopen`, :c:func:`!"
+"posix_spawn_file_actions_addclose` 和 :c:func:`!"
+"posix_spawn_file_actions_adddup2` API 调用，用于为 :c:func:`!posix_spawn` 调"
+"用本身做准备。"
 
 #: ../../library/os.rst:4378
 msgid ""
@@ -5858,6 +5926,9 @@ msgid ""
 "set, the child will inherit the parent's process group ID. This argument "
 "corresponds to the C library :c:macro:`!POSIX_SPAWN_SETPGROUP` flag."
 msgstr ""
+"*setpgroup* 参数将把子进程的进程组设置为指定值。 如果指定值为 0，则子进程的进"
+"程组 ID 将与其进程 ID 相同。 如果未设置 *setpgroup* 的值，则子进程将继承父进"
+"程的进程组 ID。 本参数对应于 C 库的 :c:macro:`!POSIX_SPAWN_SETPGROUP` 旗标。"
 
 #: ../../library/os.rst:4384
 msgid ""
@@ -5869,6 +5940,11 @@ msgid ""
 "setting of the effective UID and GID. This argument corresponds to the C "
 "library :c:macro:`!POSIX_SPAWN_RESETIDS` flag."
 msgstr ""
+"如果 *resetids* 参数为 ``True`` 则它会将子进程的有效 UID 和 GID 重置为父进程"
+"的实际 UID 和 GID。 如果该参数为 ``False``，则子进程会保留父进程的有效 UID "
+"和 GID。 无论哪种情况，如果在可执行文件上启用了设置用户 ID 和设置组 ID 权限"
+"位，它们的效果将覆盖有效 UID 和 GID 的设置。 本参数对应于 C 库的 :c:macro:`!"
+"POSIX_SPAWN_RESETIDS` 旗标。"
 
 #: ../../library/os.rst:4392
 msgid ""
@@ -5877,6 +5953,9 @@ msgid ""
 "macro:`!POSIX_SPAWN_SETSID_NP` flag. Otherwise, :exc:`NotImplementedError` "
 "is raised."
 msgstr ""
+"如果 *setsid* 参数为 ``True``，它将为 ``posix_spawn`` 新建一个会话 ID。 "
+"*setsid* 需要 :c:macro:`!POSIX_SPAWN_SETSID` 或 :c:macro:`!"
+"POSIX_SPAWN_SETSID_NP` 旗标。 否则，将会引发 :exc:`NotImplementedError`。"
 
 #: ../../library/os.rst:4397
 msgid ""
@@ -5885,6 +5964,9 @@ msgid ""
 "parent's signal mask. This argument corresponds to the C library :c:macro:`!"
 "POSIX_SPAWN_SETSIGMASK` flag."
 msgstr ""
+"*setsigmask* 参数会将信号掩码设置为指定的信号集合。 如果未使用该参数，则子进"
+"程将继承父进程的信号掩码。 本参数对应于 C 库的 :c:macro:`!"
+"POSIX_SPAWN_SETSIGMASK` 旗标。"
 
 #: ../../library/os.rst:4402
 msgid ""
@@ -5892,6 +5974,8 @@ msgid ""
 "specified. This argument corresponds to the C library :c:macro:`!"
 "POSIX_SPAWN_SETSIGDEF` flag."
 msgstr ""
+"*sigdef* 参数会将集合中所有信号的操作全部重置为默认。 本参数对应于 C 库的 :c:"
+"macro:`!POSIX_SPAWN_SETSIGDEF` 旗标。"
 
 #: ../../library/os.rst:4406
 msgid ""
@@ -5902,6 +5986,10 @@ msgid ""
 "C library :c:macro:`!POSIX_SPAWN_SETSCHEDPARAM` and :c:macro:`!"
 "POSIX_SPAWN_SETSCHEDULER` flags."
 msgstr ""
+"*scheduler* 参数必须是一个元组，其中包含（可选的）调度器策略以及携带了调度器"
+"参数的 :class:`sched_param` 实例。 在调度器策略所在位置的值为 ``None`` 表示未"
+"提供该值。 本参数是 C 库的 :c:macro:`!POSIX_SPAWN_SETSCHEDPARAM` 和 :c:macro:"
+"`!POSIX_SPAWN_SETSCHEDULER` 旗标的组合。"
 
 #: ../../library/os.rst:4413 ../../library/os.rst:4429
 msgid ""
@@ -5913,7 +6001,7 @@ msgstr ""
 
 #: ../../library/os.rst:4423
 msgid "Wraps the :c:func:`!posix_spawnp` C library API for use from Python."
-msgstr ""
+msgstr "包装 :c:func:`!posix_spawnp` C 库 API 以供 Python 使用。"
 
 #: ../../library/os.rst:4425
 msgid ""
@@ -6146,6 +6234,9 @@ msgid ""
 "`start` command from the interactive command shell: the file is opened with "
 "whatever application (if any) its extension is associated."
 msgstr ""
+"当未指定 *operation* 时，这类似于在 Windows 资源管理器中双击文件，或在交互式"
+"命令行中将文件名作为 :program:`start` 命令的参数：通过扩展名所关联的应用程序"
+"（如果有的话）来打开文件。"
 
 #: ../../library/os.rst:4589
 msgid ""
@@ -6154,6 +6245,9 @@ msgid ""
 "Microsoft are ``'open'``, ``'print'`` and  ``'edit'`` (to be used on files) "
 "as well as ``'explore'`` and ``'find'`` (to be used on directories)."
 msgstr ""
+"当指定其他 *operation* 时，它必须是一个对该文件执行操作的“命令动词”。 "
+"Microsoft 文档中记录的常用动词有 ``'open'``, ``'print'`` 和  ``'edit'`` (用于"
+"文件) 以及 ``'explore'`` 和 ``'find'`` (用于目录)。"
 
 #: ../../library/os.rst:4594
 msgid ""
@@ -6179,6 +6273,8 @@ msgid ""
 "effect will depend on the application being launched. Values are integers as "
 "supported by the Win32 :c:func:`!ShellExecute` function."
 msgstr ""
+"使用 *show_cmd* 覆盖默认的窗口样式。 这是否生效则取决于被启动的应用程序。 其"
+"值应为 Win32 :c:func:`!ShellExecute` 函数所支持的整数形式。"
 
 #: ../../library/os.rst:4606
 msgid ""
@@ -6202,6 +6298,9 @@ msgid ""
 "function is not resolved until this function is first called.  If the "
 "function cannot be resolved, :exc:`NotImplementedError` will be raised."
 msgstr ""
+"为了减少解释器的启动开销，Win32 :c:func:`!ShellExecute` 函数将不会被解析直到"
+"该函数首次被调用。 如果该函数无法被解析，则将引发 :exc:`NotImplementedError` "
+"异常。"
 
 #: ../../library/os.rst:4618
 msgid ""
@@ -6402,6 +6501,7 @@ msgid ""
 "The return value is an object representing the data contained in the :c:type:"
 "`siginfo_t` structure with the following attributes:"
 msgstr ""
+"返回值是一个代表 :c:type:`siginfo_t` 结构体所包含数据的对象，具有以下属性:"
 
 #: ../../library/os.rst:4726
 msgid ":attr:`!si_pid` (process ID)"
@@ -6413,7 +6513,7 @@ msgstr ":attr:`!si_uid` (子进程的实际用户 ID)"
 
 #: ../../library/os.rst:4728
 msgid ":attr:`!si_signo` (always :const:`~signal.SIGCHLD`)"
-msgstr ""
+msgstr ":attr:`!si_signo` (始终为 :const:`~signal.SIGCHLD`)"
 
 #: ../../library/os.rst:4729
 msgid ""
@@ -6716,6 +6816,8 @@ msgid ""
 "`~signal.SIGCONT` (if the process has been continued from a job control "
 "stop), otherwise return ``False``."
 msgstr ""
+"如果一个已停止的子进程通过传送 :const:`~signal.SIGCONT` 获得恢复（如果该进程"
+"是从任务控制停止后再继续的）则返回 ``True``，否则返回 ``False``。"
 
 #: ../../library/os.rst:4969
 msgid "See :data:`WCONTINUED` option."
@@ -6914,13 +7016,13 @@ msgstr ""
 
 #: ../../library/os.rst:5144
 msgid "Return the set of CPUs the process with PID *pid* is restricted to."
-msgstr ""
+msgstr "返回 PID 为 *pid* 的进程被限制到的那一组 CPU。"
 
 #: ../../library/os.rst:5146
 msgid ""
 "If *pid* is zero, return the set of CPUs the calling thread of the current "
 "process is restricted to."
-msgstr ""
+msgstr "如果 *pid* 为零，则返回当前进程的调用方线程被限制到的那一组 CPU。"
 
 #: ../../library/os.rst:5153
 msgid "Miscellaneous System Information"
@@ -6972,7 +7074,7 @@ msgstr ""
 msgid ""
 "Return the number of logical CPUs in the system. Returns ``None`` if "
 "undetermined."
-msgstr ""
+msgstr "返回系统的逻辑 CPU 数量。 不确定则返回 ``None``。"
 
 #: ../../library/os.rst:5191
 msgid ""
@@ -6980,6 +7082,8 @@ msgid ""
 "process can use. ``len(os.sched_getaffinity(0))`` gets the number of logical "
 "CPUs the calling thread of the current process is restricted to"
 msgstr ""
+"此数量并不等于当前进程可使用的逻辑 CPU 数量。 ``len(os."
+"sched_getaffinity(0))`` 可获取当前进程的调用方线程被限制到的逻辑 CPU 数量"
 
 #: ../../library/os.rst:5200
 msgid ""
@@ -7158,6 +7262,8 @@ msgid ""
 "following values ORed together: :py:const:`os.GRND_RANDOM` and :py:data:"
 "`GRND_NONBLOCK`."
 msgstr ""
+"flags 参数是一个位掩码，它可以包含零个或多个下列值的或运算结果: :py:const:"
+"`os.GRND_RANDOM` 和 :py:data:`GRND_NONBLOCK`。"
 
 #: ../../library/os.rst:5343
 msgid ""
