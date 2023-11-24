@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-17 19:15+0000\n"
+"POT-Creation-Date: 2023-11-24 18:59+0000\n"
 "PO-Revision-Date: 2022-11-05 17:21+0000\n"
 "Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2023\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -543,6 +543,8 @@ msgid ""
 "Multiple ``Py_mod_create`` slots may not be specified in one module "
 "definition."
 msgstr ""
+"No se pueden especificar varias ranuras ``Py_mod_create`` en una definición "
+"de módulo."
 
 #: ../../c-api/module.rst:354
 msgid ""
@@ -552,6 +554,12 @@ msgid ""
 "to their place in the module hierarchy and be imported under different names "
 "through symlinks, all while sharing a single module definition."
 msgstr ""
+"Si no se especifica ``Py_mod_create``, la maquinaria de importación creará "
+"un objeto módulo normal utilizando :c:func:`PyModule_New`. El nombre se toma "
+"de *spec*, no de la definición, para permitir que los módulos de extensión "
+"se ajusten dinámicamente a su lugar en la jerarquía de módulos y se importen "
+"con diferentes nombres a través de enlaces simbólicos, todo ello "
+"compartiendo una única definición de módulo."
 
 #: ../../c-api/module.rst:360
 msgid ""
@@ -562,6 +570,12 @@ msgid ""
 "``m_clear``, ``m_free``; non-zero ``m_size``; or slots other than "
 "``Py_mod_create``."
 msgstr ""
+"No es necesario que el objeto devuelto sea una instancia de :c:type:"
+"`PyModule_Type`. Se puede utilizar cualquier tipo, siempre y cuando admita "
+"establecer y obtener atributos relacionados con la importación. Sin embargo, "
+"sólo pueden devolverse instancias de ``PyModule_Type`` si el ``PyModuleDef`` "
+"no tiene``NULL`` ``m_traverse`` , ``m_clear``, ``m_free``; ``m_size`` no "
+"nulo ; o ranuras distintas de ``Py_mod_create``."
 
 #: ../../c-api/module.rst:369
 msgid ""
@@ -570,20 +584,25 @@ msgid ""
 "function adds classes and constants to the module. The signature of the "
 "function is:"
 msgstr ""
+"Especifica una función que se llama para *ejecutar* el módulo. Esto equivale "
+"a ejecutar el código de un módulo de Python: normalmente, esta función añade "
+"clases y constantes al módulo. La firma de la función es:"
 
 #: ../../c-api/module.rst:376
 msgid ""
 "If multiple ``Py_mod_exec`` slots are specified, they are processed in the "
 "order they appear in the *m_slots* array."
 msgstr ""
+"Si se especifican varias ranuras ``Py_mod_exec``, se procesan en el orden en "
+"que aparecen en la matriz *m_slots*."
 
 #: ../../c-api/module.rst:379
 msgid "See :PEP:`489` for more details on multi-phase initialization."
-msgstr ""
+msgstr "Ver :PEP:`489` para más detalles sobre la inicialización multifase."
 
 #: ../../c-api/module.rst:382
 msgid "Low-level module creation functions"
-msgstr ""
+msgstr "Funciones de creación de módulos de bajo nivel"
 
 #: ../../c-api/module.rst:384
 msgid ""
@@ -592,6 +611,11 @@ msgid ""
 "objects dynamically. Note that both ``PyModule_FromDefAndSpec`` and "
 "``PyModule_ExecDef`` must be called to fully initialize a module."
 msgstr ""
+"Se llaman las siguientes funciones bajo la capucha cuando se utiliza la "
+"inicialización multifase. Se pueden utilizar directamente, por ejemplo, al "
+"crear objetos de módulo de forma dinámica. Tener en cuenta que tanto "
+"``PyModule_FromDefAndSpec`` y ``PyModule_ExecDef`` se deben llamar para "
+"inicializar completamente un módulo."
 
 #: ../../c-api/module.rst:391
 msgid ""
@@ -599,6 +623,9 @@ msgid ""
 "*spec*.  This behaves like :c:func:`PyModule_FromDefAndSpec2` with "
 "*module_api_version* set to :const:`PYTHON_API_VERSION`."
 msgstr ""
+"Crea un nuevo objeto módulo, dada la definición en *def* y el ModuleSpec "
+"*spec*.  Esto se comporta como :c:func:`PyModule_FromDefAndSpec2` con "
+"*module_api_version* establecido a :const:`PYTHON_API_VERSION`."
 
 #: ../../c-api/module.rst:399
 msgid ""
@@ -607,16 +634,24 @@ msgid ""
 "not match the version of the running interpreter, a :exc:`RuntimeWarning` is "
 "emitted."
 msgstr ""
+"Crea un nuevo objeto módulo, dada la definición en *def* y el ModuleSpec "
+"*spec*, asumiendo la versión de la API *module_api_version*. Si esa versión "
+"no coincide con la versión del intérprete en ejecución, se emite un :exc:"
+"`RuntimeWarning`."
 
 #: ../../c-api/module.rst:406
 msgid ""
 "Most uses of this function should be using :c:func:`PyModule_FromDefAndSpec` "
 "instead; only use this if you are sure you need it."
 msgstr ""
+"La mayoría de los usos de esta función deberían utilizar :c:func:"
+"`PyModule_FromDefAndSpec` en su lugar; utilizarse sólo si se está seguro de "
+"que se necesita."
 
 #: ../../c-api/module.rst:413
 msgid "Process any execution slots (:c:data:`Py_mod_exec`) given in *def*."
 msgstr ""
+"Procesa cualquier ranura de ejecución (:c:data:`Py_mod_exec`) dada en *def*."
 
 #: ../../c-api/module.rst:419
 msgid ""
@@ -624,6 +659,9 @@ msgid ""
 "automatically when creating a module from ``PyModuleDef``, using either "
 "``PyModule_Create`` or ``PyModule_FromDefAndSpec``."
 msgstr ""
+"Establece el docstring para *module* en *docstring*. Esta función se ejecuta "
+"automáticamente al crear un módulo a partir de ``PyModuleDef``, utilizando "
+"``PyModule_Create`` o ``PyModule_FromDefAndSpec``."
 
 #: ../../c-api/module.rst:428
 msgid ""
@@ -636,10 +674,18 @@ msgid ""
 "``PyModuleDef``, using either ``PyModule_Create`` or "
 "``PyModule_FromDefAndSpec``."
 msgstr ""
+"Añadir las funciones del array *functions* terminado en ``NULL`` a *module*. "
+"Consultar la documentación de :c:type:`PyMethodDef` para obtener más "
+"información sobre las entradas individuales (debido a la falta de un espacio "
+"de nombres de módulo compartido, las \"funciones\" de nivel de módulo "
+"implementadas en C suelen recibir el módulo como primer parámetro, lo que "
+"las hace similares a los métodos de instancia de las clases de Python). Esta "
+"función se llama automáticamente cuando se crea un módulo desde "
+"``PyModuleDef``, usando ``PyModule_Create`` o ``PyModule_FromDefAndSpec``."
 
 #: ../../c-api/module.rst:440
 msgid "Support functions"
-msgstr ""
+msgstr "Funciones de apoyo"
 
 #: ../../c-api/module.rst:442
 msgid ""
@@ -648,45 +694,61 @@ msgid ""
 "initialization), can use the following functions to help initialize the "
 "module state:"
 msgstr ""
+"La función de inicialización del módulo (si se utiliza la inicialización "
+"monofásica) o una función llamada desde una ranura de ejecución del módulo "
+"(si se utiliza la inicialización multifásica), puede utilizar las siguientes "
+"funciones para ayudar a inicializar el estado del módulo:"
 
 #: ../../c-api/module.rst:449
 msgid ""
 "Add an object to *module* as *name*.  This is a convenience function which "
 "can be used from the module's initialization function."
 msgstr ""
+"Añade un objeto a *module* como *name*.  Esta es una función de conveniencia "
+"que se puede utilizar desde la función de inicialización del módulo."
 
 #: ../../c-api/module.rst:452
 msgid ""
 "On success, return ``0``. On error, raise an exception and return ``-1``."
 msgstr ""
+"En caso de éxito, devuelve ``0``. En caso de error, lanza una excepción y "
+"devuelve ``-1``."
 
 #: ../../c-api/module.rst:454
 msgid ""
 "Return ``NULL`` if *value* is ``NULL``. It must be called with an exception "
 "raised in this case."
 msgstr ""
+"Devuelve ``NULL`` si *value* es ``NULL``. En este caso debe llamarse con una "
+"excepción."
 
 #: ../../c-api/module.rst:457 ../../c-api/module.rst:506
 msgid "Example usage::"
-msgstr ""
+msgstr "Ejemplo de uso::"
 
 #: ../../c-api/module.rst:471 ../../c-api/module.rst:524
 msgid ""
 "The example can also be written without checking explicitly if *obj* is "
 "``NULL``::"
 msgstr ""
+"También se puede escribir el ejemplo sin comprobar explícitamente si *obj* "
+"es ``NULL``::"
 
 #: ../../c-api/module.rst:483 ../../c-api/module.rst:540
 msgid ""
 "Note that ``Py_XDECREF()`` should be used instead of ``Py_DECREF()`` in this "
 "case, since *obj* can be ``NULL``."
 msgstr ""
+"Tener en cuenta que en este caso debe usarse ``Py_XDECREF()`` en lugar de "
+"``Py_DECREF()``, ya que *obj* puede ser ``NULL``."
 
 #: ../../c-api/module.rst:491
 msgid ""
 "Similar to :c:func:`PyModule_AddObjectRef`, but steals a reference to "
 "*value* on success (if it returns ``0``)."
 msgstr ""
+"Similar a :c:func:`PyModule_AddObjectRef`, pero roba una referencia a "
+"*value* en caso de éxito (si devuelve ``0``)."
 
 #: ../../c-api/module.rst:494
 msgid ""
@@ -694,18 +756,25 @@ msgid ""
 "easy to introduce reference leaks by misusing the :c:func:"
 "`PyModule_AddObject` function."
 msgstr ""
+"Se recomienda utilizar la nueva función :c:func:`PyModule_AddObjectRef`, ya "
+"que es fácil introducir fugas de referencia utilizando incorrectamente la "
+"función :c:func:`PyModule_AddObject`."
 
 #: ../../c-api/module.rst:500
 msgid ""
 "Unlike other functions that steal references, ``PyModule_AddObject()`` only "
 "releases the reference to *value* **on success**."
 msgstr ""
+"A diferencia de otras funciones que roban referencias, "
+"``PyModule_AddObject()`` sólo libera la referencia a *value* **on success**."
 
 #: ../../c-api/module.rst:503
 msgid ""
 "This means that its return value must be checked, and calling code must :c:"
 "func:`Py_DECREF` *value* manually on error."
 msgstr ""
+"Esto significa que su valor de retorno debe ser comprobado, y el código de "
+"llamada debe :c:func:`Py_DECREF` *value* manualmente en caso de error."
 
 #: ../../c-api/module.rst:546
 msgid ""
@@ -713,6 +782,9 @@ msgid ""
 "can be used from the module's initialization function. Return ``-1`` on "
 "error, ``0`` on success."
 msgstr ""
+"Añade una constante entera a *module* como *name*.  Esta función puede "
+"usarse desde la función de inicialización del módulo. Devuelve ``-1`` en "
+"caso de error, ``0`` en caso de éxito."
 
 #: ../../c-api/module.rst:553
 msgid ""
@@ -720,6 +792,10 @@ msgid ""
 "be used from the module's initialization function.  The string *value* must "
 "be ``NULL``-terminated.  Return ``-1`` on error, ``0`` on success."
 msgstr ""
+"Añade una constante de cadena a *module* como *name*.  Esta función puede "
+"utilizarse desde la función de inicialización del módulo.  La cadena *value* "
+"debe ser ``NULL``-terminated.  Return ``-1`` en caso de error, ``0`` en caso "
+"de éxito."
 
 #: ../../c-api/module.rst:560
 msgid ""
@@ -728,10 +804,14 @@ msgid ""
 "constant *AF_INET* with the value of *AF_INET* to *module*. Return ``-1`` on "
 "error, ``0`` on success."
 msgstr ""
+"Añade una constante int a *module*. El nombre y el valor se toman de "
+"*macro*. Por ejemplo ``PyModule_AddIntMacro(module, AF_INET)`` añade la "
+"constante int *AF_INET* con el valor *AF_INET* a *module*. Devuelve ``-1`` "
+"en caso de error, ``0`` en caso de éxito."
 
 #: ../../c-api/module.rst:568
 msgid "Add a string constant to *module*."
-msgstr ""
+msgstr "Añadir una constante de cadena a *module*."
 
 #: ../../c-api/module.rst:572
 msgid ""
@@ -740,10 +820,14 @@ msgid ""
 "the last component of :c:member:`~PyTypeObject.tp_name` after dot. Return "
 "``-1`` on error, ``0`` on success."
 msgstr ""
+"Añade un objeto tipo a *module*. El objeto tipo se finaliza llamando "
+"internamente a :c:func:`PyType_Ready`. El nombre del objeto tipo se toma del "
+"último componente de :c:member:`~PyTypeObject.tp_name` después del punto. "
+"Devuelve ``-1`` en caso de error, ``0`` en caso de éxito."
 
 #: ../../c-api/module.rst:582
 msgid "Module lookup"
-msgstr ""
+msgstr "Búsqueda de módulos"
 
 #: ../../c-api/module.rst:584
 msgid ""
@@ -751,6 +835,9 @@ msgid ""
 "in the context of the current interpreter. This allows the module object to "
 "be retrieved later with only a reference to the module definition."
 msgstr ""
+"La inicialización monofásica crea módulos singleton que pueden buscarse en "
+"el contexto del intérprete actual. Esto permite recuperar posteriormente el "
+"objeto módulo con sólo una referencia a la definición del módulo."
 
 #: ../../c-api/module.rst:588
 msgid ""
@@ -758,6 +845,9 @@ msgid ""
 "initialization, since multiple such modules can be created from a single "
 "definition."
 msgstr ""
+"Estas funciones no funcionarán en módulos creados mediante inicialización "
+"multifase, ya que pueden crearse varios módulos de este tipo a partir de una "
+"única definición."
 
 #: ../../c-api/module.rst:593
 msgid ""
@@ -767,6 +857,11 @@ msgid ""
 "case the corresponding module object is not found or has not been attached "
 "to the interpreter state yet, it returns ``NULL``."
 msgstr ""
+"Devuelve el objeto módulo que se creó a partir de *def* para el intérprete "
+"actual. Este método requiere que el objeto módulo haya sido adjuntado al "
+"estado del intérprete con :c:func:`PyState_AddModule` de antemano. En caso "
+"de que no se encuentre el objeto módulo correspondiente o aún no se haya "
+"adjuntado al estado del intérprete, devuelve ``NULL``."
 
 #: ../../c-api/module.rst:600
 msgid ""
@@ -774,10 +869,14 @@ msgid ""
 "This allows the module object to be accessible via :c:func:"
 "`PyState_FindModule`."
 msgstr ""
+"Adjunta el objeto módulo pasado a la función al estado del intérprete. Esto "
+"permite que el objeto de módulo sea accesible a través de :c:func:"
+"`PyState_FindModule`."
 
 #: ../../c-api/module.rst:603
 msgid "Only effective on modules created using single-phase initialization."
 msgstr ""
+"Sólo es efectivo en módulos creados mediante inicialización monofásica."
 
 #: ../../c-api/module.rst:605
 msgid ""
@@ -789,6 +888,14 @@ msgid ""
 "directly, or by referring to its implementation for details of the required "
 "state updates)."
 msgstr ""
+"Python llama a ``PyState_AddModule`` automáticamente después de importar un "
+"módulo, por lo que es innecesario (pero inofensivo) llamarlo desde el código "
+"de inicialización del módulo. Sólo es necesaria una llamada explícita si el "
+"propio código de inicialización del módulo llama posteriormente a "
+"``PyState_FindModule``. La función está pensada principalmente para "
+"implementar mecanismos de importación alternativos (ya sea llamándola "
+"directamente o remitiéndose a su implementación para obtener detalles de las "
+"actualizaciones de estado necesarias)."
 
 #: ../../c-api/module.rst:613 ../../c-api/module.rst:624
 msgid "The caller must hold the GIL."
@@ -796,10 +903,12 @@ msgstr "Caller debe mantener el GIL."
 
 #: ../../c-api/module.rst:615
 msgid "Return 0 on success or -1 on failure."
-msgstr ""
+msgstr "Devuelve 0 en caso de éxito o -1 en caso de fallo."
 
 #: ../../c-api/module.rst:621
 msgid ""
 "Removes the module object created from *def* from the interpreter state. "
 "Return 0 on success or -1 on failure."
 msgstr ""
+"Elimina el objeto módulo creado a partir de *def* del estado del intérprete. "
+"Devuelve 0 en caso de éxito o -1 en caso de fallo."
