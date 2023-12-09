@@ -7,7 +7,6 @@
 # 8af080f2e6702c64bedd01873aed27e8_25aec74 <fd99d14239138a1f987c22e7736dde81_777475>, 2020
 # 1lin24 <1lin24@sina.com>, 2020
 # ppcfish <ppcfish@gmail.com>, 2020
-# 伟 裴 <sky_wander@outlook.com>, 2020
 # 高乐喆 <gaolezhe@outlook.com>, 2023
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 # Freesand Leo <yuqinju@163.com>, 2023
@@ -30,7 +29,7 @@ msgstr ""
 
 #: ../../c-api/unicode.rst:6
 msgid "Unicode Objects and Codecs"
-msgstr "Unicode对象和编码解码器"
+msgstr "Unicode对象和编解码器"
 
 #: ../../c-api/unicode.rst:12
 msgid "Unicode Objects"
@@ -1393,7 +1392,7 @@ msgid ""
 "Create a Unicode object by decoding *size* bytes of the UTF-8 encoded string "
 "*s*. Return ``NULL`` if an exception was raised by the codec."
 msgstr ""
-"通过解码 UTF-8 编码的字符串 *s* 的 *size* 个字节创建一个 Unicode 对象。 如果"
+"通过解码 UTF-8 编码的字节串 *s* 的 *size* 个字节创建一个 Unicode 对象。 如果"
 "编解码器引发了异常则返回 ``NULL``。"
 
 #: ../../c-api/unicode.rst:1082
@@ -1496,7 +1495,7 @@ msgid ""
 "``-1`` or ``1``, any byte order mark is copied to the output."
 msgstr ""
 "如果 ``*byteorder`` 为零，且输入数据的前四个字节为字节序标记 (BOM)，则解码器"
-"将切换为该字节序并且 BOM 将不会被拷贝到结果 Unicode 字节串中。 如果 "
+"将切换为该字节序并且 BOM 将不会被拷贝到结果 Unicode 字符串中。 如果 "
 "``*byteorder`` 为 ``-1`` 或 ``1``，则字节序标记会被拷贝到输出中。"
 
 #: ../../c-api/unicode.rst:1163 ../../c-api/unicode.rst:1237
@@ -1962,7 +1961,7 @@ msgstr ""
 
 #: ../../c-api/unicode.rst:1535
 msgid "MBCS codecs for Windows"
-msgstr "Windows 下的 MBCS 编解码器"
+msgstr "Windows 中的 MBCS 编解码器"
 
 #: ../../c-api/unicode.rst:1537
 msgid ""
@@ -1980,6 +1979,8 @@ msgid ""
 "Create a Unicode object by decoding *size* bytes of the MBCS encoded string "
 "*s*. Return ``NULL`` if an exception was raised by the codec."
 msgstr ""
+"通过解码 MBCS 编码的字节串 *s* 的 *size* 个字节创建一个 Unicode 对象。 如果编"
+"解码器引发了异常则返回 ``NULL``。"
 
 #: ../../c-api/unicode.rst:1551
 msgid ""
@@ -1988,6 +1989,9 @@ msgid ""
 "decode trailing lead byte and the number of bytes that have been decoded "
 "will be stored in *consumed*."
 msgstr ""
+"如果 *consumed* 为 ``NULL``，则行为类似于 :c:func:`PyUnicode_DecodeMBCS`。 如"
+"果 *consumed* 不为 ``NULL``，则 :c:func:`PyUnicode_DecodeMBCSStateful` 将不会"
+"解码末尾的不完整字节并且已被解码的字节数将存储在 *consumed* 中。"
 
 #: ../../c-api/unicode.rst:1559
 msgid ""
@@ -1995,6 +1999,8 @@ msgid ""
 "object.  Error handling is \"strict\".  Return ``NULL`` if an exception was "
 "raised by the codec."
 msgstr ""
+"使用 MBCS 编码 Unicode 对象并将结果作为 Python 字节串对象返回。 错误处理方式"
+"为 \"strict\"。 如果编解码器引发了异常则将返回 ``NULL``。"
 
 #: ../../c-api/unicode.rst:1566
 msgid ""
@@ -2019,7 +2025,7 @@ msgstr ""
 
 #: ../../c-api/unicode.rst:1586
 msgid "Methods & Slots"
-msgstr ""
+msgstr "方法和槽位"
 
 #: ../../c-api/unicode.rst:1592
 msgid "Methods and Slot Functions"
@@ -2031,14 +2037,16 @@ msgid ""
 "input (we refer to them as strings in the descriptions) and return Unicode "
 "objects or integers as appropriate."
 msgstr ""
+"以下 API 可以处理输入的 Unicode 对象和字符串（在描述中我们称其为字符串）并返"
+"回适当的 Unicode 或整数值。"
 
 #: ../../c-api/unicode.rst:1598
 msgid "They all return ``NULL`` or ``-1`` if an exception occurs."
-msgstr ""
+msgstr "如果发生异常它们都将返回 ``NULL`` 或 ``-1``。"
 
 #: ../../c-api/unicode.rst:1603
 msgid "Concat two strings giving a new Unicode string."
-msgstr ""
+msgstr "拼接两个字符串得到一个新的 Unicode 字符串。"
 
 #: ../../c-api/unicode.rst:1608
 msgid ""
@@ -2048,6 +2056,9 @@ msgid ""
 "negative, no limit is set.  Separators are not included in the resulting "
 "list."
 msgstr ""
+"拆分一个字符串得到一个 Unicode 字符串的列表。 如果 *sep* 为 ``NULL``，则将根"
+"据空格来拆分所有子字符串。 否则，将根据指定的分隔符来拆分。 最多拆分数为 "
+"*maxsplit*。 如为负值，则没有限制。 分隔符不包括在结果列表中。"
 
 #: ../../c-api/unicode.rst:1616
 msgid ""
@@ -2060,7 +2071,7 @@ msgstr ""
 msgid ""
 "Join a sequence of strings using the given *separator* and return the "
 "resulting Unicode string."
-msgstr ""
+msgstr "使用给定的 *separator* 合并一个字符串列表并返回结果 Unicode 字符串。"
 
 #: ../../c-api/unicode.rst:1630
 msgid ""
@@ -2068,6 +2079,9 @@ msgid ""
 "(*direction* == ``-1`` means to do a prefix match, *direction* == ``1`` a "
 "suffix match), ``0`` otherwise. Return ``-1`` if an error occurred."
 msgstr ""
+"如果 *substr* 在给定的端点 (*direction* == ``-1`` 表示前缀匹配，*direction* "
+"== ``1`` 表示后缀匹配) 与 ``str[start:end]`` 相匹配则返回 ``1``，否则返回 "
+"``0``。 如果发生错误则返回 ``-1``。"
 
 #: ../../c-api/unicode.rst:1638
 msgid ""
@@ -2077,6 +2091,10 @@ msgid ""
 "match; a value of ``-1`` indicates that no match was found, and ``-2`` "
 "indicates that an error occurred and an exception has been set."
 msgstr ""
+"返回使用给定的 *direction* (*direction* == ``1`` 表示前向搜索，*direction* "
+"== ``-1`` 表示后向搜索) 时 *substr* 在 ``str[start:end]`` 中首次出现的位置。 "
+"返回值为首个匹配的索引号；值为 ``-1`` 表示未找到匹配，``-2`` 则表示发生错误并"
+"设置了异常。"
 
 #: ../../c-api/unicode.rst:1648
 msgid ""
@@ -2086,16 +2104,22 @@ msgid ""
 "the first match; a value of ``-1`` indicates that no match was found, and "
 "``-2`` indicates that an error occurred and an exception has been set."
 msgstr ""
+"返回使用给定的 *direction* (*direction* == ``1`` 表示前向搜索，*direction* "
+"== ``-1`` 表示后向搜索) 时字符 *ch* 在 ``str[start:end]`` 中首次出现的位置。 "
+"返回值为首个匹配的索引号；值为 ``-1`` 表示未找到匹配，``-2`` 则表示发生错误并"
+"设置了异常。"
 
 #: ../../c-api/unicode.rst:1656
 msgid "*start* and *end* are now adjusted to behave like ``str[start:end]``."
-msgstr ""
+msgstr "现在 *start* 和 *end* 被调整为与 ``str[start:end]`` 类似的行为。"
 
 #: ../../c-api/unicode.rst:1663
 msgid ""
 "Return the number of non-overlapping occurrences of *substr* in ``str[start:"
 "end]``.  Return ``-1`` if an error occurred."
 msgstr ""
+"返回 *substr* 在 ``str[start:end]`` 中不重叠出现的次数。 如果发生错误则返回 "
+"``-1``。"
 
 #: ../../c-api/unicode.rst:1670
 msgid ""
@@ -2103,18 +2127,22 @@ msgid ""
 "and return the resulting Unicode object. *maxcount* == ``-1`` means replace "
 "all occurrences."
 msgstr ""
+"将 *str* 中 *substr* 在替换为 *replstr* 至多 *maxcount* 次并返回结果 Unicode "
+"对象。 *maxcount* == ``-1`` 表示全部替换。"
 
 #: ../../c-api/unicode.rst:1677
 msgid ""
 "Compare two strings and return ``-1``, ``0``, ``1`` for less than, equal, "
 "and greater than, respectively."
-msgstr ""
+msgstr "比较两个字符串并返回 ``-1``, ``0``, ``1`` 分别表示小于、等于和大于。"
 
 #: ../../c-api/unicode.rst:1680
 msgid ""
 "This function returns ``-1`` upon failure, so one should call :c:func:"
 "`PyErr_Occurred` to check for errors."
 msgstr ""
+"此函数执行失败时返回 ``-1``，因此应当调用 :c:func:`PyErr_Occurred` 来检查错"
+"误。"
 
 #: ../../c-api/unicode.rst:1686
 msgid ""
@@ -2123,10 +2151,13 @@ msgid ""
 "pass only ASCII-encoded strings, but the function interprets the input "
 "string as ISO-8859-1 if it contains non-ASCII characters."
 msgstr ""
+"将 Unicode 对象 *uni* 与 *string* 进行比较并返回 ``-1``, ``0``, ``1`` 分别表"
+"示小于、等于和大于。 最好只传入 ASCII 编码的字符串，但如果输入字符串包含非 "
+"ASCII 字符则此函数会将其按 ISO-8859-1 编码来解读。"
 
 #: ../../c-api/unicode.rst:1691
 msgid "This function does not raise exceptions."
-msgstr ""
+msgstr "此函数不会引发异常。"
 
 #: ../../c-api/unicode.rst:1696
 msgid "Rich compare two Unicode strings and return one of the following:"
@@ -2134,7 +2165,7 @@ msgstr "对两个 Unicode 字符串执行富比较并返回以下值之一:"
 
 #: ../../c-api/unicode.rst:1698
 msgid "``NULL`` in case an exception was raised"
-msgstr ""
+msgstr "``NULL`` 用于引发了异常的情况"
 
 #: ../../c-api/unicode.rst:1699
 msgid ":const:`Py_True` or :const:`Py_False` for successful comparisons"
@@ -2155,18 +2186,20 @@ msgid ""
 "Return a new string object from *format* and *args*; this is analogous to "
 "``format % args``."
 msgstr ""
+"根据 *format* 和 *args* 返回一个新的字符串对象；这等同于 ``format % args``。"
 
 #: ../../c-api/unicode.rst:1714
 msgid ""
 "Check whether *element* is contained in *container* and return true or false "
 "accordingly."
-msgstr ""
+msgstr "检查 *element* 是否包含在 *container* 中并相应返回真值或假值。"
 
 #: ../../c-api/unicode.rst:1717
 msgid ""
 "*element* has to coerce to a one element Unicode string. ``-1`` is returned "
 "if there was an error."
 msgstr ""
+"*element* 必须强制转成一个单元素 Unicode 字符串。 如果发生错误则返回 ``-1``。"
 
 #: ../../c-api/unicode.rst:1723
 msgid ""
@@ -2188,3 +2221,6 @@ msgid ""
 "has been interned, or a new (\"owned\") reference to an earlier interned "
 "string object with the same value."
 msgstr ""
+":c:func:`PyUnicode_FromString` 和 :c:func:`PyUnicode_InternInPlace` 的组合操"
+"作，返回一个已内部化的新 Unicode 字符串对象，或一个指向具有相同值的原有内部化"
+"字符串对象的新的（“拥有的”）引用。"
