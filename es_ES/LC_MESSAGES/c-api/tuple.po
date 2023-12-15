@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-08 18:45+0000\n"
+"POT-Creation-Date: 2023-12-15 19:01+0000\n"
 "PO-Revision-Date: 2022-11-05 17:21+0000\n"
 "Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2023\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -99,6 +99,8 @@ msgstr ""
 #: ../../c-api/tuple.rst:65
 msgid "Like :c:func:`PyTuple_GetItem`, but does no checking of its arguments."
 msgstr ""
+"Como :c:func:`PyTuple_GetItem`, pero no realiza ninguna comprobación de sus "
+"argumentos."
 
 #: ../../c-api/tuple.rst:70
 msgid ""
@@ -106,6 +108,9 @@ msgid ""
 "``NULL`` on failure.  This is the equivalent of the Python expression "
 "``p[low:high]``.  Indexing from the end of the list is not supported."
 msgstr ""
+"Devuelve la porción de la tupla apuntada por *p* entre *low* y *high*, o "
+"``NULL`` en caso de fallo. Esto es equivalente a la expresión de Python "
+"``p[low:high]``. No se admite la indexación desde el final de la lista."
 
 #: ../../c-api/tuple.rst:77
 msgid ""
@@ -113,18 +118,25 @@ msgid ""
 "by *p*.  Return ``0`` on success.  If *pos* is out of bounds, return ``-1`` "
 "and set an :exc:`IndexError` exception."
 msgstr ""
+"Insertar una referencia al objeto *o* en la posición *pos* de la tupla "
+"apuntada por *p*. Devuelve ``0`` en caso de éxito. Si *pos* está fuera de "
+"los límites, devuelve ``-1`` y establece una excepción :exc:`IndexError`."
 
 #: ../../c-api/tuple.rst:83
 msgid ""
 "This function \"steals\" a reference to *o* and discards a reference to an "
 "item already in the tuple at the affected position."
 msgstr ""
+"Esta función \"roba\" una referencia a *o* y descarta una referencia a un "
+"elemento que ya está en la tupla en la posición afectada."
 
 #: ../../c-api/tuple.rst:89
 msgid ""
 "Like :c:func:`PyTuple_SetItem`, but does no error checking, and should "
 "*only* be used to fill in brand new tuples."
 msgstr ""
+"Como :c:func:`PyTuple_SetItem`, pero no realiza comprobaciones de errores y "
+"solo debe utilizarse para rellenar tuplas completamente nuevas."
 
 #: ../../c-api/tuple.rst:94
 msgid ""
@@ -132,6 +144,10 @@ msgid ""
 "`PyTuple_SetItem`, does *not* discard a reference to any item that is being "
 "replaced; any reference in the tuple at position *pos* will be leaked."
 msgstr ""
+"Esta macro \"roba\" una referencia a *o*, y, a diferencia de :c:func:"
+"`PyTuple_SetItem`, *no* descarta una referencia a cualquier elemento que "
+"esté siendo reemplazado; cualquier referencia en la tupla en la posición "
+"*pos* se filtrará."
 
 #: ../../c-api/tuple.rst:102
 msgid ""
@@ -147,10 +163,21 @@ msgid ""
 "and sets ``*p`` to ``NULL``, and raises :exc:`MemoryError` or :exc:"
 "`SystemError`."
 msgstr ""
+"Se puede utilizar para redimensionar una tupla. *newsize* será la nueva "
+"longitud de la tupla. Debido a que las tuplas se *supone* que son "
+"inmutables, esto se debe usar si solo hay una referencia al objeto. No "
+"utilizar esto si la tupla se puede conocer por alguna otra parte del código. "
+"La tupla siempre crecerá o disminuirá al final. Piense en esto como destruir "
+"la antigua tupla y crear una nueva, solo de manera más eficiente. Devuelve "
+"``0`` en caso de éxito. El código del cliente nunca debe asumir que el valor "
+"resultante de ``*p`` será el mismo que antes de llamar a esta función. Si se "
+"reemplaza el objeto referenciado por ``*p``, se destruye el original "
+"``*p`` . En caso de fallo, devuelve ``-1`` y establece ``*p`` a ``NULL``, y "
+"genera :exc:`MemoryError` o :exc:`SystemError`."
 
 #: ../../c-api/tuple.rst:115
 msgid "Struct Sequence Objects"
-msgstr ""
+msgstr "Objetos de secuencia de estructura"
 
 #: ../../c-api/tuple.rst:117
 msgid ""
@@ -159,6 +186,11 @@ msgid ""
 "through attributes. To create a struct sequence, you first have to create a "
 "specific struct sequence type."
 msgstr ""
+"Los objetos de secuencia de estructura son el equivalente en C de los "
+"objetos :func:`~collections.namedtuple`, es decir, una secuencia cuyos "
+"elementos también se pueden acceder a través de atributos. Para crear una "
+"secuencia de estructura, primero tienes que crear un tipo de secuencia de "
+"estructura específico."
 
 #: ../../c-api/tuple.rst:124
 msgid ""
@@ -166,20 +198,29 @@ msgid ""
 "Instances of the resulting type can be created with :c:func:"
 "`PyStructSequence_New`."
 msgstr ""
+"Crear un nuevo tipo de secuencia de estructura a partir de los datos en "
+"*desc*, descritos a continuación. Las instancias del tipo resultante se "
+"pueden crear con :c:func:`PyStructSequence_New`."
 
 #: ../../c-api/tuple.rst:130
 msgid "Initializes a struct sequence type *type* from *desc* in place."
 msgstr ""
+"Inicializa un tipo de secuencia de estructura *type* desde *desc* en su "
+"lugar."
 
 #: ../../c-api/tuple.rst:135
 msgid ""
 "The same as ``PyStructSequence_InitType``, but returns ``0`` on success and "
 "``-1`` on failure."
 msgstr ""
+"Lo mismo que ``PyStructSequence_InitType``, pero devuelve ``0`` en caso de "
+"éxito y ``-1`` en caso de fallo."
 
 #: ../../c-api/tuple.rst:143
 msgid "Contains the meta information of a struct sequence type to create."
 msgstr ""
+"Contiene la información meta de un tipo de secuencia de estructura para "
+"crear."
 
 #: ../../c-api/tuple.rst:146 ../../c-api/tuple.rst:169
 msgid "Field"
@@ -195,48 +236,50 @@ msgstr "Significado"
 
 #: ../../c-api/tuple.rst:148 ../../c-api/tuple.rst:171
 msgid "``name``"
-msgstr ""
+msgstr "``name``"
 
 #: ../../c-api/tuple.rst:148 ../../c-api/tuple.rst:150
 #: ../../c-api/tuple.rst:171 ../../c-api/tuple.rst:176
 msgid "``const char *``"
-msgstr ""
+msgstr "``const char *``"
 
 #: ../../c-api/tuple.rst:148
 msgid "name of the struct sequence type"
-msgstr ""
+msgstr "nombre del tipo de secuencia de estructura"
 
 #: ../../c-api/tuple.rst:150 ../../c-api/tuple.rst:176
 msgid "``doc``"
-msgstr ""
+msgstr "``doc``"
 
 #: ../../c-api/tuple.rst:150
 msgid "pointer to docstring for the type or ``NULL`` to omit"
 msgstr ""
+"puntero a la cadena de documentación para el tipo o ``NULL`` para omitir"
 
 #: ../../c-api/tuple.rst:153
 msgid "``fields``"
-msgstr ""
+msgstr "``fields``"
 
 #: ../../c-api/tuple.rst:153
 msgid "``PyStructSequence_Field *``"
-msgstr ""
+msgstr "``PyStructSequence_Field *``"
 
 #: ../../c-api/tuple.rst:153
 msgid "pointer to ``NULL``-terminated array with field names of the new type"
-msgstr ""
+msgstr "puntero a ``NULL``-array terminado con nombres de campo del nuevo tipo"
 
 #: ../../c-api/tuple.rst:156
 msgid "``n_in_sequence``"
-msgstr ""
+msgstr "``n_in_sequence``"
 
 #: ../../c-api/tuple.rst:156
 msgid "``int``"
-msgstr ""
+msgstr "``int``"
 
 #: ../../c-api/tuple.rst:156
 msgid "number of fields visible to the Python side (if used as tuple)"
 msgstr ""
+"número de campos visibles para el lado de Python (si se usa como tupla)"
 
 #: ../../c-api/tuple.rst:163
 msgid ""
@@ -245,40 +288,51 @@ msgid ""
 "`fields` array of the :c:type:`PyStructSequence_Desc` determines which field "
 "of the struct sequence is described."
 msgstr ""
+"Describe un campo de una secuencia de estructuras. Como una secuencia de "
+"estructuras se modela como una tupla, todos los campos son del tipo :c:expr:"
+"`PyObject*`. El índice en el array :attr:`fields` de :c:type:"
+"`PyStructSequence_Desc` determina qué campo de la secuencia de estructuras "
+"se describe."
 
 #: ../../c-api/tuple.rst:171
 msgid ""
 "name for the field or ``NULL`` to end the list of named fields, set to :c:"
 "data:`PyStructSequence_UnnamedField` to leave unnamed"
 msgstr ""
+"nombre del campo o ``NULL`` para terminar la lista de campos con nombre, :c:"
+"data:`PyStructSequence_UnnamedField` para dejar el campo sin nombre."
 
 #: ../../c-api/tuple.rst:176
 msgid "field docstring or ``NULL`` to omit"
-msgstr ""
+msgstr "campo docstring o ``NULL`` para omitirlo"
 
 #: ../../c-api/tuple.rst:182
 msgid "Special value for a field name to leave it unnamed."
-msgstr ""
+msgstr "Valor especial para un nombre de campo para dejarlo sin nombre."
 
 #: ../../c-api/tuple.rst:184
 msgid "The type was changed from ``char *``."
-msgstr ""
+msgstr "El tipo se cambió de ``char *``."
 
 #: ../../c-api/tuple.rst:190
 msgid ""
 "Creates an instance of *type*, which must have been created with :c:func:"
 "`PyStructSequence_NewType`."
 msgstr ""
+"Crea una instancia de *type*, que se debe haber creado con :c:func:"
+"`PyStructSequence_NewType`."
 
 #: ../../c-api/tuple.rst:196
 msgid ""
 "Return the object at position *pos* in the struct sequence pointed to by "
 "*p*. No bounds checking is performed."
 msgstr ""
+"Devuelve el objeto en la posición *pos* de la secuencia struct apuntada por "
+"*p*. No se realiza comprobación de límites."
 
 #: ../../c-api/tuple.rst:202
 msgid "Macro equivalent of :c:func:`PyStructSequence_GetItem`."
-msgstr ""
+msgstr "Macro equivalente de :c:func:`PyStructSequence_GetItem`."
 
 #: ../../c-api/tuple.rst:207
 msgid ""
@@ -286,11 +340,14 @@ msgid ""
 "Like :c:func:`PyTuple_SET_ITEM`, this should only be used to fill in brand "
 "new instances."
 msgstr ""
+"Establece el campo en el índice *pos* de la secuencia struct *p* al valor "
+"*o*.  Al igual que :c:func:`PyTuple_SET_ITEM`, sólo debe utilizarse para "
+"rellenar instancias nuevas."
 
 #: ../../c-api/tuple.rst:213 ../../c-api/tuple.rst:222
 msgid "This function \"steals\" a reference to *o*."
-msgstr ""
+msgstr "Esta función \"roba\" una referencia a *o*."
 
 #: ../../c-api/tuple.rst:218
 msgid "Macro equivalent of :c:func:`PyStructSequence_SetItem`."
-msgstr ""
+msgstr "Macro equivalente de :c:func:`PyStructSequence_SetItem`."
