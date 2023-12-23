@@ -5,6 +5,7 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2023
+# Freesand Leo <yuqinju@163.com>, 2023
 #
 #, fuzzy
 msgid ""
@@ -13,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-15 16:34+0000\n"
 "PO-Revision-Date: 2023-05-24 02:16+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
+"Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -576,6 +577,8 @@ msgid ""
 "metaclass when the argument is a class and those attributes have been listed "
 "in the metaclass' custom :meth:`~object.__dir__`."
 msgstr ""
+"当参数是一个类且这些属性在元类的自定义方法 :meth:`~object.__dir__` 中列出时 :"
+"func:`getmembers` 将只返回在元类中定义的类属性。"
 
 #: ../../library/inspect.rst:281
 msgid ""
@@ -695,13 +698,14 @@ msgstr "如果该对象可以在 :keyword:`await` 表达式中使用时返回 ``
 msgid ""
 "Can also be used to distinguish generator-based coroutines from regular "
 "generators:"
-msgstr ""
+msgstr "也可被用于区分基于生成器的协程和常规的生成器："
 
 #: ../../library/inspect.rst:394
 msgid ""
 "Return ``True`` if the object is an :term:`asynchronous generator` function, "
 "for example:"
 msgstr ""
+"如果对象是一个 :term:`asynchronous generator` 函数则返回 ``True``，例如："
 
 #: ../../library/inspect.rst:407
 msgid ""
@@ -776,6 +780,10 @@ msgid ""
 "method, but beyond that the set of attributes varies.  A :attr:`~definition."
 "__name__` attribute is usually sensible, and :attr:`!__doc__` often is."
 msgstr ""
+"例如，该函数对于 ``int.__add__`` 为真。 一个通过此测试的对象可以有 :meth:"
+"`~object.__get__` 方法，但不能有 :meth:`~object.__set__` 方法，除此以外的属性"
+"集合是可变的。 一个 :attr:`~definition.__name__` 属性通常是合理的，而 :attr:"
+"`!__doc__` 往往也是如此。"
 
 #: ../../library/inspect.rst:471
 msgid ""
@@ -784,6 +792,9 @@ msgid ""
 "the other tests promise more -- you can, e.g., count on having the :attr:"
 "`~method.__func__` attribute (etc) when an object passes :func:`ismethod`."
 msgstr ""
+"以描述器实现的能够通过其他某个测试的函数对于 :func:`ismethoddescriptor` 测试"
+"也会返回 ``False``，这只是因为其他测试提供了更多保证 —— 比如，当一个对象通"
+"过 :func:`ismethod` 时你将能够使用 :attr:`~method.__func__` 等属性。"
 
 #: ../../library/inspect.rst:480
 msgid "Return ``True`` if the object is a data descriptor."
@@ -799,6 +810,11 @@ msgid ""
 "`~definition.__name__` and :attr:`!__doc__` attributes (properties, getsets, "
 "and members have both of these attributes), but this is not guaranteed."
 msgstr ""
+"数据描述器具有 :attr:`~object.__set__` 或 :attr:`~object.__delete__` 方法。 "
+"例如特征属性（在 Python 中定义）、getset 和成员等。 后两者是在 C 中定义并且有"
+"针对这些类型的更具体的测试，它们在不同 Python 实现中均能保持健壮性。 通常，数"
+"据描述器还具有 :attr:`~definition.__name__` 和 :attr:`!__doc__` 属性（特征属"
+"性、getset 和成员都同时具有这些属性），但并不保证这一点。"
 
 #: ../../library/inspect.rst:493
 msgid "Return ``True`` if the object is a getset descriptor."
@@ -944,10 +960,12 @@ msgid ""
 "object and its return annotation. To retrieve a :class:`!Signature` object, "
 "use the :func:`!signature` function."
 msgstr ""
+":class:`Signature` 对象代表一个可调用对象的调用签名及其返回值标。 要获取一"
+"个 :class:`!Signature` 对象，可使用 :func:`!signature` 函数。"
 
 #: ../../library/inspect.rst:615
 msgid "Return a :class:`Signature` object for the given *callable*:"
-msgstr ""
+msgstr "返回一个给定 *callable* 的 :class:`Signature` 对象："
 
 #: ../../library/inspect.rst:634
 msgid ""
@@ -974,6 +992,11 @@ msgid ""
 "`get_annotations` when resolving the annotations; see the documentation for :"
 "func:`get_annotations` for instructions on how to use these parameters."
 msgstr ""
+"对于使用字符化标注的模块中定义的对象 (``from __future__ import "
+"annotations``)，:func:`signature` 会尝试使用 :func:`get_annotations` 自动地反"
+"字符串化这些标注。 *globals*, *locals* 和 *eval_str* 等形参会在解析标注时被传"
+"入 :func:`get_annotations`；请参阅 :func:`get_annotations` 的文档获取如何使用"
+"这些形参的说明。"
 
 #: ../../library/inspect.rst:649
 msgid ""
@@ -983,6 +1006,10 @@ msgid ""
 "call(s) to un-stringize the annotations in :func:`get_annotations` could "
 "potentially raise any kind of exception."
 msgstr ""
+"如果没有可提供的签名则会引发 :exc:`ValueError`，而如果对象类型不受支持则会引"
+"发 :exc:`TypeError`。 同时，如果标注被字符串化，并且 *eval_str* 不为假值，则"
+"在 :func:`get_annotations` 中调用 ``eval()`` 来反字符串化标注可能会引发任何种"
+"类的异常。"
 
 #: ../../library/inspect.rst:655
 msgid ""
@@ -999,10 +1026,12 @@ msgid ""
 "of *callable* specifically (``callable.__wrapped__`` will not be used to "
 "unwrap decorated callables.)"
 msgstr ""
+"添加了 *follow_wrapped* 形参。 传入 ``False`` 以获得特定 *callable* 的签名 "
+"(``callable.__wrapped__`` 将不会被用来解包被装饰的可调用对象。)"
 
 #: ../../library/inspect.rst:665 ../../library/inspect.rst:767
 msgid "The *globals*, *locals*, and *eval_str* parameters were added."
-msgstr ""
+msgstr "添加了 *globals*, *locals* 和 *eval_str* 形参。"
 
 #: ../../library/inspect.rst:670
 msgid ""
@@ -1019,6 +1048,9 @@ msgid ""
 "its return annotation.  For each parameter accepted by the function it "
 "stores a :class:`Parameter` object in its :attr:`parameters` collection."
 msgstr ""
+":class:`!Signature` 对象表示一个函数的调用签名及其返回值标注。 对于函数所接受"
+"的每个形参它会在其 :attr:`parameters` 多项集中存储一个 :class:`Parameter` 对"
+"象。"
 
 #: ../../library/inspect.rst:682
 msgid ""
@@ -1037,16 +1069,20 @@ msgid ""
 "The optional *return_annotation* argument can be an arbitrary Python object. "
 "It represents the \"return\" annotation of the callable."
 msgstr ""
+"可选的 *return_annotation* 参数可以是任意 Python 对象。 它表示可调用对象的 "
+"\"return\" 标注。"
 
 #: ../../library/inspect.rst:691
 msgid ""
 ":class:`!Signature` objects are *immutable*.  Use :meth:`Signature.replace` "
 "to make a modified copy."
 msgstr ""
+":class:`!Signature` 对象是 *不可变* 对象。 使用 :meth:`Signature.replace` 来"
+"创建修改后的副本。"
 
 #: ../../library/inspect.rst:694
 msgid ":class:`!Signature` objects are now picklable and :term:`hashable`."
-msgstr ""
+msgstr ":class:`!Signature` 对象现在是可 pickle 且 :term:`hashable` 的对象。"
 
 #: ../../library/inspect.rst:699
 msgid "A special class-level marker to specify absence of a return annotation."
@@ -1106,16 +1142,20 @@ msgid ""
 "signature.  To remove ``return_annotation`` from the copied :class:`!"
 "Signature`, pass in :attr:`Signature.empty`."
 msgstr ""
+"根据发起调用 :meth:`replace` 的实例新建一个 :class:`Signature` 实例。 可以通"
+"过传入不同的 *parameters* 和/或 *return_annotation* 来覆盖基类签名的相应特征"
+"属性。 要从拷贝的 :class:`!Signature` 中移除 ``return_annotation``，可以传"
+"入 :attr:`Signature.empty`。"
 
 #: ../../library/inspect.rst:751
 msgid ""
 "Return a :class:`Signature` (or its subclass) object for a given callable "
 "*obj*."
-msgstr ""
+msgstr "返回给定的可调用对象 *obj* 的 :class:`Signature` (或其子类)。"
 
 #: ../../library/inspect.rst:754
 msgid "This method simplifies subclassing of :class:`Signature`:"
-msgstr ""
+msgstr "该方法简化了 :class:`Signature` 的子类化操作："
 
 #: ../../library/inspect.rst:763
 msgid "Its behavior is otherwise identical to that of :func:`signature`."
@@ -1127,10 +1167,12 @@ msgid ""
 "Parameter` object, you can use :meth:`Parameter.replace` to create a "
 "modified copy."
 msgstr ""
+":class:`!Parameter` 对象是 *不可变* 对象。 不要直接修改 :class:`!Parameter` "
+"对象，请可以使用 :meth:`Parameter.replace` 创建一个修改后的副本。"
 
 #: ../../library/inspect.rst:777
 msgid "Parameter objects are now picklable and :term:`hashable`."
-msgstr ""
+msgstr "现在 Parameter 对象可以被 pickle 并且为 :term:`hashable`。"
 
 #: ../../library/inspect.rst:782
 msgid ""
@@ -1156,7 +1198,7 @@ msgstr ""
 msgid ""
 "These parameter names are now exposed by this module as names like "
 "``implicit0``."
-msgstr ""
+msgstr "这些形参名会被此模块公开为 ``implicit0`` 这样的名字。"
 
 #: ../../library/inspect.rst:802
 msgid ""
@@ -1255,15 +1297,15 @@ msgstr ""
 
 #: ../../library/inspect.rst:847
 msgid "Example: print all keyword-only arguments without default values:"
-msgstr ""
+msgstr "示例：打印全部没有默认值的仅限关键字参数："
 
 #: ../../library/inspect.rst:863
 msgid "Describes a enum value of :attr:`Parameter.kind`."
-msgstr ""
+msgstr "描述 :attr:`Parameter.kind` 的枚举值。"
 
 #: ../../library/inspect.rst:867
 msgid "Example: print all descriptions of arguments:"
-msgstr ""
+msgstr "示例：打印全部参数的描述："
 
 #: ../../library/inspect.rst:884
 msgid ""
@@ -1272,6 +1314,9 @@ msgid ""
 "corresponding argument.  To remove a default value or/and an annotation from "
 "a :class:`!Parameter`, pass :attr:`Parameter.empty`."
 msgstr ""
+"根据发起调用 replace 的实例新建一个 :class:`Parameter` 实例。 要覆盖一个 :"
+"class:`!Parameter` 属性，可以传入相应的参数。 要从一个 :class:`!Parameter` 中"
+"移除默认值或/和标注，可以传入 :attr:`Parameter.empty`。"
 
 #: ../../library/inspect.rst:902
 msgid ""
@@ -1279,6 +1324,8 @@ msgid ""
 "to ``None`` if their ``kind`` was set to ``POSITIONAL_ONLY``. This is no "
 "longer permitted."
 msgstr ""
+"在 Python 3.3 中 :class:`Parameter` 对象在其 ``kind`` 被设为 "
+"``POSITIONAL_ONLY`` 时允许将 ``name`` 设为 ``None``。 现在已不再允许这样做。"
 
 #: ../../library/inspect.rst:909
 msgid ""
@@ -1355,7 +1402,7 @@ msgstr "对于变长关键字参数（``**kwargs``）默认值是一个空字典
 msgid ""
 "The :attr:`args` and :attr:`kwargs` properties can be used to invoke "
 "functions:"
-msgstr ""
+msgstr ":attr:`args` 和 :attr:`kwargs` 特征属性可被用于发起调用函数："
 
 #: ../../library/inspect.rst:981
 msgid ":pep:`362` - Function Signature Object."
@@ -1505,6 +1552,12 @@ msgid ""
 "exception of the same type and the same or similar message is raised. For "
 "example:"
 msgstr ""
+"将 *args* 和 *kwds* 绑定到 Python 函数或方法 *func* 的参数名称，就像将它们作"
+"为调用时传入的参数一样。 对于绑定方法，还会将第一个参数 (通常命名为 "
+"``self``) 绑定到关联的实例。 将返回一个字典，该字典会将参数名称（包括 ``*`` "
+"和 ``**`` 参数的名称，如果有的话）绑定到 *args* 和 *kwds* 中的值。 对于不正确"
+"地发起调用 *func* 的情况，即 ``func(*args, **kwds)`` 因函数签名不兼容而引发异"
+"常的时候，将引发一个相同类型的异常并附带相同或相似的消息。 例如："
 
 #: ../../library/inspect.rst:1107
 msgid "Use :meth:`Signature.bind` and :meth:`Signature.bind_partial` instead."
@@ -1930,6 +1983,9 @@ msgid ""
 "properties, will be invoked and :meth:`~object.__getattr__` and :meth:"
 "`~object.__getattribute__` may be called."
 msgstr ""
+":func:`getattr` 和 :func:`hasattr` 在获取或检查属性是否存在时可以触发代码执"
+"行。 描述器，像特征属性一样，可能会被发起调用而 :meth:`~object.__getattr__` "
+"和 :meth:`~object.__getattribute__` 也可能会被调用。"
 
 #: ../../library/inspect.rst:1410
 msgid ""
@@ -1946,6 +2002,8 @@ msgid ""
 "Retrieve attributes without triggering dynamic lookup via the descriptor "
 "protocol, :meth:`~object.__getattr__` or :meth:`~object.__getattribute__`."
 msgstr ""
+"获取属性而不触发通过描述器协议、:meth:`~object.__getattr__` 或 :meth:"
+"`~object.__getattribute__` 的动态查找。"
 
 #: ../../library/inspect.rst:1420
 msgid ""
@@ -2106,6 +2164,8 @@ msgid ""
 "Python code objects have a :attr:`~codeobject.co_flags` attribute, which is "
 "a bitmap of the following flags:"
 msgstr ""
+"Python 代码对象有一个 :attr:`~codeobject.co_flags` 属性，它是下列旗标的位映"
+"射："
 
 #: ../../library/inspect.rst:1541
 msgid "The code object is optimized, using fast locals."
@@ -2116,6 +2176,8 @@ msgid ""
 "If set, a new dict will be created for the frame's :attr:`~frame.f_locals` "
 "when the code object is executed."
 msgstr ""
+"如果设置，则当代码对象被执行时会新建一个字典作为帧的 :attr:`~frame."
+"f_locals`。"
 
 #: ../../library/inspect.rst:1550
 msgid "The code object has a variable positional parameter (``*args``-like)."
