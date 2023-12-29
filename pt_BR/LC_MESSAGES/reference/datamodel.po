@@ -9,17 +9,17 @@
 # Claudio Rogerio Carvalho Filho <excriptbrasil@gmail.com>, 2017
 # Welington Carlos <wcarlos3@gmail.com>, 2019
 # Marco Rougeth <marco@rougeth.com>, 2020
-# Adorilson Bezerra <adorilson@gmail.com>, 2023
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2023
+# Adorilson Bezerra <adorilson@gmail.com>, 2023
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-22 20:17+0000\n"
+"POT-Creation-Date: 2023-12-29 21:22+0000\n"
 "PO-Revision-Date: 2017-02-16 23:38+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
+"Last-Translator: Adorilson Bezerra <adorilson@gmail.com>, 2023\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
 "teams/5390/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -2683,9 +2683,10 @@ msgid ""
 "the normal mechanism (i.e. store the value in the instance dictionary). "
 "*name* is the attribute name, *value* is the value to be assigned to it."
 msgstr ""
-"Chamado quando uma atribuição de atributo é tentada. Isso é chamado em vez "
-"do mecanismo normal (ou seja, armazena o valor no dicionário da instância). "
-"*name* é o nome do atributo, *value* é o valor a ser atribuído a ele."
+"Chamado quando se tenta efetuar uma atribuição de atributos. Esse método é "
+"chamado em vez do mecanismo normal (ou seja, armazena o valor no dicionário "
+"da instância). *name* é o nome do atributo, *value* é o valor a ser "
+"atribuído a ele."
 
 #: ../../reference/datamodel.rst:1584
 msgid ""
@@ -2722,7 +2723,7 @@ msgid ""
 "object."
 msgstr ""
 "Como :meth:`__setattr__`, mas para exclusão de atributo em vez de "
-"atribuição. Isso só deve ser implementado se ``del obj.name`` for "
+"atribuição. Este método só deve ser implementado se ``del obj.name`` for "
 "significativo para o objeto."
 
 #: ../../reference/datamodel.rst:1600
@@ -2747,9 +2748,9 @@ msgid ""
 "Called when :func:`dir` is called on the object. A sequence must be "
 "returned. :func:`dir` converts the returned sequence to a list and sorts it."
 msgstr ""
-"Chamado quando :func:`dir` é chamado no objeto. Uma sequência deve ser "
-"retornada. :func:`dir` converte a sequência retornada em uma lista e a "
-"ordena."
+"Chamado quando :func:`dir` é chamado com o objeto como argumento. Uma "
+"sequência deve ser retornada. :func:`dir` converte a sequência retornada em "
+"uma lista e a ordena."
 
 #: ../../reference/datamodel.rst:1614
 msgid "Customizing module attribute access"
@@ -3162,7 +3163,7 @@ msgstr ""
 "atribuídas a novas variáveis não listadas na definição *__slots__*. As "
 "tentativas de atribuir a um nome de variável não listado levantam :exc:"
 "`AttributeError`. Se a atribuição dinâmica de novas variáveis for desejada, "
-"então adicione ``'__dict__'`` à sequência de strings na declaração "
+"então adicione ``'__dict__'`` à sequência de strings na declaração de "
 "*__slots__*."
 
 #: ../../reference/datamodel.rst:1845
@@ -3823,7 +3824,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:2195
 msgid "The purpose of *__class_getitem__*"
-msgstr ""
+msgstr "O propósito de *__class_getitem__*"
 
 #: ../../reference/datamodel.rst:2197
 msgid ""
@@ -3831,6 +3832,9 @@ msgid ""
 "parameterization of standard-library generic classes in order to more easily "
 "apply :term:`type hints<type hint>` to these classes."
 msgstr ""
+"O propósito de :meth:`~object.__class_getitem__` é permitir a parametrização "
+"em tempo de execução de classes genéricas da biblioteca padrão, a fim de "
+"aplicar mais facilmente :term:`dicas de tipo<type hint>` a essas classes."
 
 #: ../../reference/datamodel.rst:2201
 msgid ""
@@ -3840,6 +3844,12 @@ msgid ""
 "__class_getitem__`, or inherit from :class:`typing.Generic`, which has its "
 "own implementation of ``__class_getitem__()``."
 msgstr ""
+"Para implementar classes genéricas personalizadas que podem ser "
+"parametrizadas em tempo de execução e compreendidas por verificadores de "
+"tipo estáticos, os usuários devem herdar de uma classe da biblioteca padrão "
+"que já implementa :meth:`~object.__class_getitem__`, ou herdar de :class:"
+"`typing.Generic`, que possui sua própria implementação de "
+"``__class_getitem__()``."
 
 #: ../../reference/datamodel.rst:2207
 msgid ""
@@ -3848,10 +3858,15 @@ msgid ""
 "type-checkers such as mypy. Using ``__class_getitem__()`` on any class for "
 "purposes other than type hinting is discouraged."
 msgstr ""
+"Implementações personalizadas de :meth:`~object.__class_getitem__` em "
+"classes definidas fora da biblioteca padrão podem não ser compreendidas por "
+"verificadores de tipo de terceiros, como o mypy. O uso de "
+"``__class_getitem__()`` em qualquer classe para fins diferentes de dicas de "
+"tipo é desencorajado."
 
 #: ../../reference/datamodel.rst:2217
 msgid "*__class_getitem__* versus *__getitem__*"
-msgstr ""
+msgstr "*__class_getitem__* versus *__getitem__*"
 
 #: ../../reference/datamodel.rst:2219
 msgid ""
@@ -3862,6 +3877,12 @@ msgid ""
 "instead. ``__class_getitem__()`` should return a :ref:`GenericAlias<types-"
 "genericalias>` object if it is properly defined."
 msgstr ""
+"Normalmente, a :ref:`subscrição<subscrições>` de um objeto usando colchetes "
+"chamará o método de instância :meth:`~object.__getitem__` definido na classe "
+"do objeto. No entanto, se o objeto sendo subscrito for ele mesmo uma classe, "
+"o método de classe :meth:`~object.__class_getitem__` pode ser chamado em seu "
+"lugar. ``__class_getitem__()`` deve retornar um objeto :ref:"
+"`GenericAlias<types-genericalias>` se estiver devidamente definido."
 
 #: ../../reference/datamodel.rst:2226
 msgid ""
@@ -3869,6 +3890,9 @@ msgid ""
 "follows something like the following process to decide whether :meth:"
 "`~object.__getitem__` or :meth:`~object.__class_getitem__` should be called::"
 msgstr ""
+"Apresentado com a :term:`expressão` ``obj[x]``, o interpretador de Python "
+"segue algo parecido com o seguinte processo para decidir se :meth:`~object."
+"__getitem__` ou :meth:`~object.__class_getitem__` deve ser chamado:"
 
 #: ../../reference/datamodel.rst:2254
 msgid ""
@@ -3879,6 +3903,12 @@ msgid ""
 "``dict[str, float]`` and ``tuple[str, bytes]`` all result in :meth:`~object."
 "__class_getitem__` being called::"
 msgstr ""
+"Em Python, todas as classes são elas mesmas instâncias de outras classes. A "
+"classe de uma classe é conhecida como :term:`metaclasse` dessa classe, e a "
+"maioria das classes tem a classe :class:`type` como sua metaclasse. :class:"
+"`type` não define :meth:`~object.__getitem__`, o que significa que "
+"expressões como ``list[int]``, ``dict[str, float]`` e ``tuple[str, bytes]`` "
+"resultam em chamadas para :meth:`~object.__class_getitem__`::"
 
 #: ../../reference/datamodel.rst:2273
 msgid ""
@@ -3886,10 +3916,14 @@ msgid ""
 "__getitem__`, subscribing the class may result in different behaviour. An "
 "example of this can be found in the :mod:`enum` module::"
 msgstr ""
+"No entanto, se uma classe tiver uma metaclasse personalizada que define :"
+"meth:`~object.__getitem__`, subscrever a classe pode resultar em "
+"comportamento diferente. Um exemplo disso pode ser encontrado no módulo :mod:"
+"`enum`::"
 
 #: ../../reference/datamodel.rst:2298
 msgid ":pep:`560` - Core Support for typing module and generic types"
-msgstr ""
+msgstr ":pep:`560` - Suporte básico para módulo typing e tipos genéricos"
 
 #: ../../reference/datamodel.rst:2297
 msgid ""
@@ -3897,6 +3931,9 @@ msgid ""
 "`subscription<subscriptions>` results in ``__class_getitem__()`` being "
 "called instead of :meth:`~object.__getitem__`"
 msgstr ""
+"Introduz :meth:`~object.__class_getitem__`, e define quando uma :ref:"
+"`subscrição<subscriptions>` resulta na chamada de ``__class_getitem__()`` em "
+"vez de :meth:`~object.__getitem__`"
 
 #: ../../reference/datamodel.rst:2305
 msgid "Emulating callable objects"
