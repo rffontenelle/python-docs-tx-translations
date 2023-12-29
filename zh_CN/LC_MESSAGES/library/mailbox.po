@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-15 14:14+0000\n"
+"POT-Creation-Date: 2023-12-22 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 01:09+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -43,6 +43,11 @@ msgid ""
 "message.Message` class with format-specific state and behavior. Supported "
 "mailbox formats are Maildir, mbox, MH, Babyl, and MMDF."
 msgstr ""
+"本模块定义了两个类，:class:`Mailbox` 和 :class:`Message`，用于访问和操作磁盘"
+"中的邮箱及其所包含的电子邮件。 :class:`!Mailbox` 提供了类似字典的从键到消息的"
+"映射。 :class:`!Message` 为 :mod:`email.message` 模块的 :class:`~email."
+"message.Message` 类扩展了特定格式专属的状态和行为。 支持的邮箱格式有 "
+"Maildir, mbox, MH, Babyl 和 MMDF。"
 
 #: ../../library/mailbox.rst:24
 msgid "Module :mod:`email`"
@@ -66,6 +71,8 @@ msgid ""
 "instantiated.  Instead, format-specific subclasses should inherit from :"
 "class:`!Mailbox` and your code should instantiate a particular subclass."
 msgstr ""
+":class:`!Mailbox` 类定义了一个接口并且它不应被实例化。 而是应该让格式专属的子"
+"类继承 :class:`!Mailbox` 并且你的代码应当实例化一个特定的子类。"
 
 #: ../../library/mailbox.rst:41
 msgid ""
@@ -76,6 +83,9 @@ msgid ""
 "corresponding message is modified, such as by replacing it with another "
 "message."
 msgstr ""
+":class:`!Mailbox` 接口类似于字典，其中每个小键都有对应的消息。 键是由 :class:"
+"`!Mailbox` 实例发出的，它们将由实例来使用并且只对该 :class:`!Mailbox` 实例有"
+"意义。 键会持续标识一条消息，即使对应的消息已被修改，例如被另一条消息所替代。"
 
 #: ../../library/mailbox.rst:47
 msgid ""
@@ -83,6 +93,9 @@ msgid ""
 "method :meth:`add` and removed using a ``del`` statement or the set-like "
 "methods :meth:`remove` and :meth:`discard`."
 msgstr ""
+"可以使用类似于集合的方法 :meth:`add` 将消息添加到 :class:`!Mailbox` 实例并使"
+"用 ``del`` 语句或类似于集合的方法 :meth:`remove` 和 :meth:`discard` 将其移"
+"除。"
 
 #: ../../library/mailbox.rst:51
 msgid ""
@@ -94,6 +107,11 @@ msgid ""
 "copied. In neither case is a reference to the message representation kept by "
 "the :class:`!Mailbox` instance."
 msgstr ""
+":class:`!Mailbox` 接口语义在某些值得注意的方面与字典语义有所不同。 每次请求消"
+"息时，都会基于邮箱的当前状态生成一个新的表示形式（通常为 :class:`Message` 实"
+"例）。 类似地，当向 :class:`!Mailbox` 实例添加消息时，所提供的消息表示形式的"
+"内容将被复制。 无论在哪种情况下 :class:`!Mailbox` 实例都不会保留对消息表示形"
+"式的引用。"
 
 #: ../../library/mailbox.rst:59
 msgid ""
@@ -106,6 +124,11 @@ msgid ""
 "iterator may result in a :exc:`KeyError` exception if the corresponding "
 "message is subsequently removed."
 msgstr ""
+"默认的 :class:`!Mailbox` :term:`iterator` 会迭代消息表示形式，而不像默认的 :"
+"class:`字典 <dict>` 迭代器那样迭代键。 此外，在迭代期间修改邮箱是安全且有明确"
+"定义的。 在创建迭代器之后被添加到邮箱的消息将对该迭代不可见。 在迭代器产出消"
+"息之前从邮箱移除的消息将被静默地跳过，但是使用来自迭代器的键也有可能导致 :"
+"exc:`KeyError` 异常，如果对应的消息后来被移除的话。"
 
 #: ../../library/mailbox.rst:71
 msgid ""
@@ -118,10 +141,15 @@ msgid ""
 "deleting a message.  Failing to lock the mailbox runs the risk of losing "
 "messages or corrupting the entire mailbox."
 msgstr ""
+"在修改可能同时被其他某个进程修改的邮箱时要非常小心。 用于此种任务的最安全邮箱"
+"格式是 :class:`Maildir`；请尽量避免使用 :class:`mbox` 之类的单文件格式进行并"
+"发写入。 如果你正在修改一个邮箱，你 *必须* 在读取文件中的任何消息或者执行添加"
+"或删除消息等修改操作 *之前* 通过调用 :meth:`lock` 和 :meth:`unlock` 方法来锁"
+"定它。 如果未锁定邮箱则将导致丢失消息或损坏整个邮箱的风险。"
 
 #: ../../library/mailbox.rst:81
 msgid ":class:`!Mailbox` instances have the following methods:"
-msgstr ""
+msgstr ":class:`!Mailbox` 实例具有下列方法："
 
 #: ../../library/mailbox.rst:86
 msgid ""
@@ -210,6 +238,9 @@ msgid ""
 "class:`Message` subclass unless a custom message factory was specified when "
 "the :class:`!Mailbox` instance was initialized."
 msgstr ""
+"返回一个迭代所有消息的表示形式的 :term:`iterator`。 消息会被表示为适当的格式"
+"专属 :class:`Message` 子类的实例，除非当 :class:`!Mailbox` 实例被初始化时指定"
+"了自定义的消息工厂函数。"
 
 #: ../../library/mailbox.rst:153
 msgid ""
@@ -222,6 +253,8 @@ msgid ""
 "The same as :meth:`itervalues`, except that a :class:`list` is returned "
 "rather than an :term:`iterator`"
 msgstr ""
+"与 :meth:`itervalues` 类似，不同之处是返回 :class:`list` 而不是 :term:"
+"`iterator`"
 
 #: ../../library/mailbox.rst:165
 msgid ""
@@ -231,12 +264,17 @@ msgid ""
 "unless a custom message factory was specified when the :class:`!Mailbox` "
 "instance was initialized."
 msgstr ""
+"返回一个包含 (*key*, *message*) 对的 :term:`iterator`，其中 *key* 为键而 "
+"*message* 为消息表示形式。 消息会被表示为适当的格式专属 :class:`Message` 子类"
+"的实例，除非当 :class:`!Mailbox` 实例被初始化时指定了自定义的消息工厂函数。"
 
 #: ../../library/mailbox.rst:174
 msgid ""
 "The same as :meth:`iteritems`, except that a :class:`list` of pairs is "
 "returned rather than an :term:`iterator` of pairs."
 msgstr ""
+"与 :meth:`iteritems` 类似，不同之处是返回包含键值对的 :class:`list` 而不是键"
+"值对的 :term:`iterator`。"
 
 #: ../../library/mailbox.rst:181
 msgid ""
@@ -248,6 +286,10 @@ msgid ""
 "message factory was specified when the :class:`!Mailbox` instance was "
 "initialized."
 msgstr ""
+"返回对应于 *key* 的消息的表示形式。 当对应的消息不存在时，如果该方法是通过 :"
+"meth:`get` 调用则返回 *default*，而如果该方法是通过 :meth:`!__getitem__` 调用"
+"则会引发 :exc:`KeyError`。 消息会被表示为适当的格式专属 :class:`Message` 子类"
+"的实例，除非当 :class:`!Mailbox` 被初始化时指定了自定义的消息工厂函数。"
 
 #: ../../library/mailbox.rst:192
 msgid ""
@@ -284,6 +326,9 @@ msgid ""
 "message exists.  The file-like object behaves as if open in binary mode.  "
 "This file should be closed once it is no longer needed."
 msgstr ""
+"返回对应于 *key* 的消息的 :term:`文件类 <file-like object>` 表示形式，或者如"
+"果对应的消息不存在则会引发 :exc:`KeyError` 异常。 文件类对象的行为相当于以二"
+"进制模式打开。 当不再需要此文件时应当将其关闭。"
 
 #: ../../library/mailbox.rst:221
 msgid ""
@@ -292,6 +337,9 @@ msgid ""
 "supports the :term:`context manager` protocol: you can use a :keyword:`with` "
 "statement to automatically close it."
 msgstr ""
+"此文件对象实际上是一个 :term:`binary file`；之前它被不正确地以文本模式返回。 "
+"并且，此 :term:`file-like object` 现在还支持 :term:`context manager` 协议：你"
+"可以使用 :keyword:`with` 语句来自动关闭它。"
 
 #: ../../library/mailbox.rst:229
 msgid ""
@@ -300,6 +348,9 @@ msgid ""
 "Mailbox` instance that created them or of the underlying mailbox.  More "
 "specific documentation is provided by each subclass."
 msgstr ""
+"不同于其他消息表示形式，:term:`文件类 <file-like object>` 表示形式并不一定独"
+"立于创建它们的 :class:`!Mailbox` 实例或下层的邮箱。 每个子类都会提供更具体的"
+"文档。"
 
 #: ../../library/mailbox.rst:238
 msgid "Return ``True`` if *key* corresponds to a message, ``False`` otherwise."
@@ -321,6 +372,9 @@ msgid ""
 "`Message` subclass unless a custom message factory was specified when the :"
 "class:`!Mailbox` instance was initialized."
 msgstr ""
+"返回对应于 *key* 的消息的表示形式并删除该消息。 如果对应的消息不存在则返回 "
+"*default*。 消息会被表示为适当的格式专属 :class:`Message` 子类的实例，除非"
+"当 :class:`!Mailbox` 实例被初始化时指定的自定义的消息工厂函数。"
 
 #: ../../library/mailbox.rst:262
 msgid ""
@@ -331,6 +385,10 @@ msgid ""
 "`Message` subclass unless a custom message factory was specified when the :"
 "class:`!Mailbox` instance was initialized."
 msgstr ""
+"返回一个任意的 (*key*, *message*) 对，其中 *key* 为键而 *message* 为消息的表"
+"示形式，并删除对应的消息。 如果邮箱为空，则会引发 :exc:`KeyError` 异常。 消息"
+"会被表示为适当的格式专属 :class:`Message` 子类的实例，除非当 :class:`!"
+"Mailbox` 实例被初始化时指定了自定义的消息工厂函数。"
 
 #: ../../library/mailbox.rst:272
 msgid ""
@@ -342,6 +400,12 @@ msgid ""
 "exception will be raised, so in general it is incorrect for *arg* to be a :"
 "class:`!Mailbox` instance."
 msgstr ""
+"形参 *arg* 应当是 *key* 到 *message* 的映射或 (*key*, *message*) 对的可迭代对"
+"象。 用来更新邮箱以使得对于每个给定的 *key* 和 *message*，与 *key* 相对应的消"
+"息会被设为 *message*，就像通过使用 :meth:`__setitem__` 一样。 类似于 :meth:"
+"`__setitem__`，每个 *key* 都必须在邮箱中有一个对应的消息否则将会引发 :exc:"
+"`KeyError` 异常。 因此在通常情况下将 *arg* 设为 :class:`!Mailbox` 实例是不正"
+"确的。"
 
 #: ../../library/mailbox.rst:282
 msgid "Unlike with dictionaries, keyword arguments are not supported."
@@ -353,6 +417,9 @@ msgid ""
 "subclasses, changes are always written immediately and :meth:`!flush` does "
 "nothing, but you should still make a habit of calling this method."
 msgstr ""
+"将所有待定的更改写入到文件系统。 对于某些 :class:`Mailbox` 子类来说，更改总是"
+"被立即写入因而 :meth:`!flush` 将不做任何事，但你仍然应当养成调用此方法的习"
+"惯。"
 
 #: ../../library/mailbox.rst:294
 msgid ""
@@ -375,10 +442,12 @@ msgid ""
 "Flush the mailbox, unlock it if necessary, and close any open files. For "
 "some :class:`!Mailbox` subclasses, this method does nothing."
 msgstr ""
+"刷新邮箱，如有必要则将其解锁，并关闭所有打开的文件。 对于某些 :class:`!"
+"Mailbox` 子类来说，此方法不会做任何事。"
 
 #: ../../library/mailbox.rst:315
 msgid ":class:`!Maildir` objects"
-msgstr ""
+msgstr ":class:`!Maildir` 对象"
 
 #: ../../library/mailbox.rst:320
 msgid ""
@@ -447,6 +516,11 @@ msgid ""
 "nesting is indicated using ``'.'`` to delimit levels, e.g., "
 "\"Archived.2005.07\"."
 msgstr ""
+"Courier 邮件传输代理所引入的文件夹风格也是受支持的。 主邮箱中任何子目录只要其"
+"名称的第一个字符是 ``'.'`` 就会被视为文件夹。 文件夹名称会被 :class:`!"
+"Maildir` 表示为不带前缀 ``'.'`` 的形式。 每个文件夹自身都是一个 Maildir 邮箱"
+"但不应包含其他文件夹。 逻辑嵌套关系是使用 ``'.'`` 来划定层级，例如 "
+"\"Archived.2005.07\"。"
 
 #: ../../library/mailbox.rst:355
 msgid ""
@@ -462,13 +536,13 @@ msgstr ""
 
 #: ../../library/mailbox.rst:365
 msgid "The :attr:`!colon` attribute may also be set on a per-instance basis."
-msgstr ""
+msgstr ":attr:`!colon` 属性也可以在每个实例上分别设置。"
 
 #: ../../library/mailbox.rst:367
 msgid ""
 ":class:`!Maildir` instances have all of the methods of :class:`Mailbox` in "
 "addition to the following:"
-msgstr ""
+msgstr ":class:`!Maildir` 实例具有 :class:`Mailbox` 的所有方法及下列附加方法："
 
 #: ../../library/mailbox.rst:373 ../../library/mailbox.rst:545
 msgid "Return a list of the names of all folders."
@@ -480,12 +554,15 @@ msgid ""
 "*folder*. A :exc:`NoSuchMailboxError` exception is raised if the folder does "
 "not exist."
 msgstr ""
+"返回表示名称为 *folder* 的文件夹的 :class:`!Maildir` 实例。 如果文件夹不存在"
+"则会引发 :exc:`NoSuchMailboxError` 异常。"
 
 #: ../../library/mailbox.rst:385
 msgid ""
 "Create a folder whose name is *folder* and return a :class:`!Maildir` "
 "instance representing it."
 msgstr ""
+"创建一个名称为 *folder* 的文件夹并返回代表它的 :class:`!Maildir` 实例。"
 
 #: ../../library/mailbox.rst:391 ../../library/mailbox.rst:563
 msgid ""
@@ -509,7 +586,7 @@ msgstr ""
 msgid ""
 "Some :class:`Mailbox` methods implemented by :class:`!Maildir` deserve "
 "special remarks:"
-msgstr ""
+msgstr ":class:`!Maildir` 所实现的某些 :class:`Mailbox` 方法值得进行特别说明："
 
 #: ../../library/mailbox.rst:412
 msgid ""
@@ -539,6 +616,8 @@ msgid ""
 ":class:`!Maildir` instances do not keep any open files and the underlying "
 "mailboxes do not support locking, so this method does nothing."
 msgstr ""
+":class:`!Maildir` 实例不保留任何打开的文件并且下层的邮箱不支持锁定操作。 所以"
+"此方法不会做任何事情。"
 
 #: ../../library/mailbox.rst:439
 msgid ""
@@ -573,7 +652,7 @@ msgstr ""
 
 #: ../../library/mailbox.rst:457
 msgid ":class:`!mbox` objects"
-msgstr ""
+msgstr ":class:`!mbox` 对象"
 
 #: ../../library/mailbox.rst:462
 msgid ""
@@ -610,12 +689,17 @@ msgid ""
 "message, although occurrences of \">From \" are not transformed to \"From \" "
 "when reading the message."
 msgstr ""
+"还有一些 mbox 格式的变种对原始格式中发现的缺点做了改进。 为了保证兼容性，:"
+"class:`!mbox` 只实现了原始格式，或称 :dfn:`mboxo` 格式。 这意味着当存储消息"
+"时，如果存在 :mailheader:`Content-Length` 标头，它将被忽略并且消息体中出现于"
+"行开头的任何 \"From \" 都会被转换为 \">From \"，但是当读取消息时 \">From \" "
+"则不会被转换为 \"From \"。"
 
 #: ../../library/mailbox.rst:481
 msgid ""
 "Some :class:`Mailbox` methods implemented by :class:`!mbox` deserve special "
 "remarks:"
-msgstr ""
+msgstr ":class:`!mbox` 所实现的某些 :class:`Mailbox` 方法值得进行特别的说明："
 
 #: ../../library/mailbox.rst:487
 msgid ""
@@ -623,6 +707,8 @@ msgid ""
 "close` on the :class:`!mbox` instance may yield unpredictable results or "
 "raise an exception."
 msgstr ""
+"在 :class:`!mbox` 实例上调用 :meth:`~Mailbox.flush` 或 :meth:`~Mailbox."
+"close` 之后再使用文件可能产生无法预料的结果或者引发异常。"
 
 #: ../../library/mailbox.rst:495 ../../library/mailbox.rst:704
 #: ../../library/mailbox.rst:755
@@ -671,7 +757,7 @@ msgstr "有关 mbox 变种的历史。"
 
 #: ../../library/mailbox.rst:514
 msgid ":class:`!MH` objects"
-msgstr ""
+msgstr ":class:`!MH` 对象"
 
 #: ../../library/mailbox.rst:519
 msgid ""
@@ -710,12 +796,15 @@ msgid ""
 "and is not affected by the :file:`context` or :file:`.mh_profile` files that "
 "are used by :program:`mh` to store its state and configuration."
 msgstr ""
+":class:`!MH` 类可以操作 MH 邮箱，但它并不试图模拟 :program:`mh` 的所有行为。 "
+"特别地，它并不会修改 :file:`context` 或 :file:`.mh_profile` 文件也不会受其影"
+"响，这两个文件是 :program:`mh` 用来存储状态和配置数据的。"
 
 #: ../../library/mailbox.rst:539
 msgid ""
 ":class:`!MH` instances have all of the methods of :class:`Mailbox` in "
 "addition to the following:"
-msgstr ""
+msgstr ":class:`!MH` 实例具有 :class:`Mailbox` 的所有方法及下列附加方法："
 
 #: ../../library/mailbox.rst:550
 msgid ""
@@ -723,12 +812,14 @@ msgid ""
 "*folder*. A :exc:`NoSuchMailboxError` exception is raised if the folder does "
 "not exist."
 msgstr ""
+"返回表示名称为 *folder* 的文件夹的 :class:`!MH` 实例。 如果文件夹不存在则会引"
+"发 :exc:`NoSuchMailboxError` 异常。"
 
 #: ../../library/mailbox.rst:557
 msgid ""
 "Create a folder whose name is *folder* and return an :class:`!MH` instance "
 "representing it."
-msgstr ""
+msgstr "创建名称为 *folder* 的文件夹并返回表示它的 :class:`!MH` 实例。"
 
 #: ../../library/mailbox.rst:570
 msgid ""
@@ -763,7 +854,7 @@ msgstr "已发送的键会因此操作而失效并且不应当被继续使用。
 msgid ""
 "Some :class:`Mailbox` methods implemented by :class:`!MH` deserve special "
 "remarks:"
-msgstr ""
+msgstr ":class:`!MH` 所实现的某些 :class:`Mailbox` 方法值得进行特别的说明："
 
 #: ../../library/mailbox.rst:599
 msgid ""
@@ -802,6 +893,7 @@ msgid ""
 ":class:`!MH` instances do not keep any open files, so this method is "
 "equivalent to :meth:`unlock`."
 msgstr ""
+":class:`!MH` 实例不会保留任何打开的文件，所以此方法等价于 :meth:`unlock`。"
 
 #: ../../library/mailbox.rst:634
 msgid "`nmh - Message Handling System <https://www.nongnu.org/nmh/>`_"
@@ -831,7 +923,7 @@ msgstr ""
 
 #: ../../library/mailbox.rst:644
 msgid ":class:`!Babyl` objects"
-msgstr ""
+msgstr ":class:`!Babyl` 对象"
 
 #: ../../library/mailbox.rst:649
 msgid ""
@@ -881,7 +973,7 @@ msgstr ""
 msgid ""
 ":class:`!Babyl` instances have all of the methods of :class:`Mailbox` in "
 "addition to the following:"
-msgstr ""
+msgstr ":class:`!Babyl` 实例具有 :class:`Mailbox` 的所有方法及下列附加方法："
 
 #: ../../library/mailbox.rst:677
 msgid ""
@@ -901,7 +993,7 @@ msgstr ""
 msgid ""
 "Some :class:`Mailbox` methods implemented by :class:`!Babyl` deserve special "
 "remarks:"
-msgstr ""
+msgstr ":class:`!Babyl` 所实现的某些 :class:`Mailbox` 方法值得进行特别的说明："
 
 #: ../../library/mailbox.rst:692
 msgid ""
@@ -941,7 +1033,7 @@ msgstr "Rmail 的帮助手册，包含了有关 Babyl 语义的一些信息。"
 
 #: ../../library/mailbox.rst:720
 msgid ":class:`!MMDF` objects"
-msgstr ""
+msgstr ":class:`!MMDF` 对象"
 
 #: ../../library/mailbox.rst:725
 msgid ""
@@ -980,7 +1072,7 @@ msgstr ""
 msgid ""
 "Some :class:`Mailbox` methods implemented by :class:`!MMDF` deserve special "
 "remarks:"
-msgstr ""
+msgstr ":class:`!MMDF` 所实现的某些 :class:`Mailbox` 方法值得进行特别的说明："
 
 #: ../../library/mailbox.rst:747
 msgid ""
@@ -988,6 +1080,8 @@ msgid ""
 "close` on the :class:`!MMDF` instance may yield unpredictable results or "
 "raise an exception."
 msgstr ""
+"在 :class:`!MMDF` 实例上调用 :meth:`~Mailbox.flush` 或 :meth:`~Mailbox."
+"close` 之后再使用文件可能产生无法预料的结果或者引发异常。"
 
 #: ../../library/mailbox.rst:762
 msgid ""
@@ -1015,7 +1109,7 @@ msgstr ""
 
 #: ../../library/mailbox.rst:772
 msgid ":class:`!Message` objects"
-msgstr ""
+msgstr ":class:`!Message` 对象"
 
 #: ../../library/mailbox.rst:777
 msgid ""
@@ -1023,6 +1117,8 @@ msgid ""
 "Message`. Subclasses of :class:`!mailbox.Message` add mailbox-format-"
 "specific state and behavior."
 msgstr ""
+":mod:`email.message` 模块的 :class:`~email.message.Message` 的子类。 :class:"
+"`!mailbox.Message` 的子类添加了特定邮箱格式专属的状态和行为。"
 
 #: ../../library/mailbox.rst:781
 msgid ""
@@ -1035,6 +1131,12 @@ msgid ""
 "open in binary mode, but text mode files are accepted for backward "
 "compatibility."
 msgstr ""
+"如果省略了 *message*，则新实例会以默认的空状态被创建。 如果 *message* 是一"
+"个 :class:`email.message.Message` 实例，其内容会被拷贝；此外，如果 *message* "
+"是一个 :class:`!Message` 实例，则任何格式专属信息会尽可能地被拷贝。 如果 "
+"*message* 是一个字符串、字节串或文件，则它应当包含兼容 :rfc:`2822` 的消息，该"
+"消息会被读取和解析。 文件应当以二进制模式打开，但文本模式的文件也会被接受以向"
+"下兼容。"
 
 #: ../../library/mailbox.rst:790
 msgid ""
@@ -1063,6 +1165,10 @@ msgid ""
 "custom message factory may be specified when a :class:`!Mailbox` instance is "
 "initialized."
 msgstr ""
+"不要求使用 :class:`!Message` 实例来表示使用 :class:`Mailbox` 实例所提取到的消"
+"息。 在某些情况下，生成 :class:`!Message` 表示形式所需的时间和内存空间可能是"
+"不可接受的。 对于此类情况，:class:`!Mailbox` 实例还提供了字符串和文件类表示形"
+"式，并可在初始化 :class:`!Mailbox` 实例时设置自定义的消息工厂函数。"
 
 #: ../../library/mailbox.rst:810
 msgid ":class:`!MaildirMessage` objects"
