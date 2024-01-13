@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2001-2023, Python Software Foundation
+# Copyright (C) 2001-2024, Python Software Foundation
 # This file is distributed under the same license as the Python package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -12,8 +12,8 @@
 # Lu <lu2github@gmail.com>, 2022
 # Shan Su, 2023
 # Bryan不可思议, 2023
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 # Nyuan Zhang, 2023
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 # Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-29 23:28+0000\n"
+"POT-Creation-Date: 2024-01-06 00:05+0000\n"
 "PO-Revision-Date: 2020-05-30 11:51+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -2272,6 +2272,14 @@ msgid ""
 "containing a tuple.  This isn't immediately obvious, and there's rarely a "
 "good reason to avoid implementing :c:member:`~PyTypeObject.tp_clear`."
 msgstr ""
+":c:member:`~PyTypeObject.tp_clear` 成员函数被用来打破垃圾回收器在循环垃圾中检"
+"测到的循环引用。 总的来说，系统中的所有 :c:member:`~PyTypeObject.tp_clear` 函"
+"数必须合到一起以打破所有引用循环。 这是个微妙的问题，并且如有任何疑问都需要提"
+"供 :c:member:`~PyTypeObject.tp_clear` 函数。 例如，元组类型不会实现 :c:"
+"member:`~PyTypeObject.tp_clear` 函数，因为有可能证明完全用元组是不会构成循环"
+"引用的。 因此其他类型的 :c:member:`~PyTypeObject.tp_clear` 函数必须足以打破任"
+"何包含元组的循环。 这不是立即能明确的，并且很少会有避免实现 :c:member:"
+"`~PyTypeObject.tp_clear` 的适当理由。"
 
 #: ../../c-api/typeobj.rst:1284
 msgid ""
@@ -2280,6 +2288,8 @@ msgid ""
 "and set its pointers to those members to ``NULL``, as in the following "
 "example::"
 msgstr ""
+":c:member:`~PyTypeObject.tp_clear` 的实现应当丢弃实例指向其成员的可能为 "
+"Python 对象的引用，并将指向这些成员的指针设为 ``NULL``，如下面的例子所示::"
 
 #: ../../c-api/typeobj.rst:1298
 msgid ""
@@ -2305,6 +2315,10 @@ msgid ""
 "and write the type's :c:member:`~PyTypeObject.tp_dealloc` function to "
 "invoke :c:member:`~PyTypeObject.tp_clear`."
 msgstr ""
+"因为 :c:member:`~PyTypeObject.tp_clear` 函数的目的是打破循环引用，所以不需要"
+"清除所包含的对象如 Python 字符串或 Python 整数，它们无法参与循环引用。 另一方"
+"面，清除所包含的全部 Python 对象，并编写类型的 :c:member:`~PyTypeObject."
+"tp_dealloc` 函数来发起调用 :c:member:`~PyTypeObject.tp_clear` 也很方便。"
 
 #: ../../c-api/typeobj.rst:1322
 msgid ""
@@ -2317,13 +2331,13 @@ msgstr ""
 #: ../../c-api/typeobj.rst:1330
 msgid ""
 "An optional pointer to the rich comparison function, whose signature is::"
-msgstr ""
+msgstr "一个可选的指向富比较函数的指针，函数的签名为::"
 
 #: ../../c-api/typeobj.rst:1334
 msgid ""
 "The first parameter is guaranteed to be an instance of the type that is "
 "defined by :c:type:`PyTypeObject`."
-msgstr ""
+msgstr "第一个形参将保证为 :c:type:`PyTypeObject` 所定义的类型的实例。"
 
 #: ../../c-api/typeobj.rst:1337
 msgid ""
@@ -2332,6 +2346,9 @@ msgid ""
 "``Py_NotImplemented``, if another error occurred it must return ``NULL`` and "
 "set an exception condition."
 msgstr ""
+"该函数应当返回比较的结果 (通常为 ``Py_True`` 或 ``Py_False``)。 如果未定义比"
+"较运算，它必须返回 ``Py_NotImplemented``，如果发生了其他错误则它必须返回 "
+"``NULL`` 并设置一个异常条件。"
 
 #: ../../c-api/typeobj.rst:1342
 msgid ""
@@ -2505,7 +2522,7 @@ msgstr ""
 
 #: ../../c-api/typeobj.rst:1435
 msgid "This function has the same signature as :c:func:`PyObject_GetIter`::"
-msgstr "此函数的命名与 :c:func:`PyObject_GetIter` 的相同::"
+msgstr "此函数的签名与 :c:func:`PyObject_GetIter` 的相同::"
 
 #: ../../c-api/typeobj.rst:1446
 msgid ""
@@ -2580,7 +2597,7 @@ msgstr ""
 msgid ""
 "This field is not inherited by subtypes (members are inherited through a "
 "different mechanism)."
-msgstr ""
+msgstr "该字段不会被子类型所继承（成员是通过不同的机制来继承的）。"
 
 #: ../../c-api/typeobj.rst:1498
 msgid ""
@@ -2588,18 +2605,22 @@ msgid ""
 "`PyGetSetDef` structures, declaring computed attributes of instances of this "
 "type."
 msgstr ""
+"一个可选的指向 :c:type:`PyGetSetDef` 结构体的以 ``NULL`` 结束的静态数组的指"
+"针，它声明了此类型的实例中被计算出的属性。"
 
 #: ../../c-api/typeobj.rst:1501
 msgid ""
 "For each entry in the array, an entry is added to the type's dictionary "
 "(see :c:member:`~PyTypeObject.tp_dict` below) containing a getset descriptor."
 msgstr ""
+"对于该数组中的每一项，都会向类型的字典 (参见下面的 :c:member:`~PyTypeObject."
+"tp_dict`) 添加一个包含读写描述器的条目。"
 
 #: ../../c-api/typeobj.rst:1506
 msgid ""
 "This field is not inherited by subtypes (computed attributes are inherited "
 "through a different mechanism)."
-msgstr ""
+msgstr "该字段不会被子类型所继承（被计算属性是通过不同的机制来继承的）。"
 
 #: ../../c-api/typeobj.rst:1512
 msgid ""
@@ -2608,6 +2629,8 @@ msgid ""
 "inheritance require dynamically creating a type object by calling the "
 "metatype."
 msgstr ""
+"一个可选的指向类型特征属性所继承的基类型的指针。 在这个层级上，只支持单继承；"
+"多重继承需要通过调用元类型动态地创建类型对象。"
 
 #: ../../c-api/typeobj.rst:1520
 msgid ""
@@ -2616,6 +2639,9 @@ msgid ""
 "like :c:func:`PyType_GenericNew`, with implicit conversion to a pointer, are "
 "valid C99 address constants."
 msgstr ""
+"槽位初始化需要遵循初始化全局变量的规则。 C99 要求初始化器为“地址常量”。 隐式"
+"转换为指针的函数指示器如 :c:func:`PyType_GenericNew` 都是有效的 C99 地址常"
+"量。"
 
 #: ../../c-api/typeobj.rst:1525
 msgid ""
@@ -2630,20 +2656,23 @@ msgid ""
 "Consequently, :c:member:`~PyTypeObject.tp_base` should be set in the "
 "extension module's init function."
 msgstr ""
+"因此，应当在扩展模块的初始化函数中设置 :c:member:`~PyTypeObject.tp_base`。"
 
 #: ../../c-api/typeobj.rst:1536
 msgid "This field is not inherited by subtypes (obviously)."
-msgstr ""
+msgstr "该字段不会被子类型继承（显然）。"
 
 #: ../../c-api/typeobj.rst:1540
 msgid ""
 "This field defaults to ``&PyBaseObject_Type`` (which to Python programmers "
 "is known as the type :class:`object`)."
 msgstr ""
+"该字段默认为 ``&PyBaseObject_Type`` (对 Python 程序员来说即 :class:`object` "
+"类型)。"
 
 #: ../../c-api/typeobj.rst:1546
 msgid "The type's dictionary is stored here by :c:func:`PyType_Ready`."
-msgstr ""
+msgstr "类型的字典将由 :c:func:`PyType_Ready` 存储到这里。"
 
 #: ../../c-api/typeobj.rst:1548
 msgid ""
@@ -2659,22 +2688,25 @@ msgid ""
 "This field is not inherited by subtypes (though the attributes defined in "
 "here are inherited through a different mechanism)."
 msgstr ""
+"该字段不会被子类型所继承（但在这里定义的属性是通过不同的机制来继承的）。"
 
 #: ../../c-api/typeobj.rst:1561
 msgid ""
 "If this field is ``NULL``, :c:func:`PyType_Ready` will assign a new "
 "dictionary to it."
-msgstr ""
+msgstr "如果该字段为 ``NULL``，:c:func:`PyType_Ready` 将为它分配一个新字典。"
 
 #: ../../c-api/typeobj.rst:1566
 msgid ""
 "It is not safe to use :c:func:`PyDict_SetItem` on or otherwise modify :c:"
 "member:`~PyTypeObject.tp_dict` with the dictionary C-API."
 msgstr ""
+"通过字典 C-API 使用 :c:func:`PyDict_SetItem` 或修改 :c:member:`~PyTypeObject."
+"tp_dict` 是不安全的。"
 
 #: ../../c-api/typeobj.rst:1572
 msgid "An optional pointer to a \"descriptor get\" function."
-msgstr ""
+msgstr "一个可选的指向“描述器获取”函数的指针。"
 
 #: ../../c-api/typeobj.rst:1574 ../../c-api/typeobj.rst:1590
 #: ../../c-api/typeobj.rst:1672 ../../c-api/typeobj.rst:1702
@@ -2783,7 +2815,7 @@ msgstr ""
 
 #: ../../c-api/typeobj.rst:1665
 msgid "An optional pointer to an instance initialization function."
-msgstr ""
+msgstr "一个可选的指向实例初始化函数的指针。"
 
 #: ../../c-api/typeobj.rst:1667
 msgid ""
@@ -2811,6 +2843,12 @@ msgid ""
 "tp_new` returns an instance of a subtype of the original type, the "
 "subtype's :c:member:`~PyTypeObject.tp_init` is called."
 msgstr ""
+":c:member:`~PyTypeObject.tp_init` 函数如果不为 ``NULL``，将在通过调用类型正常"
+"创建其实例时被调用，即在类型的 :c:member:`~PyTypeObject.tp_new` 函数返回一个"
+"该类型的实例时。 如果 :c:member:`~PyTypeObject.tp_new` 函数返回了一个不是原始"
+"类型的子类型的其他类型的实例，则 :c:member:`~PyTypeObject.tp_init` 函数不会被"
+"调用；如果 :c:member:`~PyTypeObject.tp_new` 返回了一个原始类型的子类型的实"
+"例，则该子类型的 :c:member:`~PyTypeObject.tp_init` 将被调用。"
 
 #: ../../c-api/typeobj.rst:1687
 msgid "Returns ``0`` on success, ``-1`` and sets an exception on error."
@@ -2831,12 +2869,16 @@ msgid ""
 "This field is inherited by static subtypes, but not by dynamic subtypes "
 "(subtypes created by a class statement)."
 msgstr ""
+"该字段会被静态子类型继承，但不会被动态子类型（通过 class 语句创建的子类型）继"
+"承。"
 
 #: ../../c-api/typeobj.rst:1713
 msgid ""
 "For dynamic subtypes, this field is always set to :c:func:"
 "`PyType_GenericAlloc`, to force a standard heap allocation strategy."
 msgstr ""
+"对于动态子类型，该字段总是会被设为 :c:func:`PyType_GenericAlloc`，以强制应用"
+"标准的堆分配策略。"
 
 #: ../../c-api/typeobj.rst:1717
 msgid ""
@@ -2847,7 +2889,7 @@ msgstr ""
 
 #: ../../c-api/typeobj.rst:1724
 msgid "An optional pointer to an instance creation function."
-msgstr ""
+msgstr "一个可选的指向实例创建函数的指针。"
 
 #: ../../c-api/typeobj.rst:1730
 msgid ""
@@ -2869,6 +2911,12 @@ msgid ""
 "`~PyTypeObject.tp_new`, while for mutable types, most initialization should "
 "be deferred to :c:member:`~PyTypeObject.tp_init`."
 msgstr ""
+":c:member:`~PyTypeObject.tp_new` 函数应当调用 ``subtype->tp_alloc(subtype, "
+"nitems)`` 来为对象分配空间，然后只执行绝对有必要的进一步初始化操作。 可以安全"
+"地忽略或重复的初始化操作应当放在 :c:member:`~PyTypeObject.tp_init` 处理句柄"
+"中。 一个关键的规则是对于不可变类型来说，所有初始化操作都应当在 :c:member:"
+"`~PyTypeObject.tp_new` 中发生，而对于可变类型，大部分初始化操作都应当推迟到 :"
+"c:member:`~PyTypeObject.tp_init` 再执行。"
 
 #: ../../c-api/typeobj.rst:1746
 msgid ""
@@ -2888,19 +2936,21 @@ msgstr ""
 #: ../../c-api/typeobj.rst:1759
 msgid ""
 "An optional pointer to an instance deallocation function.  Its signature is::"
-msgstr ""
+msgstr "一个可选的指向实例释放函数的指针。 函数的签名为::"
 
 #: ../../c-api/typeobj.rst:1763
 msgid ""
 "An initializer that is compatible with this signature is :c:func:"
 "`PyObject_Free`."
-msgstr ""
+msgstr "一个兼容该签名的初始化器是 :c:func:`PyObject_Free`。"
 
 #: ../../c-api/typeobj.rst:1767
 msgid ""
 "This field is inherited by static subtypes, but not by dynamic subtypes "
 "(subtypes created by a class statement)"
 msgstr ""
+"该字段会被静态子类型继承，但不会被动态子类型（通过 class 语句创建的子类型）继"
+"承"
 
 #: ../../c-api/typeobj.rst:1772
 msgid ""
@@ -2984,7 +3034,7 @@ msgstr "由对子类的弱引用组成的列表。 仅供内部使用。"
 msgid ""
 "Weak reference list head, for weak references to this type object.  Not "
 "inherited.  Internal use only."
-msgstr ""
+msgstr "弱引用列表头，用于指向该类型对象的弱引用。 不会被继承。 仅限内部使用。"
 
 #: ../../c-api/typeobj.rst:1861
 msgid ""
@@ -3082,6 +3132,8 @@ msgid ""
 "type:`PyTypeObject` structure is defined directly in code and initialized "
 "using :c:func:`PyType_Ready`."
 msgstr ""
+"在传统上，在 C 代码中定义的类型都是 *静态的*，也就是说，:c:type:"
+"`PyTypeObject` 结构体在代码中直接定义并使用 :c:func:`PyType_Ready` 来初始化。"
 
 #: ../../c-api/typeobj.rst:1960
 msgid ""
@@ -3431,7 +3483,7 @@ msgstr ""
 #: ../../c-api/typeobj.rst:2339
 msgid ""
 "This slot may be set to ``NULL`` if an object is not an :term:`awaitable`."
-msgstr ""
+msgstr "如果一个对象不是 :term:`awaitable` 则此槽位可被设为 ``NULL``。"
 
 #: ../../c-api/typeobj.rst:2347
 msgid ""
@@ -3442,7 +3494,7 @@ msgstr ""
 msgid ""
 "This slot may be set to ``NULL`` if an object does not implement "
 "asynchronous iteration protocol."
-msgstr ""
+msgstr "如果一个对象没有实现异步迭代协议则此槽位可被设为 ``NULL``。"
 
 #: ../../c-api/typeobj.rst:2358
 msgid ""
@@ -3509,7 +3561,7 @@ msgstr "返回对象的指定属性的值。"
 msgid ""
 "Set the value of the named attribute for the object. The value argument is "
 "set to ``NULL`` to delete the attribute."
-msgstr ""
+msgstr "为对象设置指定属性的值。 将 value 参数设为 ``NULL`` 将删除该属性。"
 
 #: ../../c-api/typeobj.rst:2421
 msgid "See :c:member:`~PyTypeObject.tp_getattro`."
