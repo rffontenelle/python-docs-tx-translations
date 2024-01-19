@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-05 16:41+0000\n"
+"POT-Creation-Date: 2024-01-19 16:40+0000\n"
 "PO-Revision-Date: 2023-05-24 02:08+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -36,6 +36,11 @@ msgid ""
 "detector's set of observed objects. Other fields of the object are not "
 "affected."
 msgstr ""
+"Инициализирует заново выделенный объект *op* с его типом и изначальной "
+"ссылкой. Возвращает инициализированный объект. Если *type* указывает на то, "
+"что объект участвует в циклическом детекторе мусора, то он добавляется к "
+"списку наблюдаемых детектором объектов. Остальные поля объекта остаются "
+"незатронутыми."
 
 #: ../../c-api/allocation.rst:26
 msgid ""
@@ -54,6 +59,12 @@ msgid ""
 "the memory allocation is determined from the :c:member:`~PyTypeObject."
 "tp_basicsize` field of the type object."
 msgstr ""
+"Выделяет  новый объект в Python используя C-структуру типа *TYPE* и объект "
+"Python'a типа *typeobj* (``PyTypeObject*``). Поля не определённые в "
+"заголовке объекта Python'a не инициализированы. Вызывающий будет владеть "
+"только ссылкой на объект (т.е. счётчик ссылок на него будет равен одному). "
+"Размер выделяемой памяти определяется в поле :c:member:`~PyTypeObject."
+"tp_basicsize` объекта типа."
 
 #: ../../c-api/allocation.rst:43
 msgid ""
@@ -67,6 +78,16 @@ msgid ""
 "same allocation decreases the number of allocations, improving the memory "
 "management efficiency."
 msgstr ""
+"Выделяет  новый объект в Python используя C-структуру типа *TYPE* и объект "
+"Python'a типа *typeobj* (``PyTypeObject*``). Поля не определённые в "
+"заголовке объекта Python'a не инициализированы. Выделенной памяти достаточно "
+"для размещения структуры типа *TYPE* плюс *size* (``Py_ssize_t``) поля этого "
+"размера указанного в поле :c:member:`~PyTypeObject.tp_itemsize` объекта "
+"*typeobj*. Это может быть полезно для реализации объектов схожих с "
+"\"кортежами\" (tuples), которые способны определять их собственный размер на "
+"этапе создания. Внедрение массива полей в процесс выделения памяти для "
+"объекта снижает общее количество выделений памяти, улучшая эффективность "
+"распределения памяти."
 
 #: ../../c-api/allocation.rst:57
 msgid ""
@@ -76,6 +97,9 @@ msgid ""
 "fields of the object should not be accessed after this call as the memory is "
 "no longer a valid Python object."
 msgstr ""
+"Высвобождает память выделенную для объекта с использованием :c:macro:"
+"`PyObject_New` или :c:macro:`PyObject_NewVar`. Вызывается обычно из "
+"обработчика :c:member:`~PyTypeObject.tp_dealloc` указанного в типе объекта."
 
 #: ../../c-api/allocation.rst:66
 msgid ""
@@ -83,9 +107,9 @@ msgid ""
 "using the :c:macro:`Py_None` macro, which evaluates to a pointer to this "
 "object."
 msgstr ""
-"Объект, который виден в Python как ``None``. Доступ к нему должен "
-"осуществляться только с помощью макроса :c:macro:`Py_None`, который "
-"вычисляет указатель на этот объект."
+"Объект, который виден в Python как ``None``.  Доступ к которому следует "
+"осуществлять с помощью макроса :c:macro:`Py_None`, который вычисляет "
+"указатель на этот объект."
 
 #: ../../c-api/allocation.rst:73
 msgid ":c:func:`PyModule_Create`"
