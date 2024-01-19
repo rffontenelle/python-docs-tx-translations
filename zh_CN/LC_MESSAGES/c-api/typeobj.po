@@ -15,6 +15,7 @@
 # Bryan不可思议, 2023
 # Nyuan Zhang, 2023
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Kevin Deng <kevindeng55+transifex@gmail.com>, 2024
 # Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
@@ -22,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-05 21:52+0000\n"
+"POT-Creation-Date: 2024-01-12 22:01+0000\n"
 "PO-Revision-Date: 2017-02-16 17:39+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -2615,7 +2616,7 @@ msgid ""
 "type."
 msgstr ""
 "一个可选的指向 :c:type:`PyGetSetDef` 结构体的以 ``NULL`` 结束的静态数组的指"
-"针，它声明了此类型的实例中被计算出的属性。"
+"针，它声明了此类型的实例中的被计算属性。"
 
 #: ../../c-api/typeobj.rst:1507
 msgid ""
@@ -3007,7 +3008,7 @@ msgstr ""
 
 #: ../../c-api/typeobj.rst:1815
 msgid "Tuple of base types."
-msgstr ""
+msgstr "基类型的元组。"
 
 #: ../../c-api/typeobj.rst:1817
 msgid ""
@@ -3052,16 +3053,16 @@ msgstr "弱引用列表头，用于指向该类型对象的弱引用。 不会�
 #: ../../c-api/typeobj.rst:1867
 msgid ""
 "This field is deprecated.  Use :c:member:`~PyTypeObject.tp_finalize` instead."
-msgstr ""
+msgstr "该字段已被弃用。 请改用 :c:member:`~PyTypeObject.tp_finalize`。"
 
 #: ../../c-api/typeobj.rst:1872
 msgid "Used to index into the method cache.  Internal use only."
-msgstr ""
+msgstr "用于索引至方法缓存。 仅限内部使用。"
 
 #: ../../c-api/typeobj.rst:1881
 msgid ""
 "An optional pointer to an instance finalization function.  Its signature is::"
-msgstr ""
+msgstr "一个可选的指向实例最终化函数的指针。 函数的签名为::"
 
 #: ../../c-api/typeobj.rst:1885
 msgid ""
@@ -3072,6 +3073,10 @@ msgid ""
 "before attempting to break reference cycles, ensuring that it finds the "
 "object in a sane state."
 msgstr ""
+"如果设置了 :c:member:`~PyTypeObject.tp_finalize`，解释器将在最终化特定实例时"
+"调用它一次。 它将由垃圾回收器调用（如果实例是单独循环引用的一部分）或是在对象"
+"被释放之前被调用。 不论是哪种方式，它都肯定会在尝试打破循环引用之前被调用，以"
+"确保它所操作的对象处于正常状态。"
 
 #: ../../c-api/typeobj.rst:1892
 msgid ""
@@ -3079,6 +3084,8 @@ msgid ""
 "exception status; therefore, a recommended way to write a non-trivial "
 "finalizer is::"
 msgstr ""
+":c:member:`~PyTypeObject.tp_finalize` 不应改变当前异常状态；因此，编写非关键"
+"终结器的推荐做法::"
 
 #: ../../c-api/typeobj.rst:1909
 msgid ""
@@ -3098,10 +3105,16 @@ msgid ""
 "care should be taken to ensure that destroying those objects on the thread "
 "which called tp_dealloc will not violate any assumptions of the library."
 msgstr ""
+"另外还需要注意，在应用垃圾回收机制的 Python 中，:c:member:`~PyTypeObject."
+"tp_dealloc` 可以从任意 Python 线程被调用，而不仅是创建该对象的线程（如果对象"
+"成为引用计数循环的一部分，则该循环可能会被任何线程上的垃圾回收操作所回收）。 "
+"这对 Python API 调用来说不是问题，因为 tp_dealloc 调用所在的线程将持有全局解"
+"释器锁（GIL）。 但是，如果被销毁的对象又销毁了来自其他 C 或 C++ 库的对象，则"
+"应当小心确保在调用 tp_dealloc 的线程上销毁这些对象不会破坏这些库的任何资源。"
 
 #: ../../c-api/typeobj.rst:1929
 msgid "\"Safe object finalization\" (:pep:`442`)"
-msgstr ""
+msgstr "\"安全的对象最终化\" (:pep:`442`)"
 
 #: ../../c-api/typeobj.rst:1934
 msgid ""
@@ -3135,19 +3148,21 @@ msgstr ""
 #: ../../c-api/typeobj.rst:1956
 msgid ""
 "This results in types that are limited relative to types defined in Python:"
-msgstr ""
+msgstr "这就导致了与在 Python 中定义的类型相关联的类型限制："
 
 #: ../../c-api/typeobj.rst:1958
 msgid ""
 "Static types are limited to one base, i.e. they cannot use multiple "
 "inheritance."
-msgstr ""
+msgstr "静态类型只能拥有一个基类；换句话说，他们不能使用多重继承。"
 
 #: ../../c-api/typeobj.rst:1960
 msgid ""
 "Static type objects (but not necessarily their instances) are immutable. It "
 "is not possible to add or modify the type object's attributes from Python."
 msgstr ""
+"静态类型对象（但并非它们的实例）是不可变对象。 不可能在 Python 中添加或修改类"
+"型对象的属性。"
 
 #: ../../c-api/typeobj.rst:1962
 msgid ""
@@ -3155,6 +3170,8 @@ msgid ""
 "interpreter-support>`, so they should not include any subinterpreter-"
 "specific state."
 msgstr ""
+"静态类型对象是跨 :ref:`子解释器 <sub-interpreter-support>` 共享的，因此它们不"
+"应包括任何子解释器专属的状态。"
 
 #: ../../c-api/typeobj.rst:1966
 msgid ""
@@ -3178,7 +3195,7 @@ msgstr ""
 
 #: ../../c-api/typeobj.rst:1981
 msgid "Number Object Structures"
-msgstr ""
+msgstr "数字对象结构体Number Object Structures"
 
 #: ../../c-api/typeobj.rst:1988
 msgid ""
@@ -3186,10 +3203,12 @@ msgid ""
 "implement the number protocol.  Each function is used by the function of "
 "similar name documented in the :ref:`number` section."
 msgstr ""
+"该结构体持有指向被对象用来实现数字协议的函数的指针。 每个函数都被 :ref:"
+"`number` 一节中记录的对应名称的函数所使用。"
 
 #: ../../c-api/typeobj.rst:1994 ../../c-api/typeobj.rst:2318
 msgid "Here is the structure definition::"
-msgstr ""
+msgstr "结构体定义如下::"
 
 #: ../../c-api/typeobj.rst:2041
 msgid ""
@@ -3200,6 +3219,10 @@ msgid ""
 "``Py_NotImplemented``, if another error occurred they must return ``NULL`` "
 "and set an exception."
 msgstr ""
+"双目和三目函数必须检查其所有操作数的类型，并实现必要的转换（至少有一个操作数"
+"是所定义类型的实例）。 如果没有为所给出的操作数定义操作，则双目和三目函数必须"
+"返回 ``Py_NotImplemented``，如果发生了其他错误则它们必须返回 ``NULL`` 并设置"
+"一个异常。"
 
 #: ../../c-api/typeobj.rst:2050
 msgid ""
@@ -3209,13 +3232,13 @@ msgstr ""
 
 #: ../../c-api/typeobj.rst:2095
 msgid "Mapping Object Structures"
-msgstr ""
+msgstr "映射对象结构体"
 
 #: ../../c-api/typeobj.rst:2102
 msgid ""
 "This structure holds pointers to the functions which an object uses to "
 "implement the mapping protocol.  It has three members:"
-msgstr ""
+msgstr "该结构体持有指向对象用于实现映射协议的函数的指针。 它有三个成员："
 
 #: ../../c-api/typeobj.rst:2107
 msgid ""
@@ -3223,6 +3246,8 @@ msgid ""
 "`PyObject_Size`, and has the same signature.  This slot may be set to "
 "``NULL`` if the object has no defined length."
 msgstr ""
+"该函数将被 :c:func:`PyMapping_Size` 和 :c:func:`PyObject_Size` 使用，并具有相"
+"同的签名。 如果对象没有定义长度则此槽位可被设为 ``NULL``。"
 
 #: ../../c-api/typeobj.rst:2113
 msgid ""
@@ -3231,6 +3256,9 @@ msgid ""
 "PyObject_GetItem`.  This slot must be filled for the :c:func:"
 "`PyMapping_Check` function to return ``1``, it can be ``NULL`` otherwise."
 msgstr ""
+"该函数将被 :c:func:`PyObject_GetItem` 和 :c:func:`PySequence_GetSlice` 使用，"
+"并具有与 :c:func:`!PyObject_GetItem` 相同的签名。 此槽位必须被填充以便 :c:"
+"func:`PyMapping_Check` 函数返回 ``1``，否则它可以为 ``NULL``。"
 
 #: ../../c-api/typeobj.rst:2121
 msgid ""
@@ -3244,13 +3272,13 @@ msgstr ""
 
 #: ../../c-api/typeobj.rst:2132
 msgid "Sequence Object Structures"
-msgstr ""
+msgstr "序列对象结构体"
 
 #: ../../c-api/typeobj.rst:2139
 msgid ""
 "This structure holds pointers to the functions which an object uses to "
 "implement the sequence protocol."
-msgstr ""
+msgstr "该结构体持有指向对象用于实现序列协议的函数的指针。"
 
 #: ../../c-api/typeobj.rst:2144
 msgid ""
@@ -3259,6 +3287,9 @@ msgid ""
 "negative indices via the :c:member:`~PySequenceMethods.sq_item` and the :c:"
 "member:`~PySequenceMethods.sq_ass_item` slots."
 msgstr ""
+"此函数被 :c:func:`PySequence_Size` 和 :c:func:`PyObject_Size` 所使用，并具有"
+"与它们相同的签名。 它还被用于通过 :c:member:`~PySequenceMethods.sq_item` 和 :"
+"c:member:`~PySequenceMethods.sq_ass_item` 槽位来处理负索引号。"
 
 #: ../../c-api/typeobj.rst:2151
 msgid ""
@@ -3266,6 +3297,9 @@ msgid ""
 "signature.  It is also used by the ``+`` operator, after trying the numeric "
 "addition via the :c:member:`~PyNumberMethods.nb_add` slot."
 msgstr ""
+"此函数被 :c:func:`PySequence_Concat` 所使用并具有相同的签名。 在尝试通过 :c:"
+"member:`~PyNumberMethods.nb_add` 槽位执行数值相加之后它还会被用于 ``+`` 运算"
+"符。"
 
 #: ../../c-api/typeobj.rst:2157
 msgid ""
@@ -3273,6 +3307,9 @@ msgid ""
 "signature.  It is also used by the ``*`` operator, after trying numeric "
 "multiplication via the :c:member:`~PyNumberMethods.nb_multiply` slot."
 msgstr ""
+"此函数被 :c:func:`PySequence_Repeat` 所使用并具有相同的签名。 在尝试通过 :c:"
+"member:`~PyNumberMethods.nb_multiply` 槽位执行数值相乘之后它还会被用于 ``*`` "
+"运算符。"
 
 #: ../../c-api/typeobj.rst:2163
 msgid ""
@@ -3282,6 +3319,10 @@ msgid ""
 "slot must be filled for the :c:func:`PySequence_Check` function to return "
 "``1``, it can be ``NULL`` otherwise."
 msgstr ""
+"此函数被 :c:func:`PySequence_GetItem` 所使用并具有相同的签名。 在尝试通过 :c:"
+"member:`~PyMappingMethods.mp_subscript` 槽位执行下标操作之后它还会被用于 :c:"
+"func:`PyObject_GetItem`。 该槽位必须被填充以便 :c:func:`PySequence_Check` 函"
+"数返回 ``1``，否则它可以为 ``NULL``。"
 
 #: ../../c-api/typeobj.rst:2169
 msgid ""
@@ -3299,6 +3340,10 @@ msgid ""
 "member:`~PyMappingMethods.mp_ass_subscript` slot. This slot may be left to "
 "``NULL`` if the object does not support item assignment and deletion."
 msgstr ""
+"此函数被 :c:func:`PySequence_SetItem` 所使用并具有相同的签名。 在尝试通过 :c:"
+"member:`~PyMappingMethods.mp_ass_subscript` 槽位执行条目赋值和删除操作之后它"
+"还会被用于 :c:func:`PyObject_SetItem` 和 :c:func:`PyObject_DelItem`。 如果对"
+"象不支持条目和删除则该槽位可以保持为 ``NULL``。"
 
 #: ../../c-api/typeobj.rst:2185
 msgid ""
@@ -3319,6 +3364,11 @@ msgid ""
 "augmented assignment ``+=``, after trying numeric in-place addition via the :"
 "c:member:`~PyNumberMethods.nb_inplace_add` slot."
 msgstr ""
+"此函数被 :c:func:`PySequence_InPlaceConcat` 所使用并具有相同的签名。 它应当修"
+"改它的第一个操作数，并将其返回。 该槽位可以保持为 ``NULL``，在此情况下 :c:"
+"func:`!PySequence_InPlaceConcat` 将回退到 :c:func:`PySequence_Concat`。 在尝"
+"试通过 :c:member:`~PyNumberMethods.nb_inplace_add` 槽位执行数字原地相加之后它"
+"还会被用于增强赋值运算符 ``+=``。"
 
 #: ../../c-api/typeobj.rst:2201
 msgid ""
@@ -3329,10 +3379,15 @@ msgid ""
 "augmented assignment ``*=``, after trying numeric in-place multiplication "
 "via the :c:member:`~PyNumberMethods.nb_inplace_multiply` slot."
 msgstr ""
+"此函数被 :c:func:`PySequence_InPlaceRepeat` 所使用并具有相同的签名。 它应当修"
+"改它的第一个操作数，并将其返回。 该槽位可以保持为 ``NULL``，在此情况下 :c:"
+"func:`!PySequence_InPlaceRepeat` 将回退到 :c:func:`PySequence_Repeat`。 在尝"
+"试通过 :c:member:`~PyNumberMethods.nb_inplace_multiply` 槽位执行数字原地相乘"
+"之后它还会被用于增强赋值运算符 ``*=``。"
 
 #: ../../c-api/typeobj.rst:2212
 msgid "Buffer Object Structures"
-msgstr ""
+msgstr "缓冲区对象结构体"
 
 #: ../../c-api/typeobj.rst:2220
 msgid ""
@@ -3340,12 +3395,14 @@ msgid ""
 "protocol <bufferobjects>`. The protocol defines how an exporter object can "
 "expose its internal data to consumer objects."
 msgstr ""
+"此结构体持有指向 :ref:`缓冲区协议 <bufferobjects>` 所需要的函数的指针。 该协"
+"议定义了导出方对象要如何向消费方对象暴露其内部数据。"
 
 #: ../../c-api/typeobj.rst:2226 ../../c-api/typeobj.rst:2275
 #: ../../c-api/typeobj.rst:2328 ../../c-api/typeobj.rst:2339
 #: ../../c-api/typeobj.rst:2351
 msgid "The signature of this function is::"
-msgstr ""
+msgstr "此函数的签名为::"
 
 #: ../../c-api/typeobj.rst:2230
 msgid ""
@@ -3353,6 +3410,8 @@ msgid ""
 "Except for point (3), an implementation of this function MUST take these "
 "steps:"
 msgstr ""
+"处理发给 *exporter* 的请求来填充 *flags* 所指定的 *view*。 除第 (3) 点外，此"
+"函数的实现必须执行以下步骤："
 
 #: ../../c-api/typeobj.rst:2234
 msgid ""
@@ -3362,11 +3421,11 @@ msgstr ""
 
 #: ../../c-api/typeobj.rst:2237
 msgid "Fill in the requested fields."
-msgstr ""
+msgstr "填充请求的字段。"
 
 #: ../../c-api/typeobj.rst:2239
 msgid "Increment an internal counter for the number of exports."
-msgstr ""
+msgstr "递增用于保存导出次数的内部计数器。"
 
 #: ../../c-api/typeobj.rst:2241
 msgid ""
@@ -3375,13 +3434,15 @@ msgstr ""
 
 #: ../../c-api/typeobj.rst:2243
 msgid "Return ``0``."
-msgstr ""
+msgstr "返回 ``0``。"
 
 #: ../../c-api/typeobj.rst:2245
 msgid ""
 "If *exporter* is part of a chain or tree of buffer providers, two main "
 "schemes can be used:"
 msgstr ""
+"如果 *exporter* 是缓冲区提供方的链式或树型结构的一部分，则可以使用两种主要方"
+"案："
 
 #: ../../c-api/typeobj.rst:2248
 msgid ""
@@ -3402,6 +3463,9 @@ msgid ""
 "specific requests are in section :ref:`Buffer request types <buffer-request-"
 "types>`."
 msgstr ""
+"*view* 中每个字段的描述参见 :ref:`缓冲区结构体 <buffer-structure>` 一节，导出"
+"方对于特定请求应当如何反应参见 :ref:`缓冲区请求类型 <buffer-request-types>` "
+"一节。"
 
 #: ../../c-api/typeobj.rst:2260
 msgid ""
@@ -3411,18 +3475,24 @@ msgid ""
 "strides`, :c:member:`~Py_buffer.suboffsets` and :c:member:`~Py_buffer."
 "internal` are read-only for the consumer."
 msgstr ""
+"所有在 :c:type:`Py_buffer` 结构体中被指向的内存都属于导出方并必须保持有效直到"
+"不再有任何消费方。 :c:member:`~Py_buffer.format`, :c:member:`~Py_buffer."
+"shape`, :c:member:`~Py_buffer.strides`, :c:member:`~Py_buffer.suboffsets` "
+"和 :c:member:`~Py_buffer.internal` 对于消费方来说是只读的。"
 
 #: ../../c-api/typeobj.rst:2267
 msgid ""
 ":c:func:`PyBuffer_FillInfo` provides an easy way of exposing a simple bytes "
 "buffer while dealing correctly with all request types."
 msgstr ""
+":c:func:`PyBuffer_FillInfo` 提供了一种暴露简单字节缓冲区同时正确处理地所有请"
+"求类型的简便方式。"
 
 #: ../../c-api/typeobj.rst:2270
 msgid ""
 ":c:func:`PyObject_GetBuffer` is the interface for the consumer that wraps "
 "this function."
-msgstr ""
+msgstr ":c:func:`PyObject_GetBuffer` 是针对包装此函数的消费方的接口。"
 
 #: ../../c-api/typeobj.rst:2279
 msgid ""
@@ -3431,14 +3501,17 @@ msgid ""
 "``NULL``. Otherwise, a standard implementation of this function will take "
 "these optional steps:"
 msgstr ""
+"处理释放缓冲区资源的请求。 如果不需要释放任何资源，则 :c:member:"
+"`PyBufferProcs.bf_releasebuffer` 可以为 ``NULL``。 在其他情况下，此函数的标准"
+"实现将执行以下的可选步骤："
 
 #: ../../c-api/typeobj.rst:2284
 msgid "Decrement an internal counter for the number of exports."
-msgstr ""
+msgstr "递减用于保存导出次数的内部计数器。"
 
 #: ../../c-api/typeobj.rst:2286
 msgid "If the counter is ``0``, free all memory associated with *view*."
-msgstr ""
+msgstr "如果计数器为 ``0``，则释放所有关联到 *view* 的内存。"
 
 #: ../../c-api/typeobj.rst:2288
 msgid ""
@@ -3447,6 +3520,8 @@ msgid ""
 "constant, while a consumer MAY pass a copy of the original buffer as the "
 "*view* argument."
 msgstr ""
+"导出方必须使用 :c:member:`~Py_buffer.internal` 字段来记录缓冲区专属的资源。 "
+"该字段将确保恒定，而消费方则可能将原始缓冲区作为 *view* 参数传入。"
 
 #: ../../c-api/typeobj.rst:2294
 msgid ""
@@ -3459,17 +3534,19 @@ msgstr ""
 msgid ""
 ":c:func:`PyBuffer_Release` is the interface for the consumer that wraps this "
 "function."
-msgstr ""
+msgstr ":c:func:`PyBuffer_Release` 是针对包装此函数的消费方的接口。"
 
 #: ../../c-api/typeobj.rst:2307
 msgid "Async Object Structures"
-msgstr ""
+msgstr "异步对象结构体"
 
 #: ../../c-api/typeobj.rst:2315
 msgid ""
 "This structure holds pointers to the functions required to implement :term:"
 "`awaitable` and :term:`asynchronous iterator` objects."
 msgstr ""
+"此结构体将持有指向需要用来实现 :term:`awaitable` 和 :term:`asynchronous "
+"iterator` 对象的函数的指针。"
 
 #: ../../c-api/typeobj.rst:2332
 msgid ""
@@ -3504,7 +3581,7 @@ msgstr ""
 
 #: ../../c-api/typeobj.rst:2362
 msgid "Slot Type typedefs"
-msgstr ""
+msgstr "槽位类型 typedef"
 
 #: ../../c-api/typeobj.rst:2366
 msgid ""
@@ -3526,6 +3603,8 @@ msgid ""
 "allocate additional memory; that should be done by :c:member:`~PyTypeObject."
 "tp_new`."
 msgstr ""
+"此函数不应执行任何其他实例初始化操作，即使是分配额外内存也不应执行；那应当"
+"由 :c:member:`~PyTypeObject.tp_new` 来完成。"
 
 #: ../../c-api/typeobj.rst:2383
 msgid "See :c:member:`~PyTypeObject.tp_free`."
