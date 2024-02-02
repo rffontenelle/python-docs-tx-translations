@@ -961,6 +961,8 @@ msgid ""
 ":meth:`!http_error_\\<type\\>` --- signal that the handler knows how to "
 "handle HTTP errors with HTTP error code *type*."
 msgstr ""
+":meth:`!http_error_\\<type\\>` --- 表明该处理句柄知道如何处理 HTTP 错误代码 "
+"*type* 对应的 HTTP 错误。"
 
 #: ../../library/urllib.request.rst:640
 msgid "See |http_error_nnn|_ for more information."
@@ -971,12 +973,16 @@ msgid ""
 ":meth:`!<protocol>_error` --- signal that the handler knows how to handle "
 "errors from (non-\\ ``http``) *protocol*."
 msgstr ""
+":meth:`!<protocol>_error` --- 表明该处理句柄知道如何处理来自 (非 ``http``) "
+"*protocol* 的错误。"
 
 #: ../../library/urllib.request.rst:645
 msgid ""
 ":meth:`!<protocol>_request` --- signal that the handler knows how to pre-"
 "process *protocol* requests."
 msgstr ""
+":meth:`!<protocol>_request` --- 表明该处理句柄知道如何预处理 *protocol* 请"
+"求。"
 
 #: ../../library/urllib.request.rst:648
 msgid "See |protocol_request|_ for more information."
@@ -987,6 +993,8 @@ msgid ""
 ":meth:`!<protocol>_response` --- signal that the handler knows how to post-"
 "process *protocol* responses."
 msgstr ""
+":meth:`!<protocol>_response` --- 表明该处理句柄知道如何后继处理 *protocol* 响"
+"应。"
 
 #: ../../library/urllib.request.rst:653
 msgid "See |protocol_response|_ for more information."
@@ -1017,6 +1025,10 @@ msgid ""
 "code to determine the specific error handler; refer to the :meth:`!"
 "http_error_\\<type\\>` methods of the handler classes."
 msgstr ""
+"处理一个给定协议的错误。 这将调用针对给定协议的已注册错误处理句柄并附带给定的"
+"参数（这是协议专属的）。 HTTP 协议是一种特殊情况，它使用 HTTP 响应码来确定具"
+"体的错误处理句柄；请参阅错误处理句柄类的 :meth:`!http_error_\\<type\\>` 方"
+"法。"
 
 #: ../../library/urllib.request.rst:680
 msgid ""
@@ -1038,6 +1050,8 @@ msgid ""
 "Every handler with a method named like :meth:`!<protocol>_request` has that "
 "method called to pre-process the request."
 msgstr ""
+"每个具有名称为 :meth:`!<protocol>_request` 的方法的错误处理句柄都会调用该方法"
+"来对请求进行预处理。"
 
 #: ../../library/urllib.request.rst:690
 msgid ""
@@ -1046,6 +1060,9 @@ msgid ""
 "const:`None` value (ie. a response), or raises an exception (usually :exc:"
 "`~urllib.error.URLError`).  Exceptions are allowed to propagate."
 msgstr ""
+"具有名称为 :meth:`!<protocol>_open` 的方法的错误处理句柄将被调用以处理请求。 "
+"这一阶段将在错误处理句柄返回非 :const:`None` 值 (即一个响应) 或者引发异常 (通"
+"常为 :exc:`~urllib.error.URLError`) 时结束。 异常将被允许传播。"
 
 #: ../../library/urllib.request.rst:695
 msgid ""
@@ -1055,6 +1072,10 @@ msgid ""
 "all such methods return :const:`None`, the algorithm is repeated for methods "
 "named :meth:`~BaseHandler.unknown_open`."
 msgstr ""
+"实际上，以上算法会先尝试名为 :meth:`~BaseHandler.default_open` 的方法。 如果"
+"这些方法全都返回 :const:`None`，则会对名为 :meth:`!<protocol>_open` 的方法重"
+"复此算法。 如果这些方法也全都返回 :const:`None`，则会继承对名为 :meth:"
+"`~BaseHandler.unknown_open` 的方法重复此算法。"
 
 #: ../../library/urllib.request.rst:701
 msgid ""
@@ -1070,6 +1091,8 @@ msgid ""
 "Every handler with a method named like :meth:`!<protocol>_response` has that "
 "method called to post-process the response."
 msgstr ""
+"每个具有名称为 :meth:`!<protocol>_response` 的方法的错误处理句柄都会调用该方"
+"法来对响应进行后续处理。"
 
 #: ../../library/urllib.request.rst:712
 msgid "BaseHandler Objects"
@@ -1132,6 +1155,11 @@ msgid ""
 "URLError`, unless a truly exceptional thing happens (for example, :exc:"
 "`MemoryError` should not be mapped to :exc:`~urllib.error.URLError`)."
 msgstr ""
+"如果实现了本方法，则它将被上级 :class:`OpenerDirector` 所调用。 它应当返回一"
+"个如 :class:`OpenerDirector` 的 :meth:`~OpenerDirector.open` 方法的返回值所描"
+"述的文件类对象，或是返回 ``None``。 它应当引发 :exc:`~urllib.error."
+"URLError`，除非发生真正的异常 (例如，:exc:`MemoryError` 就不应被映射为 :exc:"
+"`~urllib.error.URLError`)。"
 
 #: ../../library/urllib.request.rst:756
 msgid "This method will be called before any protocol-specific open method."
@@ -1151,6 +1179,8 @@ msgid ""
 "`OpenerDirector`. Return values should be the same as for  :meth:"
 "`~BaseHandler.default_open`."
 msgstr ""
+"此方法如果被定义，它将被上级 :class:`OpenerDirector` 调用。 返回值应当与 :"
+"meth:`~BaseHandler.default_open` 的相同。"
 
 #: ../../library/urllib.request.rst:772
 msgid ""
@@ -1217,6 +1247,8 @@ msgid ""
 "Arguments, return values and exceptions raised should be the same as for :"
 "meth:`~BaseHandler.http_error_default`."
 msgstr ""
+"参数、返回值和被引发的异常应当与 :meth:`~BaseHandler.http_error_default` 的相"
+"同。"
 
 #: ../../library/urllib.request.rst:814
 msgid ""
@@ -1275,6 +1307,8 @@ msgid ""
 "consideration if the HTTPRedirectHandler is presented with a redirected URL "
 "which is not an HTTP, HTTPS or FTP URL."
 msgstr ""
+"如果发给 HTTPRedirectHandler 的重定向 URL 不是 HTTP, HTTPS 或 FTP URL 则出于"
+"安全考虑将会引发 :exc:`~urllib.error.HTTPError` 异常。"
 
 #: ../../library/urllib.request.rst:854
 msgid ""
@@ -1367,6 +1401,10 @@ msgid ""
 "calling ``request.set_proxy()``, and call the next handler in the chain to "
 "actually execute the protocol."
 msgstr ""
+":class:`ProxyHandler` 将有对应每种 *protocol* 的 :meth:`!<protocol>_open` 方"
+"法，在构造函数给出的 *proxies* 字典中包含相应的代理。 通过调用 ``request."
+"set_proxy()``，本方法将把请求修改为通过代理，并调用链中的下一个处理句柄来实际"
+"执行协议。"
 
 #: ../../library/urllib.request.rst:934
 msgid "HTTPPasswordMgr Objects"
@@ -1621,6 +1659,10 @@ msgid ""
 "Eventually, :class:`HTTPDefaultErrorHandler` will raise an :exc:`~urllib."
 "error.HTTPError` if no other handler handles the error."
 msgstr ""
+"对于除 200 以外的错误代码，会仅通过 :meth:`OpenerDirector.error` 将任务传给 :"
+"meth:`!http_error_\\<type\\>` 处理句柄方法。 最终，如果没有其他处理句柄来处理"
+"该错误则 :class:`HTTPDefaultErrorHandler` 将引发 :exc:`~urllib.error."
+"HTTPError`。"
 
 #: ../../library/urllib.request.rst:1187
 msgid "Process HTTPS error responses."
@@ -1710,6 +1752,10 @@ msgid ""
 "involved.  For example, the :envvar:`!http_proxy` environment variable is "
 "read to obtain the HTTP proxy's URL."
 msgstr ""
+":func:`build_opener` 默认提供了许多处理句柄，包括 :class:`ProxyHandler`。 在"
+"默认情况下，:class:`ProxyHandler` 会使用名为 ``<scheme>_proxy`` 的环境变量，"
+"其中 ``<scheme>`` 是对应的 URL 方案。 例如，可以读取 :envvar:`!http_proxy` 环"
+"境变量可获得 HTTP 代理的 URL."
 
 #: ../../library/urllib.request.rst:1290
 msgid ""
@@ -1795,6 +1841,11 @@ msgid ""
 "meth:`!info` method of the object returned by :func:`urlopen` returned (for "
 "a remote object). Exceptions are the same as for :func:`urlopen`."
 msgstr ""
+"将一个 URL 形式的网络对象复制为本地文件。 如果 URL 指向一个本地文件，则必须提"
+"供文件名才会复制对象。 返回一个元组 ``(filename, headers)`` 其中 *filename* "
+"为保存该对象的本地文件名，而 *headers* 是由 :func:`urlopen` 返回的对象的 :"
+"meth:`!info` 方法的返回结果（对于远程对象）。 可引发的异常与 :func:`urlopen` "
+"的相同。"
 
 #: ../../library/urllib.request.rst:1385
 msgid ""
@@ -1837,6 +1888,11 @@ msgid ""
 "expected amount (which is the size reported by a  *Content-Length* header). "
 "This can occur, for example, when the  download is interrupted."
 msgstr ""
+":func:`urlretrieve` 在检测到可用数据少于预期大小（即由 *Content-Length* 标头"
+"所报告的大小）时将引发 :exc:`~urllib.error.ContentTooShortError`。 例如，这可"
+"能会在下载被中断时发生。 when it detects that the amount of data available  "
+"was less than the expected amount (which is the size reported by aheader). "
+"This can occur, for example, when the  download is interrupted."
 
 #: ../../library/urllib.request.rst:1412
 msgid ""
@@ -1852,6 +1908,8 @@ msgid ""
 "You can still retrieve the downloaded data in this case, it is stored in "
 "the :attr:`!content` attribute of the exception instance."
 msgstr ""
+"在此情况下你仍然能够获取已下载的数据，它将保存在异常实例的 :attr:`!content` "
+"属性中。"
 
 #: ../../library/urllib.request.rst:1419
 msgid ""
@@ -2014,6 +2072,8 @@ msgid ""
 "http_error_default` is called which you can override in subclasses to handle "
 "the error appropriately."
 msgstr ""
+"对于所有其他响应代码，将会调用 :meth:`~BaseHandler.http_error_default` 方法，"
+"你可以在子类中重写此方法来正确处理错误。"
 
 #: ../../library/urllib.request.rst:1516
 msgid ""
