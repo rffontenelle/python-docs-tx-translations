@@ -4,7 +4,8 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
 msgid ""
@@ -13,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-09 16:33+0000\n"
 "PO-Revision-Date: 2023-05-24 02:14+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2023\n"
+"Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -106,7 +107,7 @@ msgid ""
 msgstr ""
 "返回一个 :ref:`reader 对象 <reader-objects>`，该对象将处理给定 *csvfile* 中的"
 "行。 csvfile 必须是一个包含字符串的可迭代对象，使用 reader 所定义的 csv 格"
-"式。 csvfile 通常是一个文件类对象或列表。 如果 *csvfile* 是一个文件对象，则打"
+"式。 csvfile 通常是一个文件型对象或列表。 如果 *csvfile* 是一个文件对象，则打"
 "开它时应设置 ``newline=''``. [1]_  给定可选 *dialect* 形参将被用于定义一组专"
 "属于特定 CSV 变种的形参。 它可以是 :class:`Dialect` 类的子类的实例，或是 :"
 "func:`list_dialects` 函数所返回的字符串之一。 另一个可选关键字形参 "
@@ -148,6 +149,17 @@ msgid ""
 "without preprocessing the data returned from a ``cursor.fetch*`` call. All "
 "other non-string data are stringified with :func:`str` before being written."
 msgstr ""
+"返回一个 writer 对象，该对象负责将用户的数据在给定的文件型对象上转换为带分隔"
+"符的字符串。 *csvfile* 可以是任何具有 :meth:`~io.TextIOBase.write` 方法的对"
+"象。 如果 *csvfile* 是一个文件对象，则打开它时应使用 ``newline=''`` [1]_。 可"
+"以给出可选的 *dialect* 形参用来定义一组特定 CSV 变种专属的形参。 它可以是 :"
+"class:`Dialect` 类的某个子类的实例或是 :func:`list_dialects` 函数所返回的字符"
+"串之一。 还可以给出另一个可选的 *fmtparams* 关键字参数来覆盖当前变种中的单个"
+"格式化形参。 有关各个变种和格式化形参的完整细节，请参阅 :ref:`csv-fmt-"
+"params` 部分。 为了尽量简化与实现 DB API 的模块之间的接口，可以将 :const:"
+"`None` 作为空字符串写入。 虽然这个转换是不可逆的，但它可以简化 SQL NULL 数据"
+"值到 CSV 文件的转储而无需预处理从 ``cursor.fetch*`` 调用返回的数据。 在被写入"
+"之前所有其他非字符串数据都会先用 :func:`str` 来转换为字符串。"
 
 #: ../../library/csv.rst:118
 msgid ""
@@ -255,6 +267,14 @@ msgid ""
 "dictionary are ignored. Any other optional or keyword arguments are passed "
 "to the underlying :class:`writer` instance."
 msgstr ""
+"创建一个对象，该对象在操作上类似常规 writer，但会将字典映射到输出行。 "
+"*fieldnames* 形参是一个由键组成的 :mod:`序列 <collections.abc>`，它指定字典中"
+"要传给 :meth:`~csvwriter.writerow` 方法并写入文件 *f* 的值的顺序。 如果字典没"
+"有 *fieldnames* 中的键，则可选的 *restval* 形参将指明要写入的值。 如果传递"
+"给 :meth:`~csvwriter.writerow` 方法包含的键在 *fieldnames* 中找不到，则可选"
+"的 *extrasaction* 形参将指明要执行的操作。 如果将其设为默认值 ``'raise'``，则"
+"会引发 :exc:`ValueError`。 如果将其设为 ``'ignore'``，则字典中额外的值将被忽"
+"略。 任何其他可选或关键字参数都将被传递给下层的 :class:`writer` 实例。"
 
 #: ../../library/csv.rst:210
 msgid ""
@@ -438,6 +458,12 @@ msgid ""
 "specify individual formatting parameters, which have the same names as the "
 "attributes defined below for the :class:`Dialect` class."
 msgstr ""
+"为了更容易地指定输入和输出记录的格式，特定的多个格式化形参将组合成为不同的 "
+"dialect。 特定的 dialect 是 :class:`Dialect` 类的一个子类，它包含多个用于描"
+"述 CSV 文件的格式的属性。 当创建 :class:`reader` 或 :class:`writer` 对象时，"
+"程序员可以指定一个字符串或 :class:`Dialect` 类的子类作为 dialect 形参。 作为"
+"对 *dialect* 形参的补充或替代，程序员还可以指定单独的格式化形参，它们的名称"
+"与 :class:`Dialect` 类所定义的以下属性相同。"
 
 #: ../../library/csv.rst:362
 msgid "Dialects support the following attributes:"
@@ -601,6 +627,12 @@ msgid ""
 "problems for other programs which read CSV files (assuming they support "
 "complex numbers at all)."
 msgstr ""
+":class:`writer` 对象 (:class:`DictWriter` 实例和 :func:`writer` 函数所返回的"
+"对象 ) 具有以下公共方法。 对于 :class:`writer` 对象 *row* 必须是输出字符串或"
+"数字的可迭代对象的数字，而对于 :class:`DictWriter` 对象则是一个将文件名映射到"
+"字符串或数字 (会先将其传给 :func:`str`) 的字典。 请注意在写入复数时会用圆括号"
+"括起来。 这可能会给其他读取 CSV 文件的程序带来一些问题 (假定它们确实支持复"
+"数)。"
 
 #: ../../library/csv.rst:483
 msgid ""
