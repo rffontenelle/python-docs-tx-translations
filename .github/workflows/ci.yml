@@ -20,7 +20,6 @@ on:
 
 env:
   TX_CLI_VERSION: '1.6.10'
-  PYTHON_NEWEST: '3.12'      # Latest Python version being translated
   TX_PROJECT: python-newest  # Project name for the latest python version
 
 jobs:
@@ -128,7 +127,7 @@ jobs:
           pip3 install -r requirements.txt -r cpython/Doc/requirements.txt
 
       - name: Change Transifex project name if Python version != python-newest
-        if: ${{ matrix.cpython_version != env.PYTHON_NEWEST }}
+        if: ${{ matrix.cpython_version != steps.version.outputs.current }}
         shell: bash
         run: |
           ver=$(echo ${{ matrix.cpython_version }} | sed 's|\.||')
@@ -198,7 +197,7 @@ jobs:
           shopt -s globstar
           git diff -I'^"POT-Creation-Date: ' --numstat **/*.po **/*.pot | cut -f3 | xargs -r git add
           git add $(git ls-files -o --exclude-standard *.po *.pot) .tx/config
-          git diff-index --cached --quiet HEAD || { git commit -m "Update translations from ${{ env.BRANCH }}" && git push; }
+          git diff-index --cached --quiet HEAD || { git commit -m "Update translations from Transifex" && git push; }
 
 
   propagate_translations:
