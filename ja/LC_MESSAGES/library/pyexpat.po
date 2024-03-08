@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-19 19:10+0000\n"
+"POT-Creation-Date: 2024-03-08 16:05+0000\n"
 "PO-Revision-Date: 2022-11-05 17:22+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2022\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -296,11 +296,47 @@ msgstr ""
 "XML_ERROR_CANT_CHANGE_FEATURE_ONCE_PARSING]`` が設定されて例外 :exc:"
 "`ExpatError` が送出されます。"
 
-#: ../../library/pyexpat.rst:199
+#: ../../library/pyexpat.rst:203
+msgid ""
+"Calling ``SetReparseDeferralEnabled(False)`` has security implications, as "
+"detailed below; please make sure to understand these consequences prior to "
+"using the ``SetReparseDeferralEnabled`` method."
+msgstr ""
+
+#: ../../library/pyexpat.rst:207
+msgid ""
+"Expat 2.6.0 introduced a security mechanism called \"reparse deferral\" "
+"where instead of causing denial of service through quadratic runtime from "
+"reparsing large tokens, reparsing of unfinished tokens is now delayed by "
+"default until a sufficient amount of input is reached. Due to this delay, "
+"registered handlers may — depending of the sizing of input chunks pushed to "
+"Expat — no longer be called right after pushing new input to the parser.  "
+"Where immediate feedback and taking over responsiblity of protecting against "
+"denial of service from large tokens are both wanted, calling "
+"``SetReparseDeferralEnabled(False)`` disables reparse deferral for the "
+"current Expat parser instance, temporarily or altogether. Calling "
+"``SetReparseDeferralEnabled(True)`` allows re-enabling reparse deferral."
+msgstr ""
+
+#: ../../library/pyexpat.rst:220
+msgid ""
+"Note that :meth:`SetReparseDeferralEnabled` has been backported to some "
+"prior releases of CPython as a security fix.  Check for availability of :"
+"meth:`SetReparseDeferralEnabled` using :func:`hasattr` if used in code "
+"running across a variety of Python versions."
+msgstr ""
+
+#: ../../library/pyexpat.rst:229
+msgid ""
+"Returns whether reparse deferral is currently enabled for the given Expat "
+"parser instance."
+msgstr ""
+
+#: ../../library/pyexpat.rst:235
 msgid ":class:`xmlparser` objects have the following attributes:"
 msgstr ":class:`xmlparser` オブジェクトは次のような属性を持ちます:"
 
-#: ../../library/pyexpat.rst:204
+#: ../../library/pyexpat.rst:240
 msgid ""
 "The size of the buffer used when :attr:`buffer_text` is true. A new buffer "
 "size can be set by assigning a new integer value to this attribute. When the "
@@ -310,7 +346,7 @@ msgstr ""
 "整数値を代入することで違うバッファサイズにできます。サイズが変えられるときに"
 "バッファはフラッシュされます。"
 
-#: ../../library/pyexpat.rst:212
+#: ../../library/pyexpat.rst:248
 msgid ""
 "Setting this to true causes the :class:`xmlparser` object to buffer textual "
 "content returned by Expat to avoid multiple calls to the :meth:"
@@ -325,7 +361,7 @@ msgstr ""
 "Expatは通常、文字列のデータを行末ごと大量に破棄するため、かなりパフォーマンス"
 "を改善できるはずです。この属性はデフォルトでは偽で、いつでも変更可能です。"
 
-#: ../../library/pyexpat.rst:222
+#: ../../library/pyexpat.rst:258
 msgid ""
 "If :attr:`buffer_text` is enabled, the number of bytes stored in the buffer. "
 "These bytes represent UTF-8 encoded text.  This attribute has no meaningful "
@@ -335,7 +371,7 @@ msgstr ""
 "らのバイトはUTF-8でエンコードされたテキストを表します。この属性は :attr:"
 "`buffer_text` が偽の時には意味がありません。"
 
-#: ../../library/pyexpat.rst:229
+#: ../../library/pyexpat.rst:265
 msgid ""
 "Setting this attribute to a non-zero integer causes the attributes to be "
 "reported as a list rather than a dictionary.  The attributes are presented "
@@ -350,7 +386,7 @@ msgstr ""
 "の古いバージョンでも、同じフォーマットが使われています。) デフォルトでは、こ"
 "の属性はデフォルトでは偽となりますが、いつでも変更可能です。"
 
-#: ../../library/pyexpat.rst:239
+#: ../../library/pyexpat.rst:275
 msgid ""
 "If set to a non-zero integer, the parser will report only those attributes "
 "which were specified in the document instance and not those which were "
@@ -367,7 +403,7 @@ msgstr ""
 "ついて特に注意を払わなければなりません。デフォルトで、この属性は偽となります"
 "が、いつでも変更可能です。"
 
-#: ../../library/pyexpat.rst:247
+#: ../../library/pyexpat.rst:283
 msgid ""
 "The following attributes contain values relating to the most recent error "
 "encountered by an :class:`xmlparser` object, and will only have correct "
@@ -378,11 +414,11 @@ msgstr ""
 "する値が入っており、また :meth:`Parse` または :meth:`ParseFile` メソッドが :"
 "exc:`xml.parsers.expat.ExpatError` 例外を送出した際にのみ正しい値となります。"
 
-#: ../../library/pyexpat.rst:255
+#: ../../library/pyexpat.rst:291
 msgid "Byte index at which an error occurred."
 msgstr "エラーが発生したバイトのインデクスです。"
 
-#: ../../library/pyexpat.rst:260
+#: ../../library/pyexpat.rst:296
 msgid ""
 "Numeric code specifying the problem.  This value can be passed to the :func:"
 "`ErrorString` function, or compared to one of the constants defined in the "
@@ -391,15 +427,15 @@ msgstr ""
 "エラーを特定する数値によるコードです。この値は :func:`ErrorString` に渡した"
 "り、 ``errors`` オブジェクトで定義された内容と比較できます。"
 
-#: ../../library/pyexpat.rst:267
+#: ../../library/pyexpat.rst:303
 msgid "Column number at which an error occurred."
 msgstr "エラーの発生したカラム番号です。"
 
-#: ../../library/pyexpat.rst:272
+#: ../../library/pyexpat.rst:308
 msgid "Line number at which an error occurred."
 msgstr "エラーの発生した行番号です。"
 
-#: ../../library/pyexpat.rst:274
+#: ../../library/pyexpat.rst:310
 msgid ""
 "The following attributes contain values relating to the current parse "
 "location in an :class:`xmlparser` object.  During a callback reporting a "
@@ -414,19 +450,19 @@ msgstr ""
 "参照された時には、（対応するコールバックであるかにかかわらず）直前のパースイ"
 "ベントの位置を示します。"
 
-#: ../../library/pyexpat.rst:284
+#: ../../library/pyexpat.rst:320
 msgid "Current byte index in the parser input."
 msgstr "パーサへの入力の、現在のバイトインデックス。"
 
-#: ../../library/pyexpat.rst:289
+#: ../../library/pyexpat.rst:325
 msgid "Current column number in the parser input."
 msgstr "パーサへの入力の、現在のカラム番号。"
 
-#: ../../library/pyexpat.rst:294
+#: ../../library/pyexpat.rst:330
 msgid "Current line number in the parser input."
 msgstr "パーサへの入力の、現在の行番号。"
 
-#: ../../library/pyexpat.rst:296
+#: ../../library/pyexpat.rst:332
 msgid ""
 "Here is the list of handlers that can be set.  To set a handler on an :class:"
 "`xmlparser` object *o*, use ``o.handlername = func``.  *handlername* must be "
@@ -440,7 +476,7 @@ msgstr ""
 "正しい数の引数を受理する呼び出し可能なオブジェクトでなければなりません。引数"
 "は特に明記しない限り、すべて文字列となります。"
 
-#: ../../library/pyexpat.rst:305
+#: ../../library/pyexpat.rst:341
 msgid ""
 "Called when the XML declaration is parsed.  The XML declaration is the "
 "(optional) declaration of the applicable version of the XML recommendation, "
@@ -458,7 +494,7 @@ msgstr ""
 "ドアローン節がない場合は ``-1`` です。\n"
 "Expat のバージョン 1.95.0 以降でのみ使用できます。"
 
-#: ../../library/pyexpat.rst:316
+#: ../../library/pyexpat.rst:352
 msgid ""
 "Called when Expat begins parsing the document type declaration (``<!"
 "DOCTYPE ...``).  The *doctypeName* is provided exactly as presented.  The "
@@ -475,7 +511,7 @@ msgstr ""
 "*has_internal_subset* は true になります。このハンドラには、Expat version 1.2"
 "以上が必要です。"
 
-#: ../../library/pyexpat.rst:326
+#: ../../library/pyexpat.rst:362
 msgid ""
 "Called when Expat is done parsing the document type declaration. This "
 "requires Expat version 1.2 or newer."
@@ -483,7 +519,7 @@ msgstr ""
 "Expatが文書型宣言の解析を終えたときに呼び出されます。このハンドラには、Expat "
 "version 1.2以上が必要です。"
 
-#: ../../library/pyexpat.rst:332
+#: ../../library/pyexpat.rst:368
 msgid ""
 "Called once for each element type declaration.  *name* is the name of the "
 "element type, and *model* is a representation of the content model."
@@ -491,7 +527,7 @@ msgstr ""
 "それぞれの要素型宣言ごとに呼び出されます。 *name* は要素型の名前であり、 "
 "*model* は内容モデル (content model) の表現です。"
 
-#: ../../library/pyexpat.rst:338
+#: ../../library/pyexpat.rst:374
 msgid ""
 "Called for each declared attribute for an element type.  If an attribute "
 "list declaration declares three attributes, this handler is called three "
@@ -515,7 +551,7 @@ msgstr ""
 "タンス中に属性値を与える必要のあるときには *required* が true になります。こ"
 "れにはExpat version 1.95.0 以上が必要です。"
 
-#: ../../library/pyexpat.rst:352
+#: ../../library/pyexpat.rst:388
 msgid ""
 "Called for the start of every element.  *name* is a string containing the "
 "element name, and *attributes* is the element attributes. If :attr:"
@@ -528,15 +564,15 @@ msgstr ""
 "`ordered_attributes` を参照してください)。\n"
 "そうでなければ名前を値に対応させる辞書です。"
 
-#: ../../library/pyexpat.rst:361
+#: ../../library/pyexpat.rst:397
 msgid "Called for the end of every element."
 msgstr "要素の終端を処理するごとに呼び出されます。"
 
-#: ../../library/pyexpat.rst:366
+#: ../../library/pyexpat.rst:402
 msgid "Called for every processing instruction."
 msgstr "処理命令を処理するごとに呼び出されます。"
 
-#: ../../library/pyexpat.rst:371
+#: ../../library/pyexpat.rst:407
 msgid ""
 "Called for character data.  This will be called for normal character data, "
 "CDATA marked content, and ignorable whitespace.  Applications which must "
@@ -550,7 +586,7 @@ msgstr ""
 "`StartCdataSectionHandler`, :attr:`EndCdataSectionHandler`, and :attr:"
 "`ElementDeclHandler` コールバックメソッドを使用できます。"
 
-#: ../../library/pyexpat.rst:380
+#: ../../library/pyexpat.rst:416
 msgid ""
 "Called for unparsed (NDATA) entity declarations.  This is only present for "
 "version 1.2 of the Expat library; for more recent versions, use :attr:"
@@ -562,7 +598,7 @@ msgstr ""
 "バージョンでは、代わりに :attr:`EntityDeclHandler` を使用してください (根底に"
 "ある Expat ライブラリ内の関数は、撤廃されたものであると宣言されています)。"
 
-#: ../../library/pyexpat.rst:388
+#: ../../library/pyexpat.rst:424
 msgid ""
 "Called for all entity declarations.  For parameter and internal entities, "
 "*value* will be a string giving the declared contents of the entity; this "
@@ -583,7 +619,7 @@ msgstr ""
 "必要がありません)。このハンドラは Expat ライブラリのバージョン1.95.0 以降での"
 "み使用できます。"
 
-#: ../../library/pyexpat.rst:400
+#: ../../library/pyexpat.rst:436
 msgid ""
 "Called for notation declarations.  *notationName*, *base*, and *systemId*, "
 "and *publicId* are strings if given.  If the public identifier is omitted, "
@@ -593,7 +629,7 @@ msgstr ""
 "*systemId*, および *publicId* を与える場合、文字列にします。public な識別子が"
 "省略された場合、 *publicId* は ``None`` になります。"
 
-#: ../../library/pyexpat.rst:407
+#: ../../library/pyexpat.rst:443
 msgid ""
 "Called when an element contains a namespace declaration.  Namespace "
 "declarations are processed before the :attr:`StartElementHandler` is called "
@@ -603,7 +639,7 @@ msgstr ""
 "置されている要素に対して :attr:`StartElementHandler` が呼び出される前に処理さ"
 "れます。"
 
-#: ../../library/pyexpat.rst:414
+#: ../../library/pyexpat.rst:450
 msgid ""
 "Called when the closing tag is reached for an element  that contained a "
 "namespace declaration.  This is called once for each namespace declaration "
@@ -618,7 +654,7 @@ msgstr ""
 "のスコープが開始されたことを示します。このハンドラは、要素が終了する際、対応"
 "する :attr:`EndElementHandler` が呼ばれた後に呼び出されます。"
 
-#: ../../library/pyexpat.rst:424
+#: ../../library/pyexpat.rst:460
 msgid ""
 "Called for comments.  *data* is the text of the comment, excluding the "
 "leading ``'<!-``\\ ``-'`` and trailing ``'-``\\ ``->'``."
@@ -626,7 +662,7 @@ msgstr ""
 "コメントで呼び出されます。 *data* はコメントのテキストで、先頭の '``<!-`` \\ "
 "``-``' と末尾の '``-`` \\ ``->``' を除きます。"
 
-#: ../../library/pyexpat.rst:430
+#: ../../library/pyexpat.rst:466
 msgid ""
 "Called at the start of a CDATA section.  This and :attr:"
 "`EndCdataSectionHandler` are needed to be able to identify the syntactical "
@@ -636,11 +672,11 @@ msgstr ""
 "了位置を識別できるようにするには、このハンドラと :attr:"
 "`EndCdataSectionHandler` が必要です。"
 
-#: ../../library/pyexpat.rst:437
+#: ../../library/pyexpat.rst:473
 msgid "Called at the end of a CDATA section."
 msgstr "CDATA セクションの終了時に呼び出されます。"
 
-#: ../../library/pyexpat.rst:442
+#: ../../library/pyexpat.rst:478
 msgid ""
 "Called for any characters in the XML document for which no applicable "
 "handler has been specified.  This means characters that are part of a "
@@ -651,7 +687,7 @@ msgstr ""
 "れます。この文字とは、検出されたことが報告されるが、ハンドラは指定されていな"
 "いようなコンストラクト (construct) の一部である文字を意味します。"
 
-#: ../../library/pyexpat.rst:449
+#: ../../library/pyexpat.rst:485
 msgid ""
 "This is the same as the :func:`DefaultHandler`,  but doesn't inhibit "
 "expansion of internal entities. The entity reference will not be passed to "
@@ -660,7 +696,7 @@ msgstr ""
 ":func:`DefaultHandler` と同じですが、内部エンティティの展開を禁止しません。エ"
 "ンティティ参照はデフォルトハンドラに渡されません。"
 
-#: ../../library/pyexpat.rst:456
+#: ../../library/pyexpat.rst:492
 msgid ""
 "Called if the XML document hasn't been declared as being a standalone "
 "document. This happens when there is an external subset or a reference to a "
@@ -675,7 +711,7 @@ msgstr ""
 "``0`` を返すと、パーザは :const:`XML_ERROR_NOT_STANDALONE` を発生させます。こ"
 "のハンドラが設定されていなければ、パーザは前述の事態で例外を送出しません。"
 
-#: ../../library/pyexpat.rst:466
+#: ../../library/pyexpat.rst:502
 msgid ""
 "Called for references to external entities.  *base* is the current base, as "
 "set by a previous call to :meth:`SetBase`.  The public and system "
@@ -690,7 +726,7 @@ msgstr ""
 "す。 *context* の値は不明瞭なものであり、以下に記述するようにしか使ってはなり"
 "ません。"
 
-#: ../../library/pyexpat.rst:472
+#: ../../library/pyexpat.rst:508
 msgid ""
 "For external entities to be parsed, this handler must be implemented. It is "
 "responsible for creating the sub-parser using "
@@ -706,7 +742,7 @@ msgstr ""
 "は :const:`XML_ERROR_EXTERNAL_ENTITY_HANDLING` エラーを送出します。そうでない"
 "場合、解析を継続します。"
 
-#: ../../library/pyexpat.rst:480
+#: ../../library/pyexpat.rst:516
 msgid ""
 "If this handler is not provided, external entities are reported by the :attr:"
 "`DefaultHandler` callback, if provided."
@@ -714,15 +750,15 @@ msgstr ""
 "このハンドラが与えられておらず、 :attr:`DefaultHandler` コールバックが指定さ"
 "れていれば、外部エンティティは :attr:`DefaultHandler` で報告されます。"
 
-#: ../../library/pyexpat.rst:487
+#: ../../library/pyexpat.rst:523
 msgid "ExpatError Exceptions"
 msgstr "ExpatError 例外"
 
-#: ../../library/pyexpat.rst:492
+#: ../../library/pyexpat.rst:528
 msgid ":exc:`ExpatError` exceptions have a number of interesting attributes:"
 msgstr ":exc:`ExpatError` 例外はいくつかの興味深い属性を備えています:"
 
-#: ../../library/pyexpat.rst:497
+#: ../../library/pyexpat.rst:533
 msgid ""
 "Expat's internal error number for the specific error.  The :data:`errors."
 "messages <xml.parsers.expat.errors.messages>` dictionary maps these error "
@@ -733,7 +769,7 @@ msgstr ""
 "ラー番号を Expat のエラーメッセージに対応させます。\n"
 "例えば::"
 
-#: ../../library/pyexpat.rst:509
+#: ../../library/pyexpat.rst:545
 msgid ""
 "The :mod:`~xml.parsers.expat.errors` module also provides error message "
 "constants and a dictionary :data:`~xml.parsers.expat.errors.codes` mapping "
@@ -743,13 +779,13 @@ msgstr ""
 "メッセージをエラーコードに対応させる辞書 :data:`~xml.parsers.expat.errors."
 "codes` も提供しています。以下を参照してください。"
 
-#: ../../library/pyexpat.rst:516
+#: ../../library/pyexpat.rst:552
 msgid ""
 "Line number on which the error was detected.  The first line is numbered "
 "``1``."
 msgstr "エラーが検出された場所の行番号です。最初の行の番号は ``1`` です。"
 
-#: ../../library/pyexpat.rst:521
+#: ../../library/pyexpat.rst:557
 msgid ""
 "Character offset into the line where the error occurred.  The first column "
 "is numbered ``0``."
@@ -757,11 +793,11 @@ msgstr ""
 "エラーが発生した場所の行内でのオフセットです。最初のカラムの番号は ``0`` で"
 "す。"
 
-#: ../../library/pyexpat.rst:528
+#: ../../library/pyexpat.rst:564
 msgid "Example"
 msgstr "使用例"
 
-#: ../../library/pyexpat.rst:530
+#: ../../library/pyexpat.rst:566
 msgid ""
 "The following program defines three handlers that just print out their "
 "arguments. ::"
@@ -769,15 +805,15 @@ msgstr ""
 "以下のプログラムでは、与えられた引数を出力するだけの三つのハンドラを定義して"
 "います。 ::"
 
-#: ../../library/pyexpat.rst:554
+#: ../../library/pyexpat.rst:590
 msgid "The output from this program is::"
 msgstr "このプログラムの出力は以下のようになります::"
 
-#: ../../library/pyexpat.rst:571
+#: ../../library/pyexpat.rst:607
 msgid "Content Model Descriptions"
 msgstr "内容モデルの記述"
 
-#: ../../library/pyexpat.rst:577
+#: ../../library/pyexpat.rst:613
 msgid ""
 "Content models are described using nested tuples.  Each tuple contains four "
 "values: the type, the quantifier, the name, and a tuple of children.  "
@@ -787,7 +823,7 @@ msgstr ""
 "4 つの値が収められています: 型、限定詞 (quantifier)、名前、そして子のタプル。"
 "子のタプルは単に内容モデルを記述したものです。"
 
-#: ../../library/pyexpat.rst:581
+#: ../../library/pyexpat.rst:617
 msgid ""
 "The values of the first two fields are constants defined in the :mod:`xml."
 "parsers.expat.model` module.  These constants can be collected in two "
@@ -797,17 +833,17 @@ msgstr ""
 "されている定数です。これらの定数は二つのグループ: モデル型 (model type) グ"
 "ループと限定子 (quantifier) グループ、に取りまとめられます。"
 
-#: ../../library/pyexpat.rst:585
+#: ../../library/pyexpat.rst:621
 msgid "The constants in the model type group are:"
 msgstr "以下にモデル型グループにおける定数を示します:"
 
-#: ../../library/pyexpat.rst:591
+#: ../../library/pyexpat.rst:627
 msgid ""
 "The element named by the model name was declared to have a content model of "
 "``ANY``."
 msgstr "モデル名で指定された要素は ``ANY`` の内容モデルを持つと宣言されます。"
 
-#: ../../library/pyexpat.rst:598
+#: ../../library/pyexpat.rst:634
 msgid ""
 "The named element allows a choice from a number of options; this is used for "
 "content models such as ``(A | B | C)``."
@@ -815,11 +851,11 @@ msgstr ""
 "指定されたエレメントはいくつかのオプションから選択できるようになっています; "
 "``(A | B | C)`` のような内容モデルで用いられます。"
 
-#: ../../library/pyexpat.rst:605
+#: ../../library/pyexpat.rst:641
 msgid "Elements which are declared to be ``EMPTY`` have this model type."
 msgstr "``EMPTY`` であると宣言されている要素はこのモデル型を持ちます。"
 
-#: ../../library/pyexpat.rst:619
+#: ../../library/pyexpat.rst:655
 msgid ""
 "Models which represent a series of models which follow one after the other "
 "are indicated with this model type.  This is used for models such as ``(A, "
@@ -828,33 +864,33 @@ msgstr ""
 "順々に続くようなモデルの系列を表すモデルがこのモデル型で表されます。 ``(A, "
 "B, C)`` のようなモデルで用いられます。"
 
-#: ../../library/pyexpat.rst:622
+#: ../../library/pyexpat.rst:658
 msgid "The constants in the quantifier group are:"
 msgstr "限定子グループにおける定数を以下に示します:"
 
-#: ../../library/pyexpat.rst:628
+#: ../../library/pyexpat.rst:664
 msgid "No modifier is given, so it can appear exactly once, as for ``A``."
 msgstr ""
 "修飾子 (modifier) が指定されていません。従って ``A`` のように、厳密に一つだけ"
 "です。"
 
-#: ../../library/pyexpat.rst:634
+#: ../../library/pyexpat.rst:670
 msgid "The model is optional: it can appear once or not at all, as for ``A?``."
 msgstr "このモデルはオプションです: ``A?`` のように、一つか全くないかです。"
 
-#: ../../library/pyexpat.rst:640
+#: ../../library/pyexpat.rst:676
 msgid "The model must occur one or more times (like ``A+``)."
 msgstr "このモデルは (``A+`` のように) 一つかそれ以上あります。"
 
-#: ../../library/pyexpat.rst:646
+#: ../../library/pyexpat.rst:682
 msgid "The model must occur zero or more times, as for ``A*``."
 msgstr "このモデルは ``A*`` のようにゼロ回以上あります。"
 
-#: ../../library/pyexpat.rst:652
+#: ../../library/pyexpat.rst:688
 msgid "Expat error constants"
 msgstr "Expat エラー定数"
 
-#: ../../library/pyexpat.rst:656
+#: ../../library/pyexpat.rst:692
 msgid ""
 "The following constants are provided in the :mod:`xml.parsers.expat.errors` "
 "module.  These constants are useful in interpreting some of the attributes "
@@ -872,19 +908,19 @@ msgstr ""
 "属性を解釈するには :attr:`code` 属性と :samp:`errors.codes[errors."
 "XML_ERROR_{CONSTANT_NAME}]` を比較します。"
 
-#: ../../library/pyexpat.rst:664
+#: ../../library/pyexpat.rst:700
 msgid "The ``errors`` module has the following attributes:"
 msgstr "``errors`` モジュールには以下の属性があります:"
 
-#: ../../library/pyexpat.rst:668
+#: ../../library/pyexpat.rst:704
 msgid "A dictionary mapping string descriptions to their error codes."
 msgstr "文字列の記述をエラーコードに対応させる辞書です。"
 
-#: ../../library/pyexpat.rst:675
+#: ../../library/pyexpat.rst:711
 msgid "A dictionary mapping numeric error codes to their string descriptions."
 msgstr "数値的なエラーコードを文字列の記述に対応させる辞書です。"
 
-#: ../../library/pyexpat.rst:685
+#: ../../library/pyexpat.rst:721
 msgid ""
 "An entity reference in an attribute value referred to an external entity "
 "instead of an internal entity."
@@ -892,7 +928,7 @@ msgstr ""
 "属性値中のエンティティ参照が、内部エンティティではなく外部エンティティを参照"
 "しました。"
 
-#: ../../library/pyexpat.rst:691
+#: ../../library/pyexpat.rst:727
 msgid ""
 "A character reference referred to a character which is illegal in XML (for "
 "example, character ``0``, or '``&#0;``')."
@@ -900,7 +936,7 @@ msgstr ""
 "文字参照が、XML では正しくない (illegal) 文字を参照しました (例えば ``0`` や "
 "'``&#0;``')。"
 
-#: ../../library/pyexpat.rst:697
+#: ../../library/pyexpat.rst:733
 msgid ""
 "An entity reference referred to an entity which was declared with a "
 "notation, so cannot be parsed."
@@ -908,11 +944,11 @@ msgstr ""
 "エンティティ参照が、記法 (notation) つきで宣言されているエンティティを参照し"
 "たため、解析できません。"
 
-#: ../../library/pyexpat.rst:703
+#: ../../library/pyexpat.rst:739
 msgid "An attribute was used more than once in a start tag."
 msgstr "一つの属性が一つの開始タグ内に一度より多く使われています。"
 
-#: ../../library/pyexpat.rst:711
+#: ../../library/pyexpat.rst:747
 msgid ""
 "Raised when an input byte could not properly be assigned to a character; for "
 "example, a NUL byte (value ``0``) in a UTF-8 input stream."
@@ -920,17 +956,17 @@ msgstr ""
 "入力されたバイトが文字に適切に関連付けできない際に送出されます; 例えば、"
 "UTF-8 入力ストリームにおける NUL バイト (値 ``0``) などです。"
 
-#: ../../library/pyexpat.rst:717
+#: ../../library/pyexpat.rst:753
 msgid "Something other than whitespace occurred after the document element."
 msgstr "空白以外の何かがドキュメント要素の後にあります。"
 
-#: ../../library/pyexpat.rst:722
+#: ../../library/pyexpat.rst:758
 msgid ""
 "An XML declaration was found somewhere other than the start of the input "
 "data."
 msgstr "入力データの先頭以外の場所に XML 定義が見つかりました。"
 
-#: ../../library/pyexpat.rst:727
+#: ../../library/pyexpat.rst:763
 msgid ""
 "The document contains no elements (XML requires all documents to contain "
 "exactly one top-level element).."
@@ -938,19 +974,19 @@ msgstr ""
 "この文書には要素がありません (XML では全ての文書は確実に最上位の要素を正確に"
 "一つ持たなければなりません)。"
 
-#: ../../library/pyexpat.rst:733
+#: ../../library/pyexpat.rst:769
 msgid "Expat was not able to allocate memory internally."
 msgstr "Expat が内部メモリを確保できませんでした。"
 
-#: ../../library/pyexpat.rst:738
+#: ../../library/pyexpat.rst:774
 msgid "A parameter entity reference was found where it was not allowed."
 msgstr "パラメータエンティティが許可されていない場所で見つかりました。"
 
-#: ../../library/pyexpat.rst:743
+#: ../../library/pyexpat.rst:779
 msgid "An incomplete character was found in the input."
 msgstr "入力に不完全な文字が見つかりました。"
 
-#: ../../library/pyexpat.rst:748
+#: ../../library/pyexpat.rst:784
 msgid ""
 "An entity reference contained another reference to the same entity; possibly "
 "via a different name, and possibly indirectly."
@@ -958,15 +994,15 @@ msgstr ""
 "エンティティ参照中に、同じエンティティへの別の参照が入っていました; おそらく"
 "違う名前で参照しているか、間接的に参照しています。"
 
-#: ../../library/pyexpat.rst:754
+#: ../../library/pyexpat.rst:790
 msgid "Some unspecified syntax error was encountered."
 msgstr "何らかの仕様化されていない構文エラーに遭遇しました。"
 
-#: ../../library/pyexpat.rst:759
+#: ../../library/pyexpat.rst:795
 msgid "An end tag did not match the innermost open start tag."
 msgstr "終了タグが最も内側で開かれている開始タグに一致しません。"
 
-#: ../../library/pyexpat.rst:764
+#: ../../library/pyexpat.rst:800
 msgid ""
 "Some token (such as a start tag) was not closed before the end of the stream "
 "or the next token was encountered."
@@ -974,19 +1010,19 @@ msgstr ""
 "何らかの (開始タグのような) トークンが閉じられないまま、ストリームの終端や次"
 "のトークンに遭遇しました。"
 
-#: ../../library/pyexpat.rst:770
+#: ../../library/pyexpat.rst:806
 msgid "A reference was made to an entity which was not defined."
 msgstr "定義されていないエンティティへの参照が行われました。"
 
-#: ../../library/pyexpat.rst:775
+#: ../../library/pyexpat.rst:811
 msgid "The document encoding is not supported by Expat."
 msgstr "ドキュメントのエンコードが Expat でサポートされていません。"
 
-#: ../../library/pyexpat.rst:780
+#: ../../library/pyexpat.rst:816
 msgid "A CDATA marked section was not closed."
 msgstr "CDATAセクションが閉じられていません。"
 
-#: ../../library/pyexpat.rst:788
+#: ../../library/pyexpat.rst:824
 msgid ""
 "The parser determined that the document was not \"standalone\" though it "
 "declared itself to be in the XML declaration, and the :attr:"
@@ -996,7 +1032,7 @@ msgstr ""
 "定され ``0`` が返されているにもかかわらず、パーサは \"standalone\" ではないと"
 "判別しました。"
 
-#: ../../library/pyexpat.rst:801
+#: ../../library/pyexpat.rst:837
 msgid ""
 "An operation was requested that requires DTD support to be compiled in, but "
 "Expat was configured without DTD support.  This should never be reported by "
@@ -1006,7 +1042,7 @@ msgstr ""
 "設定になっています。これは :mod:`xml.parsers.expat` モジュールの標準的なビル"
 "ドでは報告されません。"
 
-#: ../../library/pyexpat.rst:808
+#: ../../library/pyexpat.rst:844
 msgid ""
 "A behavioral change was requested after parsing started that can only be "
 "changed before parsing has started.  This is (currently) only raised by :"
@@ -1016,34 +1052,34 @@ msgstr ""
 "にのみ変更可能です。（現在のところ） :meth:`UseForeignDTD` によってのみ送出さ"
 "れます。"
 
-#: ../../library/pyexpat.rst:815
+#: ../../library/pyexpat.rst:851
 msgid "An undeclared prefix was found when namespace processing was enabled."
 msgstr ""
 "名前空間の処理を有効すると宣言されていないプレフィックスが見つかります。"
 
-#: ../../library/pyexpat.rst:820
+#: ../../library/pyexpat.rst:856
 msgid ""
 "The document attempted to remove the namespace declaration associated with a "
 "prefix."
 msgstr "XML文書はプレフィックスに対応した名前空間宣言を削除しようとしました。"
 
-#: ../../library/pyexpat.rst:826
+#: ../../library/pyexpat.rst:862
 msgid "A parameter entity contained incomplete markup."
 msgstr "パラメータエンティティは不完全なマークアップを含んでいます。"
 
-#: ../../library/pyexpat.rst:831
+#: ../../library/pyexpat.rst:867
 msgid "The document contained no document element at all."
 msgstr "XML文書中に要素がありません。"
 
-#: ../../library/pyexpat.rst:836
+#: ../../library/pyexpat.rst:872
 msgid "There was an error parsing a text declaration in an external entity."
 msgstr "外部エンティティ中のテキスト宣言にエラーがあります。"
 
-#: ../../library/pyexpat.rst:841
+#: ../../library/pyexpat.rst:877
 msgid "Characters were found in the public id that are not allowed."
 msgstr "パブリックID中に許可されていない文字があります。"
 
-#: ../../library/pyexpat.rst:846
+#: ../../library/pyexpat.rst:882
 msgid ""
 "The requested operation was made on a suspended parser, but isn't allowed.  "
 "This includes attempts to provide additional input or to stop the parser."
@@ -1052,17 +1088,17 @@ msgstr ""
 "です。このエラーは追加の入力を行なおうとしている場合、もしくはパーサが停止し"
 "ようとしている場合にも送出されます。"
 
-#: ../../library/pyexpat.rst:852
+#: ../../library/pyexpat.rst:888
 msgid ""
 "An attempt to resume the parser was made when the parser had not been "
 "suspended."
 msgstr "パーサを一時停止しようとしましたが、停止されませんでした。"
 
-#: ../../library/pyexpat.rst:857
+#: ../../library/pyexpat.rst:893
 msgid "This should not be reported to Python applications."
 msgstr "Pythonアプリケーションには通知されません。"
 
-#: ../../library/pyexpat.rst:862
+#: ../../library/pyexpat.rst:898
 msgid ""
 "The requested operation was made on a parser which was finished parsing "
 "input, but isn't allowed.  This includes attempts to provide additional "
@@ -1072,11 +1108,11 @@ msgstr ""
 "されませんでした。このエラーは追加の入力を行なおうとしている場合、もしくは"
 "パーサが停止しようとしている場合に送出されます。"
 
-#: ../../library/pyexpat.rst:871
+#: ../../library/pyexpat.rst:907
 msgid "Footnotes"
 msgstr "脚注"
 
-#: ../../library/pyexpat.rst:872
+#: ../../library/pyexpat.rst:908
 msgid ""
 "The encoding string included in XML output should conform to the appropriate "
 "standards. For example, \"UTF-8\" is valid, but \"UTF8\" is not. See https://"
