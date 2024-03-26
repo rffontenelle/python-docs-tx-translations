@@ -8,23 +8,26 @@ import getpass
 import re
 import os
 
-api_token = ""
 
-# Read API Token from environment variable
-api_token = os.getenv("TX_TOKEN")
+def get_api_token() -> str:
+    # Read API Token from environment variable
+    token = os.getenv("TX_TOKEN")
 
-# Try to read the API token from .transifexrc configuration file
-if not api_token:
-    transifexrc = os.path.expanduser("~") + '/.transifexrc'
-    if os.path.isfile(transifexrc):
-        config = ConfigParser()
-        config.read(transifexrc)
-        if config:
-            api_token = config["https://www.transifex.com"]["token"]
+    # Try to read the API token from .transifexrc configuration file
+    if not token:
+        transifexrc = os.path.expanduser("~") + '/.transifexrc'
+        if os.path.isfile(transifexrc):
+            config = ConfigParser()
+            config.read(transifexrc)
+            if config:
+                token = config["https://www.transifex.com"]["token"]
 
-# Prompt the user for the API token
-if not api_token:
-    api_token = getpass.getpass(prompt='Transifex APIv3 token: ')
+    # Prompt the user for the API token
+    if not token:
+       token = getpass.getpass(prompt='Transifex APIv3 token: ')
+
+
+api_token = get_api_token()
 
 # Query Transifex for the project's data
 transifex_api.setup(auth=api_token)
