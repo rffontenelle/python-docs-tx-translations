@@ -24,8 +24,9 @@ def get_api_token() -> str:
 
     # Prompt the user for the API token
     if not token:
-       token = getpass.getpass(prompt='Transifex APIv3 token: ')
+        token = getpass.getpass(prompt='Transifex APIv3 token: ')
 
+    return token
 
 api_token = get_api_token()
 
