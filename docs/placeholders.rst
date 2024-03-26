@@ -77,13 +77,13 @@ Note that the commands sort by alphabetic order ``sort -u``, but it could be sor
 
 .. code-block:: shell
    
-   grep -Po '(^|\s+):([\w\-\_\~]*:){2}`' strings.txt | sed -E 's|^ +||;' | sort -u
+   grep -Po '(^|\s+):([\w\-\_\~!]*:){2}`' strings.txt | sed -E 's|^ +||;' | tr '[:upper:]' '[:lower:]' | sort -u
 
 2. To list one-part roles (e.g. `:class:` `):
 
 .. code-block:: shell
 
-   grep -Po '(^|\s+):[\w\-\_\~]*:`' strings.txt | sed -E 's|^ +||;' | sort -u
+   grep -Po '(^|\s+):[\w\-\_\~\!]*:`' strings.txt | sed -E 's|^ +||;' | tr '[:upper:]' '[:lower:]' | sort -u
 
 3. To list Sphinx variables with links (e.g. \|tzdata\|_):
 
