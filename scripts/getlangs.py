@@ -3,21 +3,20 @@
 # Example of output: de,pt_BR,zh_CN
 
 from transifex.api import transifex_api
+from config import ConfigParser
 import getpass
 import re
 import os
 
 api_token = ""
-transifexrc = os.path.expanduser("~") + '/.transifexrc'
 
 # Try to read the API token from .transifexrc configuration file
+transifexrc = os.path.expanduser("~") + '/.transifexrc'
 if os.path.isfile(transifexrc):
-    with open(transifexrc,"r") as config:
-        pattern='^token\s+=\s+'
-        for line in config:
-            if re.match(pattern + '\d/\w+',line):
-                api_token = re.sub(pattern,'',line.rstrip('\n'))
-                break
+    config = ConfigParser()
+    config.read(transifexrc)
+    if config:
+        api_token = config["https://www.transifex.com"]["token"]
 
 # Prompt the user for the API token as a second attempt
 if not api_token:
