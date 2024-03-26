@@ -73,25 +73,25 @@ Use the following commands to find potential custom.
 
 Note that the commands sort by alphabetic order ``sort -u``, but it could be sorted by most used placeholders via ``sort | uniq -c | sort -grk 1`` instead.
 
-1. To list two-part roles (e.g. `:c:func:` `)::
+1. To list two-part roles (e.g. ``:c:func:` ``)::
 
 .. code-block:: shell
    
    grep -Po '(^|\s+):([\w\-\_\~!]*:){2}`' strings.txt | sed -E 's|^ +||;' | tr '[:upper:]' '[:lower:]' | sort -u
 
-2. To list one-part roles (e.g. `:class:` `):
+2. To list one-part roles (e.g. ``:class:` ``):
 
 .. code-block:: shell
 
    grep -Po '(^|\s+):[\w\-\_\~\!]*:`' strings.txt | sed -E 's|^ +||;' | tr '[:upper:]' '[:lower:]' | sort -u
 
-3. To list Sphinx variables with links (e.g. \|tzdata\|_):
+3. To list Sphinx variables with links (e.g. ``|tzdata|_``):
 
 .. code-block:: shell
 
    grep -Po '\|[\w\_\-]*\|_' strings.txt | sed -E 's|^ +||;' | sort -u
 
-4. Now, to list Sphinx variables with links (e.g. \|version\|):
+4. Now, to list Sphinx variables with links (e.g. ``|version|``):
 
 .. code-block:: shell
 
@@ -107,7 +107,7 @@ Note that the commands sort by alphabetic order ``sort -u``, but it could be sor
 
    grep -Po '<[\w:/\_\-\.]*>`__ ' strings.txt | sort -u
 
-5. Check for URL in external links:
+6. Check for URL in external links:
 
 .. code-block:: shell
 
