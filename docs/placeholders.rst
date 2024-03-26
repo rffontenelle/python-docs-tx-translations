@@ -106,10 +106,7 @@ This is the list of roles and variables currently set in python-doc organization
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | Starts with   | Ends with    | Allows whitespace   | Note                                                               |
 +===============+==============+=====================+====================================================================+
-| :c:data:`     | \`           | no                  | Here start two-part roles. These **must** be inserted before       |
-|               |              |                     | one-part roles because Transifex placeholders are detected         |
-|               |              |                     | according to their order; otherwise one-part role will match       |
-|               |              |                     | when not wanted (e.g. the ":data:`" will excluding the ":c:")     |
+| :c:data:`     | \`           | no                  | Here start two-part roles.                                         |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | :c:expr:\`    | \`           | no                  |                                                                    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
@@ -239,18 +236,7 @@ This is the list of roles and variables currently set in python-doc organization
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | \``           | \``          | yes                 | This matches all literals, and spaces should be allowed.           |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
-| \|nbs         | \|           | no                  | Here start Sphinx variables.                                       |
-|               |              |                     | This is for '\|nbsp\|'.                                            |
-|               |              |                     | Since Transifex doesn't allow adding the whole variable as         |
-|               |              |                     | placeholder, I omit the last character of the variable as a        |
-|               |              |                     | workaround                                                         |
+| \|            | \|_           | no                 | This matches Sphinx variables with links (e.g. '\|tzdata\|_'.      |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
-| \|releas      | \|           | no                  | This is for '\|release\|'                                          |
-+---------------+--------------+---------------------+--------------------------------------------------------------------+
-| \|toda        | \|           | no                  | This is for '\|today\|'                                            |
-+---------------+--------------+---------------------+--------------------------------------------------------------------+
-| \|tzdat       | \|_          | no                  | This is for '\|tzdata\|_'. This variable is used as a URL, hence   |
-|               |              |                     | the trailing '_'                                                   |
-+---------------+--------------+---------------------+--------------------------------------------------------------------+
-| \|versio      | \|           | no                  | This is for '\|version\|'                                          |
+| \|            | \|            | no                 | This matches Sphinx variables (e.g. '\|version\|'.                 |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
