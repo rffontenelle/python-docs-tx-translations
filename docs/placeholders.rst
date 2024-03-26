@@ -2,6 +2,7 @@
 Placeholders
 ============
 
+
 Transifex supports adding
 `Translation checks <https://help.transifex.com/en/articles/6241794-setting-translation-checks#h_317a8b70f5>`_
 to fit the translation caracteristics.
@@ -19,30 +20,83 @@ Some notes:
       custom placeholder that starts and ends with \``. Removing this custom placeholder ceases the issue, but it
       disables custom placeholders for all literal expressions.
 
+About order of placeholders expression matching:
+    - Transifex match text to custom placeholders expression from top-down, which means first expressions added as
+      custom placeholder will take precedence over the expression below. This means the order must be chosen wisely
+      to avoid unexpected mismatch of placeholders.
+    - For each category of placeholder expression, consider puting the most used before others (e.g. ``:class:`` before ``:2to3fixer:``)
+    - Order suggestion:
+      - two-part roles (e.g. ``:c:func:` ``)
+      - one-part roles (e.g. ``:class:` ``)
+      - literals starting with two dashes (e.g. \`\`--bind``)
+      - literals starting with one dash (e.g. \`\`-n``)
+      - literals (e.g. \`\`None``)
+      - Sphinx variables with links (e.g. ``|tzdata|_``)
+      - Sphinx variables (without links) (e.g. ``|version|``)
+
+
 Get a list of potential placeholders
 ------------------------------------
 
-One way to create a list of placeholders is to navigate through a bunch of translation files (po file) or translation
-templates (pot files) with the proper regular expression pattern.
+Extract strings from docs
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    **NOTE:** The commands below are set to be run from the root directory of a language team's repository, or from CPython's Docs directory after generating pot files (directory cpython/Doc/locales/pot).
+To make easier to read the source strings, extract them from the doc files and put it in a temporary file.
 
-To list two-part roles (e.g. :py:data:\`) and then one-part roles (e.g. :class:\`), each output ordered by number of occurence:
+1. Before extracting, you need to get source repositories, install dependencies and then generate POT files:
+
+.. code-block:: shell
+
+   git clone https://github.com/rffontenelle/python-docs-tx-translations
+   cd python-docs-tx-translations
+   git clone --depth 1 --branch 3.12 https://github.com/python/cpython
+   python -mvenv venv
+   source venv/bin/activate
+   pip install -r requirements.txt -r cpython/Doc/requirements.txt
+   sphinx-build -E -b gettext -D gettext_compact=0 -d build/.doctrees . locales/pot
+
+2. Now get the sources strings from POT files into a *strings.txt*
+
+.. code-block:: shell
+
+   for pot in $(find locales/pot -name '*.pot'); do (msgcat --no-wrap $pot > tmp; mv tmp $pot;); done
+   grep -h ^msgid $(find locales/pot -name '*.pot') | sed 's|^msgid "||;s|"$||;/^$/d' > strings.txt
+   git checkout locale
+
+Now, *strings.txt* have all source strings.
+
+Find pontential placeholders from extracted strings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use the following commands to find potential custom
+
+1. To list two-part roles (e.g. `:c:func:\` `)::
 
 .. code-block:: shell
    
-   grep -R '^msgid ' | grep -Poh '(\s\")?:[\w]+:[\w]+:`[\w\.-_\s~]+([\s]+<[\w\.-_]+>)?`' | sed 's| ":|:|' | cut -d\` -f1 | sort | uniq -c | sort -grk 1
-   grep -R '^msgid ' | grep -Poh '(\s\")?:[\w]+:`[\w\.-_\s~]+([\s]+<[\w\.-_]+>)?`' | sed 's| ":|:|' | cut -d\` -f1 | sort | uniq -c | sort -grk 1
+   grep -Po '(^|\s+):([\w\-\_\~]*:){2}`' strings.txt | sed -E 's|^ +||;' | sort | uniq -c | sort -grk 1
 
-I split in two commands because two-part roles must be added as custom placeholder before one-part roles (explained below), hence this command helps making sure the priority is correct for copy and pasting into custom placeholders.
-
-To list Sphinx variables (e.g. \|version\|):
+2. To list one-part roles (e.g. `:class:\` `):
 
 .. code-block:: shell
 
-   grep -ERI '[^a-zA-Z]\|[a-zA-Z]+\|[^a-zA-Z]' | grep -Eo '\|[a-zA-Z]+\|_?' | sort -u
+   grep -Po '(^|\s+):[\w\-\_\~]*:`' strings.txt | sed -E 's|^ +||;' | sort | uniq -c | sort -grk 1
 
-The above command find occurrences of text within pipes excluding text outside the pip, and then use '-o' flag to match-only the wanted content. Finally, it sorts excluding duplicated occurrences. This should give you only the Sphinx variables.
+3. To list Sphinx variables with links (e.g. \|tzdata\|_):
+
+.. code-block:: shell
+
+   grep -Po '\|[\w\_\-]*\|_' strings.txt | sed -E 's|^ +||;' | sort | uniq -c | sort -grk 1
+
+4. Now, to list Sphinx variables with links (e.g. \|version\|):
+
+.. code-block:: shell
+
+   grep -Po '\|[\w\_\-]*\|' strings.txt | sed -E 's|^ +||;' | sort | uniq -c | sort -grk 1
+
+.. note::
+
+  Put \`\`literals\`\` before Sphinx \|variables| (with and without links) in the list of custom placeholders in Transifex, otherwise the expression of a non-variable from inside a literal expression might match before actually match the literal itself.
 
 Current Custom Placeholders
 ---------------------------
@@ -52,10 +106,10 @@ This is the list of roles and variables currently set in python-doc organization
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | Starts with   | Ends with    | Allows whitespace   | Note                                                               |
 +===============+==============+=====================+====================================================================+
-| :c:data:\`    | \`           | no                  | Here start two-part roles. These **must** be inserted before       |
+| :c:data:`     | \`           | no                  | Here start two-part roles. These **must** be inserted before       |
 |               |              |                     | one-part roles because Transifex placeholders are detected         |
 |               |              |                     | according to their order; otherwise one-part role will match       |
-|               |              |                     | when not wanted (e.g. the ":data:\`" will excluding the ":c:")     |
+|               |              |                     | when not wanted (e.g. the ":data:`" will excluding the ":c:")     |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | :c:expr:\`    | \`           | no                  |                                                                    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
@@ -75,7 +129,7 @@ This is the list of roles and variables currently set in python-doc organization
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | :py:class:\`  | \`           | no                  |                                                                    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
-| :py:data:\`   | \`           | no                  |                                                                    |
+| :py:data:`    | \`           | no                  |                                                                    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | :py:func:\`   | \`           | no                  |                                                                    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
@@ -97,7 +151,7 @@ This is the list of roles and variables currently set in python-doc organization
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | :const:\`     | \`           | no                  |                                                                    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
-| :data:\`      | \`           | no                  |                                                                    |
+| :data:`       | \`           | no                  |                                                                    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | :doc:\`       | \`           | no                  |                                                                    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
@@ -109,7 +163,7 @@ This is the list of roles and variables currently set in python-doc organization
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | :expr:\`      | \`           | no                  |                                                                    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
-| :file:\`      | \`           | no                  |                                                                    |
+| :file:`       | \`           | no                  |                                                                    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
 | :func:\`      | \`           | no                  |                                                                    |
 +---------------+--------------+---------------------+--------------------------------------------------------------------+
