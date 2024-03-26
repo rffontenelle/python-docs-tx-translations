@@ -3,25 +3,32 @@
 # Example of output: de,pt_BR,zh_CN
 
 from transifex.api import transifex_api
+from config import ConfigParser
 import getpass
 import re
 import os
 
-api_token = ""
-transifexrc = os.path.expanduser("~") + '/.transifexrc'
 
-# Try to read the API token from .transifexrc configuration file
-if os.path.isfile(transifexrc):
-    with open(transifexrc,"r") as config:
-        pattern='^token\s+=\s+'
-        for line in config:
-            if re.match(pattern + '\d/\w+',line):
-                api_token = re.sub(pattern,'',line.rstrip('\n'))
-                break
+def get_api_token() -> str:
+    # Read API Token from environment variable
+    token = os.getenv("TX_TOKEN")
 
-# Prompt the user for the API token as a second attempt
-if not api_token:
-    api_token = getpass.getpass(prompt='Transifex APIv3 token: ')
+    # Try to read the API token from .transifexrc configuration file
+    if not token:
+        transifexrc = os.path.expanduser("~") + '/.transifexrc'
+        if os.path.isfile(transifexrc):
+            config = ConfigParser()
+            config.read(transifexrc)
+            if config:
+                token = config["https://www.transifex.com"]["token"]
+
+    # Prompt the user for the API token
+    if not token:
+        token = getpass.getpass(prompt='Transifex APIv3 token: ')
+
+    return token
+
+api_token = get_api_token()
 
 # Query Transifex for the project's data
 transifex_api.setup(auth=api_token)
