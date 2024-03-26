@@ -10,15 +10,19 @@ import os
 
 api_token = ""
 
-# Try to read the API token from .transifexrc configuration file
-transifexrc = os.path.expanduser("~") + '/.transifexrc'
-if os.path.isfile(transifexrc):
-    config = ConfigParser()
-    config.read(transifexrc)
-    if config:
-        api_token = config["https://www.transifex.com"]["token"]
+# Read API Token from environment variable
+api_token = os.getenv("TX_TOKEN")
 
-# Prompt the user for the API token as a second attempt
+# Try to read the API token from .transifexrc configuration file
+if not api_token:
+    transifexrc = os.path.expanduser("~") + '/.transifexrc'
+    if os.path.isfile(transifexrc):
+        config = ConfigParser()
+        config.read(transifexrc)
+        if config:
+            api_token = config["https://www.transifex.com"]["token"]
+
+# Prompt the user for the API token
 if not api_token:
     api_token = getpass.getpass(prompt='Transifex APIv3 token: ')
 
