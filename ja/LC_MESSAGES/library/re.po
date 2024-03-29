@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-23 16:44+0000\n"
+"POT-Creation-Date: 2024-03-29 16:43+0000\n"
 "PO-Revision-Date: 2023-05-24 02:19+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -47,6 +47,11 @@ msgid ""
 "substitution, the replacement string must be of the same type as both the "
 "pattern and the search string."
 msgstr ""
+"パターンおよび検索される文字列には、Unicode 文字列 (:class:`str`) や 8 ビット"
+"文字列 (:class:`bytes`) を使います。ただし、Unicode 文字列と 8 ビット文字列の"
+"混在はできません。つまり、Unicode 文字列にバイト列のパターンでマッチングした"
+"り、その逆はできません。同様に、置換時の置換文字列はパターンおよび検索文字列"
+"の両方と同じ型でなくてはなりません。"
 
 #: ../../library/re.rst:24
 msgid ""
@@ -496,6 +501,9 @@ msgid ""
 "``[]()[{}]`` will match a right bracket, as well as left bracket, braces, "
 "and parentheses."
 msgstr ""
+"集合の中でリテラル ``']'`` にマッチさせるには、その前にバックスラッシュをつけ"
+"るか、集合の先頭に置きます。例えば、 ``[()[\\]{}]`` と ``[]()[{}]`` はどちら"
+"も閉じ角括弧、開き角括弧、波括弧、丸括弧にマッチします。"
 
 #: ../../library/re.rst:281
 msgid ""
@@ -596,31 +604,31 @@ msgstr ""
 
 #: ../../library/re.rst:333 ../../library/re.rst:365
 msgid ":const:`re.A` (ASCII-only matching)"
-msgstr ""
+msgstr ":const:`re.A` (ASCIIのみにマッチ)"
 
 #: ../../library/re.rst:334 ../../library/re.rst:366
 msgid ":const:`re.I` (ignore case)"
-msgstr ""
+msgstr ":const:`re.I` (大文字小文字を無視)"
 
 #: ../../library/re.rst:335 ../../library/re.rst:367
 msgid ":const:`re.L` (locale dependent)"
-msgstr ""
+msgstr ":const:`re.L` (ロケール依存)"
 
 #: ../../library/re.rst:336 ../../library/re.rst:368
 msgid ":const:`re.M` (multi-line)"
-msgstr ""
+msgstr ":const:`re.M` (マルチライン)"
 
 #: ../../library/re.rst:337 ../../library/re.rst:369
 msgid ":const:`re.S` (dot matches all)"
-msgstr ""
+msgstr ":const:`re.S` (ドットはすべてにマッチ)"
 
 #: ../../library/re.rst:338 ../../library/re.rst:370
 msgid ":const:`re.U` (Unicode matching)"
-msgstr ""
+msgstr ":const:`re.U` (Unicodeマッチ)"
 
 #: ../../library/re.rst:339 ../../library/re.rst:371
 msgid ":const:`re.X` (verbose)"
-msgstr ""
+msgstr ":const:`re.X` (冗長)"
 
 #: ../../library/re.rst:341
 msgid ""
@@ -677,6 +685,14 @@ msgid ""
 "effect for the narrow inline group, and the original matching mode is "
 "restored outside of the group."
 msgstr ""
+"文字 ``'a'`` 、 ``'L'`` および ``'u'`` は相互に排他であり、組み合わせること"
+"も ``'-'`` に続けることもできません。その代わり、これらの内一つがインライング"
+"ループ中に現れると、外側のグループでのマッチングモードを上書きします。 "
+"Unicode パターン中では ``(?a:...)`` は ASCII 限定マッチングに切り替え、 ``(?"
+"u:...)`` は Unicode マッチング (デフォルト) に切り替えます。バイト列パターン"
+"中では、 ``(?L:...)`` はロケール依存マッチングに切り替え、 ``(?a:...)`` は "
+"ASCII 限定マッチング (デフォルト) に切り替えます。この上書きは狭いインライン"
+"グループにのみ影響し、元のマッチングモードはグループ外では復元されます。"
 
 #: ../../library/re.rst:387
 msgid "The letters ``'a'``, ``'L'`` and ``'u'`` also can be used in a group."
@@ -959,6 +975,11 @@ msgid ""
 "means that ``r'\\bat\\b'`` matches ``'at'``, ``'at.'``, ``'(at)'``, and "
 "``'as at ay'`` but not ``'attempt'`` or ``'atlas'``."
 msgstr ""
+"空文字列にマッチしますが、単語の先頭か末尾でのみです。単語は単語文字の並びと"
+"して定義されます。形式的には、 ``\\b`` は ``\\w`` と ``\\W`` 文字 (またはその"
+"逆) との、あるいは ``\\w`` と文字列の先頭・末尾との境界として定義されます。例"
+"えば、 ``r'\\bat\\b'`` は ``'at'`` 、 ``'at.'``、 ``'(at)'`` や ``'as at "
+"ay'`` にはマッチしますが、 ``'attempt'`` や ``'atlas'`` にはマッチしません。"
 
 #: ../../library/re.rst:549
 msgid ""
@@ -988,6 +1009,13 @@ msgid ""
 "using the :py:const:`~re.ASCII` flag. Word boundaries are determined by the "
 "current locale if the :py:const:`~re.LOCALE` flag is used."
 msgstr ""
+"空文字列にマッチしますが、それが単語の先頭か末尾 *でない* ときのみです。つま"
+"り ``r'at\\B'`` は ``'athens'``、 ``'atom'``、``'attorney'`` にマッチします"
+"が、 ``'at'``、 ``'at.'`` や ``'at!'`` にはマッチしません。 ``\\B`` は "
+"``\\b`` のちょうど反対で、 Unicode パターンにおける単語文字は Unicode 英数字"
+"およびアンダースコアですが、 これは :py:const:`~re.ASCII` フラグを使って変更"
+"できます。 :py:const:`~re.LOCALE` フラグが使われているなら単語の境界は現在の"
+"ロケールによって決定されます。"
 
 #: ../../library/re.rst:588
 msgid "``\\d``"
@@ -1003,10 +1031,12 @@ msgid ""
 "character category `[Nd]`__). This includes ``[0-9]``, and also many other "
 "digit characters."
 msgstr ""
+"任意の Unicode 10 進数字 (Unicode 文字カテゴリ `[Nd]`__)にマッチします。これ"
+"は ``[0-9]`` とその他多数の数字を含みます。"
 
 #: ../../library/re.rst:582
 msgid "Matches ``[0-9]`` if the :py:const:`~re.ASCII` flag is used."
-msgstr ""
+msgstr ":py:const:`~re.ASCII` フラグを使用すると ``[0-9]`` にマッチします。"
 
 #: ../../library/re.rst:588 ../../library/re.rst:611 ../../library/re.rst:636
 msgid "For 8-bit (bytes) patterns:"
@@ -1017,6 +1047,7 @@ msgid ""
 "Matches any decimal digit in the ASCII character set; this is equivalent to "
 "``[0-9]``."
 msgstr ""
+"任意のASCII文字の 10 進数字にマッチします。これは ``[0-9]`` と等価です。"
 
 #: ../../library/re.rst:596
 msgid "``\\D``"
@@ -1030,7 +1061,7 @@ msgstr ""
 
 #: ../../library/re.rst:596
 msgid "Matches ``[^0-9]`` if the :py:const:`~re.ASCII` flag is used."
-msgstr ""
+msgstr ":py:const:`~re.ASCII` フラグを使用すると ``[^0-9]`` にマッチします。"
 
 #: ../../library/re.rst:611
 msgid "``\\s``"
@@ -1042,11 +1073,16 @@ msgid ""
 "``[ \\t\\n\\r\\f\\v]``, and also many other characters, for example the non-"
 "breaking spaces mandated by typography rules in many languages)."
 msgstr ""
+"Unicode 空白文字 (これは ``[ \\t\\n\\r\\f\\v]`` その他多くの文字、例えば多く"
+"の言語におけるタイポグラフィ規則で定義されたノーブレークスペースなどを含みま"
+"す) にマッチします。"
 
 #: ../../library/re.rst:607
 msgid ""
 "Matches ``[ \\t\\n\\r\\f\\v]`` if the :py:const:`~re.ASCII` flag is used."
 msgstr ""
+":py:const:`~re.ASCII` フラグを使用すると ``[ \\t\\n\\r\\f\\v]`` にマッチしま"
+"す。"
 
 #: ../../library/re.rst:610
 msgid ""
@@ -1070,6 +1106,8 @@ msgstr ""
 msgid ""
 "Matches ``[^ \\t\\n\\r\\f\\v]`` if the :py:const:`~re.ASCII` flag is used."
 msgstr ""
+":py:const:`~re.ASCII` フラグを使用すると ``[^ \\t\\n\\r\\f\\v]`` にマッチしま"
+"す。"
 
 #: ../../library/re.rst:636
 msgid "``\\w``"
@@ -1085,6 +1123,7 @@ msgstr ""
 #: ../../library/re.rst:630
 msgid "Matches ``[a-zA-Z0-9_]`` if the :py:const:`~re.ASCII` flag is used."
 msgstr ""
+":py:const:`~re.ASCII` フラグを使用すると ``[a-zA-Z0-9_]`` にマッチします。"
 
 #: ../../library/re.rst:633
 msgid ""
@@ -1093,6 +1132,9 @@ msgid ""
 "used, matches characters considered alphanumeric in the current locale and "
 "the underscore."
 msgstr ""
+"ASCII 文字セットで英数字と見なされる文字にマッチします。これは ``[a-zA-"
+"Z0-9_]`` と等価です。:py:const:`~re.LOCALE` フラグが使われているなら、現在の"
+"ロケールで英数字と見なされる文字およびアンダースコアにマッチします。"
 
 #: ../../library/re.rst:650
 msgid "``\\W``"
@@ -1108,6 +1150,7 @@ msgstr ""
 #: ../../library/re.rst:646
 msgid "Matches ``[^a-zA-Z0-9_]`` if the :py:const:`~re.ASCII` flag is used."
 msgstr ""
+":py:const:`~re.ASCII` フラグを使用すると ``[^a-zA-Z0-9_]`` にマッチします。"
 
 #: ../../library/re.rst:648
 msgid ""
@@ -1145,6 +1188,9 @@ msgid ""
 "Unicode (str) patterns. In bytes patterns they are errors. Unknown escapes "
 "of ASCII letters are reserved for future use and treated as errors."
 msgstr ""
+"``'\\u'``、``'\\U'`` および ``'\\N'`` エスケープシーケンスは、Unicode (str)パ"
+"ターン内でのみ認識されます。バイト列ではエラーとなります。ASCII 文字のエス"
+"ケープで未知のものは将来使うために予約されていて、エラーとして扱われます。 "
 
 #: ../../library/re.rst:687
 msgid ""
@@ -1173,6 +1219,8 @@ msgid ""
 "string literals, it expands to the named Unicode character (e.g. ``'\\N{EM "
 "DASH}'``)."
 msgstr ""
+":samp:`'\\\\N\\\\{{name}\\\\}'` エスケープシーケンスが追加されました。文字列"
+"リテラルでは、同名のUnicode 文字に展開されます。(``'\\N{EM DASH}'`` など)"
 
 #: ../../library/re.rst:706
 msgid "Module Contents"
@@ -1192,7 +1240,7 @@ msgstr ""
 
 #: ../../library/re.rst:715
 msgid "Flags"
-msgstr ""
+msgstr "フラグ"
 
 #: ../../library/re.rst:717
 msgid ""
@@ -1218,10 +1266,13 @@ msgid ""
 "is only meaningful for Unicode (str) patterns, and is ignored for bytes "
 "patterns."
 msgstr ""
+"``\\w``、``\\W``、``\\b``、``\\B``、``\\d``、``\\D``、``\\s``、および "
+"``\\S`` において、ASCII 文字のみでマッチングを行います。これは Unicode(str) "
+"パターンでのみ意味があり、バイト列パターンでは無視されます。"
 
 #: ../../library/re.rst:735
 msgid "Corresponds to the inline flag ``(?a)``."
-msgstr ""
+msgstr "インラインフラグの ``(?a)`` に相当します。"
 
 #: ../../library/re.rst:739
 msgid ""
@@ -1237,7 +1288,7 @@ msgstr "コンパイルした表現に関するデバッグ情報を出力しま
 
 #: ../../library/re.rst:750
 msgid "No corresponding inline flag."
-msgstr ""
+msgstr "対応するインラインフラグはありません。"
 
 #: ../../library/re.rst:756
 msgid ""
@@ -1250,7 +1301,7 @@ msgstr ""
 
 #: ../../library/re.rst:764
 msgid "Corresponds to the inline flag ``(?i)``."
-msgstr ""
+msgstr "インラインフラグの ``(?i)`` に相当します。"
 
 #: ../../library/re.rst:766
 msgid ""
@@ -1262,6 +1313,13 @@ msgid ""
 "the :py:const:`~re.ASCII` flag is used, only letters 'a' to 'z' and 'A' to "
 "'Z' are matched."
 msgstr ""
+"Unicode パターン ``[a-z]`` または ``[A-Z]`` が :const:`IGNORECASE` フラグとあ"
+"わせて使われたとき、52 の ASCII 文字に加えて 4 の非 ASCII 文字 'İ' (U+0130, "
+"Latin capital letter I with dot above) 、 'ı' (U+0131, Latin small letter "
+"dotless i) 、 'ſ' (U+017F, Latin small letter long s) および 'K' (U+212A, "
+"Kelvin sign) にマッチすることに注意してください。 :py:const:`~re.ASCII` フラ"
+"グが使われているなら、文字 'a' から 'z' および 'A' から 'Z' にのみマッチしま"
+"す。"
 
 #: ../../library/re.rst:777
 msgid ""
@@ -1272,7 +1330,7 @@ msgstr ""
 
 #: ../../library/re.rst:781
 msgid "Corresponds to the inline flag ``(?L)``."
-msgstr ""
+msgstr "インラインフラグの ``(?L)`` に相当します。"
 
 #: ../../library/re.rst:785
 msgid ""
@@ -1288,6 +1346,8 @@ msgid ""
 ":py:const:`~re.LOCALE` can be used only with bytes patterns and is not "
 "compatible with :py:const:`~re.ASCII`."
 msgstr ""
+":py:const:`~re.LOCALE` はバイト列パターンにのみ使え、:py:const:`~re.ASCII` と"
+"互換ではありません。"
 
 #: ../../library/re.rst:796
 msgid ""
@@ -1295,6 +1355,9 @@ msgid ""
 "longer depend on the locale at compile time. Only the locale at matching "
 "time affects the result of matching."
 msgstr ""
+":py:const:`~re.LOCALE` フラグがあるコンパイル済み正規表現オブジェクトはコンパ"
+"イル時のロケールに依存しなくなりました。マッチング時のロケールのみがマッチン"
+"グの結果に影響します。"
 
 #: ../../library/re.rst:805
 msgid ""
@@ -1314,7 +1377,7 @@ msgstr ""
 
 #: ../../library/re.rst:812
 msgid "Corresponds to the inline flag ``(?m)``."
-msgstr ""
+msgstr "インラインフラグの ``(?m)`` に相当します。"
 
 #: ../../library/re.rst:816
 msgid ""
@@ -1334,7 +1397,7 @@ msgstr ""
 
 #: ../../library/re.rst:832
 msgid "Corresponds to the inline flag ``(?s)``."
-msgstr ""
+msgstr "インラインフラグの ``(?s)`` に相当します。"
 
 #: ../../library/re.rst:838
 msgid ""
@@ -1430,6 +1493,10 @@ msgid ""
 "pattern; note that this is different from finding a zero-length match at "
 "some point in the string."
 msgstr ""
+"*string* 全体を走査して、正規表現 *pattern* がマッチを発生する最初の位置を探"
+"して、対応する :class:`~re.Match` を返します。もし文字列内に、そのパターンと"
+"マッチする位置がないならば、 ``None`` を返します；これは、文字列内のある点で"
+"長さゼロのマッチを探すこととは異なることに注意して下さい。"
 
 #: ../../library/re.rst:916
 msgid ""
@@ -1438,6 +1505,10 @@ msgid ""
 "``None`` if the string does not match the pattern; note that this is "
 "different from a zero-length match."
 msgstr ""
+"もし *string* の先頭で 0 個以上の文字が正規表現 *pattern* とマッチすれば、対"
+"応する :class:`~re.Match` を返します。もし文字列がパターンとマッチしなけれ"
+"ば、 ``None`` を返します；これは長さゼロのマッチとは異なることに注意して下さ"
+"い。"
 
 #: ../../library/re.rst:921
 msgid ""
@@ -1461,6 +1532,9 @@ msgid ""
 "corresponding :class:`~re.Match`.  Return ``None`` if the string does not "
 "match the pattern; note that this is different from a zero-length match."
 msgstr ""
+"*string* 全体が正規表現 *pattern* にマッチするなら、対応する :class:`~re."
+"Match` を返します。文字列がパターンにマッチしないなら ``None`` を返します。こ"
+"れは長さ 0 のマッチとは異なることに注意して下さい。"
 
 #: ../../library/re.rst:939
 msgid ""
@@ -1537,6 +1611,10 @@ msgid ""
 "scanned left-to-right, and matches are returned in the order found.  Empty "
 "matches are included in the result."
 msgstr ""
+"*string* 中の正規表現 *pattern* の重複しないマッチ全てに渡る :class:`~re."
+"Match` オブジェクトを yield する :term:`イテレータ <iterator>` を返します。  "
+"*string* は左から右へ走査され、マッチは見つかった順で返されます。空マッチは結"
+"果に含まれます。"
 
 #: ../../library/re.rst:1018
 msgid ""
@@ -1572,10 +1650,13 @@ msgid ""
 "of *pattern*.  The function takes a single :class:`~re.Match` argument, and "
 "returns the replacement string.  For example::"
 msgstr ""
+"もし *repl* が関数であれば、重複しない *pattern* が発生するたびにその関数が呼"
+"ばれます。この関数は一つの :class:`~re.Match` 引数を取り、置換文字列を返しま"
+"す。例えば:"
 
 #: ../../library/re.rst:1046
 msgid "The pattern may be a string or a :class:`~re.Pattern`."
-msgstr ""
+msgstr "パターンは、文字列でも :class:`~re.Pattern` でも構いません。"
 
 #: ../../library/re.rst:1048
 msgid ""
@@ -1750,6 +1831,10 @@ msgid ""
 "this is different from finding a zero-length match at some point in the "
 "string."
 msgstr ""
+"*string* 全体を走査して、この正規表現がマッチを発生する最初の位置を探して、対"
+"応する :class:`~re.Match` を返します。もし文字列内に、そのパターンとマッチす"
+"る位置がないならば、 ``None`` を返します；これは、文字列内のある点で長さゼロ"
+"のマッチを探すこととは異なることに注意して下さい。"
 
 #: ../../library/re.rst:1196
 msgid ""
@@ -1787,6 +1872,9 @@ msgid ""
 "the string does not match the pattern; note that this is different from a "
 "zero-length match."
 msgstr ""
+"もし *string* の先頭で 0 個以上の文字がこの正規表現とマッチすれば、対応する :"
+"class:`~re.Match` を返します。もし文字列がパターンとマッチしなければ、 "
+"``None`` を返します；これは長さゼロのマッチとは異なることに注意して下さい。"
 
 #: ../../library/re.rst:1222 ../../library/re.rst:1240
 msgid ""
@@ -1810,6 +1898,9 @@ msgid ""
 "corresponding :class:`~re.Match`.  Return ``None`` if the string does not "
 "match the pattern; note that this is different from a zero-length match."
 msgstr ""
+"*string* 全体がこの正規表現にマッチするなら、対応する :class:`~re.Match` を返"
+"します。文字列がパターンにマッチしないなら ``None`` を返します。これは長さ 0 "
+"のマッチとは異なることに注意して下さい。"
 
 #: ../../library/re.rst:1254
 msgid "Identical to the :func:`split` function, using the compiled pattern."
@@ -1849,6 +1940,9 @@ msgid ""
 "`.compile`, any ``(?...)`` inline flags in the pattern, and implicit flags "
 "such as :py:const:`~re.UNICODE` if the pattern is a Unicode string."
 msgstr ""
+"正規表現のマッチングフラグです。これは :func:`.compile` に与えられたフラグ、"
+"パターン中の ``(?...)`` インラインフラグ、およびパターンが Unicode 文字列だっ"
+"た時の :py:const:`~re.UNICODE` のような暗黙のフラグの組み合わせです。"
 
 #: ../../library/re.rst:1290
 msgid "The number of capturing groups in the pattern."
@@ -2169,10 +2263,14 @@ msgid ""
 "equivalent mappings between :c:func:`!scanf` format tokens and regular "
 "expressions."
 msgstr ""
+"Python には現在のところ、 :c:func:`!scanf` に相当するものがありません。正規表"
+"現は一般的に、 :c:func:`!scanf` のフォーマット文字列より強力ですが、冗長でも"
+"あります。以下の表に、 :c:func:`!scanf` のフォーマットトークンと正規表現のお"
+"およその対応付けを示します。"
 
 #: ../../library/re.rst:1602
 msgid ":c:func:`!scanf` Token"
-msgstr ""
+msgstr ":c:func:`!scanf` トークン"
 
 #: ../../library/re.rst:1602
 msgid "Regular Expression"
@@ -2252,7 +2350,7 @@ msgstr "以下のような文字列からファイル名と数を抽出するに
 
 #: ../../library/re.rst:1627
 msgid "you would use a :c:func:`!scanf` format like ::"
-msgstr ""
+msgstr "以下のように :c:func:`!scanf` フォーマットを使えます ::"
 
 #: ../../library/re.rst:1631
 msgid "The equivalent regular expression would be ::"
@@ -2395,6 +2493,10 @@ msgid ""
 "writer wanted to find all of the adverbs *and their positions* in some text, "
 "they would use :func:`finditer` in the following manner::"
 msgstr ""
+"パターンの全てのマッチについて、マッチしたテキスト以上の情報が必要なら、文字"
+"列ではなく :class:`~re.Match` を返す :func:`finditer` が便利です。先の例に続"
+"いて、ライターがあるテキストの全ての副詞 *およびその位置* を見つけたいなら、"
+"以下のように :func:`finditer` を使えます::"
 
 #: ../../library/re.rst:1787
 msgid "Raw String Notation"
