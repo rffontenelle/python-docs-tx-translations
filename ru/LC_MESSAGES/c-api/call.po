@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-29 21:52+0000\n"
+"POT-Creation-Date: 2024-04-05 21:32+0000\n"
 "PO-Revision-Date: 2020-05-31 09:28+0000\n"
 "Last-Translator: Илья Панфилов, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
@@ -26,22 +26,26 @@ msgstr ""
 
 #: ../../c-api/call.rst:6
 msgid "Call Protocol"
-msgstr ""
+msgstr "Протокол вызова"
 
 #: ../../c-api/call.rst:8
 msgid ""
 "CPython supports two different calling protocols: *tp_call* and vectorcall."
 msgstr ""
+"CPython поддерживает два различных протокола вызова: *tp_call* и vectorcall "
+"(векторный вызов)."
 
 #: ../../c-api/call.rst:12
 msgid "The *tp_call* Protocol"
-msgstr ""
+msgstr "Протокол *tp_call*"
 
 #: ../../c-api/call.rst:14
 msgid ""
 "Instances of classes that set :c:member:`~PyTypeObject.tp_call` are "
 "callable. The signature of the slot is::"
 msgstr ""
+"Экземпляры классов, которые задают :c:member:`~PyTypeObject.tp_call`, "
+"доступны для вызова. Сигнатура слота - это::"
 
 #: ../../c-api/call.rst:19
 msgid ""
@@ -50,28 +54,40 @@ msgid ""
 "code. *args* must be non-NULL (use an empty tuple if there are no arguments) "
 "but *kwargs* may be *NULL* if there are no keyword arguments."
 msgstr ""
+"Вызов выполняется с использованием кортежа для позиционных аргументов и "
+"словаря для ключевых аргументов, аналогично ``callable(*args, **kwargs)`` в "
+"коде Python. *args* должно быть ненулевым (используйте пустой кортеж, если "
+"нет аргументов), но *kwargs* может быть *NULL*, если нет аргументов "
+"ключевого слова."
 
 #: ../../c-api/call.rst:25
 msgid ""
 "This convention is not only used by *tp_call*: :c:member:`~PyTypeObject."
 "tp_new` and :c:member:`~PyTypeObject.tp_init` also pass arguments this way."
 msgstr ""
+"Это соглашение используется не только *tp_call*: :c:member:`~PyTypeObject."
+"tp_new` и :c:member:`~PyTypeObject.tp_init`, которые также передают "
+"аргументы таким образом."
 
 #: ../../c-api/call.rst:29
 msgid ""
 "To call an object, use :c:func:`PyObject_Call` or another :ref:`call API "
 "<capi-call>`."
 msgstr ""
+"Чтобы вызвать объект, используйте :c:func:`PyObject_Call` или другой :ref:"
+"`вызов API <capi-call>`."
 
 #: ../../c-api/call.rst:36
 msgid "The Vectorcall Protocol"
-msgstr ""
+msgstr "Протокол vectorcall (векторного вызова)"
 
 #: ../../c-api/call.rst:40
 msgid ""
 "The vectorcall protocol was introduced in :pep:`590` as an additional "
 "protocol for making calls more efficient."
 msgstr ""
+"Протокол vectorcall был представлен в :pep:`590` в качестве дополнительного "
+"протокола для повышения эффективности вызовов."
 
 #: ../../c-api/call.rst:43
 msgid ""
@@ -84,12 +100,23 @@ msgid ""
 "achieve this is by setting :c:member:`~PyTypeObject.tp_call` to :c:func:"
 "`PyVectorcall_Call`. This bears repeating:"
 msgstr ""
+"Как правило, CPython предпочитает vectorcall для внутренних вызовов, если "
+"вызываемый объект поддерживает его. Однако это не является жестким правилом. "
+"Кроме того, некоторые сторонние расширения используют *tp_call* напрямую "
+"(вместо использования :c:func:`PyObject_Call`). Следовательно, класс, "
+"поддерживающий vectorcall, также должен реализовывать :c:member:"
+"`~PyTypeObject.tp_call`. Более того, вызываемый объект должен вести себя "
+"одинаково независимо от того, какой протокол используется. Рекомендуемый "
+"способ добиться этого - установить для :c:member:`~PyTypeObject.tp_call` "
+"значение :c:func:`PyVectorcall_Call`. Это следует повторить:"
 
 #: ../../c-api/call.rst:57
 msgid ""
 "A class supporting vectorcall **must** also implement :c:member:"
 "`~PyTypeObject.tp_call` with the same semantics."
 msgstr ""
+"Класс, поддерживающий vectorcall, должен также реализовывать :c:member:"
+"`~PyTypeObject.tp_call` с той же семантикой."
 
 #: ../../c-api/call.rst:60
 msgid ""
@@ -273,19 +300,19 @@ msgstr ""
 
 #: ../../c-api/call.rst:195
 msgid "Function"
-msgstr ""
+msgstr "Функция"
 
 #: ../../c-api/call.rst:195
 msgid "callable"
-msgstr ""
+msgstr "вызываемый объект"
 
 #: ../../c-api/call.rst:195
 msgid "args"
-msgstr ""
+msgstr "args"
 
 #: ../../c-api/call.rst:195
 msgid "kwargs"
-msgstr ""
+msgstr "kwargs"
 
 #: ../../c-api/call.rst:197
 msgid ":c:func:`PyObject_Call`"
