@@ -30,7 +30,7 @@ jobs:
     outputs:
       all_versions: ${{ steps.version.outputs.all_versions }}
       current: ${{ steps.version.outputs.current }}
-      old_versions: ${{ steps.version.outputs.old_versions }}
+      version_pairs: ${{ steps.version.outputs.version_pairs }}
       languages: ${{ steps.languages.outputs.languages }}
     steps:
     - name: Check out ${{ github.repository }}
@@ -54,7 +54,7 @@ jobs:
       run: |
         echo "all_versions=$(scripts/manage_versions.py all)" >> $GITHUB_OUTPUT
         echo "current=$(scripts/manage_versions.py current)" >> $GITHUB_OUTPUT
-        echo "old_versions=$(scripts/manage_versions.py others)" >> $GITHUB_OUTPUT
+        echo "version_pairs=$(scripts/manage_versions.py generate_pairs)" >> $GITHUB_OUTPUT
     
     - name: Check out branch ${{ steps.version.outputs.current }}
       uses: actions/checkout@v4.1.2
@@ -72,7 +72,7 @@ jobs:
       run: |
         echo all_versions: ${{ steps.version.outputs.all_versions }}
         echo current: ${{ steps.version.outputs.current }}
-        echo old_versions: ${{ steps.version.outputs.old_versions }}
+        echo version_pairs: ${{ steps.version.outputs.version_pairs }}
         echo languages: ${{ steps.languages.outputs.languages }}
 
 
@@ -209,24 +209,24 @@ jobs:
       max-parallel: 4
       fail-fast: false
       matrix:
-        branch: ${{fromJson(needs.trigger.outputs.old_versions)}}
+        branch: ${{fromJson(needs.trigger.outputs.version_pairs)}}
         language: ${{fromJson(needs.trigger.outputs.languages)}}
 
     steps:
       - name: Check out main
         uses: actions/checkout@v4.1.2
         
-      - name: Check out branch ${{ needs.trigger.outputs.current }}
+      - name: Check out branch ${{ matrix.branch.new }}
         uses: actions/checkout@v4.1.2
         with:
-          ref: ${{ needs.trigger.outputs.current }}
-          path: ${{ needs.trigger.outputs.current }}
+          ref: ${{ matrix.branch.new }}
+          path: ${{ matrix.branch.new }}
     
-      - name: Check out branch ${{ matrix.branch }}
+      - name: Check out branch ${{ matrix.branch.prev }}
         uses: actions/checkout@v4.1.2
         with:
-          ref: ${{ matrix.branch }}
-          path: ${{ matrix.branch }}
+          ref: ${{ matrix.branch.prev }}
+          path: ${{ matrix.branch.prev }}
       
       - name: Set up Python 3
         uses: actions/setup-python@v5.1.0
@@ -246,19 +246,19 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install pomerge
 
-      - name: Merge ${{ matrix.language }} translations from ${{ needs.trigger.outputs.current }} into ${{ matrix.branch }}
+      - name: Merge ${{ matrix.language }} translations from ${{ matrix.branch.new }} into ${{ matrix.branch.prev }}
         run: |
-          if test -d ${{ matrix.branch }}/${{ matrix.language }}; then
+          if test -d ${{ matrix.branch.prev }}/${{ matrix.language }}; then
             shopt -s globstar
-            pomerge --from-files ${{ needs.trigger.outputs.current }}/${{ matrix.language }}/**/*.po --to-files ${{ matrix.branch }}/${{ matrix.language }}/**/*.po
+            pomerge --from-files ${{ matrix.branch.new }}/${{ matrix.language }}/**/*.po --to-files ${{ matrix.branch.prev }}/${{ matrix.language }}/**/*.po
           else
-            echo "Branch ${{ matrix.branch }} has no lang code ${{ matrix.language }}."
+            echo "Branch ${{ matrix.branch.prev }} has no lang code ${{ matrix.language }}."
           fi
 
-      - name: Push ${{ matrix.language }} translations for Python ${{ matrix.branch }} documentation to Transifex
+      - name: Push ${{ matrix.language }} translations for Python ${{ matrix.branch.prev }} documentation to Transifex
         if: ${{ github.event_name == 'schedule' ||
                (github.event_name == 'workflow_dispatch' && github.event.inputs.push == 'true') }}
-        working-directory: ${{ matrix.branch }}
+        working-directory: ${{ matrix.branch.prev }}
         run: |
           tx push -t -l ${{ matrix.language }}
         env:

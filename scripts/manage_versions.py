@@ -128,8 +128,15 @@ def others(file):
     print(get_versions_from_file(file)[1:])
 
 
+def generate_pairs(file):
+    """List versions in (current, previous) pairs """
+    versions = get_versions_from_file(file)
+    version_pairs = [{"new": versions[i], "prev": versions[i+1]} for i in range(len(versions)-1)]
+    print(json.dumps(version_pairs))
+
+
 def main():
-    RUNNABLE_SCRIPTS = ('update_versions_file', 'all', 'current', 'others')
+    RUNNABLE_SCRIPTS = ('update_versions_file', 'all', 'current', 'others', 'generate_pairs')
 
     parser = ArgumentParser()
     parser.add_argument('cmd', choices=RUNNABLE_SCRIPTS)
