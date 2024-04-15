@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 18:59+0000\n"
+"POT-Creation-Date: 2024-04-15 03:35+0000\n"
 "PO-Revision-Date: 2022-11-05 17:21+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
@@ -313,7 +313,7 @@ msgid ""
 "Assignment expressions using the walrus operator ``:=`` assign a variable in "
 "an expression::"
 msgstr ""
-"Expressões de atribuição usando o operador leôncio ``:=`` atribuem uma "
+"Expressões de atribuição usando o operador morsa ``:=`` atribuem uma "
 "variável em uma expressão::"
 
 #: ../../faq/design.rst:164
@@ -850,6 +850,15 @@ msgid ""
 "be found either, because the value of the object found in that hash bin "
 "would be different."
 msgstr ""
+"A implementação da tabela hash de dicionários usa um valor hash calculado a "
+"partir do valor da chave para encontrar a chave. Se a chave fosse um objeto "
+"mutável, seu valor poderia mudar e, portanto, seu hash também poderia mudar. "
+"Mas como quem altera o objeto-chave não pode saber que ele estava sendo "
+"usado como chave de dicionário, ele não pode mover a entrada no dicionário. "
+"Então, quando você tentar procurar o mesmo objeto no dicionário, ele não "
+"será encontrado porque seu valor de hash é diferente. Se você tentasse "
+"procurar o valor antigo, ele também não seria encontrado, porque o valor do "
+"objeto encontrado naquele hash seria diferente."
 
 #: ../../faq/design.rst:467
 msgid ""
@@ -858,6 +867,10 @@ msgid ""
 "as the list ``L``.  Tuples are immutable and can therefore be used as "
 "dictionary keys."
 msgstr ""
+"Se você deseja que um dicionário seja indexado com uma lista, simplesmente "
+"converta primeiro a lista em uma tupla; a função ``tuple(L)`` cria uma tupla "
+"com as mesmas entradas da lista ``L``. As tuplas são imutáveis e, portanto, "
+"podem ser usadas como chaves de dicionário."
 
 #: ../../faq/design.rst:471
 msgid "Some unacceptable solutions that have been proposed:"
@@ -868,6 +881,9 @@ msgid ""
 "Hash lists by their address (object ID).  This doesn't work because if you "
 "construct a new list with the same value it won't be found; e.g.::"
 msgstr ""
+"Listas de hash por endereço (ID do objeto). Isto não funciona porque se você "
+"construir uma nova lista com o mesmo valor ela não será encontrada; por "
+"exemplo.::"
 
 #: ../../faq/design.rst:479
 msgid ""
@@ -876,6 +892,10 @@ msgid ""
 "words, dictionary keys should be compared using ``==``, not using :keyword:"
 "`is`."
 msgstr ""
+"levantaria uma exceção :exc:`KeyError` porque o id do ``[1, 2]`` usado na "
+"segunda linha difere daquele da primeira linha. Em outras palavras, as "
+"chaves de dicionário devem ser comparadas usando ``==``, não usando :keyword:"
+"`is`."
 
 #: ../../faq/design.rst:483
 msgid ""
@@ -883,6 +903,9 @@ msgid ""
 "being a mutable object, could contain a reference to itself, and then the "
 "copying code would run into an infinite loop."
 msgstr ""
+"Fazer uma cópia ao usar uma lista como chave. Isso não funciona porque a "
+"lista, sendo um objeto mutável, poderia conter uma referência a si mesma e "
+"então o código copiado entraria em um laço infinito."
 
 #: ../../faq/design.rst:487
 msgid ""
@@ -891,6 +914,11 @@ msgid ""
 "by accident. It also invalidates an important invariant of dictionaries: "
 "every value in ``d.keys()`` is usable as a key of the dictionary."
 msgstr ""
+"Permitir listas como chaves, mas dizer ao usuário para não modificá-las. "
+"Isso permitiria uma classe de bugs difíceis de rastrear em programas quando "
+"você esquecesse ou modificasse uma lista por acidente. Também invalida uma "
+"importante invariável dos dicionários: todo valor em ``d.keys()`` pode ser "
+"usado como chave do dicionário."
 
 #: ../../faq/design.rst:492
 msgid ""
@@ -901,6 +929,12 @@ msgid ""
 "read-only -- and again, self-referential objects could cause an infinite "
 "loop."
 msgstr ""
+"Marcar listas como somente leitura quando forem usadas como chave de "
+"dicionário. O problema é que não é apenas o objeto de nível superior que "
+"pode alterar seu valor; você poderia usar uma tupla contendo uma lista como "
+"chave. Inserir qualquer coisa como chave em um dicionário exigiria marcar "
+"todos os objetos acessíveis a partir daí como somente leitura -- e, "
+"novamente, objetos autorreferenciais poderiam causar um laço infinito."
 
 #: ../../faq/design.rst:498
 msgid ""
@@ -918,6 +952,9 @@ msgid ""
 "members of the list may be unhashable and also by the possibility of "
 "arithmetic overflow."
 msgstr ""
+"Observe que o cálculo do hash é complicado pela possibilidade de que alguns "
+"membros da lista possam ser não não-hasheável e também pela possibilidade de "
+"estouro aritmético."
 
 #: ../../faq/design.rst:526
 msgid ""
@@ -927,6 +964,11 @@ msgid ""
 "not.  If you fail to meet these restrictions dictionaries and other hash "
 "based structures will misbehave."
 msgstr ""
+"Além disso, deve ser sempre o caso que se ``o1 == o2`` (ou seja, ``o1."
+"__eq__(o2) is True``) então ``hash(o1) == hash(o2)`` (ou seja, ``o1."
+"__hash__() == o2.__hash__()``), independentemente de o objeto estar em um "
+"dicionário ou não. Se você não cumprir essas restrições, os dicionários e "
+"outras estruturas baseadas em hash se comportarão mal."
 
 #: ../../faq/design.rst:531
 msgid ""
@@ -971,6 +1013,7 @@ msgstr ""
 #: ../../faq/design.rst:556
 msgid "How do you specify and enforce an interface spec in Python?"
 msgstr ""
+"Como você especifica e aplica uma especificação de interface no Python?"
 
 #: ../../faq/design.rst:558
 msgid ""
@@ -979,6 +1022,10 @@ msgid ""
 "module.  Many feel that compile-time enforcement of interface specifications "
 "helps in the construction of large programs."
 msgstr ""
+"Uma especificação de interface para um módulo fornecida por linguagens como "
+"C++ e Java descreve os protótipos para os métodos e funções do módulo. "
+"Muitos acham que a aplicação de especificações de interface em tempo de "
+"compilação ajuda na construção de programas grandes."
 
 #: ../../faq/design.rst:563
 msgid ""
@@ -989,12 +1036,20 @@ msgid ""
 "`~collections.abc.Iterable`, :class:`~collections.abc.Container`, and :class:"
 "`~collections.abc.MutableMapping`."
 msgstr ""
+"Python 2.6 adiciona um módulo :mod:`abc` que permite definir Classes Base "
+"Abstratas (ABCs). Você pode então usar :func:`isinstance` e :func:"
+"`issubclass` para verificar se uma instância ou classe implementa um ABC "
+"específico. O módulo :mod:`collections.abc` define um conjunto de ABCs úteis "
+"como :class:`~collections.abc.Iterable`, :class:`~collections.abc.Container` "
+"e :class:`~collections.abc.MutableMapping`"
 
 #: ../../faq/design.rst:570
 msgid ""
 "For Python, many of the advantages of interface specifications can be "
 "obtained by an appropriate test discipline for components."
 msgstr ""
+"Para Python, muitas das vantagens das especificações de interface podem ser "
+"obtidas por uma disciplina de teste apropriada para componentes."
 
 #: ../../faq/design.rst:573
 msgid ""
@@ -1007,6 +1062,15 @@ msgid ""
 "be used to construct exhaustive test suites that exercise every line of code "
 "in a module."
 msgstr ""
+"Um bom conjunto de testes para um módulo pode fornecer um teste de regressão "
+"e servir como uma especificação de interface do módulo e um conjunto de "
+"exemplos. Muitos módulos Python podem ser executados como um script para "
+"fornecer um simples \"autoteste\". Mesmo módulos que usam interfaces "
+"externas complexas muitas vezes podem ser testados isoladamente usando "
+"emulações triviais da interface externa. Os módulos :mod:`doctest` e :mod:"
+"`unittest` ou estruturas de teste de terceiros podem ser usados para "
+"construir conjuntos de testes exaustivos que exercitam cada linha de código "
+"em um módulo."
 
 #: ../../faq/design.rst:581
 msgid ""
@@ -1027,10 +1091,15 @@ msgid ""
 "write any of the actual code.  Of course Python allows you to be sloppy and "
 "not write test cases at all."
 msgstr ""
+"Escrever conjuntos de testes é muito útil e você pode querer projetar seu "
+"código para torná-lo facilmente testável. Uma técnica cada vez mais popular, "
+"o desenvolvimento orientado a testes, exige a escrita de partes do conjunto "
+"de testes primeiro, antes de escrever qualquer parte do código real. É claro "
+"que o Python permite que você seja desleixado e nem escreva casos de teste."
 
 #: ../../faq/design.rst:597
 msgid "Why is there no goto?"
-msgstr ""
+msgstr "Por que não há goto?"
 
 #: ../../faq/design.rst:599
 msgid ""
@@ -1067,6 +1136,9 @@ msgid ""
 "unpaired backslash at the end escapes the closing quote character, leaving "
 "an unterminated string."
 msgstr ""
+"Mais precisamente, eles não podem terminar com um número ímpar de "
+"contrabarras: a contrabarra não pareada no final escapa do caractere de aspa "
+"de fechamento, deixando uma string não terminada."
 
 #: ../../faq/design.rst:633
 msgid ""
@@ -1077,17 +1149,29 @@ msgid ""
 "pass on the string quote character by escaping it with a backslash.  These "
 "rules work well when r-strings are used for their intended purpose."
 msgstr ""
+"Strings brutas foram projetadas para facilitar a criação de entrada para "
+"processadores (principalmente mecanismos de expressão regular) que desejam "
+"fazer seu próprio processamento de escape de contrabarra. De qualquer forma, "
+"esses processadores consideram uma contrabarra incomparável como um erro, "
+"portanto, as strings brutas não permitem isso. Em troca, eles permitem que "
+"você transmita o caractere de aspas da string escapando dele com uma "
+"contrabarra. Essas regras funcionam bem quando r-strings são usadas para a "
+"finalidade pretendida."
 
 #: ../../faq/design.rst:640
 msgid ""
 "If you're trying to build Windows pathnames, note that all Windows system "
 "calls accept forward slashes too::"
 msgstr ""
+"Se você estiver tentando criar nomes de caminho do Windows, observe que "
+"todas as chamadas do sistema do Windows também aceitam barras::"
 
 #: ../../faq/design.rst:645
 msgid ""
 "If you're trying to build a pathname for a DOS command, try e.g. one of ::"
 msgstr ""
+"Se você estiver tentando criar um nome de caminho para um comando DOS, "
+"tente, por exemplo. um de ::"
 
 #: ../../faq/design.rst:653
 msgid "Why doesn't Python have a \"with\" statement for attribute assignments?"
@@ -1103,7 +1187,7 @@ msgstr ""
 
 #: ../../faq/design.rst:663
 msgid "In Python, such a construct would be ambiguous."
-msgstr ""
+msgstr "Em Python, tal construção seria ambígua."
 
 #: ../../faq/design.rst:665
 msgid ""
@@ -1133,7 +1217,7 @@ msgstr ""
 
 #: ../../faq/design.rst:676
 msgid "For instance, take the following incomplete snippet::"
-msgstr ""
+msgstr "Por exemplo, pegue o seguinte trecho incompleto::"
 
 #: ../../faq/design.rst:682
 msgid ""
@@ -1164,8 +1248,8 @@ msgid ""
 "bindings are resolved at run-time in Python, and the second version only "
 "needs to perform the resolution once."
 msgstr ""
-"Isso também tem o efeito colateral de aumentar a velocidade de execução por "
-"que ligações de nome são resolvidas a tempo de execução em Python, e a "
+"Isso também tem o efeito colateral de aumentar a velocidade de execução "
+"porque as ligações de nome são resolvidas a tempo de execução em Python, e a "
 "segunda versão só precisa performar a resolução uma vez."
 
 #: ../../faq/design.rst:708

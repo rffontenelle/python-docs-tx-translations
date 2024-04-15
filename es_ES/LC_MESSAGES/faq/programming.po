@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 18:59+0000\n"
+"POT-Creation-Date: 2024-04-15 03:35+0000\n"
 "PO-Revision-Date: 2022-11-05 17:21+0000\n"
 "Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -3138,58 +3138,76 @@ msgid ""
 "only.  This means everything from an imported module is referenced as "
 "``<module>.<name>``."
 msgstr ""
+"Guido van Rossum recomienda evitar todo uso de ``from <module> import ...``, "
+"y colocar todo el código dentro de funciones.  Las inicializaciones de "
+"variables globales y variables de clase deben usar sólo constantes o "
+"funciones integradas.  Esto significa que todo lo que provenga de un módulo "
+"importado se referenciará como ``<module>.<name>``."
 
 #: ../../faq/programming.rst:2140
 msgid ""
 "Jim Roskind suggests performing steps in the following order in each module:"
 msgstr ""
+"Jim Roskind sugiere realizar los pasos en el siguiente orden en cada módulo:"
 
 #: ../../faq/programming.rst:2142
 msgid ""
 "exports (globals, functions, and classes that don't need imported base "
 "classes)"
 msgstr ""
+"exportaciones (globales, funciones y clases que no necesitan clases base "
+"importadas)"
 
 #: ../../faq/programming.rst:2144
 msgid "``import`` statements"
-msgstr ""
+msgstr "``import`` declaraciones"
 
 #: ../../faq/programming.rst:2145
 msgid ""
 "active code (including globals that are initialized from imported values)."
 msgstr ""
+"código activo (incluidos los globales que se inicializan a partir de valores "
+"importados)."
 
 #: ../../faq/programming.rst:2147
 msgid ""
 "Van Rossum doesn't like this approach much because the imports appear in a "
 "strange place, but it does work."
 msgstr ""
+"A Van Rossum no le gusta mucho este enfoque porque las importaciones "
+"aparecen en un lugar extraño, pero funciona."
 
 #: ../../faq/programming.rst:2150
 msgid ""
 "Matthias Urlichs recommends restructuring your code so that the recursive "
 "import is not necessary in the first place."
 msgstr ""
+"Matthias Urlichs recomienda reestructurar el código para que la importación "
+"recursiva no sea necesaria en primer lugar."
 
 #: ../../faq/programming.rst:2153
 msgid "These solutions are not mutually exclusive."
-msgstr ""
+msgstr "Estas soluciones no se excluyen mutuamente."
 
 #: ../../faq/programming.rst:2157
 msgid "__import__('x.y.z') returns <module 'x'>; how do I get z?"
-msgstr ""
+msgstr "__import__('x.y.z') devuelve <module 'x'>; ¿cómo obtengo z?"
 
 #: ../../faq/programming.rst:2159
 msgid ""
 "Consider using the convenience function :func:`~importlib.import_module` "
 "from :mod:`importlib` instead::"
 msgstr ""
+"Considere la posibilidad de utilizar la función :func:`~importlib."
+"import_module` de :mod:`importlib` en su lugar::"
 
 #: ../../faq/programming.rst:2166
 msgid ""
 "When I edit an imported module and reimport it, the changes don't show up.  "
 "Why does this happen?"
 msgstr ""
+"Cuando edito un módulo importado y lo reimporto, los cambios no aparecen.  "
+"¿Por qué ocurre esto?"
 
 #: ../../faq/programming.rst:2168
 msgid ""
@@ -3199,12 +3217,19 @@ msgid ""
 "module, the basic module would be parsed and re-parsed many times.  To force "
 "re-reading of a changed module, do this::"
 msgstr ""
+"Por razones de eficiencia y coherencia, Python sólo lee el archivo del "
+"módulo la primera vez que se importa un módulo.  Si no lo hiciera, en un "
+"programa consistente en muchos módulos donde cada uno importa el mismo "
+"módulo básico, el módulo básico sería analizado y re-analizado muchas "
+"veces.  Para forzar la relectura de un módulo modificado, haga lo siguiente::"
 
 #: ../../faq/programming.rst:2178
 msgid ""
 "Warning: this technique is not 100% fool-proof.  In particular, modules "
 "containing statements like ::"
 msgstr ""
+"Atención: esta técnica no es 100% infalible.  En particular, los módulos que "
+"contienen declaraciones como ::"
 
 #: ../../faq/programming.rst:2183
 msgid ""
@@ -3213,9 +3238,15 @@ msgid ""
 "updated to use the new class definition.  This can result in the following "
 "paradoxical behaviour::"
 msgstr ""
+"seguirá funcionando con la versión antigua de los objetos importados.  Si el "
+"módulo contiene definiciones de clase, las instancias de clase existentes "
+"*no* se actualizarán para utilizar la nueva definición de clase.  Esto puede "
+"dar lugar al siguiente comportamiento paradójico::"
 
 #: ../../faq/programming.rst:2196
 msgid ""
 "The nature of the problem is made clear if you print out the \"identity\" of "
 "the class objects::"
 msgstr ""
+"La naturaleza del problema queda clara si se imprime la \"identidad\" de los "
+"objetos de clase::"
