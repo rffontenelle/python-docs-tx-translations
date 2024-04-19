@@ -3,13 +3,17 @@
 # This file is distributed under the same license as the Python package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# Translators:
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-08 14:14+0000\n"
+"POT-Creation-Date: 2024-04-19 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 00:48+0000\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
 "teams/5390/es_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +25,7 @@ msgstr ""
 
 #: ../../c-api/import.rst:6
 msgid "Importing Modules"
-msgstr ""
+msgstr "Importación de módulos"
 
 #: ../../c-api/import.rst:16
 msgid ""
@@ -31,7 +35,7 @@ msgstr ""
 
 #: ../../c-api/import.rst:21
 msgid "This function is a deprecated alias of :c:func:`PyImport_ImportModule`."
-msgstr ""
+msgstr "Esta función es un alias obsoleto de :c:func:`PyImport_ImportModule`."
 
 #: ../../c-api/import.rst:23
 msgid ""
@@ -40,12 +44,18 @@ msgid ""
 "module locks for most purposes, so this function's special behaviour isn't "
 "needed anymore."
 msgstr ""
+"Esta función solía fallar inmediatamente cuando el bloqueo de importación "
+"estaba en manos de otro hilo.  Sin embargo, en Python 3.3, el esquema de "
+"bloqueo cambió a bloqueos por módulo para la mayoría de los propósitos, así "
+"ya no es necesaria la conducta especial de esta función."
 
 #: ../../c-api/import.rst:34
 msgid ""
 "Import a module.  This is best described by referring to the built-in Python "
 "function :func:`__import__`."
 msgstr ""
+"Importar un módulo.  Esto se describe mejor haciendo referencia a la función "
+"incorporada de Python :func:`__import__`."
 
 #: ../../c-api/import.rst:37 ../../c-api/import.rst:53
 msgid ""
@@ -54,12 +64,19 @@ msgid ""
 "`__import__`, the return value when a submodule of a package was requested "
 "is normally the top-level package, unless a non-empty *fromlist* was given."
 msgstr ""
+"El valor de retorno es una nueva referencia al módulo importado o al paquete "
+"de nivel superior, o ``NULL`` con una excepción en caso de fallo.  Al igual "
+"que para :func:`__import__`, el valor de retorno cuando se solicita un "
+"submódulo de un paquete es normalmente el paquete de nivel superior, a menos "
+"que se proporcione una *fromlist* no vacía."
 
 #: ../../c-api/import.rst:43
 msgid ""
 "Failing imports remove incomplete module objects, like with :c:func:"
 "`PyImport_ImportModule`."
 msgstr ""
+"Las importaciones fallidas eliminan objetos de módulo incompletos, como "
+"ocurre con :c:func:`PyImport_ImportModule`."
 
 #: ../../c-api/import.rst:49
 msgid ""
@@ -67,16 +84,21 @@ msgid ""
 "function :func:`__import__`, as the standard :func:`__import__` function "
 "calls this function directly."
 msgstr ""
+"Importar un módulo.  Esto se describe mejor haciendo referencia a la función "
+"incorporada de Python :func:`__import__`, ya que la función estándar :func:"
+"`__import__` llama directamente a esta función."
 
 #: ../../c-api/import.rst:63
 msgid ""
 "Similar to :c:func:`PyImport_ImportModuleLevelObject`, but the name is a "
 "UTF-8 encoded string instead of a Unicode object."
 msgstr ""
+"Similar a :c:func:`PyImport_ImportModuleLevelObject`, pero el nombre es una "
+"cadena codificada en UTF-8 en lugar de un objeto Unicode."
 
 #: ../../c-api/import.rst:66
 msgid "Negative values for *level* are no longer accepted."
-msgstr ""
+msgstr "Ya no se aceptan valores negativos para *level*."
 
 #: ../../c-api/import.rst:71
 msgid ""
@@ -86,16 +108,25 @@ msgid ""
 "current globals.  This means that the import is done using whatever import "
 "hooks are installed in the current environment."
 msgstr ""
+"Se trata de una interfaz de nivel superior que llama a la \"función gancho "
+"de importación\" actual (con un *nivel* explícito de 0, que significa "
+"importación absoluta).  Invoca la función :func:`__import__` desde "
+"``__builtins__`` de los globales actuales.  Esto significa que la "
+"importación se realiza utilizando cualquier gancho de importación instalado "
+"en el entorno actual."
 
 #: ../../c-api/import.rst:77
 msgid "This function always uses absolute imports."
-msgstr ""
+msgstr "Esta función utiliza siempre importaciones absolutas."
 
 #: ../../c-api/import.rst:82
 msgid ""
 "Reload a module.  Return a new reference to the reloaded module, or ``NULL`` "
 "with an exception set on failure (the module still exists in this case)."
 msgstr ""
+"Recarga un módulo.  Devuelve una nueva referencia al módulo recargado, o "
+"``NULL`` con una excepción establecida en caso de fallo (el módulo sigue "
+"existiendo en este caso)."
 
 #: ../../c-api/import.rst:88
 msgid ""
@@ -104,6 +135,11 @@ msgid ""
 "dictionary if there's one there, and if not, create a new one and insert it "
 "in the modules dictionary. Return ``NULL`` with an exception set on failure."
 msgstr ""
+"Devuelve el objeto módulo correspondiente a un nombre de módulo.  El "
+"argumento *name* puede ser de la forma ``package.module``. Primero comprueba "
+"el diccionario de módulos si hay uno, y si no, crea uno nuevo y lo inserta "
+"en el diccionario de módulos. Devuelve ``NULL`` con una excepción en caso de "
+"fallo."
 
 #: ../../c-api/import.rst:95
 msgid ""
@@ -113,12 +149,19 @@ msgid ""
 "structures implied by a dotted name for *name* are not created if not "
 "already present."
 msgstr ""
+"Esta función no carga ni importa el módulo; si el módulo no estaba ya "
+"cargado, obtendrá un objeto módulo vacío. Utilice :c:func:"
+"`PyImport_ImportModule` o una de sus variantes para importar un módulo.  Las "
+"estructuras de paquete implicadas por un nombre con puntos para *name* no se "
+"crean si no están ya presentes."
 
 #: ../../c-api/import.rst:105
 msgid ""
 "Similar to :c:func:`PyImport_AddModuleObject`, but the name is a UTF-8 "
 "encoded string instead of a Unicode object."
 msgstr ""
+"Similar a :c:func:`PyImport_AddModuleObject`, pero el nombre es una cadena "
+"codificada en UTF-8 en lugar de un objeto Unicode."
 
 #: ../../c-api/import.rst:113
 msgid ""
@@ -154,18 +197,24 @@ msgid ""
 "This function will reload the module if it was already imported.  See :c:"
 "func:`PyImport_ReloadModule` for the intended way to reload a module."
 msgstr ""
+"Esta función recargará el módulo si ya fue importado.  Consultar :c:func:"
+"`PyImport_ReloadModule` para conocer la forma prevista de recargar un módulo."
 
 #: ../../c-api/import.rst:135
 msgid ""
 "If *name* points to a dotted name of the form ``package.module``, any "
 "package structures not already created will still not be created."
 msgstr ""
+"Si *name* apunta a un nombre con puntos de la forma ``package.module``, "
+"cualquier estructura de paquete que no esté ya creada seguirá sin crearse."
 
 #: ../../c-api/import.rst:138
 msgid ""
 "See also :c:func:`PyImport_ExecCodeModuleEx` and :c:func:"
 "`PyImport_ExecCodeModuleWithPathnames`."
 msgstr ""
+"Ver también :c:func:`PyImport_ExecCodeModuleEx` y :c:func:"
+"`PyImport_ExecCodeModuleWithPathnames`."
 
 #: ../../c-api/import.rst:141
 msgid ""
@@ -178,10 +227,12 @@ msgid ""
 "Like :c:func:`PyImport_ExecCodeModule`, but the :attr:`__file__` attribute "
 "of the module object is set to *pathname* if it is non-``NULL``."
 msgstr ""
+"Como :c:func:`PyImport_ExecCodeModule`, pero el atributo :attr:`__file__` "
+"del objeto de módulo se establece en *pathname* si no es``NULL``."
 
 #: ../../c-api/import.rst:152
 msgid "See also :c:func:`PyImport_ExecCodeModuleWithPathnames`."
-msgstr ""
+msgstr "Ver también :c:func:`PyImport_ExecCodeModuleWithPathnames`."
 
 #: ../../c-api/import.rst:157
 msgid ""
@@ -189,6 +240,9 @@ msgid ""
 "attribute of the module object is set to *cpathname* if it is non-``NULL``.  "
 "Of the three functions, this is the preferred one to use."
 msgstr ""
+"Como :c:func:`PyImport_ExecCodeModuleEx`, pero el atributo :attr:"
+"`__cached__` del objeto módulo se establece en *cpathname* si no "
+"es``NULL``.  De las tres funciones, ésta es la preferida."
 
 #: ../../c-api/import.rst:163
 msgid ""
@@ -203,6 +257,10 @@ msgid ""
 "what the value for *pathname* should be from *cpathname* if the former is "
 "set to ``NULL``."
 msgstr ""
+"Como :c:func:`PyImport_ExecCodeModuleObject`, pero *name*, *pathname* y "
+"*cpathname* son cadenas codificadas en UTF-8. También se intenta averiguar "
+"cuál debería ser el valor de *pathname* a partir de *cpathname* si el "
+"primero se establece en ``NULL``."
 
 #: ../../c-api/import.rst:176
 msgid ""
@@ -220,10 +278,14 @@ msgid ""
 "file). The magic number should be present in the first four bytes of the "
 "bytecode file, in little-endian byte order. Returns ``-1`` on error."
 msgstr ""
+"Devuelve el número mágico de los archivos de código de bytes de Python "
+"(también conocido como archivo :file:`.pyc` ). El número mágico debe estar "
+"presente en los primeros cuatro bytes del archivo bytecode, en orden little-"
+"endian. Devuelve ``-1`` en caso de error."
 
 #: ../../c-api/import.rst:189
 msgid "Return value of ``-1`` upon failure."
-msgstr ""
+msgstr "Valor de retorno de ``-1`` en caso de fallo."
 
 #: ../../c-api/import.rst:195
 msgid ""
@@ -231,12 +293,19 @@ msgid ""
 "names.  Keep in mind that the value at ``sys.implementation.cache_tag`` is "
 "authoritative and should be used instead of this function."
 msgstr ""
+"Devuelve la cadena de etiquetas mágicas para nombres de archivos de código "
+"de bytes de Python con formato :pep:`3147`.  Tener en cuenta que el valor en "
+"``sys.implementation.cache_tag`` es autoritativo y debe utilizarse en lugar "
+"de esta función."
 
 #: ../../c-api/import.rst:203
 msgid ""
 "Return the dictionary used for the module administration (a.k.a. ``sys."
 "modules``).  Note that this is a per-interpreter variable."
 msgstr ""
+"Devuelve el diccionario utilizado para la administración del módulo (también "
+"conocido como ``sys.modules``).  Tener en cuenta que se trata de una "
+"variable por intérprete."
 
 #: ../../c-api/import.rst:208
 msgid ""
@@ -244,6 +313,9 @@ msgid ""
 "not been imported yet then returns ``NULL`` but does not set an error.  "
 "Returns ``NULL`` and sets an error if the lookup failed."
 msgstr ""
+"Devuelve el módulo ya importado con el nombre dado.  Si el módulo aún no se "
+"ha importado, devuelve ``NULL`` pero no genera ningún error.  Si la búsqueda "
+"falla, devuelve ``NULL`` y genera un error."
 
 #: ../../c-api/import.rst:216
 msgid ""
@@ -264,16 +336,23 @@ msgid ""
 "`PyImport_ImportModule`.  (Note the misnomer --- this function would reload "
 "the module if it was already imported.)"
 msgstr ""
+"Carga un módulo congelado llamado *name*.  Devuelve ``1`` en caso de éxito, "
+"``0`` si el módulo no se encuentra, y ``-1`` con una excepción si la "
+"inicialización falló.  Para acceder al módulo importado en una carga con "
+"éxito, usar :c:func:`PyImport_ImportModule`. (Notar el nombre equivocado --- "
+"esta función recargaría el módulo si ya estuviera importado)."
 
 #: ../../c-api/import.rst:235
 msgid "The ``__file__`` attribute is no longer set on the module."
-msgstr ""
+msgstr "El atributo ``__file__`` ya no se establece en el módulo."
 
 #: ../../c-api/import.rst:241
 msgid ""
 "Similar to :c:func:`PyImport_ImportFrozenModuleObject`, but the name is a "
 "UTF-8 encoded string instead of a Unicode object."
 msgstr ""
+"Similar a :c:func:`PyImport_ImportFrozenModuleObject`, pero el nombre es una "
+"cadena codificada en UTF-8 en lugar de un objeto Unicode."
 
 #: ../../c-api/import.rst:249
 msgid ""
@@ -282,6 +361,10 @@ msgid ""
 "Python source distribution).  Its definition, found in :file:`Include/import."
 "h`, is::"
 msgstr ""
+"Esta es la definición del tipo de estructura para los descriptores de "
+"módulos congelados, generada por la utilidad :program:`freeze` (ver :file:"
+"`Tools/freeze/` en la distribución del código fuente de Python).  Su "
+"definición, que se encuentra en :file:`Include/import.h`, es::"
 
 #: ../../c-api/import.rst:261
 msgid ""
@@ -307,6 +390,12 @@ msgid ""
 "function called on the first attempted import.  This should be called "
 "before :c:func:`Py_Initialize`."
 msgstr ""
+"Añade un único módulo a la tabla existente de módulos incorporados.  Esta es "
+"una envoltura de conveniencia alrededor de :c:func:`PyImport_ExtendInittab`, "
+"devolviendo ``-1`` si la tabla no pudo ser extendida.  El nuevo módulo se "
+"puede importar por el nombre *name*, y utiliza la función *initfunc* como "
+"función de inicialización llamada en el primer intento de importación.  Esta "
+"se debe llamar antes de :c:func:`Py_Initialize`."
 
 #: ../../c-api/import.rst:285
 msgid ""
@@ -341,6 +430,9 @@ msgid ""
 "or :c:func:`PyImport_ExtendInittab` must be called before each Python "
 "initialization."
 msgstr ""
+"Si Python se inicializa varias veces, se debe llamar a :c:func:"
+"`PyImport_AppendInittab` o :c:func:`PyImport_ExtendInittab` antes de cada "
+"inicialización de Python."
 
 #: ../../c-api/import.rst:11
 msgid "package variable"

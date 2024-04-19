@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 14:16+0000\n"
+"POT-Creation-Date: 2024-04-19 14:13+0000\n"
 "PO-Revision-Date: 2023-05-24 13:08+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
@@ -343,7 +343,7 @@ msgstr ""
 "juntamente com vários `apelidos de métodos <unittest-TestCase-removed-"
 "aliases_>`_ de :class:`unittest.TestCase`."
 
-#: ../../whatsnew/3.12.rst:176 ../../whatsnew/3.12.rst:1966
+#: ../../whatsnew/3.12.rst:176 ../../whatsnew/3.12.rst:1963
 msgid "New Features"
 msgstr "Novas funcionalidades"
 
@@ -1046,6 +1046,13 @@ msgid ""
 "Contributed by Pablo Galindo and Christian Heimes with contributions from "
 "Gregory P. Smith [Google] and Mark Shannon in :gh:`96123`.)"
 msgstr ""
+"Adiciona :ref:`suporte ao perfilador perf <perf_profiling>` por meio da nova "
+"variável de ambiente :envvar:`PYTHONPERFSUPPORT` e da opção de linha de "
+"comando :option:`-X perf <-X>`, bem como das novas funções :func:`sys."
+"activate_stack_trampoline`, :func:`sys.deactivate_stack_trampoline` e :func:"
+"`sys.is_stack_trampoline_active`. (Design de Pablo Galindo. Contribuição de "
+"Pablo Galindo e Christian Heimes com contribuições de Gregory P. Smith "
+"[Google] e Mark Shannon em :gh:`96123`)."
 
 #: ../../whatsnew/3.12.rst:628
 msgid "New Modules"
@@ -1094,6 +1101,11 @@ msgid ""
 "eager task execution, making some use-cases 2x to 5x faster. (Contributed by "
 "Jacob Bower & Itamar Oren in :gh:`102853`, :gh:`104140`, and :gh:`104138`)"
 msgstr ""
+"Adiciona as funções :func:`asyncio.eager_task_factory` e :func:`asyncio."
+"create_eager_task_factory` para permitir a opção de um laço de eventos na "
+"execução de tarefas ansiosas, tornando alguns casos de uso de 2x a 5x mais "
+"rápidos. (Contribuição de Jacob Bower e Itamar Oren em :gh:`102853`, :gh:"
+"`104140` e :gh:`104138`)"
 
 #: ../../whatsnew/3.12.rst:655
 msgid ""
@@ -1101,6 +1113,10 @@ msgid ""
 "if :func:`os.pidfd_open` is available and functional instead of :class:"
 "`asyncio.ThreadedChildWatcher`. (Contributed by Kumar Aditya in :gh:`98024`.)"
 msgstr ""
+"No Linux, :mod:`asyncio` usa :class:`asyncio.PidfdChildWatcher` por padrão "
+"se :func:`os.pidfd_open` estiver disponível e funcional em vez de :class:"
+"`asyncio.ThreadedChildWatcher`. (Contribuição de Kumar Aditya em :gh:"
+"`98024`.)"
 
 #: ../../whatsnew/3.12.rst:660
 msgid ""
@@ -1109,18 +1125,29 @@ msgid ""
 "ThreadedChildWatcher` otherwise), so manually configuring a child watcher is "
 "not recommended. (Contributed by Kumar Aditya in :gh:`94597`.)"
 msgstr ""
+"O laço de eventos agora usa o melhor observador filho disponível para cada "
+"plataforma (:class:`asyncio.PidfdChildWatcher` se suportado e :class:"
+"`asyncio.ThreadedChildWatcher` caso contrário), portanto, configurar "
+"manualmente um observador filho não é recomendado. (Contribuição de Kumar "
+"Aditya em :gh:`94597`.)"
 
 #: ../../whatsnew/3.12.rst:666
 msgid ""
 "Add *loop_factory* parameter to :func:`asyncio.run` to allow specifying a "
 "custom event loop factory. (Contributed by Kumar Aditya in :gh:`99388`.)"
 msgstr ""
+"Adiciona o parâmetro *loop_factory* a :func:`asyncio.run` para permitir a "
+"especificação de uma fábrica de laço de eventos personalizada. (Contribuição "
+"de Kumar Aditya em :gh:`99388`.)"
 
 #: ../../whatsnew/3.12.rst:670
 msgid ""
 "Add C implementation of :func:`asyncio.current_task` for 4x-6x speedup. "
 "(Contributed by Itamar Oren and Pranav Thulasiram Bhat in :gh:`100344`.)"
 msgstr ""
+"Adiciona implementação C de :func:`asyncio.current_task` para aceleração de "
+"4x-6x. (Contribuição de Itamar Oren e Pranav Thulasiram Bhat em :gh:"
+"`100344`.)"
 
 #: ../../whatsnew/3.12.rst:673
 msgid ""
@@ -1128,16 +1155,21 @@ msgid ""
 "`asyncio` does not support legacy generator-based coroutines. (Contributed "
 "by Kumar Aditya in :gh:`102748`.)"
 msgstr ""
+":func:`asyncio.iscoroutine` agora retorna ``False`` para geradores, pois :"
+"mod:`asyncio` não tem suporte a corrotinas legadas baseadas em geradores. "
+"(Contribuição de Kumar Aditya em :gh:`102748`.)"
 
 #: ../../whatsnew/3.12.rst:677
 msgid ""
 ":func:`asyncio.wait` and :func:`asyncio.as_completed` now accepts generators "
 "yielding tasks. (Contributed by Kumar Aditya in :gh:`78530`.)"
 msgstr ""
+":func:`asyncio.wait` e :func:`asyncio.as_completed` agora aceita geradores "
+"que produzem tarefas. (Contribuição de Kumar Aditya em :gh:`78530`.)"
 
 #: ../../whatsnew/3.12.rst:682
 msgid "calendar"
-msgstr ""
+msgstr "calendar"
 
 #: ../../whatsnew/3.12.rst:684
 msgid ""
@@ -1145,6 +1177,8 @@ msgid ""
 "the year and days of the week. (Contributed by Prince Roshan in :gh:"
 "`103636`.)"
 msgstr ""
+"Adiciona enums :data:`calendar.Month` e :data:`calendar.Day` definindo meses "
+"do ano e dias da semana. (Contribuição de Prince Roshan em :gh:`103636`.)"
 
 #: ../../whatsnew/3.12.rst:689
 msgid "csv"
@@ -1156,6 +1190,9 @@ msgid ""
 "provide finer grained control of ``None`` and empty strings by :class:`csv."
 "writer` objects."
 msgstr ""
+"Adiciona os sinalizadores :const:`csv.QUOTE_NOTNULL` e :const:`csv."
+"QUOTE_STRINGS` para fornecer um controle mais refinado de ``None`` e strings "
+"vazias por objetos :class:`csv.writer`."
 
 #: ../../whatsnew/3.12.rst:696
 msgid "dis"
@@ -1169,12 +1206,19 @@ msgid ""
 "pseudo instructions. Use the new :data:`dis.hasarg` collection instead. "
 "(Contributed by Irit Katriel in :gh:`94216`.)"
 msgstr ""
+"Opcodes de pseudo-instruções (que são usados pelo compilador, mas não "
+"aparecem no bytecode executável) agora são expostos no módulo :mod:`dis`. :"
+"opcode:`HAVE_ARGUMENT` ainda é relevante para opcodes reais, mas não é útil "
+"para pseudo-instruções. Use a nova coleção :data:`dis.hasarg`. (Contribuição "
+"de Irit Katriel em :gh:`94216`.)"
 
 #: ../../whatsnew/3.12.rst:706
 msgid ""
 "Add the :data:`dis.hasexc` collection to signify instructions that set an "
 "exception handler. (Contributed by Irit Katriel in :gh:`94216`.)"
 msgstr ""
+"Adiciona a coleção :data:`dis.hasexc` para indicar instruções que definem um "
+"manipulador de exceções. (Contribuição de Irit Katriel em :gh:`94216`.)"
 
 #: ../../whatsnew/3.12.rst:710
 msgid "fractions"
@@ -1185,22 +1229,28 @@ msgid ""
 "Objects of type :class:`fractions.Fraction` now support float-style "
 "formatting. (Contributed by Mark Dickinson in :gh:`100161`.)"
 msgstr ""
+"Objetos do tipo :class:`fractions.Fraction` agora têm suporte a formatação "
+"estilo float. (Contribuição de Mark Dickinson em :gh:`100161`.)"
 
 #: ../../whatsnew/3.12.rst:716
 msgid "importlib.resources"
-msgstr ""
+msgstr "importlib.resources"
 
 #: ../../whatsnew/3.12.rst:718
 msgid ""
 ":func:`importlib.resources.as_file` now supports resource directories. "
 "(Contributed by Jason R. Coombs in :gh:`97930`.)"
 msgstr ""
+":func:`importlib.resources.as_file` agora tem suporta a diretórios de "
+"recursos. (Contribuição de Jason R. Coombs em :gh:`97930`.)"
 
 #: ../../whatsnew/3.12.rst:721
 msgid ""
 "Rename first parameter of :func:`importlib.resources.files` to *anchor*. "
 "(Contributed by Jason R. Coombs in :gh:`100598`.)"
 msgstr ""
+"Renomeia o primeiro parâmetro de :func:`importlib.resources.files` para "
+"*anchor*. (Contribuição de Jason R. Coombs em :gh:`100598`.)"
 
 #: ../../whatsnew/3.12.rst:725
 msgid "inspect"
@@ -1210,7 +1260,7 @@ msgstr "inspect"
 msgid ""
 "Add :func:`inspect.markcoroutinefunction` to mark sync functions that return "
 "a :term:`coroutine` for use with :func:`inspect.iscoroutinefunction`. "
-"(Contributed Carlton Gibson in :gh:`99247`.)"
+"(Contributed by Carlton Gibson in :gh:`99247`.)"
 msgstr ""
 
 #: ../../whatsnew/3.12.rst:731
@@ -1219,6 +1269,9 @@ msgid ""
 "for determining the current state of asynchronous generators. (Contributed "
 "by Thomas Krennwallner in :gh:`79940`.)"
 msgstr ""
+"Adiciona :func:`inspect.getasyncgenstate` e :func:`inspect."
+"getasyncgenlocals` para determinar o estado atual dos geradores assíncronos. "
+"(Contribuição de Thomas Krennwallner em :gh:`79940`.)"
 
 #: ../../whatsnew/3.12.rst:735
 msgid ""
@@ -1227,6 +1280,10 @@ msgid ""
 "were in Python 3.11, and some may be 6x faster or more. (Contributed by Alex "
 "Waygood in :gh:`103193`.)"
 msgstr ""
+"O desempenho de :func:`inspect.getattr_static` foi consideravelmente "
+"melhorado. A maioria das chamadas para a função deve ser pelo menos 2x mais "
+"rápida do que no Python 3.11, e algumas podem ser 6x mais rápidas ou mais. "
+"(Contribuição de Alex Waygood em :gh:`103193`.)"
 
 #: ../../whatsnew/3.12.rst:741
 msgid "itertools"
@@ -1238,6 +1295,9 @@ msgid ""
 "the last batch may be shorter than the rest. (Contributed by Raymond "
 "Hettinger in :gh:`98363`.)"
 msgstr ""
+"Adiciona :class:`itertools.batched()` para coletar tuplas de tamanhos "
+"iguais, onde o último lote pode ser menor que o resto. (Contribuição de "
+"Raymond Hettinger em :gh:`98363`.)"
 
 #: ../../whatsnew/3.12.rst:748
 msgid "math"
@@ -1248,12 +1308,14 @@ msgid ""
 "Add :func:`math.sumprod` for computing a sum of products. (Contributed by "
 "Raymond Hettinger in :gh:`100485`.)"
 msgstr ""
+"Adiciona :func:`math.sumprod` para calcular uma soma de produtos. "
+"(Contribuição de Raymond Hettinger em :gh:`100485`.)"
 
 #: ../../whatsnew/3.12.rst:753
 msgid ""
 "Extend :func:`math.nextafter` to include a *steps* argument for moving up or "
-"down multiple steps at a time. (By Matthias Goergens, Mark Dickinson, and "
-"Raymond Hettinger in :gh:`94906`.)"
+"down multiple steps at a time. (Contributed by Matthias Goergens, Mark "
+"Dickinson, and Raymond Hettinger in :gh:`94906`.)"
 msgstr ""
 
 #: ../../whatsnew/3.12.rst:758
@@ -1266,6 +1328,9 @@ msgid ""
 "func:`os.pidfd_open` in non-blocking mode. (Contributed by Kumar Aditya in :"
 "gh:`93312`.)"
 msgstr ""
+"Adiciona :const:`os.PIDFD_NONBLOCK` para abrir um descritor de arquivo para "
+"um processo com :func:`os.pidfd_open` em modo sem bloqueio. (Contribuição de "
+"Kumar Aditya em :gh:`93312`.)"
 
 #: ../../whatsnew/3.12.rst:764
 msgid ""
@@ -1273,6 +1338,9 @@ msgid ""
 "to check if the entry is a junction. (Contributed by Charles Machalow in :gh:"
 "`99547`.)"
 msgstr ""
+":class:`os.DirEntry` agora inclui um método :meth:`os.DirEntry.is_junction` "
+"para verificar se a entrada é uma junção. (Contribuição de Charles Machalow "
+"em :gh:`99547`.)"
 
 #: ../../whatsnew/3.12.rst:768
 msgid ""
@@ -1280,6 +1348,9 @@ msgid ""
 "functions on Windows for enumerating drives, volumes and mount points. "
 "(Contributed by Steve Dower in :gh:`102519`.)"
 msgstr ""
+"Adiciona funções :func:`os.listdrives`, :func:`os.listvolumes` e :func:`os."
+"listmounts` no Windows para enumerar unidades, volumes e pontos de montagem. "
+"(Contribuição de Steve Dower em :gh:`102519`.)"
 
 #: ../../whatsnew/3.12.rst:772
 msgid ""
@@ -1293,6 +1364,15 @@ msgid ""
 "faster on newer releases of Windows. (Contributed by Steve Dower in :gh:"
 "`99726`.)"
 msgstr ""
+":func:`os.stat` e :func:`os.lstat` agora são mais precisos no Windows. O "
+"campo ``st_birthtime`` agora será preenchido com a hora de criação do "
+"arquivo, e ``st_ctime`` foi descontinuado, mas ainda contém a hora de "
+"criação (mas no futuro vai retornar a última alteração de metadados, para "
+"consistência com outras plataformas ). ``st_dev`` pode ter até 64 bits e "
+"``st_ino`` até 128 bits dependendo do seu sistema de arquivos, e ``st_rdev`` "
+"é sempre definido como zero em vez de valores incorretos. Ambas as funções "
+"podem ser significativamente mais rápidas nas lançamentos mais recentes do "
+"Windows. (Contribuição de Steve Dower em :gh:`99726`.)"
 
 #: ../../whatsnew/3.12.rst:783
 msgid "os.path"
@@ -1303,12 +1383,16 @@ msgid ""
 "Add :func:`os.path.isjunction` to check if a given path is a junction. "
 "(Contributed by Charles Machalow in :gh:`99547`.)"
 msgstr ""
+"Adiciona :func:`os.path.isjunction` para verificar se um determinado caminho "
+"é uma junção. (Contribuição de Charles Machalow em :gh:`99547`.)"
 
 #: ../../whatsnew/3.12.rst:788
 msgid ""
 "Add :func:`os.path.splitroot` to split a path into a triad ``(drive, root, "
 "tail)``. (Contributed by Barney Gale in :gh:`101000`.)"
 msgstr ""
+"Adiciona :func:`os.path.splitroot` para dividir um caminho em uma tríade "
+"``(drive, root, tail)``. (Contribuição de Barney Gale em :gh:`101000`.)"
 
 #: ../../whatsnew/3.12.rst:792
 msgid "pathlib"
@@ -1321,6 +1405,10 @@ msgid ""
 "override the :meth:`pathlib.PurePath.with_segments` method to pass "
 "information between path instances."
 msgstr ""
+"Adiciona suporte para fazer subclasse de :class:`pathlib.PurePath` e :class:"
+"`pathlib.Path`, além de suas variantes específicas do Posix e do Windows. As "
+"subclasses podem substituir o método :meth:`pathlib.PurePath.with_segments` "
+"para passar informações entre instâncias de caminho."
 
 #: ../../whatsnew/3.12.rst:799
 msgid ""
@@ -1328,6 +1416,9 @@ msgid ""
 "all file or directory names within them, similar to :func:`os.walk`. "
 "(Contributed by Stanislav Zmiev in :gh:`90385`.)"
 msgstr ""
+"Adiciona :meth:`pathlib.Path.walk` para percorrer as árvores de diretórios e "
+"gerar todos os nomes de arquivos ou diretórios dentro delas, semelhante a :"
+"func:`os.walk`. (Contribuição de Stanislav Zmiev em :gh:`90385`.)"
 
 #: ../../whatsnew/3.12.rst:803
 msgid ""
@@ -1336,12 +1427,18 @@ msgid ""
 "consistent with :func:`os.path.relpath`. (Contributed by Domenico Ragusa in :"
 "gh:`84538`.)"
 msgstr ""
+"Adiciona o parâmetro opcional *walk_up* a :meth:`pathlib.PurePath."
+"relative_to` para permitir a inserção de entradas ``..`` no resultado; este "
+"comportamento é mais consistente com :func:`os.path.relpath`. (Contribuição "
+"de Domenico Ragusa em :gh:`84538`.)"
 
 #: ../../whatsnew/3.12.rst:808
 msgid ""
 "Add :meth:`pathlib.Path.is_junction` as a proxy to :func:`os.path."
 "isjunction`. (Contributed by Charles Machalow in :gh:`99547`.)"
 msgstr ""
+"Adiciona :meth:`pathlib.Path.is_junction` como proxy para :func:`os.path."
+"isjunction`. (Contribuição de Charles Machalow em :gh:`99547`.)"
 
 #: ../../whatsnew/3.12.rst:811
 msgid ""
@@ -1350,6 +1447,11 @@ msgid ""
 "path's case sensitivity, allowing for more precise control over the matching "
 "process."
 msgstr ""
+"Adiciona o parâmetro opcional *case_sensitive* a :meth:`pathlib.Path.glob`, :"
+"meth:`pathlib.Path.rglob` e :meth:`pathlib.PurePath.match` para fazer "
+"correspondência com distinção entre maiúsculas e minúsculas do caminho, "
+"permitindo uma precisão mais precisa controle sobre o processo de "
+"correspondência."
 
 #: ../../whatsnew/3.12.rst:816
 msgid "pdb"
@@ -1361,6 +1463,9 @@ msgid ""
 "provide quick access to values like the current frame or the return value. "
 "(Contributed by Tian Gao in :gh:`103693`.)"
 msgstr ""
+"Adiciona variáveis de conveniência para armazenar valores temporariamente "
+"para a sessão de depuração e fornece acesso rápido a valores como o quadro "
+"atual ou o valor de retorno. (Contribuição de Tian Gao em :gh:`103693`.)"
 
 #: ../../whatsnew/3.12.rst:824
 msgid "random"
@@ -1371,12 +1476,16 @@ msgid ""
 "Add :func:`random.binomialvariate`. (Contributed by Raymond Hettinger in :gh:"
 "`81620`.)"
 msgstr ""
+"Adiciona :func:`random.binomialvariate`. (Contribuição de Raymond Hettinger "
+"em :gh:`81620`.)"
 
 #: ../../whatsnew/3.12.rst:829
 msgid ""
 "Add a default of ``lambd=1.0`` to :func:`random.expovariate`. (Contributed "
 "by Raymond Hettinger in :gh:`100234`.)"
 msgstr ""
+"Adiciona um padrão de ``lambd=1.0`` a :func:`random.expovariate`. "
+"(Contribuição de Raymond Hettinger em :gh:`100234`.)"
 
 #: ../../whatsnew/3.12.rst:833
 msgid "shutil"
@@ -1389,6 +1498,11 @@ msgid ""
 "the current working directory of the process to *root_dir* to perform "
 "archiving. (Contributed by Serhiy Storchaka in :gh:`74696`.)"
 msgstr ""
+":func:`shutil.make_archive` agora passa o argumento *root_dir* para "
+"arquivadores personalizados que o suportam. Neste caso, ele não altera mais "
+"temporariamente o diretório de trabalho atual do processo para *root_dir* "
+"para realizar o arquivamento. (Contribuição de Serhiy Storchaka em :gh:"
+"`74696`.)"
 
 #: ../../whatsnew/3.12.rst:841
 msgid ""
@@ -1397,6 +1511,10 @@ msgid ""
 "*(typ, val, tb)* triplet. *onerror* is deprecated. (Contributed by Irit "
 "Katriel in :gh:`102828`.)"
 msgstr ""
+":func:`shutil.rmtree` agora aceita um novo argumento *onexc* que é um "
+"tratador de erros como *onerror* mas que espera uma instância de exceção em "
+"vez de um trio *(typ, val, tb)*. *onerror* foi descontinuado. (Contribuição "
+"de Irit Katriel em :gh:`102828`.)"
 
 #: ../../whatsnew/3.12.rst:846
 msgid ""
@@ -1404,6 +1522,10 @@ msgid ""
 "matches within *PATH* on Windows even when the given *cmd* includes a "
 "directory component. (Contributed by Charles Machalow in :gh:`103179`.)"
 msgstr ""
+":func:`shutil. which` agora consulta a variável de ambiente *PATHEXT* para "
+"encontrar correspondências dentro de *PATH* no Windows mesmo quando o *cmd* "
+"fornecido inclui um componente de diretório. (Contribuição de Charles "
+"Machalow em :gh:`103179`.)"
 
 #: ../../whatsnew/3.12.rst:851
 msgid ""
@@ -1412,6 +1534,10 @@ msgid ""
 "directory should be prepended to the search path. (Contributed by Charles "
 "Machalow in :gh:`103179`.)"
 msgstr ""
+":func:`shutil. which` chamará ``NeedCurrentDirectoryForExePathW`` ao "
+"consultar executáveis no Windows para determinar se o diretório de trabalho "
+"atual deve ser anexado ao caminho de pesquisa. (Contribuição de Charles "
+"Machalow em :gh:`103179`.)"
 
 #: ../../whatsnew/3.12.rst:856
 msgid ""
@@ -1419,8 +1545,12 @@ msgid ""
 "from ``PATHEXT`` prior to a direct match elsewhere in the search path on "
 "Windows. (Contributed by Charles Machalow in :gh:`103179`.)"
 msgstr ""
+":func:`shutil.which` vai retornar um caminho que corresponde ao *cmd* com um "
+"componente de ``PATHEXT`` antes de uma correspondência direta em outro lugar "
+"no caminho de pesquisa no Windows. (Contribuição de Charles Machalow em :gh:"
+"`103179`.)"
 
-#: ../../whatsnew/3.12.rst:862 ../../whatsnew/3.12.rst:1669
+#: ../../whatsnew/3.12.rst:862 ../../whatsnew/3.12.rst:1667
 msgid "sqlite3"
 msgstr "sqlite3"
 
@@ -1429,6 +1559,8 @@ msgid ""
 "Add a :ref:`command-line interface <sqlite3-cli>`. (Contributed by Erlend E. "
 "Aasland in :gh:`77617`.)"
 msgstr ""
+"Adiciona uma :ref:`interface de linha de comando <sqlite3-cli>`. "
+"(Contribuição de Erlend E. Aasland em :gh:`77617`.)"
 
 #: ../../whatsnew/3.12.rst:867
 msgid ""
@@ -1437,6 +1569,11 @@ msgid ""
 "control :pep:`249`-compliant :ref:`transaction handling <sqlite3-transaction-"
 "control-autocommit>`. (Contributed by Erlend E. Aasland in :gh:`83638`.)"
 msgstr ""
+"Adiciona o atributo :attr:`sqlite3.Connection.autocommit` a :class:`sqlite3."
+"Connection` e o parâmetro *autocommit* a :func:`sqlite3.connect` para "
+"controlar a :pep:`249` compatível com :ref: `tratamento de transação "
+"<sqlite3-transaction-control-autocommit>`. (Contribuição de Erlend E. "
+"Aasland em :gh:`83638`.)"
 
 #: ../../whatsnew/3.12.rst:874
 msgid ""
@@ -1444,6 +1581,9 @@ msgid ""
 "load_extension`, for overriding the SQLite extension entry point. "
 "(Contributed by Erlend E. Aasland in :gh:`103015`.)"
 msgstr ""
+"Adiciona o parâmetro somente-nomeado *entrypoint* a :meth:`sqlite3."
+"Connection.load_extension`, para substituir o ponto de entrada da extensão "
+"SQLite. (Contribuição de Erlend E. Aasland em :gh:`103015`.)"
 
 #: ../../whatsnew/3.12.rst:879
 msgid ""
@@ -1451,6 +1591,10 @@ msgid ""
 "setconfig` to :class:`sqlite3.Connection` to make configuration changes to a "
 "database connection. (Contributed by Erlend E. Aasland in :gh:`103489`.)"
 msgstr ""
+"Adiciona :meth:`sqlite3.Connection.getconfig` e :meth:`sqlite3.Connection."
+"setconfig` a :class:`sqlite3.Connection` para fazer alterações na "
+"configuração de uma conexão de banco de dados. (Contribuição de Erlend E. "
+"Aasland em :gh:`103489`.)"
 
 #: ../../whatsnew/3.12.rst:885
 msgid "statistics"
@@ -1462,6 +1606,9 @@ msgid ""
 "computing the Spearman correlation of ranked data. (Contributed by Raymond "
 "Hettinger in :gh:`95861`.)"
 msgstr ""
+"Estende :func:`statistics.correlation` para incluir como um método "
+"``ranked`` para calcular a correlação de Spearman de dados classificados. "
+"(Contribuição de Raymond Hettinger em :gh:`95861`.)"
 
 #: ../../whatsnew/3.12.rst:892
 msgid "sys"
@@ -1473,6 +1620,9 @@ msgid ""
 "<whatsnew312-pep669>` monitoring API. (Contributed by Mark Shannon in :gh:"
 "`103082`.)"
 msgstr ""
+"Adiciona o espaço de nomes :mod:`sys.monitoring` para expor a nova API de "
+"monitoramento :ref:`PEP 669 <whatsnew312-pep669>`. (Contribuição de Mark "
+"Shannon em :gh:`103082`.)"
 
 #: ../../whatsnew/3.12.rst:898
 msgid ""
@@ -1483,6 +1633,12 @@ msgid ""
 "Christian Heimes with contributions from Gregory P. Smith [Google] and Mark "
 "Shannon in :gh:`96123`.)"
 msgstr ""
+"Adiciona :func:`sys.activate_stack_trampoline` e :func:`sys."
+"deactivate_stack_trampoline` para ativar e desativar trampolins do "
+"perfilador de pilha e :func:`sys.is_stack_trampoline_active` para consultar "
+"se os trampolins do perfilador de pilha estão ativos. (Contribuição de Pablo "
+"Galindo e Christian Heimes com contribuições de Gregory P. Smith [Google] e "
+"Mark Shannon em :gh:`96123`.)"
 
 #: ../../whatsnew/3.12.rst:907
 msgid ""
@@ -1492,13 +1648,21 @@ msgid ""
 "data:`sys.last_value` and :data:`sys.last_traceback`. (Contributed by Irit "
 "Katriel in :gh:`102778`.)"
 msgstr ""
+"Adiciona :data:`sys.last_exc` que contém a última exceção não tratada que "
+"foi levantada (para casos de uso de depuração post-mortem). Descontinuar os "
+"três campos que possuem as mesmas informações em seu formato legado: :data:"
+"`sys.last_type`, :data:`sys.last_value` e :data:`sys.last_traceback`. "
+"(Contribuição de Irit Katriel em :gh:`102778`.)"
 
-#: ../../whatsnew/3.12.rst:913 ../../whatsnew/3.12.rst:1865
+#: ../../whatsnew/3.12.rst:913 ../../whatsnew/3.12.rst:1862
 msgid ""
 ":func:`sys._current_exceptions` now returns a mapping from thread-id to an "
 "exception instance, rather than to a ``(typ, exc, tb)`` tuple. (Contributed "
 "by Irit Katriel in :gh:`103176`.)"
 msgstr ""
+":func:`sys._current_exceptions` agora retorna um mapeamento de thread-id "
+"para uma instância de exceção, ao invés de uma tupla ``(typ, exc, tb)``. "
+"(Contribuição de Irit Katriel em :gh:`103176`.)"
 
 #: ../../whatsnew/3.12.rst:917
 msgid ""
@@ -1507,6 +1671,10 @@ msgid ""
 "use the recursion limit, but are protected by a different mechanism that "
 "prevents recursion from causing a virtual machine crash."
 msgstr ""
+":func:`sys.setrecursionlimit` e :func:`sys.getrecursionlimit`. O limite de "
+"recursão agora se aplica apenas ao código Python. As funções integradas não "
+"usam o limite de recursão, mas são protegidas por um mecanismo diferente que "
+"evita que a recursão cause uma falha na máquina virtual."
 
 #: ../../whatsnew/3.12.rst:923
 msgid "tempfile"
@@ -1517,30 +1685,38 @@ msgid ""
 "The :class:`tempfile.NamedTemporaryFile` function has a new optional "
 "parameter *delete_on_close* (Contributed by Evgeny Zorin in :gh:`58451`.)"
 msgstr ""
+"A função :class:`tempfile.NamedTemporaryFile` tem um novo parâmetro opcional "
+"*delete_on_close* (Contribuição de Evgeny Zorin em :gh:`58451`.)"
 
 #: ../../whatsnew/3.12.rst:927
 msgid ""
 ":func:`tempfile.mkdtemp` now always returns an absolute path, even if the "
 "argument provided to the *dir* parameter is a relative path."
 msgstr ""
+":func:`tempfile.mkdtemp` agora sempre retorna um caminho absoluto, mesmo se "
+"o argumento fornecido para o parâmetro *dir* for um caminho relativo."
 
-#: ../../whatsnew/3.12.rst:933
+#: ../../whatsnew/3.12.rst:931
 msgid "threading"
 msgstr "threading"
 
-#: ../../whatsnew/3.12.rst:935
+#: ../../whatsnew/3.12.rst:933
 msgid ""
 "Add :func:`threading.settrace_all_threads` and :func:`threading."
 "setprofile_all_threads` that allow to set tracing and profiling functions in "
 "all running threads in addition to the calling one. (Contributed by Pablo "
 "Galindo in :gh:`93503`.)"
 msgstr ""
+"Adiciona :func:`threading.settrace_all_threads` e :func:`threading."
+"setprofile_all_threads` que permitem definir funções de rastreamento e "
+"criação de perfil em todos os threads em execução além do que está chamando. "
+"(Contribuição de Pablo Galindo em :gh:`93503`.)"
 
-#: ../../whatsnew/3.12.rst:941
+#: ../../whatsnew/3.12.rst:939
 msgid "tkinter"
 msgstr "tkinter"
 
-#: ../../whatsnew/3.12.rst:943
+#: ../../whatsnew/3.12.rst:941
 msgid ""
 "``tkinter.Canvas.coords()`` now flattens its arguments. It now accepts not "
 "only coordinates as separate arguments (``x1, y1, x2, y2, ...``) and a "
@@ -1549,29 +1725,42 @@ msgid ""
 "y2), ...]``), like ``create_*()`` methods. (Contributed by Serhiy Storchaka "
 "in :gh:`94473`.)"
 msgstr ""
+"``tkinter.Canvas.coords()`` agora nivela seus argumentos. Agora ele aceita "
+"não apenas coordenadas como argumentos separados (``x1, y1, x2, y2, ...``) e "
+"uma sequência de coordenadas (``[x1, y1, x2, y2, ...]``) , mas também "
+"coordenadas agrupadas em pares (``(x1, y1), (x2, y2), ...`` e ``[(x1, y1), "
+"(x2, y2), ...]``) , como métodos ``create_*()``. (Contribuição de Serhiy "
+"Storchaka em :gh:`94473`.)"
 
-#: ../../whatsnew/3.12.rst:952
+#: ../../whatsnew/3.12.rst:950
 msgid "tokenize"
 msgstr "tokenize"
 
-#: ../../whatsnew/3.12.rst:954
+#: ../../whatsnew/3.12.rst:952
 msgid ""
 "The :mod:`tokenize` module includes the changes introduced in :pep:`701`. "
 "(Contributed by Marta Gómez Macías and Pablo Galindo in :gh:`102856`.) See :"
 "ref:`whatsnew312-porting-to-python312` for more information on the changes "
 "to the :mod:`tokenize` module."
 msgstr ""
+"O módulo :mod:`tokenize` inclui as mudanças introduzidas em :pep:`701`. "
+"(Contribuição de Marta Gómez Macías e Pablo Galindo em :gh:`102856`.) Veja :"
+"ref:`whatsnew312-porting-to-python312` para mais informações sobre as "
+"mudanças no módulo :mod:`tokenize`."
 
-#: ../../whatsnew/3.12.rst:960
+#: ../../whatsnew/3.12.rst:958
 msgid "types"
 msgstr "types"
 
-#: ../../whatsnew/3.12.rst:962
+#: ../../whatsnew/3.12.rst:960
 msgid ""
 "Add :func:`types.get_original_bases` to allow for further introspection of :"
 "ref:`user-defined-generics` when subclassed. (Contributed by James Hilton-"
 "Balfe and Alex Waygood in :gh:`101827`.)"
 msgstr ""
+"Adiciona :func:`types.get_original_bases` para permitir uma introspecção "
+"adicional de :ref:`user-defined-generics` quando subclassificado. "
+"(Contribuição de James Hilton-Balfe e Alex Waygood em :gh:`101827`.)"
 
 #: ../../whatsnew/3.12.rst:967
 msgid "typing"
@@ -1589,6 +1778,17 @@ msgid ""
 "protocol on Python 3.12+, and vice versa. Most users are unlikely to be "
 "affected by this change. (Contributed by Alex Waygood in :gh:`102433`.)"
 msgstr ""
+"As verificações de :func:`isinstance` com :func:`protocolos verificáveis em "
+"tempo de execução <typing.runtime_checkable>` agora use :func:`inspect."
+"getattr_static` em vez de :func:`hasattr` para verificar se existem "
+"atributos. Isso significa que descritores e métodos :meth:`~object."
+"__getattr__` não são mais avaliados inesperadamente durante verificações "
+"``isinstance()`` em protocolos verificáveis em tempo de execução. No "
+"entanto, também pode significar que alguns objetos que costumavam ser "
+"considerados instâncias de um protocolo verificável em tempo de execução "
+"podem não ser mais considerados instâncias desse protocolo no Python 3.12+ e "
+"vice-versa. É improvável que a maioria dos usuários seja afetada por esta "
+"mudança. (Contribuição de Alex Waygood em :gh:`102433`.)"
 
 #: ../../whatsnew/3.12.rst:980
 msgid ""
@@ -1597,12 +1797,20 @@ msgid ""
 "onto a runtime-checkable protocol will still work, but will have no impact "
 "on :func:`isinstance` checks comparing objects to the protocol. For example::"
 msgstr ""
+"Os membros de um protocolo verificável em tempo de execução agora são "
+"considerados \"congelados\" em tempo de execução assim que a classe é "
+"criada. Fazer alterações em atributos em tempo de execução em um protocolo "
+"verificável em tempo de execução ainda vai funcioanr, mas não terá impacto "
+"nas verificações de :func:`isinstance` comparando objetos com o protocolo. "
+"Por exemplo::"
 
 #: ../../whatsnew/3.12.rst:1002
 msgid ""
 "This change was made in order to speed up ``isinstance()`` checks against "
 "runtime-checkable protocols."
 msgstr ""
+"Esta mudança foi feita para acelerar as verificações de ``isinstance()`` em "
+"protocolos verificáveis em tempo de execução."
 
 #: ../../whatsnew/3.12.rst:1005
 msgid ""
@@ -1614,6 +1822,14 @@ msgid ""
 "more members may be slower than in Python 3.11. (Contributed by Alex Waygood "
 "in :gh:`74690` and :gh:`103193`.)"
 msgstr ""
+"O perfil de desempenho de verificações de :func:`isinstance` com :func:"
+"`protocolos verificáveis em tempo de execução <typing.runtime_checkable>` "
+"mudou significativamente. A maioria das verificações ``isinstance()`` a "
+"esses protocolos com apenas alguns membros devem ser pelo menos 2x mais "
+"rápidas que na versão 3.11, e algumas podem ser 20x mais rápidas ou mais. No "
+"entanto, as verificações de ``isinstance()`` em protocolos com quatorze ou "
+"mais membros podem ser mais lentas do que no Python 3.11. (Contribuição de "
+"Alex Waygood em :gh:`74690` e :gh:`103193`.)"
 
 #: ../../whatsnew/3.12.rst:1013
 msgid ""
@@ -1621,12 +1837,17 @@ msgid ""
 "the ``__orig_bases__`` attribute. (Contributed by Adrian Garcia Badaracco "
 "in :gh:`103699`.)"
 msgstr ""
+"Todas as classes :data:`typing.TypedDict` e :data:`typing.NamedTuple` agora "
+"possuem o atributo ``__orig_bases__``. (Contribuição de Adrian Garcia "
+"Badaracco em :gh:`103699`.)"
 
 #: ../../whatsnew/3.12.rst:1017
 msgid ""
 "Add ``frozen_default`` parameter to :func:`typing.dataclass_transform`. "
 "(Contributed by Erik De Bonte in :gh:`99957`.)"
 msgstr ""
+"Adiciona o parâmetro ``frozen_default`` a :func:`typing."
+"dataclass_transform`. (Contribuição de Erik De Bonte em :gh:`99957`.)"
 
 #: ../../whatsnew/3.12.rst:1021
 msgid "unicodedata"
@@ -1637,8 +1858,10 @@ msgid ""
 "The Unicode database has been updated to version 15.0.0. (Contributed by "
 "Benjamin Peterson in :gh:`96734`)."
 msgstr ""
+"O banco de dados Unicode foi atualizado para a versão 15.0.0. (Contribuição "
+"de Benjamin Peterson em :gh:`96734`)."
 
-#: ../../whatsnew/3.12.rst:1027 ../../whatsnew/3.12.rst:1710
+#: ../../whatsnew/3.12.rst:1027 ../../whatsnew/3.12.rst:1707
 msgid "unittest"
 msgstr "unittest"
 
@@ -1646,10 +1869,12 @@ msgstr "unittest"
 msgid ""
 "Add a ``--durations`` command line option, showing the N slowest test cases::"
 msgstr ""
+"Adiciona uma opção de linha de comando ``--durations``, mostrando os N casos "
+"de teste mais lentos::"
 
 #: ../../whatsnew/3.12.rst:1045
 msgid "(Contributed by Giampaolo Rodola in :gh:`48330`)"
-msgstr ""
+msgstr "(Contribuição de Giampaolo Rodola em :gh:`48330`)"
 
 #: ../../whatsnew/3.12.rst:1048
 msgid "uuid"
@@ -1814,7 +2039,7 @@ msgid ""
 "demos>`_. (Contributed by Victor Stinner in :gh:`97669`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1144 ../../whatsnew/3.12.rst:2268
+#: ../../whatsnew/3.12.rst:1144 ../../whatsnew/3.12.rst:2265
 msgid "Deprecated"
 msgstr "Descontinuados"
 
@@ -1835,23 +2060,23 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1155 ../../whatsnew/3.12.rst:1401
 msgid ":class:`!ast.Num`"
-msgstr ""
+msgstr ":class:`!ast.Num`"
 
 #: ../../whatsnew/3.12.rst:1156 ../../whatsnew/3.12.rst:1402
 msgid ":class:`!ast.Str`"
-msgstr ""
+msgstr ":class:`!ast.Str`"
 
 #: ../../whatsnew/3.12.rst:1157 ../../whatsnew/3.12.rst:1403
 msgid ":class:`!ast.Bytes`"
-msgstr ""
+msgstr ":class:`!ast.Bytes`"
 
 #: ../../whatsnew/3.12.rst:1158 ../../whatsnew/3.12.rst:1404
 msgid ":class:`!ast.NameConstant`"
-msgstr ""
+msgstr ":class:`!ast.NameConstant`"
 
 #: ../../whatsnew/3.12.rst:1159 ../../whatsnew/3.12.rst:1405
 msgid ":class:`!ast.Ellipsis`"
-msgstr ""
+msgstr ":class:`!ast.Ellipsis`"
 
 #: ../../whatsnew/3.12.rst:1161
 msgid ""
@@ -1861,7 +2086,7 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1164 ../../whatsnew/3.12.rst:1407
 msgid ":mod:`asyncio`:"
-msgstr ""
+msgstr ":mod:`asyncio`:"
 
 #: ../../whatsnew/3.12.rst:1166
 msgid ""
@@ -1930,15 +2155,15 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1206 ../../whatsnew/3.12.rst:1424
 msgid ":class:`!importlib.abc.ResourceReader`"
-msgstr ""
+msgstr ":class:`!importlib.abc.ResourceReader`"
 
 #: ../../whatsnew/3.12.rst:1207 ../../whatsnew/3.12.rst:1425
 msgid ":class:`!importlib.abc.Traversable`"
-msgstr ""
+msgstr ":class:`!importlib.abc.Traversable`"
 
 #: ../../whatsnew/3.12.rst:1208 ../../whatsnew/3.12.rst:1426
 msgid ":class:`!importlib.abc.TraversableResources`"
-msgstr ""
+msgstr ":class:`!importlib.abc.TraversableResources`"
 
 #: ../../whatsnew/3.12.rst:1210
 msgid "Use :mod:`importlib.resources.abc` classes instead:"
@@ -1946,11 +2171,11 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1212
 msgid ":class:`importlib.resources.abc.Traversable`"
-msgstr ""
+msgstr ":class:`importlib.resources.abc.Traversable`"
 
 #: ../../whatsnew/3.12.rst:1213
 msgid ":class:`importlib.resources.abc.TraversableResources`"
-msgstr ""
+msgstr ":class:`importlib.resources.abc.TraversableResources`"
 
 #: ../../whatsnew/3.12.rst:1215
 msgid "(Contributed by Jason R. Coombs and Hugo van Kemenade in :gh:`93963`.)"
@@ -1994,7 +2219,7 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1243
 msgid ":mod:`os`:"
-msgstr ""
+msgstr ":mod:`os`:"
 
 #: ../../whatsnew/3.12.rst:1245
 msgid ""
@@ -2034,7 +2259,7 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1268
 msgid ":mod:`sqlite3`:"
-msgstr ""
+msgstr ":mod:`sqlite3`:"
 
 #: ../../whatsnew/3.12.rst:1270
 msgid ""
@@ -2069,7 +2294,7 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1291
 msgid ":mod:`typing`:"
-msgstr ""
+msgstr ":mod:`typing`:"
 
 #: ../../whatsnew/3.12.rst:1293
 msgid ""
@@ -2233,39 +2458,39 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1366 ../../whatsnew/3.12.rst:1456
 msgid "APIs:"
-msgstr ""
+msgstr "APIs:"
 
 #: ../../whatsnew/3.12.rst:1368
 msgid ":class:`!configparser.LegacyInterpolation` (:gh:`90765`)"
-msgstr ""
+msgstr ":class:`!configparser.LegacyInterpolation` (:gh:`90765`)"
 
 #: ../../whatsnew/3.12.rst:1369
 msgid "``locale.resetlocale()`` (:gh:`90817`)"
-msgstr ""
+msgstr "``locale.resetlocale()`` (:gh:`90817`)"
 
 #: ../../whatsnew/3.12.rst:1370
 msgid ":meth:`!turtle.RawTurtle.settiltangle` (:gh:`50096`)"
-msgstr ""
+msgstr ":meth:`!turtle.RawTurtle.settiltangle` (:gh:`50096`)"
 
 #: ../../whatsnew/3.12.rst:1371
 msgid ":func:`!unittest.findTestCases` (:gh:`50096`)"
-msgstr ""
+msgstr ":func:`!unittest.findTestCases` (:gh:`50096`)"
 
 #: ../../whatsnew/3.12.rst:1372
 msgid ":func:`!unittest.getTestCaseNames` (:gh:`50096`)"
-msgstr ""
+msgstr ":func:`!unittest.getTestCaseNames` (:gh:`50096`)"
 
 #: ../../whatsnew/3.12.rst:1373
 msgid ":func:`!unittest.makeSuite` (:gh:`50096`)"
-msgstr ""
+msgstr ":func:`!unittest.makeSuite` (:gh:`50096`)"
 
 #: ../../whatsnew/3.12.rst:1374
 msgid ":meth:`!unittest.TestProgram.usageExit` (:gh:`67048`)"
-msgstr ""
+msgstr ":meth:`!unittest.TestProgram.usageExit` (:gh:`67048`)"
 
 #: ../../whatsnew/3.12.rst:1375
 msgid ":class:`!webbrowser.MacOSX` (:gh:`86421`)"
-msgstr ""
+msgstr ":class:`!webbrowser.MacOSX` (:gh:`86421`)"
 
 #: ../../whatsnew/3.12.rst:1376
 msgid ":class:`classmethod` descriptor chaining (:gh:`89519`)"
@@ -2277,31 +2502,31 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1379
 msgid "``contents()``"
-msgstr ""
+msgstr "``contents()``"
 
 #: ../../whatsnew/3.12.rst:1380
 msgid "``is_resource()``"
-msgstr ""
+msgstr "``is_resource()``"
 
 #: ../../whatsnew/3.12.rst:1381
 msgid "``open_binary()``"
-msgstr ""
+msgstr "``open_binary()``"
 
 #: ../../whatsnew/3.12.rst:1382
 msgid "``open_text()``"
-msgstr ""
+msgstr "``open_text()``"
 
 #: ../../whatsnew/3.12.rst:1383
 msgid "``path()``"
-msgstr ""
+msgstr "``path()``"
 
 #: ../../whatsnew/3.12.rst:1384
 msgid "``read_binary()``"
-msgstr ""
+msgstr "``read_binary()``"
 
 #: ../../whatsnew/3.12.rst:1385
 msgid "``read_text()``"
-msgstr ""
+msgstr "``read_text()``"
 
 #: ../../whatsnew/3.12.rst:1387
 msgid ""
@@ -2310,7 +2535,7 @@ msgid ""
 "en/latest/using.html#migrating-from-legacy>`_ (:gh:`106531`)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1391 ../../whatsnew/3.12.rst:2355
+#: ../../whatsnew/3.12.rst:1391 ../../whatsnew/3.12.rst:2352
 msgid "Pending Removal in Python 3.14"
 msgstr ""
 
@@ -2331,39 +2556,39 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1409
 msgid ":class:`!asyncio.MultiLoopChildWatcher`"
-msgstr ""
+msgstr ":class:`!asyncio.MultiLoopChildWatcher`"
 
 #: ../../whatsnew/3.12.rst:1410
 msgid ":class:`!asyncio.FastChildWatcher`"
-msgstr ""
+msgstr ":class:`!asyncio.FastChildWatcher`"
 
 #: ../../whatsnew/3.12.rst:1411
 msgid ":class:`!asyncio.AbstractChildWatcher`"
-msgstr ""
+msgstr ":class:`!asyncio.AbstractChildWatcher`"
 
 #: ../../whatsnew/3.12.rst:1412
 msgid ":class:`!asyncio.SafeChildWatcher`"
-msgstr ""
+msgstr ":class:`!asyncio.SafeChildWatcher`"
 
 #: ../../whatsnew/3.12.rst:1413
 msgid ":func:`!asyncio.set_child_watcher`"
-msgstr ""
+msgstr ":func:`!asyncio.set_child_watcher`"
 
 #: ../../whatsnew/3.12.rst:1414
 msgid ":func:`!asyncio.get_child_watcher`,"
-msgstr ""
+msgstr ":func:`!asyncio.get_child_watcher`,"
 
 #: ../../whatsnew/3.12.rst:1415
 msgid ":meth:`!asyncio.AbstractEventLoopPolicy.set_child_watcher`"
-msgstr ""
+msgstr ":meth:`!asyncio.AbstractEventLoopPolicy.set_child_watcher`"
 
 #: ../../whatsnew/3.12.rst:1416
 msgid ":meth:`!asyncio.AbstractEventLoopPolicy.get_child_watcher`"
-msgstr ""
+msgstr ":meth:`!asyncio.AbstractEventLoopPolicy.get_child_watcher`"
 
 #: ../../whatsnew/3.12.rst:1418
 msgid ":mod:`collections.abc`: :class:`!collections.abc.ByteString`."
-msgstr ""
+msgstr ":mod:`collections.abc`: :class:`!collections.abc.ByteString`."
 
 #: ../../whatsnew/3.12.rst:1420
 msgid ":mod:`email`: the *isdst* parameter in :func:`email.utils.localtime`."
@@ -2371,7 +2596,7 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1422
 msgid ":mod:`importlib.abc`:"
-msgstr ""
+msgstr ":mod:`importlib.abc`:"
 
 #: ../../whatsnew/3.12.rst:1428
 msgid ":mod:`itertools`: Support for copy, deepcopy, and pickle operations."
@@ -2379,27 +2604,27 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1430
 msgid ":mod:`pkgutil`:"
-msgstr ""
+msgstr ":mod:`pkgutil`:"
 
 #: ../../whatsnew/3.12.rst:1432
 msgid ":func:`!pkgutil.find_loader`"
-msgstr ""
+msgstr ":func:`!pkgutil.find_loader`"
 
 #: ../../whatsnew/3.12.rst:1433
 msgid ":func:`!pkgutil.get_loader`."
-msgstr ""
+msgstr ":func:`!pkgutil.get_loader`."
 
 #: ../../whatsnew/3.12.rst:1435
 msgid ":mod:`pty`:"
-msgstr ""
+msgstr ":mod:`pty`:"
 
 #: ../../whatsnew/3.12.rst:1437
 msgid ":func:`!pty.master_open`"
-msgstr ""
+msgstr ":func:`!pty.master_open`"
 
 #: ../../whatsnew/3.12.rst:1438
 msgid ":func:`!pty.slave_open`"
-msgstr ""
+msgstr ":func:`!pty.slave_open`"
 
 #: ../../whatsnew/3.12.rst:1440
 msgid ":mod:`shutil`: The *onerror* argument of :func:`shutil.rmtree`"
@@ -2407,7 +2632,7 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1442
 msgid ":mod:`typing`: :class:`!typing.ByteString`"
-msgstr ""
+msgstr ":mod:`typing`: :class:`!typing.ByteString`"
 
 #: ../../whatsnew/3.12.rst:1444
 msgid ""
@@ -2423,7 +2648,7 @@ msgstr ""
 msgid "The :attr:`~codeobject.co_lnotab` attribute of code objects."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1451 ../../whatsnew/3.12.rst:2392
+#: ../../whatsnew/3.12.rst:1451 ../../whatsnew/3.12.rst:2389
 msgid "Pending Removal in Python 3.15"
 msgstr ""
 
@@ -2434,9 +2659,9 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1458
 msgid ":func:`locale.getdefaultlocale` (:gh:`90817`)"
-msgstr ""
+msgstr ":func:`locale.getdefaultlocale` (:gh:`90817`)"
 
-#: ../../whatsnew/3.12.rst:1462 ../../whatsnew/3.12.rst:2410
+#: ../../whatsnew/3.12.rst:1462 ../../whatsnew/3.12.rst:2407
 msgid "Pending Removal in Future Versions"
 msgstr ""
 
@@ -2452,7 +2677,7 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1469
 msgid ":class:`typing.Text` (:gh:`92332`)"
-msgstr ""
+msgstr ":class:`typing.Text` (:gh:`92332`)"
 
 #: ../../whatsnew/3.12.rst:1471
 msgid ""
@@ -2466,7 +2691,7 @@ msgid ""
 "syntax error. (:gh:`87999`)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1482 ../../whatsnew/3.12.rst:2442
+#: ../../whatsnew/3.12.rst:1482 ../../whatsnew/3.12.rst:2439
 msgid "Removed"
 msgstr "Removidos"
 
@@ -2637,7 +2862,7 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1588 ../../whatsnew/3.12.rst:1596
 msgid "imp"
-msgstr ""
+msgstr "imp"
 
 #: ../../whatsnew/3.12.rst:1590
 msgid ""
@@ -2651,7 +2876,7 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1598
 msgid "``imp.NullImporter``"
-msgstr ""
+msgstr "``imp.NullImporter``"
 
 #: ../../whatsnew/3.12.rst:1598
 msgid "Insert ``None`` into ``sys.path_importer_cache``"
@@ -2659,45 +2884,47 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1599
 msgid "``imp.cache_from_source()``"
-msgstr ""
+msgstr "``imp.cache_from_source()``"
 
 #: ../../whatsnew/3.12.rst:1599
 msgid ":func:`importlib.util.cache_from_source`"
-msgstr ""
+msgstr ":func:`importlib.util.cache_from_source`"
 
 #: ../../whatsnew/3.12.rst:1600
 msgid "``imp.find_module()``"
-msgstr ""
+msgstr "``imp.find_module()``"
 
 #: ../../whatsnew/3.12.rst:1600
 msgid ":func:`importlib.util.find_spec`"
-msgstr ""
+msgstr ":func:`importlib.util.find_spec`"
 
 #: ../../whatsnew/3.12.rst:1601
 msgid "``imp.get_magic()``"
-msgstr ""
+msgstr "``imp.get_magic()``"
 
 #: ../../whatsnew/3.12.rst:1601
 msgid ":attr:`importlib.util.MAGIC_NUMBER`"
-msgstr ""
+msgstr ":attr:`importlib.util.MAGIC_NUMBER`"
 
 #: ../../whatsnew/3.12.rst:1602
 msgid "``imp.get_suffixes()``"
-msgstr ""
+msgstr "``imp.get_suffixes()``"
 
 #: ../../whatsnew/3.12.rst:1602
 msgid ""
 ":attr:`importlib.machinery.SOURCE_SUFFIXES`, :attr:`importlib.machinery."
 "EXTENSION_SUFFIXES`, and :attr:`importlib.machinery.BYTECODE_SUFFIXES`"
 msgstr ""
+":attr:`importlib.machinery.SOURCE_SUFFIXES`, :attr:`importlib.machinery."
+"EXTENSION_SUFFIXES` e :attr:`importlib.machinery.BYTECODE_SUFFIXES`"
 
 #: ../../whatsnew/3.12.rst:1603
 msgid "``imp.get_tag()``"
-msgstr ""
+msgstr "``imp.get_tag()``"
 
 #: ../../whatsnew/3.12.rst:1603
 msgid ":attr:`sys.implementation.cache_tag <sys.implementation>`"
-msgstr ""
+msgstr ":attr:`sys.implementation.cache_tag <sys.implementation>`"
 
 #: ../../whatsnew/3.12.rst:1604
 msgid "``imp.load_module()``"
@@ -2709,31 +2936,31 @@ msgstr ":func:`importlib.import_module`"
 
 #: ../../whatsnew/3.12.rst:1605
 msgid "``imp.new_module(name)``"
-msgstr ""
+msgstr "``imp.new_module(name)``"
 
 #: ../../whatsnew/3.12.rst:1605
 msgid "``types.ModuleType(name)``"
-msgstr ""
+msgstr "``types.ModuleType(name)``"
 
 #: ../../whatsnew/3.12.rst:1606
 msgid "``imp.reload()``"
-msgstr ""
+msgstr "``imp.reload()``"
 
 #: ../../whatsnew/3.12.rst:1606
 msgid ":func:`importlib.reload`"
-msgstr ""
+msgstr ":func:`importlib.reload`"
 
 #: ../../whatsnew/3.12.rst:1607
 msgid "``imp.source_from_cache()``"
-msgstr ""
+msgstr "``imp.source_from_cache()``"
 
 #: ../../whatsnew/3.12.rst:1607
 msgid ":func:`importlib.util.source_from_cache`"
-msgstr ""
+msgstr ":func:`importlib.util.source_from_cache`"
 
 #: ../../whatsnew/3.12.rst:1608
 msgid "``imp.load_source()``"
-msgstr ""
+msgstr "``imp.load_source()``"
 
 #: ../../whatsnew/3.12.rst:1608
 msgid "*See below*"
@@ -2753,19 +2980,19 @@ msgstr ""
 
 #: ../../whatsnew/3.12.rst:1630
 msgid "``imp.init_builtin()``"
-msgstr ""
+msgstr "``imp.init_builtin()``"
 
 #: ../../whatsnew/3.12.rst:1631
 msgid "``imp.load_compiled()``"
-msgstr ""
+msgstr "``imp.load_compiled()``"
 
 #: ../../whatsnew/3.12.rst:1632
 msgid "``imp.load_dynamic()``"
-msgstr ""
+msgstr "``imp.load_dynamic()``"
 
 #: ../../whatsnew/3.12.rst:1633
 msgid "``imp.load_package()``"
-msgstr ""
+msgstr "``imp.load_package()``"
 
 #: ../../whatsnew/3.12.rst:1635
 msgid ""
@@ -2779,6 +3006,9 @@ msgid ""
 "``PY_COMPILED``, ``C_EXTENSION``, ``PY_RESOURCE``, ``PKG_DIRECTORY``, "
 "``C_BUILTIN``, ``PY_FROZEN``, ``PY_CODERESOURCE``, ``IMP_HOOK``."
 msgstr ""
+"Constantes de ``imp.find_module()``: ``SEARCH_ERROR``, ``PY_SOURCE``, "
+"``PY_COMPILED``, ``C_EXTENSION``, ``PY_RESOURCE``, ``PKG_DIRECTORY``, "
+"``C_BUILTIN``, ``PY_FROZEN``, ``PY_CODERESOURCE``, ``IMP_HOOK``."
 
 #: ../../whatsnew/3.12.rst:1642
 msgid "io"
@@ -2811,32 +3041,32 @@ msgstr "smtpd"
 #: ../../whatsnew/3.12.rst:1660
 msgid ""
 "The ``smtpd`` module has been removed according to the schedule in :pep:"
-"`594`, having been deprecated in Python 3.4.7 and 3.5.4. Use aiosmtpd_ PyPI "
-"module or any other :mod:`asyncio`-based server instead. (Contributed by "
-"Oleg Iarygin in :gh:`93243`.)"
+"`594`, having been deprecated in Python 3.4.7 and 3.5.4. Use the :pypi:"
+"`aiosmtpd` PyPI module or any other :mod:`asyncio`-based server instead. "
+"(Contributed by Oleg Iarygin in :gh:`93243`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1671
+#: ../../whatsnew/3.12.rst:1669
 msgid ""
 "The following undocumented :mod:`sqlite3` features, deprecated in Python "
 "3.10, are now removed:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1674
+#: ../../whatsnew/3.12.rst:1672
 msgid "``sqlite3.enable_shared_cache()``"
-msgstr ""
+msgstr "``sqlite3.enable_shared_cache()``"
+
+#: ../../whatsnew/3.12.rst:1673
+msgid "``sqlite3.OptimizedUnicode``"
+msgstr "``sqlite3.OptimizedUnicode``"
 
 #: ../../whatsnew/3.12.rst:1675
-msgid "``sqlite3.OptimizedUnicode``"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:1677
 msgid ""
 "If a shared cache must be used, open the database in URI mode using the "
 "``cache=shared`` query parameter."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1680
+#: ../../whatsnew/3.12.rst:1678
 msgid ""
 "The ``sqlite3.OptimizedUnicode`` text factory has been an alias for :class:"
 "`str` since Python 3.3. Code that previously set the text factory to "
@@ -2844,22 +3074,22 @@ msgid ""
 "default value which is also ``str``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1685
+#: ../../whatsnew/3.12.rst:1683
 msgid "(Contributed by Erlend E. Aasland in :gh:`92548`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1688
+#: ../../whatsnew/3.12.rst:1686
 msgid "ssl"
 msgstr "ssl"
 
-#: ../../whatsnew/3.12.rst:1690
+#: ../../whatsnew/3.12.rst:1688
 msgid ""
 "Remove :mod:`ssl`'s :func:`!ssl.RAND_pseudo_bytes` function, deprecated in "
 "Python 3.6: use :func:`os.urandom` or :func:`ssl.RAND_bytes` instead. "
 "(Contributed by Victor Stinner in :gh:`94199`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1694
+#: ../../whatsnew/3.12.rst:1692
 msgid ""
 "Remove the :func:`!ssl.match_hostname` function. It was deprecated in Python "
 "3.7. OpenSSL performs hostname matching since Python 3.7, Python no longer "
@@ -2867,200 +3097,207 @@ msgid ""
 "Stinner in :gh:`94199`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1700
+#: ../../whatsnew/3.12.rst:1698
 msgid ""
 "Remove the :func:`!ssl.wrap_socket` function, deprecated in Python 3.7: "
 "instead, create a :class:`ssl.SSLContext` object and call its :class:`ssl."
 "SSLContext.wrap_socket` method. Any package that still uses :func:`!ssl."
 "wrap_socket` is broken and insecure. The function neither sends a SNI TLS "
-"extension nor validates server hostname. Code is subject to `CWE-295 "
-"<https://cwe.mitre.org/data/definitions/295.html>`_: Improper Certificate "
-"Validation. (Contributed by Victor Stinner in :gh:`94199`.)"
+"extension nor validates the server hostname. Code is subject to :cwe:`295` "
+"(Improper Certificate Validation). (Contributed by Victor Stinner in :gh:"
+"`94199`.)"
 msgstr ""
+"Remove a função :func:`!ssl.wrap_socket`, descontinuada no Python 3.7: em "
+"vez desta, crie um objeto :class:`ssl.SSLContext` e chame seu método :class:"
+"`ssl.SSLContext.wrap_socket`. Qualquer pacote que ainda use :func:`!ssl."
+"wrap_socket` está quebrado e é inseguro. A função não envia uma extensão SNI "
+"TLS nem valida o nome do host do servidor. O código está sujeito a :cwe:"
+"`295` (validação inadequada de certificado). (Contribuição de Victor Stinner "
+"em :gh:`94199`.)"
 
-#: ../../whatsnew/3.12.rst:1712
+#: ../../whatsnew/3.12.rst:1709
 msgid "Remove many long-deprecated :mod:`unittest` features:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1716
+#: ../../whatsnew/3.12.rst:1713
 msgid "A number of :class:`~unittest.TestCase` method aliases:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1719
+#: ../../whatsnew/3.12.rst:1716
 msgid "Deprecated alias"
 msgstr "Apelido descontinuado"
 
-#: ../../whatsnew/3.12.rst:1719
+#: ../../whatsnew/3.12.rst:1716
 msgid "Method Name"
 msgstr "Método"
 
-#: ../../whatsnew/3.12.rst:1719
+#: ../../whatsnew/3.12.rst:1716
 msgid "Deprecated in"
 msgstr "Descontinuado em"
 
-#: ../../whatsnew/3.12.rst:1721
+#: ../../whatsnew/3.12.rst:1718
 msgid "``failUnless``"
 msgstr "``failUnless``"
 
-#: ../../whatsnew/3.12.rst:1721 ../../whatsnew/3.12.rst:1728
+#: ../../whatsnew/3.12.rst:1718 ../../whatsnew/3.12.rst:1725
 msgid ":meth:`.assertTrue`"
 msgstr ":meth:`.assertTrue`"
 
-#: ../../whatsnew/3.12.rst:1721 ../../whatsnew/3.12.rst:1722
-#: ../../whatsnew/3.12.rst:1723 ../../whatsnew/3.12.rst:1724
-#: ../../whatsnew/3.12.rst:1725 ../../whatsnew/3.12.rst:1726
-#: ../../whatsnew/3.12.rst:1727
+#: ../../whatsnew/3.12.rst:1718 ../../whatsnew/3.12.rst:1719
+#: ../../whatsnew/3.12.rst:1720 ../../whatsnew/3.12.rst:1721
+#: ../../whatsnew/3.12.rst:1722 ../../whatsnew/3.12.rst:1723
+#: ../../whatsnew/3.12.rst:1724
 msgid "3.1"
 msgstr "3.1"
 
-#: ../../whatsnew/3.12.rst:1722
+#: ../../whatsnew/3.12.rst:1719
 msgid "``failIf``"
 msgstr "``failIf``"
 
-#: ../../whatsnew/3.12.rst:1722
+#: ../../whatsnew/3.12.rst:1719
 msgid ":meth:`.assertFalse`"
 msgstr ":meth:`.assertFalse`"
 
-#: ../../whatsnew/3.12.rst:1723
+#: ../../whatsnew/3.12.rst:1720
 msgid "``failUnlessEqual``"
 msgstr "``failUnlessEqual``"
 
-#: ../../whatsnew/3.12.rst:1723 ../../whatsnew/3.12.rst:1729
+#: ../../whatsnew/3.12.rst:1720 ../../whatsnew/3.12.rst:1726
 msgid ":meth:`.assertEqual`"
 msgstr ":meth:`.assertEqual`"
 
-#: ../../whatsnew/3.12.rst:1724
+#: ../../whatsnew/3.12.rst:1721
 msgid "``failIfEqual``"
 msgstr "``failIfEqual``"
 
-#: ../../whatsnew/3.12.rst:1724 ../../whatsnew/3.12.rst:1730
+#: ../../whatsnew/3.12.rst:1721 ../../whatsnew/3.12.rst:1727
 msgid ":meth:`.assertNotEqual`"
 msgstr ":meth:`.assertNotEqual`"
 
-#: ../../whatsnew/3.12.rst:1725
+#: ../../whatsnew/3.12.rst:1722
 msgid "``failUnlessAlmostEqual``"
 msgstr "``failUnlessAlmostEqual``"
 
-#: ../../whatsnew/3.12.rst:1725 ../../whatsnew/3.12.rst:1731
+#: ../../whatsnew/3.12.rst:1722 ../../whatsnew/3.12.rst:1728
 msgid ":meth:`.assertAlmostEqual`"
 msgstr ":meth:`.assertAlmostEqual`"
 
-#: ../../whatsnew/3.12.rst:1726
+#: ../../whatsnew/3.12.rst:1723
 msgid "``failIfAlmostEqual``"
 msgstr "``failIfAlmostEqual``"
 
-#: ../../whatsnew/3.12.rst:1726 ../../whatsnew/3.12.rst:1732
+#: ../../whatsnew/3.12.rst:1723 ../../whatsnew/3.12.rst:1729
 msgid ":meth:`.assertNotAlmostEqual`"
 msgstr ":meth:`.assertNotAlmostEqual`"
 
-#: ../../whatsnew/3.12.rst:1727
+#: ../../whatsnew/3.12.rst:1724
 msgid "``failUnlessRaises``"
 msgstr "``failUnlessRaises``"
 
-#: ../../whatsnew/3.12.rst:1727
+#: ../../whatsnew/3.12.rst:1724
 msgid ":meth:`.assertRaises`"
 msgstr ":meth:`.assertRaises`"
 
-#: ../../whatsnew/3.12.rst:1728
+#: ../../whatsnew/3.12.rst:1725
 msgid "``assert_``"
 msgstr "``assert_``"
 
-#: ../../whatsnew/3.12.rst:1728 ../../whatsnew/3.12.rst:1729
-#: ../../whatsnew/3.12.rst:1730 ../../whatsnew/3.12.rst:1731
-#: ../../whatsnew/3.12.rst:1732 ../../whatsnew/3.12.rst:1733
-#: ../../whatsnew/3.12.rst:1734
+#: ../../whatsnew/3.12.rst:1725 ../../whatsnew/3.12.rst:1726
+#: ../../whatsnew/3.12.rst:1727 ../../whatsnew/3.12.rst:1728
+#: ../../whatsnew/3.12.rst:1729 ../../whatsnew/3.12.rst:1730
+#: ../../whatsnew/3.12.rst:1731
 msgid "3.2"
 msgstr "3.2"
 
-#: ../../whatsnew/3.12.rst:1729
+#: ../../whatsnew/3.12.rst:1726
 msgid "``assertEquals``"
 msgstr "``assertEquals``"
 
-#: ../../whatsnew/3.12.rst:1730
+#: ../../whatsnew/3.12.rst:1727
 msgid "``assertNotEquals``"
 msgstr "``assertNotEquals``"
 
-#: ../../whatsnew/3.12.rst:1731
+#: ../../whatsnew/3.12.rst:1728
 msgid "``assertAlmostEquals``"
 msgstr "``assertAlmostEquals``"
 
-#: ../../whatsnew/3.12.rst:1732
+#: ../../whatsnew/3.12.rst:1729
 msgid "``assertNotAlmostEquals``"
 msgstr "``assertNotAlmostEquals``"
 
-#: ../../whatsnew/3.12.rst:1733
+#: ../../whatsnew/3.12.rst:1730
 msgid "``assertRegexpMatches``"
 msgstr "``assertRegexpMatches``"
 
-#: ../../whatsnew/3.12.rst:1733
+#: ../../whatsnew/3.12.rst:1730
 msgid ":meth:`.assertRegex`"
 msgstr ":meth:`.assertRegex`"
 
-#: ../../whatsnew/3.12.rst:1734
+#: ../../whatsnew/3.12.rst:1731
 msgid "``assertRaisesRegexp``"
 msgstr "``assertRaisesRegexp``"
 
-#: ../../whatsnew/3.12.rst:1734
+#: ../../whatsnew/3.12.rst:1731
 msgid ":meth:`.assertRaisesRegex`"
 msgstr ":meth:`.assertRaisesRegex`"
 
-#: ../../whatsnew/3.12.rst:1735
+#: ../../whatsnew/3.12.rst:1732
 msgid "``assertNotRegexpMatches``"
 msgstr "``assertNotRegexpMatches``"
 
-#: ../../whatsnew/3.12.rst:1735
+#: ../../whatsnew/3.12.rst:1732
 msgid ":meth:`.assertNotRegex`"
 msgstr ":meth:`.assertNotRegex`"
 
-#: ../../whatsnew/3.12.rst:1735
+#: ../../whatsnew/3.12.rst:1732
 msgid "3.5"
 msgstr "3.5"
 
-#: ../../whatsnew/3.12.rst:1738
+#: ../../whatsnew/3.12.rst:1735
 msgid ""
 "You can use https://github.com/isidentical/teyit to automatically modernise "
 "your unit tests."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1741
+#: ../../whatsnew/3.12.rst:1738
 msgid ""
 "Undocumented and broken :class:`~unittest.TestCase` method "
 "``assertDictContainsSubset`` (deprecated in Python 3.2)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1744
+#: ../../whatsnew/3.12.rst:1741
 msgid ""
 "Undocumented :meth:`TestLoader.loadTestsFromModule <unittest.TestLoader."
 "loadTestsFromModule>` parameter *use_load_tests* (deprecated and ignored "
 "since Python 3.2)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1748
+#: ../../whatsnew/3.12.rst:1745
 msgid ""
 "An alias of the :class:`~unittest.TextTestResult` class: ``_TextTestResult`` "
 "(deprecated in Python 3.2)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1751
+#: ../../whatsnew/3.12.rst:1748
 msgid "(Contributed by Serhiy Storchaka in :gh:`89325`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1754
+#: ../../whatsnew/3.12.rst:1751
 msgid "webbrowser"
-msgstr ""
+msgstr "webbrowser"
 
-#: ../../whatsnew/3.12.rst:1756
+#: ../../whatsnew/3.12.rst:1753
 msgid ""
 "Remove support for obsolete browsers from :mod:`webbrowser`. The removed "
 "browsers include: Grail, Mosaic, Netscape, Galeon, Skipstone, Iceape, "
 "Firebird, and Firefox versions 35 and below (:gh:`102871`)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1761
+#: ../../whatsnew/3.12.rst:1758
 msgid "xml.etree.ElementTree"
-msgstr ""
+msgstr "xml.etree.ElementTree"
 
-#: ../../whatsnew/3.12.rst:1763
+#: ../../whatsnew/3.12.rst:1760
 msgid ""
 "Remove the ``ElementTree.Element.copy()`` method of the pure Python "
 "implementation, deprecated in Python 3.10, use the :func:`copy.copy` "
@@ -3069,22 +3306,22 @@ msgid ""
 "Stinner in :gh:`94383`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1770
+#: ../../whatsnew/3.12.rst:1767
 msgid "zipimport"
 msgstr "zipimport"
 
-#: ../../whatsnew/3.12.rst:1772
+#: ../../whatsnew/3.12.rst:1769
 msgid ""
 "Remove :mod:`zipimport`'s ``find_loader()`` and ``find_module()`` methods, "
 "deprecated in Python 3.10: use the ``find_spec()`` method instead.  See :pep:"
 "`451` for the rationale. (Contributed by Victor Stinner in :gh:`94379`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1778
+#: ../../whatsnew/3.12.rst:1775
 msgid "Others"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1780
+#: ../../whatsnew/3.12.rst:1777
 msgid ""
 "Remove the ``suspicious`` rule from the documentation :file:`Makefile` and :"
 "file:`Doc/tools/rstlint.py`, both in favor of `sphinx-lint <https://github."
@@ -3092,7 +3329,7 @@ msgid ""
 "`98179`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1785
+#: ../../whatsnew/3.12.rst:1782
 msgid ""
 "Remove the *keyfile* and *certfile* parameters from the :mod:`ftplib`, :mod:"
 "`imaplib`, :mod:`poplib` and :mod:`smtplib` modules, and the *key_file*, "
@@ -3102,23 +3339,23 @@ msgid ""
 "in :gh:`94172`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1793
+#: ../../whatsnew/3.12.rst:1790
 msgid ""
 "Remove ``Jython`` compatibility hacks from several stdlib modules and tests. "
 "(Contributed by Nikita Sobolev in :gh:`99482`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1796
+#: ../../whatsnew/3.12.rst:1793
 msgid ""
 "Remove ``_use_broken_old_ctypes_structure_semantics_`` flag from :mod:"
 "`ctypes` module. (Contributed by Nikita Sobolev in :gh:`99285`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1804 ../../whatsnew/3.12.rst:2128
+#: ../../whatsnew/3.12.rst:1801 ../../whatsnew/3.12.rst:2125
 msgid "Porting to Python 3.12"
-msgstr ""
+msgstr "Portando para Python 3.12"
 
-#: ../../whatsnew/3.12.rst:1806
+#: ../../whatsnew/3.12.rst:1803
 msgid ""
 "This section lists previously described changes and other bugfixes that may "
 "require changes to your code."
@@ -3126,11 +3363,11 @@ msgstr ""
 "Esta seção lista as alterações descritas anteriormente e outras correções "
 "que podem exigir alterações no seu código."
 
-#: ../../whatsnew/3.12.rst:1810
+#: ../../whatsnew/3.12.rst:1807
 msgid "Changes in the Python API"
 msgstr "Alterações na API Python"
 
-#: ../../whatsnew/3.12.rst:1812
+#: ../../whatsnew/3.12.rst:1809
 msgid ""
 "More strict rules are now applied for numerical group references and group "
 "names in regular expressions. Only sequence of ASCII digits is now accepted "
@@ -3139,7 +3376,7 @@ msgid ""
 "(Contributed by Serhiy Storchaka in :gh:`91760`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1819
+#: ../../whatsnew/3.12.rst:1816
 msgid ""
 "Remove ``randrange()`` functionality deprecated since Python 3.10.  "
 "Formerly, ``randrange(10.0)`` losslessly converted to ``randrange(10)``. "
@@ -3151,7 +3388,7 @@ msgid ""
 "`86388`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1827
+#: ../../whatsnew/3.12.rst:1824
 msgid ""
 ":class:`argparse.ArgumentParser` changed encoding and error handler for "
 "reading arguments from file (e.g. ``fromfile_prefix_chars`` option) from "
@@ -3161,21 +3398,21 @@ msgid ""
 "on Windows."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1833
+#: ../../whatsnew/3.12.rst:1830
 msgid ""
 "Remove the ``asyncore``-based ``smtpd`` module deprecated in Python 3.4.7 "
-"and 3.5.4.  A recommended replacement is the :mod:`asyncio`-based aiosmtpd_ "
-"PyPI module."
+"and 3.5.4.  A recommended replacement is the :mod:`asyncio`-based :pypi:"
+"`aiosmtpd` PyPI module."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1837
+#: ../../whatsnew/3.12.rst:1834
 msgid ""
 ":func:`shlex.split`: Passing ``None`` for *s* argument now raises an "
 "exception, rather than reading :data:`sys.stdin`. The feature was deprecated "
 "in Python 3.9. (Contributed by Victor Stinner in :gh:`94352`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1842
+#: ../../whatsnew/3.12.rst:1839
 msgid ""
 "The :mod:`os` module no longer accepts bytes-like paths, like :class:"
 "`bytearray` and :class:`memoryview` types: only the exact :class:`bytes` "
@@ -3183,7 +3420,7 @@ msgid ""
 "`98393`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1847
+#: ../../whatsnew/3.12.rst:1844
 msgid ""
 ":func:`syslog.openlog` and :func:`syslog.closelog` now fail if used in "
 "subinterpreters. :func:`syslog.syslog` may still be used in subinterpreters, "
@@ -3195,7 +3432,7 @@ msgid ""
 "(Contributed by Donghee Na in :gh:`99127`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1856
+#: ../../whatsnew/3.12.rst:1853
 msgid ""
 "The undocumented locking behavior of :func:`~functools.cached_property` is "
 "removed, because it locked across all instances of the class, leading to "
@@ -3207,14 +3444,14 @@ msgid ""
 "property getter function or around multi-threaded access points."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1869
+#: ../../whatsnew/3.12.rst:1866
 msgid ""
 "When extracting tar files using :mod:`tarfile` or :func:`shutil."
 "unpack_archive`, pass the *filter* argument to limit features that may be "
 "surprising or dangerous. See :ref:`tarfile-extraction-filter` for details."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1874
+#: ../../whatsnew/3.12.rst:1871
 msgid ""
 "The output of the :func:`tokenize.tokenize` and :func:`tokenize."
 "generate_tokens` functions is now changed due to the changes introduced in :"
@@ -3226,58 +3463,58 @@ msgid ""
 "``f\"start {1+1} end\"`` the old version of the tokenizer emitted::"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1885
+#: ../../whatsnew/3.12.rst:1882
 msgid "while the new version emits::"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1897
+#: ../../whatsnew/3.12.rst:1894
 msgid ""
 "Additionally, there may be some minor behavioral changes as a consequence of "
 "the changes required to support :pep:`701`. Some of these changes include:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1900
+#: ../../whatsnew/3.12.rst:1897
 msgid ""
 "The ``type`` attribute of the tokens emitted when tokenizing some invalid "
 "Python characters such as ``!`` has changed from ``ERRORTOKEN`` to ``OP``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1903
+#: ../../whatsnew/3.12.rst:1900
 msgid ""
 "Incomplete single-line strings now also raise :exc:`tokenize.TokenError` as "
 "incomplete multiline strings do."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1906
+#: ../../whatsnew/3.12.rst:1903
 msgid ""
 "Some incomplete or invalid Python code now raises :exc:`tokenize.TokenError` "
 "instead of returning arbitrary ``ERRORTOKEN`` tokens when tokenizing it."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1909
+#: ../../whatsnew/3.12.rst:1906
 msgid ""
 "Mixing tabs and spaces as indentation in the same file is not supported "
 "anymore and will raise a :exc:`TabError`."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1912
+#: ../../whatsnew/3.12.rst:1909
 msgid ""
 "The :mod:`threading` module now expects the :mod:`!_thread` module to have "
 "an ``_is_main_interpreter`` attribute.  It is a function with no arguments "
 "that returns ``True`` if the current interpreter is the main interpreter."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1917
+#: ../../whatsnew/3.12.rst:1914
 msgid ""
 "Any library or application that provides a custom ``_thread`` module should "
 "provide ``_is_main_interpreter()``. (See :gh:`112826`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1922
+#: ../../whatsnew/3.12.rst:1919
 msgid "Build Changes"
 msgstr "Alterações de compilação"
 
-#: ../../whatsnew/3.12.rst:1924
+#: ../../whatsnew/3.12.rst:1921
 msgid ""
 "Python no longer uses :file:`setup.py` to build shared C extension modules. "
 "Build parameters like headers and libraries are detected in ``configure`` "
@@ -3286,21 +3523,21 @@ msgid ""
 "in :gh:`93939`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1930
+#: ../../whatsnew/3.12.rst:1927
 msgid ""
 "``va_start()`` with two parameters, like ``va_start(args, format),`` is now "
 "required to build Python. ``va_start()`` is no longer called with a single "
 "parameter. (Contributed by Kumar Aditya in :gh:`93207`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1935
+#: ../../whatsnew/3.12.rst:1932
 msgid ""
 "CPython now uses the ThinLTO option as the default link time optimization "
 "policy if the Clang compiler accepts the flag. (Contributed by Donghee Na "
 "in :gh:`89536`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1939
+#: ../../whatsnew/3.12.rst:1936
 msgid ""
 "Add ``COMPILEALL_OPTS`` variable in :file:`Makefile` to override :mod:"
 "`compileall` options (default: ``-j0``) in ``make install``. Also merged the "
@@ -3309,48 +3546,48 @@ msgid ""
 "`99289`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1945
+#: ../../whatsnew/3.12.rst:1942
 msgid "Add platform triplets for 64-bit LoongArch:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1947
+#: ../../whatsnew/3.12.rst:1944
 msgid "loongarch64-linux-gnusf"
-msgstr ""
+msgstr "loongarch64-linux-gnusf"
+
+#: ../../whatsnew/3.12.rst:1945
+msgid "loongarch64-linux-gnuf32"
+msgstr "loongarch64-linux-gnuf32"
+
+#: ../../whatsnew/3.12.rst:1946
+msgid "loongarch64-linux-gnu"
+msgstr "loongarch64-linux-gnu"
 
 #: ../../whatsnew/3.12.rst:1948
-msgid "loongarch64-linux-gnuf32"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:1949
-msgid "loongarch64-linux-gnu"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:1951
 msgid "(Contributed by Zhang Na in :gh:`90656`.)"
-msgstr ""
+msgstr "(Contribuição de Zhang Na em :gh:`90656`.)"
 
-#: ../../whatsnew/3.12.rst:1953
+#: ../../whatsnew/3.12.rst:1950
 msgid "``PYTHON_FOR_REGEN`` now require Python 3.10 or newer."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1955
+#: ../../whatsnew/3.12.rst:1952
 msgid ""
 "Autoconf 2.71 and aclocal 1.16.4 is now required to regenerate :file:`!"
 "configure`. (Contributed by Christian Heimes in :gh:`89886`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1959
+#: ../../whatsnew/3.12.rst:1956
 msgid ""
 "Windows builds and macOS installers from python.org now use OpenSSL 3.0."
 msgstr ""
 "Construções do Windows e instaladores do macOS em python.org agora usam "
 "OpenSSL 3.0."
 
-#: ../../whatsnew/3.12.rst:1963
+#: ../../whatsnew/3.12.rst:1960
 msgid "C API Changes"
 msgstr "Alterações na API C"
 
-#: ../../whatsnew/3.12.rst:1970
+#: ../../whatsnew/3.12.rst:1967
 msgid ""
 ":pep:`697`: Introduce the :ref:`Unstable C API tier <unstable-c-api>`, "
 "intended for low-level tools like debuggers and JIT compilers. This API may "
@@ -3358,84 +3595,84 @@ msgid ""
 "contents are marked by the ``PyUnstable_`` prefix in names."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1976
+#: ../../whatsnew/3.12.rst:1973
 msgid "Code object constructors:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1978
+#: ../../whatsnew/3.12.rst:1975
 msgid "``PyUnstable_Code_New()`` (renamed from ``PyCode_New``)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1979
+#: ../../whatsnew/3.12.rst:1976
 msgid ""
 "``PyUnstable_Code_NewWithPosOnlyArgs()`` (renamed from "
 "``PyCode_NewWithPosOnlyArgs``)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1981
+#: ../../whatsnew/3.12.rst:1978
 msgid "Extra storage for code objects (:pep:`523`):"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1983
+#: ../../whatsnew/3.12.rst:1980
 msgid ""
 "``PyUnstable_Eval_RequestCodeExtraIndex()`` (renamed from "
 "``_PyEval_RequestCodeExtraIndex``)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1984
+#: ../../whatsnew/3.12.rst:1981
 msgid "``PyUnstable_Code_GetExtra()`` (renamed from ``_PyCode_GetExtra``)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1985
+#: ../../whatsnew/3.12.rst:1982
 msgid "``PyUnstable_Code_SetExtra()`` (renamed from ``_PyCode_SetExtra``)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1987
+#: ../../whatsnew/3.12.rst:1984
 msgid ""
 "The original names will continue to be available until the respective API "
 "changes."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1990
+#: ../../whatsnew/3.12.rst:1987
 msgid "(Contributed by Petr Viktorin in :gh:`101101`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1992
+#: ../../whatsnew/3.12.rst:1989
 msgid ""
 ":pep:`697`: Add an API for extending types whose instance memory layout is "
 "opaque:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1995
+#: ../../whatsnew/3.12.rst:1992
 msgid ""
 ":c:member:`PyType_Spec.basicsize` can be zero or negative to specify "
 "inheriting or extending the base class size."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1997
+#: ../../whatsnew/3.12.rst:1994
 msgid ""
 ":c:func:`PyObject_GetTypeData` and :c:func:`PyType_GetTypeDataSize` added to "
 "allow access to subclass-specific instance data."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:1999
+#: ../../whatsnew/3.12.rst:1996
 msgid ""
 ":c:macro:`Py_TPFLAGS_ITEMS_AT_END` and :c:func:`PyObject_GetItemData` added "
 "to allow safely extending certain variable-sized types, including :c:var:"
 "`PyType_Type`."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2002
+#: ../../whatsnew/3.12.rst:1999
 msgid ""
 ":c:macro:`Py_RELATIVE_OFFSET` added to allow defining :c:type:`members "
 "<PyMemberDef>` in terms of a subclass-specific struct."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2005
+#: ../../whatsnew/3.12.rst:2002
 msgid "(Contributed by Petr Viktorin in :gh:`103509`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2007
+#: ../../whatsnew/3.12.rst:2004
 msgid ""
 "Add the new :ref:`limited C API <limited-c-api>` function :c:func:"
 "`PyType_FromMetaclass`, which generalizes the existing :c:func:"
@@ -3443,29 +3680,29 @@ msgid ""
 "(Contributed by Wenzel Jakob in :gh:`93012`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2012
+#: ../../whatsnew/3.12.rst:2009
 msgid ""
 "API for creating objects that can be called using :ref:`the vectorcall "
 "protocol <vectorcall>` was added to the :ref:`Limited API <stable>`:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2016
+#: ../../whatsnew/3.12.rst:2013
 msgid ":c:macro:`Py_TPFLAGS_HAVE_VECTORCALL`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2017
+#: ../../whatsnew/3.12.rst:2014
 msgid ":c:func:`PyVectorcall_NARGS`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2018
+#: ../../whatsnew/3.12.rst:2015
 msgid ":c:func:`PyVectorcall_Call`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2019
+#: ../../whatsnew/3.12.rst:2016
 msgid ":c:type:`vectorcallfunc`"
 msgstr ":c:type:`vectorcallfunc`"
 
-#: ../../whatsnew/3.12.rst:2021
+#: ../../whatsnew/3.12.rst:2018
 msgid ""
 "The :c:macro:`Py_TPFLAGS_HAVE_VECTORCALL` flag is now removed from a class "
 "when the class's :py:meth:`~object.__call__` method is reassigned. This "
@@ -3476,7 +3713,7 @@ msgid ""
 "`93274`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2029
+#: ../../whatsnew/3.12.rst:2026
 msgid ""
 "The :c:macro:`Py_TPFLAGS_MANAGED_DICT` and :c:macro:"
 "`Py_TPFLAGS_MANAGED_WEAKREF` flags have been added. This allows extensions "
@@ -3484,32 +3721,32 @@ msgid ""
 "using less memory and with faster access."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2034
+#: ../../whatsnew/3.12.rst:2031
 msgid ""
 "API for performing calls using :ref:`the vectorcall protocol <vectorcall>` "
 "was added to the :ref:`Limited API <stable>`:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2038
+#: ../../whatsnew/3.12.rst:2035
 msgid ":c:func:`PyObject_Vectorcall`"
 msgstr ":c:func:`PyObject_Vectorcall`"
 
-#: ../../whatsnew/3.12.rst:2039
+#: ../../whatsnew/3.12.rst:2036
 msgid ":c:func:`PyObject_VectorcallMethod`"
 msgstr ":c:func:`PyObject_VectorcallMethod`"
 
-#: ../../whatsnew/3.12.rst:2040
+#: ../../whatsnew/3.12.rst:2037
 msgid ":c:macro:`PY_VECTORCALL_ARGUMENTS_OFFSET`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2042
+#: ../../whatsnew/3.12.rst:2039
 msgid ""
 "This means that both the incoming and outgoing ends of the vector call "
 "protocol are now available in the :ref:`Limited API <stable>`. (Contributed "
 "by Wenzel Jakob in :gh:`98586`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2046
+#: ../../whatsnew/3.12.rst:2043
 msgid ""
 "Add two new public functions, :c:func:`PyEval_SetProfileAllThreads` and :c:"
 "func:`PyEval_SetTraceAllThreads`, that allow to set tracing and profiling "
@@ -3517,14 +3754,14 @@ msgid ""
 "(Contributed by Pablo Galindo in :gh:`93503`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2052
+#: ../../whatsnew/3.12.rst:2049
 msgid ""
 "Add new function :c:func:`PyFunction_SetVectorcall` to the C API which sets "
 "the vectorcall field of a given :c:type:`PyFunctionObject`. (Contributed by "
 "Andrew Frost in :gh:`92257`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2056
+#: ../../whatsnew/3.12.rst:2053
 msgid ""
 "The C API now permits registering callbacks via :c:func:"
 "`PyDict_AddWatcher`, :c:func:`PyDict_Watch` and related APIs to be called "
@@ -3533,28 +3770,28 @@ msgid ""
 "`91052`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2062
+#: ../../whatsnew/3.12.rst:2059
 msgid ""
 "Add :c:func:`PyType_AddWatcher` and :c:func:`PyType_Watch` API to register "
 "callbacks to receive notification on changes to a type. (Contributed by Carl "
 "Meyer in :gh:`91051`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2066
+#: ../../whatsnew/3.12.rst:2063
 msgid ""
 "Add :c:func:`PyCode_AddWatcher` and :c:func:`PyCode_ClearWatcher` APIs to "
 "register callbacks to receive notification on creation and destruction of "
 "code objects. (Contributed by Itamar Oren in :gh:`91054`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2071
+#: ../../whatsnew/3.12.rst:2068
 msgid ""
 "Add :c:func:`PyFrame_GetVar` and :c:func:`PyFrame_GetVarString` functions to "
 "get a frame variable by its name. (Contributed by Victor Stinner in :gh:"
 "`91248`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2075
+#: ../../whatsnew/3.12.rst:2072
 msgid ""
 "Add :c:func:`PyErr_GetRaisedException` and :c:func:"
 "`PyErr_SetRaisedException` for saving and restoring the current exception. "
@@ -3564,14 +3801,14 @@ msgid ""
 "(Contributed by Mark Shannon in :gh:`101578`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2083
+#: ../../whatsnew/3.12.rst:2080
 msgid ""
 "Add ``_PyErr_ChainExceptions1``, which takes an exception instance, to "
 "replace the legacy-API ``_PyErr_ChainExceptions``, which is now deprecated. "
 "(Contributed by Mark Shannon in :gh:`101578`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2087
+#: ../../whatsnew/3.12.rst:2084
 msgid ""
 "Add :c:func:`PyException_GetArgs` and :c:func:`PyException_SetArgs` as "
 "convenience functions for retrieving and modifying the :attr:`~BaseException."
@@ -3579,71 +3816,71 @@ msgid ""
 "in :gh:`101578`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2092
+#: ../../whatsnew/3.12.rst:2089
 msgid ""
 "Add :c:func:`PyErr_DisplayException`, which takes an exception instance, to "
 "replace the legacy-api :c:func:`!PyErr_Display`. (Contributed by Irit "
 "Katriel in :gh:`102755`)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2098
+#: ../../whatsnew/3.12.rst:2095
 msgid ""
 ":pep:`683`: Introduce *Immortal Objects*, which allows objects to bypass "
 "reference counts, and related changes to the C-API:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2101
+#: ../../whatsnew/3.12.rst:2098
 msgid "``_Py_IMMORTAL_REFCNT``: The reference count that defines an object"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2102
+#: ../../whatsnew/3.12.rst:2099
 msgid "as immortal."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2103
+#: ../../whatsnew/3.12.rst:2100
 msgid ""
 "``_Py_IsImmortal`` Checks if an object has the immortal reference count."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2104
+#: ../../whatsnew/3.12.rst:2101
 msgid "``PyObject_HEAD_INIT`` This will now initialize reference count to"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2105
+#: ../../whatsnew/3.12.rst:2102
 msgid "``_Py_IMMORTAL_REFCNT`` when used with ``Py_BUILD_CORE``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2106
+#: ../../whatsnew/3.12.rst:2103
 msgid "``SSTATE_INTERNED_IMMORTAL`` An identifier for interned unicode objects"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2107
+#: ../../whatsnew/3.12.rst:2104
 msgid "that are immortal."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2108
+#: ../../whatsnew/3.12.rst:2105
 msgid "``SSTATE_INTERNED_IMMORTAL_STATIC`` An identifier for interned unicode"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2109
+#: ../../whatsnew/3.12.rst:2106
 msgid "objects that are immortal and static"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2112
+#: ../../whatsnew/3.12.rst:2109
 msgid "``sys.getunicodeinternedsize`` This returns the total number of unicode"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2111
+#: ../../whatsnew/3.12.rst:2108
 msgid ""
 "objects that have been interned. This is now needed for :file:`refleak.py` "
 "to correctly track reference counts and allocated blocks"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2114
+#: ../../whatsnew/3.12.rst:2111
 msgid "(Contributed by Eddie Elizondo in :gh:`84436`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2116
+#: ../../whatsnew/3.12.rst:2113
 msgid ""
 ":pep:`684`: Add the new :c:func:`Py_NewInterpreterFromConfig` function and :"
 "c:type:`PyInterpreterConfig`, which may be used to create sub-interpreters "
@@ -3651,27 +3888,27 @@ msgid ""
 "(Contributed by Eric Snow in :gh:`104110`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2122
+#: ../../whatsnew/3.12.rst:2119
 msgid ""
 "In the limited C API version 3.12, :c:func:`Py_INCREF` and :c:func:"
 "`Py_DECREF` functions are now implemented as opaque function calls to hide "
 "implementation details. (Contributed by Victor Stinner in :gh:`105387`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2130
+#: ../../whatsnew/3.12.rst:2127
 msgid ""
 "Legacy Unicode APIs based on ``Py_UNICODE*`` representation has been "
 "removed. Please migrate to APIs based on UTF-8 or ``wchar_t*``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2133
+#: ../../whatsnew/3.12.rst:2130
 msgid ""
 "Argument parsing functions like :c:func:`PyArg_ParseTuple` doesn't support "
 "``Py_UNICODE*`` based format (e.g. ``u``, ``Z``) anymore. Please migrate to "
 "other formats for Unicode like ``s``, ``z``, ``es``, and ``U``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2137
+#: ../../whatsnew/3.12.rst:2134
 msgid ""
 "``tp_weaklist`` for all static builtin types is always ``NULL``. This is an "
 "internal-only field on ``PyTypeObject`` but we're pointing out the change in "
@@ -3680,7 +3917,7 @@ msgid ""
 "necessary, the (internal-only) ``_PyObject_GET_WEAKREFS_LISTPTR()`` macro."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2144
+#: ../../whatsnew/3.12.rst:2141
 msgid ""
 "This internal-only :c:member:`PyTypeObject.tp_subclasses` may now not be a "
 "valid object pointer.  Its type was changed to :c:expr:`void *` to reflect "
@@ -3688,13 +3925,13 @@ msgid ""
 "only field directly."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2149
+#: ../../whatsnew/3.12.rst:2146
 msgid ""
 "To get a list of subclasses, call the Python method :py:meth:`~class."
 "__subclasses__` (using :c:func:`PyObject_CallMethod`, for example)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2153
+#: ../../whatsnew/3.12.rst:2150
 msgid ""
 "Add support of more formatting options (left aligning, octals, uppercase "
 "hexadecimals, :c:type:`intmax_t`, :c:type:`ptrdiff_t`, :c:type:`wchar_t` C "
@@ -3703,7 +3940,7 @@ msgid ""
 "`98836`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2159
+#: ../../whatsnew/3.12.rst:2156
 msgid ""
 "An unrecognized format character in :c:func:`PyUnicode_FromFormat` and :c:"
 "func:`PyUnicode_FromFormatV` now sets a :exc:`SystemError`. In previous "
@@ -3712,13 +3949,13 @@ msgid ""
 "Storchaka in :gh:`95781`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2165
+#: ../../whatsnew/3.12.rst:2162
 msgid ""
 "Fix wrong sign placement in :c:func:`PyUnicode_FromFormat` and :c:func:"
 "`PyUnicode_FromFormatV`. (Contributed by Philip Georgi in :gh:`95504`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2169
+#: ../../whatsnew/3.12.rst:2166
 msgid ""
 "Extension classes wanting to add a ``__dict__`` or weak reference slot "
 "should use :c:macro:`Py_TPFLAGS_MANAGED_DICT` and :c:macro:"
@@ -3732,7 +3969,7 @@ msgid ""
 "func:`PyObject_ClearWeakRefs`, as before."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2181
+#: ../../whatsnew/3.12.rst:2178
 msgid ""
 "The :c:func:`PyUnicode_FSDecoder` function no longer accepts bytes-like "
 "paths, like :class:`bytearray` and :class:`memoryview` types: only the "
@@ -3740,7 +3977,7 @@ msgid ""
 "Victor Stinner in :gh:`98393`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2186
+#: ../../whatsnew/3.12.rst:2183
 msgid ""
 "The :c:macro:`Py_CLEAR`, :c:macro:`Py_SETREF` and :c:macro:`Py_XSETREF` "
 "macros now only evaluate their arguments once. If an argument has side "
@@ -3748,7 +3985,7 @@ msgid ""
 "Stinner in :gh:`98724`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2191
+#: ../../whatsnew/3.12.rst:2188
 msgid ""
 "The interpreter's error indicator is now always normalized. This means that :"
 "c:func:`PyErr_SetObject`, :c:func:`PyErr_SetString` and the other functions "
@@ -3756,7 +3993,7 @@ msgid ""
 "(Contributed by Mark Shannon in :gh:`101578`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2196
+#: ../../whatsnew/3.12.rst:2193
 msgid ""
 "``_Py_RefTotal`` is no longer authoritative and only kept around for ABI "
 "compatibility.  Note that it is an internal global and only available on "
@@ -3764,25 +4001,25 @@ msgid ""
 "``_Py_GetGlobalRefTotal()``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2201
+#: ../../whatsnew/3.12.rst:2198
 msgid ""
 "The following functions now select an appropriate metaclass for the newly "
 "created type:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2204
+#: ../../whatsnew/3.12.rst:2201
 msgid ":c:func:`PyType_FromSpec`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2205
+#: ../../whatsnew/3.12.rst:2202
 msgid ":c:func:`PyType_FromSpecWithBases`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2206
+#: ../../whatsnew/3.12.rst:2203
 msgid ":c:func:`PyType_FromModuleAndSpec`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2208
+#: ../../whatsnew/3.12.rst:2205
 msgid ""
 "Creating classes whose metaclass overrides :c:member:`~PyTypeObject.tp_new` "
 "is deprecated, and in Python 3.14+ it will be disallowed. Note that these "
@@ -3790,14 +4027,14 @@ msgid ""
 "initialization."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2213
+#: ../../whatsnew/3.12.rst:2210
 msgid ""
 "Note that :c:func:`PyType_FromMetaclass` (added in Python 3.12) already "
 "disallows creating classes whose metaclass overrides ``tp_new`` (:meth:"
 "`~object.__new__` in Python)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2217
+#: ../../whatsnew/3.12.rst:2214
 msgid ""
 "Since ``tp_new`` overrides almost everything ``PyType_From*`` functions do, "
 "the two are incompatible with each other. The existing behavior -- ignoring "
@@ -3806,17 +4043,17 @@ msgid ""
 "general workaround. One of the following may work for you:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2224
+#: ../../whatsnew/3.12.rst:2221
 msgid "If you control the metaclass, avoid using ``tp_new`` in it:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2226
+#: ../../whatsnew/3.12.rst:2223
 msgid ""
 "If initialization can be skipped, it can be done in :c:member:`~PyTypeObject."
 "tp_init` instead."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2228
+#: ../../whatsnew/3.12.rst:2225
 msgid ""
 "If the metaclass doesn't need to be instantiated from Python, set its "
 "``tp_new`` to ``NULL`` using the :c:macro:"
@@ -3824,20 +4061,20 @@ msgid ""
 "``PyType_From*`` functions."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2233
+#: ../../whatsnew/3.12.rst:2230
 msgid ""
 "Avoid ``PyType_From*`` functions: if you don't need C-specific features "
 "(slots or setting the instance size), create types by :ref:`calling <call>` "
 "the metaclass."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2237
+#: ../../whatsnew/3.12.rst:2234
 msgid ""
 "If you *know* the ``tp_new`` can be skipped safely, filter the deprecation "
 "warning out using :func:`warnings.catch_warnings` from Python."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2240
+#: ../../whatsnew/3.12.rst:2237
 msgid ""
 ":c:var:`PyOS_InputHook` and :c:var:`PyOS_ReadlineFunctionPointer` are no "
 "longer called in :ref:`subinterpreters <sub-interpreter-support>`. This is "
@@ -3845,14 +4082,14 @@ msgid ""
 "callbacks have no way of recovering extension module state)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2245
+#: ../../whatsnew/3.12.rst:2242
 msgid ""
 "This also avoids situations where extensions may find themselves running in "
 "a subinterpreter that they don't support (or haven't yet been loaded in). "
 "See :gh:`104668` for more info."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2249
+#: ../../whatsnew/3.12.rst:2246
 msgid ""
 ":c:struct:`PyLongObject` has had its internals changed for better "
 "performance. Although the internals of :c:struct:`PyLongObject` are private, "
@@ -3863,15 +4100,15 @@ msgid ""
 "a single machine word:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2257
+#: ../../whatsnew/3.12.rst:2254
 msgid ":c:func:`PyUnstable_Long_IsCompact`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2258
+#: ../../whatsnew/3.12.rst:2255
 msgid ":c:func:`PyUnstable_Long_CompactValue`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2260
+#: ../../whatsnew/3.12.rst:2257
 msgid ""
 "Custom allocators, set via :c:func:`PyMem_SetAllocator`, are now required to "
 "be thread-safe, regardless of memory domain.  Allocators that don't have "
@@ -3880,7 +4117,7 @@ msgid ""
 "create a new GitHub issue and CC ``@ericsnowcurrently``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2270
+#: ../../whatsnew/3.12.rst:2267
 msgid ""
 "In accordance with :pep:`699`, the ``ma_version_tag`` field in :c:type:"
 "`PyDictObject` is deprecated for extension modules. Accessing this field "
@@ -3889,444 +4126,475 @@ msgid ""
 "PEP by Ken Jin.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2275
+#: ../../whatsnew/3.12.rst:2272
 msgid "Deprecate global configuration variable:"
-msgstr ""
+msgstr "Variáveis de configuração global descontinuadas:"
+
+#: ../../whatsnew/3.12.rst:2274 ../../whatsnew/3.12.rst:2359
+msgid ":c:var:`Py_DebugFlag`: use :c:member:`PyConfig.parser_debug`"
+msgstr ":c:var:`Py_DebugFlag`: use :c:member:`PyConfig.parser_debug`"
+
+#: ../../whatsnew/3.12.rst:2275 ../../whatsnew/3.12.rst:2360
+msgid ":c:var:`Py_VerboseFlag`: use :c:member:`PyConfig.verbose`"
+msgstr ":c:var:`Py_VerboseFlag`: use :c:member:`PyConfig.verbose`"
+
+#: ../../whatsnew/3.12.rst:2276 ../../whatsnew/3.12.rst:2361
+msgid ":c:var:`Py_QuietFlag`: use :c:member:`PyConfig.quiet`"
+msgstr ":c:var:`Py_QuietFlag`: use :c:member:`PyConfig.quiet`"
 
 #: ../../whatsnew/3.12.rst:2277 ../../whatsnew/3.12.rst:2362
-msgid ":c:var:`Py_DebugFlag`: use :c:member:`PyConfig.parser_debug`"
-msgstr ""
+msgid ":c:var:`Py_InteractiveFlag`: use :c:member:`PyConfig.interactive`"
+msgstr ":c:var:`Py_InteractiveFlag`: use :c:member:`PyConfig.interactive`"
 
 #: ../../whatsnew/3.12.rst:2278 ../../whatsnew/3.12.rst:2363
-msgid ":c:var:`Py_VerboseFlag`: use :c:member:`PyConfig.verbose`"
-msgstr ""
+msgid ":c:var:`Py_InspectFlag`: use :c:member:`PyConfig.inspect`"
+msgstr ":c:var:`Py_InspectFlag`: use :c:member:`PyConfig.inspect`"
 
 #: ../../whatsnew/3.12.rst:2279 ../../whatsnew/3.12.rst:2364
-msgid ":c:var:`Py_QuietFlag`: use :c:member:`PyConfig.quiet`"
-msgstr ""
+msgid ":c:var:`Py_OptimizeFlag`: use :c:member:`PyConfig.optimization_level`"
+msgstr ":c:var:`Py_OptimizeFlag`: use :c:member:`PyConfig.optimization_level`"
 
 #: ../../whatsnew/3.12.rst:2280 ../../whatsnew/3.12.rst:2365
-msgid ":c:var:`Py_InteractiveFlag`: use :c:member:`PyConfig.interactive`"
-msgstr ""
+msgid ":c:var:`Py_NoSiteFlag`: use :c:member:`PyConfig.site_import`"
+msgstr ":c:var:`Py_NoSiteFlag`: use :c:member:`PyConfig.site_import`"
 
 #: ../../whatsnew/3.12.rst:2281 ../../whatsnew/3.12.rst:2366
-msgid ":c:var:`Py_InspectFlag`: use :c:member:`PyConfig.inspect`"
-msgstr ""
+msgid ":c:var:`Py_BytesWarningFlag`: use :c:member:`PyConfig.bytes_warning`"
+msgstr ":c:var:`Py_BytesWarningFlag`: use :c:member:`PyConfig.bytes_warning`"
 
 #: ../../whatsnew/3.12.rst:2282 ../../whatsnew/3.12.rst:2367
-msgid ":c:var:`Py_OptimizeFlag`: use :c:member:`PyConfig.optimization_level`"
-msgstr ""
+msgid ":c:var:`Py_FrozenFlag`: use :c:member:`PyConfig.pathconfig_warnings`"
+msgstr ":c:var:`Py_FrozenFlag`: use :c:member:`PyConfig.pathconfig_warnings`"
 
 #: ../../whatsnew/3.12.rst:2283 ../../whatsnew/3.12.rst:2368
-msgid ":c:var:`Py_NoSiteFlag`: use :c:member:`PyConfig.site_import`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:2284 ../../whatsnew/3.12.rst:2369
-msgid ":c:var:`Py_BytesWarningFlag`: use :c:member:`PyConfig.bytes_warning`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:2285 ../../whatsnew/3.12.rst:2370
-msgid ":c:var:`Py_FrozenFlag`: use :c:member:`PyConfig.pathconfig_warnings`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:2286 ../../whatsnew/3.12.rst:2371
 msgid ""
 ":c:var:`Py_IgnoreEnvironmentFlag`: use :c:member:`PyConfig.use_environment`"
 msgstr ""
+":c:var:`Py_IgnoreEnvironmentFlag`: use :c:member:`PyConfig.use_environment`"
 
-#: ../../whatsnew/3.12.rst:2287 ../../whatsnew/3.12.rst:2372
+#: ../../whatsnew/3.12.rst:2284 ../../whatsnew/3.12.rst:2369
 msgid ""
 ":c:var:`Py_DontWriteBytecodeFlag`: use :c:member:`PyConfig.write_bytecode`"
 msgstr ""
+":c:var:`Py_DontWriteBytecodeFlag`: use :c:member:`PyConfig.write_bytecode`"
 
-#: ../../whatsnew/3.12.rst:2288 ../../whatsnew/3.12.rst:2373
+#: ../../whatsnew/3.12.rst:2285 ../../whatsnew/3.12.rst:2370
 msgid ""
 ":c:var:`Py_NoUserSiteDirectory`: use :c:member:`PyConfig.user_site_directory`"
 msgstr ""
+":c:var:`Py_NoUserSiteDirectory`: use :c:member:`PyConfig.user_site_directory`"
 
-#: ../../whatsnew/3.12.rst:2289 ../../whatsnew/3.12.rst:2374
+#: ../../whatsnew/3.12.rst:2286 ../../whatsnew/3.12.rst:2371
 msgid ""
 ":c:var:`Py_UnbufferedStdioFlag`: use :c:member:`PyConfig.buffered_stdio`"
 msgstr ""
+":c:var:`Py_UnbufferedStdioFlag`: use :c:member:`PyConfig.buffered_stdio`"
 
-#: ../../whatsnew/3.12.rst:2290 ../../whatsnew/3.12.rst:2375
+#: ../../whatsnew/3.12.rst:2287 ../../whatsnew/3.12.rst:2372
 msgid ""
 ":c:var:`Py_HashRandomizationFlag`: use :c:member:`PyConfig.use_hash_seed` "
 "and :c:member:`PyConfig.hash_seed`"
 msgstr ""
+":c:var:`Py_HashRandomizationFlag`: use :c:member:`PyConfig.use_hash_seed` "
+"and :c:member:`PyConfig.hash_seed`"
 
-#: ../../whatsnew/3.12.rst:2292 ../../whatsnew/3.12.rst:2377
+#: ../../whatsnew/3.12.rst:2289 ../../whatsnew/3.12.rst:2374
 msgid ":c:var:`Py_IsolatedFlag`: use :c:member:`PyConfig.isolated`"
-msgstr ""
+msgstr ":c:var:`Py_IsolatedFlag`: use :c:member:`PyConfig.isolated`"
 
-#: ../../whatsnew/3.12.rst:2293 ../../whatsnew/3.12.rst:2378
+#: ../../whatsnew/3.12.rst:2290 ../../whatsnew/3.12.rst:2375
 msgid ""
 ":c:var:`Py_LegacyWindowsFSEncodingFlag`: use :c:member:`PyPreConfig."
 "legacy_windows_fs_encoding`"
 msgstr ""
+":c:var:`Py_LegacyWindowsFSEncodingFlag`: use :c:member:`PyPreConfig."
+"legacy_windows_fs_encoding`"
 
-#: ../../whatsnew/3.12.rst:2294 ../../whatsnew/3.12.rst:2379
+#: ../../whatsnew/3.12.rst:2291 ../../whatsnew/3.12.rst:2376
 msgid ""
 ":c:var:`Py_LegacyWindowsStdioFlag`: use :c:member:`PyConfig."
 "legacy_windows_stdio`"
 msgstr ""
+":c:var:`Py_LegacyWindowsStdioFlag`: use :c:member:`PyConfig."
+"legacy_windows_stdio`"
 
-#: ../../whatsnew/3.12.rst:2295 ../../whatsnew/3.12.rst:2380
+#: ../../whatsnew/3.12.rst:2292 ../../whatsnew/3.12.rst:2377
 msgid ""
 ":c:var:`!Py_FileSystemDefaultEncoding`: use :c:member:`PyConfig."
 "filesystem_encoding`"
 msgstr ""
+":c:var:`!Py_FileSystemDefaultEncoding`: use :c:member:`PyConfig."
+"filesystem_encoding`"
 
-#: ../../whatsnew/3.12.rst:2296 ../../whatsnew/3.12.rst:2381
+#: ../../whatsnew/3.12.rst:2293 ../../whatsnew/3.12.rst:2378
 msgid ""
 ":c:var:`!Py_HasFileSystemDefaultEncoding`: use :c:member:`PyConfig."
 "filesystem_encoding`"
 msgstr ""
+":c:var:`!Py_HasFileSystemDefaultEncoding`: use :c:member:`PyConfig."
+"filesystem_encoding`"
 
-#: ../../whatsnew/3.12.rst:2297 ../../whatsnew/3.12.rst:2382
+#: ../../whatsnew/3.12.rst:2294 ../../whatsnew/3.12.rst:2379
 msgid ""
 ":c:var:`!Py_FileSystemDefaultEncodeErrors`: use :c:member:`PyConfig."
 "filesystem_errors`"
 msgstr ""
+":c:var:`!Py_FileSystemDefaultEncodeErrors`: use :c:member:`PyConfig."
+"filesystem_errors`"
 
-#: ../../whatsnew/3.12.rst:2298 ../../whatsnew/3.12.rst:2383
+#: ../../whatsnew/3.12.rst:2295 ../../whatsnew/3.12.rst:2380
 msgid ""
 ":c:var:`!Py_UTF8Mode`: use :c:member:`PyPreConfig.utf8_mode` (see :c:func:"
 "`Py_PreInitialize`)"
 msgstr ""
+":c:var:`!Py_UTF8Mode`: use :c:member:`PyPreConfig.utf8_mode` (see :c:func:"
+"`Py_PreInitialize`)"
 
-#: ../../whatsnew/3.12.rst:2300
+#: ../../whatsnew/3.12.rst:2297
 msgid ""
 "The :c:func:`Py_InitializeFromConfig` API should be used with :c:type:"
 "`PyConfig` instead. (Contributed by Victor Stinner in :gh:`77782`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2304
+#: ../../whatsnew/3.12.rst:2301
 msgid ""
 "Creating :c:data:`immutable types <Py_TPFLAGS_IMMUTABLETYPE>` with mutable "
 "bases is deprecated and will be disabled in Python 3.14. (:gh:`95388`)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2307
+#: ../../whatsnew/3.12.rst:2304
 msgid ""
 "The :file:`structmember.h` header is deprecated, though it continues to be "
 "available and there are no plans to remove it."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2310
+#: ../../whatsnew/3.12.rst:2307
 msgid ""
 "Its contents are now available just by including :file:`Python.h`, with a "
 "``Py`` prefix added if it was missing:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2313
+#: ../../whatsnew/3.12.rst:2310
 msgid ""
 ":c:struct:`PyMemberDef`, :c:func:`PyMember_GetOne` and :c:func:"
 "`PyMember_SetOne`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2315
+#: ../../whatsnew/3.12.rst:2312
 msgid ""
 "Type macros like :c:macro:`Py_T_INT`, :c:macro:`Py_T_DOUBLE`, etc. "
 "(previously ``T_INT``, ``T_DOUBLE``, etc.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2317
+#: ../../whatsnew/3.12.rst:2314
 msgid ""
 "The flags :c:macro:`Py_READONLY` (previously ``READONLY``) and :c:macro:"
 "`Py_AUDIT_READ` (previously all uppercase)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2320
+#: ../../whatsnew/3.12.rst:2317
 msgid "Several items are not exposed from :file:`Python.h`:"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2322
+#: ../../whatsnew/3.12.rst:2319
 msgid ":c:macro:`T_OBJECT` (use :c:macro:`Py_T_OBJECT_EX`)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2323
+#: ../../whatsnew/3.12.rst:2320
 msgid ":c:macro:`T_NONE` (previously undocumented, and pretty quirky)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2324
+#: ../../whatsnew/3.12.rst:2321
 msgid "The macro ``WRITE_RESTRICTED`` which does nothing."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2325
+#: ../../whatsnew/3.12.rst:2322
 msgid ""
 "The macros ``RESTRICTED`` and ``READ_RESTRICTED``, equivalents of :c:macro:"
 "`Py_AUDIT_READ`."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2327
+#: ../../whatsnew/3.12.rst:2324
 msgid ""
 "In some configurations, ``<stddef.h>`` is not included from :file:`Python."
 "h`. It should be included manually when using ``offsetof()``."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2330
+#: ../../whatsnew/3.12.rst:2327
 msgid ""
 "The deprecated header continues to provide its original contents under the "
 "original names. Your old code can stay unchanged, unless the extra include "
 "and non-namespaced macros bother you greatly."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2335
+#: ../../whatsnew/3.12.rst:2332
 msgid ""
 "(Contributed in :gh:`47146` by Petr Viktorin, based on earlier work by "
 "Alexander Belopolsky and Matthias Braun.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2338
+#: ../../whatsnew/3.12.rst:2335
 msgid ""
 ":c:func:`PyErr_Fetch` and :c:func:`PyErr_Restore` are deprecated. Use :c:"
 "func:`PyErr_GetRaisedException` and :c:func:`PyErr_SetRaisedException` "
 "instead. (Contributed by Mark Shannon in :gh:`101578`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2343
+#: ../../whatsnew/3.12.rst:2340
 msgid ""
 ":c:func:`!PyErr_Display` is deprecated. Use :c:func:`PyErr_DisplayException` "
 "instead. (Contributed by Irit Katriel in :gh:`102755`)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2346
+#: ../../whatsnew/3.12.rst:2343
 msgid ""
 "``_PyErr_ChainExceptions`` is deprecated. Use ``_PyErr_ChainExceptions1`` "
 "instead. (Contributed by Irit Katriel in :gh:`102192`.)"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2349
+#: ../../whatsnew/3.12.rst:2346
 msgid ""
 "Using :c:func:`PyType_FromSpec`, :c:func:`PyType_FromSpecWithBases` or :c:"
 "func:`PyType_FromModuleAndSpec` to create a class whose metaclass overrides :"
 "c:member:`~PyTypeObject.tp_new` is deprecated. Call the metaclass instead."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2357
+#: ../../whatsnew/3.12.rst:2354
 msgid ""
 "The ``ma_version_tag`` field in :c:type:`PyDictObject` for extension modules "
 "(:pep:`699`; :gh:`101193`)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2360
+#: ../../whatsnew/3.12.rst:2357
 msgid "Global configuration variables:"
-msgstr ""
+msgstr "Variáveis de configuração globais"
 
-#: ../../whatsnew/3.12.rst:2385
+#: ../../whatsnew/3.12.rst:2382
 msgid ""
 "The :c:func:`Py_InitializeFromConfig` API should be used with :c:type:"
 "`PyConfig` instead."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2388
+#: ../../whatsnew/3.12.rst:2385
 msgid ""
 "Creating :c:data:`immutable types <Py_TPFLAGS_IMMUTABLETYPE>` with mutable "
 "bases (:gh:`95388`)."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2394
+#: ../../whatsnew/3.12.rst:2391
 msgid ""
 ":c:func:`PyImport_ImportModuleNoBlock`: use :c:func:`PyImport_ImportModule`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2395
+#: ../../whatsnew/3.12.rst:2392
 msgid ":c:type:`!Py_UNICODE_WIDE` type: use :c:type:`wchar_t`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2396
+#: ../../whatsnew/3.12.rst:2393
 msgid ":c:type:`Py_UNICODE` type: use :c:type:`wchar_t`"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2397
+#: ../../whatsnew/3.12.rst:2394
 msgid "Python initialization functions:"
-msgstr ""
+msgstr "Funções de inicialização do Python"
 
-#: ../../whatsnew/3.12.rst:2399
+#: ../../whatsnew/3.12.rst:2396
 msgid ""
 ":c:func:`PySys_ResetWarnOptions`: clear :data:`sys.warnoptions` and :data:`!"
 "warnings.filters`"
 msgstr ""
+":c:func:`PySys_ResetWarnOptions`: limpa :data:`sys.warnoptions` e :data:`!"
+"warnings.filters`"
+
+#: ../../whatsnew/3.12.rst:2398
+msgid ":c:func:`Py_GetExecPrefix`: get :data:`sys.exec_prefix`"
+msgstr ":c:func:`Py_GetExecPrefix`: obtém :data:`sys.exec_prefix`"
+
+#: ../../whatsnew/3.12.rst:2399
+msgid ":c:func:`Py_GetPath`: get :data:`sys.path`"
+msgstr ":c:func:`Py_GetPath`: obtém :data:`sys.path`"
+
+#: ../../whatsnew/3.12.rst:2400
+msgid ":c:func:`Py_GetPrefix`: get :data:`sys.prefix`"
+msgstr ":c:func:`Py_GetPrefix`: obtém :data:`sys.prefix`"
 
 #: ../../whatsnew/3.12.rst:2401
-msgid ":c:func:`Py_GetExecPrefix`: get :data:`sys.exec_prefix`"
-msgstr ""
+msgid ":c:func:`Py_GetProgramFullPath`: get :data:`sys.executable`"
+msgstr ":c:func:`Py_GetProgramFullPath`: obtém :data:`sys.executable`"
 
 #: ../../whatsnew/3.12.rst:2402
-msgid ":c:func:`Py_GetPath`: get :data:`sys.path`"
-msgstr ""
+msgid ":c:func:`Py_GetProgramName`: get :data:`sys.executable`"
+msgstr ":c:func:`Py_GetProgramName`: obtém :data:`sys.executable`"
 
 #: ../../whatsnew/3.12.rst:2403
-msgid ":c:func:`Py_GetPrefix`: get :data:`sys.prefix`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:2404
-msgid ":c:func:`Py_GetProgramFullPath`: get :data:`sys.executable`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:2405
-msgid ":c:func:`Py_GetProgramName`: get :data:`sys.executable`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:2406
 msgid ""
 ":c:func:`Py_GetPythonHome`: get :c:member:`PyConfig.home` or the :envvar:"
 "`PYTHONHOME` environment variable"
 msgstr ""
+":c:func:`Py_GetPythonHome`: obtém :c:member:`PyConfig.home` ou a variável de "
+"ambiente :envvar:`PYTHONHOME`"
 
-#: ../../whatsnew/3.12.rst:2412
+#: ../../whatsnew/3.12.rst:2409
 msgid ""
 "The following APIs are deprecated and will be removed, although there is "
 "currently no date scheduled for their removal."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2415
+#: ../../whatsnew/3.12.rst:2412
 msgid ":c:macro:`Py_TPFLAGS_HAVE_FINALIZE`: unneeded since Python 3.8"
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2416
+#: ../../whatsnew/3.12.rst:2413
 msgid ":c:func:`PyErr_Fetch`: use :c:func:`PyErr_GetRaisedException`"
-msgstr ""
+msgstr ":c:func:`PyErr_Fetch`: use :c:func:`PyErr_GetRaisedException`"
 
-#: ../../whatsnew/3.12.rst:2417
+#: ../../whatsnew/3.12.rst:2414
 msgid ""
 ":c:func:`PyErr_NormalizeException`: use :c:func:`PyErr_GetRaisedException`"
 msgstr ""
+":c:func:`PyErr_NormalizeException`: use :c:func:`PyErr_GetRaisedException`"
 
-#: ../../whatsnew/3.12.rst:2418
+#: ../../whatsnew/3.12.rst:2415
 msgid ":c:func:`PyErr_Restore`: use :c:func:`PyErr_SetRaisedException`"
-msgstr ""
+msgstr ":c:func:`PyErr_Restore`: use :c:func:`PyErr_SetRaisedException`"
 
-#: ../../whatsnew/3.12.rst:2419
+#: ../../whatsnew/3.12.rst:2416
 msgid ""
 ":c:func:`PyModule_GetFilename`: use :c:func:`PyModule_GetFilenameObject`"
 msgstr ""
+":c:func:`PyModule_GetFilename`: use :c:func:`PyModule_GetFilenameObject`"
 
-#: ../../whatsnew/3.12.rst:2420
+#: ../../whatsnew/3.12.rst:2417
 msgid ":c:func:`PyOS_AfterFork`: use :c:func:`PyOS_AfterFork_Child`"
-msgstr ""
+msgstr ":c:func:`PyOS_AfterFork`: use :c:func:`PyOS_AfterFork_Child`"
 
-#: ../../whatsnew/3.12.rst:2421
+#: ../../whatsnew/3.12.rst:2418
 msgid ""
 ":c:func:`PySlice_GetIndicesEx`: use :c:func:`PySlice_Unpack` and :c:func:"
 "`PySlice_AdjustIndices`"
 msgstr ""
+":c:func:`PySlice_GetIndicesEx`: use :c:func:`PySlice_Unpack` and :c:func:"
+"`PySlice_AdjustIndices`"
+
+#: ../../whatsnew/3.12.rst:2419
+msgid ":c:func:`!PyUnicode_AsDecodedObject`: use :c:func:`PyCodec_Decode`"
+msgstr ":c:func:`!PyUnicode_AsDecodedObject`: use :c:func:`PyCodec_Decode`"
+
+#: ../../whatsnew/3.12.rst:2420
+msgid ":c:func:`!PyUnicode_AsDecodedUnicode`: use :c:func:`PyCodec_Decode`"
+msgstr ":c:func:`!PyUnicode_AsDecodedUnicode`: use :c:func:`PyCodec_Decode`"
+
+#: ../../whatsnew/3.12.rst:2421
+msgid ":c:func:`!PyUnicode_AsEncodedObject`: use :c:func:`PyCodec_Encode`"
+msgstr ":c:func:`!PyUnicode_AsEncodedObject`: use :c:func:`PyCodec_Encode`"
 
 #: ../../whatsnew/3.12.rst:2422
-msgid ":c:func:`!PyUnicode_AsDecodedObject`: use :c:func:`PyCodec_Decode`"
-msgstr ""
+msgid ":c:func:`!PyUnicode_AsEncodedUnicode`: use :c:func:`PyCodec_Encode`"
+msgstr ":c:func:`!PyUnicode_AsEncodedUnicode`: use :c:func:`PyCodec_Encode`"
 
 #: ../../whatsnew/3.12.rst:2423
-msgid ":c:func:`!PyUnicode_AsDecodedUnicode`: use :c:func:`PyCodec_Decode`"
-msgstr ""
+msgid ":c:func:`PyUnicode_READY`: unneeded since Python 3.12"
+msgstr ":c:func:`PyUnicode_READY`: desnecessário desde Python 3.12"
 
 #: ../../whatsnew/3.12.rst:2424
-msgid ":c:func:`!PyUnicode_AsEncodedObject`: use :c:func:`PyCodec_Encode`"
-msgstr ""
+msgid ":c:func:`!PyErr_Display`: use :c:func:`PyErr_DisplayException`"
+msgstr ":c:func:`!PyErr_Display`: use :c:func:`PyErr_DisplayException`"
 
 #: ../../whatsnew/3.12.rst:2425
-msgid ":c:func:`!PyUnicode_AsEncodedUnicode`: use :c:func:`PyCodec_Encode`"
-msgstr ""
+msgid ":c:func:`!_PyErr_ChainExceptions`: use ``_PyErr_ChainExceptions1``"
+msgstr ":c:func:`!_PyErr_ChainExceptions`: use ``_PyErr_ChainExceptions1``"
 
 #: ../../whatsnew/3.12.rst:2426
-msgid ":c:func:`PyUnicode_READY`: unneeded since Python 3.12"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:2427
-msgid ":c:func:`!PyErr_Display`: use :c:func:`PyErr_DisplayException`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:2428
-msgid ":c:func:`!_PyErr_ChainExceptions`: use ``_PyErr_ChainExceptions1``"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:2429
 msgid ""
 ":c:member:`!PyBytesObject.ob_shash` member: call :c:func:`PyObject_Hash` "
 "instead"
 msgstr ""
+"Membro :c:member:`!PyBytesObject.ob_shash`: chame :c:func:`PyObject_Hash`"
+
+#: ../../whatsnew/3.12.rst:2428
+msgid ":c:member:`!PyDictObject.ma_version_tag` member"
+msgstr "Membro :c:member:`!PyDictObject.ma_version_tag`"
+
+#: ../../whatsnew/3.12.rst:2429
+msgid "Thread Local Storage (TLS) API:"
+msgstr "API do Thread Local Storage (TLS):"
 
 #: ../../whatsnew/3.12.rst:2431
-msgid ":c:member:`!PyDictObject.ma_version_tag` member"
-msgstr ""
+msgid ":c:func:`PyThread_create_key`: use :c:func:`PyThread_tss_alloc`"
+msgstr ":c:func:`PyThread_create_key`: use :c:func:`PyThread_tss_alloc`"
 
 #: ../../whatsnew/3.12.rst:2432
-msgid "Thread Local Storage (TLS) API:"
-msgstr ""
+msgid ":c:func:`PyThread_delete_key`: use :c:func:`PyThread_tss_free`"
+msgstr ":c:func:`PyThread_delete_key`: use :c:func:`PyThread_tss_free`"
+
+#: ../../whatsnew/3.12.rst:2433
+msgid ":c:func:`PyThread_set_key_value`: use :c:func:`PyThread_tss_set`"
+msgstr ":c:func:`PyThread_set_key_value`: use :c:func:`PyThread_tss_set`"
 
 #: ../../whatsnew/3.12.rst:2434
-msgid ":c:func:`PyThread_create_key`: use :c:func:`PyThread_tss_alloc`"
-msgstr ""
+msgid ":c:func:`PyThread_get_key_value`: use :c:func:`PyThread_tss_get`"
+msgstr ":c:func:`PyThread_get_key_value`: use :c:func:`PyThread_tss_get`"
 
 #: ../../whatsnew/3.12.rst:2435
-msgid ":c:func:`PyThread_delete_key`: use :c:func:`PyThread_tss_free`"
-msgstr ""
+msgid ":c:func:`PyThread_delete_key_value`: use :c:func:`PyThread_tss_delete`"
+msgstr ":c:func:`PyThread_delete_key_value`: use :c:func:`PyThread_tss_delete`"
 
 #: ../../whatsnew/3.12.rst:2436
-msgid ":c:func:`PyThread_set_key_value`: use :c:func:`PyThread_tss_set`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:2437
-msgid ":c:func:`PyThread_get_key_value`: use :c:func:`PyThread_tss_get`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:2438
-msgid ":c:func:`PyThread_delete_key_value`: use :c:func:`PyThread_tss_delete`"
-msgstr ""
-
-#: ../../whatsnew/3.12.rst:2439
 msgid ":c:func:`PyThread_ReInitTLS`: unneeded since Python 3.7"
-msgstr ""
+msgstr ":c:func:`PyThread_ReInitTLS`: desnecessário desde Python 3.7"
 
-#: ../../whatsnew/3.12.rst:2444
+#: ../../whatsnew/3.12.rst:2441
 msgid ""
 "Remove the :file:`token.h` header file. There was never any public tokenizer "
 "C API. The :file:`token.h` header file was only designed to be used by "
 "Python internals. (Contributed by Victor Stinner in :gh:`92651`.)"
 msgstr ""
+"Remove o arquivo de cabeçalho :file:`token.h`. Nunca houve nenhuma API C de "
+"tokenizador público. O arquivo de cabeçalho :file:`token.h` foi projetado "
+"apenas para ser usado por internos do Python. (Contribuição de Victor "
+"Stinner em :gh:`92651`.)"
 
-#: ../../whatsnew/3.12.rst:2449
+#: ../../whatsnew/3.12.rst:2446
 msgid "Legacy Unicode APIs have been removed. See :pep:`623` for detail."
 msgstr ""
 
-#: ../../whatsnew/3.12.rst:2451
+#: ../../whatsnew/3.12.rst:2448
 msgid ":c:macro:`!PyUnicode_WCHAR_KIND`"
 msgstr ":c:macro:`!PyUnicode_WCHAR_KIND`"
 
-#: ../../whatsnew/3.12.rst:2452
+#: ../../whatsnew/3.12.rst:2449
 msgid ":c:func:`!PyUnicode_AS_UNICODE`"
 msgstr ":c:func:`!PyUnicode_AS_UNICODE`"
 
-#: ../../whatsnew/3.12.rst:2453
+#: ../../whatsnew/3.12.rst:2450
 msgid ":c:func:`!PyUnicode_AsUnicode`"
 msgstr ":c:func:`!PyUnicode_AsUnicode`"
 
-#: ../../whatsnew/3.12.rst:2454
+#: ../../whatsnew/3.12.rst:2451
 msgid ":c:func:`!PyUnicode_AsUnicodeAndSize`"
 msgstr ":c:func:`!PyUnicode_AsUnicodeAndSize`"
 
-#: ../../whatsnew/3.12.rst:2455
+#: ../../whatsnew/3.12.rst:2452
 msgid ":c:func:`!PyUnicode_AS_DATA`"
 msgstr ":c:func:`!PyUnicode_AS_DATA`"
 
-#: ../../whatsnew/3.12.rst:2456
+#: ../../whatsnew/3.12.rst:2453
 msgid ":c:func:`!PyUnicode_FromUnicode`"
 msgstr ":c:func:`!PyUnicode_FromUnicode`"
 
-#: ../../whatsnew/3.12.rst:2457
+#: ../../whatsnew/3.12.rst:2454
 msgid ":c:func:`!PyUnicode_GET_SIZE`"
 msgstr ":c:func:`!PyUnicode_GET_SIZE`"
 
-#: ../../whatsnew/3.12.rst:2458
+#: ../../whatsnew/3.12.rst:2455
 msgid ":c:func:`!PyUnicode_GetSize`"
 msgstr ":c:func:`!PyUnicode_GetSize`"
 
-#: ../../whatsnew/3.12.rst:2459
+#: ../../whatsnew/3.12.rst:2456
 msgid ":c:func:`!PyUnicode_GET_DATA_SIZE`"
 msgstr ":c:func:`!PyUnicode_GET_DATA_SIZE`"
 
-#: ../../whatsnew/3.12.rst:2461
+#: ../../whatsnew/3.12.rst:2458
 msgid ""
 "Remove the ``PyUnicode_InternImmortal()`` function macro. (Contributed by "
 "Victor Stinner in :gh:`85858`.)"

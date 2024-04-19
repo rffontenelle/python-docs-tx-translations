@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 14:16+0000\n"
+"POT-Creation-Date: 2024-04-19 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 00:48+0000\n"
 "Last-Translator: Илья Панфилов, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
@@ -352,33 +352,25 @@ msgstr ""
 
 #: ../../c-api/exceptions.rst:211
 msgid ""
-"This is a convenience function to raise :exc:`WindowsError`. If called with "
+"This is a convenience function to raise :exc:`OSError`. If called with "
 "*ierr* of ``0``, the error code returned by a call to :c:func:`!"
 "GetLastError` is used instead.  It calls the Win32 function :c:func:`!"
 "FormatMessage` to retrieve the Windows description of error code given by "
-"*ierr* or :c:func:`!GetLastError`, then it constructs a tuple object whose "
-"first item is the *ierr* value and whose second item is the corresponding "
-"error message (gotten from :c:func:`!FormatMessage`), and then calls "
-"``PyErr_SetObject(PyExc_WindowsError, object)``. This function always "
-"returns ``NULL``."
+"*ierr* or :c:func:`!GetLastError`, then it constructs a :exc:`OSError` "
+"object with the :attr:`~OSError.winerror` attribute set to the error code, "
+"the :attr:`~OSError.strerror` attribute set to the corresponding error "
+"message (gotten from :c:func:`!FormatMessage`), and then calls "
+"``PyErr_SetObject(PyExc_OSError, object)``. This function always returns "
+"``NULL``."
 msgstr ""
-"Это удобная функция для вызова :exc:`WindowsError`. Если вызывается с *ierr* "
-"равным ``0``, вместо этого используется код ошибки, возвращаемый вызовом :c:"
-"func:`!GetLastError`. Он вызывает функцию Win32 :c:func:`!FormatMessage` для "
-"получения описания кода ошибки Windows, заданного *ierr* или :c:func:`!"
-"GetLastError`, затем он создает объект кортежа, первым элементом которого "
-"является значение *ierr*, а вторым элементом является соответствующее "
-"сообщение об ошибке (полученое из :c:func:`!FormatMessage`), а затем "
-"вызывает ``PyErr_SetObject(PyExc_WindowsError, object)``. Эта функция всегда "
-"возвращает ``NULL``."
 
-#: ../../c-api/exceptions.rst:220 ../../c-api/exceptions.rst:228
-#: ../../c-api/exceptions.rst:239 ../../c-api/exceptions.rst:249
-#: ../../c-api/exceptions.rst:257 ../../c-api/exceptions.rst:267
+#: ../../c-api/exceptions.rst:221 ../../c-api/exceptions.rst:229
+#: ../../c-api/exceptions.rst:240 ../../c-api/exceptions.rst:250
+#: ../../c-api/exceptions.rst:258 ../../c-api/exceptions.rst:268
 msgid ":ref:`Availability <availability>`: Windows."
 msgstr ":ref:`Availability <availability>`: Windows."
 
-#: ../../c-api/exceptions.rst:225
+#: ../../c-api/exceptions.rst:226
 msgid ""
 "Similar to :c:func:`PyErr_SetFromWindowsErr`, with an additional parameter "
 "specifying the exception type to be raised."
@@ -386,7 +378,7 @@ msgstr ""
 "Аналогично :c:func:`PyErr_SetFromWindowsErr`, с дополнительным параметром, "
 "указывающим тип вызываемого исключения."
 
-#: ../../c-api/exceptions.rst:233
+#: ../../c-api/exceptions.rst:234
 msgid ""
 "Similar to :c:func:`PyErr_SetFromWindowsErr`, with the additional behavior "
 "that if *filename* is not ``NULL``, it is decoded from the filesystem "
@@ -401,7 +393,7 @@ msgstr ""
 "использоваться для определения атрибута :attr:`!filename` экземпляра "
 "исключения."
 
-#: ../../c-api/exceptions.rst:244
+#: ../../c-api/exceptions.rst:245
 msgid ""
 "Similar to :c:func:`PyErr_SetExcFromWindowsErr`, with the additional "
 "behavior that if *filename* is not ``NULL``, it is passed to the constructor "
@@ -414,7 +406,7 @@ msgstr ""
 "который будет использоваться для определения :attr:`!filename` атрибута "
 "экземпляра исключения."
 
-#: ../../c-api/exceptions.rst:254
+#: ../../c-api/exceptions.rst:255
 msgid ""
 "Similar to :c:func:`PyErr_SetExcFromWindowsErrWithFilenameObject`, but "
 "accepts a second filename object."
@@ -422,7 +414,7 @@ msgstr ""
 "Аналогично :c:func:`PyErr_SetExcFromWindowsErrWithFilenameObject`, но "
 "принимает второе имя объекта."
 
-#: ../../c-api/exceptions.rst:264
+#: ../../c-api/exceptions.rst:265
 msgid ""
 "Similar to :c:func:`PyErr_SetFromWindowsErrWithFilename`, with an additional "
 "parameter specifying the exception type to be raised."
@@ -430,7 +422,7 @@ msgstr ""
 "Аналогично :c:func:`PyErr_SetFromWindowsErrWithFilename`, с дополнительным "
 "параметром, указывающим тип вызываемого исключения."
 
-#: ../../c-api/exceptions.rst:272
+#: ../../c-api/exceptions.rst:273
 msgid ""
 "This is a convenience function to raise :exc:`ImportError`. *msg* will be "
 "set as the exception's message string. *name* and *path*, both of which can "
@@ -442,7 +434,7 @@ msgstr ""
 "могут быть ``NULL``, будут установлены в качестве соответствующих атрибутов "
 "``name`` и ``path`` для :exc:`ImportError`."
 
-#: ../../c-api/exceptions.rst:282
+#: ../../c-api/exceptions.rst:283
 msgid ""
 "Much like :c:func:`PyErr_SetImportError` but this function allows for "
 "specifying a subclass of :exc:`ImportError` to raise."
@@ -450,7 +442,7 @@ msgstr ""
 "Очень похоже на :c:func:`PyErr_SetImportError`, но эта функция позволяет "
 "указать подкласс :exc:`ImportError` для вызова."
 
-#: ../../c-api/exceptions.rst:290
+#: ../../c-api/exceptions.rst:291
 msgid ""
 "Set file, line, and offset information for the current exception.  If the "
 "current exception is not a :exc:`SyntaxError`, then it sets additional "
@@ -462,7 +454,7 @@ msgstr ""
 "дополнительные атрибуты, которые заставляют подсистему печати исключений "
 "думать, что исключение является :exc:`SyntaxError`."
 
-#: ../../c-api/exceptions.rst:300
+#: ../../c-api/exceptions.rst:301
 msgid ""
 "Like :c:func:`PyErr_SyntaxLocationObject`, but *filename* is a byte string "
 "decoded from the :term:`filesystem encoding and error handler`."
@@ -470,13 +462,13 @@ msgstr ""
 "Как :c:func:`PyErr_SyntaxLocationObject`, но *filename* - это байтовая "
 "строка, декодированная из :term:`filesystem encoding and error handler`."
 
-#: ../../c-api/exceptions.rst:308
+#: ../../c-api/exceptions.rst:309
 msgid ""
 "Like :c:func:`PyErr_SyntaxLocationEx`, but the *col_offset* parameter is "
 "omitted."
 msgstr "Как :c:func:`PyErr_SyntaxLocationEx`, но параметр *col_offset* опущен."
 
-#: ../../c-api/exceptions.rst:314
+#: ../../c-api/exceptions.rst:315
 msgid ""
 "This is a shorthand for ``PyErr_SetString(PyExc_SystemError, message)``, "
 "where *message* indicates that an internal operation (e.g. a Python/C API "
@@ -488,11 +480,11 @@ msgstr ""
 "C) была вызвана с недопустимым аргументом. В основном для внутреннего "
 "использования."
 
-#: ../../c-api/exceptions.rst:321
+#: ../../c-api/exceptions.rst:322
 msgid "Issuing warnings"
 msgstr "Выдача предупреждений"
 
-#: ../../c-api/exceptions.rst:323
+#: ../../c-api/exceptions.rst:324
 msgid ""
 "Use these functions to issue warnings from C code.  They mirror similar "
 "functions exported by the Python :mod:`warnings` module.  They normally "
@@ -520,7 +512,7 @@ msgstr ""
 "выполнить свою обычную обработку исключений (например, ссылки, "
 "принадлежащие :c:func:`Py_DECREF`, и вернуть значение ошибки)."
 
-#: ../../c-api/exceptions.rst:338
+#: ../../c-api/exceptions.rst:339
 msgid ""
 "Issue a warning message.  The *category* argument is a warning category (see "
 "below) or ``NULL``; the *message* argument is a UTF-8 encoded string.  "
@@ -536,7 +528,7 @@ msgstr ""
 "кода в этом фрейме стека. A *stack_level*, равный 1 - это функция, "
 "вызывающая :c:func:`PyErr_WarnEx`, 2 - функция выше этой, и так далее."
 
-#: ../../c-api/exceptions.rst:345
+#: ../../c-api/exceptions.rst:346
 msgid ""
 "Warning categories must be subclasses of :c:data:`PyExc_Warning`; :c:data:"
 "`PyExc_Warning` is a subclass of :c:data:`PyExc_Exception`; the default "
@@ -551,7 +543,7 @@ msgstr ""
 "переменных, имена которых перечислены по адресу :ref:"
 "`standardwarningcategories`."
 
-#: ../../c-api/exceptions.rst:351
+#: ../../c-api/exceptions.rst:352
 msgid ""
 "For information about warning control, see the documentation for the :mod:"
 "`warnings` module and the :option:`-W` option in the command line "
@@ -561,7 +553,7 @@ msgstr ""
 "mod:`warnings` и опции :option:`-W` в документации по командной строке. Для "
 "управления предупреждениями нет C API."
 
-#: ../../c-api/exceptions.rst:358
+#: ../../c-api/exceptions.rst:359
 msgid ""
 "Issue a warning message with explicit control over all warning attributes.  "
 "This is a straightforward wrapper around the Python function :func:`warnings."
@@ -574,7 +566,7 @@ msgstr ""
 "Аргументам *module* и *registry* может быть присвоено значение ``NULL``, "
 "чтобы получить эффект по умолчанию, описанный там."
 
-#: ../../c-api/exceptions.rst:369
+#: ../../c-api/exceptions.rst:370
 msgid ""
 "Similar to :c:func:`PyErr_WarnExplicitObject` except that *message* and "
 "*module* are UTF-8 encoded strings, and *filename* is decoded from the :term:"
@@ -584,7 +576,7 @@ msgstr ""
 "*message* и *module* являются строками в кодировке UTF-8, а *filename* "
 "декодируется из :term:`filesystem encoding and error handler`."
 
-#: ../../c-api/exceptions.rst:376
+#: ../../c-api/exceptions.rst:377
 msgid ""
 "Function similar to :c:func:`PyErr_WarnEx`, but use :c:func:"
 "`PyUnicode_FromFormat` to format the warning message.  *format* is an ASCII-"
@@ -594,7 +586,7 @@ msgstr ""
 "`PyUnicode_FromFormat` для форматирования предупреждающего сообщения. "
 "*format* - это строка в кодировке ASCII."
 
-#: ../../c-api/exceptions.rst:385
+#: ../../c-api/exceptions.rst:386
 msgid ""
 "Function similar to :c:func:`PyErr_WarnFormat`, but *category* is :exc:"
 "`ResourceWarning` and it passes *source* to :class:`!warnings."
@@ -604,11 +596,11 @@ msgstr ""
 "`ResourceWarning`, и она передает *source* в :class:`!warnings."
 "WarningMessage`."
 
-#: ../../c-api/exceptions.rst:392
+#: ../../c-api/exceptions.rst:393
 msgid "Querying the error indicator"
 msgstr "Запрос индикатора ошибки"
 
-#: ../../c-api/exceptions.rst:396
+#: ../../c-api/exceptions.rst:397
 msgid ""
 "Test whether the error indicator is set.  If set, return the exception "
 "*type* (the first argument to the last call to one of the ``PyErr_Set*`` "
@@ -622,11 +614,11 @@ msgstr ""
 "``NULL``. У вас нет ссылки на возвращаемое значение, поэтому вам не нужно "
 "её :c:func:`Py_DECREF`."
 
-#: ../../c-api/exceptions.rst:402
+#: ../../c-api/exceptions.rst:403
 msgid "The caller must hold the GIL."
 msgstr "Вызывающий объект должен удерживать GIL."
 
-#: ../../c-api/exceptions.rst:406
+#: ../../c-api/exceptions.rst:407
 msgid ""
 "Do not compare the return value to a specific exception; use :c:func:"
 "`PyErr_ExceptionMatches` instead, shown below.  (The comparison could easily "
@@ -639,7 +631,7 @@ msgstr ""
 "экземпляром вместо класса, в случае исключения класса, или это может быть "
 "подкласс ожидаемого исключения.)"
 
-#: ../../c-api/exceptions.rst:414
+#: ../../c-api/exceptions.rst:415
 msgid ""
 "Equivalent to ``PyErr_GivenExceptionMatches(PyErr_Occurred(), exc)``.  This "
 "should only be called when an exception is actually set; a memory access "
@@ -649,7 +641,7 @@ msgstr ""
 "должно вызываться только тогда, когда действительно установлено исключение; "
 "произойдет нарушение доступа к памяти, если исключение не было вызвано."
 
-#: ../../c-api/exceptions.rst:421
+#: ../../c-api/exceptions.rst:422
 msgid ""
 "Return true if the *given* exception matches the exception type in *exc*.  "
 "If *exc* is a class object, this also returns true when *given* is an "
@@ -662,7 +654,7 @@ msgstr ""
 "*exc* является кортежем, выполняется поиск совпадения по всем типам "
 "исключений в кортеже (и рекурсивно в подтипах)."
 
-#: ../../c-api/exceptions.rst:429
+#: ../../c-api/exceptions.rst:430
 msgid ""
 "Return the exception currently being raised, clearing the error indicator at "
 "the same time. Return ``NULL`` if the error indicator is not set."
@@ -670,7 +662,7 @@ msgstr ""
 "Возвращает вызываемое в данный момент исключение, одновременно очищая "
 "индикатор ошибки. Возвращает ``NULL``, если индикатор ошибки не установлен."
 
-#: ../../c-api/exceptions.rst:432
+#: ../../c-api/exceptions.rst:433
 msgid ""
 "This function is used by code that needs to catch exceptions, or code that "
 "needs to save and restore the error indicator temporarily."
@@ -679,11 +671,11 @@ msgstr ""
 "исключения, или кодом, которому необходимо временно сохранять и "
 "восстанавливать индикатор ошибки."
 
-#: ../../c-api/exceptions.rst:435 ../../c-api/exceptions.rst:479
+#: ../../c-api/exceptions.rst:436 ../../c-api/exceptions.rst:480
 msgid "For example::"
 msgstr "Например::"
 
-#: ../../c-api/exceptions.rst:445
+#: ../../c-api/exceptions.rst:446
 msgid ""
 ":c:func:`PyErr_GetHandledException`, to save the exception currently being "
 "handled."
@@ -691,7 +683,7 @@ msgstr ""
 ":c:func:`PyErr_GetHandledException`, для сохранения обрабатываемого в данный "
 "момент исключения."
 
-#: ../../c-api/exceptions.rst:453
+#: ../../c-api/exceptions.rst:454
 msgid ""
 "Set *exc* as the exception currently being raised, clearing the existing "
 "exception if one is set."
@@ -699,17 +691,17 @@ msgstr ""
 "Устанавливает *exc* в качестве вызываемого в данный момент исключения, "
 "очистив существующее исключение, если оно установлено."
 
-#: ../../c-api/exceptions.rst:458
+#: ../../c-api/exceptions.rst:459
 msgid "This call steals a reference to *exc*, which must be a valid exception."
 msgstr ""
 "Этот вызов забирает ссылку на *exc*, которая должна быть допустимым "
 "исключением."
 
-#: ../../c-api/exceptions.rst:467
+#: ../../c-api/exceptions.rst:468
 msgid "Use :c:func:`PyErr_GetRaisedException` instead."
 msgstr "Вместо этого используется :c:func:`PyErr_GetRaisedException`."
 
-#: ../../c-api/exceptions.rst:469
+#: ../../c-api/exceptions.rst:470
 msgid ""
 "Retrieve the error indicator into three variables whose addresses are "
 "passed. If the error indicator is not set, set all three variables to "
@@ -723,7 +715,7 @@ msgstr ""
 "собственная ссылка на каждый извлеченный объект. Значение и объект обратной "
 "трассировки могут быть ``NULL``, даже если объект типа таковым не является."
 
-#: ../../c-api/exceptions.rst:476
+#: ../../c-api/exceptions.rst:477
 msgid ""
 "This function is normally only used by legacy code that needs to catch "
 "exceptions or save and restore the error indicator temporarily."
@@ -732,11 +724,11 @@ msgstr ""
 "перехватывать исключения или временно сохранять и восстанавливать индикатор "
 "ошибки."
 
-#: ../../c-api/exceptions.rst:495
+#: ../../c-api/exceptions.rst:496
 msgid "Use :c:func:`PyErr_SetRaisedException` instead."
 msgstr "Вместо этого используйте :c:func:`PyErr_SetRaisedException`."
 
-#: ../../c-api/exceptions.rst:497
+#: ../../c-api/exceptions.rst:498
 msgid ""
 "Set the error indicator from the three objects, *type*, *value*, and "
 "*traceback*, clearing the existing exception if one is set. If the objects "
@@ -759,7 +751,7 @@ msgstr ""
 "вызова вы больше не будете владеть этими ссылками. (Если вы этого не "
 "понимаете, не используйте эту функцию. Я вас предупреждал.)"
 
-#: ../../c-api/exceptions.rst:511
+#: ../../c-api/exceptions.rst:512
 msgid ""
 "This function is normally only used by legacy code that needs to save and "
 "restore the error indicator temporarily. Use :c:func:`PyErr_Fetch` to save "
@@ -769,7 +761,7 @@ msgstr ""
 "необходимо временно сохранить и восстановить индикатор ошибки. Используйте :"
 "c:func:`PyErr_Fetch` для сохранения текущего индикатора ошибки."
 
-#: ../../c-api/exceptions.rst:520
+#: ../../c-api/exceptions.rst:521
 msgid ""
 "Use :c:func:`PyErr_GetRaisedException` instead, to avoid any possible de-"
 "normalization."
@@ -777,7 +769,7 @@ msgstr ""
 "Вместо этого используйте :c:func:`PyErr_GetRaisedException`, чтобы избежать "
 "любой возможной нормализации."
 
-#: ../../c-api/exceptions.rst:523
+#: ../../c-api/exceptions.rst:524
 msgid ""
 "Under certain circumstances, the values returned by :c:func:`PyErr_Fetch` "
 "below can be \"unnormalized\", meaning that ``*exc`` is a class object but "
@@ -794,7 +786,7 @@ msgstr ""
 "происходит. Отложенная нормализация реализована для повышения "
 "производительности."
 
-#: ../../c-api/exceptions.rst:531
+#: ../../c-api/exceptions.rst:532
 msgid ""
 "This function *does not* implicitly set the :attr:`~BaseException."
 "__traceback__` attribute on the exception value. If setting the traceback "
@@ -804,7 +796,7 @@ msgstr ""
 "__traceback__` для значения исключения. Если требуется соответствующая "
 "настройка трассировки, необходим следующий дополнительный фрагмент кода::"
 
-#: ../../c-api/exceptions.rst:543
+#: ../../c-api/exceptions.rst:544
 msgid ""
 "Retrieve the active exception instance, as would be returned by :func:`sys."
 "exception`. This refers to an exception that was *already caught*, not to an "
@@ -817,7 +809,7 @@ msgstr ""
 "новую ссылку на исключение или ``NULL``. Не изменяет состояние исключения "
 "интерпретатора."
 
-#: ../../c-api/exceptions.rst:550
+#: ../../c-api/exceptions.rst:551
 msgid ""
 "This function is not normally used by code that wants to handle exceptions. "
 "Rather, it can be used when code needs to save and restore the exception "
@@ -830,7 +822,7 @@ msgstr ""
 "`PyErr_SetHandledException` для восстановления или очистки состояния "
 "исключения."
 
-#: ../../c-api/exceptions.rst:559
+#: ../../c-api/exceptions.rst:560
 msgid ""
 "Set the active exception, as known from ``sys.exception()``.  This refers to "
 "an exception that was *already caught*, not to an exception that was freshly "
@@ -841,7 +833,7 @@ msgstr ""
 "которое было вызвано недавно. Чтобы очистить состояние исключения, введите "
 "``NULL``."
 
-#: ../../c-api/exceptions.rst:566
+#: ../../c-api/exceptions.rst:567
 msgid ""
 "This function is not normally used by code that wants to handle exceptions. "
 "Rather, it can be used when code needs to save and restore the exception "
@@ -853,7 +845,7 @@ msgstr ""
 "сохранить и восстановить состояние исключения. Используйте :c:func:"
 "`PyErr_GetHandledException`, чтобы получить состояние исключения."
 
-#: ../../c-api/exceptions.rst:575
+#: ../../c-api/exceptions.rst:576
 msgid ""
 "Retrieve the old-style representation of the exception info, as known from :"
 "func:`sys.exc_info`.  This refers to an exception that was *already caught*, "
@@ -870,7 +862,7 @@ msgstr ""
 "совместимости. Предпочтительно использовать :c:func:"
 "`PyErr_GetHandledException`."
 
-#: ../../c-api/exceptions.rst:584
+#: ../../c-api/exceptions.rst:585
 msgid ""
 "This function is not normally used by code that wants to handle exceptions. "
 "Rather, it can be used when code needs to save and restore the exception "
@@ -882,7 +874,7 @@ msgstr ""
 "сохранить и восстановить состояние исключения. Используйте :c:func:"
 "`PyErr_SetExcInfo` для восстановления или очистки состояния исключения."
 
-#: ../../c-api/exceptions.rst:594
+#: ../../c-api/exceptions.rst:595
 msgid ""
 "Set the exception info, as known from ``sys.exc_info()``.  This refers to an "
 "exception that was *already caught*, not to an exception that was freshly "
@@ -898,7 +890,7 @@ msgstr ""
 "Эта функция сохранена для обеспечения обратной совместимости. "
 "Предпочтительно использовать :c:func:`PyErr_SetHandledException`."
 
-#: ../../c-api/exceptions.rst:603
+#: ../../c-api/exceptions.rst:604
 msgid ""
 "This function is not normally used by code that wants to handle exceptions. "
 "Rather, it can be used when code needs to save and restore the exception "
@@ -910,7 +902,7 @@ msgstr ""
 "сохранить и восстановить состояние исключения. Используйте :c:func:"
 "`PyErr_GetExcInfo` для считывания состояния исключения."
 
-#: ../../c-api/exceptions.rst:610
+#: ../../c-api/exceptions.rst:611
 msgid ""
 "The ``type`` and ``traceback`` arguments are no longer used and can be NULL. "
 "The interpreter now derives them from the exception instance (the ``value`` "
@@ -921,15 +913,15 @@ msgstr ""
 "(аргумент ``value``). Функция по-прежнему перехватывает ссылки на все три "
 "аргумента."
 
-#: ../../c-api/exceptions.rst:618
+#: ../../c-api/exceptions.rst:619
 msgid "Signal Handling"
 msgstr "Обработка сигналов"
 
-#: ../../c-api/exceptions.rst:628
+#: ../../c-api/exceptions.rst:629
 msgid "This function interacts with Python's signal handling."
 msgstr "Эта функция взаимодействует с обработкой сигналов в Python."
 
-#: ../../c-api/exceptions.rst:630
+#: ../../c-api/exceptions.rst:631
 msgid ""
 "If the function is called from the main thread and under the main Python "
 "interpreter, it checks whether a signal has been sent to the processes and "
@@ -942,7 +934,7 @@ msgstr ""
 "поддерживается модуль :mod:`signal`, это может вызвать обработчик сигналов, "
 "написанный на Python."
 
-#: ../../c-api/exceptions.rst:635
+#: ../../c-api/exceptions.rst:636
 msgid ""
 "The function attempts to handle all pending signals, and then returns ``0``. "
 "However, if a Python signal handler raises an exception, the error indicator "
@@ -956,7 +948,7 @@ msgstr ""
 "другие ожидающие сигналы, возможно, еще не были обработаны: они будут при "
 "следующем вызове :c:func:`PyErr_CheckSignals()`)."
 
-#: ../../c-api/exceptions.rst:641
+#: ../../c-api/exceptions.rst:642
 msgid ""
 "If the function is called from a non-main thread, or under a non-main Python "
 "interpreter, it does nothing and returns ``0``."
@@ -964,7 +956,7 @@ msgstr ""
 "Если функция вызывается из не основного потока или с помощью не основного "
 "интерпретатора Python, она ничего не делает и возвращает ``0``."
 
-#: ../../c-api/exceptions.rst:644
+#: ../../c-api/exceptions.rst:645
 msgid ""
 "This function can be called by long-running C code that wants to be "
 "interruptible by user requests (such as by pressing Ctrl-C)."
@@ -973,7 +965,7 @@ msgstr ""
 "хочет, чтобы его можно было прерывать запросами пользователя (например, "
 "нажатием Ctrl-C)."
 
-#: ../../c-api/exceptions.rst:648
+#: ../../c-api/exceptions.rst:649
 msgid ""
 "The default Python signal handler for :c:macro:`!SIGINT` raises the :exc:"
 "`KeyboardInterrupt` exception."
@@ -981,7 +973,7 @@ msgstr ""
 "Обработчик сигналов Python по умолчанию для :c:macro:`!SIGINT` вызывает "
 "исключение :exc:`KeyboardInterrupt`."
 
-#: ../../c-api/exceptions.rst:659
+#: ../../c-api/exceptions.rst:660
 msgid ""
 "Simulate the effect of a :c:macro:`!SIGINT` signal arriving. This is "
 "equivalent to ``PyErr_SetInterruptEx(SIGINT)``."
@@ -989,7 +981,7 @@ msgstr ""
 "Имитирует эффект поступления сигнала :c:macro:`!SIGINT`. Это эквивалентно "
 "``PyErr_SetInterruptEx(SIGINT)``."
 
-#: ../../c-api/exceptions.rst:663 ../../c-api/exceptions.rst:690
+#: ../../c-api/exceptions.rst:664 ../../c-api/exceptions.rst:691
 msgid ""
 "This function is async-signal-safe.  It can be called without the :term:"
 "`GIL` and from a C signal handler."
@@ -997,7 +989,7 @@ msgstr ""
 "Эта функция безопасна для асинхронного сигнала. Она может быть вызвана без :"
 "term:`GIL` и из обработчика сигналов C."
 
-#: ../../c-api/exceptions.rst:673
+#: ../../c-api/exceptions.rst:674
 msgid ""
 "Simulate the effect of a signal arriving. The next time :c:func:"
 "`PyErr_CheckSignals` is called,  the Python signal handler for the given "
@@ -1007,7 +999,7 @@ msgstr ""
 "`PyErr_CheckSignals` будет вызван обработчик сигнала Python для данного "
 "номера сигнала."
 
-#: ../../c-api/exceptions.rst:677
+#: ../../c-api/exceptions.rst:678
 msgid ""
 "This function can be called by C code that sets up its own signal handling "
 "and wants Python signal handlers to be invoked as expected when an "
@@ -1019,7 +1011,7 @@ msgstr ""
 "вызывались ожидаемым образом при запросе прерывания (например, когда "
 "пользователь нажимает Ctrl-C, чтобы прервать операцию)."
 
-#: ../../c-api/exceptions.rst:682
+#: ../../c-api/exceptions.rst:683
 msgid ""
 "If the given signal isn't handled by Python (it was set to :py:const:`signal."
 "SIG_DFL` or :py:const:`signal.SIG_IGN`), it will be ignored."
@@ -1027,7 +1019,7 @@ msgstr ""
 "Если данный сигнал не обрабатывается Python (для него было задано значение :"
 "const:`signal.SIG_DFL` или :const:`signal.SIG_IGN`), он будет проигнорирован."
 
-#: ../../c-api/exceptions.rst:685
+#: ../../c-api/exceptions.rst:686
 msgid ""
 "If *signum* is outside of the allowed range of signal numbers, ``-1`` is "
 "returned.  Otherwise, ``0`` is returned.  The error indicator is never "
@@ -1037,7 +1029,7 @@ msgstr ""
 "возвращается значение ``-1``. В противном случае возвращается значение "
 "``0``. Эта функция никогда не изменяет индикатор ошибки."
 
-#: ../../c-api/exceptions.rst:698
+#: ../../c-api/exceptions.rst:699
 msgid ""
 "This utility function specifies a file descriptor to which the signal number "
 "is written as a single byte whenever a signal is received. *fd* must be non-"
@@ -1048,7 +1040,7 @@ msgstr ""
 "сигнал. *fd* должен быть неблокирующим. Он возвращает предыдущий файловый "
 "дескриптор."
 
-#: ../../c-api/exceptions.rst:702
+#: ../../c-api/exceptions.rst:703
 msgid ""
 "The value ``-1`` disables the feature; this is the initial state. This is "
 "equivalent to :func:`signal.set_wakeup_fd` in Python, but without any error "
@@ -1060,15 +1052,15 @@ msgstr ""
 "проверки на ошибки. *fd* должен быть допустимым файловым дескриптором. "
 "Функция должна вызываться только из основного потока."
 
-#: ../../c-api/exceptions.rst:707
+#: ../../c-api/exceptions.rst:708
 msgid "On Windows, the function now also supports socket handles."
 msgstr "В Windows эта функция теперь также поддерживает дескрипторы сокетов."
 
-#: ../../c-api/exceptions.rst:712
+#: ../../c-api/exceptions.rst:713
 msgid "Exception Classes"
 msgstr "Классы исключений"
 
-#: ../../c-api/exceptions.rst:716
+#: ../../c-api/exceptions.rst:717
 msgid ""
 "This utility function creates and returns a new exception class. The *name* "
 "argument must be the name of the new exception, a C string of the form "
@@ -1082,7 +1074,7 @@ msgstr ""
 "``NULL``. Это создает объект класса, производный от :exc:`Exception` "
 "(доступный в C как :c:data:`PyExc_Exception`)."
 
-#: ../../c-api/exceptions.rst:722
+#: ../../c-api/exceptions.rst:723
 msgid ""
 "The :attr:`!__module__` attribute of the new class is set to the first part "
 "(up to the last dot) of the *name* argument, and the class name is set to "
@@ -1098,7 +1090,7 @@ msgstr ""
 "либо только один класс, либо набор классов. Аргумент *dict* может "
 "использоваться для указания словаря переменных и методов класса."
 
-#: ../../c-api/exceptions.rst:731
+#: ../../c-api/exceptions.rst:732
 msgid ""
 "Same as :c:func:`PyErr_NewException`, except that the new exception class "
 "can easily be given a docstring: If *doc* is non-``NULL``, it will be used "
@@ -1109,11 +1101,11 @@ msgstr ""
 "*doc* не равно ``NULL``, оно будет использоваться в качестве строки "
 "документации для класса исключений."
 
-#: ../../c-api/exceptions.rst:739
+#: ../../c-api/exceptions.rst:740
 msgid "Exception Objects"
 msgstr "Объекты исключений"
 
-#: ../../c-api/exceptions.rst:743
+#: ../../c-api/exceptions.rst:744
 msgid ""
 "Return the traceback associated with the exception as a new reference, as "
 "accessible from Python through the :attr:`~BaseException.__traceback__` "
@@ -1124,7 +1116,7 @@ msgstr ""
 "__traceback__`. Если обратная трассировка не связана, возвращается значение "
 "``NULL``."
 
-#: ../../c-api/exceptions.rst:751
+#: ../../c-api/exceptions.rst:752
 msgid ""
 "Set the traceback associated with the exception to *tb*.  Use ``Py_None`` to "
 "clear it."
@@ -1132,7 +1124,7 @@ msgstr ""
 "Устанавливает для параметра обратной трассировки, связанного с исключением, "
 "значение *tb*. Используйте ``Py_None``, чтобы очистить его."
 
-#: ../../c-api/exceptions.rst:757
+#: ../../c-api/exceptions.rst:758
 msgid ""
 "Return the context (another exception instance during whose handling *ex* "
 "was raised) associated with the exception as a new reference, as accessible "
@@ -1144,7 +1136,7 @@ msgstr ""
 "ссылки, доступной из Python через атрибут :attr:`~BaseException."
 "__context__`. Если контекст не связан, то возвращается значение ``NULL``."
 
-#: ../../c-api/exceptions.rst:765
+#: ../../c-api/exceptions.rst:766
 msgid ""
 "Set the context associated with the exception to *ctx*.  Use ``NULL`` to "
 "clear it.  There is no type check to make sure that *ctx* is an exception "
@@ -1154,7 +1146,7 @@ msgstr ""
 "``NULL``, чтобы очистить его. Нет проверки типа, чтобы убедиться, что *ctx* "
 "является экземпляром исключения. При этом будет украдена ссылка на *ctx*."
 
-#: ../../c-api/exceptions.rst:772
+#: ../../c-api/exceptions.rst:773
 msgid ""
 "Return the cause (either an exception instance, or ``None``, set by "
 "``raise ... from ...``) associated with the exception as a new reference, as "
@@ -1165,7 +1157,7 @@ msgstr ""
 "параметром ``raise ... from ...``), связанную с исключением в качестве новой "
 "ссылки, доступной из Python через атрибут :attr:`~BaseException.__cause__`."
 
-#: ../../c-api/exceptions.rst:780
+#: ../../c-api/exceptions.rst:781
 msgid ""
 "Set the cause associated with the exception to *cause*.  Use ``NULL`` to "
 "clear it.  There is no type check to make sure that *cause* is either an "
@@ -1176,7 +1168,7 @@ msgstr ""
 "*cause* является либо экземпляром исключения, либо ``None``. Это приведет к "
 "краже ссылки на *cause*."
 
-#: ../../c-api/exceptions.rst:784
+#: ../../c-api/exceptions.rst:785
 msgid ""
 "The :attr:`~BaseException.__suppress_context__` attribute is implicitly set "
 "to ``True`` by this function."
@@ -1184,16 +1176,16 @@ msgstr ""
 "Атрибуту :attr:`~BaseException.__suppress_context__` этой функцией неявно "
 "присваивается значение ``True``."
 
-#: ../../c-api/exceptions.rst:790
+#: ../../c-api/exceptions.rst:791
 msgid "Return :attr:`~BaseException.args` of exception *ex*."
 msgstr "Возвращает :attr:`~BaseException.args` из исключения *ex*."
 
-#: ../../c-api/exceptions.rst:795
+#: ../../c-api/exceptions.rst:796
 msgid "Set :attr:`~BaseException.args` of exception *ex* to *args*."
 msgstr ""
 "Устанавливает :attr:`~BaseException.args` для исключения *ex* в *args*."
 
-#: ../../c-api/exceptions.rst:799
+#: ../../c-api/exceptions.rst:800
 msgid ""
 "Implement part of the interpreter's implementation of :keyword:`!except*`. "
 "*orig* is the original exception that was caught, and *excs* is the list of "
@@ -1214,11 +1206,11 @@ msgstr ""
 "который в конце должен быть повторно вызван, или ``None``, если повторно "
 "вызывать нечего."
 
-#: ../../c-api/exceptions.rst:813
+#: ../../c-api/exceptions.rst:814
 msgid "Unicode Exception Objects"
 msgstr "Объекты исключений в Unicode"
 
-#: ../../c-api/exceptions.rst:815
+#: ../../c-api/exceptions.rst:816
 msgid ""
 "The following functions are used to create and modify Unicode exceptions "
 "from C."
@@ -1226,7 +1218,7 @@ msgstr ""
 "Следующие функции используются для создания и изменения исключений Unicode "
 "из C."
 
-#: ../../c-api/exceptions.rst:819
+#: ../../c-api/exceptions.rst:820
 msgid ""
 "Create a :class:`UnicodeDecodeError` object with the attributes *encoding*, "
 "*object*, *length*, *start*, *end* and *reason*. *encoding* and *reason* are "
@@ -1236,15 +1228,15 @@ msgstr ""
 "*object*, *length*, *start*, *end* и *reason*. *encoding* и *reason* "
 "являются строками в кодировке UTF-8."
 
-#: ../../c-api/exceptions.rst:826
+#: ../../c-api/exceptions.rst:827
 msgid "Return the *encoding* attribute of the given exception object."
 msgstr "Возвращает атрибут *encoding* данного объекта исключения."
 
-#: ../../c-api/exceptions.rst:832
+#: ../../c-api/exceptions.rst:833
 msgid "Return the *object* attribute of the given exception object."
 msgstr "Возвращает атрибут *object* данного объекта исключения."
 
-#: ../../c-api/exceptions.rst:838
+#: ../../c-api/exceptions.rst:839
 msgid ""
 "Get the *start* attribute of the given exception object and place it into "
 "*\\*start*.  *start* must not be ``NULL``.  Return ``0`` on success, ``-1`` "
@@ -1254,7 +1246,7 @@ msgstr ""
 "*\\*start*. Значение *start* не должно быть ``NULL``. Возвращает ``0`` в "
 "случае успеха, ``-1`` в случае сбоя."
 
-#: ../../c-api/exceptions.rst:846
+#: ../../c-api/exceptions.rst:847
 msgid ""
 "Set the *start* attribute of the given exception object to *start*.  Return "
 "``0`` on success, ``-1`` on failure."
@@ -1262,7 +1254,7 @@ msgstr ""
 "Устанавливает для атрибута *start* данного объекта исключения значение "
 "*start*. Возвращает ``0`` в случае успеха, ``-1`` в случае сбоя."
 
-#: ../../c-api/exceptions.rst:853
+#: ../../c-api/exceptions.rst:854
 msgid ""
 "Get the *end* attribute of the given exception object and place it into "
 "*\\*end*.  *end* must not be ``NULL``.  Return ``0`` on success, ``-1`` on "
@@ -1272,7 +1264,7 @@ msgstr ""
 "*end* не должен быть равен ``NULL``. Возвращает ``0`` в случае успеха, "
 "``-1`` в случае сбоя."
 
-#: ../../c-api/exceptions.rst:861
+#: ../../c-api/exceptions.rst:862
 msgid ""
 "Set the *end* attribute of the given exception object to *end*.  Return "
 "``0`` on success, ``-1`` on failure."
@@ -1280,11 +1272,11 @@ msgstr ""
 "Устанавливает для атрибута *end* данного объекта исключения значение *end*. "
 "Возвращает ``0`` в случае успеха, ``-1`` в случае сбоя."
 
-#: ../../c-api/exceptions.rst:868
+#: ../../c-api/exceptions.rst:869
 msgid "Return the *reason* attribute of the given exception object."
 msgstr "Возвращает атрибут *reason* данного объекта исключения."
 
-#: ../../c-api/exceptions.rst:874
+#: ../../c-api/exceptions.rst:875
 msgid ""
 "Set the *reason* attribute of the given exception object to *reason*.  "
 "Return ``0`` on success, ``-1`` on failure."
@@ -1292,11 +1284,11 @@ msgstr ""
 "Устанавливает для атрибута *reason* данного объекта исключения значение "
 "*reason*. Возвращает ``0`` в случае успеха, ``-1`` в случае сбоя."
 
-#: ../../c-api/exceptions.rst:881
+#: ../../c-api/exceptions.rst:882
 msgid "Recursion Control"
 msgstr "Управление рекурсией"
 
-#: ../../c-api/exceptions.rst:883
+#: ../../c-api/exceptions.rst:884
 msgid ""
 "These two functions provide a way to perform safe recursive calls at the C "
 "level, both in the core and in extension modules.  They are needed if the "
@@ -1312,12 +1304,12 @@ msgstr ""
 "реализаций *tp_call*, потому что :ref:`call protocol <call>` заботится об "
 "обработке рекурсии."
 
-#: ../../c-api/exceptions.rst:892
+#: ../../c-api/exceptions.rst:893
 msgid "Marks a point where a recursive C-level call is about to be performed."
 msgstr ""
 "Отмечает точку, в которой вот-вот будет выполнен рекурсивный вызов уровня C."
 
-#: ../../c-api/exceptions.rst:894
+#: ../../c-api/exceptions.rst:895
 msgid ""
 "If :c:macro:`!USE_STACKCHECK` is defined, this function checks if the OS "
 "stack overflowed using :c:func:`PyOS_CheckStack`.  If this is the case, it "
@@ -1328,7 +1320,7 @@ msgstr ""
 "`PyOS_CheckStack`. Если это так, то он устанавливает :exc:`MemoryError` и "
 "возвращает ненулевое значение."
 
-#: ../../c-api/exceptions.rst:898
+#: ../../c-api/exceptions.rst:899
 msgid ""
 "The function then checks if the recursion limit is reached.  If this is the "
 "case, a :exc:`RecursionError` is set and a nonzero value is returned. "
@@ -1338,7 +1330,7 @@ msgstr ""
 "устанавливается значение :exc:`RecursionError` и возвращается ненулевое "
 "значение. В противном случае возвращается ноль."
 
-#: ../../c-api/exceptions.rst:902
+#: ../../c-api/exceptions.rst:903
 msgid ""
 "*where* should be a UTF-8 encoded string such as ``\" in instance check\"`` "
 "to be concatenated to the :exc:`RecursionError` message caused by the "
@@ -1348,14 +1340,14 @@ msgstr ""
 "check\"``, которая должна быть объединена с сообщением :exc:"
 "`RecursionError`, вызванным ограничением глубины рекурсии."
 
-#: ../../c-api/exceptions.rst:906 ../../c-api/exceptions.rst:914
+#: ../../c-api/exceptions.rst:907 ../../c-api/exceptions.rst:915
 msgid ""
 "This function is now also available in the :ref:`limited API <limited-c-"
 "api>`."
 msgstr ""
 "Эта функция теперь также доступна в :ref:`limited API <limited-c-api>`."
 
-#: ../../c-api/exceptions.rst:911
+#: ../../c-api/exceptions.rst:912
 msgid ""
 "Ends a :c:func:`Py_EnterRecursiveCall`.  Must be called once for each "
 "*successful* invocation of :c:func:`Py_EnterRecursiveCall`."
@@ -1363,7 +1355,7 @@ msgstr ""
 "Завершает :c:func:`Py_EnterRecursiveCall`. Должен вызываться один раз для "
 "каждого *успешного* вызова :c:func:`Py_EnterRecursiveCall`."
 
-#: ../../c-api/exceptions.rst:917
+#: ../../c-api/exceptions.rst:918
 msgid ""
 "Properly implementing :c:member:`~PyTypeObject.tp_repr` for container types "
 "requires special recursion handling.  In addition to protecting the stack, :"
@@ -1377,7 +1369,7 @@ msgstr ""
 "чтобы предотвратить циклы. Следующие две функции облегчают эту "
 "функциональность. По сути, это C-эквивалент :func:`reprlib.recursive_repr`."
 
-#: ../../c-api/exceptions.rst:925
+#: ../../c-api/exceptions.rst:926
 msgid ""
 "Called at the beginning of the :c:member:`~PyTypeObject.tp_repr` "
 "implementation to detect cycles."
@@ -1385,7 +1377,7 @@ msgstr ""
 "Вызывается в начале реализации :c:member:`~PyTypeObject.tp_repr` для "
 "обнаружения циклов."
 
-#: ../../c-api/exceptions.rst:928
+#: ../../c-api/exceptions.rst:929
 msgid ""
 "If the object has already been processed, the function returns a positive "
 "integer.  In that case the :c:member:`~PyTypeObject.tp_repr` implementation "
@@ -1398,7 +1390,7 @@ msgstr ""
 "`dict` возвращают значение ``{...}``, а объекты :class:`list` возвращают "
 "значение ``[...]``."
 
-#: ../../c-api/exceptions.rst:934
+#: ../../c-api/exceptions.rst:935
 msgid ""
 "The function will return a negative integer if the recursion limit is "
 "reached.  In that case the :c:member:`~PyTypeObject.tp_repr` implementation "
@@ -1408,7 +1400,7 @@ msgstr ""
 "рекурсии. В этом случае реализация :c:member:`~PyTypeObject.tp_repr` обычно "
 "должна возвращать значение ``NULL``."
 
-#: ../../c-api/exceptions.rst:938
+#: ../../c-api/exceptions.rst:939
 msgid ""
 "Otherwise, the function returns zero and the :c:member:`~PyTypeObject."
 "tp_repr` implementation can continue normally."
@@ -1416,7 +1408,7 @@ msgstr ""
 "В противном случае функция возвращает ноль, и реализация :c:member:"
 "`~PyTypeObject.tp_repr` может продолжаться в обычном режиме."
 
-#: ../../c-api/exceptions.rst:943
+#: ../../c-api/exceptions.rst:944
 msgid ""
 "Ends a :c:func:`Py_ReprEnter`.  Must be called once for each invocation of :"
 "c:func:`Py_ReprEnter` that returns zero."
@@ -1424,11 +1416,11 @@ msgstr ""
 "Завершает :c:func:`Py_ReprEnter`. Должен вызываться один раз для каждого "
 "вызова :c:func:`Py_ReprEnter`, который возвращает ноль."
 
-#: ../../c-api/exceptions.rst:950
+#: ../../c-api/exceptions.rst:951
 msgid "Standard Exceptions"
 msgstr "Стандартные исключения"
 
-#: ../../c-api/exceptions.rst:952
+#: ../../c-api/exceptions.rst:953
 msgid ""
 "All standard Python exceptions are available as global variables whose names "
 "are ``PyExc_`` followed by the Python exception name.  These have the type :"
@@ -1440,451 +1432,451 @@ msgstr ""
 "тип :c:expr:`PyObject*`; все они являются объектами класса. Для полноты "
 "картины, вот все переменные:"
 
-#: ../../c-api/exceptions.rst:1013 ../../c-api/exceptions.rst:1146
-#: ../../c-api/exceptions.rst:1191
+#: ../../c-api/exceptions.rst:1014 ../../c-api/exceptions.rst:1147
+#: ../../c-api/exceptions.rst:1192
 msgid "C Name"
 msgstr "C Имя"
 
-#: ../../c-api/exceptions.rst:1013 ../../c-api/exceptions.rst:1191
+#: ../../c-api/exceptions.rst:1014 ../../c-api/exceptions.rst:1192
 msgid "Python Name"
 msgstr "Имя Python"
 
-#: ../../c-api/exceptions.rst:1013 ../../c-api/exceptions.rst:1146
-#: ../../c-api/exceptions.rst:1191
+#: ../../c-api/exceptions.rst:1014 ../../c-api/exceptions.rst:1147
+#: ../../c-api/exceptions.rst:1192
 msgid "Notes"
 msgstr "Примечания"
 
-#: ../../c-api/exceptions.rst:1015
+#: ../../c-api/exceptions.rst:1016
 msgid ":c:data:`PyExc_BaseException`"
 msgstr ":c:data:`PyExc_BaseException`"
 
-#: ../../c-api/exceptions.rst:1015
+#: ../../c-api/exceptions.rst:1016
 msgid ":exc:`BaseException`"
 msgstr ":exc:`BaseException`"
 
-#: ../../c-api/exceptions.rst:1015 ../../c-api/exceptions.rst:1017
-#: ../../c-api/exceptions.rst:1019 ../../c-api/exceptions.rst:1065
-#: ../../c-api/exceptions.rst:1077
+#: ../../c-api/exceptions.rst:1016 ../../c-api/exceptions.rst:1018
+#: ../../c-api/exceptions.rst:1020 ../../c-api/exceptions.rst:1066
+#: ../../c-api/exceptions.rst:1078
 msgid "[1]_"
 msgstr "[1]_"
 
-#: ../../c-api/exceptions.rst:1017
+#: ../../c-api/exceptions.rst:1018
 msgid ":c:data:`PyExc_Exception`"
 msgstr ":c:data:`PyExc_Exception`"
 
-#: ../../c-api/exceptions.rst:1017
+#: ../../c-api/exceptions.rst:1018
 msgid ":exc:`Exception`"
 msgstr ":exc:`Exception`"
 
-#: ../../c-api/exceptions.rst:1019
+#: ../../c-api/exceptions.rst:1020
 msgid ":c:data:`PyExc_ArithmeticError`"
 msgstr ":c:data:`PyExc_ArithmeticError`"
 
-#: ../../c-api/exceptions.rst:1019
+#: ../../c-api/exceptions.rst:1020
 msgid ":exc:`ArithmeticError`"
 msgstr ":exc:`ArithmeticError`"
 
-#: ../../c-api/exceptions.rst:1021
+#: ../../c-api/exceptions.rst:1022
 msgid ":c:data:`PyExc_AssertionError`"
 msgstr ":c:data:`PyExc_AssertionError`"
 
-#: ../../c-api/exceptions.rst:1021
+#: ../../c-api/exceptions.rst:1022
 msgid ":exc:`AssertionError`"
 msgstr ":exc:`AssertionError`"
 
-#: ../../c-api/exceptions.rst:1023
+#: ../../c-api/exceptions.rst:1024
 msgid ":c:data:`PyExc_AttributeError`"
 msgstr ":c:data:`PyExc_AttributeError`"
 
-#: ../../c-api/exceptions.rst:1023
+#: ../../c-api/exceptions.rst:1024
 msgid ":exc:`AttributeError`"
 msgstr ":exc:`AttributeError`"
 
-#: ../../c-api/exceptions.rst:1025
+#: ../../c-api/exceptions.rst:1026
 msgid ":c:data:`PyExc_BlockingIOError`"
 msgstr ":c:data:`PyExc_BlockingIOError`"
 
-#: ../../c-api/exceptions.rst:1025
+#: ../../c-api/exceptions.rst:1026
 msgid ":exc:`BlockingIOError`"
 msgstr ":exc:`BlockingIOError`"
 
-#: ../../c-api/exceptions.rst:1027
+#: ../../c-api/exceptions.rst:1028
 msgid ":c:data:`PyExc_BrokenPipeError`"
 msgstr ":c:data:`PyExc_BrokenPipeError`"
 
-#: ../../c-api/exceptions.rst:1027
+#: ../../c-api/exceptions.rst:1028
 msgid ":exc:`BrokenPipeError`"
 msgstr ":exc:`BrokenPipeError`"
 
-#: ../../c-api/exceptions.rst:1029
+#: ../../c-api/exceptions.rst:1030
 msgid ":c:data:`PyExc_BufferError`"
 msgstr ":c:data:`PyExc_BufferError`"
 
-#: ../../c-api/exceptions.rst:1029
+#: ../../c-api/exceptions.rst:1030
 msgid ":exc:`BufferError`"
 msgstr ":exc:`BufferError`"
 
-#: ../../c-api/exceptions.rst:1031
+#: ../../c-api/exceptions.rst:1032
 msgid ":c:data:`PyExc_ChildProcessError`"
 msgstr ":c:data:`PyExc_ChildProcessError`"
 
-#: ../../c-api/exceptions.rst:1031
+#: ../../c-api/exceptions.rst:1032
 msgid ":exc:`ChildProcessError`"
 msgstr ":exc:`ChildProcessError`"
 
-#: ../../c-api/exceptions.rst:1033
+#: ../../c-api/exceptions.rst:1034
 msgid ":c:data:`PyExc_ConnectionAbortedError`"
 msgstr ":c:data:`PyExc_ConnectionAbortedError`"
 
-#: ../../c-api/exceptions.rst:1033
+#: ../../c-api/exceptions.rst:1034
 msgid ":exc:`ConnectionAbortedError`"
 msgstr ":exc:`ConnectionAbortedError`"
 
-#: ../../c-api/exceptions.rst:1035
+#: ../../c-api/exceptions.rst:1036
 msgid ":c:data:`PyExc_ConnectionError`"
 msgstr ":c:data:`PyExc_ConnectionError`"
 
-#: ../../c-api/exceptions.rst:1035
+#: ../../c-api/exceptions.rst:1036
 msgid ":exc:`ConnectionError`"
 msgstr ":exc:`ConnectionError`"
 
-#: ../../c-api/exceptions.rst:1037
+#: ../../c-api/exceptions.rst:1038
 msgid ":c:data:`PyExc_ConnectionRefusedError`"
 msgstr ":c:data:`PyExc_ConnectionRefusedError`"
 
-#: ../../c-api/exceptions.rst:1037
+#: ../../c-api/exceptions.rst:1038
 msgid ":exc:`ConnectionRefusedError`"
 msgstr ":exc:`ConnectionRefusedError`"
 
-#: ../../c-api/exceptions.rst:1039
+#: ../../c-api/exceptions.rst:1040
 msgid ":c:data:`PyExc_ConnectionResetError`"
 msgstr ":c:data:`PyExc_ConnectionResetError`"
 
-#: ../../c-api/exceptions.rst:1039
+#: ../../c-api/exceptions.rst:1040
 msgid ":exc:`ConnectionResetError`"
 msgstr ":exc:`ConnectionResetError`"
 
-#: ../../c-api/exceptions.rst:1041
+#: ../../c-api/exceptions.rst:1042
 msgid ":c:data:`PyExc_EOFError`"
 msgstr ":c:data:`PyExc_EOFError`"
 
-#: ../../c-api/exceptions.rst:1041
+#: ../../c-api/exceptions.rst:1042
 msgid ":exc:`EOFError`"
 msgstr ":exc:`EOFError`"
 
-#: ../../c-api/exceptions.rst:1043
+#: ../../c-api/exceptions.rst:1044
 msgid ":c:data:`PyExc_FileExistsError`"
 msgstr ":c:data:`PyExc_FileExistsError`"
 
-#: ../../c-api/exceptions.rst:1043
+#: ../../c-api/exceptions.rst:1044
 msgid ":exc:`FileExistsError`"
 msgstr ":exc:`FileExistsError`"
 
-#: ../../c-api/exceptions.rst:1045
+#: ../../c-api/exceptions.rst:1046
 msgid ":c:data:`PyExc_FileNotFoundError`"
 msgstr ":c:data:`PyExc_FileNotFoundError`"
 
-#: ../../c-api/exceptions.rst:1045
+#: ../../c-api/exceptions.rst:1046
 msgid ":exc:`FileNotFoundError`"
 msgstr ":exc:`FileNotFoundError`"
 
-#: ../../c-api/exceptions.rst:1047
+#: ../../c-api/exceptions.rst:1048
 msgid ":c:data:`PyExc_FloatingPointError`"
 msgstr ":c:data:`PyExc_FloatingPointError`"
 
-#: ../../c-api/exceptions.rst:1047
+#: ../../c-api/exceptions.rst:1048
 msgid ":exc:`FloatingPointError`"
 msgstr ":exc:`FloatingPointError`"
 
-#: ../../c-api/exceptions.rst:1049
+#: ../../c-api/exceptions.rst:1050
 msgid ":c:data:`PyExc_GeneratorExit`"
 msgstr ":c:data:`PyExc_GeneratorExit`"
 
-#: ../../c-api/exceptions.rst:1049
+#: ../../c-api/exceptions.rst:1050
 msgid ":exc:`GeneratorExit`"
 msgstr ":exc:`GeneratorExit`"
 
-#: ../../c-api/exceptions.rst:1051
+#: ../../c-api/exceptions.rst:1052
 msgid ":c:data:`PyExc_ImportError`"
 msgstr ":c:data:`PyExc_ImportError`"
 
-#: ../../c-api/exceptions.rst:1051
+#: ../../c-api/exceptions.rst:1052
 msgid ":exc:`ImportError`"
 msgstr ":exc:`ImportError`"
 
-#: ../../c-api/exceptions.rst:1053
+#: ../../c-api/exceptions.rst:1054
 msgid ":c:data:`PyExc_IndentationError`"
 msgstr ":c:data:`PyExc_IndentationError`"
 
-#: ../../c-api/exceptions.rst:1053
+#: ../../c-api/exceptions.rst:1054
 msgid ":exc:`IndentationError`"
 msgstr ":exc:`IndentationError`"
 
-#: ../../c-api/exceptions.rst:1055
+#: ../../c-api/exceptions.rst:1056
 msgid ":c:data:`PyExc_IndexError`"
 msgstr ":c:data:`PyExc_IndexError`"
 
-#: ../../c-api/exceptions.rst:1055
+#: ../../c-api/exceptions.rst:1056
 msgid ":exc:`IndexError`"
 msgstr ":exc:`IndexError`"
 
-#: ../../c-api/exceptions.rst:1057
+#: ../../c-api/exceptions.rst:1058
 msgid ":c:data:`PyExc_InterruptedError`"
 msgstr ":c:data:`PyExc_InterruptedError`"
 
-#: ../../c-api/exceptions.rst:1057
+#: ../../c-api/exceptions.rst:1058
 msgid ":exc:`InterruptedError`"
 msgstr ":exc:`InterruptedError`"
 
-#: ../../c-api/exceptions.rst:1059
+#: ../../c-api/exceptions.rst:1060
 msgid ":c:data:`PyExc_IsADirectoryError`"
 msgstr ":c:data:`PyExc_IsADirectoryError`"
 
-#: ../../c-api/exceptions.rst:1059
+#: ../../c-api/exceptions.rst:1060
 msgid ":exc:`IsADirectoryError`"
 msgstr ":exc:`IsADirectoryError`"
 
-#: ../../c-api/exceptions.rst:1061
+#: ../../c-api/exceptions.rst:1062
 msgid ":c:data:`PyExc_KeyError`"
 msgstr ":c:data:`PyExc_KeyError`"
 
-#: ../../c-api/exceptions.rst:1061
+#: ../../c-api/exceptions.rst:1062
 msgid ":exc:`KeyError`"
 msgstr ":exc:`KeyError`"
 
-#: ../../c-api/exceptions.rst:1063
+#: ../../c-api/exceptions.rst:1064
 msgid ":c:data:`PyExc_KeyboardInterrupt`"
 msgstr ":c:data:`PyExc_KeyboardInterrupt`"
 
-#: ../../c-api/exceptions.rst:1063
+#: ../../c-api/exceptions.rst:1064
 msgid ":exc:`KeyboardInterrupt`"
 msgstr ":exc:`KeyboardInterrupt`"
 
-#: ../../c-api/exceptions.rst:1065
+#: ../../c-api/exceptions.rst:1066
 msgid ":c:data:`PyExc_LookupError`"
 msgstr ":c:data:`PyExc_LookupError`"
 
-#: ../../c-api/exceptions.rst:1065
+#: ../../c-api/exceptions.rst:1066
 msgid ":exc:`LookupError`"
 msgstr ":exc:`LookupError`"
 
-#: ../../c-api/exceptions.rst:1067
+#: ../../c-api/exceptions.rst:1068
 msgid ":c:data:`PyExc_MemoryError`"
 msgstr ":c:data:`PyExc_MemoryError`"
 
-#: ../../c-api/exceptions.rst:1067
+#: ../../c-api/exceptions.rst:1068
 msgid ":exc:`MemoryError`"
 msgstr ":exc:`MemoryError`"
 
-#: ../../c-api/exceptions.rst:1069
+#: ../../c-api/exceptions.rst:1070
 msgid ":c:data:`PyExc_ModuleNotFoundError`"
 msgstr ":c:data:`PyExc_ModuleNotFoundError`"
 
-#: ../../c-api/exceptions.rst:1069
+#: ../../c-api/exceptions.rst:1070
 msgid ":exc:`ModuleNotFoundError`"
 msgstr ":exc:`ModuleNotFoundError`"
 
-#: ../../c-api/exceptions.rst:1071
+#: ../../c-api/exceptions.rst:1072
 msgid ":c:data:`PyExc_NameError`"
 msgstr ":c:data:`PyExc_NameError`"
 
-#: ../../c-api/exceptions.rst:1071
+#: ../../c-api/exceptions.rst:1072
 msgid ":exc:`NameError`"
 msgstr ":exc:`NameError`"
 
-#: ../../c-api/exceptions.rst:1073
+#: ../../c-api/exceptions.rst:1074
 msgid ":c:data:`PyExc_NotADirectoryError`"
 msgstr ":c:data:`PyExc_NotADirectoryError`"
 
-#: ../../c-api/exceptions.rst:1073
+#: ../../c-api/exceptions.rst:1074
 msgid ":exc:`NotADirectoryError`"
 msgstr ":exc:`NotADirectoryError`"
 
-#: ../../c-api/exceptions.rst:1075
+#: ../../c-api/exceptions.rst:1076
 msgid ":c:data:`PyExc_NotImplementedError`"
 msgstr ":c:data:`PyExc_NotImplementedError`"
 
-#: ../../c-api/exceptions.rst:1075
+#: ../../c-api/exceptions.rst:1076
 msgid ":exc:`NotImplementedError`"
 msgstr ":exc:`NotImplementedError`"
 
-#: ../../c-api/exceptions.rst:1077
+#: ../../c-api/exceptions.rst:1078
 msgid ":c:data:`PyExc_OSError`"
 msgstr ":c:data:`PyExc_OSError`"
 
-#: ../../c-api/exceptions.rst:1077
+#: ../../c-api/exceptions.rst:1078
 msgid ":exc:`OSError`"
 msgstr ":exc:`OSError`"
 
-#: ../../c-api/exceptions.rst:1079
+#: ../../c-api/exceptions.rst:1080
 msgid ":c:data:`PyExc_OverflowError`"
 msgstr ":c:data:`PyExc_OverflowError`"
 
-#: ../../c-api/exceptions.rst:1079
+#: ../../c-api/exceptions.rst:1080
 msgid ":exc:`OverflowError`"
 msgstr ":exc:`OverflowError`"
 
-#: ../../c-api/exceptions.rst:1081
+#: ../../c-api/exceptions.rst:1082
 msgid ":c:data:`PyExc_PermissionError`"
 msgstr ":c:data:`PyExc_PermissionError`"
 
-#: ../../c-api/exceptions.rst:1081
+#: ../../c-api/exceptions.rst:1082
 msgid ":exc:`PermissionError`"
 msgstr ":exc:`PermissionError`"
 
-#: ../../c-api/exceptions.rst:1083
+#: ../../c-api/exceptions.rst:1084
 msgid ":c:data:`PyExc_ProcessLookupError`"
 msgstr ":c:data:`PyExc_ProcessLookupError`"
 
-#: ../../c-api/exceptions.rst:1083
+#: ../../c-api/exceptions.rst:1084
 msgid ":exc:`ProcessLookupError`"
 msgstr ":exc:`ProcessLookupError`"
 
-#: ../../c-api/exceptions.rst:1085
+#: ../../c-api/exceptions.rst:1086
 msgid ":c:data:`PyExc_RecursionError`"
 msgstr ":c:data:`PyExc_RecursionError`"
 
-#: ../../c-api/exceptions.rst:1085
+#: ../../c-api/exceptions.rst:1086
 msgid ":exc:`RecursionError`"
 msgstr ":exc:`RecursionError`"
 
-#: ../../c-api/exceptions.rst:1087
+#: ../../c-api/exceptions.rst:1088
 msgid ":c:data:`PyExc_ReferenceError`"
 msgstr ":c:data:`PyExc_ReferenceError`"
 
-#: ../../c-api/exceptions.rst:1087
+#: ../../c-api/exceptions.rst:1088
 msgid ":exc:`ReferenceError`"
 msgstr ":exc:`ReferenceError`"
 
-#: ../../c-api/exceptions.rst:1089
+#: ../../c-api/exceptions.rst:1090
 msgid ":c:data:`PyExc_RuntimeError`"
 msgstr ":c:data:`PyExc_RuntimeError`"
 
-#: ../../c-api/exceptions.rst:1089
+#: ../../c-api/exceptions.rst:1090
 msgid ":exc:`RuntimeError`"
 msgstr ":exc:`RuntimeError`"
 
-#: ../../c-api/exceptions.rst:1091
+#: ../../c-api/exceptions.rst:1092
 msgid ":c:data:`PyExc_StopAsyncIteration`"
 msgstr ":c:data:`PyExc_StopAsyncIteration`"
 
-#: ../../c-api/exceptions.rst:1091
+#: ../../c-api/exceptions.rst:1092
 msgid ":exc:`StopAsyncIteration`"
 msgstr ":exc:`StopAsyncIteration`"
 
-#: ../../c-api/exceptions.rst:1093
+#: ../../c-api/exceptions.rst:1094
 msgid ":c:data:`PyExc_StopIteration`"
 msgstr ":c:data:`PyExc_StopIteration`"
 
-#: ../../c-api/exceptions.rst:1093
+#: ../../c-api/exceptions.rst:1094
 msgid ":exc:`StopIteration`"
 msgstr ":exc:`StopIteration`"
 
-#: ../../c-api/exceptions.rst:1095
+#: ../../c-api/exceptions.rst:1096
 msgid ":c:data:`PyExc_SyntaxError`"
 msgstr ":c:data:`PyExc_SyntaxError`"
 
-#: ../../c-api/exceptions.rst:1095
+#: ../../c-api/exceptions.rst:1096
 msgid ":exc:`SyntaxError`"
 msgstr ":exc:`SyntaxError`"
 
-#: ../../c-api/exceptions.rst:1097
+#: ../../c-api/exceptions.rst:1098
 msgid ":c:data:`PyExc_SystemError`"
 msgstr ":c:data:`PyExc_SystemError`"
 
-#: ../../c-api/exceptions.rst:1097
+#: ../../c-api/exceptions.rst:1098
 msgid ":exc:`SystemError`"
 msgstr ":exc:`SystemError`"
 
-#: ../../c-api/exceptions.rst:1099
+#: ../../c-api/exceptions.rst:1100
 msgid ":c:data:`PyExc_SystemExit`"
 msgstr ":c:data:`PyExc_SystemExit`"
 
-#: ../../c-api/exceptions.rst:1099
+#: ../../c-api/exceptions.rst:1100
 msgid ":exc:`SystemExit`"
 msgstr ":exc:`SystemExit`"
 
-#: ../../c-api/exceptions.rst:1101
+#: ../../c-api/exceptions.rst:1102
 msgid ":c:data:`PyExc_TabError`"
 msgstr ":c:data:`PyExc_TabError`"
 
-#: ../../c-api/exceptions.rst:1101
+#: ../../c-api/exceptions.rst:1102
 msgid ":exc:`TabError`"
 msgstr ":exc:`TabError`"
 
-#: ../../c-api/exceptions.rst:1103
+#: ../../c-api/exceptions.rst:1104
 msgid ":c:data:`PyExc_TimeoutError`"
 msgstr ":c:data:`PyExc_TimeoutError`"
 
-#: ../../c-api/exceptions.rst:1103
+#: ../../c-api/exceptions.rst:1104
 msgid ":exc:`TimeoutError`"
 msgstr ":exc:`TimeoutError`"
 
-#: ../../c-api/exceptions.rst:1105
+#: ../../c-api/exceptions.rst:1106
 msgid ":c:data:`PyExc_TypeError`"
 msgstr ":c:data:`PyExc_TypeError`"
 
-#: ../../c-api/exceptions.rst:1105
+#: ../../c-api/exceptions.rst:1106
 msgid ":exc:`TypeError`"
 msgstr ":exc:`TypeError`"
 
-#: ../../c-api/exceptions.rst:1107
+#: ../../c-api/exceptions.rst:1108
 msgid ":c:data:`PyExc_UnboundLocalError`"
 msgstr ":c:data:`PyExc_UnboundLocalError`"
 
-#: ../../c-api/exceptions.rst:1107
+#: ../../c-api/exceptions.rst:1108
 msgid ":exc:`UnboundLocalError`"
 msgstr ":exc:`UnboundLocalError`"
 
-#: ../../c-api/exceptions.rst:1109
+#: ../../c-api/exceptions.rst:1110
 msgid ":c:data:`PyExc_UnicodeDecodeError`"
 msgstr ":c:data:`PyExc_UnicodeDecodeError`"
 
-#: ../../c-api/exceptions.rst:1109
+#: ../../c-api/exceptions.rst:1110
 msgid ":exc:`UnicodeDecodeError`"
 msgstr ":exc:`UnicodeDecodeError`"
 
-#: ../../c-api/exceptions.rst:1111
+#: ../../c-api/exceptions.rst:1112
 msgid ":c:data:`PyExc_UnicodeEncodeError`"
 msgstr ":c:data:`PyExc_UnicodeEncodeError`"
 
-#: ../../c-api/exceptions.rst:1111
+#: ../../c-api/exceptions.rst:1112
 msgid ":exc:`UnicodeEncodeError`"
 msgstr ":exc:`UnicodeEncodeError`"
 
-#: ../../c-api/exceptions.rst:1113
+#: ../../c-api/exceptions.rst:1114
 msgid ":c:data:`PyExc_UnicodeError`"
 msgstr ":c:data:`PyExc_UnicodeError`"
 
-#: ../../c-api/exceptions.rst:1113
+#: ../../c-api/exceptions.rst:1114
 msgid ":exc:`UnicodeError`"
 msgstr ":exc:`UnicodeError`"
 
-#: ../../c-api/exceptions.rst:1115
+#: ../../c-api/exceptions.rst:1116
 msgid ":c:data:`PyExc_UnicodeTranslateError`"
 msgstr ":c:data:`PyExc_UnicodeTranslateError`"
 
-#: ../../c-api/exceptions.rst:1115
+#: ../../c-api/exceptions.rst:1116
 msgid ":exc:`UnicodeTranslateError`"
 msgstr ":exc:`UnicodeTranslateError`"
 
-#: ../../c-api/exceptions.rst:1117
+#: ../../c-api/exceptions.rst:1118
 msgid ":c:data:`PyExc_ValueError`"
 msgstr ":c:data:`PyExc_ValueError`"
 
-#: ../../c-api/exceptions.rst:1117
+#: ../../c-api/exceptions.rst:1118
 msgid ":exc:`ValueError`"
 msgstr ":exc:`ValueError`"
 
-#: ../../c-api/exceptions.rst:1119
+#: ../../c-api/exceptions.rst:1120
 msgid ":c:data:`PyExc_ZeroDivisionError`"
 msgstr ":c:data:`PyExc_ZeroDivisionError`"
 
-#: ../../c-api/exceptions.rst:1119
+#: ../../c-api/exceptions.rst:1120
 msgid ":exc:`ZeroDivisionError`"
 msgstr ":exc:`ZeroDivisionError`"
 
-#: ../../c-api/exceptions.rst:1122
+#: ../../c-api/exceptions.rst:1123
 msgid ""
 ":c:data:`PyExc_BlockingIOError`, :c:data:`PyExc_BrokenPipeError`, :c:data:"
 "`PyExc_ChildProcessError`, :c:data:`PyExc_ConnectionError`, :c:data:"
@@ -1904,47 +1896,47 @@ msgstr ""
 "`PyExc_PermissionError`, :c:data:`PyExc_ProcessLookupError` и :c:data:"
 "`PyExc_TimeoutError` были введены следующим образом :pep:`3151`."
 
-#: ../../c-api/exceptions.rst:1132
+#: ../../c-api/exceptions.rst:1133
 msgid ":c:data:`PyExc_StopAsyncIteration` and :c:data:`PyExc_RecursionError`."
 msgstr ":c:data:`PyExc_StopAsyncIteration` и :c:data:`PyExc_RecursionError`."
 
-#: ../../c-api/exceptions.rst:1135
+#: ../../c-api/exceptions.rst:1136
 msgid ":c:data:`PyExc_ModuleNotFoundError`."
 msgstr ":c:data:`PyExc_ModuleNotFoundError`."
 
-#: ../../c-api/exceptions.rst:1138
+#: ../../c-api/exceptions.rst:1139
 msgid "These are compatibility aliases to :c:data:`PyExc_OSError`:"
 msgstr "Это псевдонимы совместимости с :c:data:`PyExc_OSError`:"
 
-#: ../../c-api/exceptions.rst:1148
+#: ../../c-api/exceptions.rst:1149
 msgid ":c:data:`!PyExc_EnvironmentError`"
 msgstr ":c:data:`!PyExc_EnvironmentError`"
 
-#: ../../c-api/exceptions.rst:1150
+#: ../../c-api/exceptions.rst:1151
 msgid ":c:data:`!PyExc_IOError`"
 msgstr ":c:data:`!PyExc_IOError`"
 
-#: ../../c-api/exceptions.rst:1152
+#: ../../c-api/exceptions.rst:1153
 msgid ":c:data:`!PyExc_WindowsError`"
 msgstr ":c:data:`!PyExc_WindowsError`"
 
-#: ../../c-api/exceptions.rst:1152
+#: ../../c-api/exceptions.rst:1153
 msgid "[2]_"
 msgstr "[2]_"
 
-#: ../../c-api/exceptions.rst:1155
+#: ../../c-api/exceptions.rst:1156
 msgid "These aliases used to be separate exception types."
 msgstr "Эти псевдонимы раньше были отдельными типами исключений."
 
-#: ../../c-api/exceptions.rst:1158 ../../c-api/exceptions.rst:1219
+#: ../../c-api/exceptions.rst:1159 ../../c-api/exceptions.rst:1220
 msgid "Notes:"
 msgstr "Примечания:"
 
-#: ../../c-api/exceptions.rst:1161
+#: ../../c-api/exceptions.rst:1162
 msgid "This is a base class for other standard exceptions."
 msgstr "Это базовый класс для других стандартных исключений."
 
-#: ../../c-api/exceptions.rst:1164
+#: ../../c-api/exceptions.rst:1165
 msgid ""
 "Only defined on Windows; protect code that uses this by testing that the "
 "preprocessor macro ``MS_WINDOWS`` is defined."
@@ -1952,11 +1944,11 @@ msgstr ""
 "Определен только в Windows; защищает код, который использует это, проводя "
 "проверку, определен ли макрос препроцессора ``MS_WINDOWS``."
 
-#: ../../c-api/exceptions.rst:1170
+#: ../../c-api/exceptions.rst:1171
 msgid "Standard Warning Categories"
 msgstr "Стандартные категории предупреждений"
 
-#: ../../c-api/exceptions.rst:1172
+#: ../../c-api/exceptions.rst:1173
 msgid ""
 "All standard Python warning categories are available as global variables "
 "whose names are ``PyExc_`` followed by the Python exception name. These have "
@@ -1968,103 +1960,103 @@ msgstr ""
 "Они имеют тип :c:expr:`PyObject*`; все они являются объектами класса. Для "
 "полноты картины, вот все переменные:"
 
-#: ../../c-api/exceptions.rst:1193
+#: ../../c-api/exceptions.rst:1194
 msgid ":c:data:`PyExc_Warning`"
 msgstr ":c:data:`PyExc_Warning`"
 
-#: ../../c-api/exceptions.rst:1193
+#: ../../c-api/exceptions.rst:1194
 msgid ":exc:`Warning`"
 msgstr ":exc:`Warning`"
 
-#: ../../c-api/exceptions.rst:1193
+#: ../../c-api/exceptions.rst:1194
 msgid "[3]_"
 msgstr "[3]_"
 
-#: ../../c-api/exceptions.rst:1195
+#: ../../c-api/exceptions.rst:1196
 msgid ":c:data:`PyExc_BytesWarning`"
 msgstr ":c:data:`PyExc_BytesWarning`"
 
-#: ../../c-api/exceptions.rst:1195
+#: ../../c-api/exceptions.rst:1196
 msgid ":exc:`BytesWarning`"
 msgstr ":exc:`BytesWarning`"
 
-#: ../../c-api/exceptions.rst:1197
+#: ../../c-api/exceptions.rst:1198
 msgid ":c:data:`PyExc_DeprecationWarning`"
 msgstr ":c:data:`PyExc_DeprecationWarning`"
 
-#: ../../c-api/exceptions.rst:1197
+#: ../../c-api/exceptions.rst:1198
 msgid ":exc:`DeprecationWarning`"
 msgstr ":exc:`DeprecationWarning`"
 
-#: ../../c-api/exceptions.rst:1199
+#: ../../c-api/exceptions.rst:1200
 msgid ":c:data:`PyExc_FutureWarning`"
 msgstr ":c:data:`PyExc_FutureWarning`"
 
-#: ../../c-api/exceptions.rst:1199
+#: ../../c-api/exceptions.rst:1200
 msgid ":exc:`FutureWarning`"
 msgstr ":exc:`FutureWarning`"
 
-#: ../../c-api/exceptions.rst:1201
+#: ../../c-api/exceptions.rst:1202
 msgid ":c:data:`PyExc_ImportWarning`"
 msgstr ":c:data:`PyExc_ImportWarning`"
 
-#: ../../c-api/exceptions.rst:1201
+#: ../../c-api/exceptions.rst:1202
 msgid ":exc:`ImportWarning`"
 msgstr ":exc:`ImportWarning`"
 
-#: ../../c-api/exceptions.rst:1203
+#: ../../c-api/exceptions.rst:1204
 msgid ":c:data:`PyExc_PendingDeprecationWarning`"
 msgstr ":c:data:`PyExc_PendingDeprecationWarning`"
 
-#: ../../c-api/exceptions.rst:1203
+#: ../../c-api/exceptions.rst:1204
 msgid ":exc:`PendingDeprecationWarning`"
 msgstr ":exc:`PendingDeprecationWarning`"
 
-#: ../../c-api/exceptions.rst:1205
+#: ../../c-api/exceptions.rst:1206
 msgid ":c:data:`PyExc_ResourceWarning`"
 msgstr ":c:data:`PyExc_ResourceWarning`"
 
-#: ../../c-api/exceptions.rst:1205
+#: ../../c-api/exceptions.rst:1206
 msgid ":exc:`ResourceWarning`"
 msgstr ":exc:`ResourceWarning`"
 
-#: ../../c-api/exceptions.rst:1207
+#: ../../c-api/exceptions.rst:1208
 msgid ":c:data:`PyExc_RuntimeWarning`"
 msgstr ":c:data:`PyExc_RuntimeWarning`"
 
-#: ../../c-api/exceptions.rst:1207
+#: ../../c-api/exceptions.rst:1208
 msgid ":exc:`RuntimeWarning`"
 msgstr ":exc:`RuntimeWarning`"
 
-#: ../../c-api/exceptions.rst:1209
+#: ../../c-api/exceptions.rst:1210
 msgid ":c:data:`PyExc_SyntaxWarning`"
 msgstr ":c:data:`PyExc_SyntaxWarning`"
 
-#: ../../c-api/exceptions.rst:1209
+#: ../../c-api/exceptions.rst:1210
 msgid ":exc:`SyntaxWarning`"
 msgstr ":exc:`SyntaxWarning`"
 
-#: ../../c-api/exceptions.rst:1211
+#: ../../c-api/exceptions.rst:1212
 msgid ":c:data:`PyExc_UnicodeWarning`"
 msgstr ":c:data:`PyExc_UnicodeWarning`"
 
-#: ../../c-api/exceptions.rst:1211
+#: ../../c-api/exceptions.rst:1212
 msgid ":exc:`UnicodeWarning`"
 msgstr ":exc:`UnicodeWarning`"
 
-#: ../../c-api/exceptions.rst:1213
+#: ../../c-api/exceptions.rst:1214
 msgid ":c:data:`PyExc_UserWarning`"
 msgstr ":c:data:`PyExc_UserWarning`"
 
-#: ../../c-api/exceptions.rst:1213
+#: ../../c-api/exceptions.rst:1214
 msgid ":exc:`UserWarning`"
 msgstr ":exc:`UserWarning`"
 
-#: ../../c-api/exceptions.rst:1216
+#: ../../c-api/exceptions.rst:1217
 msgid ":c:data:`PyExc_ResourceWarning`."
 msgstr ":c:data:`PyExc_ResourceWarning`."
 
-#: ../../c-api/exceptions.rst:1222
+#: ../../c-api/exceptions.rst:1223
 msgid "This is a base class for other standard warning categories."
 msgstr "Это базовый класс для других стандартных категорий предупреждений."
 
@@ -2072,289 +2064,289 @@ msgstr "Это базовый класс для других стандартн�
 msgid "strerror (C function)"
 msgstr "strerror (C функция)"
 
-#: ../../c-api/exceptions.rst:623 ../../c-api/exceptions.rst:654
-#: ../../c-api/exceptions.rst:669
+#: ../../c-api/exceptions.rst:624 ../../c-api/exceptions.rst:655
+#: ../../c-api/exceptions.rst:670
 msgid "module"
 msgstr "модуль"
 
-#: ../../c-api/exceptions.rst:623 ../../c-api/exceptions.rst:654
-#: ../../c-api/exceptions.rst:669
+#: ../../c-api/exceptions.rst:624 ../../c-api/exceptions.rst:655
+#: ../../c-api/exceptions.rst:670
 msgid "signal"
 msgstr "сигнал"
 
-#: ../../c-api/exceptions.rst:623 ../../c-api/exceptions.rst:654
+#: ../../c-api/exceptions.rst:624 ../../c-api/exceptions.rst:655
 msgid "SIGINT (C macro)"
 msgstr "SIGINT (C макрос)"
 
-#: ../../c-api/exceptions.rst:623 ../../c-api/exceptions.rst:654
-#: ../../c-api/exceptions.rst:669
+#: ../../c-api/exceptions.rst:624 ../../c-api/exceptions.rst:655
+#: ../../c-api/exceptions.rst:670
 msgid "KeyboardInterrupt (built-in exception)"
 msgstr "KeyboardInterrupt (встроенное исключение)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_BaseException (C var)"
 msgstr "PyExc_BaseException (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_Exception (C var)"
 msgstr "PyExc_Exception (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_ArithmeticError (C var)"
 msgstr "PyExc_ArithmeticError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_AssertionError (C var)"
 msgstr "PyExc_AssertionError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_AttributeError (C var)"
 msgstr "PyExc_AttributeError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_BlockingIOError (C var)"
 msgstr "PyExc_BlockingIOError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_BrokenPipeError (C var)"
 msgstr "PyExc_BrokenPipeError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_BufferError (C var)"
 msgstr "PyExc_BufferError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_ChildProcessError (C var)"
 msgstr "PyExc_ChildProcessError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_ConnectionAbortedError (C var)"
 msgstr "PyExc_ConnectionAbortedError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_ConnectionError (C var)"
 msgstr "PyExc_ConnectionError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_ConnectionRefusedError (C var)"
 msgstr "PyExc_ConnectionRefusedError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_ConnectionResetError (C var)"
 msgstr "PyExc_ConnectionResetError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_EOFError (C var)"
 msgstr "PyExc_EOFError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_FileExistsError (C var)"
 msgstr "PyExc_FileExistsError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_FileNotFoundError (C var)"
 msgstr "PyExc_FileNotFoundError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_FloatingPointError (C var)"
 msgstr "PyExc_FloatingPointError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_GeneratorExit (C var)"
 msgstr "PyExc_GeneratorExit (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_ImportError (C var)"
 msgstr "PyExc_ImportError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_IndentationError (C var)"
 msgstr "PyExc_IndentationError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_IndexError (C var)"
 msgstr "PyExc_IndexError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_InterruptedError (C var)"
 msgstr "PyExc_InterruptedError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_IsADirectoryError (C var)"
 msgstr "PyExc_IsADirectoryError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_KeyError (C var)"
 msgstr "PyExc_KeyError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_KeyboardInterrupt (C var)"
 msgstr "PyExc_KeyboardInterrupt (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_LookupError (C var)"
 msgstr "PyExc_LookupError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_MemoryError (C var)"
 msgstr "PyExc_MemoryError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_ModuleNotFoundError (C var)"
 msgstr "PyExc_ModuleNotFoundError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_NameError (C var)"
 msgstr "PyExc_NameError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_NotADirectoryError (C var)"
 msgstr "PyExc_NotADirectoryError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_NotImplementedError (C var)"
 msgstr "PyExc_NotImplementedError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_OSError (C var)"
 msgstr "PyExc_OSError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_OverflowError (C var)"
 msgstr "PyExc_OverflowError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_PermissionError (C var)"
 msgstr "PyExc_PermissionError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_ProcessLookupError (C var)"
 msgstr "PyExc_ProcessLookupError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_RecursionError (C var)"
 msgstr "PyExc_RecursionError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_ReferenceError (C var)"
 msgstr "PyExc_ReferenceError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_RuntimeError (C var)"
 msgstr "PyExc_RuntimeError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_StopAsyncIteration (C var)"
 msgstr "PyExc_StopAsyncIteration (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_StopIteration (C var)"
 msgstr "PyExc_StopIteration (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_SyntaxError (C var)"
 msgstr "PyExc_SyntaxError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_SystemError (C var)"
 msgstr "PyExc_SystemError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_SystemExit (C var)"
 msgstr "PyExc_SystemExit (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_TabError (C var)"
 msgstr "PyExc_TabError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_TimeoutError (C var)"
 msgstr "PyExc_TimeoutError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_TypeError (C var)"
 msgstr "PyExc_TypeError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_UnboundLocalError (C var)"
 msgstr "PyExc_UnboundLocalError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_UnicodeDecodeError (C var)"
 msgstr "PyExc_UnicodeDecodeError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_UnicodeEncodeError (C var)"
 msgstr "PyExc_UnicodeEncodeError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_UnicodeError (C var)"
 msgstr "PyExc_UnicodeError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_UnicodeTranslateError (C var)"
 msgstr "PyExc_UnicodeTranslateError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_ValueError (C var)"
 msgstr "PyExc_ValueError (C var)"
 
-#: ../../c-api/exceptions.rst:957
+#: ../../c-api/exceptions.rst:958
 msgid "PyExc_ZeroDivisionError (C var)"
 msgstr "PyExc_ZeroDivisionError (C var)"
 
-#: ../../c-api/exceptions.rst:1140
+#: ../../c-api/exceptions.rst:1141
 msgid "PyExc_EnvironmentError (C var)"
 msgstr "PyExc_EnvironmentError (C var)"
 
-#: ../../c-api/exceptions.rst:1140
+#: ../../c-api/exceptions.rst:1141
 msgid "PyExc_IOError (C var)"
 msgstr "PyExc_IOError (C var)"
 
-#: ../../c-api/exceptions.rst:1140
+#: ../../c-api/exceptions.rst:1141
 msgid "PyExc_WindowsError (C var)"
 msgstr "PyExc_WindowsError (C var)"
 
-#: ../../c-api/exceptions.rst:1177
+#: ../../c-api/exceptions.rst:1178
 msgid "PyExc_Warning (C var)"
 msgstr "PyExc_Warning (C var)"
 
-#: ../../c-api/exceptions.rst:1177
+#: ../../c-api/exceptions.rst:1178
 msgid "PyExc_BytesWarning (C var)"
 msgstr "PyExc_BytesWarning (C var)"
 
-#: ../../c-api/exceptions.rst:1177
+#: ../../c-api/exceptions.rst:1178
 msgid "PyExc_DeprecationWarning (C var)"
 msgstr "PyExc_DeprecationWarning (C var)"
 
-#: ../../c-api/exceptions.rst:1177
+#: ../../c-api/exceptions.rst:1178
 msgid "PyExc_FutureWarning (C var)"
 msgstr "PyExc_FutureWarning (C var)"
 
-#: ../../c-api/exceptions.rst:1177
+#: ../../c-api/exceptions.rst:1178
 msgid "PyExc_ImportWarning (C var)"
 msgstr "PyExc_ImportWarning (C var)"
 
-#: ../../c-api/exceptions.rst:1177
+#: ../../c-api/exceptions.rst:1178
 msgid "PyExc_PendingDeprecationWarning (C var)"
 msgstr "PyExc_PendingDeprecationWarning (C var)"
 
-#: ../../c-api/exceptions.rst:1177
+#: ../../c-api/exceptions.rst:1178
 msgid "PyExc_ResourceWarning (C var)"
 msgstr "PyExc_ResourceWarning (C var)"
 
-#: ../../c-api/exceptions.rst:1177
+#: ../../c-api/exceptions.rst:1178
 msgid "PyExc_RuntimeWarning (C var)"
 msgstr "PyExc_RuntimeWarning (C var)"
 
-#: ../../c-api/exceptions.rst:1177
+#: ../../c-api/exceptions.rst:1178
 msgid "PyExc_SyntaxWarning (C var)"
 msgstr "PyExc_SyntaxWarning (C var)"
 
-#: ../../c-api/exceptions.rst:1177
+#: ../../c-api/exceptions.rst:1178
 msgid "PyExc_UnicodeWarning (C var)"
 msgstr "PyExc_UnicodeWarning (C var)"
 
-#: ../../c-api/exceptions.rst:1177
+#: ../../c-api/exceptions.rst:1178
 msgid "PyExc_UserWarning (C var)"
 msgstr "PyExc_UserWarning (C var)"
