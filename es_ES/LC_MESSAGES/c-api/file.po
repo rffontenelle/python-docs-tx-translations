@@ -3,13 +3,17 @@
 # This file is distributed under the same license as the Python package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# Translators:
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-13 00:12+0000\n"
+"POT-Creation-Date: 2024-04-20 00:12+0000\n"
 "PO-Revision-Date: 2020-05-30 11:48+0000\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
 "teams/5390/es_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +25,7 @@ msgstr ""
 
 #: ../../c-api/file.rst:6
 msgid "File Objects"
-msgstr ""
+msgstr "Objetos de archivo"
 
 #: ../../c-api/file.rst:10
 msgid ""
@@ -44,6 +48,13 @@ msgid ""
 "failure. For a more comprehensive description of the arguments, please refer "
 "to the :func:`io.open` function documentation."
 msgstr ""
+"Crea un objeto archivo Python a partir del descriptor de archivo de un "
+"archivo *fd* ya abierto.  Los argumentos *name*, *encoding*, *errors* y "
+"*newline* pueden ser ``NULL`` para usar los valores por defecto; *buffering* "
+"puede ser *-1* para usar el valor por defecto. *name* se ignora y se "
+"mantiene por compatibilidad con versiones anteriores. Devuelve ``NULL`` en "
+"caso de fallo. Para una descripción más completa de los argumentos, "
+"consultar la documentación de la función :func:`io.open`."
 
 #: ../../c-api/file.rst:31
 msgid ""
@@ -51,10 +62,14 @@ msgid ""
 "level file descriptors can produce various issues (such as unexpected "
 "ordering of data)."
 msgstr ""
+"Dado que los flujos de Python tienen su propia capa de almacenamiento en "
+"búfer, mezclarlos con descriptores de archivo a nivel de sistema operativo "
+"puede producir varios problemas (como el ordenamiento inesperado de los "
+"datos)."
 
 #: ../../c-api/file.rst:35
 msgid "Ignore *name* attribute."
-msgstr ""
+msgstr "Ignora el atributo *name*."
 
 #: ../../c-api/file.rst:41
 msgid ""
@@ -77,12 +92,23 @@ msgid ""
 "regardless of length, but :exc:`EOFError` is raised if the end of the file "
 "is reached immediately."
 msgstr ""
+"Equivalente a ``p.readline([n])``, esta función lee una línea del objeto "
+"*p*.  *p* puede ser un objeto fichero o cualquier objeto con un método :meth:"
+"`~io.IOBase.readline`.  Si *n* es ``0``, se lee exactamente una línea, "
+"independientemente de la longitud de la línea.  Si *n* es mayor que ``0``, "
+"no se leerán más de *n* bytes del fichero; se puede devolver una línea "
+"parcial.  En ambos casos, se devuelve una cadena vacía si se alcanza "
+"inmediatamente el final del fichero.  Si *n* es menor que ``0``, sin "
+"embargo, se lee una línea independientemente de la longitud, pero se "
+"devuelve :exc:`EOFError` si se alcanza el final del fichero inmediatamente."
 
 #: ../../c-api/file.rst:65
 msgid ""
 "Overrides the normal behavior of :func:`io.open_code` to pass its parameter "
 "through the provided handler."
 msgstr ""
+"Anula el comportamiento normal de :func:`io.open_code` para pasar su "
+"parámetro a través del manejador proporcionado."
 
 #: ../../c-api/file.rst:68
 msgid ""
@@ -96,6 +122,9 @@ msgid ""
 "functions may be called from different runtimes, this pointer should not "
 "refer directly to Python state."
 msgstr ""
+"El puntero *userData* se pasa a la función gancho. Dado que las funciones "
+"gancho se pueden llamar en diferentes tiempos de ejecución, este puntero no "
+"debe referirse directamente al estado de Python."
 
 #: ../../c-api/file.rst:75
 msgid ""
@@ -103,6 +132,9 @@ msgid ""
 "modules during its execution unless they are known to be frozen or available "
 "in ``sys.modules``."
 msgstr ""
+"Dado que este hook se utiliza intencionadamente durante la importación, "
+"evite importar nuevos módulos durante su ejecución a menos que se sepa que "
+"están congelados o disponibles en ``sys.modules``."
 
 #: ../../c-api/file.rst:79
 msgid ""
@@ -110,16 +142,22 @@ msgid ""
 "to :c:func:`PyFile_SetOpenCodeHook` will fail. On failure, the function "
 "returns -1 and sets an exception if the interpreter has been initialized."
 msgstr ""
+"Una vez que se ha establecido un gancho, no puede ser eliminado o "
+"reemplazado, y las llamadas posteriores a :c:func:`PyFile_SetOpenCodeHook` "
+"fallarán. En caso de fallo, la función devuelve -1 y lanza una excepción si "
+"se ha inicializado el intérprete."
 
 #: ../../c-api/file.rst:83
 msgid "This function is safe to call before :c:func:`Py_Initialize`."
-msgstr ""
+msgstr "Es seguro llamar a esta función antes de :c:func:`Py_Initialize`."
 
 #: ../../c-api/file.rst:86
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``setopencodehook`` with no "
 "arguments."
 msgstr ""
+"Lanza un evento :ref:`auditing <auditing>` ``setopencodehook`` sin "
+"argumentos."
 
 #: ../../c-api/file.rst:95
 msgid ""
@@ -128,9 +166,15 @@ msgid ""
 "instead of the :func:`repr`.  Return ``0`` on success or ``-1`` on failure; "
 "the appropriate exception will be set."
 msgstr ""
+"Escribe el objeto *obj* en el fichero objeto *p*.  La única bandera "
+"soportada para *flags* es :const:`Py_PRINT_RAW`; si se da, se escribe el :"
+"func:`str` del objeto en lugar del :func:`repr`. Devuelve ``0`` en caso de "
+"éxito o ``-1`` en caso de fallo; se establecerá la excepción apropiada."
 
 #: ../../c-api/file.rst:103
 msgid ""
 "Write string *s* to file object *p*.  Return ``0`` on success or ``-1`` on "
 "failure; the appropriate exception will be set."
 msgstr ""
+"Escribe la cadena *s* en el objeto de archivo *p*.  Devuelve ``0`` en caso "
+"de éxito o ``-1`` en caso de fallo; se establecerá la excepción apropiada."
