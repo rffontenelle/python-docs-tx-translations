@@ -3,13 +3,17 @@
 # This file is distributed under the same license as the Python package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# Translators:
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-12 16:53+0000\n"
+"POT-Creation-Date: 2024-04-26 16:43+0000\n"
 "PO-Revision-Date: 2023-05-24 02:10+0000\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
 "teams/5390/es_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +25,7 @@ msgstr ""
 
 #: ../../extending/embedding.rst:8
 msgid "Embedding Python in Another Application"
-msgstr ""
+msgstr "Integrar Python en otra aplicación"
 
 #: ../../extending/embedding.rst:10
 msgid ""
@@ -35,6 +39,15 @@ msgid ""
 "writing some scripts in Python.  You can also use it yourself if some of the "
 "functionality can be written in Python more easily."
 msgstr ""
+"Los capítulos anteriores han tratado de cómo extender Python, es decir, cómo "
+"ampliar la funcionalidad de Python adjuntando una biblioteca de funciones en "
+"C. También es posible hacerlo al revés: enriquecer tu aplicación en C/C++ "
+"incrustando Python en ella. La incrustación proporciona a tu aplicación la "
+"capacidad de implementar parte de la funcionalidad en Python en lugar de en "
+"C o C++. Esto se puede utilizar para muchos propósitos; un ejemplo sería "
+"permitir a los usuarios adaptar la aplicación a sus necesidades escribiendo "
+"scripts en Python. También puedes utilizarlo tú mismo si parte de la "
+"funcionalidad se puede escribir más fácilmente en Python."
 
 #: ../../extending/embedding.rst:20
 msgid ""
@@ -44,6 +57,12 @@ msgid ""
 "nothing to do with Python --- instead, some parts of the application "
 "occasionally call the Python interpreter to run some Python code."
 msgstr ""
+"Incrustar Python es similar a extenderlo, pero no del todo.  La diferencia "
+"es que cuando extiendes Python, el programa principal de la aplicación sigue "
+"siendo el intérprete de Python, mientras que si incrustas Python, el "
+"programa principal puede no tener nada que ver con Python --- en su lugar, "
+"algunas partes de la aplicación llaman ocasionalmente al intérprete de "
+"Python para ejecutar algún código Python."
 
 #: ../../extending/embedding.rst:26
 msgid ""
@@ -54,6 +73,12 @@ msgid ""
 "Python.  Then later you can call the interpreter from any part of the "
 "application."
 msgstr ""
+"Así que si estás incrustando Python, estás proporcionando tu propio programa "
+"principal.  Una de las cosas que este programa principal tiene que hacer es "
+"inicializar el intérprete de Python.  Como mínimo, tiene que llamar a la "
+"función :c:func:`Py_Initialize`.  Hay llamadas opcionales para pasar "
+"argumentos de línea de comandos a Python.  Luego, más tarde, puedes llamar "
+"al intérprete desde cualquier parte de la aplicación."
 
 #: ../../extending/embedding.rst:32
 msgid ""
@@ -64,20 +89,28 @@ msgid ""
 "level operations described in the previous chapters to construct and use "
 "Python objects."
 msgstr ""
+"Hay varias formas diferentes de llamar al intérprete: puede pasar una cadena "
+"que contenga sentencias Python a :c:func:`PyRun_SimpleString`, o puede pasar "
+"un puntero de archivo stdio y un nombre de archivo (sólo para identificación "
+"en mensajes de error) a :c:func:`PyRun_SimpleFile`. También puede llamar a "
+"las operaciones de nivel inferior descritas en los capítulos anteriores para "
+"construir y utilizar objetos Python."
 
 #: ../../extending/embedding.rst:42
 msgid ":ref:`c-api-index`"
-msgstr ""
+msgstr ":ref:`c-api-index`"
 
 #: ../../extending/embedding.rst:42
 msgid ""
 "The details of Python's C interface are given in this manual. A great deal "
 "of necessary information can be found here."
 msgstr ""
+"Los detalles de la interfaz C de Python se encuentran en este manual. Aquí "
+"se puede encontrar una gran cantidad de información necesaria."
 
 #: ../../extending/embedding.rst:49
 msgid "Very High Level Embedding"
-msgstr ""
+msgstr "Nivel de incrustación muy alto"
 
 #: ../../extending/embedding.rst:51
 msgid ""
@@ -86,6 +119,10 @@ msgid ""
 "needing to interact with the application directly. This can for example be "
 "used to perform some operation on a file. ::"
 msgstr ""
+"La forma más sencilla de incrustar Python es mediante el uso de la interfaz "
+"de nivel muy alto. Esta interfaz está diseñada para ejecutar un script de "
+"Python sin necesidad de interactuar directamente con la aplicación. Esto se "
+"puede utilizar, por ejemplo, para realizar alguna operación en un archivo. ::"
 
 #: ../../extending/embedding.rst:78
 msgid ""
@@ -101,10 +138,21 @@ msgid ""
 "which saves you the trouble of allocating memory space and loading the file "
 "contents."
 msgstr ""
+"La función :c:func:`Py_SetProgramName` debe invocarse antes de :c:func:"
+"`Py_Initialize` para informar al intérprete sobre las rutas a las "
+"bibliotecas en tiempo de ejecución de Python.  A continuación, el intérprete "
+"de Python se inicializa con :c:func:`Py_Initialize`, seguido de la ejecución "
+"de un script de Python que imprime la fecha y la hora.  Después, la llamada :"
+"c:func:`Py_FinalizeEx` cierra el intérprete, seguido por el final del "
+"programa.  En un programa real, es posible que desee obtener el script "
+"Python de otra fuente, tal vez una rutina de editor de texto, un archivo o "
+"una base de datos.  Obtener el código Python de un archivo puede hacerse "
+"mejor usando la función :c:func:`PyRun_SimpleFile`, que te ahorra la "
+"molestia de asignar espacio de memoria y cargar el contenido del archivo."
 
 #: ../../extending/embedding.rst:93
 msgid "Beyond Very High Level Embedding: An overview"
-msgstr ""
+msgstr "Más allá de la incrustación de muy alto nivel: Panorama general"
 
 #: ../../extending/embedding.rst:95
 msgid ""
@@ -114,6 +162,11 @@ msgid ""
 "calls. At the cost of having to write more C code, you can achieve almost "
 "anything."
 msgstr ""
+"La interfaz de alto nivel te permite ejecutar piezas arbitrarias de código "
+"Python desde tu aplicación, pero intercambiar valores de datos es bastante "
+"engorroso, por decir lo menos. Si deseas eso, deberías usar llamadas de "
+"nivel inferior. A costa de tener que escribir más código en C, puedes lograr "
+"casi cualquier cosa."
 
 #: ../../extending/embedding.rst:100
 msgid ""
@@ -122,36 +175,44 @@ msgid ""
 "previous chapters are still valid. To show this, consider what the extension "
 "code from Python to C really does:"
 msgstr ""
+"Debe tenerse en cuenta que extender Python e incrustar Python son "
+"actividades bastante similares, a pesar de la intención diferente. La "
+"mayoría de los temas discutidos en los capítulos anteriores siguen siendo "
+"válidos. Para demostrar esto, considera lo que realmente hace el código de "
+"extensión de Python a C."
 
 #: ../../extending/embedding.rst:105
 msgid "Convert data values from Python to C,"
-msgstr ""
+msgstr "Convertir valores de datos de Python a C,"
 
 #: ../../extending/embedding.rst:107
 msgid "Perform a function call to a C routine using the converted values, and"
 msgstr ""
+"Realizar una llamada a una rutina C utilizando los valores convertidos, y"
 
 #: ../../extending/embedding.rst:109
 msgid "Convert the data values from the call from C to Python."
-msgstr ""
+msgstr "Convertir los valores de datos de la llamada de C a Python."
 
 #: ../../extending/embedding.rst:111
 msgid "When embedding Python, the interface code does:"
-msgstr ""
+msgstr "Cuando se incrusta Python, el código de interfaz hace:"
 
 #: ../../extending/embedding.rst:113
 msgid "Convert data values from C to Python,"
-msgstr ""
+msgstr "Convertir valores de datos de C a Python,"
 
 #: ../../extending/embedding.rst:115
 msgid ""
 "Perform a function call to a Python interface routine using the converted "
 "values, and"
 msgstr ""
+"Realizar una llamada a una rutina de interfaz de Python utilizando los "
+"valores convertidos, y"
 
 #: ../../extending/embedding.rst:118
 msgid "Convert the data values from the call from Python to C."
-msgstr ""
+msgstr "Convertir los valores de datos de la llamada de Python a C."
 
 #: ../../extending/embedding.rst:120
 msgid ""
@@ -160,6 +221,11 @@ msgid ""
 "is the routine that you call between both data conversions. When extending, "
 "you call a C routine, when embedding, you call a Python routine."
 msgstr ""
+"Como puedes ver, los pasos de conversión de datos se intercambian "
+"simplemente para adaptarse a la dirección diferente de la transferencia "
+"entre lenguajes. La única diferencia es la rutina que llamas entre ambas "
+"conversiones de datos. Al extender, llamas a una rutina en C, al incrustar, "
+"llamas a una rutina en Python."
 
 #: ../../extending/embedding.rst:125
 msgid ""
@@ -168,10 +234,15 @@ msgid ""
 "be understood.  Since these aspects do not differ from extending the "
 "interpreter, you can refer to earlier chapters for the required information."
 msgstr ""
+"Este capítulo no discutirá cómo convertir datos de Python a C y viceversa. "
+"Además, se asume que se entiende el uso adecuado de referencias y cómo "
+"manejar errores. Dado que estos aspectos no difieren de la extensión del "
+"intérprete, puedes consultar los capítulos anteriores para obtener la "
+"información requerida."
 
 #: ../../extending/embedding.rst:134
 msgid "Pure Embedding"
-msgstr ""
+msgstr "Incrustación pura"
 
 #: ../../extending/embedding.rst:136
 msgid ""
@@ -180,10 +251,15 @@ msgid ""
 "directly interact with the application (but that will change in the next "
 "section)."
 msgstr ""
+"El primer programa tiene como objetivo ejecutar una función en un script de "
+"Python. Al igual que en la sección sobre la interfaz de nivel muy alto, el "
+"intérprete de Python no interactúa directamente con la aplicación (pero eso "
+"cambiará en la próxima sección)."
 
 #: ../../extending/embedding.rst:141
 msgid "The code to run a function defined in a Python script is:"
 msgstr ""
+"El código para ejecutar una función definida en un script de Python es:"
 
 #: ../../extending/embedding.rst:146
 msgid ""
@@ -193,10 +269,15 @@ msgid ""
 "(let's call the finished executable :program:`call`), and use it to execute "
 "a Python script, such as:"
 msgstr ""
+"Este código carga un script de Python usando ``argv[1]`` y llama a la "
+"función nombrada en ``argv[2]``. Sus argumentos enteros son los otros "
+"valores del array ``argv``. Si :ref:`compilas y enlazas <compiling>` este "
+"programa (llamémoslo ejecutable terminado :program:`call`) y lo usas para "
+"ejecutar un script de Python, como:"
 
 #: ../../extending/embedding.rst:161
 msgid "then the result should be:"
-msgstr ""
+msgstr "entonces el resultado debería ser:"
 
 #: ../../extending/embedding.rst:169
 msgid ""
@@ -204,6 +285,10 @@ msgid ""
 "is for data conversion between Python and C, and for error reporting.  The "
 "interesting part with respect to embedding Python starts with ::"
 msgstr ""
+"Aunque el programa es bastante grande para su funcionalidad, la mayor parte "
+"del código es para la conversión de datos entre Python y C, y para la "
+"notificación de errores. La parte interesante con respecto a la "
+"incorporación de Python comienza con ::"
 
 #: ../../extending/embedding.rst:178
 msgid ""
@@ -212,6 +297,10 @@ msgid ""
 "which is constructed using the :c:func:`PyUnicode_FromString` data "
 "conversion routine. ::"
 msgstr ""
+"Después de inicializar el intérprete, el script se carga utilizando :c:func:"
+"`PyImport_Import`. Esta rutina necesita una cadena de Python como argumento, "
+"que se construye utilizando la rutina de conversión de datos :c:func:"
+"`PyUnicode_FromString`. ::"
 
 #: ../../extending/embedding.rst:191
 msgid ""
@@ -221,6 +310,11 @@ msgid ""
 "proceeds by constructing a tuple of arguments as normal.  The call to the "
 "Python function is then made with::"
 msgstr ""
+"Una vez que se carga el script, se recupera el nombre que estamos buscando "
+"utilizando :c:func:`PyObject_GetAttrString`. Si el nombre existe y el objeto "
+"devuelto es callable, puedes asumir de forma segura que es una función. El "
+"programa luego procede construyendo una tupla de argumentos como de "
+"costumbre. La llamada a la función de Python se realiza con::"
 
 #: ../../extending/embedding.rst:199
 msgid ""
@@ -228,10 +322,13 @@ msgid ""
 "reference to the return value of the function.  Be sure to release the "
 "reference after examining the value."
 msgstr ""
+"Tras el retorno de la función, ``pValue`` es ``NULL`` o contiene una "
+"referencia al valor de retorno de la función.  Asegúrese de liberar la "
+"referencia después de examinar el valor."
 
 #: ../../extending/embedding.rst:207
 msgid "Extending Embedded Python"
-msgstr ""
+msgstr "Extendiendo Python Incrustado"
 
 #: ../../extending/embedding.rst:209
 msgid ""
@@ -244,12 +341,24 @@ msgid ""
 "and write some glue code that gives Python access to those routines, just "
 "like you would write a normal Python extension.  For example::"
 msgstr ""
+"Hasta ahora, el intérprete de Python integrado no tenía acceso a la "
+"funcionalidad de la propia aplicación. La API de Python permite esto al "
+"extender el intérprete integrado. Es decir, el intérprete integrado se "
+"amplía con rutinas proporcionadas por la aplicación. Aunque suene complejo, "
+"no es tan malo. Simplemente olvídate por un momento de que la aplicación "
+"inicia el intérprete de Python. En su lugar, considera que la aplicación es "
+"un conjunto de subrutinas y escribe un código de enlace que brinde acceso a "
+"Python a esas rutinas, tal como escribirías una extensión normal de Python. "
+"Por ejemplo:"
 
 #: ../../extending/embedding.rst:246
 msgid ""
 "Insert the above code just above the :c:func:`main` function. Also, insert "
 "the following two statements before the call to :c:func:`Py_Initialize`::"
 msgstr ""
+"Inserte el código anterior justo encima de la función :c:func:`main`. "
+"Además, inserte las siguientes dos declaraciones antes de la llamada a :c:"
+"func:`Py_Initialize`::"
 
 #: ../../extending/embedding.rst:252
 msgid ""
@@ -263,10 +372,12 @@ msgid ""
 "In a real application, the methods will expose an API of the application to "
 "Python."
 msgstr ""
+"En una aplicación real, los métodos expondrán una API de la aplicación a "
+"Python."
 
 #: ../../extending/embedding.rst:271
 msgid "Embedding Python in C++"
-msgstr ""
+msgstr "Incrustación de Python en C++"
 
 #: ../../extending/embedding.rst:273
 msgid ""
@@ -276,10 +387,15 @@ msgid ""
 "and link your program.  There is no need to recompile Python itself using C+"
 "+."
 msgstr ""
+"También es posible incrustar Python en un programa C++; precisamente cómo se "
+"hace dependerá de los detalles del sistema C++ utilizado; en general, "
+"necesitarás escribir el programa principal en C++ y usar el compilador C++ "
+"para compilar y enlazar tu programa. No es necesario volver a compilar "
+"Python en sí mismo usando C++."
 
 #: ../../extending/embedding.rst:282
 msgid "Compiling and Linking under Unix-like systems"
-msgstr ""
+msgstr "Compilando y enlazando en sistemas tipo Unix"
 
 #: ../../extending/embedding.rst:284
 msgid ""
@@ -288,6 +404,11 @@ msgid ""
 "application, particularly because Python needs to load library modules "
 "implemented as C dynamic extensions (:file:`.so` files) linked against it."
 msgstr ""
+"No siempre es trivial encontrar las banderas correctas para pasarle a tu "
+"compilador (y enlazador) con el fin de incrustar el intérprete de Python en "
+"tu aplicación, especialmente porque Python necesita cargar módulos de "
+"biblioteca implementados como extensiones dinámicas en C (:file:`.so`) "
+"enlazados con él."
 
 #: ../../extending/embedding.rst:290
 msgid ""
@@ -297,12 +418,18 @@ msgid ""
 "available).  This script has several options, of which the following will be "
 "directly useful to you:"
 msgstr ""
+"Para averiguar las banderas de compilador y enlazador requeridas, puedes "
+"ejecutar el script :file:`python{X.Y}-config` que se genera como parte del "
+"proceso de instalación (también puede estar disponible un script :file:"
+"`python3-config`). Este script tiene varias opciones, de las cuales las "
+"siguientes te serán útiles directamente."
 
 #: ../../extending/embedding.rst:296
 msgid ""
 "``pythonX.Y-config --cflags`` will give you the recommended flags when "
 "compiling:"
 msgstr ""
+"``pythonX.Y-config --cflags`` te dará las banderas recomendadas al compilar:"
 
 #: ../../extending/embedding.rst:304
 msgid ""
@@ -317,6 +444,10 @@ msgid ""
 "that you use the absolute path to :file:`python{X.Y}-config`, as in the "
 "above example."
 msgstr ""
+"Para evitar confusiones entre varias instalaciones de Python (y "
+"especialmente entre el Python del sistema y tu propio Python compilado), se "
+"recomienda que utilices la ruta absoluta a :file:`python{X.Y}-config`, como "
+"en el ejemplo anterior."
 
 #: ../../extending/embedding.rst:318
 msgid ""
@@ -329,3 +460,11 @@ msgid ""
 "extract the configuration values that you will want to combine together.  "
 "For example:"
 msgstr ""
+"Si este procedimiento no funciona para ti (no se garantiza que funcione en "
+"todas las plataformas similares a Unix; sin embargo, agradecemos los "
+"informes de errores) tendrás que leer la documentación de tu sistema sobre "
+"la vinculación dinámica y/o examinar el :file:`Makefile` de Python (usa :"
+"func:`sysconfig.get_makefile_filename` para encontrar su ubicación) y las "
+"opciones de compilación. En este caso, el módulo :mod:`sysconfig` es una "
+"herramienta útil para extraer programáticamente los valores de configuración "
+"que desees combinar. Por ejemplo:"
