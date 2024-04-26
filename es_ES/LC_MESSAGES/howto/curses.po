@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-19 14:13+0000\n"
+"POT-Creation-Date: 2024-04-26 14:13+0000\n"
 "PO-Revision-Date: 2021-06-28 00:53+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -25,15 +25,15 @@ msgstr ""
 
 #: ../../howto/curses.rst:5
 msgid "Curses Programming with Python"
-msgstr ""
+msgstr "Programación con Python"
 
 #: ../../howto/curses.rst:0
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: ../../howto/curses.rst:9
 msgid "A.M. Kuchling, Eric S. Raymond"
-msgstr ""
+msgstr "A.M. Kuchling, Eric S. Raymond"
 
 #: ../../howto/curses.rst:0
 msgid "Release"
@@ -41,7 +41,7 @@ msgstr "Publique"
 
 #: ../../howto/curses.rst:10
 msgid "2.04"
-msgstr ""
+msgstr "2.04"
 
 #: ../../howto/curses.rst-1
 msgid "Abstract"
@@ -52,10 +52,12 @@ msgid ""
 "This document describes how to use the :mod:`curses` extension module to "
 "control text-mode displays."
 msgstr ""
+"Este documento describe cómo utilizar el módulo de extensión :mod:`curses` "
+"para controlar las pantallas en modo texto."
 
 #: ../../howto/curses.rst:20
 msgid "What is curses?"
-msgstr ""
+msgstr "¿Qué son las reglas?"
 
 #: ../../howto/curses.rst:22
 msgid ""
@@ -67,6 +69,14 @@ msgid ""
 "areas.  Different terminals use widely differing codes, and often have their "
 "own minor quirks."
 msgstr ""
+"La biblioteca de reglas proporciona una herramienta independiente de "
+"terminal para pintar la pantalla y manejar el teclado para terminales "
+"basados en texto; tales terminales incluyen VT100s, la consola Linux, y el "
+"terminal simulado proporcionado por varios programas.  Los terminales de "
+"pantalla admiten varios códigos de control para realizar operaciones comunes "
+"como mover el cursor, desplazar la pantalla y borrar áreas.  Los distintos "
+"terminales utilizan códigos muy diferentes y a menudo tienen sus propias "
+"peculiaridades."
 
 #: ../../howto/curses.rst:30
 msgid ""
@@ -77,6 +87,14 @@ msgid ""
 "an X server.  Another is tools such as OS installers and kernel "
 "configurators that may have to run before any graphical support is available."
 msgstr ""
+"En un mundo de pantallas gráficas, cabe preguntarse \"¿para qué molestarse?  "
+"Es cierto que los terminales con pantalla de celdas de caracteres son una "
+"tecnología obsoleta, pero hay nichos en los que poder hacer cosas "
+"sofisticadas con ellos sigue siendo valioso.  Un nicho es el de los Unix "
+"integrados o de pequeño tamaño que no ejecutan un servidor X. Otro es el de "
+"las herramientas como los instaladores de sistemas operativos.  Otro son las "
+"herramientas como los instaladores de SO y los configuradores de kernel que "
+"pueden tener que ejecutarse antes de disponer de soporte gráfico."
 
 #: ../../howto/curses.rst:38
 msgid ""
@@ -102,6 +120,15 @@ msgid ""
 "older versions of curses carried by some proprietary Unixes may not support "
 "everything, though."
 msgstr ""
+"La biblioteca de reglas se escribió para BSD Unix; las posteriores versiones "
+"System V de Unix de AT&T añadieron muchas mejoras y nuevas funciones. Las "
+"reglas BSD ya no se mantiene, se han reemplazado por nreglas, que es una "
+"implementación de código abierto de la interfaz de AT&T.  Si está usando un "
+"Unix de código abierto como Linux o FreeBSD, su sistema casi seguro que usa "
+"nreglas.  Dado que la mayoría de las versiones comerciales actuales de Unix "
+"están basadas en código System V, todas las funciones descritas aquí "
+"probablemente estarán disponibles.  Sin embargo, las versiones más antiguas "
+"de reglas que llevan algunos Unix propietarios pueden no soportarlo todo."
 
 #: ../../howto/curses.rst:58
 msgid ""
@@ -111,7 +138,7 @@ msgstr ""
 
 #: ../../howto/curses.rst:63
 msgid "The Python curses module"
-msgstr ""
+msgstr "El módulo curses de Python"
 
 #: ../../howto/curses.rst:65
 msgid ""
@@ -131,10 +158,15 @@ msgid ""
 "that, see the Python library guide's section on ncurses, and the C manual "
 "pages for ncurses.  It will, however, give you the basic ideas."
 msgstr ""
+"Este COMO es una introducción a la escritura de programas en modo texto con "
+"curses y Python. No pretende ser una guía completa de la API de curses; para "
+"eso, vea la sección de ncurses de la guía de bibliotecas de Python, y las "
+"páginas del manual de C para ncurses.  Sin embargo, le dará las ideas "
+"básicas."
 
 #: ../../howto/curses.rst:80
 msgid "Starting and ending a curses application"
-msgstr ""
+msgstr "Iniciar y finalizar una aplicación curses"
 
 #: ../../howto/curses.rst:82
 msgid ""
@@ -152,6 +184,10 @@ msgid ""
 "screen, in order to be able to read keys and only display them under certain "
 "circumstances.  This requires calling the :func:`~curses.noecho` function. ::"
 msgstr ""
+"Normalmente las aplicaciones curses desactivan el eco automático de las "
+"teclas en la pantalla, para poder leer las teclas y mostrarlas sólo en "
+"determinadas circunstancias.  Para ello es necesario llamar a la función :"
+"func:`~curses.noecho`. ::"
 
 #: ../../howto/curses.rst:100
 msgid ""
@@ -159,6 +195,9 @@ msgid ""
 "requiring the Enter key to be pressed; this is called cbreak mode, as "
 "opposed to the usual buffered input mode. ::"
 msgstr ""
+"Las aplicaciones también suelen necesitar reaccionar a las teclas de forma "
+"instantánea, sin necesidad de pulsar la tecla Intro; esto se denomina modo "
+"cbreak, en contraposición al modo habitual de entrada con búfer. ::"
 
 #: ../../howto/curses.rst:106
 msgid ""
@@ -169,12 +208,20 @@ msgid ""
 "const:`curses.KEY_LEFT`.  To get curses to do the job, you'll have to enable "
 "keypad mode. ::"
 msgstr ""
+"Los terminales normalmente devuelven teclas especiales, como las teclas de "
+"cursor o las teclas de navegación como Re Pág y Inicio, como una secuencia "
+"de escape multibyte.  Mientras que usted podría escribir su aplicación para "
+"esperar tales secuencias y procesarlas en consecuencia, curses puede hacerlo "
+"por usted, devolviendo un valor especial como :const:`curses.KEY_LEFT`.  "
+"Para que curses haga el trabajo, tendrá que habilitar el modo de teclado ::"
 
 #: ../../howto/curses.rst:115
 msgid ""
 "Terminating a curses application is much easier than starting one. You'll "
 "need to call::"
 msgstr ""
+"Terminar una aplicación curses es mucho más fácil que iniciarla. Necesitará "
+"llamar a::"
 
 #: ../../howto/curses.rst:122
 msgid ""
@@ -182,6 +229,9 @@ msgid ""
 "`~curses.endwin` function to restore the terminal to its original operating "
 "mode. ::"
 msgstr ""
+"para invertir la configuración del terminal \"curses-friendly\". A "
+"continuación, llame a la función :func:`~curses.endwin` para restaurar el "
+"terminal a su modo de funcionamiento original. ::"
 
 #: ../../howto/curses.rst:128
 msgid ""
@@ -191,12 +241,19 @@ msgid ""
 "raises an uncaught exception.  Keys are no longer echoed to the screen when "
 "you type them, for example, which makes using the shell difficult."
 msgstr ""
+"Un problema común al depurar una aplicación curses es que tu terminal se "
+"cuelga cuando la aplicación muere sin restaurar la terminal a su estado "
+"anterior.  En Python esto sucede comúnmente cuando tu código tiene errores y "
+"lanza una excepción no capturada.  Las teclas ya no se repiten en la "
+"pantalla cuando las tecleas, por ejemplo, lo que dificulta el uso del shell."
 
 #: ../../howto/curses.rst:134
 msgid ""
 "In Python you can avoid these complications and make debugging much easier "
 "by importing the :func:`curses.wrapper` function and using it like this::"
 msgstr ""
+"En Python puedes evitar estas complicaciones y hacer la depuración mucho más "
+"fácil importando la función :func:`curses.wrapper` y usándola así::"
 
 #: ../../howto/curses.rst:153
 msgid ""
@@ -213,7 +270,7 @@ msgstr ""
 
 #: ../../howto/curses.rst:165
 msgid "Windows and Pads"
-msgstr ""
+msgstr "Ventanas y almohadillas"
 
 #: ../../howto/curses.rst:167
 msgid ""
@@ -221,6 +278,9 @@ msgid ""
 "rectangular area of the screen, and supports methods to display text, erase "
 "it, allow the user to input strings, and so forth."
 msgstr ""
+"Las ventanas son la abstracción básica en curses.  Un objeto ventana "
+"representa un área rectangular de la pantalla, y soporta métodos para "
+"mostrar texto, borrarlo, permitir al usuario introducir cadenas, etc."
 
 #: ../../howto/curses.rst:171
 msgid ""
@@ -231,6 +291,12 @@ msgid ""
 "newwin` function creates a new window of a given size, returning the new "
 "window object. ::"
 msgstr ""
+"El objeto ``stdscr`` devuelto por la función :func:`~curses.initscr` es un "
+"objeto ventana que cubre toda la pantalla.  Muchos programas pueden "
+"necesitar sólo esta única ventana, pero es posible que desee dividir la "
+"pantalla en ventanas más pequeñas, con el fin de redibujarlas o borrarlas "
+"por separado. La función :func:`~curses.newwin` crea una nueva ventana de un "
+"tamaño dado, devolviendo el nuevo objeto ventana. ::"
 
 #: ../../howto/curses.rst:182
 msgid ""
@@ -241,6 +307,13 @@ msgid ""
 "difference from most other computer applications, but it's been part of "
 "curses since it was first written, and it's too late to change things now."
 msgstr ""
+"Tener en cuenta que el sistema de coordenadas utilizado en curses es "
+"inusual. Las coordenadas siempre se pasan en el orden *y,x*, y la esquina "
+"superior izquierda de una ventana es la coordenada (0,0).  Esto rompe la "
+"convención normal para el manejo de coordenadas donde la coordenada *x* "
+"viene primero.  Esta es una desafortunada diferencia con la mayoría de las "
+"otras aplicaciones informáticas, pero ha sido parte de curses desde que fue "
+"escrito, y es demasiado tarde para cambiar las cosas ahora."
 
 #: ../../howto/curses.rst:190
 msgid ""
@@ -249,6 +322,10 @@ msgid ""
 "sizes.  Legal coordinates will then extend from ``(0,0)`` to ``(curses.LINES "
 "- 1, curses.COLS - 1)``."
 msgstr ""
+"Su aplicación puede determinar el tamaño de la pantalla utilizando las "
+"variables :data:`curses.LINES` y :data:`curses.COLS` para obtener los "
+"tamaños *y* y *x*.  Las coordenadas legales se extenderán entonces desde "
+"``(0,0)`` hasta ``(curses.LINES - 1, curses.COLS - 1)``."
 
 #: ../../howto/curses.rst:195
 msgid ""
@@ -256,6 +333,10 @@ msgid ""
 "immediately show up on the display.  Instead you must call the :meth:"
 "`~curses.window.refresh` method of window objects to update the screen."
 msgstr ""
+"Cuando se llama a un método para mostrar o borrar texto, el efecto no "
+"aparece inmediatamente en la pantalla.  En su lugar, debes llamar al método :"
+"meth:`~curses.window.refresh` de los objetos ventana para actualizar la "
+"pantalla."
 
 #: ../../howto/curses.rst:200
 msgid ""
@@ -286,6 +367,11 @@ msgid ""
 "giving the coordinates of the on-screen area where a subsection of the pad "
 "will be displayed.  ::"
 msgstr ""
+"Un pad es un caso especial de ventana; puede ser más grande que la pantalla "
+"de visualización real, y sólo una parte del pad se muestra a la vez. Para "
+"crear un pad se necesita la altura y la anchura del pad, mientras que para "
+"actualizarlo hay que dar las coordenadas de la zona de la pantalla en la que "
+"se mostrará una subsección del pad. ::"
 
 #: ../../howto/curses.rst:238
 msgid ""
@@ -308,12 +394,18 @@ msgid ""
 "Calls the :meth:`~curses.window.noutrefresh` method of each window to update "
 "an underlying data structure representing the desired state of the screen."
 msgstr ""
+"Llama al método :meth:`~curses.window.noutrefresh` de cada ventana para "
+"actualizar una estructura de datos subyacente que representa el estado "
+"deseado de la pantalla."
 
 #: ../../howto/curses.rst:252
 msgid ""
 "Calls the function :func:`~curses.doupdate` function to change the physical "
 "screen to match the desired state recorded in the data structure."
 msgstr ""
+"Llama a la función :func:`~curses.doupdate` función para cambiar la pantalla "
+"física para que coincida con el estado deseado registrado en la estructura "
+"de datos."
 
 #: ../../howto/curses.rst:255
 msgid ""
@@ -323,7 +415,7 @@ msgstr ""
 
 #: ../../howto/curses.rst:261
 msgid "Displaying Text"
-msgstr ""
+msgstr "Mostrar texto"
 
 #: ../../howto/curses.rst:263
 msgid ""
@@ -344,10 +436,14 @@ msgid ""
 "addstr` accept multiple argument forms.  Usually there are four different "
 "forms."
 msgstr ""
+"Afortunadamente, la interfaz de Python oculta todos estos detalles. "
+"``stdscr`` es un objeto ventana como cualquier otro, y métodos como :meth:"
+"`~curses.window.addstr` aceptan múltiples formas de argumento.  Normalmente "
+"hay cuatro formas diferentes."
 
 #: ../../howto/curses.rst:278
 msgid "Form"
-msgstr ""
+msgstr "Formulario"
 
 #: ../../howto/curses.rst:278 ../../howto/curses.rst:346
 msgid "Description"
@@ -355,39 +451,43 @@ msgstr "Description"
 
 #: ../../howto/curses.rst:280
 msgid "*str* or *ch*"
-msgstr ""
+msgstr "*str* o *ch*"
 
 #: ../../howto/curses.rst:280
 msgid "Display the string *str* or character *ch* at the current position"
-msgstr ""
+msgstr "Mostrar la cadena *str* o el carácter *ch* en la posición actual"
 
 #: ../../howto/curses.rst:283
 msgid "*str* or *ch*, *attr*"
-msgstr ""
+msgstr "*str* o *ch*, *attr*"
 
 #: ../../howto/curses.rst:283
 msgid ""
 "Display the string *str* or character *ch*, using attribute *attr* at the "
 "current position"
 msgstr ""
+"Mostrar la cadena *str* o el carácter *ch*, utilizando el atributo *attr* en "
+"la posición actual"
 
 #: ../../howto/curses.rst:287
 msgid "*y*, *x*, *str* or *ch*"
-msgstr ""
+msgstr "*y*, *x*, *str* o *ch*"
 
 #: ../../howto/curses.rst:287
 msgid "Move to position *y,x* within the window, and display *str* or *ch*"
-msgstr ""
+msgstr "Mover a la posición *y,x* dentro de la ventana, y mostrar *str* o *ch"
 
 #: ../../howto/curses.rst:290
 msgid "*y*, *x*, *str* or *ch*, *attr*"
-msgstr ""
+msgstr "*y*, *x*, *str* o *ch*, *attr*"
 
 #: ../../howto/curses.rst:290
 msgid ""
 "Move to position *y,x* within the window, and display *str* or *ch*, using "
 "attribute *attr*"
 msgstr ""
+"Mover a la posición *y,x* dentro de la ventana, y mostrar *str* o *ch*, "
+"usando el atributo *attr*"
 
 #: ../../howto/curses.rst:294
 msgid ""
@@ -395,6 +495,9 @@ msgid ""
 "underline, reverse code, or in color.  They'll be explained in more detail "
 "in the next subsection."
 msgstr ""
+"Los atributos permiten mostrar el texto en formas resaltadas, como negrita, "
+"subrayado, código inverso o en color.  Se explicarán con más detalle en la "
+"siguiente subsección."
 
 #: ../../howto/curses.rst:299
 msgid ""
@@ -410,6 +513,8 @@ msgid ""
 "The :meth:`~curses.window.addch` methods take a character, which can be "
 "either a string of length 1, a bytestring of length 1, or an integer."
 msgstr ""
+"Los métodos :meth:`~curses.window.addch` toman un carácter, que puede ser "
+"una cadena de longitud 1, una bytestring de longitud 1 o un entero."
 
 #: ../../howto/curses.rst:308
 msgid ""
@@ -418,6 +523,11 @@ msgid ""
 "symbol, and :const:`ACS_ULCORNER` is the upper left corner of a box (handy "
 "for drawing borders).  You can also use the appropriate Unicode character."
 msgstr ""
+"Se proporcionan constantes para los caracteres de extensión; estas "
+"constantes son números enteros mayores que 255.  Por ejemplo, :const:"
+"`ACS_PLMINUS` es un símbolo +/-, y :const:`ACS_ULCORNER` es la esquina "
+"superior izquierda de una caja (útil para dibujar bordes).  También puede "
+"utilizar el carácter Unicode apropiado."
 
 #: ../../howto/curses.rst:314
 msgid ""
@@ -429,6 +539,13 @@ msgid ""
 "some location where it won't be distracting; it can be confusing to have the "
 "cursor blinking at some apparently random location."
 msgstr ""
+"Windows recuerda dónde quedó el cursor después de la última operación, por "
+"lo que si omite las coordenadas *y,x*, la cadena o carácter se mostrará "
+"donde lo dejó la última operación.  También puede mover el cursor con el "
+"método ``move(y,x)``.  Debido a que algunas terminales siempre muestran un "
+"cursor parpadeante, es posible que desee asegurarse de que el cursor se "
+"coloca en algún lugar donde no se distraiga; puede ser confuso tener el "
+"cursor parpadeando en algún lugar aparentemente al azar."
 
 #: ../../howto/curses.rst:322
 msgid ""
@@ -439,10 +556,16 @@ msgid ""
 "attempt to suppress the flashing cursor, and you won't need to worry about "
 "leaving it in odd locations."
 msgstr ""
+"Si su aplicación no necesita un cursor parpadeante, puede llamar a "
+"``curs_set(False)`` para hacerlo invisible.  Por compatibilidad con "
+"versiones anteriores de curses, existe una función ``leaveok(bool)`` que es "
+"sinónimo de :func:`~curses.curs_set`.  Cuando *bool* es true, la librería "
+"curses intentará suprimir el cursor parpadeante, y no tendrá que preocuparse "
+"de dejarlo en lugares extraños."
 
 #: ../../howto/curses.rst:331
 msgid "Attributes and Color"
-msgstr ""
+msgstr "Atributos y color"
 
 #: ../../howto/curses.rst:333
 msgid ""
@@ -451,6 +574,10 @@ msgid ""
 "to highlight certain words.  curses supports this by allowing you to specify "
 "an attribute for each cell on the screen."
 msgstr ""
+"Los caracteres pueden mostrarse de diferentes maneras.  Las líneas de estado "
+"en una aplicación basada en texto se muestran comúnmente en vídeo inverso, o "
+"un visor de texto puede necesitar resaltar ciertas palabras. curses soporta "
+"esto permitiéndole especificar un atributo para cada celda en la pantalla."
 
 #: ../../howto/curses.rst:338
 msgid ""
@@ -461,64 +588,72 @@ msgid ""
 "being used, so it's safest to stick to the most commonly available "
 "attributes, listed here."
 msgstr ""
+"Un atributo es un número entero, cada bit representa un atributo diferente.  "
+"Puede intentar mostrar texto con múltiples bits de atributo, pero curses no "
+"garantiza que todas las combinaciones posibles estén disponibles, o que "
+"todas sean visualmente distintas.  Eso depende de la capacidad del terminal "
+"que se esté usando, así que lo más seguro es ceñirse a los atributos más "
+"comúnmente disponibles, listados aquí."
 
 #: ../../howto/curses.rst:346
 msgid "Attribute"
-msgstr ""
+msgstr "Atributo"
 
 #: ../../howto/curses.rst:348
 msgid ":const:`A_BLINK`"
-msgstr ""
+msgstr ":const:`A_BLINK`"
 
 #: ../../howto/curses.rst:348
 msgid "Blinking text"
-msgstr ""
+msgstr "Texto intermitente"
 
 #: ../../howto/curses.rst:350
 msgid ":const:`A_BOLD`"
-msgstr ""
+msgstr ":const:`A_BOLD`"
 
 #: ../../howto/curses.rst:350
 msgid "Extra bright or bold text"
-msgstr ""
+msgstr "Texto muy brillante o en negrita"
 
 #: ../../howto/curses.rst:352
 msgid ":const:`A_DIM`"
-msgstr ""
+msgstr ":const:`A_DIM`"
 
 #: ../../howto/curses.rst:352
 msgid "Half bright text"
-msgstr ""
+msgstr "Texto medio brillante"
 
 #: ../../howto/curses.rst:354
 msgid ":const:`A_REVERSE`"
-msgstr ""
+msgstr ":const:`A_REVERSE`"
 
 #: ../../howto/curses.rst:354
 msgid "Reverse-video text"
-msgstr ""
+msgstr "Texto de vídeo inverso"
 
 #: ../../howto/curses.rst:356
 msgid ":const:`A_STANDOUT`"
-msgstr ""
+msgstr ":const:`A_STANDOUT`"
 
 #: ../../howto/curses.rst:356
 msgid "The best highlighting mode available"
-msgstr ""
+msgstr "El mejor modo de resaltado disponible"
 
 #: ../../howto/curses.rst:358
 msgid ":const:`A_UNDERLINE`"
-msgstr ""
+msgstr ":const:`A_UNDERLINE`"
 
 #: ../../howto/curses.rst:358
 msgid "Underlined text"
-msgstr ""
+msgstr "Texto subrayado"
 
 #: ../../howto/curses.rst:361
 msgid ""
 "So, to display a reverse-video status line on the top line of the screen, "
 "you could code::"
 msgstr ""
+"Así, para mostrar una línea de estado de vídeo inverso en la línea superior "
+"de la pantalla, podrías codificar::"
 
 #: ../../howto/curses.rst:368
 msgid ""
@@ -526,6 +661,9 @@ msgid ""
 "The most common such terminal is probably the Linux console, followed by "
 "color xterms."
 msgstr ""
+"La biblioteca curses también soporta color en aquellos terminales que lo "
+"proporcionan. El terminal más común es probablemente la consola de Linux, "
+"seguido de xterms en color."
 
 #: ../../howto/curses.rst:372
 msgid ""
@@ -538,6 +676,15 @@ msgid ""
 "to the British spelling, you'll have to resign yourself to misspelling it "
 "for the sake of these functions.)"
 msgstr ""
+"Para utilizar el color, debe llamar a la función :func:`~curses.start_color` "
+"poco después de llamar a :func:`~curses.initscr`, para inicializar el "
+"conjunto de colores por defecto (la función :func:`curses.wrapper` lo hace "
+"automáticamente).  Una vez hecho esto, la función :func:`~curses.has_colors` "
+"devuelve TRUE si el terminal en uso puede realmente mostrar color. (Nota: "
+"curses utiliza la ortografía americana 'color', en lugar de la ortografía "
+"canadiense/británica 'color'.  Si está acostumbrado a la ortografía "
+"británica, tendrá que resignarse a escribirlo mal por el bien de estas "
+"funciones)."
 
 #: ../../howto/curses.rst:382
 msgid ""
@@ -548,10 +695,17 @@ msgid ""
 "as :const:`A_REVERSE`, but again, such combinations are not guaranteed to "
 "work on all terminals."
 msgstr ""
+"La biblioteca curses mantiene un número finito de pares de colores, que "
+"contienen un color de primer plano (o texto) y un color de fondo.  Puede "
+"obtener el valor del atributo correspondiente a un par de colores con la "
+"función :func:`~curses.color_pair`; esto puede ser bitwise-OR con otros "
+"atributos como :const:`A_REVERSE`, pero de nuevo, no se garantiza que tales "
+"combinaciones funcionen en todos los terminales."
 
 #: ../../howto/curses.rst:389
 msgid "An example, which displays a line of text using color pair 1::"
 msgstr ""
+"Un ejemplo, que muestra una línea de texto utilizando el par de colores 1::"
 
 #: ../../howto/curses.rst:394
 msgid ""
@@ -560,6 +714,10 @@ msgid ""
 "pair *n*, to foreground color f and background color b.  Color pair 0 is "
 "hard-wired to white on black, and cannot be changed."
 msgstr ""
+"Como he dicho antes, un par de colores consiste en un color de primer plano "
+"y un color de fondo. La función ``init_pair(n, f, b)`` cambia la definición "
+"del par de colores *n*, a color de primer plano f y color de fondo b. El par "
+"de colores 0 está programado para blanco sobre negro, y no se puede cambiar."
 
 #: ../../howto/curses.rst:399
 msgid ""
@@ -569,6 +727,11 @@ msgid ""
 "named constants for each of these colors: :const:`curses.COLOR_BLACK`, :"
 "const:`curses.COLOR_RED`, and so forth."
 msgstr ""
+"Los colores están numerados, y :func:`start_color` inicializa 8 colores "
+"básicos cuando activa el modo color.  Estos son: 0:negro, 1:rojo, 2:verde, 3:"
+"amarillo, 4:azul, 5:magenta, 6:cian y 7:blanco.  El módulo :mod:`curses` "
+"define constantes con nombre para cada uno de estos colores: :const:`curses."
+"COLOR_BLACK`, :const:`curses.COLOR_RED`, y así sucesivamente."
 
 #: ../../howto/curses.rst:405
 msgid ""
