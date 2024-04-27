@@ -9,17 +9,17 @@
 # Vitor Buxbaum Orlandi, 2021
 # Rodrigo Cândido, 2022
 # Cezar Peixeiro <czr-pxr@protonmail.com>, 2023
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 # Julio Biason, 2023
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-13 00:12+0000\n"
+"POT-Creation-Date: 2024-04-26 23:55+0000\n"
 "PO-Revision-Date: 2020-05-30 12:12+0000\n"
-"Last-Translator: Julio Biason, 2023\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
 "teams/5390/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -173,11 +173,11 @@ msgid ""
 "treat ``Alias`` as being *exactly equivalent* to ``Original`` in all cases. "
 "This is useful when you want to simplify complex type signatures."
 msgstr ""
-"Relembre que o uso de um apelido declara que dois tipos serão *equivalentes* "
-"entre si. Efetuar ``Alias = Original`` irá   fazer o verificador de tipo "
-"estático tratar ``Alias`` como sendo *exatamente equivalente* a ``Original`` "
-"em todos os casos. Isso é útil quando você deseja simplificar assinaturas de "
-"tipo complexas."
+"Relembre que o uso de um apelido de tipo declara que dois tipos serão "
+"*equivalentes* entre si. Efetuar ``Alias = Original`` irá fazer o "
+"verificador de tipo estático tratar ``Alias`` como sendo *exatamente "
+"equivalente* a ``Original`` em todos os casos. Isso é útil quando você "
+"deseja simplificar assinaturas de tipo complexas."
 
 #: ../../library/typing.rst:142
 msgid ""
@@ -321,12 +321,17 @@ msgid ""
 "every type as being compatible with :data:`Any` and :data:`Any` as being "
 "compatible with every type."
 msgstr ""
+"Um tipo especial de tipo é :data:`Any`. Um verificador de tipo estático "
+"tratará cada tipo como sendo compatível com :data:`Any` e :data:`Any` como "
+"sendo compatível com todos os tipos."
 
 #: ../../library/typing.rst:326
 msgid ""
 "This means that it is possible to perform any operation or method call on a "
 "value of type :data:`Any` and assign it to any variable::"
 msgstr ""
+"Isso significa que é possível realizar qualquer operação ou chamada de "
+"método sobre um valor do tipo :data:`Any` e atribuí-lo a qualquer variável::"
 
 #: ../../library/typing.rst:344
 msgid ""
@@ -342,12 +347,17 @@ msgid ""
 "Furthermore, all functions without a return type or parameter types will "
 "implicitly default to using :data:`Any`::"
 msgstr ""
+"Além disso, todas as funções sem um tipo de retorno ou tipos de parâmetro "
+"terão como padrão implicitamente o uso de :data:`Any`::"
 
 #: ../../library/typing.rst:363
 msgid ""
 "This behavior allows :data:`Any` to be used as an *escape hatch* when you "
 "need to mix dynamically and statically typed code."
 msgstr ""
+"Este comportamento permite que :data:`Any` seja usado como uma *saída de "
+"emergência* quando você precisar misturar código tipado dinamicamente e "
+"estaticamente."
 
 #: ../../library/typing.rst:366
 msgid ""
@@ -356,6 +366,10 @@ msgid ""
 "unlike :data:`Any`, the reverse is not true: :class:`object` is *not* a "
 "subtype of every other type."
 msgstr ""
+"Compare o comportamento de :data:`Any` com o comportamento de :class:"
+"`object`. Semelhante a :data:`Any`, todo tipo é um subtipo de :class:"
+"`object`. No entanto, ao contrário de :data:`Any`, o inverso não é "
+"verdadeiro: :class:`object` *não* é um subtipo de qualquer outro tipo."
 
 #: ../../library/typing.rst:371
 msgid ""
@@ -364,12 +378,19 @@ msgid ""
 "it as a return value) of a more specialized type is a type error. For "
 "example::"
 msgstr ""
+"Isso significa que quando o tipo de um valor é :class:`object`, um "
+"verificador de tipo rejeitará quase todas as operações nele, e atribuí-lo a "
+"uma variável (ou usá-la como valor de retorno) de um tipo mais especializado "
+"é um tipo erro. Por exemplo::"
 
 #: ../../library/typing.rst:393
 msgid ""
 "Use :class:`object` to indicate that a value could be any type in a typesafe "
 "manner. Use :data:`Any` to indicate that a value is dynamically typed."
 msgstr ""
+"Use :class:`object` para indicar que um valor pode ser de qualquer tipo de "
+"maneira segura. Use :data:`Any` para indicar que um valor é tipado "
+"dinamicamente."
 
 #: ../../library/typing.rst:398
 msgid "Nominal vs structural subtyping"
@@ -390,6 +411,12 @@ msgid ""
 "unlike what one would normally do in idiomatic dynamically typed Python "
 "code. For example, this conforms to :pep:`484`::"
 msgstr ""
+"Este requisito anteriormente também se aplicava a classes base abstratas, "
+"como :class:`~collections.abc.Iterable`. O problema com essa abordagem é que "
+"uma classe teve que ser marcada explicitamente para suportá-los, o que não é "
+"pythônico e diferente do que normalmente seria feito em código Python de "
+"tipo dinamicamente idiomático. Por exemplo, isso está em conformidade com :"
+"pep:`484`::"
 
 #: ../../library/typing.rst:417
 msgid ""
@@ -399,6 +426,11 @@ msgid ""
 "``Iterable[int]`` by static type checkers. This is known as *structural "
 "subtyping* (or static duck-typing)::"
 msgstr ""
+":pep:`544` permite resolver este problema permitindo que os usuários "
+"escrevam o código acima sem classes base explícitas na definição da classe, "
+"permitindo que ``Bucket`` seja implicitamente considerado um subtipo de "
+"``Sized`` e `` Iterable[int]`` por verificadores de tipo estático. Isso é "
+"conhecido como *subtipagem estrutural* (ou digitação estática de pato)::"
 
 #: ../../library/typing.rst:433
 msgid ""
@@ -406,6 +438,9 @@ msgid ""
 "define new custom protocols to fully enjoy structural subtyping (see "
 "examples below)."
 msgstr ""
+"Além disso, ao criar uma subclasse de uma classe especial :class:`Protocol`, "
+"um usuário pode definir novos protocolos personalizados para aproveitar ao "
+"máximo a subtipagem estrutural (veja exemplos abaixo)."
 
 #: ../../library/typing.rst:439
 msgid "Classes, functions, and decorators"
@@ -1045,7 +1080,7 @@ msgstr ""
 
 #: ../../library/typing.rst:1187
 msgid "Special type indicating an unconstrained type."
-msgstr ""
+msgstr "Tipo especial que indica um tipo irrestrito."
 
 #: ../../library/typing.rst:1189
 msgid "Every type is compatible with :data:`Any`."
