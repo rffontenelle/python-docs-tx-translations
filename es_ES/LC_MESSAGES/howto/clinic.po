@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-26 19:05+0000\n"
+"POT-Creation-Date: 2024-05-03 18:41+0000\n"
 "PO-Revision-Date: 2022-11-05 17:21+0000\n"
 "Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -987,10 +987,12 @@ msgid ""
 "Currently the generated code will use :c:func:`PyArg_ParseTuple`, but this "
 "will change soon."
 msgstr ""
+"Actualmente el código generado utilizará :c:func:`PyArg_ParseTuple`, pero "
+"esto cambiará pronto."
 
 #: ../../howto/clinic.rst:635
 msgid "Optional Groups"
-msgstr ""
+msgstr "Grupos opcionales"
 
 #: ../../howto/clinic.rst:637
 msgid ""
@@ -1002,6 +1004,13 @@ msgid ""
 "optional arguments back before :c:func:`PyArg_ParseTupleAndKeywords` was "
 "created."
 msgstr ""
+"Algunas funciones heredadas tienen un enfoque complicado para analizar sus "
+"argumentos: cuentan el número de argumentos posicionales, luego usan una "
+"sentencia ``switch`` para llamar a una de varias llamadas diferentes a :c:"
+"func:`PyArg_ParseTuple` dependiendo de cuántos argumentos posicionales "
+"haya.  (Estas funciones no pueden aceptar argumentos de sólo palabra clave.) "
+"Este método se utilizaba para simular argumentos opcionales antes de que se "
+"creara :c:func:`PyArg_ParseTupleAndKeywords`."
 
 #: ../../howto/clinic.rst:644
 msgid ""
@@ -1016,6 +1025,17 @@ msgid ""
 "the function passing in ``x``, you must also pass in ``y``—and if you don't "
 "pass in ``x`` you may not pass in ``y`` either.)"
 msgstr ""
+"Aunque las funciones que utilizan este enfoque a menudo pueden convertirse "
+"para usar :c:func:`PyArg_ParseTupleAndKeywords`, argumentos opcionales y "
+"valores por defecto, no siempre es posible. Algunas de estas funciones "
+"heredadas tienen comportamientos que :c:func:`PyArg_ParseTupleAndKeywords` "
+"no soportan directamente. El ejemplo más obvio es la función incorporada "
+"``range()``, ¡que tiene un argumento opcional a la *izquierda* de su "
+"argumento obligatorio!. Otro ejemplo es``curses.window.addch()``, que tiene "
+"un grupo de dos argumentos que siempre deben especificarse juntos. (Los "
+"argumentos se llaman``x`` y ``y``; si llama a la función pasando en ``x``, "
+"también debe pasar en ``y``—y si no pasa en ``x`` tampoco puede pasar en "
+"``y`` .)"
 
 #: ../../howto/clinic.rst:656
 msgid ""
@@ -1026,6 +1046,13 @@ msgid ""
 "all be passed in together. They can be to the left or the right of the "
 "required arguments.  They can *only* be used with positional-only parameters."
 msgstr ""
+"En cualquier caso, el objetivo de Argument Clinic es soportar el análisis "
+"sintáctico de argumentos para todos los buildins existentes de CPython sin "
+"cambiar su semántica. Por lo tanto Argument Clinic soporta esta aproximación "
+"alternativa al análisis sintáctico, usando lo que se llama *grupos "
+"opcionales*. Los grupos opcionales son grupos de argumentos que deben "
+"pasarse juntos. Pueden estar a la izquierda o a la derecha de los argumentos "
+"requeridos.  Sólo se pueden utilizar con parámetros de sólo posición."
 
 #: ../../howto/clinic.rst:664
 msgid ""
@@ -1037,6 +1064,13 @@ msgid ""
 "doesn't understand the concept.  Please avoid using optional groups wherever "
 "possible."
 msgstr ""
+"¡Los grupos opcionales están *únicamente* pensados para su uso al convertir "
+"funciones que realizan múltiples llamadas a :c:func:`PyArg_ParseTuple`! Las "
+"funciones que usan *cualquier* otro enfoque para analizar argumentos no "
+"deberían *casi nunca* ser convertidas a Argument Clinic usando grupos "
+"opcionales.  Las funciones que usan grupos opcionales actualmente no pueden "
+"tener firmas precisas en Python, porque Python no entiende el concepto.  Por "
+"favor, evite usar grupos opcionales siempre que sea posible."
 
 #: ../../howto/clinic.rst:673
 msgid ""
@@ -1046,6 +1080,11 @@ msgid ""
 "optional groups to make the first two parameters and the last parameter "
 "optional::"
 msgstr ""
+"Para especificar un grupo opcional, añada un ``[`` en una línea por sí mismo "
+"antes de los parámetros que desea agrupar, y un ``]`` en una línea por sí "
+"mismo después de estos parámetros.  A modo de ejemplo, a continuación se "
+"muestra cómo ``curses.window.addch`` utiliza grupos opcionales para que los "
+"dos primeros parámetros y el último parámetro sean opcionales::"
 
 #: ../../howto/clinic.rst:702
 msgid "Notes:"
@@ -1063,32 +1102,51 @@ msgid ""
 "was unused, and set to non-zero if this group was used. (By used or unused, "
 "I mean whether or not the parameters received arguments in this invocation.)"
 msgstr ""
+"Por cada grupo opcional, se pasará un parámetro adicional a la función impl "
+"que representa al grupo.  El parámetro será un int llamado "
+"``group_{direction}_{number}``, donde ``{direction}`` es ``right`` o "
+"``left`` dependiendo de si el grupo está antes o después de los parámetros "
+"requeridos, y ``{number}`` es un número monótonamente creciente (empezando "
+"en 1) que indica lo lejos que está el grupo de los parámetros requeridos.  "
+"Cuando se llame a la impl, este parámetro se pondrá a cero si este grupo no "
+"se utilizó, y se pondrá a un valor distinto de cero si este grupo se "
+"utilizó. (Por usado o no usado, me refiero a si los parámetros recibieron o "
+"no argumentos en esta invocación)."
 
 #: ../../howto/clinic.rst:715
 msgid ""
 "If there are no required arguments, the optional groups will behave as if "
 "they're to the right of the required arguments."
 msgstr ""
+"Si no hay argumentos obligatorios, los grupos opcionales se comportarán como "
+"si estuvieran a la derecha de los argumentos obligatorios."
 
 #: ../../howto/clinic.rst:718
 msgid ""
 "In the case of ambiguity, the argument parsing code favors parameters on the "
 "left (before the required parameters)."
 msgstr ""
+"En caso de ambigüedad, el código de análisis sintáctico de argumentos "
+"favorece los parámetros de la izquierda (antes de los parámetros "
+"obligatorios)."
 
 #: ../../howto/clinic.rst:721
 msgid "Optional groups can only contain positional-only parameters."
-msgstr ""
+msgstr "Los grupos opcionales sólo pueden contener parámetros de posición."
 
 #: ../../howto/clinic.rst:723
 msgid ""
 "Optional groups are *only* intended for legacy code.  Please do not use "
 "optional groups for new code."
 msgstr ""
+"Los grupos opcionales están *únicamente* pensados para código heredado.  No "
+"utilice grupos opcionales para código nuevo."
 
 #: ../../howto/clinic.rst:728
 msgid "Using real Argument Clinic converters, instead of \"legacy converters\""
 msgstr ""
+"Uso de convertidores reales de Argument Clinic, en lugar de \"convertidores "
+"heredados\"."
 
 #: ../../howto/clinic.rst:730
 msgid ""
@@ -1098,17 +1156,28 @@ msgid ""
 "explicitly to make porting existing code to Argument Clinic easier.  And to "
 "be clear, their use is acceptable when porting code for Python 3.4."
 msgstr ""
+"Para ahorrar tiempo, y minimizar lo mucho que necesitas aprender para lograr "
+"tu primera portabilidad a Argument Clinic, el tutorial anterior te dice que "
+"uses \"conversores heredados\".  Los \"conversores heredados\" son una "
+"conveniencia, diseñados explícitamente para hacer más fácil la portabilidad "
+"de código existente a Argument Clinic.  Y para ser claros, su uso es "
+"aceptable al portar código para Python 3.4."
 
 #: ../../howto/clinic.rst:737
 msgid ""
 "However, in the long term we probably want all our blocks to use Argument "
 "Clinic's real syntax for converters.  Why?  A couple reasons:"
 msgstr ""
+"Sin embargo, a largo plazo probablemente queramos que todos nuestros bloques "
+"utilicen la sintaxis real de Argument Clinic para los conversores.  ¿Por "
+"qué?  Por un par de razones:"
 
 #: ../../howto/clinic.rst:741
 msgid ""
 "The proper converters are far easier to read and clearer in their intent."
 msgstr ""
+"Los conversores adecuados son mucho más fáciles de leer y más claros en su "
+"intención."
 
 #: ../../howto/clinic.rst:742
 msgid ""
@@ -1116,6 +1185,9 @@ msgid ""
 "because they require arguments, and the legacy converter syntax doesn't "
 "support specifying arguments."
 msgstr ""
+"Hay algunas unidades de formato que no se admiten como \"conversores "
+"heredados\", porque requieren argumentos y la sintaxis de los conversores "
+"heredados no admite la especificación de argumentos."
 
 #: ../../howto/clinic.rst:745
 msgid ""
@@ -1123,12 +1195,18 @@ msgid ""
 "restricted to what :c:func:`PyArg_ParseTuple` supports; this flexibility "
 "won't be available to parameters using legacy converters."
 msgstr ""
+"Es posible que en el futuro dispongamos de una nueva biblioteca de análisis "
+"sintáctico de argumentos que no se limite a lo que admite :c:func:"
+"`PyArg_ParseTuple`; esta flexibilidad no estará disponible para los "
+"parámetros que utilicen convertidores heredados."
 
 #: ../../howto/clinic.rst:749
 msgid ""
 "Therefore, if you don't mind a little extra effort, please use the normal "
 "converters instead of legacy converters."
 msgstr ""
+"Por lo tanto, si no le importa hacer un pequeño esfuerzo adicional, utilice "
+"los conversores normales en lugar de los conversores heredados."
 
 #: ../../howto/clinic.rst:752
 msgid ""
@@ -1137,16 +1215,24 @@ msgid ""
 "the function (all functions take their default values), you may omit the "
 "parentheses.  Thus ``bool`` and ``bool()`` are exactly the same converters."
 msgstr ""
+"En pocas palabras, la sintaxis de los conversores Argument Clinic (no "
+"legacy) se parece a la de una llamada a una función de Python.  Sin embargo, "
+"si no hay argumentos explícitos para la función (todas las funciones toman "
+"sus valores por defecto), puede omitir los paréntesis.  Así, ``bool`` y "
+"``bool()`` son exactamente los mismos convertidores."
 
 #: ../../howto/clinic.rst:758
 msgid ""
 "All arguments to Argument Clinic converters are keyword-only. All Argument "
 "Clinic converters accept the following arguments:"
 msgstr ""
+"Todos los argumentos de los conversores de Argument Clinic son sólo palabras "
+"clave. Todos los conversores de Argument Clinic aceptan los siguientes "
+"argumentos:"
 
 #: ../../howto/clinic.rst:766 ../../howto/clinic.rst:1316
 msgid "``c_default``"
-msgstr ""
+msgstr "``c_default``"
 
 #: ../../howto/clinic.rst:762
 msgid ""
@@ -1155,26 +1241,35 @@ msgid ""
 "function\".  See :ref:`the section on default values <default_values>` for "
 "how to use this. Specified as a string."
 msgstr ""
+"El valor por defecto para este parámetro cuando se define en C. "
+"Específicamente, este será el inicializador para la variable declarada en la "
+"\"función parse\".  Ver :ref:`la sección sobre valores por defecto "
+"<default_values>` para saber cómo utilizarlo. Especificado como una cadena."
 
 #: ../../howto/clinic.rst:771
 msgid "``annotation``"
-msgstr ""
+msgstr "``annotation``"
 
 #: ../../howto/clinic.rst:769
 msgid ""
 "The annotation value for this parameter.  Not currently supported, because :"
 "pep:`8` mandates that the Python library may not use annotations."
 msgstr ""
+"El valor de la anotación para este parámetro.  Actualmente no se admite "
+"porque :pep:`8` establece que la biblioteca Python no puede utilizar "
+"anotaciones."
 
 #: ../../howto/clinic.rst:773
 msgid ""
 "In addition, some converters accept additional arguments.  Here is a list of "
 "these arguments, along with their meanings:"
 msgstr ""
+"Además, algunos conversores aceptan argumentos adicionales.  He aquí una "
+"lista de estos argumentos, junto con sus significados:"
 
 #: ../../howto/clinic.rst:782
 msgid "``accept``"
-msgstr ""
+msgstr "``accept``"
 
 #: ../../howto/clinic.rst:777
 msgid ""
@@ -1183,14 +1278,18 @@ msgid ""
 "purpose facility; as a rule it only supports specific lists of types as "
 "shown in the legacy converter table.)"
 msgstr ""
+"Un conjunto de tipos Python (y posiblemente pseudotipos); esto restringe el "
+"argumento Python permitido a valores de estos tipos. (Esta no es una "
+"facilidad de propósito general; como regla sólo soporta listas específicas "
+"de tipos como se muestra en la tabla de conversores heredados)."
 
 #: ../../howto/clinic.rst:782
 msgid "To accept ``None``, add ``NoneType`` to this set."
-msgstr ""
+msgstr "Para aceptar ``None``, añada ``NoneType`` a este conjunto."
 
 #: ../../howto/clinic.rst:787
 msgid "``bitwise``"
-msgstr ""
+msgstr "``bitwise``"
 
 #: ../../howto/clinic.rst:785
 msgid ""
@@ -1198,10 +1297,13 @@ msgid ""
 "Python argument will be written to the parameter without any range checking, "
 "even for negative values."
 msgstr ""
+"Sólo soportado para enteros sin signo.  El valor entero nativo de este "
+"argumento de Python se escribirá en el parámetro sin ninguna comprobación de "
+"rango, incluso para valores negativos."
 
 #: ../../howto/clinic.rst:792 ../../howto/clinic.rst:1330
 msgid "``converter``"
-msgstr ""
+msgstr "``converter``"
 
 #: ../../howto/clinic.rst:790
 msgid ""
@@ -1209,30 +1311,38 @@ msgid ""
 "\"converter function\" <o_ampersand>` to use to convert this object to a "
 "native type."
 msgstr ""
+"Sólo soportado por el convertidor ``object``.  Especifica el nombre de una :"
+"ref:`C \"converter function\" <o_ampersand>` a utilizar para convertir este "
+"objeto a un tipo nativo."
 
 #: ../../howto/clinic.rst:797
 msgid "``encoding``"
-msgstr ""
+msgstr "``encoding``"
 
 #: ../../howto/clinic.rst:795
 msgid ""
 "Only supported for strings.  Specifies the encoding to use when converting "
 "this string from a Python str (Unicode) value into a C ``char *`` value."
 msgstr ""
+"Sólo se admite para cadenas.  Especifica la codificación que se utilizará al "
+"convertir esta cadena de un valor str (Unicode) de Python a un valor ``char "
+"*`` de C."
 
 #: ../../howto/clinic.rst:801
 msgid "``subclass_of``"
-msgstr ""
+msgstr "``subclass_of``"
 
 #: ../../howto/clinic.rst:800
 msgid ""
 "Only supported for the ``object`` converter.  Requires that the Python value "
 "be a subclass of a Python type, as expressed in C."
 msgstr ""
+"Sólo compatible con el convertidor ``object``.  Requiere que el valor Python "
+"sea una subclase de un tipo Python, expresado en C."
 
 #: ../../howto/clinic.rst:806 ../../howto/clinic.rst:1302
 msgid "``type``"
-msgstr ""
+msgstr "``type``"
 
 #: ../../howto/clinic.rst:804
 msgid ""
@@ -1240,10 +1350,13 @@ msgid ""
 "type that will be used to declare the variable.  Default value is "
 "``\"PyObject *\"``."
 msgstr ""
+"Sólo compatible con los convertidores ``object`` y ``self``.  Especifica el "
+"tipo C que se utilizará para declarar la variable.  El valor por defecto es "
+"``\"PyObject *\"``."
 
 #: ../../howto/clinic.rst:812
 msgid "``zeroes``"
-msgstr ""
+msgstr "``zeroes``"
 
 #: ../../howto/clinic.rst:809
 msgid ""
@@ -1252,6 +1365,10 @@ msgid ""
 "the impl function, just after the string parameter, as a parameter named "
 "``<parameter_name>_length``."
 msgstr ""
+"Sólo se admite para cadenas.  Si es verdadero, se permiten bytes NUL "
+"incrustados (``'\\\\0'``) dentro del valor.  La longitud de la cadena se "
+"pasará a la función impl, justo después del parámetro de cadena, como un "
+"parámetro llamado ``<parameter_name>_length``."
 
 #: ../../howto/clinic.rst:814
 msgid ""
@@ -1263,6 +1380,14 @@ msgid ""
 "any existing format unit.  So Argument Clinic doesn't support it.  (Or, at "
 "least, not yet.)"
 msgstr ""
+"Tenga en cuenta que no todas las combinaciones posibles de argumentos "
+"funcionarán. Normalmente estos argumentos son implementados por "
+"``PyArg_ParseTuple`` *unidades de formato* específicas, con un "
+"comportamiento específico.  Por ejemplo, actualmente no se puede llamar a "
+"``unsigned_short`` sin especificar también ``bitwise=True``. Aunque es "
+"perfectamente razonable pensar que esto funcionaría, esta semántica no se "
+"corresponde con ninguna unidad de formato existente.  Así que Argument "
+"Clinic no lo admite.  (O, al menos, todavía no)."
 
 #: ../../howto/clinic.rst:822
 msgid ""
@@ -1270,116 +1395,122 @@ msgid ""
 "Clinic converters.  On the left is the legacy converter, on the right is the "
 "text you'd replace it with."
 msgstr ""
+"A continuación se muestra una tabla con la correspondencia entre los "
+"conversores antiguos y los conversores reales de Argument Clinic.  A la "
+"izquierda está el conversor heredado, a la derecha el texto con el que lo "
+"sustituirías."
 
 #: ../../howto/clinic.rst:827
 msgid "``'B'``"
-msgstr ""
+msgstr "``'B'``"
 
 #: ../../howto/clinic.rst:827
 msgid "``unsigned_char(bitwise=True)``"
-msgstr ""
+msgstr "``unsigned_char(bitwise=True)``"
 
 #: ../../howto/clinic.rst:828
 msgid "``'b'``"
-msgstr ""
+msgstr "``'b'``"
 
 #: ../../howto/clinic.rst:828
 msgid "``unsigned_char``"
-msgstr ""
+msgstr "``unsigned_char``"
 
 #: ../../howto/clinic.rst:829
 msgid "``'c'``"
-msgstr ""
+msgstr "``'c'``"
 
 #: ../../howto/clinic.rst:829
 msgid "``char``"
-msgstr ""
+msgstr "``char``"
 
 #: ../../howto/clinic.rst:830
 msgid "``'C'``"
-msgstr ""
+msgstr "``'C'``"
 
 #: ../../howto/clinic.rst:830
 msgid "``int(accept={str})``"
-msgstr ""
+msgstr "``int(accept={str})``"
 
 #: ../../howto/clinic.rst:831
 msgid "``'d'``"
-msgstr ""
+msgstr "``'d'``"
 
 #: ../../howto/clinic.rst:831
 msgid "``double``"
-msgstr ""
+msgstr "``double``"
 
 #: ../../howto/clinic.rst:832
 msgid "``'D'``"
-msgstr ""
+msgstr "``'D'``"
 
 #: ../../howto/clinic.rst:832
 msgid "``Py_complex``"
-msgstr ""
+msgstr "``Py_complex``"
 
 #: ../../howto/clinic.rst:833
 msgid "``'es'``"
-msgstr ""
+msgstr "``'es'``"
 
 #: ../../howto/clinic.rst:833
 msgid "``str(encoding='name_of_encoding')``"
-msgstr ""
+msgstr "``str(encoding='name_of_encoding')``"
 
 #: ../../howto/clinic.rst:834
 msgid "``'es#'``"
-msgstr ""
+msgstr "``'es#'``"
 
 #: ../../howto/clinic.rst:834
 msgid "``str(encoding='name_of_encoding', zeroes=True)``"
-msgstr ""
+msgstr "``str(encoding='name_of_encoding', zeroes=True)``"
 
 #: ../../howto/clinic.rst:835
 msgid "``'et'``"
-msgstr ""
+msgstr "``'et'``"
 
 #: ../../howto/clinic.rst:835
 msgid "``str(encoding='name_of_encoding', accept={bytes, bytearray, str})``"
-msgstr ""
+msgstr "``str(encoding='name_of_encoding', accept={bytes, bytearray, str})``"
 
 #: ../../howto/clinic.rst:836
 msgid "``'et#'``"
-msgstr ""
+msgstr "``'et#'``"
 
 #: ../../howto/clinic.rst:836
 msgid ""
 "``str(encoding='name_of_encoding', accept={bytes, bytearray, str}, "
 "zeroes=True)``"
 msgstr ""
+"``str(encoding='name_of_encoding', accept={bytes, bytearray, str}, "
+"zeroes=True)``"
 
 #: ../../howto/clinic.rst:837
 msgid "``'f'``"
-msgstr ""
+msgstr "``'f'``"
 
 #: ../../howto/clinic.rst:837
 msgid "``float``"
-msgstr ""
+msgstr "``float``"
 
 #: ../../howto/clinic.rst:838
 msgid "``'h'``"
-msgstr ""
+msgstr "``'h'``"
 
 #: ../../howto/clinic.rst:838
 msgid "``short``"
-msgstr ""
+msgstr "``short``"
 
 #: ../../howto/clinic.rst:839
 msgid "``'H'``"
-msgstr ""
+msgstr "``'H'``"
 
 #: ../../howto/clinic.rst:839
 msgid "``unsigned_short(bitwise=True)``"
-msgstr ""
+msgstr "``unsigned_short(bitwise=True)``"
 
 #: ../../howto/clinic.rst:840
 msgid "``'i'``"
-msgstr ""
+msgstr "``'i'``"
 
 #: ../../howto/clinic.rst:840
 msgid "``int``"
@@ -1387,225 +1518,227 @@ msgstr "``int``"
 
 #: ../../howto/clinic.rst:841
 msgid "``'I'``"
-msgstr ""
+msgstr "``'I'``"
 
 #: ../../howto/clinic.rst:841
 msgid "``unsigned_int(bitwise=True)``"
-msgstr ""
+msgstr "``unsigned_int(bitwise=True)``"
 
 #: ../../howto/clinic.rst:842
 msgid "``'k'``"
-msgstr ""
+msgstr "``'k'``"
 
 #: ../../howto/clinic.rst:842
 msgid "``unsigned_long(bitwise=True)``"
-msgstr ""
+msgstr "``unsigned_long(bitwise=True)``"
 
 #: ../../howto/clinic.rst:843
 msgid "``'K'``"
-msgstr ""
+msgstr "``'K'``"
 
 #: ../../howto/clinic.rst:843
 msgid "``unsigned_long_long(bitwise=True)``"
-msgstr ""
+msgstr "``unsigned_long_long(bitwise=True)``"
 
 #: ../../howto/clinic.rst:844
 msgid "``'l'``"
-msgstr ""
+msgstr "``'l'``"
 
 #: ../../howto/clinic.rst:844
 msgid "``long``"
-msgstr ""
+msgstr "``long``"
 
 #: ../../howto/clinic.rst:845
 msgid "``'L'``"
-msgstr ""
+msgstr "``'L'``"
 
 #: ../../howto/clinic.rst:845
 msgid "``long long``"
-msgstr ""
+msgstr "``long long``"
 
 #: ../../howto/clinic.rst:846
 msgid "``'n'``"
-msgstr ""
+msgstr "``'n'``"
 
 #: ../../howto/clinic.rst:846
 msgid "``Py_ssize_t``"
-msgstr ""
+msgstr "``Py_ssize_t``"
 
 #: ../../howto/clinic.rst:847
 msgid "``'O'``"
-msgstr ""
+msgstr "``'O'``"
 
 #: ../../howto/clinic.rst:847
 msgid "``object``"
-msgstr ""
+msgstr "``object``"
 
 #: ../../howto/clinic.rst:848
 msgid "``'O!'``"
-msgstr ""
+msgstr "``'O!'``"
 
 #: ../../howto/clinic.rst:848
 msgid "``object(subclass_of='&PySomething_Type')``"
-msgstr ""
+msgstr "``object(subclass_of='&PySomething_Type')``"
 
 #: ../../howto/clinic.rst:849
 msgid "``'O&'``"
-msgstr ""
+msgstr "``'O&'``"
 
 #: ../../howto/clinic.rst:849
 msgid "``object(converter='name_of_c_function')``"
-msgstr ""
+msgstr "``object(converter='name_of_c_function')``"
 
 #: ../../howto/clinic.rst:850
 msgid "``'p'``"
-msgstr ""
+msgstr "``'p'``"
 
 #: ../../howto/clinic.rst:850
 msgid "``bool``"
-msgstr ""
+msgstr "``bool``"
 
 #: ../../howto/clinic.rst:851
 msgid "``'S'``"
-msgstr ""
+msgstr "``'S'``"
 
 #: ../../howto/clinic.rst:851
 msgid "``PyBytesObject``"
-msgstr ""
+msgstr "``PyBytesObject``"
 
 #: ../../howto/clinic.rst:852
 msgid "``'s'``"
-msgstr ""
+msgstr "``'s'``"
 
 #: ../../howto/clinic.rst:852
 msgid "``str``"
-msgstr ""
+msgstr "``str``"
 
 #: ../../howto/clinic.rst:853
 msgid "``'s#'``"
-msgstr ""
+msgstr "``'s#'``"
 
 #: ../../howto/clinic.rst:853
 msgid "``str(zeroes=True)``"
-msgstr ""
+msgstr "``str(zeroes=True)``"
 
 #: ../../howto/clinic.rst:854
 msgid "``'s*'``"
-msgstr ""
+msgstr "``'s*'``"
 
 #: ../../howto/clinic.rst:854
 msgid "``Py_buffer(accept={buffer, str})``"
-msgstr ""
+msgstr "``Py_buffer(accept={buffer, str})``"
 
 #: ../../howto/clinic.rst:855
 msgid "``'U'``"
-msgstr ""
+msgstr "``'U'``"
 
 #: ../../howto/clinic.rst:855
 msgid "``unicode``"
-msgstr ""
+msgstr "``unicode``"
 
 #: ../../howto/clinic.rst:856
 msgid "``'u'``"
-msgstr ""
+msgstr "``'u'``"
 
 #: ../../howto/clinic.rst:856
 msgid "``Py_UNICODE``"
-msgstr ""
+msgstr "``Py_UNICODE``"
 
 #: ../../howto/clinic.rst:857
 msgid "``'u#'``"
-msgstr ""
+msgstr "``'u#'``"
 
 #: ../../howto/clinic.rst:857
 msgid "``Py_UNICODE(zeroes=True)``"
-msgstr ""
+msgstr "``Py_UNICODE(zeroes=True)``"
 
 #: ../../howto/clinic.rst:858
 msgid "``'w*'``"
-msgstr ""
+msgstr "``'w*'``"
 
 #: ../../howto/clinic.rst:858
 msgid "``Py_buffer(accept={rwbuffer})``"
-msgstr ""
+msgstr "``Py_buffer(accept={rwbuffer})``"
 
 #: ../../howto/clinic.rst:859
 msgid "``'Y'``"
-msgstr ""
+msgstr "``'Y'``"
 
 #: ../../howto/clinic.rst:859
 msgid "``PyByteArrayObject``"
-msgstr ""
+msgstr "``PyByteArrayObject``"
 
 #: ../../howto/clinic.rst:860
 msgid "``'y'``"
-msgstr ""
+msgstr "``'y'``"
 
 #: ../../howto/clinic.rst:860
 msgid "``str(accept={bytes})``"
-msgstr ""
+msgstr "``str(accept={bytes})``"
 
 #: ../../howto/clinic.rst:861
 msgid "``'y#'``"
-msgstr ""
+msgstr "``'y#'``"
 
 #: ../../howto/clinic.rst:861
 msgid "``str(accept={robuffer}, zeroes=True)``"
-msgstr ""
+msgstr "``str(accept={robuffer}, zeroes=True)``"
 
 #: ../../howto/clinic.rst:862
 msgid "``'y*'``"
-msgstr ""
+msgstr "``'y*'``"
 
 #: ../../howto/clinic.rst:862
 msgid "``Py_buffer``"
-msgstr ""
+msgstr "``Py_buffer``"
 
 #: ../../howto/clinic.rst:863
 msgid "``'Z'``"
-msgstr ""
+msgstr "``'Z'``"
 
 #: ../../howto/clinic.rst:863
 msgid "``Py_UNICODE(accept={str, NoneType})``"
-msgstr ""
+msgstr "``Py_UNICODE(accept={str, NoneType})``"
 
 #: ../../howto/clinic.rst:864
 msgid "``'Z#'``"
-msgstr ""
+msgstr "``'Z#'``"
 
 #: ../../howto/clinic.rst:864
 msgid "``Py_UNICODE(accept={str, NoneType}, zeroes=True)``"
-msgstr ""
+msgstr "``Py_UNICODE(accept={str, NoneType}, zeroes=True)``"
 
 #: ../../howto/clinic.rst:865
 msgid "``'z'``"
-msgstr ""
+msgstr "``'z'``"
 
 #: ../../howto/clinic.rst:865
 msgid "``str(accept={str, NoneType})``"
-msgstr ""
+msgstr "``str(accept={str, NoneType})``"
 
 #: ../../howto/clinic.rst:866
 msgid "``'z#'``"
-msgstr ""
+msgstr "``'z#'``"
 
 #: ../../howto/clinic.rst:866
 msgid "``str(accept={str, NoneType}, zeroes=True)``"
-msgstr ""
+msgstr "``str(accept={str, NoneType}, zeroes=True)``"
 
 #: ../../howto/clinic.rst:867
 msgid "``'z*'``"
-msgstr ""
+msgstr "``'z*'``"
 
 #: ../../howto/clinic.rst:867
 msgid "``Py_buffer(accept={buffer, str, NoneType})``"
-msgstr ""
+msgstr "``Py_buffer(accept={buffer, str, NoneType})``"
 
 #: ../../howto/clinic.rst:870
 msgid ""
 "As an example, here's our sample ``pickle.Pickler.dump`` using the proper "
 "converter::"
 msgstr ""
+"Como ejemplo, aquí está nuestro ejemplo ``pickle.Pickler.dump`` utilizando "
+"el convertidor adecuado::"
 
 #: ../../howto/clinic.rst:883
 msgid ""
@@ -1615,6 +1748,11 @@ msgid ""
 "default behavior performs range checking on the value, and they won't accept "
 "negative numbers.  You just can't do that with a legacy converter!"
 msgstr ""
+"Una ventaja de los conversores reales es que son más flexibles que los "
+"conversores heredados.  Por ejemplo, el conversor ``unsigned_int`` (y todos "
+"los conversores ``unsigned_`` ) pueden especificarse sin ``bitwise=True``.  "
+"Su comportamiento por defecto comprueba el rango del valor y no acepta "
+"números negativos.  Eso no se puede hacer con un convertidor heredado."
 
 #: ../../howto/clinic.rst:889
 msgid ""
@@ -1623,10 +1761,14 @@ msgid ""
 "default value for each parameter. Just run ``Tools/clinic/clinic.py --"
 "converters`` to see the full list."
 msgstr ""
+"Argument Clinic te mostrará todos los conversores que tiene disponibles.  "
+"Para cada conversor te mostrará todos los parámetros que acepta, junto con "
+"el valor por defecto de cada parámetro. Ejecute ``Tools/clinic/clinic.py --"
+"converters`` para ver la lista completa."
 
 #: ../../howto/clinic.rst:895
 msgid "Py_buffer"
-msgstr ""
+msgstr "Py_buffer"
 
 #: ../../howto/clinic.rst:897
 msgid ""
@@ -1635,16 +1777,22 @@ msgid ""
 "`PyBuffer_Release` on the provided buffer. Argument Clinic generates code "
 "that does it for you (in the parsing function)."
 msgstr ""
+"Cuando utilice el conversor ``Py_buffer`` (o los conversores heredados "
+"``'s*'``, ``'w*'``, ``'*y'``, o ``'z*'`` ), *no debe* llamar a :c:func:"
+"`PyBuffer_Release` en el búfer proporcionado. Argument Clinic genera código "
+"que lo hace por ti (en la función de análisis)."
 
 #: ../../howto/clinic.rst:905
 msgid "Advanced converters"
-msgstr ""
+msgstr "Convertidores avanzados"
 
 #: ../../howto/clinic.rst:907
 msgid ""
 "Remember those format units you skipped for your first time because they "
 "were advanced?  Here's how to handle those too."
 msgstr ""
+"¿Recuerdas esas unidades de formato que te saltaste la primera vez porque "
+"eran avanzadas?  Aquí tienes cómo manejarlas también."
 
 #: ../../howto/clinic.rst:910
 msgid ""
@@ -1656,6 +1804,13 @@ msgid ""
 "``O&``), ``subclass_of`` (for ``O!``), or ``encoding`` (for all the format "
 "units that start with ``e``)."
 msgstr ""
+"El truco es que todas esas unidades de formato aceptan argumentos, ya sean "
+"funciones de conversión, tipos o cadenas que especifican una codificación. "
+"(Pero los \"conversores heredados\" no admiten argumentos.  Por eso los "
+"omitimos para tu primera función).  El argumento que especificó para la "
+"unidad de formato es ahora un argumento para el conversor; este argumento es "
+"``converter`` (para ``O&``), ``subclass_of`` (para ``O!``), o ``encoding`` "
+"(para todas las unidades de formato que empiezan por ``e``)."
 
 #: ../../howto/clinic.rst:918
 msgid ""
@@ -1665,6 +1820,12 @@ msgid ""
 "is a subclass of ``PyUnicode_Type``, you probably want to use the converter "
 "``object(type='PyUnicodeObject *', subclass_of='&PyUnicode_Type')``."
 msgstr ""
+"Al utilizar ``subclass_of``, puede que también desee utilizar el otro "
+"argumento personalizado para ``object()``: ``type`` que le permite "
+"establecer el tipo utilizado realmente para el parámetro.  Por ejemplo, si "
+"desea asegurarse de que el objeto es una subclase de ``PyUnicode_Type``, es "
+"probable que desee utilizar el convertidor ``object(type='PyUnicodeObject "
+"*', subclass_of='&PyUnicode_Type')``."
 
 #: ../../howto/clinic.rst:924
 msgid ""
@@ -1678,30 +1839,45 @@ msgid ""
 "unreasonable; CPython itself always passes in static hard-coded encoding "
 "strings for parameters whose format units start with ``e``."
 msgstr ""
+"Un posible problema de la utilización de Argument Clinic es que resta "
+"flexibilidad a las unidades de formato que empiezan por ``e``.  Cuando se "
+"escribe una llamada a ``PyArg_Parse`` a mano, teóricamente se podría decidir "
+"en tiempo de ejecución qué cadena de codificación pasar a :c:func:"
+"`PyArg_ParseTuple`. Pero ahora esta cadena debe ser codificada en tiempo de "
+"preprocesamiento de Argument-Clinic.  Esta limitación es deliberada; hace "
+"que el soporte de esta unidad de formato sea mucho más fácil, y puede "
+"permitir futuras optimizaciones. Esta restricción no parece irrazonable; el "
+"propio CPython siempre pasa cadenas de codificación estáticas codificadas "
+"para parámetros cuyas unidades de formato empiezan por ``e``."
 
 #: ../../howto/clinic.rst:937
 msgid "Parameter default values"
-msgstr ""
+msgstr "Valores por defecto de los parámetros"
 
 #: ../../howto/clinic.rst:939
 msgid ""
 "Default values for parameters can be any of a number of values. At their "
 "simplest, they can be string, int, or float literals:"
 msgstr ""
+"Los valores por defecto de los parámetros pueden ser de varios tipos. En su "
+"forma más simple, pueden ser literales string, int o float:"
 
 #: ../../howto/clinic.rst:948
 msgid "They can also use any of Python's built-in constants:"
 msgstr ""
+"También pueden utilizar cualquiera de las constantes incorporadas en Python:"
 
 #: ../../howto/clinic.rst:956
 msgid ""
 "There's also special support for a default value of ``NULL``, and for simple "
 "expressions, documented in the following sections."
 msgstr ""
+"También hay soporte especial para un valor por defecto de ``NULL``, y para "
+"expresiones simples, documentadas en las siguientes secciones."
 
 #: ../../howto/clinic.rst:961
 msgid "The ``NULL`` default value"
-msgstr ""
+msgstr "El valor por defecto ``NULL`` "
 
 #: ../../howto/clinic.rst:963
 msgid ""
@@ -1712,10 +1888,16 @@ msgid ""
 "behaves like a default value of ``None``, but the C variable is initialized "
 "with ``NULL``."
 msgstr ""
+"En el caso de los parámetros de cadena y objeto, puede establecerlos en "
+"``None`` para indicar que no hay ningún valor por defecto.  Sin embargo, eso "
+"significa que la variable C se inicializará a ``Py_None``.  Por "
+"conveniencia, hay un valor especial llamado ``NULL`` precisamente por esta "
+"razón: desde la perspectiva de Python se comporta como un valor por defecto "
+"de ``None``, pero la variable C se inicializa con ``NULL``."
 
 #: ../../howto/clinic.rst:971
 msgid "Expressions specified as default values"
-msgstr ""
+msgstr "Expresiones especificadas como valores por defecto"
 
 #: ../../howto/clinic.rst:973
 msgid ""
@@ -1724,10 +1906,14 @@ msgid ""
 "on objects.  However, this support isn't exactly simple, because of some non-"
 "obvious semantics."
 msgstr ""
+"El valor por defecto de un parámetro puede ser algo más que un valor "
+"literal. Puede ser una expresión completa, que utilice operadores "
+"matemáticos y busque atributos en los objetos.  Sin embargo, este soporte no "
+"es exactamente sencillo, debido a algunas semánticas no obvias."
 
 #: ../../howto/clinic.rst:978
 msgid "Consider the following example:"
-msgstr ""
+msgstr "Considere el siguiente ejemplo:"
 
 #: ../../howto/clinic.rst:984
 msgid ""
@@ -1736,6 +1922,11 @@ msgid ""
 "it in C.  So it stores the default in such a way that it will get evaluated "
 "at runtime, when the user asks for the function's signature."
 msgstr ""
+"``sys.maxsize`` puede tener diferentes valores en diferentes plataformas.  "
+"Por lo tanto, Argument Clinic no puede simplemente evaluar esa expresión "
+"localmente y codificarla en C. Así que almacena el valor predeterminado de "
+"tal manera que se evaluará en tiempo de ejecución, cuando el usuario "
+"pregunte por la firma de la función."
 
 #: ../../howto/clinic.rst:989
 msgid ""
@@ -1743,6 +1934,10 @@ msgid ""
 "evaluated in the context of the module the builtin came from.  So, if your "
 "module has an attribute called \"``max_widgets``\", you may simply use it:"
 msgstr ""
+"¿Qué espacio de nombres está disponible cuando se evalúa la expresión?  Se "
+"evalúa en el contexto del módulo del que procede el builtin.  Por lo tanto, "
+"si su módulo tiene un atributo llamado \"``max_widgets``\", puede "
+"simplemente utilizarlo:"
 
 #: ../../howto/clinic.rst:997
 msgid ""
@@ -1752,6 +1947,10 @@ msgid ""
 "interpreter, it's best to restrict yourself to modules that are preloaded by "
 "Python itself.)"
 msgstr ""
+"Si el símbolo no se encuentra en el módulo actual, pasa a buscarlo en ``sys."
+"modules``.  Así es como puede encontrar ``sys.maxsize``, por ejemplo.  (Dado "
+"que no sabes de antemano qué módulos cargará el usuario en su intérprete, es "
+"mejor limitarse a los módulos precargados por el propio Python)."
 
 #: ../../howto/clinic.rst:1002
 msgid ""
@@ -1760,6 +1959,11 @@ msgid ""
 "explicitly. When you use an expression, you must also specify the equivalent "
 "expression in C, using the ``c_default`` parameter to the converter:"
 msgstr ""
+"Evaluar los valores por defecto sólo en tiempo de ejecución significa que "
+"Argument Clinic no puede calcular el valor por defecto C equivalente "
+"correcto.  Así que tienes que decírselo explícitamente. Cuando utilices una "
+"expresión, también debes especificar la expresión equivalente en C, "
+"utilizando el parámetro ``c_default`` del conversor:"
 
 #: ../../howto/clinic.rst:1011
 msgid ""
@@ -1768,6 +1972,11 @@ msgid ""
 "legal, but it can't *actually* know.  You must be very careful when using "
 "expressions to specify values that are guaranteed to be valid at runtime!"
 msgstr ""
+"Otra complicación: Argument Clinic no puede saber de antemano si la "
+"expresión que proporcionas es válida o no.  La analiza para asegurarse de "
+"que parece legal, pero no puede saberlo *realmente*.  Debes tener mucho "
+"cuidado cuando utilices expresiones para especificar valores cuya validez "
+"esté garantizada en tiempo de ejecución."
 
 #: ../../howto/clinic.rst:1016
 msgid ""
@@ -1775,30 +1984,33 @@ msgid ""
 "are many restrictions on legal expressions.  Here's a list of Python "
 "features you're not permitted to use:"
 msgstr ""
+"Por último, dado que las expresiones deben ser representables como valores "
+"estáticos de C, existen muchas restricciones sobre las expresiones legales.  "
+"Aquí tienes una lista de funciones de Python que no puedes usar:"
 
 #: ../../howto/clinic.rst:1020
 msgid "Function calls."
-msgstr ""
+msgstr "Llamadas a función."
 
 #: ../../howto/clinic.rst:1021
 msgid "Inline if statements (``3 if foo else 5``)."
-msgstr ""
+msgstr "Sentencias if en línea (``3 if foo else 5``)."
 
 #: ../../howto/clinic.rst:1022
 msgid "Automatic sequence unpacking (``*[1, 2, 3]``)."
-msgstr ""
+msgstr "Desembalaje secuencial automático (``*[1, 2, 3]``)."
 
 #: ../../howto/clinic.rst:1023
 msgid "List/set/dict comprehensions and generator expressions."
-msgstr ""
+msgstr "Comprensiones list/set/dict y expresiones generadoras."
 
 #: ../../howto/clinic.rst:1024
 msgid "Tuple/list/set/dict literals."
-msgstr ""
+msgstr "Literales tuple/list/set/dict ."
 
 #: ../../howto/clinic.rst:1029
 msgid "Using a return converter"
-msgstr ""
+msgstr "Utilizar un convertidor de retorno"
 
 #: ../../howto/clinic.rst:1031
 msgid ""
@@ -1809,6 +2021,12 @@ msgid ""
 "have it convert your return value from a native C type into a Python type "
 "too?"
 msgstr ""
+"Por defecto, la función impl que Argument Clinic genera para ti devuelve "
+"``PyObject *``. Pero tu función C a menudo calcula algún tipo C, y luego lo "
+"convierte en ``PyObject *`` en el último momento.  Argument Clinic se "
+"encarga de convertir tus entradas de tipos Python a tipos C nativos, ¿por "
+"qué no hacer que convierta también tu valor de retorno de un tipo C nativo a "
+"un tipo Python?"
 
 #: ../../howto/clinic.rst:1037
 msgid ""
@@ -1816,6 +2034,9 @@ msgid ""
 "return some C type, then adds code to the generated (non-impl) function to "
 "handle converting that value into the appropriate ``PyObject *``."
 msgstr ""
+"Eso es lo que hace un \"convertidor de retorno\".  Cambia tu función impl "
+"para que devuelva algún tipo C, luego añade código a la función generada (no "
+"impl) para manejar la conversión de ese valor en el apropiado ``PyObject *``."
 
 #: ../../howto/clinic.rst:1041
 msgid ""
@@ -1826,12 +2047,21 @@ msgid ""
 "you're not changing any of the default arguments you can omit the "
 "parentheses."
 msgstr ""
+"La sintaxis de los convertidores de retorno es similar a la de los "
+"convertidores de parámetros. Se especifica el convertidor de retorno como si "
+"fuera una anotación de retorno en la propia función.  Los convertidores de "
+"retorno se comportan de forma muy similar a los convertidores de parámetros; "
+"toman argumentos, los argumentos son todos de palabra clave y, si no vas a "
+"cambiar ninguno de los argumentos predeterminados, puedes omitir los "
+"paréntesis."
 
 #: ../../howto/clinic.rst:1047
 msgid ""
 "(If you use both ``\"as\"`` *and* a return converter for your function, the "
 "``\"as\"`` should come before the return converter.)"
 msgstr ""
+"(Si utiliza tanto ``\"as\"`` *como* un convertidor de retorno para su "
+"función, el ``\"as\"`` debe ir antes del convertidor de retorno)."
 
 #: ../../howto/clinic.rst:1050
 msgid ""
@@ -1845,10 +2075,21 @@ msgid ""
 "generated code will propagate the error.  Otherwise it will encode the value "
 "you return like normal."
 msgstr ""
+"Hay una complicación adicional cuando se utilizan convertidores de retorno: "
+"¿cómo se indica que se ha producido un error?  Normalmente, una función "
+"devuelve un puntero válido (no``NULL``) en caso de éxito, y ``NULL`` en caso "
+"de error.  Pero si se utiliza un convertidor de retorno de enteros, todos "
+"los enteros son válidos.  ¿Cómo puede Argument Clinic detectar un error?  Su "
+"solución: cada convertidor de retorno busca implícitamente un valor especial "
+"que indica un error.  Si devuelve ese valor, y se ha establecido un error "
+"(``PyErr_Occurred()`` devuelve un valor verdadero), entonces el código "
+"generado propagará el error.  De lo contrario, codificará el valor que "
+"devuelve como normal."
 
 #: ../../howto/clinic.rst:1059
 msgid "Currently Argument Clinic supports only a few return converters:"
 msgstr ""
+"Actualmente, Argument Clinic sólo admite unos pocos conversores de retorno:"
 
 #: ../../howto/clinic.rst:1074
 msgid ""
@@ -1856,6 +2097,9 @@ msgid ""
 "error.  For ``DecodeFSDefault``, the return type is ``const char *``; return "
 "a ``NULL`` pointer to indicate an error."
 msgstr ""
+"Ninguna de ellas toma parámetros.  Para los tres primeros, devuelva -1 para "
+"indicar error.  Para ``DecodeFSDefault``, el tipo de retorno es ``const char "
+"*``; devuelve un puntero ``NULL`` para indicar un error."
 
 #: ../../howto/clinic.rst:1078
 msgid ""
@@ -1864,6 +2108,10 @@ msgid ""
 "the reference count on ``Py_None``.  I'm not sure it adds enough clarity to "
 "be worth using.)"
 msgstr ""
+"(También existe un conversor experimental ``NoneType``, que permite devolver "
+"``Py_None`` en caso de éxito o ``NULL`` en caso de fallo, sin tener que "
+"incrementar el recuento de referencias en ``Py_None``.  No estoy seguro de "
+"que añada suficiente claridad como para que merezca la pena usarlo)."
 
 #: ../../howto/clinic.rst:1083
 msgid ""
@@ -1871,56 +2119,65 @@ msgid ""
 "parameters (if any), just run ``Tools/clinic/clinic.py --converters`` for "
 "the full list."
 msgstr ""
+"Para ver todos los conversores de retorno que admite Argument Clinic, junto "
+"con sus parámetros (si los hay), basta con ejecutar ``Tools/clinic/clinic.py "
+"--converters`` para obtener la lista completa."
 
 #: ../../howto/clinic.rst:1089
 msgid "Cloning existing functions"
-msgstr ""
+msgstr "Clonación de funciones existentes"
 
 #: ../../howto/clinic.rst:1091
 msgid ""
 "If you have a number of functions that look similar, you may be able to use "
 "Clinic's \"clone\" feature.  When you clone an existing function, you reuse:"
 msgstr ""
+"Si tiene varias funciones parecidas, puede utilizar la función \"clonar\" de "
+"Clinic.  Cuando clonas una función existente, la reutilizas:"
 
 #: ../../howto/clinic.rst:1095
 msgid "its parameters, including"
-msgstr ""
+msgstr "sus parámetros, incluidos"
 
 #: ../../howto/clinic.rst:1097
 msgid "their names,"
-msgstr ""
+msgstr "sus nombres,"
 
 #: ../../howto/clinic.rst:1099
 msgid "their converters, with all parameters,"
-msgstr ""
+msgstr "sus convertidores, con todos los parámetros,"
 
 #: ../../howto/clinic.rst:1101
 msgid "their default values,"
-msgstr ""
+msgstr "sus valores por defecto,"
 
 #: ../../howto/clinic.rst:1103
 msgid "their per-parameter docstrings,"
-msgstr ""
+msgstr "sus docstrings por parámetro,"
 
 #: ../../howto/clinic.rst:1105
 msgid ""
 "their *kind* (whether they're positional only, positional or keyword, or "
 "keyword only), and"
 msgstr ""
+"su *tipo* (si son sólo posicionales, posicionales o de palabra clave, o sólo "
+"de palabra clave), y"
 
 #: ../../howto/clinic.rst:1108
 msgid "its return converter."
-msgstr ""
+msgstr "su convertidor de retorno."
 
 #: ../../howto/clinic.rst:1110
 msgid ""
 "The only thing not copied from the original function is its docstring; the "
 "syntax allows you to specify a new docstring."
 msgstr ""
+"Lo único que no se copia de la función original es su docstring; la sintaxis "
+"permite especificar un nuevo docstring."
 
 #: ../../howto/clinic.rst:1113
 msgid "Here's the syntax for cloning a function::"
-msgstr ""
+msgstr "Esta es la sintaxis para clonar una función::"
 
 #: ../../howto/clinic.rst:1121
 msgid ""
