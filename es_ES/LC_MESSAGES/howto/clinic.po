@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-20 00:12+0000\n"
+"POT-Creation-Date: 2024-05-03 23:17+0000\n"
 "PO-Revision-Date: 2020-05-30 11:54+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -25,7 +25,7 @@ msgstr ""
 
 #: ../../howto/clinic.rst:5
 msgid "Argument Clinic How-To"
-msgstr ""
+msgstr "Clínica de la argumentación"
 
 #: ../../howto/clinic.rst:0
 msgid "author"
@@ -47,6 +47,11 @@ msgid ""
 "to work with Argument Clinic, and then introduces some advanced topics on "
 "Argument Clinic usage."
 msgstr ""
+"Argument Clinic es un preprocesador para archivos C de CPython. Su propósito "
+"es automatizar todo el trabajo de escribir código de análisis de argumentos "
+"para \"builtins\". Este documento le muestra cómo convertir su primera "
+"función C para trabajar con Argument Clinic, y luego introduce algunos temas "
+"avanzados sobre el uso de Argument Clinic."
 
 #: ../../howto/clinic.rst:19
 msgid ""
@@ -58,10 +63,17 @@ msgid ""
 "Argument Clinic that ships with the next version of CPython *could* be "
 "totally incompatible and break all your code."
 msgstr ""
+"Actualmente Argument Clinic se considera sólo interno para CPython.  Su uso "
+"no está soportado para archivos fuera de CPython, y no se garantiza la "
+"compatibilidad con versiones futuras.  En otras palabras: si mantienes una "
+"extensión C externa para CPython, eres bienvenido a experimentar con "
+"Argument Clinic en tu propio código.  Pero la versión de Argument Clinic que "
+"venga con la próxima versión de CPython *podría* ser totalmente incompatible "
+"y romper todo tu código."
 
 #: ../../howto/clinic.rst:29
 msgid "The Goals Of Argument Clinic"
-msgstr ""
+msgstr "Los objetivos de la clínica de la argumentación"
 
 #: ../../howto/clinic.rst:31
 msgid ""
@@ -73,6 +85,14 @@ msgid ""
 "gets called at the bottom, with ``PyObject *args`` (and maybe ``PyObject "
 "*kwargs``) magically converted into the C variables and types you need."
 msgstr ""
+"El objetivo principal de Argument Clinic es asumir la responsabilidad de "
+"todo el código de análisis de argumentos dentro de CPython.  Esto significa "
+"que, cuando se convierte una función para trabajar con Argument Clinic, esa "
+"función ya no debe hacer nada de su propio análisis de argumentos - el "
+"código generado por Argument Clinic debe ser una \"caja negra\" para usted, "
+"donde CPython llama en la parte superior, y su código es llamado en la parte "
+"inferior, con ``PyObject *args`` (y tal vez ``PyObject *kwargs``) convertido "
+"mágicamente en las variables C y los tipos que necesita."
 
 #: ../../howto/clinic.rst:41
 msgid ""
@@ -81,6 +101,11 @@ msgid ""
 "chore, requiring maintaining redundant information in a surprising number of "
 "places. When you use Argument Clinic, you don't have to repeat yourself."
 msgstr ""
+"Para que Argument Clinic cumpla su objetivo principal, debe ser fácil de "
+"usar.  Actualmente, trabajar con la biblioteca de análisis sintáctico de "
+"argumentos de CPython es una tarea, que requiere mantener información "
+"redundante en un sorprendente número de lugares. Cuando usas Argument "
+"Clinic, no tienes que repetirte."
 
 #: ../../howto/clinic.rst:47
 msgid ""
@@ -93,6 +118,15 @@ msgid ""
 "parsing code, rather than calling the general-purpose CPython argument "
 "parsing library.  That would make for the fastest argument parsing possible!)"
 msgstr ""
+"Obviamente, nadie querría usar Argument Clinic a menos que resuelva su "
+"problema, y sin crear nuevos problemas propios. Así que es primordial que "
+"Argument Clinic genere código correcto. También estaría bien que el código "
+"fuera más rápido, pero como mínimo no debería introducir una regresión "
+"importante en la velocidad.  (Eventualmente Argument Clinic *debería* hacer "
+"posible un aumento de velocidad mayor -podríamos reescribir su generador de "
+"código para producir código de análisis de argumentos a medida, en lugar de "
+"llamar a la biblioteca de análisis de argumentos CPython de propósito "
+"general.  Eso haría el análisis de argumentos más rápido posible)."
 
 #: ../../howto/clinic.rst:59
 msgid ""
@@ -100,6 +134,10 @@ msgid ""
 "approach to argument parsing.  Python has some functions with some very "
 "strange parsing behaviors; Argument Clinic's goal is to support all of them."
 msgstr ""
+"Además, Argument Clinic debe ser lo suficientemente flexible como para "
+"trabajar con cualquier enfoque de análisis sintáctico de argumentos.  Python "
+"tiene algunas funciones con comportamientos de análisis muy extraños; el "
+"objetivo de Argument Clinic es soportarlos todos."
 
 #: ../../howto/clinic.rst:64
 msgid ""
@@ -108,6 +146,10 @@ msgid ""
 "introspection query functions would throw an exception if you passed in a "
 "builtin.  With Argument Clinic, that's a thing of the past!"
 msgstr ""
+"Por último, la motivación original de Argument Clinic era proporcionar "
+"\"firmas\" de introspección para los builtins de CPython. Antes, las "
+"funciones de consulta de introspección lanzaban una excepción si pasabas un "
+"builtin.  Con Argument Clinic, ¡eso es cosa del pasado!"
 
 #: ../../howto/clinic.rst:70
 msgid ""
@@ -117,28 +159,38 @@ msgid ""
 "more sophisticated, and it should be able to do many interesting and smart "
 "things with all the information you give it."
 msgstr ""
+"Una idea que debes tener en cuenta cuando trabajes con Argument Clinic: "
+"cuanta más información le des, mejor trabajo podrá hacer. En estos momentos, "
+"Argument Clinic es relativamente sencillo.  Pero a medida que evolucione se "
+"volverá más sofisticado, y debería ser capaz de hacer muchas cosas "
+"interesantes e inteligentes con toda la información que le des."
 
 #: ../../howto/clinic.rst:80
 msgid "Basic Concepts And Usage"
-msgstr ""
+msgstr "Conceptos básicos y uso"
 
 #: ../../howto/clinic.rst:82
 msgid ""
 "Argument Clinic ships with CPython; you'll find it in ``Tools/clinic/clinic."
 "py``. If you run that script, specifying a C file as an argument:"
 msgstr ""
+"Argument Clinic viene con CPython; lo encontrarás en ``Tools/clinic/clinic."
+"py``. Si ejecutas ese script, especificando un archivo C como argumento:"
 
 #: ../../howto/clinic.rst:89
 msgid ""
 "Argument Clinic will scan over the file looking for lines that look exactly "
 "like this:"
 msgstr ""
+"Argument Clinic escaneará el archivo en busca de líneas exactamente iguales "
+"a ésta:"
 
 #: ../../howto/clinic.rst:96
 msgid ""
 "When it finds one, it reads everything up to a line that looks exactly like "
 "this:"
 msgstr ""
+"Cuando encuentra una, lee todo hasta una línea exactamente igual a ésta:"
 
 #: ../../howto/clinic.rst:103
 msgid ""
@@ -146,6 +198,9 @@ msgid ""
 "these lines, including the beginning and ending comment lines, are "
 "collectively called an Argument Clinic \"block\"."
 msgstr ""
+"Todo lo que hay entre estas dos líneas es entrada para Argument Clinic. "
+"Todas estas líneas, incluidas las líneas de comentario inicial y final, se "
+"denominan colectivamente \"bloque\" de Argument Clinic."
 
 #: ../../howto/clinic.rst:107
 msgid ""
@@ -154,6 +209,10 @@ msgid ""
 "a comment containing a checksum. The Argument Clinic block now looks like "
 "this:"
 msgstr ""
+"Cuando Argument Clinic analiza uno de estos bloques, genera una salida.  "
+"Esta salida se reescribe en el archivo C inmediatamente después del bloque, "
+"seguido de un comentario que contiene una suma de comprobación. El bloque "
+"Argument Clinic tiene ahora este aspecto:"
 
 #: ../../howto/clinic.rst:120
 msgid ""
@@ -162,6 +221,10 @@ msgid ""
 "checksum line.  However, if the input hasn't changed, the output won't "
 "change either."
 msgstr ""
+"Si ejecuta Argument Clinic en el mismo archivo por segunda vez, Argument "
+"Clinic descartará la salida anterior y escribirá la nueva salida con una "
+"nueva línea de suma de comprobación.  Sin embargo, si la entrada no ha "
+"cambiado, la salida tampoco lo hará."
 
 #: ../../howto/clinic.rst:124
 msgid ""
@@ -171,37 +234,51 @@ msgid ""
 "these edits would be lost the next time Argument Clinic writes out fresh "
 "output.)"
 msgstr ""
+"Nunca debe modificar la parte de salida de un bloque Argument Clinic.  En su "
+"lugar, cambie la entrada hasta que produzca la salida que desea.  (Ese es el "
+"propósito de la suma de comprobación: detectar si alguien cambió la salida, "
+"ya que estas ediciones se perderían la próxima vez que Argument Clinic "
+"escriba una salida nueva)."
 
 #: ../../howto/clinic.rst:129
 msgid ""
 "For the sake of clarity, here's the terminology we'll use with Argument "
 "Clinic:"
 msgstr ""
+"En aras de la claridad, ésta es la terminología que utilizaremos con "
+"Argument Clinic:"
 
 #: ../../howto/clinic.rst:131
 msgid ""
 "The first line of the comment (``/*[clinic input]``) is the *start line*."
 msgstr ""
+"La primera línea del comentario (``/*[clinic input]``) es la *línea de "
+"inicio*."
 
 #: ../../howto/clinic.rst:132
 msgid ""
 "The last line of the initial comment (``[clinic start generated code]*/``) "
 "is the *end line*."
 msgstr ""
+"La última línea del comentario inicial (``[clinic start generated code]*/``) "
+"es la *línea final*."
 
 #: ../../howto/clinic.rst:133
 msgid ""
 "The last line (``/*[clinic end generated code: checksum=...]*/``) is the "
 "*checksum line*."
 msgstr ""
+"La última línea (``/*[clinic end generated code: checksum=...]*/``) es la "
+"*línea de comprobación*."
 
 #: ../../howto/clinic.rst:134
 msgid "In between the start line and the end line is the *input*."
-msgstr ""
+msgstr "Entre la línea de inicio y la línea final se encuentra la *entrada*."
 
 #: ../../howto/clinic.rst:135
 msgid "In between the end line and the checksum line is the *output*."
 msgstr ""
+"Entre la línea final y la línea de suma de comprobación está la *salida*."
 
 #: ../../howto/clinic.rst:136
 msgid ""
@@ -210,10 +287,14 @@ msgid ""
 "processed by Argument Clinic yet doesn't have output or a checksum line, but "
 "it's still considered a block.)"
 msgstr ""
+"Todo el texto en conjunto, desde la línea de inicio hasta la línea de suma "
+"de comprobación inclusive, es el *bloque*.  (Un bloque que aún no ha sido "
+"procesado con éxito por la Clínica de Argumentos no tiene salida ni línea de "
+"suma de comprobación, pero sigue considerándose un bloque)."
 
 #: ../../howto/clinic.rst:143
 msgid "Converting Your First Function"
-msgstr ""
+msgstr "Conversión de la primera función"
 
 #: ../../howto/clinic.rst:145
 msgid ""
@@ -225,16 +306,26 @@ msgid ""
 "document (like \"return converters\" and \"self converters\"). But we'll "
 "keep it simple for this walkthrough so you can learn."
 msgstr ""
+"La mejor manera de hacerse una idea de cómo funciona Argument Clinic es "
+"convertir una función para que funcione con ella.  Aquí, entonces, están los "
+"pasos mínimos que necesitas seguir para convertir una función para trabajar "
+"con Argument Clinic.  Ten en cuenta que para el código que planeas registrar "
+"en CPython, realmente deberías llevar la conversión más lejos, usando "
+"algunos de los conceptos avanzados que verás más adelante en el documento "
+"(como \"convertidores de retorno\" y \"autoconvertidores\"). Pero lo "
+"mantendremos simple para que puedas aprender."
 
 #: ../../howto/clinic.rst:154
 msgid "Let's dive in!"
-msgstr ""
+msgstr "Sumerjámonos."
 
 #: ../../howto/clinic.rst:156
 msgid ""
 "Make sure you're working with a freshly updated checkout of the CPython "
 "trunk."
 msgstr ""
+"Asegúrate de que estás trabajando con una versión actualizada del trunk de "
+"CPython."
 
 #: ../../howto/clinic.rst:159
 msgid ""
@@ -242,12 +333,18 @@ msgid ""
 "func:`PyArg_ParseTupleAndKeywords`, and hasn't been converted to work with "
 "Argument Clinic yet. For my example I'm using ``_pickle.Pickler.dump()``."
 msgstr ""
+"Encuentra un builtin de Python que llame a :c:func:`PyArg_ParseTuple` o :c:"
+"func:`PyArg_ParseTupleAndKeywords`, y que aún no haya sido convertido para "
+"trabajar con Argument Clinic. Para mi ejemplo estoy usando ``_pickle.Pickler."
+"dump()``."
 
 #: ../../howto/clinic.rst:164
 msgid ""
 "If the call to the ``PyArg_Parse`` function uses any of the following format "
 "units:"
 msgstr ""
+"Si la llamada a la función ``PyArg_Parse`` utiliza alguna de las siguientes "
+"unidades de formato:"
 
 #: ../../howto/clinic.rst:176
 msgid ""
@@ -256,6 +353,9 @@ msgid ""
 "scenarios.  But these are advanced topics—let's do something simpler for "
 "your first function."
 msgstr ""
+"o si tiene múltiples llamadas a :c:func:`PyArg_ParseTuple`, debe elegir una "
+"función diferente.  Argument Clinic *soporta* todos estos escenarios.  Pero "
+"estos son temas avanzados, hagamos algo más simple para su primera función."
 
 #: ../../howto/clinic.rst:181
 msgid ""
@@ -266,10 +366,17 @@ msgid ""
 "to Argument Clinic.  Argument Clinic doesn't support generic functions or "
 "polymorphic parameters."
 msgstr ""
+"Además, si la función tiene múltiples llamadas a :c:func:`PyArg_ParseTuple` "
+"o :c:func:`PyArg_ParseTupleAndKeywords` donde admite diferentes tipos para "
+"el mismo argumento, o si la función utiliza algo más que las funciones "
+"PyArg_Parse para analizar sus argumentos, probablemente no sea adecuada para "
+"la conversión a Argument Clinic.  Argument Clinic no soporta funciones "
+"genéricas o parámetros polimórficos."
 
 #: ../../howto/clinic.rst:188
 msgid "Add the following boilerplate above the function, creating our block::"
 msgstr ""
+"Añade el siguiente boilerplate encima de la función, creando nuestro bloque::"
 
 #: ../../howto/clinic.rst:193
 msgid ""
@@ -278,6 +385,11 @@ msgid ""
 "should have just the text, based at the left margin, with no line wider than "
 "80 characters. (Argument Clinic will preserve indents inside the docstring.)"
 msgstr ""
+"Corta el docstring y pégalo entre las líneas de ``[clinic]``, eliminando "
+"toda la basura que lo convierte en una cadena C correctamente "
+"entrecomillada. Cuando hayas terminado deberías tener sólo el texto, basado "
+"en el margen izquierdo, sin ninguna línea de más de 80 caracteres. (Argument "
+"Clinic preservará las sangrías dentro del docstring)."
 
 #: ../../howto/clinic.rst:199
 msgid ""
@@ -286,13 +398,17 @@ msgid ""
 "``help()`` on your builtin in the future, the first line will be built "
 "automatically based on the function's signature.)"
 msgstr ""
+"Si el antiguo docstring tenía una primera línea que parecía la firma de una "
+"función, elimínela.  (El docstring ya no lo necesita: cuando en el futuro "
+"utilice ``help()`` en su builtin, la primera línea se construirá "
+"automáticamente basándose en la firma de la función)."
 
 #: ../../howto/clinic.rst:205 ../../howto/clinic.rst:226
 #: ../../howto/clinic.rst:250 ../../howto/clinic.rst:308
 #: ../../howto/clinic.rst:348 ../../howto/clinic.rst:375
 #: ../../howto/clinic.rst:481 ../../howto/clinic.rst:533
 msgid "Sample::"
-msgstr ""
+msgstr "Muestra::"
 
 #: ../../howto/clinic.rst:211
 msgid ""
@@ -301,12 +417,18 @@ msgid ""
 "paragraph consisting of a single 80-column line at the beginning of the "
 "docstring."
 msgstr ""
+"Si tu docstring no tiene una línea de \"resumen\", Argument Clinic se "
+"quejará.  Así que asegurémonos de que tiene una.  La línea \"resumen\" debe "
+"ser un párrafo consistente en una única línea de 80 columnas al principio "
+"del docstring."
 
 #: ../../howto/clinic.rst:216
 msgid ""
 "(Our example docstring consists solely of a summary line, so the sample code "
 "doesn't have to change for this step.)"
 msgstr ""
+"(Nuestro docstring de ejemplo consiste únicamente en una línea de resumen, "
+"por lo que el código de ejemplo no tiene que cambiar para este paso)."
 
 #: ../../howto/clinic.rst:219
 msgid ""
@@ -316,6 +438,11 @@ msgid ""
 "module, include any sub-modules, and if the function is a method on a class "
 "it should include the class name too."
 msgstr ""
+"Encima del docstring, introduzca el nombre de la función, seguido de una "
+"línea en blanco.  Este debe ser el nombre Python de la función, y debe ser "
+"la ruta punteada completa a la función - debe comenzar con el nombre del "
+"módulo, incluir cualquier sub-módulo, y si la función es un método en una "
+"clase debe incluir el nombre de la clase también."
 
 #: ../../howto/clinic.rst:234
 msgid ""
@@ -326,6 +453,12 @@ msgid ""
 "statics go at the top.  (In our sample code we'll just show the two blocks "
 "next to each other.)"
 msgstr ""
+"Si es la primera vez que ese módulo o clase se ha usado con Argument Clinic "
+"en este fichero C, debes declarar el módulo y/o la clase.  La correcta "
+"higiene de Argument Clinic prefiere declararlos en un bloque separado en "
+"algún lugar cerca de la parte superior del archivo C, de la misma manera que "
+"los archivos de inclusión y los estáticos van al principio. (En nuestro "
+"código de ejemplo sólo mostraremos los dos bloques uno al lado del otro)."
 
 #: ../../howto/clinic.rst:242
 msgid ""
@@ -333,6 +466,9 @@ msgid ""
 "Python.  Check the name defined in the :c:type:`PyModuleDef` or :c:type:"
 "`PyTypeObject` as appropriate."
 msgstr ""
+"El nombre de la clase y del módulo debe ser el mismo que el visto por "
+"Python.  Compruebe el nombre definido en :c:type:`PyModuleDef` o :c:type:"
+"`PyTypeObject` según corresponda."
 
 #: ../../howto/clinic.rst:246
 msgid ""
@@ -340,6 +476,9 @@ msgid ""
 "C: the type declaration you'd use for a pointer to an instance of this "
 "class, and a pointer to the :c:type:`PyTypeObject` for this class."
 msgstr ""
+"Cuando declaras una clase, también debes especificar dos aspectos de su tipo "
+"en C: la declaración de tipo que utilizarías para un puntero a una instancia "
+"de esta clase, y un puntero a la :c:type:`PyTypeObject` para esta clase."
 
 #: ../../howto/clinic.rst:266
 msgid ""
@@ -347,14 +486,18 @@ msgid ""
 "its own line.  All the parameter lines should be indented from the function "
 "name and the docstring."
 msgstr ""
+"Declare cada uno de los parámetros de la función.  Cada parámetro debe tener "
+"su propia línea.  Todas las líneas de parámetros deben estar sangradas desde "
+"el nombre de la función y el docstring."
 
 #: ../../howto/clinic.rst:270
 msgid "The general form of these parameter lines is as follows:"
-msgstr ""
+msgstr "La forma general de estas líneas de parámetros es la siguiente:"
 
 #: ../../howto/clinic.rst:276
 msgid "If the parameter has a default value, add that after the converter:"
 msgstr ""
+"Si el parámetro tiene un valor por defecto, añádalo después del conversor:"
 
 #: ../../howto/clinic.rst:283
 msgid ""
@@ -362,10 +505,13 @@ msgid ""
 "please see :ref:`the section below on default values <default_values>` for "
 "more information."
 msgstr ""
+"El soporte de Argument Clinic para \"valores por defecto\" es bastante "
+"sofisticado; consulte :ref:`la sección siguiente sobre valores por defecto "
+"<default_values>` para obtener más información."
 
 #: ../../howto/clinic.rst:287
 msgid "Add a blank line below the parameters."
-msgstr ""
+msgstr "Añada una línea en blanco debajo de los parámetros."
 
 #: ../../howto/clinic.rst:289
 msgid ""
@@ -375,6 +521,11 @@ msgid ""
 "convenience syntax intended to make porting old code into Argument Clinic "
 "easier."
 msgstr ""
+"¿Qué es un \"convertidor\"?  Establece tanto el tipo de la variable usada en "
+"C, como el método para convertir el valor Python en un valor C en tiempo de "
+"ejecución. Por ahora vas a utilizar lo que se llama un \"convertidor de "
+"legado\" - una sintaxis de conveniencia destinada a facilitar la "
+"portabilidad de código antiguo a Argument Clinic."
 
 #: ../../howto/clinic.rst:296
 msgid ""
@@ -385,12 +536,21 @@ msgid ""
 "parsing function what the type of the variable is and how to convert it.  "
 "For more on format units please see :ref:`arg-parsing`.)"
 msgstr ""
+"Para cada parámetro, copie la \"unidad de formato\" para ese parámetro desde "
+"el argumento de formato ``PyArg_Parse()`` y especifique *eso* como su "
+"convertidor, como una cadena entre comillas.  (\"unidad de formato\" es el "
+"nombre formal de la subcadena de uno a tres caracteres del parámetro "
+"``format`` que indica a la función de análisis sintáctico de argumentos cuál "
+"es el tipo de la variable y cómo convertirla.  Para más información sobre "
+"las unidades de formato, consulte :ref:`arg-parsing`.)"
 
 #: ../../howto/clinic.rst:305
 msgid ""
 "For multicharacter format units like ``z#``, use the entire two-or-three "
 "character string."
 msgstr ""
+"Para unidades de formato multicarácter como ``z#``, utilice la cadena "
+"completa de dos o tres caracteres."
 
 #: ../../howto/clinic.rst:323
 msgid ""
@@ -398,6 +558,10 @@ msgid ""
 "have default values, you can ignore it.  Argument Clinic infers which "
 "parameters are optional based on whether or not they have default values."
 msgstr ""
+"Si su función tiene ``|`` en la cadena de formato, lo que significa que "
+"algunos parámetros tienen valores por defecto, puede ignorarlo.  Argument "
+"Clinic infiere qué parámetros son opcionales en función de si tienen o no "
+"valores por defecto."
 
 #: ../../howto/clinic.rst:328
 msgid ""
@@ -405,10 +569,16 @@ msgid ""
 "only arguments, specify ``*`` on a line by itself before the first keyword-"
 "only argument, indented the same as the parameter lines."
 msgstr ""
+"Si su función tiene ``$`` en la cadena de formato, lo que significa que toma "
+"argumentos de sólo palabra clave, especifique ``*`` en una línea por sí "
+"misma antes del primer argumento de sólo palabra clave, con la misma sangría "
+"que las líneas de parámetros."
 
 #: ../../howto/clinic.rst:333
 msgid "(``_pickle.Pickler.dump`` has neither, so our sample is unchanged.)"
 msgstr ""
+"(``_pickle.Pickler.dump`` no tiene ninguno de los dos, por lo que nuestra "
+"muestra no cambia)."
 
 #: ../../howto/clinic.rst:336
 msgid ""
@@ -416,6 +586,9 @@ msgid ""
 "c:func:`PyArg_ParseTupleAndKeywords`), then all its arguments are positional-"
 "only."
 msgstr ""
+"Si la función C existente llama a :c:func:`PyArg_ParseTuple` (en lugar de :c:"
+"func:`PyArg_ParseTupleAndKeywords`), entonces todos sus argumentos son sólo "
+"posicionales."
 
 #: ../../howto/clinic.rst:340
 msgid ""
@@ -423,6 +596,9 @@ msgid ""
 "a line by itself after the last parameter, indented the same as the "
 "parameter lines."
 msgstr ""
+"Para marcar todos los parámetros como sólo posicionales en Argument Clinic, "
+"añada un ``/`` en una línea aparte después del último parámetro, con la "
+"misma sangría que las líneas de los parámetros."
 
 #: ../../howto/clinic.rst:344
 msgid ""
@@ -430,12 +606,18 @@ msgid ""
 "or none of them are.  (In the future Argument Clinic may relax this "
 "restriction.)"
 msgstr ""
+"Actualmente esto es todo o nada; o todos los parámetros son sólo "
+"posicionales, o ninguno de ellos lo es.  (En el futuro Argument Clinic "
+"podría relajar esta restricción)."
 
 #: ../../howto/clinic.rst:364
 msgid ""
 "It's helpful to write a per-parameter docstring for each parameter. But per-"
 "parameter docstrings are optional; you can skip this step if you prefer."
 msgstr ""
+"Es útil escribir una documentación por parámetro para cada parámetro. Pero "
+"los docstrings por parámetro son opcionales; puedes saltarte este paso si lo "
+"prefieres."
 
 #: ../../howto/clinic.rst:368
 msgid ""
@@ -446,6 +628,12 @@ msgid ""
 "amount.  You can write as much text as you like, across multiple lines if "
 "you wish."
 msgstr ""
+"A continuación se explica cómo añadir un docstring por parámetro.  La "
+"primera línea de la docstring por parámetro debe tener una sangría mayor que "
+"la definición del parámetro.  El margen izquierdo de esta primera línea "
+"establece el margen izquierdo para toda la docstring por parámetro; todo el "
+"texto que escriba se sangrará en esta cantidad.  Puede escribir todo el "
+"texto que desee, en varias líneas si lo desea."
 
 #: ../../howto/clinic.rst:392
 msgid ""
@@ -453,6 +641,9 @@ msgid ""
 "luck everything worked---your block now has output, and a ``.c.h`` file has "
 "been generated! Reopen the file in your text editor to see::"
 msgstr ""
+"Guarde y cierre el archivo y ejecute ``Tools/clinic/clinic.py``.  Con "
+"suerte, todo ha funcionado: ¡tu bloque ya tiene salida y se ha generado un "
+"archivo ``.c.h``! Vuelva a abrir el archivo en su editor de texto para ver::"
 
 #: ../../howto/clinic.rst:411
 msgid ""
@@ -460,6 +651,9 @@ msgid ""
 "found an error in your input.  Keep fixing your errors and retrying until "
 "Argument Clinic processes your file without complaint."
 msgstr ""
+"Obviamente, si Argument Clinic no produjo ninguna salida, es porque encontró "
+"un error en su entrada.  Siga corrigiendo sus errores y reintentando hasta "
+"que Argument Clinic procese su archivo sin quejarse."
 
 #: ../../howto/clinic.rst:415
 msgid ""
@@ -467,12 +661,17 @@ msgid ""
 "file.  You'll need to include that in your original ``.c`` file, typically "
 "right after the clinic module block::"
 msgstr ""
+"Para facilitar la lectura, la mayor parte del código de cola se ha generado "
+"en un archivo ``.c.h``.  Tendrás que incluirlo en tu archivo original ``."
+"c``, normalmente justo después del bloque del módulo clínico::"
 
 #: ../../howto/clinic.rst:421
 msgid ""
 "Double-check that the argument-parsing code Argument Clinic generated looks "
 "basically the same as the existing code."
 msgstr ""
+"Compruebe que el código de análisis de argumentos generado por Argument "
+"Clinic es básicamente igual al código existente."
 
 #: ../../howto/clinic.rst:424
 msgid ""
@@ -481,6 +680,11 @@ msgid ""
 "`PyArg_ParseTupleAndKeywords`; ensure that the code generated by Argument "
 "Clinic calls the *exact* same function."
 msgstr ""
+"En primer lugar, asegúrese de que ambos sitios utilizan la misma función de "
+"análisis de argumentos. El código existente debe llamar a :c:func:"
+"`PyArg_ParseTuple` o a :c:func:`PyArg_ParseTupleAndKeywords`; asegúrese de "
+"que el código generado por Argument Clinic llama *exactamente* a la misma "
+"función."
 
 #: ../../howto/clinic.rst:430
 msgid ""
@@ -488,6 +692,10 @@ msgid ""
 "`PyArg_ParseTupleAndKeywords` should be *exactly* the same as the hand-"
 "written one in the existing function, up to the colon or semi-colon."
 msgstr ""
+"En segundo lugar, la cadena de formato pasada a :c:func:`PyArg_ParseTuple` "
+"o :c:func:`PyArg_ParseTupleAndKeywords` debe ser *exactamente* la misma que "
+"la escrita a mano en la función existente, hasta los dos puntos o el punto y "
+"coma."
 
 #: ../../howto/clinic.rst:435
 msgid ""
@@ -495,6 +703,10 @@ msgid ""
 "by the name of the function.  If the existing code's format string ends with "
 "``;``, to provide usage help, this change is harmless—don't worry about it.)"
 msgstr ""
+"(Argument Clinic siempre genera sus cadenas de formato con un ``:`` seguido "
+"del nombre de la función.  Si la cadena de formato del código existente "
+"termina con ``;``, para proporcionar ayuda de uso, este cambio es inofensivo-"
+"no te preocupes)."
 
 #: ../../howto/clinic.rst:440
 msgid ""
@@ -503,6 +715,10 @@ msgid ""
 "function), ensure that the second argument is *exactly* the same between the "
 "two invocations."
 msgstr ""
+"En tercer lugar, para los parámetros cuyas unidades de formato requieren dos "
+"argumentos (como una variable de longitud, o una cadena de codificación, o "
+"un puntero a una función de conversión), asegúrese de que el segundo "
+"argumento es *exactamente* el mismo entre las dos invocaciones."
 
 #: ../../howto/clinic.rst:445
 msgid ""
@@ -510,12 +726,17 @@ msgid ""
 "macro defining the appropriate static :c:type:`PyMethodDef` structure for "
 "this builtin::"
 msgstr ""
+"En cuarto lugar, dentro de la parte de salida del bloque encontrarás una "
+"macro de preprocesador que define la estructura estática :c:type:"
+"`PyMethodDef` adecuada para este builtin::"
 
 #: ../../howto/clinic.rst:452
 msgid ""
 "This static structure should be *exactly* the same as the existing static :c:"
 "type:`PyMethodDef` structure for this builtin."
 msgstr ""
+"Esta estructura estática debe ser *exactamente* la misma que la estructura "
+"estática :c:type:`PyMethodDef` existente para este builtin."
 
 #: ../../howto/clinic.rst:455
 msgid ""
@@ -523,6 +744,9 @@ msgid ""
 "function specification and rerun ``Tools/clinic/clinic.py`` until they *are* "
 "the same."
 msgstr ""
+"Si alguno de estos elementos difiere en *algo*, ajuste la especificación de "
+"la función Argument Clinic y vuelva a ejecutar ``Tools/clinic/clinic.py`` "
+"hasta que *coincidan*."
 
 #: ../../howto/clinic.rst:460
 msgid ""
@@ -534,12 +758,22 @@ msgid ""
 "arguments are now arguments to this impl function; if the implementation "
 "used different names for these variables, fix it."
 msgstr ""
+"Observe que la última línea de su salida es la declaración de su función "
+"\"impl\".  Aquí es donde va la implementación del builtin. Borra el "
+"prototipo existente de la función que estás modificando, pero deja la llave "
+"de apertura.  Ahora borra su código de análisis de argumentos y las "
+"declaraciones de todas las variables en las que vuelca los argumentos. "
+"Observa cómo los argumentos de Python son ahora argumentos de esta función "
+"impl; si la implementación usaba nombres diferentes para estas variables, "
+"arréglalo."
 
 #: ../../howto/clinic.rst:468
 msgid ""
 "Let's reiterate, just because it's kind of weird.  Your code should now look "
 "like this::"
 msgstr ""
+"Vamos a reiterar, sólo porque es un poco raro.  Su código ahora debe tener "
+"este aspecto::"
 
 #: ../../howto/clinic.rst:477
 msgid ""
@@ -547,6 +781,9 @@ msgid ""
 "above it.  You should write the opening (and closing) curly braces for the "
 "function, and the implementation inside."
 msgstr ""
+"Argument Clinic generó la línea checksum y el prototipo de la función justo "
+"encima.  Debe escribir las llaves de apertura (y cierre) para la función, y "
+"la implementación dentro."
 
 #: ../../howto/clinic.rst:522
 msgid ""
@@ -557,6 +794,12 @@ msgid ""
 "builtin is a class method, this will probably be below but relatively near "
 "to the implementation.)"
 msgstr ""
+"¿Recuerdas la macro con la estructura :c:type:`PyMethodDef` para esta "
+"función?  Busque la estructura :c:type:`PyMethodDef` existente para esta "
+"función y sustitúyala por una referencia a la macro.  (Si el builtin está en "
+"el ámbito del módulo, esto será probablemente muy cerca del final del "
+"archivo; si el builtin es un método de clase, esto será probablemente por "
+"debajo pero relativamente cerca de la implementación)."
 
 #: ../../howto/clinic.rst:529
 msgid ""
@@ -564,6 +807,9 @@ msgid ""
 "replace the existing static :c:type:`PyMethodDef` structure with the macro, "
 "*don't* add a comma to the end."
 msgstr ""
+"Tenga en cuenta que el cuerpo de la macro contiene una coma al final.  Por "
+"lo tanto, cuando sustituya la estructura estática :c:type:`PyMethodDef` "
+"existente por la macro, *no* añada una coma al final."
 
 #: ../../howto/clinic.rst:542
 msgid ""
@@ -577,66 +823,80 @@ msgid ""
 "Well, except for one difference: ``inspect.signature()`` run on your "
 "function should now provide a valid signature!"
 msgstr ""
+"Bueno, excepto por una diferencia: ¡la ejecución de ``inspect.signature()`` "
+"sobre tu función debería proporcionar ahora una firma válida!"
 
 #: ../../howto/clinic.rst:549
 msgid ""
 "Congratulations, you've ported your first function to work with Argument "
 "Clinic!"
 msgstr ""
+"Enhorabuena, has adaptado tu primera función para que funcione con Argument "
+"Clinic."
 
 #: ../../howto/clinic.rst:552
 msgid "Advanced Topics"
-msgstr ""
+msgstr "Temas avanzados"
 
 #: ../../howto/clinic.rst:554
 msgid ""
 "Now that you've had some experience working with Argument Clinic, it's time "
 "for some advanced topics."
 msgstr ""
+"Ahora que ya tiene cierta experiencia trabajando con Argument Clinic, es el "
+"momento de abordar algunos temas avanzados."
 
 #: ../../howto/clinic.rst:559
 msgid "Symbolic default values"
-msgstr ""
+msgstr "Valores simbólicos por defecto"
 
 #: ../../howto/clinic.rst:561
 msgid ""
 "The default value you provide for a parameter can't be any arbitrary "
 "expression.  Currently the following are explicitly supported:"
 msgstr ""
+"El valor por defecto de un parámetro no puede ser una expresión arbitraria.  "
+"Actualmente se admiten explícitamente los siguientes:"
 
 #: ../../howto/clinic.rst:564
 msgid "Numeric constants (integer and float)"
-msgstr ""
+msgstr "Constantes numéricas (enteros y flotantes)"
 
 #: ../../howto/clinic.rst:565
 msgid "String constants"
-msgstr ""
+msgstr "Constantes de cadena"
 
 #: ../../howto/clinic.rst:566
 msgid "``True``, ``False``, and ``None``"
-msgstr ""
+msgstr "``True``, ``False``, y ``None``"
 
 #: ../../howto/clinic.rst:567
 msgid ""
 "Simple symbolic constants like ``sys.maxsize``, which must start with the "
 "name of the module"
 msgstr ""
+"Constantes simbólicas simples como ``sys.maxsize``, que debe empezar por el "
+"nombre del módulo."
 
 #: ../../howto/clinic.rst:570
 msgid ""
 "In case you're curious, this is implemented in  ``from_builtin()`` in ``Lib/"
 "inspect.py``."
 msgstr ""
+"Por si tiene curiosidad, esto se implementa en ``from_builtin()`` en ``Lib/"
+"inspect.py``."
 
 #: ../../howto/clinic.rst:573
 msgid ""
 "(In the future, this may need to get even more elaborate, to allow full "
 "expressions like ``CONSTANT - 1``.)"
 msgstr ""
+"(En el futuro, es posible que esto tenga que ser aún más elaborado, para "
+"permitir expresiones completas como ``CONSTANT - 1``.)"
 
 #: ../../howto/clinic.rst:578
 msgid "Renaming the C functions and variables generated by Argument Clinic"
-msgstr ""
+msgstr "Renombrar las funciones y variables C generadas por Argument Clinic"
 
 #: ../../howto/clinic.rst:580
 msgid ""
@@ -649,18 +909,30 @@ msgid ""
 "function, then add ``\"_impl\"`` to the end and use that for the name of the "
 "impl function."
 msgstr ""
+"Argument Clinic asigna automáticamente un nombre a las funciones que genera. "
+"Ocasionalmente esto puede causar un problema, si el nombre generado "
+"colisiona con el nombre de una función C existente.  Hay una solución fácil: "
+"anular los nombres utilizados para las funciones C.  Sólo tiene que añadir "
+"la palabra clave ``\"as\"`` a la línea de declaración de la función, seguida "
+"del nombre de la función que desee utilizar. Argument Clinic utilizará ese "
+"nombre de función para la función base (generada), luego añadirá "
+"``\"_impl\"`` al final y lo utilizará para el nombre de la función impl."
 
 #: ../../howto/clinic.rst:588
 msgid ""
 "For example, if we wanted to rename the C function names generated for "
 "``pickle.Pickler.dump``, it'd look like this::"
 msgstr ""
+"Por ejemplo, si quisiéramos renombrar los nombres de función C generados "
+"para ``pickle.Pickler.dump``, quedaría así::"
 
 #: ../../howto/clinic.rst:596
 msgid ""
 "The base function would now be named ``pickler_dumper()``, and the impl "
 "function would now be named ``pickler_dumper_impl()``."
 msgstr ""
+"La función base pasaría a llamarse ``pickler_dumper()``, y la función impl "
+"pasaría a llamarse ``pickler_dumper_impl()``."
 
 #: ../../howto/clinic.rst:600
 msgid ""
@@ -669,20 +941,27 @@ msgid ""
 "Clinic allows you to give a parameter different names in Python and in C, "
 "using the same ``\"as\"`` syntax::"
 msgstr ""
+"De forma similar, puedes tener un problema en el que quieras dar a un "
+"parámetro un nombre específico de Python, pero ese nombre puede ser "
+"inconveniente en C. Argument Clinic te permite dar a un parámetro diferentes "
+"nombres en Python y en C, usando la misma sintaxis ``\"as\"``::"
 
 #: ../../howto/clinic.rst:614
 msgid ""
 "Here, the name used in Python (in the signature and the ``keywords`` array) "
 "would be ``file``, but the C variable would be named ``file_obj``."
 msgstr ""
+"Aquí, el nombre utilizado en Python (en la firma y en la matriz "
+"``keywords`` ) sería ``file``, pero la variable C se llamaría ``file_obj``."
 
 #: ../../howto/clinic.rst:617
 msgid "You can use this to rename the ``self`` parameter too!"
 msgstr ""
+"También puede utilizarlo para cambiar el nombre del parámetro ``self``."
 
 #: ../../howto/clinic.rst:621
 msgid "Converting functions using PyArg_UnpackTuple"
-msgstr ""
+msgstr "Convertir funciones usando PyArg_UnpackTuple"
 
 #: ../../howto/clinic.rst:623
 msgid ""
@@ -692,6 +971,12 @@ msgid ""
 "appropriate.  All arguments should be marked positional-only (add a ``/`` on "
 "a line by itself after the last argument)."
 msgstr ""
+"Para convertir una función analizando sus argumentos con :c:func:"
+"`PyArg_UnpackTuple`, simplemente escriba todos los argumentos, especificando "
+"cada uno como un ``object``. Puede especificar el argumento ``type`` para "
+"convertir el tipo según corresponda.  Todos los argumentos deben marcarse "
+"como sólo posicionales (añada un ``/`` en una línea por sí mismo después del "
+"último argumento)."
 
 #: ../../howto/clinic.rst:629
 msgid ""
