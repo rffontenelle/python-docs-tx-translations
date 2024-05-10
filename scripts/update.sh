@@ -17,12 +17,13 @@ fi
 
 # Create POT Files
 cd cpython/Doc
-sphinx-build -E -b gettext -D gettext_compact=0 -d build/.doctrees . locales/pot
+sphinx-build -b gettext -D gettext_compact=0 . locales/pot
 
 # Generate Transifex configuration file (.tx/config)
 cd locales
 sphinx-intl create-txconfig
 sphinx-intl update-txconfig-resources -p pot -d . --transifex-organization-name python-doc --transifex-project-name "$TX_PROJECT"
+sed -i '/^minimum_perc *= 0$/s/0/1/' .tx/config
 
 if [ "$CI" = true ]; then
     tx push --source --skip
