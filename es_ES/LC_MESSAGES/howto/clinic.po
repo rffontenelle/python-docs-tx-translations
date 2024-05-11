@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-03 23:17+0000\n"
+"POT-Creation-Date: 2024-05-10 16:27+0000\n"
 "PO-Revision-Date: 2020-05-30 11:54+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -2181,6 +2181,9 @@ msgid ""
 "class`` in the sample just to illustrate that you must use the full path to "
 "*both* functions.)"
 msgstr ""
+"(Las funciones pueden estar en diferentes módulos o clases.  Escribí "
+"``module.class`` en el ejemplo solo para ilustrar que debe utilizar la ruta "
+"completa a *ambas* funciones)."
 
 #: ../../howto/clinic.rst:1123
 msgid ""
@@ -2193,10 +2196,12 @@ msgid ""
 "Also, the function you are cloning from must have been previously defined in "
 "the current file."
 msgstr ""
+"Además, la función de la que se clona debe haber sido definida previamente "
+"en el archivo actual."
 
 #: ../../howto/clinic.rst:1130
 msgid "Calling Python code"
-msgstr ""
+msgstr "Llamada al código Python"
 
 #: ../../howto/clinic.rst:1132
 msgid ""
@@ -2204,12 +2209,17 @@ msgid ""
 "inside your C file and modifies Argument Clinic's runtime state.  This is "
 "simple: you simply define a Python block."
 msgstr ""
+"El resto de los temas avanzados requieren que escribas código Python que "
+"viva dentro de tu archivo C y modifique el estado en tiempo de ejecución de "
+"Argument Clinic.  Esto es sencillo: basta con definir un bloque Python."
 
 #: ../../howto/clinic.rst:1136
 msgid ""
 "A Python block uses different delimiter lines than an Argument Clinic "
 "function block.  It looks like this::"
 msgstr ""
+"Un bloque Python utiliza líneas delimitadoras diferentes a las de un bloque "
+"de función Argument Clinic.  Su aspecto es el siguiente::"
 
 #: ../../howto/clinic.rst:1143
 msgid ""
@@ -2217,16 +2227,21 @@ msgid ""
 "All text written to stdout inside the block is redirected into the "
 "\"output\" after the block."
 msgstr ""
+"Todo el código dentro del bloque Python se ejecuta en el momento en que se "
+"analiza.  Todo el texto escrito en stdout dentro del bloque se redirige a la "
+"\"output\" después del bloque."
 
 #: ../../howto/clinic.rst:1147
 msgid ""
 "As an example, here's a Python block that adds a static integer variable to "
 "the C code::"
 msgstr ""
+"Como ejemplo, he aquí un bloque Python que añade una variable entera "
+"estática al código C::"
 
 #: ../../howto/clinic.rst:1158
 msgid "Using a \"self converter\""
-msgstr ""
+msgstr "Utilizar un \"autoconversor\""
 
 #: ../../howto/clinic.rst:1160
 msgid ""
@@ -2238,12 +2253,21 @@ msgid ""
 "block, and ensure that its converter is an instance of ``self_converter`` or "
 "a subclass thereof."
 msgstr ""
+"Argument Clinic añade automáticamente un parámetro \"self\" utilizando un "
+"conversor predeterminado.  Establece automáticamente el ``type`` de este "
+"parámetro al \"puntero a una instancia\" que especificaste cuando declaraste "
+"el tipo.  Sin embargo, puedes anular el conversor de Argument Clinic y "
+"especificar uno tú mismo. Sólo tienes que añadir tu propio parámetro "
+"``self`` como primer parámetro de un bloque y asegurarte de que su conversor "
+"es una instancia de ``self_converter`` o una subclase del mismo."
 
 #: ../../howto/clinic.rst:1169
 msgid ""
 "What's the point?  This lets you override the type of ``self``, or give it a "
 "different default name."
 msgstr ""
+"¿Para qué sirve?  Esto le permite anular el tipo de ``self``, o darle un "
+"nombre por defecto diferente."
 
 #: ../../howto/clinic.rst:1172
 msgid ""
@@ -2252,6 +2276,10 @@ msgid ""
 "use Argument Clinic's existing ``self`` converter, passing in the type you "
 "want to use as the ``type`` parameter::"
 msgstr ""
+"¿Cómo especifica el tipo personalizado al que desea convertir ``self``? Si "
+"sólo tiene una o dos funciones con el mismo tipo para ``self``, puede "
+"utilizar directamente el convertidor ``self`` existente en Argument Clinic, "
+"pasando el tipo que desea utilizar como parámetro ``type``::"
 
 #: ../../howto/clinic.rst:1188
 msgid ""
@@ -2259,10 +2287,13 @@ msgid ""
 "type for ``self``, it's best to create your own converter, subclassing "
 "``self_converter`` but overwriting the ``type`` member::"
 msgstr ""
+"Por otro lado, si tiene muchas funciones que utilizarán el mismo tipo para "
+"``self``, es mejor crear su propio convertidor, subclasificando "
+"``self_converter`` pero sobrescribiendo el miembro ``type``::"
 
 #: ../../howto/clinic.rst:1211
 msgid "Writing a custom converter"
-msgstr ""
+msgstr "Escribir un conversor personalizado"
 
 #: ../../howto/clinic.rst:1213
 msgid ""
@@ -2272,6 +2303,12 @@ msgid ""
 "parameter using the ``O&`` format unit—parsing this parameter means calling "
 "a :c:func:`PyArg_ParseTuple` \"converter function\"."
 msgstr ""
+"Como insinuamos en la sección anterior... ¡puedes escribir tus propios "
+"conversores! Un conversor es simplemente una clase Python que hereda de "
+"``CConverter``. El principal propósito de un conversor personalizado es si "
+"tienes un parámetro que utiliza el formato ``O&`` parsear por unidades este "
+"parámetro significa llamar a una \"función conversora\" de :c:func:"
+"`PyArg_ParseTuple`."
 
 #: ../../howto/clinic.rst:1219
 msgid ""
@@ -2281,6 +2318,10 @@ msgid ""
 "with the ``_converter`` suffix stripped off.  (This is accomplished with a "
 "metaclass.)"
 msgstr ""
+"Su clase convertidora debe llamarse ``*something*_converter``. Si el nombre "
+"sigue esta convención, entonces tu clase convertidora se registrará "
+"automáticamente en Argument Clinic; su nombre será el nombre de tu clase con "
+"el sufijo ``_converter`` eliminado.  (Esto se consigue con una metaclase)."
 
 #: ../../howto/clinic.rst:1225
 msgid ""
@@ -2290,12 +2331,19 @@ msgid ""
 "only.  Any arguments passed in to the converter in Argument Clinic will be "
 "passed along to your ``converter_init()``."
 msgstr ""
+"No debería subclasificar ``CConverter.__init__``.  En su lugar, debe "
+"escribir una función ``converter_init()``. ``converter_init()`` siempre "
+"acepta un parámetro ``self``; después de eso, todos los parámetros "
+"adicionales *deben* ser sólo de palabra clave.  Todos los argumentos que se "
+"pasen al conversor en Argument Clinic se pasarán a su ``converter_init()``."
 
 #: ../../howto/clinic.rst:1232
 msgid ""
 "There are some additional members of ``CConverter`` you may wish to specify "
 "in your subclass.  Here's the current list:"
 msgstr ""
+"Hay algunos miembros adicionales de ``CConverter`` que tal vez desee "
+"especificar en su subclase.  Aquí está la lista actual:"
 
 #: ../../howto/clinic.rst:1236
 msgid ""
@@ -2303,36 +2351,45 @@ msgid ""
 "specifying the type, e.g. ``int``. If this is a pointer type, the type "
 "string should end with ``' *'``."
 msgstr ""
+"El tipo C que se utilizará para esta variable. ``type`` debe ser una cadena "
+"Python que especifique el tipo, por ejemplo ``int``. Si se trata de un tipo "
+"de puntero, la cadena de tipo debe terminar con ``' *'``."
 
 #: ../../howto/clinic.rst:1242
 msgid "``default``"
-msgstr ""
+msgstr "``default``"
 
 #: ../../howto/clinic.rst:1241
 msgid ""
 "The Python default value for this parameter, as a Python value. Or the magic "
 "value ``unspecified`` if there is no default."
 msgstr ""
+"El valor por defecto de Python para este parámetro, como valor de Python. O "
+"el valor mágico ``unspecified`` si no hay valor por defecto."
 
 #: ../../howto/clinic.rst:1247
 msgid "``py_default``"
-msgstr ""
+msgstr "``py_default``"
 
 #: ../../howto/clinic.rst:1245
 msgid ""
 "``default`` as it should appear in Python code, as a string. Or ``None`` if "
 "there is no default."
 msgstr ""
+"``default`` como debería aparecer en el código Python, como una cadena. O "
+"``None`` si no existe por defecto."
 
 #: ../../howto/clinic.rst:1250
 msgid ""
 "``default`` as it should appear in C code, as a string. Or ``None`` if there "
 "is no default."
 msgstr ""
+"``default`` como debería aparecer en código C, como una cadena. O ``None`` "
+"si no existe por defecto."
 
 #: ../../howto/clinic.rst:1263
 msgid "``c_ignored_default``"
-msgstr ""
+msgstr "``c_ignored_default``"
 
 #: ../../howto/clinic.rst:1255
 msgid ""
@@ -2347,33 +2404,39 @@ msgstr ""
 
 #: ../../howto/clinic.rst:1266
 msgid "The name of the C converter function, as a string."
-msgstr ""
+msgstr "El nombre de la función de conversión de C, como cadena."
 
 #: ../../howto/clinic.rst:1271
 msgid "``impl_by_reference``"
-msgstr ""
+msgstr "``impl_by_reference``"
 
 #: ../../howto/clinic.rst:1269
 msgid ""
 "A boolean value.  If true, Argument Clinic will add a ``&`` in front of the "
 "name of the variable when passing it into the impl function."
 msgstr ""
+"Valor booleano.  Si es verdadero, Argument Clinic añadirá un ``&`` delante "
+"del nombre de la variable cuando la pase a la función impl."
 
 #: ../../howto/clinic.rst:1277
 msgid "``parse_by_reference``"
-msgstr ""
+msgstr "``parse_by_reference``"
 
 #: ../../howto/clinic.rst:1274
 msgid ""
 "A boolean value.  If true, Argument Clinic will add a ``&`` in front of the "
 "name of the variable when passing it into :c:func:`PyArg_ParseTuple`."
 msgstr ""
+"Valor booleano.  Si es verdadero, Argument Clinic añadirá un ``&`` delante "
+"del nombre de la variable cuando la pase a :c:func:`PyArg_ParseTuple`."
 
 #: ../../howto/clinic.rst:1279
 msgid ""
 "Here's the simplest example of a custom converter, from ``Modules/zlibmodule."
 "c``::"
 msgstr ""
+"Este es el ejemplo más sencillo de conversor personalizado, de ``Modules/"
+"zlibmodule.c``::"
 
 #: ../../howto/clinic.rst:1290
 msgid ""
@@ -2390,10 +2453,14 @@ msgid ""
 "initialization and cleanup. You can see more examples of custom converters "
 "in the CPython source tree; grep the C files for the string ``CConverter``."
 msgstr ""
+"Convertidores personalizados más sofisticados pueden insertar código C "
+"personalizado para manejar la inicialización y limpieza. Puede ver más "
+"ejemplos de convertidores personalizados en el árbol de fuentes de CPython; "
+"busque en los archivos C la cadena ``CConverter``."
 
 #: ../../howto/clinic.rst:1302
 msgid "Writing a custom return converter"
-msgstr ""
+msgstr "Escribir un convertidor de retorno personalizado"
 
 #: ../../howto/clinic.rst:1304
 msgid ""
@@ -2401,6 +2468,9 @@ msgid ""
 "Except it's somewhat simpler, because return converters are themselves much "
 "simpler."
 msgstr ""
+"Escribir un convertidor return personalizado es muy parecido a escribir un "
+"convertidor personalizado.  Excepto que es algo más sencillo, porque los "
+"convertidores de retorno son en sí mismos mucho más sencillos."
 
 #: ../../howto/clinic.rst:1308
 msgid ""
@@ -2410,10 +2480,15 @@ msgid ""
 "clinic.py``, specifically the implementation of ``CReturnConverter`` and all "
 "its subclasses."
 msgstr ""
+"Los convertidores de retorno deben subclasificar ``CReturnConverter``. Aún "
+"no hay ejemplos de convertidores de retorno personalizados, porque todavía "
+"no se utilizan mucho.  Si desea escribir su propio convertidor de retorno, "
+"por favor lea ``Tools/clinic/clinic.py``, específicamente la implementación "
+"de ``CReturnConverter`` y todas sus subclases."
 
 #: ../../howto/clinic.rst:1316
 msgid "METH_O and METH_NOARGS"
-msgstr ""
+msgstr "METH_O y METH_NOARGS"
 
 #: ../../howto/clinic.rst:1318
 msgid ""
@@ -2421,28 +2496,37 @@ msgid ""
 "argument is using the ``object`` converter, and mark the arguments as "
 "positional-only::"
 msgstr ""
+"Para convertir una función utilizando ``METH_O``, asegúrese de que el único "
+"argumento de la función utiliza el conversor ``object``, y marque los "
+"argumentos como sólo posicionales::"
 
 #: ../../howto/clinic.rst:1330
 msgid ""
 "To convert a function using ``METH_NOARGS``, just don't specify any "
 "arguments."
 msgstr ""
+"Para convertir una función utilizando ``METH_NOARGS``, basta con no "
+"especificar ningún argumento."
 
 #: ../../howto/clinic.rst:1333
 msgid ""
 "You can still use a self converter, a return converter, and specify a "
 "``type`` argument to the object converter for ``METH_O``."
 msgstr ""
+"Puede seguir utilizando un autoconversor, un conversor de retorno y "
+"especificar un argumento ``type`` al conversor de objetos para ``METH_O``."
 
 #: ../../howto/clinic.rst:1337
 msgid "tp_new and tp_init functions"
-msgstr ""
+msgstr "tp_new y funciones tp_init"
 
 #: ../../howto/clinic.rst:1339
 msgid ""
 "You can convert ``tp_new`` and ``tp_init`` functions.  Just name them "
 "``__new__`` or ``__init__`` as appropriate.  Notes:"
 msgstr ""
+"Puede convertir las funciones ``tp_new`` y ``tp_init``.  Basta con "
+"nombrarlas ``__new__`` o ``__init__`` según corresponda.  Notas:"
 
 #: ../../howto/clinic.rst:1342
 msgid ""
@@ -2450,18 +2534,21 @@ msgid ""
 "it would by default.  It's just the name of the class, converted into a "
 "valid C identifier."
 msgstr ""
+"El nombre de la función generado para ``__new__`` no termina en ``__new__`` "
+"como lo haría por defecto.  Es sólo el nombre de la clase, convertido en un "
+"identificador C válido."
 
 #: ../../howto/clinic.rst:1346
 msgid "No ``PyMethodDef`` ``#define`` is generated for these functions."
-msgstr ""
+msgstr "No se genera ``PyMethodDef`` ``#define`` para estas funciones."
 
 #: ../../howto/clinic.rst:1348
 msgid "``__init__`` functions return ``int``, not ``PyObject *``."
-msgstr ""
+msgstr "``__init__`` las funciones devuelven ``int``, no ``PyObject *``."
 
 #: ../../howto/clinic.rst:1350
 msgid "Use the docstring as the class docstring."
-msgstr ""
+msgstr "Utiliza el docstring como docstring de la clase."
 
 #: ../../howto/clinic.rst:1352
 msgid ""
@@ -2471,10 +2558,15 @@ msgid ""
 "support keywords, the parsing function generated will throw an exception if "
 "it receives any.)"
 msgstr ""
+"Aunque las funciones ``__new__`` y ``__init__`` siempre deben aceptar los "
+"objetos ``args`` y ``kwargs``, al convertir puede especificar cualquier "
+"firma para estas funciones que desee. (Si su función no admite palabras "
+"clave, la función de análisis sintáctico generada lanzará una excepción si "
+"recibe alguna)."
 
 #: ../../howto/clinic.rst:1359
 msgid "Changing and redirecting Clinic's output"
-msgstr ""
+msgstr "Modificar y redirigir la salida de Clinic"
 
 #: ../../howto/clinic.rst:1361
 msgid ""
@@ -2484,6 +2576,11 @@ msgid ""
 "to a separate file.  You can also add a prefix or suffix to every line of "
 "Clinic's generated output."
 msgstr ""
+"Puede ser incómodo tener la salida de Clinic entremezclada con tu código C "
+"convencional editado a mano.  Por suerte, Clinic es configurable: puede "
+"almacenar su salida para imprimirla más tarde (¡o antes!), o escribirla en "
+"un archivo separado.  También puede añadir un prefijo o sufijo a cada línea "
+"de la salida generada por Clinic."
 
 #: ../../howto/clinic.rst:1367
 msgid ""
@@ -2496,14 +2593,23 @@ msgid ""
 "many people consider this hampers readability, it will never require "
 "rearranging your code to fix definition-before-use problems.)"
 msgstr ""
+"Aunque cambiar la salida de Clinic de esta manera puede ser una ayuda para "
+"la legibilidad, puede resultar en que el código de Clinic use tipos antes de "
+"que estén definidos, o que tu código intente usar código generado por Clinic "
+"antes de que esté definido. Estos problemas pueden resolverse fácilmente "
+"reordenando las declaraciones en tu fichero, o moviendo el lugar donde va el "
+"código generado por Clinic.  (Esta es la razón por la que el comportamiento "
+"por defecto de Clinic es mostrar todo en el bloque actual; aunque mucha "
+"gente considera que esto dificulta la legibilidad, nunca será necesario "
+"reordenar tu código para solucionar problemas de definición-antes-de-uso)."
 
 #: ../../howto/clinic.rst:1376
 msgid "Let's start with defining some terminology:"
-msgstr ""
+msgstr "Empecemos por definir algunos términos:"
 
 #: ../../howto/clinic.rst:1403
 msgid "*field*"
-msgstr ""
+msgstr "*field*"
 
 #: ../../howto/clinic.rst:1379
 msgid ""
@@ -2512,6 +2618,10 @@ msgid ""
 "``methoddef_define``.  Clinic has seven different fields it can output per "
 "function definition:"
 msgstr ""
+"Un  field, en este contexto, es una subsección de la salida de Clinic. Por "
+"ejemplo, el ``#define`` para la estructura ``PyMethodDef`` es un campo, "
+"llamado ``methoddef_define``.  Clinic dispone de siete campos diferentes que "
+"puede generar por definición de función:"
 
 #: ../../howto/clinic.rst:1394
 msgid ""
@@ -2525,32 +2635,45 @@ msgid ""
 "(``\"methoddef\"`` is special, it's the only one that ends with "
 "``\"_define\"``, representing that it's a preprocessor #define.)"
 msgstr ""
+"Todos los nombres tienen la forma ``\"<a>_<b>\"``, donde ``\"<a>\"`` es el "
+"objeto semántico representado (la función de análisis sintáctico, la función "
+"impl, el docstring o la estructura methoddef) y ``\"<b>\"`` representa qué "
+"tipo de declaración es el campo.  Los nombres de campo que terminan en "
+"``\"_prototype\"`` representan declaraciones hacia adelante de esa cosa, sin "
+"el cuerpo/datos reales de la cosa; los nombres de campo que terminan en "
+"``\"_definition\"`` representan la definición real de la cosa, con el cuerpo/"
+"datos de la cosa.  (``\"methoddef\"`` es especial, es el único que termina "
+"en ``\"_define\"``, representando que es una #define del preprocesador)."
 
 #: ../../howto/clinic.rst:1437
 msgid "*destination*"
-msgstr ""
+msgstr "*destination*"
 
 #: ../../howto/clinic.rst:1406
 msgid ""
 "A destination is a place Clinic can write output to.  There are five built-"
 "in destinations:"
 msgstr ""
+"Un destino es un lugar en el que Clinic puede escribir la salida.  Hay cinco "
+"destinos incorporados:"
 
 #: ../../howto/clinic.rst:1411 ../../howto/clinic.rst:1486
 #: ../../howto/clinic.rst:1564
 msgid "``block``"
-msgstr ""
+msgstr "``block``"
 
 #: ../../howto/clinic.rst:1410
 msgid ""
 "The default destination: printed in the output section of the current Clinic "
 "block."
 msgstr ""
+"El destino por defecto: se imprime en la sección de salida del bloque de la "
+"Clínica actual."
 
 #: ../../howto/clinic.rst:1417 ../../howto/clinic.rst:1513
 #: ../../howto/clinic.rst:1567
 msgid "``buffer``"
-msgstr ""
+msgstr "``buffer``"
 
 #: ../../howto/clinic.rst:1414
 msgid ""
@@ -2558,11 +2681,14 @@ msgid ""
 "to the end of any existing text.  It's an error to have any text left in the "
 "buffer when Clinic finishes processing a file."
 msgstr ""
+"Un búfer de texto donde puedes guardar texto para más tarde.  El texto "
+"enviado aquí se añade al final de cualquier texto existente.  Es un error "
+"que quede texto en el búfer cuando Clinic termina de procesar un archivo."
 
 #: ../../howto/clinic.rst:1428 ../../howto/clinic.rst:1499
 #: ../../howto/clinic.rst:1593
 msgid "``file``"
-msgstr ""
+msgstr "``file``"
 
 #: ../../howto/clinic.rst:1420
 msgid ""
@@ -2572,17 +2698,24 @@ msgid ""
 "splitext()`` run on the current file.  (Example: the ``file`` destination "
 "for ``_pickle.c`` would be written to ``_pickle.clinic.c``.)"
 msgstr ""
+"Un \"archivo clínico\" independiente que será creado automáticamente por "
+"Clinic. El nombre elegido para el archivo es ``{basename}.clinic{extension}"
+"``, donde ``basename`` y ``extension`` se asignaron a la salida de ``os.path."
+"splitext()`` ejecutada en el archivo actual.  (Ejemplo: el destino ``file`` "
+"para ``_pickle.c`` se escribiría en ``_pickle.clinic.c``.)"
 
 #: ../../howto/clinic.rst:1427
 msgid ""
 "**Important: When using a** ``file`` **destination, you** *must check in* "
 "**the generated file!**"
 msgstr ""
+"**Importante: Cuando se utiliza un** ``file`` **destino, se** *debe "
+"registrar* **el archivo generado!**"
 
 #: ../../howto/clinic.rst:1433 ../../howto/clinic.rst:1526
 #: ../../howto/clinic.rst:1597
 msgid "``two-pass``"
-msgstr ""
+msgstr "``two-pass``"
 
 #: ../../howto/clinic.rst:1431
 msgid ""
@@ -2590,22 +2723,27 @@ msgid ""
 "once, and it prints out all text sent to it during all processing, even from "
 "Clinic blocks *after* the dumping point."
 msgstr ""
+"Un búfer como ``buffer``. Sin embargo, un búfer de dos pasadas sólo puede "
+"volcarse una vez, e imprime todo el texto que se le envía durante todo el "
+"procesamiento, incluso de los bloques de la Clínica *después* del punto de "
+"volcado."
 
 #: ../../howto/clinic.rst:1437 ../../howto/clinic.rst:1560
 msgid "``suppress``"
-msgstr ""
+msgstr "``suppress``"
 
 #: ../../howto/clinic.rst:1436
 msgid "The text is suppressed—thrown away."
-msgstr ""
+msgstr "El texto se suprime, se desecha."
 
 #: ../../howto/clinic.rst:1439
 msgid "Clinic defines five new directives that let you reconfigure its output."
 msgstr ""
+"Clinic define cinco nuevas directivas que permiten reconfigurar su salida."
 
 #: ../../howto/clinic.rst:1441
 msgid "The first new directive is ``dump``:"
-msgstr ""
+msgstr "La primera directiva nueva es ``dump``:"
 
 #: ../../howto/clinic.rst:1447
 msgid ""
@@ -2613,12 +2751,16 @@ msgid ""
 "the current block, and empties it.  This only works with ``buffer`` and "
 "``two-pass`` destinations."
 msgstr ""
+"Vuelca el contenido actual del destino indicado en la salida del bloque "
+"actual y lo vacía.  Sólo funciona con los destinos ``buffer`` y ``two-pass``."
 
 #: ../../howto/clinic.rst:1451
 msgid ""
 "The second new directive is ``output``.  The most basic form of ``output`` "
 "is like this:"
 msgstr ""
+"La segunda directiva nueva es ``output``.  La forma más básica de ``output`` "
+"es la siguiente:"
 
 #: ../../howto/clinic.rst:1458
 msgid ""
@@ -2626,10 +2768,13 @@ msgid ""
 "supports a special meta-destination, called ``everything``, which tells "
 "Clinic to output *all* fields to that *destination*."
 msgstr ""
+"Esto indica a Clinic que envíe *campo* a *destino*. ``output`` también "
+"admite un meta-destino especial, llamado ``everything``, que indica a Clinic "
+"que envíe *todos* los campos a ese *destino*."
 
 #: ../../howto/clinic.rst:1462
 msgid "``output`` has a number of other functions:"
-msgstr ""
+msgstr "``output`` tiene otras funciones:"
 
 #: ../../howto/clinic.rst:1471
 msgid ""
@@ -2639,24 +2784,36 @@ msgid ""
 "Simply push before your change to save the current configuration, then pop "
 "when you wish to restore the previous configuration."
 msgstr ""
+"``output push`` y ``output pop`` le permiten insertar y extraer "
+"configuraciones en una pila de configuración interna, de forma que pueda "
+"modificar temporalmente la configuración de salida y, a continuación, "
+"restaurar fácilmente la configuración anterior.  Basta con pulsar antes del "
+"cambio para guardar la configuración actual y pulsar cuando se desee "
+"restaurar la configuración anterior."
 
 #: ../../howto/clinic.rst:1478
 msgid ""
 "``output preset`` sets Clinic's output to one of several built-in preset "
 "configurations, as follows:"
 msgstr ""
+"``output preset`` ajusta la salida del Clinic a una de las configuraciones "
+"preestablecidas, como se indica a continuación:"
 
 #: ../../howto/clinic.rst:1482
 msgid ""
 "Clinic's original starting configuration.  Writes everything immediately "
 "after the input block."
 msgstr ""
+"Configuración inicial original de la clínica.  Escribe todo inmediatamente "
+"después del bloque de entrada."
 
 #: ../../howto/clinic.rst:1485
 msgid ""
 "Suppress the ``parser_prototype`` and ``docstring_prototype``, write "
 "everything else to ``block``."
 msgstr ""
+"Suprima ``parser_prototype`` y ``docstring_prototype``, escriba todo lo "
+"demás en ``block``."
 
 #: ../../howto/clinic.rst:1489
 msgid ""
@@ -2665,16 +2822,24 @@ msgid ""
 "your file to make this work, though usually this just means creating forward "
 "declarations for various ``typedef`` and ``PyTypeObject`` definitions."
 msgstr ""
+"Diseñado para escribir todo lo que pueda en el \"archivo de la clínica\". "
+"Entonces ``#include`` este archivo cerca de la parte superior de su archivo. "
+"Es posible que tenga que reorganizar su archivo para que esto funcione, "
+"aunque por lo general esto sólo significa la creación de declaraciones hacia "
+"adelante para varias definiciones ``typedef`` y ``PyTypeObject``."
 
 #: ../../howto/clinic.rst:1495
 msgid ""
 "Suppress the ``parser_prototype`` and ``docstring_prototype``, write the "
 "``impl_definition`` to ``block``, and write everything else to ``file``."
 msgstr ""
+"Suprima ``parser_prototype`` y ``docstring_prototype``, escriba "
+"``impl_definition`` en ``block``, y escriba todo lo demás en ``file``."
 
 #: ../../howto/clinic.rst:1499
 msgid "The default filename is ``\"{dirname}/clinic/{basename}.h\"``."
 msgstr ""
+"El nombre de archivo por defecto es ``\"{dirname}/clinic/{basename}.h\"``."
 
 #: ../../howto/clinic.rst:1502
 msgid ""
@@ -2685,6 +2850,13 @@ msgid ""
 "``buffer`` may require even more editing than ``file``, if your file has "
 "static ``PyMethodDef`` arrays defined in the middle of the file."
 msgstr ""
+"Guarda la mayor parte de la salida de Clinic, para escribirla en tu fichero "
+"cerca del final.  Para archivos Python que implementen módulos o tipos "
+"incorporados, se recomienda que vuelque el buffer justo encima de las "
+"estructuras estáticas para su módulo o tipo incorporado; éstas están "
+"normalmente muy cerca del final.  Usar ``buffer`` puede requerir incluso más "
+"edición que ``file``, si tu archivo tiene arrays estáticos ``PyMethodDef`` "
+"definidos en medio del archivo."
 
 #: ../../howto/clinic.rst:1511
 msgid ""
@@ -2692,6 +2864,9 @@ msgid ""
 "``docstring_prototype``, write the ``impl_definition`` to ``block``, and "
 "write everything else to ``file``."
 msgstr ""
+"Suprima ``parser_prototype``, ``impl_prototype``, y ``docstring_prototype``, "
+"escriba ``impl_definition`` en ``block``, y escriba todo lo demás en "
+"``file``."
 
 #: ../../howto/clinic.rst:1516
 msgid ""
@@ -2701,6 +2876,12 @@ msgid ""
 "the ``two-pass`` buffer near the top of your file, and dump the ``buffer`` "
 "near the end just like you would when using the ``buffer`` preset."
 msgstr ""
+"Similar al preajuste ``buffer``, pero escribe las declaraciones hacia "
+"adelante en el búfer ``two-pass``, y las definiciones en ``buffer``. Es "
+"similar al preajuste ``buffer``, pero puede requerir menos edición que "
+"``buffer``. Vuelca el búfer ``two-pass`` cerca de la parte superior de su "
+"archivo, y vuelca el ``buffer`` cerca del final tal como lo haría cuando "
+"utiliza el preajuste ``buffer``."
 
 #: ../../howto/clinic.rst:1523
 msgid ""
@@ -2708,10 +2889,13 @@ msgid ""
 "``block``, write ``docstring_prototype``, ``methoddef_define``, and "
 "``parser_prototype`` to ``two-pass``, write everything else to ``buffer``."
 msgstr ""
+"Suprime el ``impl_prototype``, escribe el ``impl_definition`` en ``block``, "
+"escribe ``docstring_prototype``, ``methoddef_define``, y "
+"``parser_prototype`` en ``two-pass``, escribe todo lo demás en ``buffer``."
 
 #: ../../howto/clinic.rst:1537
 msgid "``partial-buffer``"
-msgstr ""
+msgstr "``partial-buffer``"
 
 #: ../../howto/clinic.rst:1529
 msgid ""
@@ -2722,110 +2906,132 @@ msgid ""
 "``buffer`` near the end, just like you would when using the ``buffer`` "
 "preset."
 msgstr ""
+"Similar al preajuste ``buffer``, pero escribe más cosas en ``block``, "
+"escribiendo sólo los trozos realmente grandes de código generado en "
+"``buffer``. Esto evita completamente el problema de definición antes de uso "
+"de ``buffer``, con el pequeño coste de tener un poco más de cosas en la "
+"salida del bloque. Descargue ``buffer`` cerca del final, como haría con el "
+"preajuste ``buffer``."
 
 #: ../../howto/clinic.rst:1536
 msgid ""
 "Suppresses the ``impl_prototype``, write the ``docstring_definition`` and "
 "``parser_definition`` to ``buffer``, write everything else to ``block``."
 msgstr ""
+"Suprime el ``impl_prototype``, escribe el ``docstring_definition`` y "
+"``parser_definition`` en ``buffer``, escribe todo lo demás en ``block``."
 
 #: ../../howto/clinic.rst:1539
 msgid "The third new directive is ``destination``:"
-msgstr ""
+msgstr "La tercera nueva directiva es ``destination``:"
 
 #: ../../howto/clinic.rst:1545
 msgid "This performs an operation on the destination named ``name``."
-msgstr ""
+msgstr "Esto realiza una operación en el destino llamado ``name``."
 
 #: ../../howto/clinic.rst:1547
 msgid "There are two defined subcommands: ``new`` and ``clear``."
-msgstr ""
+msgstr "Hay dos subcomandos definidos: ``new`` y ``clear``."
 
 #: ../../howto/clinic.rst:1549
 msgid "The ``new`` subcommand works like this:"
-msgstr ""
+msgstr "El subcomando ``new`` funciona así:"
 
 #: ../../howto/clinic.rst:1555
 msgid ""
 "This creates a new destination with name ``<name>`` and type ``<type>``."
 msgstr ""
+"Esto crea un nuevo destino con el nombre ``<name>`` y el tipo ``<type>``."
 
 #: ../../howto/clinic.rst:1557
 msgid "There are five destination types:"
-msgstr ""
+msgstr "Existen cinco tipos de destino:"
 
 #: ../../howto/clinic.rst:1560
 msgid "Throws the text away."
-msgstr ""
+msgstr "Tira el texto."
 
 #: ../../howto/clinic.rst:1563
 msgid ""
 "Writes the text to the current block.  This is what Clinic originally did."
 msgstr ""
+"Escribe el texto en el bloque actual.  Esto es lo que Clinic hacía "
+"originalmente."
 
 #: ../../howto/clinic.rst:1567
 msgid "A simple text buffer, like the \"buffer\" builtin destination above."
 msgstr ""
+"Un simple búfer de texto, como el destino \"buffer\" incorporado más arriba."
 
 #: ../../howto/clinic.rst:1570
 msgid ""
 "A text file.  The file destination takes an extra argument, a template to "
 "use for building the filename, like so:"
 msgstr ""
+"Un archivo de texto.  El destino del fichero toma un argumento extra, una "
+"plantilla a usar para construir el nombre del fichero, así:"
 
 #: ../../howto/clinic.rst:1573
 msgid "destination <name> new <type> <file_template>"
-msgstr ""
+msgstr "destino <name> nuevo <type> <file_template>"
 
 #: ../../howto/clinic.rst:1575
 msgid ""
 "The template can use three strings internally that will be replaced by bits "
 "of the filename:"
 msgstr ""
+"La plantilla puede utilizar internamente tres cadenas que serán sustituidas "
+"por bits del nombre de archivo:"
 
 #: ../../howto/clinic.rst:1578
 msgid "{path}"
-msgstr ""
+msgstr "{path}"
 
 #: ../../howto/clinic.rst:1579
 msgid "The full path to the file, including directory and full filename."
 msgstr ""
+"La ruta completa al archivo, incluyendo el directorio y el nombre completo "
+"del archivo."
 
 #: ../../howto/clinic.rst:1580
 msgid "{dirname}"
-msgstr ""
+msgstr "{dirname}"
 
 #: ../../howto/clinic.rst:1581
 msgid "The name of the directory the file is in."
-msgstr ""
+msgstr "El nombre del directorio en el que se encuentra el archivo."
 
 #: ../../howto/clinic.rst:1582
 msgid "{basename}"
-msgstr ""
+msgstr "{basename}"
 
 #: ../../howto/clinic.rst:1583
 msgid "Just the name of the file, not including the directory."
-msgstr ""
+msgstr "Sólo el nombre del archivo, sin incluir el directorio."
 
 #: ../../howto/clinic.rst:1585
 msgid "{basename_root}"
-msgstr ""
+msgstr "{basename_root}"
 
 #: ../../howto/clinic.rst:1585
 msgid ""
 "Basename with the extension clipped off (everything up to but not including "
 "the last '.')."
 msgstr ""
+"Nombre base con la extensión recortada (todo hasta el último '.', pero sin "
+"incluirlo)."
 
 #: ../../howto/clinic.rst:1589
 msgid "{basename_extension}"
-msgstr ""
+msgstr "{basename_extension}"
 
 #: ../../howto/clinic.rst:1588
 msgid ""
 "The last '.' and everything after it.  If the basename does not contain a "
 "period, this will be the empty string."
 msgstr ""
+"El último '.' y todo lo que le sigue.  Si el nombre base no contiene un "
+"punto, será la cadena vacía."
 
 #: ../../howto/clinic.rst:1591
 msgid ""
@@ -2833,14 +3039,18 @@ msgid ""
 "same, and {extension} is empty.  \"{basename}{extension}\" is always exactly "
 "the same as \"{filename}\".\""
 msgstr ""
+"Si no hay puntos en el nombre del archivo, {basename} y {filename} son "
+"iguales, y {extension} está vacío.  \"{basename}{extension} \" es siempre "
+"exactamente igual que \"{filename}\".\""
 
 #: ../../howto/clinic.rst:1596
 msgid "A two-pass buffer, like the \"two-pass\" builtin destination above."
 msgstr ""
+"Un búfer de dos pasos, como el destino incorporado \"two-pass\" anterior."
 
 #: ../../howto/clinic.rst:1599
 msgid "The ``clear`` subcommand works like this:"
-msgstr ""
+msgstr "El subcomando ``clear`` funciona así:"
 
 #: ../../howto/clinic.rst:1605
 msgid ""
@@ -2848,10 +3058,13 @@ msgid ""
 "don't know what you'd need this for, but I thought maybe it'd be useful "
 "while someone's experimenting.)"
 msgstr ""
+"Elimina todo el texto acumulado hasta este punto en el destino. (No sé para "
+"qué necesitarías esto, pero pensé que quizá sería útil mientras alguien "
+"experimenta)."
 
 #: ../../howto/clinic.rst:1609
 msgid "The fourth new directive is ``set``:"
-msgstr ""
+msgstr "La cuarta nueva directiva es ``set``:"
 
 #: ../../howto/clinic.rst:1616
 msgid ""
@@ -2860,34 +3073,44 @@ msgid ""
 "``line_suffix`` is a string that will be appended to every line of Clinic's "
 "output."
 msgstr ""
+"``set`` permite establecer dos variables internas en Clinic. ``line_prefix`` "
+"es una cadena que se antepondrá a cada línea de la salida de Clinic; "
+"``line_suffix`` es una cadena que se añadirá a cada línea de la salida de "
+"Clinic."
 
 #: ../../howto/clinic.rst:1620
 msgid "Both of these support two format strings:"
-msgstr ""
+msgstr "Ambos admiten dos cadenas de formato:"
 
 #: ../../howto/clinic.rst:1623
 msgid "``{block comment start}``"
-msgstr ""
+msgstr "``{block comment start}``"
 
 #: ../../howto/clinic.rst:1623
 msgid ""
 "Turns into the string ``/*``, the start-comment text sequence for C files."
 msgstr ""
+"Convierte en la cadena ``/*``, la secuencia de texto de inicio-comentario "
+"para archivos C."
 
 #: ../../howto/clinic.rst:1626
 msgid "``{block comment end}``"
-msgstr ""
+msgstr "``{block comment end}``"
 
 #: ../../howto/clinic.rst:1626
 msgid ""
 "Turns into the string ``*/``, the end-comment text sequence for C files."
 msgstr ""
+"Convierte en la cadena ``*/``, la secuencia de texto de fin de comentario "
+"para archivos C."
 
 #: ../../howto/clinic.rst:1628
 msgid ""
 "The final new directive is one you shouldn't need to use directly, called "
 "``preserve``:"
 msgstr ""
+"La última directiva nueva es una que no debería tener que utilizar "
+"directamente, denominada ``preserve``:"
 
 #: ../../howto/clinic.rst:1635
 msgid ""
@@ -2897,10 +3120,16 @@ msgid ""
 "checksum functionality to ensure the file was not modified by hand before it "
 "gets overwritten."
 msgstr ""
+"Indica a Clinic que el contenido actual de la salida debe mantenerse sin "
+"modificaciones. Esto es utilizado internamente por Clinic cuando vuelca la "
+"salida en archivos ``file``; envolverlo en un bloque de Clinic permite a "
+"Clinic utilizar su funcionalidad de suma de comprobación existente para "
+"asegurarse de que el archivo no fue modificado a mano antes de que se "
+"sobrescriba."
 
 #: ../../howto/clinic.rst:1642
 msgid "The #ifdef trick"
-msgstr ""
+msgstr "El truco #ifdef"
 
 #: ../../howto/clinic.rst:1644
 msgid ""
@@ -2908,24 +3137,33 @@ msgid ""
 "there's a trick you can use to make life a little easier.  The existing code "
 "probably looks like this::"
 msgstr ""
+"Si estás convirtiendo una función que no está disponible en todas las "
+"plataformas, hay un truco que puedes utilizar para hacerte la vida un poco "
+"más fácil.  El código existente probablemente se parece a esto::"
 
 #: ../../howto/clinic.rst:1655
 msgid ""
 "And then in the ``PyMethodDef`` structure at the bottom the existing code "
 "will have:"
 msgstr ""
+"Y luego en la estructura ``PyMethodDef`` en la parte inferior el código "
+"existente tendrá:"
 
 #: ../../howto/clinic.rst:1664
 msgid ""
 "In this scenario, you should enclose the body of your impl function inside "
 "the ``#ifdef``, like so::"
 msgstr ""
+"En este caso, debe encerrar el cuerpo de la función impl dentro de "
+"``#ifdef``, de la siguiente manera::"
 
 #: ../../howto/clinic.rst:1678
 msgid ""
 "Then, remove those three lines from the ``PyMethodDef`` structure, replacing "
 "them with the macro Argument Clinic generated:"
 msgstr ""
+"A continuación, elimine esas tres líneas de la estructura ``PyMethodDef``, "
+"sustituyéndolas por la macro Argument Clinic generada:"
 
 #: ../../howto/clinic.rst:1685
 msgid ""
@@ -2934,12 +3172,18 @@ msgid ""
 "first line of your block, but with periods changed to underscores, "
 "uppercased, and ``\"_METHODDEF\"`` added to the end.)"
 msgstr ""
+"(Puede encontrar el nombre real de esta macro dentro del código generado. O "
+"puedes calcularlo tú mismo: es el nombre de tu función tal y como se define "
+"en la primera línea de tu bloque, pero con los puntos cambiados por guiones "
+"bajos, en mayúsculas y añadiendo ``\"_METHODDEF\"`` al final)."
 
 #: ../../howto/clinic.rst:1690
 msgid ""
 "Perhaps you're wondering: what if ``HAVE_FUNCTIONNAME`` isn't defined? The "
 "``MODULE_FUNCTIONNAME_METHODDEF`` macro won't be defined either!"
 msgstr ""
+"Tal vez se pregunte: ¿y si ``HAVE_FUNCTIONNAME`` no está definida? La macro "
+"``MODULE_FUNCTIONNAME_METHODDEF`` tampoco estará definida."
 
 #: ../../howto/clinic.rst:1693
 msgid ""
@@ -2947,6 +3191,9 @@ msgid ""
 "Argument Clinic block might be deactivated by the ``#ifdef``.  When that "
 "happens, it generates a little extra code that looks like this::"
 msgstr ""
+"Aquí es donde Argument Clinic se vuelve muy inteligente.  De hecho, detecta "
+"que el bloque Argument Clinic podría estar desactivado por el ``#ifdef``. "
+"Cuando eso sucede, genera un poco de código extra que se parece a esto::"
 
 #: ../../howto/clinic.rst:1701
 msgid ""
@@ -2954,6 +3201,9 @@ msgid ""
 "into the correct structure, including the trailing comma.  If the function "
 "is undefined, this turns into nothing."
 msgstr ""
+"Esto significa que la macro siempre funciona.  Si la función está definida, "
+"se convierte en la estructura correcta, incluida la coma final.  Si la "
+"función no está definida, se convierte en nada."
 
 #: ../../howto/clinic.rst:1705
 msgid ""
@@ -2962,12 +3212,18 @@ msgid ""
 "output block, because that could be deactivated by the ``#ifdef``.  (That's "
 "the whole point!)"
 msgstr ""
+"Sin embargo, esto causa un problema delicado: ¿dónde debe poner Argument "
+"Clinic este código extra cuando se utiliza el preajuste de salida "
+"\"bloque\"?  No puede ir en el bloque de salida, porque podría ser "
+"desactivado por ``#ifdef``. (¡De eso se trata!)"
 
 #: ../../howto/clinic.rst:1709
 msgid ""
 "In this situation, Argument Clinic writes the extra code to the \"buffer\" "
 "destination. This may mean that you get a complaint from Argument Clinic:"
 msgstr ""
+"En esta situación, Argument Clinic escribe el código extra en el destino "
+"\"buffer\". Esto puede significar que recibas una queja de Argument Clinic:"
 
 #: ../../howto/clinic.rst:1717
 msgid ""
@@ -2975,10 +3231,14 @@ msgid ""
 "Argument Clinic added to your file (it'll be at the very bottom), then move "
 "it above the ``PyMethodDef`` structure where that macro is used."
 msgstr ""
+"Cuando esto ocurra, simplemente abra su archivo, encuentre el bloque ``dump "
+"buffer`` que Argument Clinic añadió a su archivo (estará en la parte "
+"inferior), y muévalo por encima de la estructura ``PyMethodDef`` donde se "
+"utiliza esa macro."
 
 #: ../../howto/clinic.rst:1724
 msgid "Using Argument Clinic in Python files"
-msgstr ""
+msgstr "Uso de Argument Clinic en archivos Python"
 
 #: ../../howto/clinic.rst:1726
 msgid ""
@@ -2987,9 +3247,17 @@ msgid ""
 "wouldn't make any sense to the Python interpreter.  But using Argument "
 "Clinic to run Python blocks lets you use Python as a Python preprocessor!"
 msgstr ""
+"Es posible utilizar Argument Clinic para preprocesar ficheros Python. No "
+"tiene sentido usar bloques de Argument Clinic, por supuesto, ya que la "
+"salida no tendría ningún sentido para el intérprete de Python.  Pero usar "
+"Argument Clinic para ejecutar bloques de Python te permite usar Python como "
+"un preprocesador de Python."
 
 #: ../../howto/clinic.rst:1731
 msgid ""
 "Since Python comments are different from C comments, Argument Clinic blocks "
 "embedded in Python files look slightly different.  They look like this:"
 msgstr ""
+"Dado que los comentarios en Python son diferentes de los comentarios en C, "
+"los bloques Argument Clinic incrustados en archivos Python tienen un aspecto "
+"ligeramente diferente.  Tienen este aspecto:"
