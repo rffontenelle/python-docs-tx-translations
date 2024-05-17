@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-11 03:01+0000\n"
+"POT-Creation-Date: 2024-05-17 14:44+0000\n"
 "PO-Revision-Date: 2024-05-11 00:34+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
@@ -26,11 +26,11 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:6
 msgid "Data model"
-msgstr ""
+msgstr "Модель данных"
 
 #: ../../reference/datamodel.rst:12
 msgid "Objects, values and types"
-msgstr ""
+msgstr "Объекты, значения и типы данных"
 
 #: ../../reference/datamodel.rst:18
 msgid ""
@@ -52,6 +52,7 @@ msgstr ""
 #: ../../reference/datamodel.rst:42
 msgid "For CPython, ``id(x)`` is the memory address where ``x`` is stored."
 msgstr ""
+"В CPython, ``id(x)`` это адрес объекта ``x`` в памяти, где он хранится."
 
 #: ../../reference/datamodel.rst:44
 msgid ""
@@ -61,6 +62,11 @@ msgid ""
 "an object itself).  Like its identity, an object's :dfn:`type` is also "
 "unchangeable. [#]_"
 msgstr ""
+"Тип объекта определяет операции, которые объект поддерживает (например, "
+"\"Имеет ли он длину?\") и также определяет возможные значения для объекта "
+"этого типа. Функция :func:`type` возвращает тип объекта (который сам также "
+"является объектом). Также как и его идентификатор, :dfn:`type` объекта "
+"является неизменяемым. [#]_"
 
 #: ../../reference/datamodel.rst:50
 msgid ""
@@ -75,6 +81,17 @@ msgid ""
 "instance, numbers, strings and tuples are immutable, while dictionaries and "
 "lists are mutable."
 msgstr ""
+"Значение *value* некоторых объектов может изменяться. Объекты, чьи значения "
+"могут изменяться, называются изменяемыми *mutable*; объекты, чьи значения не "
+"меняются с момента, как объекты были созданы, называются неизменяемые "
+"*immutable*. (Значение неизменяемого контейнера объектов, который содержит "
+"ссылки на изменяемые объекты может изменяться, когда значения последних "
+"изменились; однако контейнер все еще считается неизменяемым, потому что "
+"коллекция объектов, которую он содержит, не может быть изменена. Таким "
+"образом, неизменяемость это не строго тоже самое, что и неизменяемое "
+"значение, это более тонкое понятие.) Изменяемость объекта определяется его "
+"типом; к примеру, числа, строки и кортежи - неизменяемые, в то время как "
+"словари и списки - изменяемые."
 
 #: ../../reference/datamodel.rst:65
 msgid ""
@@ -84,6 +101,11 @@ msgid ""
 "implementation quality how garbage collection is implemented, as long as no "
 "objects are collected that are still reachable."
 msgstr ""
+"Объекты никогда явно не удаляются; однако, когда они перестают "
+"использоваться, они могут быть собраны как мусор. Реализация позволяет "
+"отсрочить сбор мусора или совсем его пропустить - это вопрос качества "
+"реализации, как осуществляется сбор мусора, до тех пор, пока не останется "
+"объектов, которые все еще используются."
 
 #: ../../reference/datamodel.rst:73
 msgid ""
@@ -96,6 +118,14 @@ msgid ""
 "on immediate finalization of objects when they become unreachable (so you "
 "should always close files explicitly)."
 msgstr ""
+"CPython в настоящее время использует референсно-счетную схему (по желанию), "
+"задерживающую выявление циклически связанного мусора, которая собирает "
+"большинство объектов сразу, как они становятся неиспользуемыми, но это не "
+"гарантирует сбор мусора, содержащего циклические ссылки. Смотри документацию "
+"к  модулю :mod:`gc` для информации о контроле над сбором мусора с "
+"циклическими ссылками. Другие реализации действуют иначе и CPython может "
+"измениться. Не нужно дожидаться немедленного завершения объекта, когда он "
+"становится недоступен (поэтому следует всегда в явном виде закрывать файлы)."
 
 #: ../../reference/datamodel.rst:82
 msgid ""
@@ -128,6 +158,14 @@ msgid ""
 "implied.  So, if an immutable container (like a tuple) contains a reference "
 "to a mutable object, its value changes if that mutable object is changed."
 msgstr ""
+"Некоторые объекты содержат ссылки на другие объекты; они называются "
+"контейнеры *containers*. Примеры контейнеров это кортежи, списки и словари. "
+"Ссылки являются частью значения контейнера. В большинстве случаев, когда мы "
+"говорим о значении контейнера, мы подразумеваем значения - не идентификаторы "
+"содержащихся объектов; однако, когда мы говорим о изменяемости контейнера, "
+"подразумеваются только идентификаторы содержащихся в данный момент объектов. "
+"Так, если неизменяемый контейнер (как кортеж) содержит ссылки на изменяемый "
+"объект, его значение изменяется, если этот изменяемый объект изменился."
 
 #: ../../reference/datamodel.rst:106
 msgid ""
@@ -141,10 +179,20 @@ msgid ""
 "different, unique, newly created empty lists. (Note that ``c = d = []`` "
 "assigns the same object to both ``c`` and ``d``.)"
 msgstr ""
+"Типы определяют практически все аспекты поведения объектов. Даже "
+"необходимость идентификации объекта в какой-то мере подвергается влиянию для "
+"неизменяемых типов, операция, что вычисляет новое значение может возвратить "
+"ссылку на любой существующий объект с таким же типом и значением, в то время "
+"как для изменяемых объектов это не допускается. Например, после ``a = 1; b = "
+"1``, ``a`` и ``b`` могут ссылаться, или могут не ссылаться на такой же "
+"объект со значением один, в зависимости от реализации, но после ``c = []; d "
+"= []``, ``c`` и ``d`` будут гарантированно ссылаться на два различных, "
+"уникальных, вновь созданных пустых листа. (Заметьте, что ``c = d = "
+"[]``назначает один и тот же объект для обоих ``c`` и ``d``.)"
 
 #: ../../reference/datamodel.rst:120
 msgid "The standard type hierarchy"
-msgstr ""
+msgstr "Стандартная иерархия типов"
 
 #: ../../reference/datamodel.rst:129
 msgid ""
@@ -178,7 +226,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:157 ../../reference/datamodel.rst:159
 msgid "NotImplemented"
-msgstr ""
+msgstr "NotImplemented"
 
 #: ../../reference/datamodel.rst:161
 msgid ""
@@ -203,7 +251,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:179 ../../reference/datamodel.rst:180
 msgid "Ellipsis"
-msgstr ""
+msgstr "Эллипсис"
 
 #: ../../reference/datamodel.rst:184
 msgid ""
@@ -214,7 +262,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:190
 msgid ":class:`numbers.Number`"
-msgstr ""
+msgstr ":class:`numbers.Number`"
 
 #: ../../reference/datamodel.rst:194
 msgid ""
@@ -266,7 +314,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:223
 msgid ":class:`numbers.Integral`"
-msgstr ""
+msgstr ":class:`numbers.Integral`"
 
 #: ../../reference/datamodel.rst:227
 msgid ""
@@ -287,7 +335,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:238
 msgid "Integers (:class:`int`)"
-msgstr ""
+msgstr "Целые числа (:class:`int`)"
 
 #: ../../reference/datamodel.rst:239
 msgid ""
@@ -300,7 +348,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:245
 msgid "Booleans (:class:`bool`)"
-msgstr ""
+msgstr "Булевы (:class:`bool`)"
 
 #: ../../reference/datamodel.rst:251
 msgid ""
@@ -314,7 +362,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:259
 msgid ":class:`numbers.Real` (:class:`float`)"
-msgstr ""
+msgstr ":class:`numbers.Real` (:class:`float`)"
 
 #: ../../reference/datamodel.rst:267
 msgid ""
@@ -329,7 +377,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:277
 msgid ":class:`numbers.Complex` (:class:`complex`)"
-msgstr ""
+msgstr ":class:`numbers.Complex` (:class:`complex`)"
 
 #: ../../reference/datamodel.rst:283
 msgid ""
@@ -341,7 +389,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:290
 msgid "Sequences"
-msgstr ""
+msgstr "Последовательности"
 
 #: ../../reference/datamodel.rst:299
 msgid ""
@@ -375,7 +423,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:322
 msgid "Immutable sequences"
-msgstr ""
+msgstr "Неизменяемые последовательности"
 
 #: ../../reference/datamodel.rst:328
 msgid ""
@@ -391,7 +439,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:338
 msgid "Strings"
-msgstr ""
+msgstr "Строки"
 
 #: ../../reference/datamodel.rst:346
 msgid ""
@@ -409,7 +457,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:358
 msgid "Tuples"
-msgstr ""
+msgstr "Кортежи"
 
 #: ../../reference/datamodel.rst:364
 msgid ""
@@ -436,7 +484,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:382
 msgid "Mutable sequences"
-msgstr ""
+msgstr "Изменяемые последовательности"
 
 #: ../../reference/datamodel.rst:391
 msgid ""
@@ -457,7 +505,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:404
 msgid "Lists"
-msgstr ""
+msgstr "Списки"
 
 #: ../../reference/datamodel.rst:407
 msgid ""
@@ -468,7 +516,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:411
 msgid "Byte Arrays"
-msgstr ""
+msgstr "Массивы байтов"
 
 #: ../../reference/datamodel.rst:414
 msgid ""
@@ -480,7 +528,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:421
 msgid "Set types"
-msgstr ""
+msgstr "Типы наборов"
 
 #: ../../reference/datamodel.rst:427
 msgid ""
@@ -506,7 +554,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:442
 msgid "Sets"
-msgstr ""
+msgstr "Множества"
 
 #: ../../reference/datamodel.rst:445
 msgid ""
@@ -545,7 +593,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:477
 msgid "Dictionaries"
-msgstr ""
+msgstr "Словари"
 
 #: ../../reference/datamodel.rst:481
 msgid ""
@@ -588,7 +636,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:513
 msgid "Callable types"
-msgstr ""
+msgstr "Вызываемые типы"
 
 #: ../../reference/datamodel.rst:521
 msgid ""
@@ -598,7 +646,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:528
 msgid "User-defined functions"
-msgstr ""
+msgstr "Пользовательские функции"
 
 #: ../../reference/datamodel.rst:535
 msgid ""
@@ -614,7 +662,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:551 ../../reference/datamodel.rst:585
 msgid "Attribute"
-msgstr ""
+msgstr "Атрибут"
 
 #: ../../reference/datamodel.rst:552 ../../reference/datamodel.rst:586
 msgid "Meaning"
@@ -733,7 +781,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:655
 msgid "Instance methods"
-msgstr ""
+msgstr "Методы экземпляра"
 
 #: ../../reference/datamodel.rst:662
 msgid ""
@@ -855,7 +903,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:762
 msgid "Coroutine functions"
-msgstr ""
+msgstr "Функции сопрограммы"
 
 #: ../../reference/datamodel.rst:767
 msgid ""
@@ -868,7 +916,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:775
 msgid "Asynchronous generator functions"
-msgstr ""
+msgstr "Функции асинхронного генератора"
 
 #: ../../reference/datamodel.rst:781
 msgid ""
@@ -892,7 +940,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:800
 msgid "Built-in functions"
-msgstr ""
+msgstr "Встроенные функции"
 
 #: ../../reference/datamodel.rst:807
 msgid ""
@@ -925,7 +973,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:824
 msgid "Built-in methods"
-msgstr ""
+msgstr "Встроенные методы"
 
 #: ../../reference/datamodel.rst:831
 msgid ""
@@ -940,7 +988,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:840
 msgid "Classes"
-msgstr ""
+msgstr "Классы"
 
 #: ../../reference/datamodel.rst:842
 msgid ""
@@ -953,7 +1001,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:850
 msgid "Class Instances"
-msgstr ""
+msgstr "Экземпляры классов"
 
 #: ../../reference/datamodel.rst:852
 msgid ""
@@ -992,7 +1040,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:888
 msgid ":attr:`__name__`"
-msgstr ""
+msgstr ":attr:`__name__`"
 
 #: ../../reference/datamodel.rst:889
 msgid "The module's name."
@@ -1000,7 +1048,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:891 ../../reference/datamodel.rst:989
 msgid ":attr:`__doc__`"
-msgstr ""
+msgstr ":attr:`__doc__`"
 
 #: ../../reference/datamodel.rst:892
 msgid "The module's documentation string, or ``None`` if unavailable."
@@ -1008,7 +1056,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:895
 msgid ":attr:`__file__`"
-msgstr ""
+msgstr ":attr:`__file__`"
 
 #: ../../reference/datamodel.rst:896
 msgid ""
@@ -1021,7 +1069,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:904 ../../reference/datamodel.rst:992
 msgid ":attr:`__annotations__`"
-msgstr ""
+msgstr ":attr:`__annotations__`"
 
 #: ../../reference/datamodel.rst:905
 msgid ""
@@ -1046,7 +1094,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:924
 msgid "Custom classes"
-msgstr ""
+msgstr "Пользовательские классы"
 
 #: ../../reference/datamodel.rst:926
 msgid ""
@@ -1088,7 +1136,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:974
 msgid "Special attributes:"
-msgstr ""
+msgstr "Особые атрибуты:"
 
 #: ../../reference/datamodel.rst:976
 msgid ":attr:`~definition.__name__`"
@@ -1100,7 +1148,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:979
 msgid ":attr:`__module__`"
-msgstr ""
+msgstr ":attr:`__module__`"
 
 #: ../../reference/datamodel.rst:980
 msgid "The name of the module in which the class was defined."
@@ -1108,7 +1156,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:982
 msgid ":attr:`~object.__dict__`"
-msgstr ""
+msgstr ":attr:`~object.__dict__`"
 
 #: ../../reference/datamodel.rst:983
 msgid "The dictionary containing the class's namespace."
@@ -1147,7 +1195,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1005
 msgid "Class instances"
-msgstr ""
+msgstr "Экземпляры классов"
 
 #: ../../reference/datamodel.rst:1013
 msgid ""
@@ -1209,7 +1257,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1080
 msgid "Internal types"
-msgstr ""
+msgstr "Внутренние типы"
 
 #: ../../reference/datamodel.rst:1086
 msgid ""
@@ -1220,7 +1268,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1094
 msgid "Code objects"
-msgstr ""
+msgstr "Объекты кода"
 
 #: ../../reference/datamodel.rst:1098
 msgid ""
@@ -1493,7 +1541,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1305
 msgid "Frame objects"
-msgstr ""
+msgstr "Объекты рамок"
 
 #: ../../reference/datamodel.rst:1309
 msgid ""
@@ -1588,7 +1636,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1405
 msgid "Traceback objects"
-msgstr ""
+msgstr "Объекты обратной трассировки"
 
 #: ../../reference/datamodel.rst:1418
 msgid ""
@@ -1667,7 +1715,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1488
 msgid "Slice objects"
-msgstr ""
+msgstr "Объекты среза"
 
 #: ../../reference/datamodel.rst:1492
 msgid ""
@@ -1698,7 +1746,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1518
 msgid "Static method objects"
-msgstr ""
+msgstr "Объекты статического метода"
 
 #: ../../reference/datamodel.rst:1520
 msgid ""
@@ -1713,7 +1761,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1530
 msgid "Class method objects"
-msgstr ""
+msgstr "Объекты метода класса"
 
 #: ../../reference/datamodel.rst:1532
 msgid ""
@@ -1727,7 +1775,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1542
 msgid "Special method names"
-msgstr ""
+msgstr "Названия специальных методов"
 
 #: ../../reference/datamodel.rst:1548
 msgid ""
@@ -1764,7 +1812,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1576
 msgid "Basic customization"
-msgstr ""
+msgstr "Базовая настройка"
 
 #: ../../reference/datamodel.rst:1582
 msgid ""
@@ -2128,7 +2176,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1892
 msgid "See also :envvar:`PYTHONHASHSEED`."
-msgstr ""
+msgstr "См. также :envvar:`PYTHONHASHSEED`."
 
 #: ../../reference/datamodel.rst:1894
 msgid "Hash randomization is enabled by default."
@@ -2145,7 +2193,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1913
 msgid "Customizing attribute access"
-msgstr ""
+msgstr "Настройка доступа к атрибутам"
 
 #: ../../reference/datamodel.rst:1915
 msgid ""
@@ -2316,7 +2364,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:2060
 msgid "Implementing Descriptors"
-msgstr ""
+msgstr "Реализация дескрипторов"
 
 #: ../../reference/datamodel.rst:2062
 msgid ""
@@ -2390,7 +2438,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:2117
 msgid "Invoking Descriptors"
-msgstr ""
+msgstr "Вызов дескрипторов"
 
 #: ../../reference/datamodel.rst:2119
 msgid ""
@@ -2425,7 +2473,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:2138
 msgid "Direct Call"
-msgstr ""
+msgstr "Прямой вызов"
 
 #: ../../reference/datamodel.rst:2139
 msgid ""
@@ -2455,7 +2503,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:2150
 msgid "Super Binding"
-msgstr ""
+msgstr "Супер связывание"
 
 #: ../../reference/datamodel.rst:2151
 msgid ""
@@ -2499,7 +2547,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:2216
 msgid "__slots__"
-msgstr ""
+msgstr "__slots__"
 
 #: ../../reference/datamodel.rst:2218
 msgid ""
@@ -2619,7 +2667,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:2301
 msgid "Customizing class creation"
-msgstr ""
+msgstr "Настройка создания классов"
 
 #: ../../reference/datamodel.rst:2303
 msgid ""
@@ -2685,7 +2733,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:2373
 msgid "Metaclasses"
-msgstr ""
+msgstr "Метаклассы"
 
 #: ../../reference/datamodel.rst:2380
 msgid ""
@@ -2734,7 +2782,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:2411
 msgid "Resolving MRO entries"
-msgstr ""
+msgstr "Разрешение ввода данных MRO"
 
 #: ../../reference/datamodel.rst:2415
 msgid ""
@@ -3008,7 +3056,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:2608
 msgid "Emulating generic types"
-msgstr ""
+msgstr "Эмуляция универсальных типов"
 
 #: ../../reference/datamodel.rst:2610
 msgid ""
@@ -3656,11 +3704,11 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:3316
 msgid "Coroutines"
-msgstr ""
+msgstr "Сопрограммы"
 
 #: ../../reference/datamodel.rst:3320
 msgid "Awaitable Objects"
-msgstr ""
+msgstr "Ожидаемые объекты"
 
 #: ../../reference/datamodel.rst:3322
 msgid ""
@@ -3767,7 +3815,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:3415
 msgid "Asynchronous Iterators"
-msgstr ""
+msgstr "Асинхронные итераторы"
 
 #: ../../reference/datamodel.rst:3417
 msgid ""
@@ -3810,7 +3858,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:3461
 msgid "Asynchronous Context Managers"
-msgstr ""
+msgstr "Асинхронные контекстные менеджеры"
 
 #: ../../reference/datamodel.rst:3463
 msgid ""
@@ -3896,7 +3944,7 @@ msgstr "объект"
 
 #: ../../reference/datamodel.rst:14 ../../reference/datamodel.rst:122
 msgid "data"
-msgstr ""
+msgstr "данные"
 
 #: ../../reference/datamodel.rst:23 ../../reference/datamodel.rst:292
 #: ../../reference/datamodel.rst:339 ../../reference/datamodel.rst:423
@@ -3913,7 +3961,7 @@ msgstr "встроенная функция"
 
 #: ../../reference/datamodel.rst:23
 msgid "id"
-msgstr ""
+msgstr "id"
 
 #: ../../reference/datamodel.rst:23 ../../reference/datamodel.rst:122
 #: ../../reference/datamodel.rst:2375
@@ -3942,7 +3990,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:60
 msgid "garbage collection"
-msgstr ""
+msgstr "сбор мусора"
 
 #: ../../reference/datamodel.rst:60
 msgid "reference counting"
@@ -3985,7 +4033,7 @@ msgstr ""
 #: ../../reference/datamodel.rst:956 ../../reference/datamodel.rst:1007
 #: ../../reference/datamodel.rst:1027
 msgid "attribute"
-msgstr ""
+msgstr "атрибут"
 
 #: ../../reference/datamodel.rst:135
 msgid "special"
@@ -4018,15 +4066,15 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:246
 msgid "Boolean"
-msgstr ""
+msgstr "Логический тип"
 
 #: ../../reference/datamodel.rst:246
 msgid "False"
-msgstr ""
+msgstr "Ложь"
 
 #: ../../reference/datamodel.rst:246
 msgid "True"
-msgstr ""
+msgstr "Истина"
 
 #: ../../reference/datamodel.rst:261
 msgid "floating point"
@@ -4034,7 +4082,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:261 ../../reference/datamodel.rst:279
 msgid "number"
-msgstr ""
+msgstr "число"
 
 #: ../../reference/datamodel.rst:261
 msgid "Java"
@@ -4076,7 +4124,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:324
 msgid "immutable"
-msgstr ""
+msgstr "неизменяемый"
 
 #: ../../reference/datamodel.rst:335 ../../reference/datamodel.rst:1705
 #: ../../reference/datamodel.rst:1735
@@ -4101,7 +4149,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:339
 msgid "Unicode"
-msgstr ""
+msgstr "Юникод"
 
 #: ../../reference/datamodel.rst:359
 msgid "tuple"
@@ -4129,7 +4177,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:384
 msgid "mutable"
-msgstr ""
+msgstr "изменяемый"
 
 #: ../../reference/datamodel.rst:384 ../../reference/datamodel.rst:956
 #: ../../reference/datamodel.rst:1027
@@ -4140,15 +4188,15 @@ msgstr ""
 #: ../../reference/datamodel.rst:1444 ../../reference/datamodel.rst:1626
 #: ../../reference/datamodel.rst:3125
 msgid "statement"
-msgstr ""
+msgstr "инструкция"
 
 #: ../../reference/datamodel.rst:396
 msgid "array"
-msgstr ""
+msgstr "array"
 
 #: ../../reference/datamodel.rst:397
 msgid "collections"
-msgstr ""
+msgstr "коллекции"
 
 #: ../../reference/datamodel.rst:405
 msgid "list"
@@ -4232,7 +4280,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:543 ../../reference/datamodel.rst:879
 msgid "namespace"
-msgstr ""
+msgstr "пространство имён"
 
 #: ../../reference/datamodel.rst:569
 msgid "__doc__ (function attribute)"
@@ -4300,23 +4348,23 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:746 ../../reference/datamodel.rst:1200
 msgid "generator"
-msgstr ""
+msgstr "генератор"
 
 #: ../../reference/datamodel.rst:746
 msgid "iterator"
-msgstr ""
+msgstr "итератор"
 
 #: ../../reference/datamodel.rst:764 ../../reference/datamodel.rst:3312
 msgid "coroutine"
-msgstr ""
+msgstr "корутина"
 
 #: ../../reference/datamodel.rst:777
 msgid "asynchronous generator"
-msgstr ""
+msgstr "асинхронный генератор"
 
 #: ../../reference/datamodel.rst:777
 msgid "asynchronous iterator"
-msgstr ""
+msgstr "асинхронный итератор"
 
 #: ../../reference/datamodel.rst:826
 msgid "built-in method"
@@ -4328,7 +4376,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:859
 msgid "import"
-msgstr ""
+msgstr "импорт"
 
 #: ../../reference/datamodel.rst:879
 msgid "__name__ (module attribute)"
@@ -4354,7 +4402,7 @@ msgstr "__dict__ (атрибут модуля)"
 #: ../../reference/datamodel.rst:1007 ../../reference/datamodel.rst:1609
 #: ../../reference/datamodel.rst:2486
 msgid "class"
-msgstr ""
+msgstr "класс"
 
 #: ../../reference/datamodel.rst:938 ../../reference/datamodel.rst:1007
 #: ../../reference/datamodel.rst:1027
@@ -4408,11 +4456,11 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1053
 msgid "open"
-msgstr ""
+msgstr "открыть"
 
 #: ../../reference/datamodel.rst:1053
 msgid "io"
-msgstr ""
+msgstr "io"
 
 #: ../../reference/datamodel.rst:1053
 msgid "popen() (in module os)"
@@ -4460,7 +4508,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1096
 msgid "bytecode"
-msgstr ""
+msgstr "байт-код"
 
 #: ../../reference/datamodel.rst:1096
 msgid "code"
@@ -4540,11 +4588,11 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1218
 msgid "documentation string"
-msgstr ""
+msgstr "строка документации"
 
 #: ../../reference/datamodel.rst:1307
 msgid "frame"
-msgstr ""
+msgstr "фрейм"
 
 #: ../../reference/datamodel.rst:1313
 msgid "f_back (frame attribute)"
@@ -4588,7 +4636,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1407
 msgid "traceback"
-msgstr ""
+msgstr "трассировка"
 
 #: ../../reference/datamodel.rst:1407
 msgid "stack"
@@ -4652,7 +4700,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1490 ../../reference/datamodel.rst:2834
 msgid "slice"
-msgstr ""
+msgstr "срез"
 
 #: ../../reference/datamodel.rst:1496
 msgid "start (slice object attribute)"
@@ -4668,7 +4716,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1544
 msgid "operator"
-msgstr ""
+msgstr "оператор"
 
 #: ../../reference/datamodel.rst:1544
 msgid "overloading"
@@ -4716,7 +4764,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1705
 msgid "format() (built-in function)"
-msgstr ""
+msgstr "format() (встроенная функция)"
 
 #: ../../reference/datamodel.rst:1705
 msgid "print() (built-in function)"
@@ -4740,7 +4788,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1819
 msgid "hash"
-msgstr "хэш"
+msgstr "hash"
 
 #: ../../reference/datamodel.rst:1900
 msgid "__len__() (mapping object method)"
@@ -4760,7 +4808,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:2375
 msgid "metaclass"
-msgstr ""
+msgstr "метакласс"
 
 #: ../../reference/datamodel.rst:2375
 msgid "= (equals)"
@@ -4825,4 +4873,4 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:3125
 msgid "context manager"
-msgstr ""
+msgstr "контекстный менеджер"
