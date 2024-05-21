@@ -142,9 +142,14 @@ jobs:
       - name: Generate POT files
         working-directory: cpython/Doc
         run: |
-          (cd locales; git rm -r pot;)
+          (cd locales; rm -r pot;)
           sphinx-build -E -b gettext -D gettext_compact=0 -d build/.doctrees . locales/pot
 
+      - name: Include obsolete catalog templates (pot files) for removal
+        run: |
+          deleted_files=$(git status -s | grep ^' D' | cut -d' ' -f3)
+          if [ -n "$deleted_files" ]; then git rm -v $deleted_files; fi
+        
         # See issue #15
       - name: Patch POT files
         run: |
