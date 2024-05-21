@@ -196,9 +196,8 @@ jobs:
           powrap --modified
           powrap pot/{**/,}*.pot
 
-      - name: Commit and push changes
+      - name: Commit changes
         working-directory: cpython/Doc/locales
-        if: ${{ contains(fromJSON('["schedule", "workflow_dispatch"]'), github.event_name) }}
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
@@ -206,7 +205,13 @@ jobs:
           shopt -s globstar
           git diff -I'^"POT-Creation-Date: ' --numstat **/*.po **/*.pot | cut -f3 | xargs -r git add
           git add $(git ls-files -o --exclude-standard *.po *.pot) .tx/config
-          git diff-index --cached --quiet HEAD || { git commit -vm "Update translations from Transifex" && git push; }
+          git diff-index --cached --quiet HEAD || { git commit -m "Update translations from Transifex"; }
+
+      - name: Push changes
+        working-directory: cpython/Doc/locales
+        if: ${{ contains(fromJSON('["schedule", "workflow_dispatch"]'), github.event_name) }}
+        run: |
+          git push
 
 
   propagate_translations:
