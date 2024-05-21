@@ -148,7 +148,7 @@ jobs:
       - name: Include obsolete catalog templates (pot files) for removal
         run: |
           deleted_files=$(git status -s | grep ^' D' | cut -d' ' -f3)
-          if [ -n "$deleted_files" ]; then git rm -v $deleted_files; fi
+          if [ -n "$deleted_files" ]; then git rm -v $deleted_files; else echo "no POT files to remove"; fi
         
         # See issue #15
       - name: Patch POT files
@@ -203,9 +203,9 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git status
           shopt -s globstar
-          git diff -I'^"POT-Creation-Date: ' --numstat **/*.po **/*.pot | cut -f3 | xargs -r git add
-          git add $(git ls-files -o --exclude-standard *.po *.pot) .tx/config
-          git diff-index --cached --quiet HEAD || { git commit -m "Update translations from Transifex"; }
+          git diff -I'^"POT-Creation-Date: ' --numstat **/*.po **/*.pot | cut -f3 | xargs -r git add -v
+          git add -v $(git ls-files -o --exclude-standard *.po *.pot) .tx/config
+          git diff-index --cached --quiet HEAD || { git commit -vm "Update translations from Transifex"; }
 
       - name: Push changes
         working-directory: cpython/Doc/locales
