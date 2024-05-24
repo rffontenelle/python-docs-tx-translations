@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-26 16:43+0000\n"
+"POT-Creation-Date: 2024-05-24 15:19+0000\n"
 "PO-Revision-Date: 2023-05-24 02:08+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -104,6 +104,15 @@ msgid ""
 "objects to selectively allow or reject exporting of read-write and read-only "
 "buffers."
 msgstr ""
+"Un ejemplo de consumidor de la interfaz de búfer es el método :meth:`~io."
+"BufferedIOBase.write` de los objetos de archivo: cualquier objeto que pueda "
+"exportar una serie de bytes a través de la interfaz de búfer puede "
+"escribirse en un archivo.  Mientras que :meth:`!write` sólo necesita acceso "
+"de sólo lectura al contenido interno del objeto que se le pasa, otros "
+"métodos como :meth:`~io.BufferedIOBase.readinto` necesitan acceso de "
+"escritura al contenido de su argumento.  La interfaz de búfer permite a los "
+"objetos permitir o rechazar selectivamente la exportación de búferes de "
+"lectura-escritura y de sólo lectura."
 
 #: ../../c-api/buffer.rst:53
 msgid ""
@@ -211,6 +220,11 @@ msgid ""
 "set to ``NULL`` by :c:func:`PyBuffer_Release`. The field is the equivalent "
 "of the return value of any standard C-API function."
 msgstr ""
+"Una nueva referencia al objeto exportador. La referencia es propiedad del "
+"consumidor y se libera automáticamente (es decir, se reduce el recuento de "
+"referencias) y se establece en ``NULL`` mediante :c:func:`PyBuffer_Release`. "
+"El campo es equivalente al valor de retorno de cualquier función C-API "
+"estándar."
 
 #: ../../c-api/buffer.rst:111
 msgid ""
@@ -318,6 +332,12 @@ msgid ""
 "strides` and :c:member:`~Py_buffer.suboffsets` MUST be ``NULL``. The maximum "
 "number of dimensions is given by :c:macro:`PyBUF_MAX_NDIM`."
 msgstr ""
+"El número de dimensiones que la memoria representa como un array n-"
+"dimensional. Si es ``0``, :c:member:`~Py_buffer.buf` apunta a un único "
+"elemento que representa un escalar. En este caso, :c:member:`~Py_buffer."
+"shape`, :c:member:`~Py_buffer.strides` y :c:member:`~Py_buffer.suboffsets` "
+"DEBEN ser ``NULL``. El número máximo de dimensiones viene dado por :c:macro:"
+"`PyBUF_MAX_NDIM`."
 
 #: ../../c-api/buffer.rst:168
 msgid ""
@@ -421,7 +441,7 @@ msgstr ""
 
 #: ../../c-api/buffer.rst:218
 msgid "Constants:"
-msgstr ""
+msgstr "Constantes:"
 
 #: ../../c-api/buffer.rst:222
 msgid ""
@@ -429,6 +449,10 @@ msgid ""
 "respect this limit, consumers of multi-dimensional buffers SHOULD be able to "
 "handle up to :c:macro:`!PyBUF_MAX_NDIM` dimensions. Currently set to 64."
 msgstr ""
+"El número máximo de dimensiones que representa la memoria. Los exportadores "
+"DEBEN respetar este límite, los consumidores de memorias multidimensionales "
+"DEBERÍAN ser capaces de manejar hasta :c:macro:`!PyBUF_MAX_NDIM` "
+"dimensiones. Actualmente está fijado en 64."
 
 #: ../../c-api/buffer.rst:231
 msgid "Buffer request types"
@@ -451,6 +475,8 @@ msgstr ""
 msgid ""
 "All :c:type:`Py_buffer` fields are unambiguously defined by the request type."
 msgstr ""
+"Todos los campos de :c:type:`Py_buffer` están definidos inequívocamente por "
+"el tipo de solicitud."
 
 #: ../../c-api/buffer.rst:242
 msgid "request-independent fields"
@@ -759,6 +785,10 @@ msgid ""
 "the exporter cannot provide a buffer of the exact type, it MUST raise :exc:"
 "`BufferError`, set ``view->obj`` to ``NULL`` and return ``-1``."
 msgstr ""
+"Envía una petición a *exporter* para que rellene *view* según lo "
+"especificado por *flags*. Si el exportador no puede proporcionar un buffer "
+"del tipo exacto, DEBE levantar :exc:`BufferError`, poner ``view->obj`` en "
+"``NULL`` y devolver ``-1``."
 
 #: ../../c-api/buffer.rst:454
 msgid ""
@@ -792,6 +822,10 @@ msgid ""
 ">obj``. This function MUST be called when the buffer is no longer being "
 "used, otherwise reference leaks may occur."
 msgstr ""
+"Libera el buffer *view* y libera la referencia :term:`strong` (es decir, "
+"disminuye la cuenta de referencias) al objeto de soporte de la vista, ``view-"
+">obj``. Esta función DEBE ser llamada cuando el buffer ya no esté siendo "
+"utilizado, de lo contrario pueden producirse fugas de referencias."
 
 #: ../../c-api/buffer.rst:472
 msgid ""
@@ -806,6 +840,8 @@ msgid ""
 "Return the implied :c:member:`~Py_buffer.itemsize` from :c:member:"
 "`~Py_buffer.format`. On error, raise an exception and return -1."
 msgstr ""
+"Devuelve el :c:member:`~Py_buffer.itemsize` implícito de :c:member:"
+"`~Py_buffer.format`. En caso de error, lanza una excepción y devuelve -1."
 
 #: ../../c-api/buffer.rst:486
 msgid ""
@@ -857,10 +893,12 @@ msgid ""
 "Copy data from *src* to *dest* buffer. Can convert between C-style and or "
 "Fortran-style buffers."
 msgstr ""
+"Copia datos del buffer *src* al *dest*. Puede convertir entre buffers de "
+"estilo C y/o Fortran."
 
 #: ../../c-api/buffer.rst:518
 msgid "``0`` is returned on success, ``-1`` on error."
-msgstr ""
+msgstr "``0`` se devuelve en caso de éxito, ``-1`` en caso de error."
 
 #: ../../c-api/buffer.rst:522
 msgid ""
@@ -899,6 +937,9 @@ msgid ""
 "Otherwise, raise :exc:`BufferError`, set ``view->obj`` to ``NULL`` and "
 "return ``-1``;"
 msgstr ""
+"Si tiene éxito, asigna a ``view->obj`` una nueva referencia a *exporter* y "
+"devuelve 0. En caso contrario, eleva :exc:`BufferError`, establece ``view-"
+">obj`` a ``NULL`` y devuelve ``-1``;"
 
 #: ../../c-api/buffer.rst:541
 msgid ""
@@ -912,23 +953,23 @@ msgstr ""
 
 #: ../../c-api/buffer.rst:3
 msgid "buffer protocol"
-msgstr ""
+msgstr "protocolo de búfer"
 
 #: ../../c-api/buffer.rst:3
 msgid "buffer interface"
-msgstr ""
+msgstr "interfaz de búfer"
 
 #: ../../c-api/buffer.rst:3
 msgid "(see buffer protocol)"
-msgstr ""
+msgstr "(ver protocolo de búfer)"
 
 #: ../../c-api/buffer.rst:3
 msgid "buffer object"
-msgstr ""
+msgstr "objeto búfer"
 
 #: ../../c-api/buffer.rst:32
 msgid "PyBufferProcs (C type)"
-msgstr ""
+msgstr "PyBufferProcs (tipo C)"
 
 #: ../../c-api/buffer.rst:294
 msgid "contiguous"
@@ -936,8 +977,8 @@ msgstr "contiguo"
 
 #: ../../c-api/buffer.rst:294
 msgid "C-contiguous"
-msgstr ""
+msgstr "C-contiguous"
 
 #: ../../c-api/buffer.rst:294
 msgid "Fortran contiguous"
-msgstr ""
+msgstr "Fortran contiguo"
