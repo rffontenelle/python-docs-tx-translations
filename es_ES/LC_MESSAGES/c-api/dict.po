@@ -5,15 +5,16 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# eulalio barbero espinosa <eulalio@disroot.org>, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-11 03:01+0000\n"
+"POT-Creation-Date: 2024-05-24 14:49+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
 "teams/5390/es_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -111,6 +112,9 @@ msgid ""
 "expr:`const char*` UTF-8 encoded bytes string, rather than a :c:expr:"
 "`PyObject*`."
 msgstr ""
+"Es lo mismo que :c:func:`PyDict_SetItem`, pero *key* se especifica como una "
+"cadena de bytes :c:expr:`const char*` codificada en UTF-8, en lugar de :c:"
+"expr:`PyObject*`."
 
 #: ../../c-api/dict.rst:80
 msgid ""
@@ -119,6 +123,10 @@ msgid ""
 "dictionary, :exc:`KeyError` is raised. Return ``0`` on success or ``-1`` on "
 "failure."
 msgstr ""
+"Elimina la entrada del diccionario *p* con la clave *key*. La clave *key* "
+"debe ser :term:`hashable`; si no lo es, aparece :exc:`TypeError`. Si *clave* "
+"no está en el diccionario, se muestra :exc:`KeyError`. Devuelve ``0`` en "
+"caso de éxito o ``-1`` en caso de fallo."
 
 #: ../../c-api/dict.rst:88
 msgid ""
@@ -126,6 +134,9 @@ msgid ""
 "expr:`const char*` UTF-8 encoded bytes string, rather than a :c:expr:"
 "`PyObject*`."
 msgstr ""
+"Es lo mismo que :c:func:`PyDict_DelItem`, pero *key* se especifica como una "
+"cadena de bytes :c:expr:`const char*` codificada en UTF-8, en lugar de :c:"
+"expr:`PyObject*`."
 
 #: ../../c-api/dict.rst:95
 msgid ""
@@ -142,12 +153,17 @@ msgid ""
 "`~object.__eq__` methods are silently ignored. Prefer the :c:func:"
 "`PyDict_GetItemWithError` function instead."
 msgstr ""
+"Las excepciones que se producen mientras esto llama a los métodos :meth:"
+"`~object.__hash__` y :meth:`~object.__eq__` se ignoran silenciosamente. "
+"Prefiera la función :c:func:`PyDict_GetItemWithError` en su lugar."
 
 #: ../../c-api/dict.rst:104
 msgid ""
 "Calling this API without :term:`GIL` held had been allowed for historical "
 "reason. It is no longer allowed."
 msgstr ""
+"La llamada a esta API sin :term:`GIL` se había permitido por razones "
+"históricas. Ya no se permite."
 
 #: ../../c-api/dict.rst:111
 msgid ""
@@ -166,6 +182,9 @@ msgid ""
 "expr:`const char*` UTF-8 encoded bytes string, rather than a :c:expr:"
 "`PyObject*`."
 msgstr ""
+"Es lo mismo que :c:func:`PyDict_GetItem`, pero *key* se especifica como una "
+"cadena de bytes :c:expr:`const char*` codificada en UTF-8, en lugar de :c:"
+"expr:`PyObject*`."
 
 #: ../../c-api/dict.rst:125
 msgid ""
@@ -174,6 +193,11 @@ msgid ""
 "are silently ignored. Prefer using the :c:func:`PyDict_GetItemWithError` "
 "function with your own :c:func:`PyUnicode_FromString` *key* instead."
 msgstr ""
+"Las excepciones que se producen mientras esto llama a los métodos :meth:"
+"`~object.__hash__` y :meth:`~object.__eq__` o mientras se crea el objeto "
+"temporal :class:`str` se ignoran silenciosamente. Prefiera utilizar la "
+"función :c:func:`PyDict_GetItemWithError` con su propia :c:func:"
+"`PyUnicode_FromString` *key* en su lugar."
 
 #: ../../c-api/dict.rst:134
 msgid ""
@@ -234,6 +258,17 @@ msgid ""
 "represents offsets within the internal dictionary structure, and since the "
 "structure is sparse, the offsets are not consecutive."
 msgstr ""
+"Recorre todos los pares clave-valor del diccionario *p*.  El :c:type:"
+"`Py_ssize_t` al que hace referencia *ppos* debe inicializarse a ``0`` antes "
+"de la primera llamada a esta función para iniciar la iteración; la función "
+"devuelve true para cada par del diccionario, y false una vez que se han "
+"informado todos los pares.  Los parámetros *pkey* y *pvalue* deben apuntar a "
+"variables :c:expr:`PyObject*` que se rellenarán con cada clave y valor, "
+"respectivamente, o pueden ser ``NULL``.  Cualquier referencia devuelta a "
+"través de ellos se toma prestada.  *ppos* no debe alterarse durante la "
+"iteración. Su valor representa desplazamientos dentro de la estructura "
+"interna del diccionario, y como la estructura es dispersa, los "
+"desplazamientos no son consecutivos."
 
 #: ../../c-api/dict.rst:179
 msgid "For example::"
@@ -302,6 +337,11 @@ msgid ""
 "of error (e.g. no more watcher IDs available), return ``-1`` and set an "
 "exception."
 msgstr ""
+"Registrar *callback* como observador de diccionario. Devuelve un "
+"identificador entero no negativo que debe pasarse a futuras llamadas a :c:"
+"func:`PyDict_Watch`. En caso de error (por ejemplo, no hay más "
+"identificadores de observador disponibles), devuelve ``-1`` y establece una "
+"excepción."
 
 #: ../../c-api/dict.rst:256
 msgid ""
@@ -309,6 +349,9 @@ msgid ""
 "`PyDict_AddWatcher`. Return ``0`` on success, ``-1`` on error (e.g. if the "
 "given *watcher_id* was never registered.)"
 msgstr ""
+"Borra el observador identificado por *watcher_id* devuelto previamente por :"
+"c:func:`PyDict_AddWatcher`. Devuelve ``0`` en caso de éxito, ``-1`` en caso "
+"de error (por ejemplo, si el *watcher_id* dado nunca se registró.)"
 
 #: ../../c-api/dict.rst:264
 msgid ""
@@ -316,6 +359,10 @@ msgid ""
 "func:`PyDict_AddWatcher` will be called when *dict* is modified or "
 "deallocated. Return ``0`` on success or ``-1`` on error."
 msgstr ""
+"Marca el diccionario *dict* como vigilado. La llamada de retorno otorgada a "
+"*watcher_id* por :c:func:`PyDict_AddWatcher` será llamada cuando *dict* sea "
+"modificado o desocupado. Devuelve ``0`` en caso de éxito o ``-1`` en caso de "
+"error."
 
 #: ../../c-api/dict.rst:272
 msgid ""
@@ -324,6 +371,11 @@ msgid ""
 "*dict* is modified or deallocated. The dict must previously have been "
 "watched by this watcher. Return ``0`` on success or ``-1`` on error."
 msgstr ""
+"Marca el diccionario *dict* como ya no vigilado. La llamada de retorno "
+"concedida a *watcher_id* por :c:func:`PyDict_AddWatcher` ya no será invocada "
+"cuando *dict* sea modificado o desocupado. El dict debe haber sido observado "
+"previamente por este observador. Devuelve ``0`` en caso de éxito o ``-1`` en "
+"caso de error."
 
 #: ../../c-api/dict.rst:281
 msgid ""
@@ -332,10 +384,14 @@ msgid ""
 "``PyDict_EVENT_CLONED``, ``PyDict_EVENT_CLEARED``, or "
 "``PyDict_EVENT_DEALLOCATED``."
 msgstr ""
+"Enumeración de posibles eventos del observador del diccionario: "
+"``PyDict_EVENT_ADDED``, ``PyDict_EVENT_MODIFIED``, ``PyDict_EVENT_DELETED``, "
+"``PyDict_EVENT_CLONED``, ``PyDict_EVENT_CLEARED``, o "
+"``PyDict_EVENT_DEALLOCATED``."
 
 #: ../../c-api/dict.rst:289
 msgid "Type of a dict watcher callback function."
-msgstr ""
+msgstr "Tipo de una función de devolución de llamada de observador de dict."
 
 #: ../../c-api/dict.rst:291
 msgid ""
@@ -345,6 +401,11 @@ msgid ""
 "If *event* is ``PyDict_EVENT_DELETED``, *key* is being deleted from the "
 "dictionary and *new_value* will be ``NULL``."
 msgstr ""
+"Si *event* es ``PyDict_EVENT_CLEARED`` o ``PyDict_EVENT_DEALLOCATED``, tanto "
+"*key* como *new_value* serán ``NULL``. Si *event* es ``PyDict_EVENT_ADDED`` "
+"o ``PyDict_EVENT_MODIFIED``, *new_value* será el nuevo valor de *key*. Si "
+"*event* es ``PyDict_EVENT_DELETED``, *key* se borra del diccionario y "
+"*new_value* será ``NULL``."
 
 #: ../../c-api/dict.rst:297
 msgid ""
@@ -353,6 +414,11 @@ msgid ""
 "``PyDict_EVENT_ADDED`` events are not issued in this case; instead a single "
 "``PyDict_EVENT_CLONED`` is issued, and *key* will be the source dictionary."
 msgstr ""
+"``PyDict_EVENT_CLONED`` se produce cuando *dict* estaba previamente vacío y "
+"otro dict se fusiona con él. Para mantener la eficiencia de esta operación, "
+"en este caso no se emiten eventos ``PyDict_EVENT_ADDED`` por clave; en su "
+"lugar se emite un único ``PyDict_EVENT_CLONED``, y *clave* será el "
+"diccionario de origen."
 
 #: ../../c-api/dict.rst:303
 msgid ""
@@ -360,6 +426,10 @@ msgid ""
 "unpredictable effects, including infinite recursion. Do not trigger Python "
 "code execution in the callback, as it could modify the dict as a side effect."
 msgstr ""
+"La llamada de retorno puede inspeccionar pero no debe modificar *dict*; "
+"hacerlo podría tener efectos impredecibles, incluyendo recursión infinita. "
+"No active la ejecución de código Python en la llamada de retorno, ya que "
+"podría modificar el dict como efecto secundario."
 
 #: ../../c-api/dict.rst:307
 msgid ""
@@ -369,12 +439,20 @@ msgid ""
 "destroyed later, any watcher callbacks active at that time will be called "
 "again."
 msgstr ""
+"Si *event* es ``PyDict_EVENT_DEALLOCATED``, tomar una nueva referencia en la "
+"llamada de retorno al diccionario a punto de ser destruido lo resucitará y "
+"evitará que sea liberado en ese momento. Cuando el objeto resucitado sea "
+"destruido más tarde, cualquier llamada de retorno activa en ese momento será "
+"llamada de nuevo."
 
 #: ../../c-api/dict.rst:313
 msgid ""
 "Callbacks occur before the notified modification to *dict* takes place, so "
 "the prior state of *dict* can be inspected."
 msgstr ""
+"Las llamadas de retorno se producen antes de que tenga lugar la modificación "
+"notificada a *dict*, por lo que el estado previo de *dict* puede ser "
+"inspeccionado."
 
 #: ../../c-api/dict.rst:316
 msgid ""
@@ -382,6 +460,9 @@ msgid ""
 "will be printed as an unraisable exception using :c:func:"
 "`PyErr_WriteUnraisable`. Otherwise it should return ``0``."
 msgstr ""
+"Si la llamada de retorno establece una excepción, debe devolver ``-1``; esta "
+"excepción se imprimirá como una excepción no calificable utilizando :c:func:"
+"`PyErr_WriteUnraisable`. En caso contrario, debe devolver ``0``."
 
 #: ../../c-api/dict.rst:320
 msgid ""
@@ -391,6 +472,12 @@ msgid ""
 "exception unless it saves and clears the exception state first, and restores "
 "it before returning."
 msgstr ""
+"Puede que ya haya una excepción pendiente al entrar en la llamada de "
+"retorno. En este caso, la llamada de retorno debe volver a ``0`` con la "
+"misma excepción todavía establecida. Esto significa que la llamada de "
+"retorno no puede llamar a ninguna otra API que pueda establecer una "
+"excepción a menos que guarde y borre el estado de excepción primero, y lo "
+"restaure antes de regresar."
 
 #: ../../c-api/dict.rst:8
 msgid "object"

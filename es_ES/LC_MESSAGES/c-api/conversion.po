@@ -5,15 +5,16 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# eulalio barbero espinosa <eulalio@disroot.org>, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-11 03:01+0000\n"
+"POT-Creation-Date: 2024-05-24 14:49+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
 "teams/5390/es_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -73,6 +74,12 @@ msgid ""
 "equivalent to the C99 ``n = snprintf(NULL, 0, ...)`` which would determine "
 "the necessary buffer size."
 msgstr ""
+"Las envolturas aseguran que ``str[size-1]`` es siempre ``'\\0'`` al volver. "
+"Nunca escriben más de *tamaño* bytes (incluido el final ``'\\0'``) en str. "
+"Ambas funciones requieren que ``str != NULL``, ``size > 0``, ``format != "
+"NULL`` y ``size < INT_MAX``. Nótese que esto significa que no hay un "
+"equivalente al ``n = snprintf(NULL, 0, ...)`` de C99 que determinaría el "
+"tamaño necesario del buffer."
 
 #: ../../c-api/conversion.rst:34
 msgid ""
@@ -124,6 +131,9 @@ msgid ""
 "long` value according to the given ``base``, which must be between ``2`` and "
 "``36`` inclusive, or be the special value ``0``."
 msgstr ""
+"Convierte la parte inicial de la cadena en ``str`` a un valor :c:expr:"
+"`unsigned long` según el valor dado ``base``, que debe estar entre ``2`` y "
+"``36`` inclusive, o ser el valor especial ``0``."
 
 #: ../../c-api/conversion.rst:57
 msgid ""
@@ -133,6 +143,12 @@ msgid ""
 "(inclusive).  If ``ptr`` is non-``NULL`` it will contain a pointer to the "
 "end of the scan."
 msgstr ""
+"No se tienen en cuenta los espacios en blanco ni las mayúsculas y "
+"minúsculas.  Si ``base`` es cero, busca un espacio en blanco al principio de "
+"``0b``, ``0o`` o ``0x`` para indicar la base.  Si no se encuentran, el valor "
+"predeterminado es ``10``. La base debe ser 0 o estar comprendida entre 2 y "
+"36 (ambos inclusive).  Si ``ptr`` es distinto de``NULL``, contendrá un "
+"puntero al final de la exploración."
 
 #: ../../c-api/conversion.rst:63
 msgid ""
@@ -141,10 +157,14 @@ msgid ""
 "macro:`!ULONG_MAX` is returned.  If no conversion can be performed, ``0`` is "
 "returned."
 msgstr ""
+"Si el valor convertido queda fuera del rango del tipo de retorno "
+"correspondiente, se produce un error de rango (:c:data:`errno` se establece "
+"en :c:macro:`!ERANGE`) y se devuelve :c:macro:`!ULONG_MAX`.  Si no se puede "
+"realizar la conversión, se devuelve ``0``."
 
 #: ../../c-api/conversion.rst:68
 msgid "See also the Unix man page :manpage:`strtoul(3)`."
-msgstr ""
+msgstr "Véase también la página man de Unix :manpage:`strtoul(3)`."
 
 #: ../../c-api/conversion.rst:75
 msgid ""
@@ -152,16 +172,21 @@ msgid ""
 "according to the given ``base``, which must be between ``2`` and ``36`` "
 "inclusive, or be the special value ``0``."
 msgstr ""
+"Convierte la parte inicial de la cadena en ``str`` a un valor :c:expr:`long` "
+"de acuerdo con el ``base`` dado, que debe estar entre ``2`` y ``36`` "
+"inclusive, o ser el valor especial ``0``."
 
 #: ../../c-api/conversion.rst:79
 msgid ""
 "Same as :c:func:`PyOS_strtoul`, but return a :c:expr:`long` value instead "
 "and :c:macro:`LONG_MAX` on overflows."
 msgstr ""
+"Igual que :c:func:`PyOS_strtoul`, pero devuelve un valor :c:expr:`long` en "
+"su lugar y :c:macro:`LONG_MAX` en caso de desbordamiento."
 
 #: ../../c-api/conversion.rst:82
 msgid "See also the Unix man page :manpage:`strtol(3)`."
-msgstr ""
+msgstr "Ver también la página man de Unix :manpage:`strtol(3)`."
 
 #: ../../c-api/conversion.rst:89
 msgid ""
@@ -171,6 +196,11 @@ msgid ""
 "have leading or trailing whitespace. The conversion is independent of the "
 "current locale."
 msgstr ""
+"Convierte una cadena ``s`` en :c:expr:`double`, lanzando una excepción "
+"Python en caso de fallo.  El conjunto de cadenas aceptadas corresponde al "
+"conjunto de cadenas aceptadas por el constructor :func:`float` de Python, "
+"excepto que ``s`` no debe tener espacios en blanco iniciales ni finales. La "
+"conversión es independiente de la configuración regional actual."
 
 #: ../../c-api/conversion.rst:95
 msgid ""
@@ -229,6 +259,8 @@ msgid ""
 "Convert a :c:expr:`double` *val* to a string using supplied *format_code*, "
 "*precision*, and *flags*."
 msgstr ""
+"Convierte un *val* de :c:expr:`double` en una cadena utilizando "
+"*format_code*, *precision* y *flags* suministrados."
 
 #: ../../c-api/conversion.rst:126
 msgid ""
@@ -301,9 +333,15 @@ msgid ""
 "Case insensitive comparison of strings. The function works almost "
 "identically to :c:func:`!strcmp` except that it ignores the case."
 msgstr ""
+"Comparación de cadenas sin tener en cuenta mayúsculas y minúsculas. La "
+"función funciona de forma casi idéntica a :c:func:`!strcmp`, salvo que "
+"ignora las mayúsculas y minúsculas."
 
 #: ../../c-api/conversion.rst:163
 msgid ""
 "Case insensitive comparison of strings. The function works almost "
 "identically to :c:func:`!strncmp` except that it ignores the case."
 msgstr ""
+"Comparación de cadenas sin tener en cuenta mayúsculas y minúsculas. La "
+"función funciona de forma casi idéntica a :c:func:`!strncmp`, salvo que "
+"ignora las mayúsculas y minúsculas."
