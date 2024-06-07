@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-24 14:49+0000\n"
+"POT-Creation-Date: 2024-06-07 14:48+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
 "Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -73,6 +73,11 @@ msgid ""
 "is set to the same value as the code object's :attr:`~codeobject."
 "co_qualname` field."
 msgstr ""
+"El docstring y el nombre de la función se obtienen del objeto de código. :"
+"attr:`~function.__module__` se obtiene de *globals*. Los argumentos por "
+"defecto, las anotaciones y el cierre se establecen en ``NULL``. :attr:"
+"`~function.__qualname__` se establece en el mismo valor que el campo :attr:"
+"`~codeobject.co_qualname` del objeto de código."
 
 #: ../../c-api/function.rst:46
 msgid ""
@@ -81,6 +86,11 @@ msgid ""
 "object or ``NULL``; if ``NULL``, the :attr:`!__qualname__` attribute is set "
 "to the same value as the code object's :attr:`~codeobject.co_qualname` field."
 msgstr ""
+"Como :c:func:`PyFunction_New`, pero también permite establecer el atributo :"
+"attr:`~function.__qualname__` del objeto de función. *qualname* debe ser un "
+"objeto unicode o ``NULL``; si es ``NULL``, el atributo :attr:`!__qualname__` "
+"se establece con el mismo valor que el campo :attr:`~codeobject.co_qualname` "
+"del objeto de código."
 
 #: ../../c-api/function.rst:57
 msgid "Return the code object associated with the function object *op*."
@@ -96,12 +106,17 @@ msgid ""
 "attribute of the :ref:`function object <user-defined-funcs>` *op*. It can be "
 "*NULL*."
 msgstr ""
+"Devuelve una :term:`prestada reference` al atributo :attr:`~function."
+"__module__` del :ref:`function object <user-defined-funcs>` *op*. Puede ser "
+"*NULL*."
 
 #: ../../c-api/function.rst:71
 msgid ""
 "This is normally a :class:`string <str>` containing the module name, but can "
 "be set to any other object by Python code."
 msgstr ""
+"Normalmente es una :class:`string <str>` que contiene el nombre del módulo, "
+"pero puede ser establecido a cualquier otro objeto por código Python."
 
 #: ../../c-api/function.rst:77
 msgid ""
@@ -126,13 +141,15 @@ msgstr "Levanta :exc:`SystemError` y devuelve ``-1`` en caso de fallo."
 
 #: ../../c-api/function.rst:91
 msgid "Set the vectorcall field of a given function object *func*."
-msgstr ""
+msgstr "Establece el campo vectorcall de un objeto función dado *func*."
 
 #: ../../c-api/function.rst:93
 msgid ""
 "Warning: extensions using this API must preserve the behavior of the "
 "unaltered (default) vectorcall function!"
 msgstr ""
+"Advertencia: ¡las extensiones que utilicen esta API deben conservar el "
+"comportamiento de la función vectorcall inalterada (por defecto)!"
 
 #: ../../c-api/function.rst:100
 msgid ""
@@ -173,6 +190,10 @@ msgid ""
 "case of error (e.g. no more watcher IDs available), return ``-1`` and set an "
 "exception."
 msgstr ""
+"Registrar *callback* como observador de funciones para el intérprete actual. "
+"Devuelve un ID que puede pasarse a :c:func:`PyFunction_ClearWatcher`. En "
+"caso de error (por ejemplo, no hay más ID de observador disponibles), "
+"devuelve ``-1`` y establece una excepción."
 
 #: ../../c-api/function.rst:138
 msgid ""
@@ -181,6 +202,10 @@ msgid ""
 "success, or ``-1`` and set an exception on error (e.g.  if the given "
 "*watcher_id* was never registered.)"
 msgstr ""
+"Borra el observador identificado por *watcher_id* devuelto previamente por :"
+"c:func:`PyFunction_AddWatcher` para el intérprete actual. Devuelve ``0`` en "
+"caso de éxito, o ``-1`` y establece una excepción en caso de error (por "
+"ejemplo, si el *watcher_id* dado nunca fue registrado)."
 
 #: ../../c-api/function.rst:148
 msgid ""
@@ -189,10 +214,15 @@ msgid ""
 "``PyFunction_EVENT_MODIFY_CODE`` - ``PyFunction_EVENT_MODIFY_DEFAULTS`` - "
 "``PyFunction_EVENT_MODIFY_KWDEFAULTS``"
 msgstr ""
+"Enumeración de los posibles eventos del observador de funciones: - "
+"``PyFunction_EVENT_CREATE`` - ``PyFunction_EVENT_DESTROY`` - "
+"``PyFunction_EVENT_MODIFY_CODE`` - ``PyFunction_EVENT_MODIFY_DEFAULTS`` - "
+"``PyFunction_EVENT_MODIFY_KWDEFAULTS``"
 
 #: ../../c-api/function.rst:160
 msgid "Type of a function watcher callback function."
 msgstr ""
+"Tipo de una función de devolución de llamada del observador de funciones."
 
 #: ../../c-api/function.rst:162
 msgid ""
@@ -201,12 +231,18 @@ msgid ""
 "`borrowed reference` to the new value that is about to be stored in *func* "
 "for the attribute that is being modified."
 msgstr ""
+"Si *event* es ``PyFunction_EVENT_CREATE`` o ``PyFunction_EVENT_DESTROY`` "
+"entonces *new_value* será ``NULL``. De lo contrario, *new_value* contendrá "
+"una referencia :term:`borrowed reference` al nuevo valor que está a punto de "
+"ser almacenado en *func* para el atributo que está siendo modificado."
 
 #: ../../c-api/function.rst:167
 msgid ""
 "The callback may inspect but must not modify *func*; doing so could have "
 "unpredictable effects, including infinite recursion."
 msgstr ""
+"La llamada de retorno puede inspeccionar pero no debe modificar *func*; "
+"hacerlo podría tener efectos impredecibles, incluyendo recursión infinita."
 
 #: ../../c-api/function.rst:170
 msgid ""
@@ -219,6 +255,15 @@ msgid ""
 "behavior depending on optimization decisions, it does not change the "
 "semantics of the Python code being executed."
 msgstr ""
+"Si *event* es ``PyFunction_EVENT_CREATE``, entonces la llamada de retorno es "
+"invocada después de que `func` haya sido completamente inicializado. En otro "
+"caso, la llamada de retorno se invoca antes de que tenga lugar la "
+"modificación de *func*, por lo que el estado previo de *func* puede ser "
+"inspeccionado. El tiempo de ejecución puede optimizar la creación de objetos "
+"función cuando sea posible. En tales casos no se emitirá ningún evento. "
+"Aunque esto crea la posibilidad de una diferencia observable de "
+"comportamiento en tiempo de ejecución dependiendo de las decisiones de "
+"optimización, no cambia la semántica del código Python que se ejecuta."
 
 #: ../../c-api/function.rst:179
 msgid ""
@@ -227,6 +272,11 @@ msgid ""
 "it from being freed at this time. When the resurrected object is destroyed "
 "later, any watcher callbacks active at that time will be called again."
 msgstr ""
+"Si *event* es ``PyFunction_EVENT_DESTROY``, Tomar una referencia en la "
+"llamada de retorno a la función a punto de ser destruida lo resucitará, "
+"impidiendo que sea liberado en ese momento. Cuando el objeto resucitado sea "
+"destruido más tarde, cualquier llamada de retorno activa en ese momento será "
+"llamada de nuevo."
 
 #: ../../c-api/function.rst:184
 msgid ""
@@ -263,4 +313,4 @@ msgstr "función"
 
 #: ../../c-api/function.rst:20
 msgid "MethodType (in module types)"
-msgstr ""
+msgstr "MethodType (en tipos de módulo)"
