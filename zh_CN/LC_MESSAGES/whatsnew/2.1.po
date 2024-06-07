@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-24 16:33+0000\n"
+"POT-Creation-Date: 2024-05-31 16:34+0000\n"
 "PO-Revision-Date: 2017-02-16 23:42+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -495,6 +495,8 @@ msgid ""
 "Functions were also added to Python's C API for issuing warnings; refer to "
 "PEP 230 or to Python's API documentation for the details."
 msgstr ""
+"Python 的 C API 也增加了用于发出警告的函数；详情请参阅 PEP 230 或 Python 的 "
+"API 文档。"
 
 #: ../../whatsnew/2.1.rst:293
 msgid ":pep:`5` - Guidelines for Language Evolution"
@@ -507,6 +509,8 @@ msgid ""
 "officially adopted, but the eventual policy probably won't be too different "
 "from Prescod's proposal."
 msgstr ""
+"该文档由 Paul Prescod 撰写，旨在规定移除 Python 旧功能时应遵循的程序。 尽管本"
+"文描述的政策尚未被正式采纳，但最终的政策可能不会与 Prescod 的提议有太大不同。"
 
 #: ../../whatsnew/2.1.rst:295
 msgid ":pep:`230` - Warning Framework"
@@ -529,6 +533,10 @@ msgid ""
 "notably Linux, Python installations often don't contain all useful modules "
 "they could."
 msgstr ""
+"在编译 Python 时，用户必须进入并编辑 :file:`Modules/Setup` 文件以启用各种附加"
+"模块；默认集相对较小，并且仅限于在大多数 Unix 平台上编译的模块。这意味着在具"
+"有更多功能的 Unix 平台上，特别是 Linux，Python 安装通常不包含所有可能有用的模"
+"块。"
 
 #: ../../whatsnew/2.1.rst:310
 msgid ""
@@ -538,6 +546,9 @@ msgid ""
 "are supported on the current machine.  It's hoped that this will make Python "
 "installations easier and more featureful."
 msgstr ""
+"Python 2.0 添加了 Distutils，一组用于分发和安装扩展模块的模块。在 Python 2.1 "
+"中，Distutils 被用于编译大部分标准库扩展模块，自动检测当前机器上支持哪些模"
+"块。希望这将使 Python 的安装更加容易并具有更多功能。"
 
 #: ../../whatsnew/2.1.rst:316
 msgid ""
@@ -550,6 +561,12 @@ msgid ""
 "Setup` file's contents.  This provides a way to specific any strange command-"
 "line flags or libraries that are required for a specific platform."
 msgstr ""
+"不再需要编辑 :file:`Modules/Setup` 文件来启用模块，而是在 Python 源代码分发包"
+"的顶层目录运行一个 :file:`setup.py` 脚本，该脚本在构建时尝试通过检查系统上的"
+"模块和头文件来发现可以启用那些模块。 如果某个模块已在 :file:`Modules/Setup` "
+"中配置，则 :file:`setup.py` 脚本不会尝试编译该模块，并会遵从 :file:`Modules/"
+"Setup` 文件中的内容。 这提供了一种方式来指定特定平台所需的任何奇怪的命令行旗"
+"标或库。"
 
 #: ../../whatsnew/2.1.rst:325
 msgid ""
@@ -560,6 +577,10 @@ msgid ""
 "subdirectories.  This makes building Python faster and also makes hacking "
 "the Makefiles clearer and simpler."
 msgstr ""
+"在对构建机制的另一项重大更改中，Neil Schemenauer 对其进行了重组，现在 Python "
+"使用单一的非递归 makefile，而不是在顶层目录和 :file:`Python/`、:file:`Parser/"
+"`、:file:`Objects/`和 :file:`Modules/` 子目录中的多个 makefile。这使得构建 "
+"Python 更快，同时也使修改 Makefile 更加清晰和简单。"
 
 #: ../../whatsnew/2.1.rst:335
 msgid ":pep:`229` - Using Distutils to Build Python"
@@ -578,6 +599,8 @@ msgid ""
 "Weak references, available through the :mod:`weakref` module, are a minor "
 "but useful new data type in the Python programmer's toolbox."
 msgstr ""
+"弱引用，通过 :mod:`weakref` 模块提供，是 Python 程序员工具箱中一种较小但有用"
+"的新数据类型。"
 
 #: ../../whatsnew/2.1.rst:347
 msgid ""
@@ -587,6 +610,9 @@ msgid ""
 "common one, and another being circular references in data structures such as "
 "trees."
 msgstr ""
+"存储一个指向对象的引用（例如，在字典或列表中）会导致该对象永久存活。 在某些特"
+"定情况下，这种行为是不符合需要的，最常见的是对象缓存，另一个是像树这样的数据"
+"结构中的循环引用。"
 
 #: ../../whatsnew/2.1.rst:352
 msgid ""
@@ -594,6 +620,8 @@ msgid ""
 "another function ``f(x)`` by storing the function's argument and its result "
 "in a dictionary::"
 msgstr ""
+"例如，考虑一个记忆化函数，它通过将函数的参数及其结果存储在字典中来缓存另一个"
+"函数 ``f(x)`` 的结果::"
 
 #: ../../whatsnew/2.1.rst:368
 msgid ""
@@ -615,6 +643,11 @@ msgid ""
 "were a function: ``wr()``.  It will return the referenced object, or "
 "``None`` if the object no longer exists."
 msgstr ""
+"弱引用提供了一种实现缓存的方法，不会让对象在其生命周期结束后仍然存活。 如果一"
+"个对象仅通过弱引用访问，该对象将被释放，并且弱引用将指示它所引用的对象不再存"
+"在。 通过调用 ``wr = weakref.ref(obj)`` 来创建对对象 *obj* 的弱引用。 通过调"
+"用弱引用，就像调用函数一样，可以返回被引用的对象: ``wr()``。 如果对象仍然存"
+"在，它将返回被引用的对象；如果对象不再存在，则返回 ``None``。"
 
 #: ../../whatsnew/2.1.rst:382
 msgid ""
@@ -663,7 +696,7 @@ msgstr ""
 msgid ""
 "Arbitrary attributes can now be set and retrieved on functions using the "
 "regular Python syntax::"
-msgstr ""
+msgstr "现在可以使用常规的 Python 语法在函数上设置和检索任意属性::"
 
 #: ../../whatsnew/2.1.rst:444
 msgid ""
@@ -694,6 +727,9 @@ msgid ""
 "distinguish the filenames ``FILE.PY`` and ``file.py``, even though they do "
 "store the file's name  in its original case (they're case-preserving, too)."
 msgstr ""
+"一些操作系统的文件系统是大小写不敏感的，MacOS 和 Windows 是主要的例子；在这些"
+"系统上，无法区分文件名 ``FILE.PY`` 和 ``file.py``，尽管它们确实以原始大小写存"
+"储文件名（它们是保留大小写的）。"
 
 #: ../../whatsnew/2.1.rst:468
 msgid ""
@@ -704,6 +740,11 @@ msgid ""
 "PY``. Case-insensitive matching can be requested by setting the :envvar:"
 "`PYTHONCASEOK` environment variable before starting the Python interpreter."
 msgstr ""
+"在 Python 2.1 中，:keyword:`import` 语句可以在不区分大小写的平台上模拟大小写"
+"敏感性。 现在，Python 默认搜索第一个大小写敏感匹配的文件，如果找不到这样的文"
+"件，就会引发 :exc:`ImportError`，因此 ``import file`` 不会导入名为 ``FILE."
+"PY`` 的模块。 在启动 Python 解释器之前，可以通过设置 :envvar:`PYTHONCASEOK` "
+"环境变量来请求大小写不敏感匹配。"
 
 #: ../../whatsnew/2.1.rst:479
 msgid "PEP 217: Interactive Display Hook"
@@ -717,6 +758,10 @@ msgid ""
 "be called instead of :func:`repr`. For example, you can set it to a special "
 "pretty-printing function::"
 msgstr ""
+"在交互模式下使用 Python 解释器时，命令的输出是通过内置的 :func:`repr` 函数显"
+"示的。 在 Python 2.1 中，可以将变量 :func:`sys.displayhook` 设置为一个可调用"
+"对象，该对象将在代替 :func:`repr` 函数被调用。 例如，你可以将其设置为一个特殊"
+"的美化打印函数::"
 
 #: ../../whatsnew/2.1.rst:502
 msgid ":pep:`217` - Display Hook for Interactive Use"
@@ -736,6 +781,8 @@ msgid ""
 "This will only affect the authors of C extensions to Python, allowing them "
 "more flexibility in writing extension types that support numeric operations."
 msgstr ""
+"在 C 级别上的数值类型转换方法进行了重大修改。 这只会影响编写 Python C 扩展的"
+"作者，使他们在编写支持数值运算的扩展类型时有更多的灵活性。"
 
 #: ../../whatsnew/2.1.rst:515
 msgid ""
@@ -754,6 +801,15 @@ msgid ""
 "not exist (perhaps raising a :exc:`TypeError`, perhaps trying another "
 "object's numeric methods)."
 msgstr ""
+"扩展类型现在可以在其 ``PyTypeObject`` 结构中设置类型标志 "
+"``Py_TPFLAGS_CHECKTYPES``，以表明它们支持新的强制模型。 在此类扩展类型中，数"
+"字槽函数不再假定它们将得到两个相同类型的参数；相反，它们可能会得到两个不同类"
+"型的参数，然后可以执行自己的内部强制。如果槽函数传递给它一个无法处理的类型，"
+"它可以通过返回一个指向 ``Py_NotImplemented`` 单一值的引用来表示失败。 然后将"
+"尝试其他类型的数值函数，也许它们可以处理该操作；如果其他类型也返回 "
+"``Py_NotImplemented``，那么将引发 :exc:`TypeError`。 用 Python 写的数值方法也"
+"可以返回 ``Py_NotImplemented``，导致解释器当作该方法不存在（也许会引发 :exc:"
+"`TypeError`，也许会尝试另一个对象的数值方法）。"
 
 #: ../../whatsnew/2.1.rst:534
 msgid ":pep:`208` - Reworking the Coercion Model"
@@ -765,6 +821,8 @@ msgid ""
 "by Marc-André Lemburg.  Read this to understand the fine points of how "
 "numeric operations will now be processed at the C level."
 msgstr ""
+"由 Neil Schemenauer 编写和实现，基于 Marc-André Lemburg 的早期工作。阅读这部"
+"分内容可以了解数值运算在 C 级别上现在如何处理的细节。"
 
 #: ../../whatsnew/2.1.rst:541
 msgid "PEP 241: Metadata in Python Packages"
@@ -793,6 +851,14 @@ msgid ""
 "and :command:`bdist_\\*` commands could support an ``upload`` option that "
 "would automatically upload your package to a catalog server."
 msgstr ""
+"作为解决这个问题的第一步，使用 Distutils :command:`sdist` 命令打包的 Python "
+"软件将包含一个名为 :file:`PKG-INFO` 的文件，其中包含有关包的信息，如名称、版"
+"本和作者（在目录编制术语中称为元数据）。:file:`PKG-INFO` 文件可以包含的字段的"
+"完整列表见 :pep:`241`。随着人们开始使用 Python 2.1 打包他们的软件，越来越多的"
+"包将包含元数据，从而使得构建自动化目录系统并进行实验成为可能。通过积累经验，"
+"也许有可能设计一个真正好的目录系统，然后在 Python 2.2 中支持它。例如，"
+"Distutils 的 :command:`sdist` 和 :command:`bdist_\\*` 命令可以支持一个 "
+"``upload`` 选项，自动将你的包上传到目录服务器。"
 
 #: ../../whatsnew/2.1.rst:561
 msgid ""
@@ -803,6 +869,10 @@ msgid ""
 "enhancements.  It will be available from the Distutils SIG at https://www."
 "python.org/community/sigs/current/distutils-sig/."
 msgstr ""
+"即使你不使用 Python 2.1，你也可以开始创建包含 :file:`PKG-INFO` 的包，因为 "
+"Distutils 的新版本将为早期 Python 版本的用户发布。Distutils 1.0.2 版本包含"
+"了 :pep:`241` 所描述的更改，以及各种错误修复和增强功能。可以从 Distutils SIG "
+"上获取该版本 https://www.python.org/community/sigs/current/distutils-sig/ 。"
 
 #: ../../whatsnew/2.1.rst:571
 msgid ":pep:`241` - Metadata for Python Software Packages"
@@ -839,6 +909,8 @@ msgid ""
 ":file:`pydoc` also includes a Tk-based interactive help browser.   :file:"
 "`pydoc` quickly becomes addictive; try it out!"
 msgstr ""
+":file:`pydoc` 还包括一个基于 Tk 的交互式帮助浏览器。:file:`pydoc` 很快会让人"
+"上瘾；试试看！"
 
 #: ../../whatsnew/2.1.rst:608
 msgid ""
@@ -869,6 +941,9 @@ msgid ""
 "lower in the depth ordering, and the panel library figures out where panels "
 "overlap and which sections are visible."
 msgstr ""
+":mod:`curses.panel`，是 ncurses 和 SYSV curses 一部分的 panel 库的包装器，由 "
+"Thomas Gellekum 贡献。panel 库为窗口提供了深度特性。窗口可以在深度顺序中向上"
+"或向下移动，panel 库会计算出面板的重叠位置和哪些部分是可见的。"
 
 #: ../../whatsnew/2.1.rst:628
 msgid ""
@@ -890,6 +965,11 @@ msgid ""
 "frames, but also lists the function arguments and the local variables for "
 "each frame."
 msgstr ""
+"Ka-Ping Yee 还贡献了另一个用于处理未捕获异常的钩子。:func:`sys.excepthook` 可"
+"以设置为一个可调用对象。当异常未被任何 :keyword:`try`...\\ :keyword:`except` "
+"块捕获时，异常将传递给 :func:`sys.excepthook`，它可以执行任何需要的操作。在第"
+"九届 Python 会议上，他演示了这个钩子的一个应用：打印扩展的回溯信息，不仅列出"
+"堆栈帧，还列出每个帧的函数参数和局部变量。"
 
 #: ../../whatsnew/2.1.rst:642
 msgid ""
@@ -905,7 +985,7 @@ msgstr ""
 
 #: ../../whatsnew/2.1.rst:651
 msgid "This change was proposed and implemented by Thomas Wouters."
-msgstr ""
+msgstr "此更改由 Thomas Wouters 提出并实现。"
 
 #: ../../whatsnew/2.1.rst:653
 msgid ""
@@ -918,12 +998,19 @@ msgid ""
 "passive mode is unsuitable for your application or network setup, call "
 "``set_pasv(0)`` on FTP objects to disable passive mode."
 msgstr ""
+":mod:`ftplib` 模块现在默认以被动模式检索文件，因为被动模式在防火墙后面更可能"
+"正常工作。这一请求来自 Debian 错误跟踪系统，因为其他 Debian 包使用 :mod:"
+"`ftplib` 来检索文件，但在防火墙后面无法正常工作。由于 Netscape 默认使用被动模"
+"式且几乎没有人抱怨，因此认为这不太可能会对任何人造成问题。但如果被动模式不适"
+"合你的应用程序或网络设置，可以调用 FTP 对象的 ``set_pasv(0)`` 来禁用被动模"
+"式。"
 
 #: ../../whatsnew/2.1.rst:662
 msgid ""
 "Support for raw socket access has been added to the :mod:`socket` module, "
 "contributed by Grant Edwards."
 msgstr ""
+"对原始套接字访问的支持已添加到 :mod:`socket` 模块中，由 Grant Edwards 贡献。"
 
 #: ../../whatsnew/2.1.rst:665
 msgid ""
@@ -931,6 +1018,8 @@ msgid ""
 "browser for displaying timing profiles for Python programs, invoked when the "
 "module is run as a script.  Contributed by  Eric S. Raymond."
 msgstr ""
+":mod:`pstats` 模块现在包含一个简单的交互式统计浏览器，用于显示 Python 程序的"
+"时间分析结果，当该模块作为脚本运行时调用。此功能由 Eric S. Raymond 贡献。"
 
 #: ../../whatsnew/2.1.rst:669
 msgid ""
@@ -941,6 +1030,10 @@ msgid ""
 "frame that is *depth* calls below the top of the stack.  For example, ``sys."
 "_getframe(1)`` returns the caller's frame object."
 msgstr ""
+"新增了一个依赖于实现的函数 ``sys._getframe([depth])``，用于从当前调用堆栈中返"
+"回给定的帧对象。:func:`sys._getframe`返回调用堆栈顶部的帧对象；如果提供了可选"
+"的整数参数 depth，则该函数返回堆栈顶部以下 depth 层的帧。例如，``sys."
+"_getframe(1)`` 返回调用者的帧对象。"
 
 #: ../../whatsnew/2.1.rst:676
 msgid ""
@@ -948,6 +1041,8 @@ msgid ""
 "implementation.  Use it for debugging, and resist the temptation to put it "
 "into production code."
 msgstr ""
+"这个函数仅存在于 CPython 中，不存在于 Jython 或 .NET 实现中。请将其用于调试，"
+"并避免将其放入生产代码中。"
 
 #: ../../whatsnew/2.1.rst:684
 msgid "Other Changes and Fixes"
@@ -960,6 +1055,9 @@ msgid ""
 "patches applied, and 136 bugs fixed; both figures are likely to be "
 "underestimates.  Some of the more notable changes are:"
 msgstr ""
+"由于较短的发布周期，Python 2.1 中的较小更改相对较少。通过搜索 CVS 更改日志，"
+"发现应用了 117 个补丁并修复了 136 个错误；这两个数字都可能是低估的。一些较为"
+"显著的更改包括："
 
 #: ../../whatsnew/2.1.rst:691
 msgid ""
@@ -990,7 +1088,7 @@ msgstr ""
 
 #: ../../whatsnew/2.1.rst:711
 msgid "The object allocator was contributed by Vladimir Marangozov."
-msgstr ""
+msgstr "对象分配器由 Vladimir Marangozov 贡献。"
 
 #: ../../whatsnew/2.1.rst:713
 msgid ""
@@ -1020,6 +1118,8 @@ msgid ""
 "for January 1--15, 2001 at https://mail.python.org/pipermail/python-dev/2001-"
 "January/."
 msgstr ""
+"有关行 I/O 更改的更详细讨论，请参阅 2001 年 1 月 1 日至 15 日的 python-dev 摘"
+"要 https://mail.python.org/pipermail/python-dev/2001-January/ 。"
 
 #: ../../whatsnew/2.1.rst:736
 msgid ""
@@ -1041,6 +1141,10 @@ msgid ""
 "will add them to the importing module's namespace.  To fix this, simply list "
 "the public names in ``__all__``::"
 msgstr ""
+"模块现在可以通过定义一个 ``__all__`` 属性来控制使用 ``from module import *`` "
+"时导入的名称。 一个常见的抱怨是，如果模块导入了其他模块，例如 :mod:`sys` 或 :"
+"mod:`string`，使用 ``from module import *`` 会将它们添加到导入模块的命名空间"
+"中。 为了解决这个问题，只需在 ``__all__`` 模块中列出公共名称即可::"
 
 #: ../../whatsnew/2.1.rst:754
 msgid ""
@@ -1048,6 +1152,8 @@ msgid ""
 "Wolfson, but after some python-dev discussion, a weaker final version was "
 "checked in."
 msgstr ""
+"此补丁的更严格版本最初由 Ben Wolfson 提出并实现，但在经过一些 python-dev 讨论"
+"后，最终版本被修改为较弱的版本并提交。"
 
 #: ../../whatsnew/2.1.rst:758
 msgid ""
@@ -1058,6 +1164,10 @@ msgid ""
 "ones, and using the ``\\n``, ``\\t``, ``\\r`` escapes for the appropriate "
 "characters, and implemented this new formatting."
 msgstr ""
+"以前对字符串应用 :func:`repr` 时，对于不可打印字符使用八进制转义符；例如，换"
+"行符表示为 ``'\\012'``。这是 Python 从 C 语言继承而来的遗留特性，但如今八进制"
+"的实际用途非常有限。Ka-Ping Yee 建议使用十六进制转义符代替八进制，并使用 "
+"``\\n``、``\\t``、``\\r`` 等转义符表示适当的字符，并实现了这种新的格式。"
 
 #: ../../whatsnew/2.1.rst:765
 msgid ""
@@ -1065,6 +1175,8 @@ msgid ""
 "the filename and line number of the error, a pleasant side effect of the "
 "compiler reorganization done by Jeremy Hylton."
 msgstr ""
+"在编译时检测到的语法错误现在可以引发包含错误文件名和行号的异常，这是 Jeremy "
+"Hylton 进行的编译器重组的一个令人愉快的副作用。"
 
 #: ../../whatsnew/2.1.rst:769
 msgid ""
@@ -1078,7 +1190,7 @@ msgstr ""
 msgid ""
 "The size of the Unicode character database was shrunk by another 340K thanks "
 "to Fredrik Lundh."
-msgstr ""
+msgstr "由于 Fredrik Lundh 的努力，Unicode 字符数据库的大小又减少了 340K。"
 
 #: ../../whatsnew/2.1.rst:777
 msgid ""
@@ -1086,6 +1198,9 @@ msgid ""
 "Jason Tishler); RISCOS (by Dietmar Schwertberger); Unixware 7  (by Billy G. "
 "Allie)."
 msgstr ""
+"一些新移植版本被贡献：MacOS X（由 Steven Majewski 贡献），Cygwin（由 Jason "
+"Tishler 贡献），RISCOS（由 Dietmar Schwertberger 贡献），以及 Unixware 7（由 "
+"Billy G. Allie 贡献）。"
 
 #: ../../whatsnew/2.1.rst:781
 msgid ""
