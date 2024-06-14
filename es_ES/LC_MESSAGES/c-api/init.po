@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-26 16:43+0000\n"
+"POT-Creation-Date: 2024-06-14 19:33+0000\n"
 "PO-Revision-Date: 2023-05-24 02:09+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -68,7 +68,7 @@ msgstr ":c:func:`PyImport_ExtendInittab`"
 
 #: ../../c-api/init.rst:28
 msgid ":c:func:`!PyInitFrozenExtensions`"
-msgstr ""
+msgstr ":c:func:`!PyInitFrozenExtensions`"
 
 #: ../../c-api/init.rst:29
 msgid ":c:func:`PyMem_SetAllocator`"
@@ -271,6 +271,8 @@ msgstr ""
 #: ../../c-api/init.rst:113
 msgid "Private flag used by ``_freeze_module`` and ``frozenmain`` programs."
 msgstr ""
+"Bandera privada utilizada por los programas ``_freeze_module`` y "
+"``frozenmain``."
 
 #: ../../c-api/init.rst:117
 msgid ""
@@ -293,6 +295,8 @@ msgid ""
 "Ignore all :envvar:`!PYTHON*` environment variables, e.g. :envvar:"
 "`PYTHONPATH` and :envvar:`PYTHONHOME`, that might be set."
 msgstr ""
+"Ignore todas las variables de entorno :envvar:`!PYTHON*`, por ejemplo :"
+"envvar:`PYTHONPATH` y :envvar:`PYTHONHOME`, que puedan estar establecidas."
 
 #: ../../c-api/init.rst:128
 msgid "Set by the :option:`-E` and :option:`-I` options."
@@ -339,6 +343,10 @@ msgid ""
 "handler, instead of the UTF-8 encoding with ``surrogatepass`` error handler, "
 "for the :term:`filesystem encoding and error handler`."
 msgstr ""
+"Si el indicador es distinto de cero, utilice la codificación ``mbcs`` con el "
+"gestor de errores ``replace``, en lugar de la codificación UTF-8 con el "
+"gestor de errores ``surrogatepass``, para el :term:`filesystem encoding and "
+"error handler`."
 
 #: ../../c-api/init.rst:158
 msgid ""
@@ -361,6 +369,8 @@ msgid ""
 "If the flag is non-zero, use :class:`io.FileIO` instead of :class:`!io."
 "_WindowsConsoleIO` for :mod:`sys` standard streams."
 msgstr ""
+"Si el indicador es distinto de cero, utilice :class:`io.FileIO` en lugar de :"
+"class:`!io._WindowsConsoleIO` para los flujos estándar :mod:`sys`."
 
 #: ../../c-api/init.rst:170
 msgid ""
@@ -572,6 +582,18 @@ msgid ""
 "an application calls :c:func:`Py_Initialize` and :c:func:`Py_FinalizeEx` "
 "more than once."
 msgstr ""
+"**Bugs y advertencias:** La destrucción de módulos y objetos en módulos se "
+"hace en orden aleatorio; esto puede causar que los destructores (:meth:"
+"`~object.__del__` métodos) fallen cuando dependen de otros objetos (incluso "
+"funciones) o módulos.  Los módulos de extensión cargados dinámicamente por "
+"Python no se descargan.  Pequeñas cantidades de memoria asignadas por el "
+"intérprete de Python pueden no ser liberadas (si encuentras una fuga, por "
+"favor repórtala).  La memoria ligada a referencias circulares entre objetos "
+"no se libera.  Alguna memoria asignada por módulos de extensión puede no ser "
+"liberada.  Algunas extensiones pueden no funcionar correctamente si su "
+"rutina de inicialización es llamada más de una vez; esto puede ocurrir si "
+"una aplicación llama a :c:func:`Py_Initialize` y :c:func:`Py_FinalizeEx` más "
+"de una vez."
 
 #: ../../c-api/init.rst:305
 msgid ""
@@ -599,6 +621,10 @@ msgid ""
 "stdio_encoding` and :c:member:`PyConfig.stdio_errors` should be used "
 "instead, see :ref:`Python Initialization Configuration <init-config>`."
 msgstr ""
+"Esta API se mantiene por compatibilidad con versiones anteriores: en su "
+"lugar debe utilizarse la configuración de :c:member:`PyConfig."
+"stdio_encoding` y :c:member:`PyConfig.stdio_errors`, ver :ref:`Python "
+"Initialization Configuration <init-config>`."
 
 #: ../../c-api/init.rst:331
 msgid ""
@@ -659,6 +685,9 @@ msgid ""
 "program_name` should be used instead, see :ref:`Python Initialization "
 "Configuration <init-config>`."
 msgstr ""
+"Esta API se mantiene por compatibilidad con versiones anteriores: en su "
+"lugar debe utilizarse la configuración :c:member:`PyConfig.program_name`, "
+"ver :ref:`Python Initialization Configuration <init-config>`."
 
 #: ../../c-api/init.rst:367
 msgid ""
@@ -690,6 +719,8 @@ msgid ""
 "Use :c:func:`Py_DecodeLocale` to decode a bytes string to get a :c:expr:"
 "`wchar_*` string."
 msgstr ""
+"Utilice :c:func:`Py_DecodeLocale` para descodificar una cadena de bytes y "
+"obtener una cadena :c:expr:`wchar_*`."
 
 #: ../../c-api/init.rst:388
 msgid ""
@@ -707,11 +738,13 @@ msgid ""
 "This function should not be called before :c:func:`Py_Initialize`, otherwise "
 "it returns ``NULL``."
 msgstr ""
+"Esta función no debe invocarse antes de :c:func:`Py_Initialize`, de lo "
+"contrario devuelve ``NULL``."
 
 #: ../../c-api/init.rst:395 ../../c-api/init.rst:414 ../../c-api/init.rst:455
 #: ../../c-api/init.rst:474 ../../c-api/init.rst:500 ../../c-api/init.rst:721
 msgid "It now returns ``NULL`` if called before :c:func:`Py_Initialize`."
-msgstr ""
+msgstr "Ahora devuelve ``NULL`` si se llama antes que :c:func:`Py_Initialize`."
 
 #: ../../c-api/init.rst:401
 msgid ""
@@ -726,6 +759,17 @@ msgid ""
 "available to Python code as ``sys.prefix``. It is only useful on Unix.  See "
 "also the next function."
 msgstr ""
+"Devuelve el *prefijo* de los archivos instalados independientes de la "
+"plataforma. Se obtiene mediante una serie de complicadas reglas a partir del "
+"nombre del programa establecido con :c:func:`Py_SetProgramName` y algunas "
+"variables de entorno; por ejemplo, si el nombre del programa es ``'/usr/"
+"local/bin/python'``, el prefijo es ``'/usr/local'``. La cadena devuelta "
+"apunta a un almacenamiento estático; la persona que llama no debe modificar "
+"su valor.  Esto corresponde a la variable :makevar:`prefix` en el nivel "
+"superior :file:`Makefile` y al argumento :option:`--prefix` del script :"
+"program:`configure` en tiempo de compilación.  El valor está disponible para "
+"el código Python como ``sys.prefix``. Sólo es útil en Unix.  Véase también "
+"la siguiente función."
 
 #: ../../c-api/init.rst:420
 msgid ""
@@ -849,6 +893,10 @@ msgid ""
 "be used instead, see :ref:`Python Initialization Configuration <init-"
 "config>`."
 msgstr ""
+"Esta API se mantiene por compatibilidad con versiones anteriores: en su "
+"lugar debe utilizarse la configuración de :c:member:`PyConfig."
+"module_search_paths` y :c:member:`PyConfig.module_search_paths_set`, ver :"
+"ref:`Python Initialization Configuration <init-config>`."
 
 #: ../../c-api/init.rst:516
 msgid ""
@@ -921,7 +969,7 @@ msgstr ""
 
 #: ../../c-api/init.rst:556
 msgid "See also the :c:var:`Py_Version` constant."
-msgstr ""
+msgstr "Ver también la constante :c:var:`Py_Version`."
 
 #: ../../c-api/init.rst:563
 msgid ""
@@ -996,6 +1044,10 @@ msgid ""
 "should be used instead, see :ref:`Python Initialization Configuration <init-"
 "config>`."
 msgstr ""
+"Esta API se mantiene por compatibilidad con versiones anteriores: en su "
+"lugar debe utilizarse la configuración :c:member:`PyConfig.argv`, :c:member:"
+"`PyConfig.parse_argv` y :c:member:`PyConfig.safe_path`, ver :ref:`Python "
+"Initialization Configuration <init-config>`."
 
 #: ../../c-api/init.rst:624
 msgid ""
@@ -1051,6 +1103,8 @@ msgid ""
 "See also :c:member:`PyConfig.orig_argv` and :c:member:`PyConfig.argv` "
 "members of the :ref:`Python Initialization Configuration <init-config>`."
 msgstr ""
+"Ver también :c:member:`PyConfig.orig_argv` y :c:member:`PyConfig.argv` "
+"miembros de la :ref:`Python Initialization Configuration <init-config>`."
 
 #: ../../c-api/init.rst:651
 msgid ""
@@ -1076,6 +1130,10 @@ msgid ""
 "argv` and :c:member:`PyConfig.parse_argv` should be used instead, see :ref:"
 "`Python Initialization Configuration <init-config>`."
 msgstr ""
+"Esta API se mantiene por compatibilidad con versiones anteriores: en su "
+"lugar debe utilizarse la configuración de :c:member:`PyConfig.argv` y :c:"
+"member:`PyConfig.parse_argv`, ver :ref:`Python Initialization Configuration "
+"<init-config>`."
 
 #: ../../c-api/init.rst:676
 msgid ""
@@ -1097,6 +1155,9 @@ msgid ""
 "home` should be used instead, see :ref:`Python Initialization Configuration "
 "<init-config>`."
 msgstr ""
+"Esta API se mantiene por compatibilidad con versiones anteriores: en su "
+"lugar debe utilizarse la configuración :c:member:`PyConfig.home`, ver :ref:"
+"`Python Initialization Configuration <init-config>`."
 
 #: ../../c-api/init.rst:697
 msgid ""
@@ -1305,6 +1366,11 @@ msgid ""
 "`Py_NewInterpreter`), but mixing multiple interpreters and the "
 "``PyGILState_*`` API is unsupported."
 msgstr ""
+"Tenga en cuenta que las funciones ``PyGILState_*`` asumen que sólo hay un "
+"intérprete global (creado automáticamente por :c:func:`Py_Initialize`).  "
+"Python soporta la creación de intérpretes adicionales (usando :c:func:"
+"`Py_NewInterpreter`), pero mezclar múltiples intérpretes y la API "
+"``PyGILState_*`` no está soportado."
 
 #: ../../c-api/init.rst:859
 msgid "Cautions about fork()"
@@ -1341,6 +1407,21 @@ msgid ""
 "after the fork. :c:func:`PyOS_AfterFork_Child` tries to reset the necessary "
 "locks, but is not always able to."
 msgstr ""
+"El hecho de que sólo permanezca el hilo \"actual\" significa que los "
+"bloqueos mantenidos por otros hilos nunca serán liberados. Python resuelve "
+"esto en :func:`os.fork` adquiriendo los bloqueos que utiliza internamente "
+"antes de la bifurcación y liberándolos después. Además, restablece "
+"cualquier :ref:`lock-objects` en el hijo. Cuando se extiende o incrusta "
+"Python, no hay forma de informar a Python de bloqueos adicionales (no "
+"Python) que necesitan ser adquiridos antes o reiniciados después de una "
+"bifurcación. Sería necesario utilizar facilidades del sistema operativo "
+"como :c:func:`!pthread_atfork` para conseguir lo mismo. Además, al extender "
+"o incrustar Python, llamar a :c:func:`fork` directamente en lugar de a "
+"través de :func:`os.fork` (y volver o llamar a Python) puede resultar en un "
+"bloqueo debido a que uno de los bloqueos internos de Python está en manos de "
+"un hilo que ha desaparecido después de la bifurcación. :c:func:"
+"`PyOS_AfterFork_Child` intenta restablecer los bloqueos necesarios, pero no "
+"siempre puede."
 
 #: ../../c-api/init.rst:882
 msgid ""
@@ -1406,10 +1487,12 @@ msgid ""
 "This data structure represents the state of a single thread.  The only "
 "public data member is:"
 msgstr ""
+"Esta estructura de datos representa el estado de un único hilo.  El único "
+"miembro de datos públicos es:"
 
 #: ../../c-api/init.rst:920
 msgid "This thread's interpreter state."
-msgstr ""
+msgstr "Estado del intérprete de este hilo."
 
 #: ../../c-api/init.rst:931
 msgid "Deprecated function which does nothing."
@@ -1484,6 +1567,11 @@ msgid ""
 "interpreter is in process of being finalized before calling this function to "
 "avoid unwanted termination."
 msgstr ""
+"Llamar a esta función desde un hilo cuando el intérprete está finalizando "
+"terminará el hilo, incluso si el hilo no fue creado por Python. Puede "
+"utilizar :c:func:`!_Py_IsFinalizing` o :func:`sys.is_finalizing` para "
+"comprobar si el intérprete está en proceso de finalización antes de llamar a "
+"esta función para evitar una terminación no deseada."
 
 #: ../../c-api/init.rst:986
 msgid ""
@@ -1777,6 +1865,8 @@ msgid ""
 "Return a :term:`strong reference`. Return ``NULL`` if no frame is currently "
 "executing."
 msgstr ""
+"Devuelve :term:`strong reference`. Devuelve ``NULL`` si no se está "
+"ejecutando ninguna trama."
 
 #: ../../c-api/init.rst:1168
 msgid "See also :c:func:`PyEval_GetFrame`."
@@ -1799,21 +1889,27 @@ msgstr "Obtiene el intérprete del estado del hilo de Python *tstate*."
 #: ../../c-api/init.rst:1195
 msgid "Suspend tracing and profiling in the Python thread state *tstate*."
 msgstr ""
+"Suspende el rastreo y el perfilado en el estado *tstate* de los hilos de "
+"Python."
 
 #: ../../c-api/init.rst:1197
 msgid "Resume them using the :c:func:`PyThreadState_LeaveTracing` function."
-msgstr ""
+msgstr "Reanúdelos utilizando la función :c:func:`PyThreadState_LeaveTracing`."
 
 #: ../../c-api/init.rst:1204
 msgid ""
 "Resume tracing and profiling in the Python thread state *tstate* suspended "
 "by the :c:func:`PyThreadState_EnterTracing` function."
 msgstr ""
+"Reanudar el trazado y perfilado en el estado *tstate* del hilo de Python "
+"suspendido por la función :c:func:`PyThreadState_EnterTracing`."
 
 #: ../../c-api/init.rst:1207
 msgid ""
 "See also :c:func:`PyEval_SetTrace` and :c:func:`PyEval_SetProfile` functions."
 msgstr ""
+"Ver también las funciones :c:func:`PyEval_SetTrace` y :c:func:"
+"`PyEval_SetProfile`."
 
 #: ../../c-api/init.rst:1215
 msgid "Get the current interpreter."
@@ -1879,6 +1975,8 @@ msgid ""
 "The *frame* parameter changed from ``PyFrameObject*`` to "
 "``_PyInterpreterFrame*``."
 msgstr ""
+"El parámetro *frame* ha cambiado de ``PyFrameObject*`` a "
+"``_PyInterpreterFrame*``."
 
 #: ../../c-api/init.rst:1261
 msgid "Get the frame evaluation function."
@@ -1918,12 +2016,22 @@ msgid ""
 "``NULL``, the pending exception (if any) for the thread is cleared. This "
 "raises no exceptions."
 msgstr ""
+"Lanza asíncronamente una excepción en un subproceso. El argumento *id* es el "
+"identificador del subproceso de destino; *exc* es el objeto de excepción a "
+"lanzar. Esta función no roba ninguna referencia a *exc*. Para evitar un mal "
+"uso ingenuo, debe escribir su propia extensión de C para llamar a esto.  "
+"Debe ser llamada con el GIL retenido. Devuelve el número de estados de hilo "
+"modificados; normalmente es uno, pero será cero si no se encuentra el id del "
+"hilo.  Si *exc* es ``NULL``, la excepción pendiente (si existe) para el hilo "
+"se borra. Esto no genera excepciones."
 
 #: ../../c-api/init.rst:1295
 msgid ""
 "The type of the *id* parameter changed from :c:expr:`long` to :c:expr:"
 "`unsigned long`."
 msgstr ""
+"El tipo del parámetro *id* ha cambiado de :c:expr:`long` a :c:expr:`unsigned "
+"long`."
 
 #: ../../c-api/init.rst:1301
 msgid ""
@@ -2225,6 +2333,15 @@ msgid ""
 "`ctypes`) using these APIs to allow calling of Python code from non-Python "
 "created threads will probably be broken when using sub-interpreters."
 msgstr ""
+"También ten en cuenta que combinar esta funcionalidad con las APIs "
+"``PyGILState_*`` es delicado, porque estas APIs asumen una biyección entre "
+"los estados de los hilos de Python y los hilos a nivel de SO, una asunción "
+"rota por la presencia de subinterpretadores. Se recomienda encarecidamente "
+"no cambiar de subinterpretador entre un par de llamadas coincidentes a :c:"
+"func:`PyGILState_Ensure` y :c:func:`PyGILState_Release`. Además, las "
+"extensiones (como :mod:`ctypes`) que utilizan estas APIs para permitir la "
+"llamada de código Python desde hilos no creados en Python probablemente se "
+"romperán al utilizar subinterpretadores."
 
 #: ../../c-api/init.rst:1494
 msgid "Asynchronous Notifications"
@@ -2375,6 +2492,14 @@ msgid ""
 "`PyTrace_C_RETURN`, or :c:data:`PyTrace_OPCODE`, and *arg* depends on the "
 "value of *what*:"
 msgstr ""
+"El tipo de la función de seguimiento registrada mediante :c:func:"
+"`PyEval_SetProfile` y :c:func:`PyEval_SetTrace`. El primer parámetro es el "
+"objeto pasado a la función de registro como *obj*, *frame* es el objeto "
+"frame al que pertenece el evento, *what* es una de las constantes :c:data:"
+"`PyTrace_CALL`, :c:data:`PyTrace_EXCEPTION`, :c:data:`PyTrace_LINE`, :c:data:"
+"`PyTrace_RETURN`, :c:data:`PyTrace_C_CALL`, :c:data:`PyTrace_C_EXCEPTION`, :"
+"c:data:`PyTrace_C_RETURN`, o :c:data:`PyTrace_OPCODE`, y *arg* depende del "
+"valor de *what*:"
 
 #: ../../c-api/init.rst:1575
 msgid "Value of *what*"
@@ -2386,7 +2511,7 @@ msgstr "Significado de *arg*"
 
 #: ../../c-api/init.rst:1577
 msgid ":c:data:`PyTrace_CALL`"
-msgstr ""
+msgstr ":c:data:`PyTrace_CALL`"
 
 #: ../../c-api/init.rst:1577 ../../c-api/init.rst:1582
 #: ../../c-api/init.rst:1593
@@ -2395,7 +2520,7 @@ msgstr "Siempre :c:data:`Py_None`."
 
 #: ../../c-api/init.rst:1579
 msgid ":c:data:`PyTrace_EXCEPTION`"
-msgstr ""
+msgstr ":c:data:`PyTrace_EXCEPTION`"
 
 #: ../../c-api/init.rst:1579
 msgid "Exception information as returned by :func:`sys.exc_info`."
@@ -2403,7 +2528,7 @@ msgstr "Información de excepción devuelta por :func:`sys.exc_info`."
 
 #: ../../c-api/init.rst:1582
 msgid ":c:data:`PyTrace_LINE`"
-msgstr ""
+msgstr ":c:data:`PyTrace_LINE`"
 
 #: ../../c-api/init.rst:1584
 msgid ":c:data:`PyTrace_RETURN`"
@@ -2425,15 +2550,15 @@ msgstr "Objeto de función al que se llama."
 
 #: ../../c-api/init.rst:1589
 msgid ":c:data:`PyTrace_C_EXCEPTION`"
-msgstr ""
+msgstr ":c:data:`PyTrace_C_EXCEPTION`"
 
 #: ../../c-api/init.rst:1591
 msgid ":c:data:`PyTrace_C_RETURN`"
-msgstr ""
+msgstr ":c:data:`PyTrace_C_RETURN`"
 
 #: ../../c-api/init.rst:1593
 msgid ":c:data:`PyTrace_OPCODE`"
-msgstr ""
+msgstr ":c:data:`PyTrace_OPCODE`"
 
 #: ../../c-api/init.rst:1598
 msgid ""
@@ -2476,6 +2601,10 @@ msgid ""
 "reported. It may be disabled for a frame by setting :attr:`~frame."
 "f_trace_lines` to *0* on that frame."
 msgstr ""
+"El valor que se pasa como parámetro *what* a una función :c:type:"
+"`Py_tracefunc` (pero no a una función de perfilado) cuando se notifica un "
+"evento de número de línea. Se puede desactivar para una trama estableciendo :"
+"attr:`~frame.f_trace_lines` a *0* en esa trama."
 
 #: ../../c-api/init.rst:1626
 msgid ""
@@ -2516,6 +2645,11 @@ msgid ""
 "event is not emitted by default: it must be explicitly requested by setting :"
 "attr:`~frame.f_trace_opcodes` to *1* on the frame."
 msgstr ""
+"El valor para el parámetro *what* a las funciones :c:type:`Py_tracefunc` "
+"(pero no a las funciones de perfil) cuando un nuevo opcode está a punto de "
+"ser ejecutado.  Este evento no se emite por defecto: debe solicitarse "
+"explícitamente estableciendo :attr:`~frame.f_trace_opcodes` a *1* en el "
+"marco."
 
 #: ../../c-api/init.rst:1658
 msgid ""
@@ -2827,7 +2961,7 @@ msgstr ""
 
 #: ../../c-api/init.rst:231
 msgid "modules (in module sys)"
-msgstr ""
+msgstr "módulos (en módulo sys)"
 
 #: ../../c-api/init.rst:231 ../../c-api/init.rst:480 ../../c-api/init.rst:506
 msgid "path (in module sys)"

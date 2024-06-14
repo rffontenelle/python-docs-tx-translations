@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-09 14:21+0000\n"
+"POT-Creation-Date: 2024-06-07 15:24+0000\n"
 "PO-Revision-Date: 2023-05-24 02:23+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -103,6 +103,11 @@ msgid ""
 "there's lots of C code that expects a regular Python list and won't accept "
 "a :class:`~collections.UserList` instance."
 msgstr ""
+"很久以前，我写过一个网页，列出了 Python 设计中的一些缺陷。其中一个最显著的缺"
+"陷是无法对子类化用 C 实现的 Python 类型。特别是，无法对子类化内置类型，因此你"
+"不能简单地对子类化列表，以便向其添加一个有用的方法。虽然 :mod:`!UserList` 模"
+"块提供了一个支持所有列表方法的类并且可以进一步子类化，但有很多 C 代码期望的是"
+"一个普通的 Python 列表，不能接受 :class:`~collections.UserList` 实例。"
 
 #: ../../whatsnew/2.2.rst:61
 msgid ""
@@ -117,12 +122,16 @@ msgid ""
 "You can subclass built-in types such as lists and even integers, and your "
 "subclasses should work in every place that requires the original type."
 msgstr ""
+"你可以继承内置类型，例如列表和整数，并且你的子类应该在任何需要原始类型的地方"
+"正常工作。这使得 Python 的面向对象编程更加灵活和强大。"
 
 #: ../../whatsnew/2.2.rst:67
 msgid ""
 "It's now possible to define static and class methods, in addition to the "
 "instance methods available in previous versions of Python."
 msgstr ""
+"现在，除了之前版本的 Python 中可用的实例方法外，还可以定义静态方法和类方法。"
+"这使得你可以更灵活地组织类的行为。"
 
 #: ../../whatsnew/2.2.rst:70
 msgid ""
@@ -132,6 +141,9 @@ msgid ""
 "instead, making the resulting code simpler and faster.  As a small side "
 "benefit, attributes can now have docstrings, too."
 msgstr ""
+"还可以通过使用一种称为 *属性* 的新机制，在访问或设置实例属性时自动调用方法。"
+"许多 :meth:`~object.__getattr__` 的用法可以重写为使用属性，从而使代码更简单、"
+"更快速。作为一个小的额外好处，属性现在也可以有文档字符串。"
 
 #: ../../whatsnew/2.2.rst:76
 msgid ""
@@ -139,6 +151,8 @@ msgid ""
 "set using :dfn:`slots`, making it possible to safeguard against typos and "
 "perhaps make more optimizations possible in future versions of Python."
 msgstr ""
+"可以使用 __slots__ 限制实例的合法属性列表，从而防止拼写错误，并且在未来的 "
+"Python 版本中可能进行更多的优化。"
 
 #: ../../whatsnew/2.2.rst:80
 msgid ""
@@ -149,6 +163,9 @@ msgid ""
 "recommended Python for its simplicity, and feel that its simplicity is being "
 "lost."
 msgstr ""
+"一些用户对这些变化表示担忧。确实，他们说，新功能很棒，可以实现以前版本的 "
+"Python 无法做到的各种技巧，但它们也使语言变得更加复杂。一些人表示，他们一直推"
+"荐 Python 是因为它的简单性，现在感觉这种简单性正在丧失。"
 
 #: ../../whatsnew/2.2.rst:86
 msgid ""
@@ -160,6 +177,10 @@ msgid ""
 "only possible from C will now be possible in pure Python, and to my mind "
 "that's all for the better."
 msgstr ""
+"个人而言，我认为没有必要担心。许多新功能相当深奥，你可以编写大量 Python 代码"
+"而不需要了解它们。编写一个简单的类并不比以前更难，因此除非确实需要，否则你不"
+"必费心去学习或教授这些新功能。一些以前只有在 C 语言中才能实现的非常复杂的任"
+"务，现在可以用纯 Python 实现，在我看来，这一切都更好了。"
 
 #: ../../whatsnew/2.2.rst:93
 msgid ""
@@ -169,6 +190,9 @@ msgid ""
 "Links\", for further sources of information about Python 2.2's new object "
 "model."
 msgstr ""
+"我不会尝试涵盖所有为了使新功能生效而需要的每一个边缘情况和小改动。相反，本节"
+"将只勾勒出大致的轮廓。有关 Python 2.2 新对象模型的更多信息，请参见 :ref:"
+"`sect-rellinks` 的“相关链接”部分。"
 
 #: ../../whatsnew/2.2.rst:100
 msgid "Old and New Classes"
@@ -183,6 +207,10 @@ msgid ""
 "classes. This divergence isn't intended to last forever; eventually old-"
 "style classes will be dropped, possibly in Python 3.0."
 msgstr ""
+"首先，你应该知道 Python 2.2 实际上有两种类型的类：经典类（或旧式类）和新式"
+"类。旧式类模型与早期版本的 Python 中的类模型完全相同。本节描述的所有新功能仅"
+"适用于新式类。这种分歧并不是永久的；最终，旧式类将被淘汰，可能在 Python 3.0 "
+"中被移除。"
 
 #: ../../whatsnew/2.2.rst:109
 msgid ""
@@ -193,6 +221,10 @@ msgid ""
 "types, has also been added so if no built-in type is suitable, you can just "
 "subclass :class:`object`::"
 msgstr ""
+"那么如何定义一个新式类呢？你可以通过继承一个现有的新式类来实现。大多数 "
+"Python 内置类型，如整数、列表、字典，甚至文件，现在都是新式类。此外，还添加了"
+"一个名为 :class:`object` 的新式类，它是所有内置类型的基类，因此如果没有合适的"
+"内置类型，你可以直接继承 :class:`object` 类："
 
 #: ../../whatsnew/2.2.rst:121
 msgid ""
@@ -202,6 +234,9 @@ msgid ""
 "see :pep:`253` for the details --- but it's easier to just subclass :class:"
 "`object`.)"
 msgstr ""
+"这意味着在 Python 2.2 中，不带任何基类的 :keyword:`class` 声明总是经典类。"
+"（实际上，你也可以通过设置一个名为 :attr:`!__metaclass__` 的模块级变量来改变"
+"这一点——详见 :pep:`253` ——但更简单的方法是直接继承 :class:`object`。）"
 
 #: ../../whatsnew/2.2.rst:126
 msgid ""
@@ -210,6 +245,9 @@ msgid ""
 "`int`, :func:`float`, and :func:`str`.  In 2.2, they aren't functions any "
 "more, but type objects that behave as factories when called. ::"
 msgstr ""
+"内置类型的类型对象在 Python 2.2 中作为内置对象提供，使用了一种巧妙的技巧命"
+"名。Python 一直有名为 :func:`int`、:func:`float` 和 :func:`str` 的内置函数。"
+"在 Python 2.2 中，它们不再是函数，而是作为被调用时表现为工厂的类型对象。"
 
 #: ../../whatsnew/2.2.rst:136
 msgid ""
@@ -217,6 +255,8 @@ msgid ""
 "and :func:`!file` have been added.  Here's a more interesting example, "
 "adding a :meth:`!lock` method to file objects::"
 msgstr ""
+"为了使类型集合完整，Python 2.2 中还添加了新的类型对象，例如 :func:`dict` 和 :"
+"func:`!file`。以下是一个更有趣的例子，向文件对象添加一个 :meth:`!lock` 方法："
 
 #: ../../whatsnew/2.2.rst:146
 msgid ""
@@ -225,6 +265,9 @@ msgid ""
 "this class couldn't be passed to internal functions that expected a built-in "
 "file, something which is possible with our new :class:`!LockableFile`."
 msgstr ""
+"现在已经过时的 :mod:`!posixfile` 模块包含一个类，该类模仿了文件对象的所有方"
+"法，并添加了一个 :meth:`!lock` 方法，但这个类不能传递给期望内置文件对象的内部"
+"函数，而这在我们的新 :class:`!LockableFile` 实现中是可能的。"
 
 #: ../../whatsnew/2.2.rst:153
 msgid "Descriptors"
@@ -241,6 +284,11 @@ msgid ""
 "inheritance or an arbitrary :meth:`!__getattr__` hook were in use this could "
 "still be inaccurate."
 msgstr ""
+"在以前的 Python 版本中，没有一致的方法来发现对象支持的属性和方法。有一些非正"
+"式的约定，例如定义 :attr:`!__members__` 和 :attr:`!__methods__` 属性，这些属"
+"性是名称列表，但扩展类型或类的作者往往不会去定义它们。你可以退而求其次，检查"
+"对象的 :attr:`~object.__dict__` 属性，但在使用类继承或任意的 :meth:`!"
+"__getattr__` 钩子时，这仍然可能是不准确的。"
 
 #: ../../whatsnew/2.2.rst:163
 msgid ""
@@ -250,12 +298,17 @@ msgid ""
 "it's a method or a field.  With the descriptor API, static methods and class "
 "methods become possible, as well as more exotic constructs."
 msgstr ""
+"新类模型的一个核心理念是正式化了使用描述符来描述对象属性的 API。描述符指定属"
+"性的值，说明它是方法还是字段。通过描述符 API，静态方法和类方法成为可能，以及"
+"其他更复杂的构造。"
 
 #: ../../whatsnew/2.2.rst:169
 msgid ""
 "Attribute descriptors are objects that live inside class objects, and have a "
 "few attributes of their own:"
 msgstr ""
+"属性描述符是存在于类对象内部的对象，它们自身具有一些属性。描述符协议由三个主"
+"要方法组成："
 
 #: ../../whatsnew/2.2.rst:172
 msgid ":attr:`~definition.__name__` is the attribute's name."
@@ -297,6 +350,11 @@ msgid ""
 "methods are passed the class of the object, but not the object itself.  "
 "Static and class methods are defined like this::"
 msgstr ""
+"对于方法，:meth:`!descriptor.__get__` 返回一个可调用的临时对象，它将实例和要"
+"调用的方法封装在一起。这也是为什么现在可以实现静态方法和类方法的原因；它们有"
+"描述符，可以只封装方法，或者封装方法和类。作为对这些新方法类型的简要说明，静"
+"态方法不传递实例，因此类似于常规函数。类方法传递对象的类，但不传递对象本身。"
+"静态方法和类方法的定义如下："
 
 #: ../../whatsnew/2.2.rst:207
 msgid ""
@@ -316,6 +374,9 @@ msgid ""
 "and postconditions for a method.  A class that used this feature might be "
 "defined like this::"
 msgstr ""
+"更多的新功能，如 __slots__ 和属性，也作为新类型的描述符实现。编写一个实现新功"
+"能的描述符类并不困难。例如，可以编写一个描述符类，使其能够为方法编写类似 "
+"Eiffel 风格的前置条件和后置条件。使用该功能的类可能定义如下："
 
 #: ../../whatsnew/2.2.rst:235
 msgid ""
@@ -357,6 +418,9 @@ msgid ""
 "cases, but produces more useful results for really complicated inheritance "
 "graphs.)"
 msgstr ""
+"新式类遵循一种不同的算法，虽然解释起来有点复杂，但在这种情况下能做正确的事"
+"情。（请注意，Python 2.3 改变了这个算法，在大多数情况下会产生相同的结果，但对"
+"于非常复杂的继承图会产生更有用的结果。）"
 
 #: ../../whatsnew/2.2.rst:277
 msgid ""
@@ -485,6 +549,8 @@ msgid ""
 "been simplified or ignored.  Where should you go to get a more complete "
 "picture?"
 msgstr ""
+"本节只是对新特性进行了简要概述，提供了足够的解释以帮助你开始编程，但许多细节"
+"已被简化或忽略。想要获得更全面的了解，你可以去哪里呢？"
 
 #: ../../whatsnew/2.2.rst:398
 msgid ""
@@ -493,6 +559,9 @@ msgid ""
 "whetted your appetite, go read this tutorial next, because it goes into much "
 "more detail about the new features while still remaining quite easy to read."
 msgstr ""
+":ref:`descriptorhowto` 是由 Guido van Rossum 编写的一篇详细教程，介绍了描述符"
+"功能。如果我的描述激起了你的兴趣，请继续阅读这篇教程，因为它更加详细地介绍了"
+"这些新功能，同时仍然保持了相当的易读性。"
 
 #: ../../whatsnew/2.2.rst:403
 msgid ""
@@ -524,6 +593,8 @@ msgid ""
 "and Python levels.  Objects can define how they can be looped over by "
 "callers."
 msgstr ""
+"Python 2.2 的另一个重要新增功能是在 C 和 Python 两个层面上引入了迭代接口。对"
+"象可以定义如何被调用者循环遍历。"
 
 #: ../../whatsnew/2.2.rst:426
 msgid ""
@@ -628,7 +699,7 @@ msgid ""
 "Written by Ka-Ping Yee and GvR; implemented  by the Python Labs crew, mostly "
 "by GvR and Tim Peters."
 msgstr ""
-"由 Ka-Ping Yee 和 GvR 撰写；由 Python Labs 小组（主要由 GvR 和 Tim Peters）实"
+"由 Ka-Ping Yee 和 GvR 撰写；由 Python Labs 团队（主要由 GvR 和 Tim Peters）实"
 "现。"
 
 #: ../../whatsnew/2.2.rst:542
@@ -739,6 +810,11 @@ msgid ""
 "Language\" at https://www2.cs.arizona.edu/icon/docs/ipd266.htm gives an idea "
 "of what this looks like::"
 msgstr ""
+"生成器的概念源自其他编程语言，尤其是 Icon（https://www2.cs.arizona.edu/"
+"icon/ ），在 Icon 语言中，生成器的概念是核心。在 Icon 中，每个表达式和函数调"
+"用生成器的概念源自其他编程语言，尤其是 Icon。在Icon中，每个表达式和函数调用都"
+"可以表现得像一个生成器。以下是来自“Icon 编程语言概述”中的一个示例，展示了生成"
+"器的用法 https://www2.cs.arizona.edu/icon/docs/ipd266.htm ："
 
 #: ../../whatsnew/2.2.rst:644
 msgid ""
@@ -760,6 +836,10 @@ msgid ""
 "represented as a concrete object (the iterator) that can be passed around to "
 "other functions or stored in a data structure."
 msgstr ""
+"Python 并没有像 Icon 那样将生成器作为核心概念来采纳。生成器被认为是 Python 核"
+"心语言的一部分，但学习或使用它们并不是强制性的；如果它们不能解决你的问题，可"
+"以完全忽略它们。与 Icon 相比，Python 的一个新颖特性是生成器的状态表示为一个具"
+"体对象（迭代器），该对象可以传递给其他函数或存储在数据结构中。"
 
 #: ../../whatsnew/2.2.rst:662
 msgid ":pep:`255` - Simple Generators"
@@ -801,6 +881,11 @@ msgid ""
 "to raise an :exc:`OverflowError` will now return a long integer as their "
 "result.  For example::"
 msgstr ""
+"Python 2.2 将根据需要将数值从短整数转换为长整数。'L' 后缀不再需要用于表示长整"
+"数字面量，因为现在编译器会自动选择适当的类型。（在未来的 2.x 版本的 Python "
+"中，使用 'L' 后缀将被不鼓励，并在 Python 2.4 中触发警告，可能在 Python 3.0 中"
+"被移除。）许多以前会引发 :exc:`OverflowError` 的操作现在会返回一个长整数作为"
+"结果。例如："
 
 #: ../../whatsnew/2.2.rst:694
 msgid ""
@@ -853,6 +938,8 @@ msgid ""
 "Python 2.2 begins the transition, but the switch won't be complete until "
 "Python 3.0."
 msgstr ""
+"由于这一变化可能会破坏现有代码，因此它正在非常逐步地引入。Python 2.2 开始了这"
+"一过渡，但直到 Python 3.0 这一转换才会完全完成。"
 
 #: ../../whatsnew/2.2.rst:732
 msgid ""
@@ -868,7 +955,7 @@ msgstr ""
 
 #: ../../whatsnew/2.2.rst:740
 msgid "Here are the changes 2.2 introduces:"
-msgstr ""
+msgstr "Python 2.2 引入了以下变化："
 
 #: ../../whatsnew/2.2.rst:742
 msgid ""
@@ -909,10 +996,14 @@ msgid ""
 "and fix it.  By default, Python 2.2 will simply perform classic division "
 "without a warning; the warning will be turned on by default in Python 2.3."
 msgstr ""
+"Python 2.2 支持一些命令行参数，用于测试代码是否能在除法语义改变的情况下正常工"
+"作。运行 Python 并使用 -Q warn 选项时，当对两个整数应用除法时会发出警告。你可"
+"以利用这个功能找到受影响的代码并进行修复。默认情况下，Python 2.2 会执行经典除"
+"法而不会发出警告；在 Python 2.3 中，警告将默认开启。"
 
 #: ../../whatsnew/2.2.rst:770
 msgid ":pep:`238` - Changing the Division Operator"
-msgstr ""
+msgstr ":pep:`238`：改变除法运算符"
 
 #: ../../whatsnew/2.2.rst:771
 msgid ""
@@ -1007,6 +1098,10 @@ msgid ""
 "their intuitive expectations.  For example, a nested recursive function "
 "definition doesn't work::"
 msgstr ""
+"Python 2.1 中的最大改变是 Python 的作用域规则，在Python 2.2中得到完善。 在 "
+"Python 2.0 中，任意给定的时刻至多使用三个命名空间来查找变量名称：局部、模块和"
+"内置命名空间。 这往往会导致令人吃惊的结果因为它与人们直觉上的预期不相匹配。 "
+"例如，一个嵌套的递归函数将不起作用::"
 
 #: ../../whatsnew/2.2.rst:862
 msgid ""
@@ -1037,6 +1132,12 @@ msgid ""
 "local namespace of the enclosing scope.  A more detailed explanation of the "
 "rules, and a dissection of the implementation, can be found in the PEP."
 msgstr ""
+"Python 2.2 最显著的改变是增加了静态作用域这一语言特征来解决此问题。 作为它的"
+"第一项影响，在上述示例中的 ``name=name`` 默认参数现在将不再必要。 简单地说，"
+"当一个函数内部的给定变量名没有被赋值时（通过赋值语句，或者 :keyword:`def`, :"
+"keyword:`class` 或 :keyword:`import` 语句），对该变量的引用将在外层作用域的局"
+"部命名空间中查找。 对于该规则的更详细解释，以及具体实现的分析，请参阅相应的 "
+"PEP。"
 
 #: ../../whatsnew/2.2.rst:888
 msgid ""
@@ -1272,6 +1373,9 @@ msgid ""
 "write Python code, none of the changes described here will affect you very "
 "much."
 msgstr ""
+"有些变化只会影响那些在 C 级别处理 Python 解释器的人，因为他们正在编写 Python "
+"扩展模块、嵌入解释器或仅仅是在修改解释器本身。如果你只编写 Python 代码，这里"
+"描述的变化对你几乎没有影响。"
 
 #: ../../whatsnew/2.2.rst:1056
 msgid ""
@@ -1306,6 +1410,9 @@ msgid ""
 "collection, so updating them for 2.2 should be considered fairly high "
 "priority."
 msgstr ""
+"垃圾收集器的 C 级接口已经发生了变化，使得编写支持垃圾收集的扩展类型和调试函数"
+"误用变得更容易。各种函数的语义略有不同，因此需要重命名一系列函数。使用旧 API "
+"的扩展仍然可以编译，但不会参与垃圾收集，因此应优先考虑将它们更新为 2.2 版本。"
 
 #: ../../whatsnew/2.2.rst:1079
 msgid ""
@@ -1314,7 +1421,7 @@ msgstr "要将一个扩展模块升级至新 API，请执行下列步骤:"
 
 #: ../../whatsnew/2.2.rst:1081
 msgid "Rename :c:macro:`!Py_TPFLAGS_GC` to :c:macro:`Py_TPFLAGS_HAVE_GC`."
-msgstr ""
+msgstr "将 :c:macro:`!Py_TPFLAGS_GC` 重命名为 :c:macro:`Py_TPFLAGS_HAVE_GC`。"
 
 #: ../../whatsnew/2.2.rst:1084
 msgid ""
@@ -1333,7 +1440,7 @@ msgstr ""
 
 #: ../../whatsnew/2.2.rst:1089
 msgid "Remove :c:macro:`!PyGC_HEAD_SIZE` from object size calculations."
-msgstr ""
+msgstr "从对象大小计算中移除 :c:macro:`!PyGC_HEAD_SIZE`。"
 
 #: ../../whatsnew/2.2.rst:1091
 msgid ""
