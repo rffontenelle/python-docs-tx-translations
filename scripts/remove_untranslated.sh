@@ -12,8 +12,8 @@ fi
 pofiles=$(find * -name '*.po' | sort)
 to_remove=()
 for po in $pofiles; do
-  output=$(LC_ALL=C /usr/bin/msgfmt -cvo /dev/null $po 2>&1 | sed '/:/d;s|,.*||')
-  if [[ "$output" == "0 translated messages" ]]; then
+  output=$(LC_ALL=C /usr/bin/msgfmt -cvo /dev/null $po 2>&1 | grep '[0-9] translated messages')
+  if $(echo $output | grep '^0 translated messages' > /dev/null); then
     to_remove+=($po)
   fi
 done
