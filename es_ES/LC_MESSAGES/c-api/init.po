@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-14 19:33+0000\n"
+"POT-Creation-Date: 2024-06-20 07:44+0000\n"
 "PO-Revision-Date: 2023-05-24 02:09+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -2660,10 +2660,17 @@ msgid ""
 "it.  The profile function is called for all monitored events except :c:data:"
 "`PyTrace_LINE` :c:data:`PyTrace_OPCODE` and :c:data:`PyTrace_EXCEPTION`."
 msgstr ""
+"Establece la función del perfilador como *func*.  El parámetro *obj* se pasa "
+"a la función como su primer parámetro, y puede ser cualquier objeto Python, "
+"o ``NULL``. Si la función de perfil necesita mantener el estado, el uso de "
+"un valor diferente para *obj* para cada hilo proporciona un lugar "
+"conveniente y seguro para almacenarlo.  La función de perfil es llamada para "
+"todos los eventos monitorizados excepto :c:data:`PyTrace_LINE` :c:data:"
+"`PyTrace_OPCODE` y :c:data:`PyTrace_EXCEPTION`."
 
 #: ../../c-api/init.rst:1665
 msgid "See also the :func:`sys.setprofile` function."
-msgstr ""
+msgstr "Ver también la función :func:`sys.setprofile`."
 
 #: ../../c-api/init.rst:1667 ../../c-api/init.rst:1681
 msgid "The caller must hold the :term:`GIL`."
@@ -2679,10 +2686,17 @@ msgid ""
 "`PyTrace_C_EXCEPTION` or :c:data:`PyTrace_C_RETURN` as a value for the "
 "*what* parameter."
 msgstr ""
+"Establece la función de seguimiento como *func*.  Esto es similar a :c:func:"
+"`PyEval_SetProfile`, excepto que la función de rastreo recibe eventos de "
+"número de línea y eventos por código de operación, pero no recibe ningún "
+"evento relacionado con objetos de función C llamados.  Cualquier función de "
+"rastreo registrada usando :c:func:`PyEval_SetTrace` no recibirá :c:data:"
+"`PyTrace_C_CALL`, :c:data:`PyTrace_C_EXCEPTION` o :c:data:`PyTrace_C_RETURN` "
+"como valor para el parámetro *what*."
 
 #: ../../c-api/init.rst:1679
 msgid "See also the :func:`sys.settrace` function."
-msgstr ""
+msgstr "Ver también la función :func:`sys.settrace`."
 
 #: ../../c-api/init.rst:1687
 msgid "Advanced Debugger Support"
@@ -2745,6 +2759,12 @@ msgid ""
 "use a thread key and functions to associate a :c:expr:`void*` value per "
 "thread."
 msgstr ""
+"El intérprete de Python proporciona soporte de bajo nivel para el "
+"almacenamiento local de hilos (TLS) que envuelve la implementación TLS "
+"nativa subyacente para soportar la API de almacenamiento local de hilos a "
+"nivel de Python (:class:`threading.local`).  Las API de nivel C de CPython "
+"son similares a las ofrecidas por pthreads y Windows: utilizan una clave de "
+"hilo y funciones para asociar un valor :c:expr:`void*` por hilo."
 
 #: ../../c-api/init.rst:1737
 msgid ""
@@ -2770,6 +2790,10 @@ msgid ""
 "the :c:expr:`void*` values happen to be :c:expr:`PyObject*`, these functions "
 "don't do refcount operations on them either."
 msgstr ""
+"Ninguna de estas funciones de la API gestiona la memoria en nombre de los "
+"valores de :c:expr:`void*`.  Debe asignarlos y desasignarlos usted mismo. Si "
+"los valores :c:expr:`void*` resultan ser :c:expr:`PyObject*`, estas "
+"funciones tampoco realizan operaciones de recuento sobre ellos."
 
 #: ../../c-api/init.rst:1752
 msgid "Thread Specific Storage (TSS) API"
@@ -2781,6 +2805,9 @@ msgid ""
 "the CPython interpreter.  This API uses a new type :c:type:`Py_tss_t` "
 "instead of :c:expr:`int` to represent thread keys."
 msgstr ""
+"La API TSS se introduce para reemplazar el uso de la API TLS existente "
+"dentro del intérprete CPython.  Esta API utiliza un nuevo tipo :c:type:"
+"`Py_tss_t` en lugar de :c:expr:`int` para representar claves de hilo."
 
 #: ../../c-api/init.rst:1760
 msgid "\"A New C-API for Thread-Local Storage in CPython\" (:pep:`539`)"
@@ -2845,11 +2872,17 @@ msgid ""
 "calling :c:func:`PyThread_tss_delete` to ensure any associated thread locals "
 "have been unassigned. This is a no-op if the *key* argument is ``NULL``."
 msgstr ""
+"Libera la *clave* asignada por :c:func:`PyThread_tss_alloc`, después de "
+"llamar primero a :c:func:`PyThread_tss_delete` para asegurarse de que "
+"cualquier hilo local asociado ha sido desasignado. Esto es un no-op si el "
+"argumento *key* es ``NULL``."
 
 #: ../../c-api/init.rst:1803
 msgid ""
 "A freed key becomes a dangling pointer. You should reset the key to ``NULL``."
 msgstr ""
+"Una clave liberada se convierte en un puntero colgante. Debe restablecer la "
+"clave a ``NULL``."
 
 #: ../../c-api/init.rst:1808
 msgid "Methods"
@@ -2909,6 +2942,10 @@ msgid ""
 "value with a TSS key in the current thread.  Each thread has a distinct "
 "mapping of the key to a :c:expr:`void*` value."
 msgstr ""
+"Devuelve un valor cero para indicar que se ha asociado correctamente un "
+"valor :c:expr:`void*` con una clave TSS en el subproceso actual.  Cada "
+"subproceso tiene una asignación distinta de la clave a un valor :c:expr:"
+"`void*`."
 
 #: ../../c-api/init.rst:1849
 msgid ""
@@ -2916,6 +2953,9 @@ msgid ""
 "thread.  This returns ``NULL`` if no value is associated with the key in the "
 "current thread."
 msgstr ""
+"Devuelve el valor :c:expr:`void*` asociado a una clave TSS en el subproceso "
+"actual.  Devuelve ``NULL`` si no hay ningún valor asociado a la clave en el "
+"subproceso actual."
 
 #: ../../c-api/init.rst:1857
 msgid "Thread Local Storage (TLS) API"
@@ -2953,11 +2993,11 @@ msgstr ""
 
 #: ../../c-api/init.rst:231 ../../c-api/init.rst:386 ../../c-api/init.rst:461
 msgid "Py_SetProgramName()"
-msgstr ""
+msgstr "Py_SetProgramName()"
 
 #: ../../c-api/init.rst:231
 msgid "PyEval_InitThreads()"
-msgstr ""
+msgstr "PyEval_InitThreads()"
 
 #: ../../c-api/init.rst:231
 msgid "modules (in module sys)"
@@ -2965,7 +3005,7 @@ msgstr "módulos (en módulo sys)"
 
 #: ../../c-api/init.rst:231 ../../c-api/init.rst:480 ../../c-api/init.rst:506
 msgid "path (in module sys)"
-msgstr ""
+msgstr "ruta (en módulo sys)"
 
 #: ../../c-api/init.rst:231 ../../c-api/init.rst:480 ../../c-api/init.rst:506
 #: ../../c-api/init.rst:947 ../../c-api/init.rst:1389
@@ -2974,87 +3014,87 @@ msgstr "módulo"
 
 #: ../../c-api/init.rst:231 ../../c-api/init.rst:1389
 msgid "builtins"
-msgstr ""
+msgstr "builtins"
 
 #: ../../c-api/init.rst:231 ../../c-api/init.rst:1389
 msgid "__main__"
-msgstr ""
+msgstr "__main__"
 
 #: ../../c-api/init.rst:231 ../../c-api/init.rst:1389
 msgid "sys"
-msgstr ""
+msgstr "sys"
 
 #: ../../c-api/init.rst:231 ../../c-api/init.rst:480 ../../c-api/init.rst:506
 msgid "search"
-msgstr ""
+msgstr "busque en"
 
 #: ../../c-api/init.rst:231 ../../c-api/init.rst:480 ../../c-api/init.rst:506
 msgid "path"
-msgstr ""
+msgstr "ruta"
 
 #: ../../c-api/init.rst:231
 msgid "PySys_SetArgv (C function)"
-msgstr ""
+msgstr "PySys_SetArgv (función C)"
 
 #: ../../c-api/init.rst:231
 msgid "PySys_SetArgvEx (C function)"
-msgstr ""
+msgstr "PySys_SetArgvEx (función C)"
 
 #: ../../c-api/init.rst:231 ../../c-api/init.rst:1418 ../../c-api/init.rst:1453
 msgid "Py_FinalizeEx (C function)"
-msgstr ""
+msgstr "Py_FinalizeEx (función C)"
 
 #: ../../c-api/init.rst:321 ../../c-api/init.rst:358
 msgid "Py_Initialize()"
-msgstr ""
+msgstr "Py_Initialize()"
 
 #: ../../c-api/init.rst:321 ../../c-api/init.rst:358 ../../c-api/init.rst:614
 msgid "main()"
-msgstr ""
+msgstr "main()"
 
 #: ../../c-api/init.rst:321
 msgid "stdin"
-msgstr ""
+msgstr "stdin"
 
 #: ../../c-api/init.rst:321
 msgid "stdout"
-msgstr ""
+msgstr "stdout"
 
 #: ../../c-api/init.rst:321
 msgid "sdterr"
-msgstr ""
+msgstr "sdterr"
 
 #: ../../c-api/init.rst:358 ../../c-api/init.rst:506
 msgid "Py_GetPath()"
-msgstr ""
+msgstr "Py_GetPath()"
 
 #: ../../c-api/init.rst:461
 msgid "executable (in module sys)"
-msgstr ""
+msgstr "ejecutable (en módulo sys)"
 
 #: ../../c-api/init.rst:480
 msgid "Py_SetPath()"
-msgstr ""
+msgstr "Py_SetPath()"
 
 #: ../../c-api/init.rst:549 ../../c-api/init.rst:591 ../../c-api/init.rst:605
 msgid "version (in module sys)"
-msgstr ""
+msgstr "versión (en módulo sys)"
 
 #: ../../c-api/init.rst:561
 msgid "platform (in module sys)"
-msgstr ""
+msgstr "plataforma (en módulo sys)"
 
 #: ../../c-api/init.rst:578
 msgid "copyright (in module sys)"
-msgstr ""
+msgstr "copyright (en módulo sys)"
 
 #: ../../c-api/init.rst:614
 msgid "Py_FatalError()"
-msgstr ""
+msgstr "Py_FatalError()"
 
 #: ../../c-api/init.rst:614
 msgid "argv (in module sys)"
-msgstr ""
+msgstr "argv (en módulo sys)"
 
 #: ../../c-api/init.rst:730
 msgid "global interpreter lock"
@@ -3062,72 +3102,72 @@ msgstr "bloqueo global del intérprete"
 
 #: ../../c-api/init.rst:730
 msgid "interpreter lock"
-msgstr ""
+msgstr "bloqueo del intérprete"
 
 #: ../../c-api/init.rst:730
 msgid "lock, interpreter"
-msgstr ""
+msgstr "bloqueo, intérprete"
 
 #: ../../c-api/init.rst:743
 msgid "setswitchinterval (in module sys)"
-msgstr ""
+msgstr "setswitchinterval (en módulo sys)"
 
 #: ../../c-api/init.rst:752
 msgid "PyThreadState (C type)"
-msgstr ""
+msgstr "PyThreadState (tipo C)"
 
 #: ../../c-api/init.rst:778
 msgid "Py_BEGIN_ALLOW_THREADS (C macro)"
-msgstr ""
+msgstr "Py_BEGIN_ALLOW_THREADS (macro C)"
 
 #: ../../c-api/init.rst:778
 msgid "Py_END_ALLOW_THREADS (C macro)"
-msgstr ""
+msgstr "Py_END_ALLOW_THREADS (macro C)"
 
 #: ../../c-api/init.rst:794
 msgid "PyEval_RestoreThread (C function)"
-msgstr ""
+msgstr "PyEval_RestoreThread (función C)"
 
 #: ../../c-api/init.rst:794
 msgid "PyEval_SaveThread (C function)"
-msgstr ""
+msgstr "PyEval_SaveThread (función C)"
 
 #: ../../c-api/init.rst:925
 msgid "PyEval_AcquireThread()"
-msgstr ""
+msgstr "PyEval_AcquireThread()"
 
 #: ../../c-api/init.rst:925
 msgid "PyEval_ReleaseThread()"
-msgstr ""
+msgstr "PyEval_ReleaseThread()"
 
 #: ../../c-api/init.rst:925
 msgid "PyEval_SaveThread()"
-msgstr ""
+msgstr "PyEval_SaveThread()"
 
 #: ../../c-api/init.rst:925
 msgid "PyEval_RestoreThread()"
-msgstr ""
+msgstr "PyEval_RestoreThread()"
 
 #: ../../c-api/init.rst:947
 msgid "_thread"
-msgstr ""
+msgstr "_thread"
 
 #: ../../c-api/init.rst:1389
 msgid "stdout (in module sys)"
-msgstr ""
+msgstr "stdout (en módulo sys)"
 
 #: ../../c-api/init.rst:1389
 msgid "stderr (in module sys)"
-msgstr ""
+msgstr "stderr (en módulo sys)"
 
 #: ../../c-api/init.rst:1389
 msgid "stdin (in module sys)"
-msgstr ""
+msgstr "stdin (en módulo sys)"
 
 #: ../../c-api/init.rst:1418
 msgid "Py_Initialize (C function)"
-msgstr ""
+msgstr "Py_Initialize (función C)"
 
 #: ../../c-api/init.rst:1448
 msgid "close (in module os)"
-msgstr ""
+msgstr "close (en módulo os)"
