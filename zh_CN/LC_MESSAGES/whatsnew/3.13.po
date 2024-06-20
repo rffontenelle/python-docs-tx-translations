@@ -14,6 +14,7 @@
 # Alpha Du <alphanow@gmail.com>, 2024
 # Dai Xu <daixu61@hotmail.com>, 2024
 # Nyuan Zhang, 2024
+# Bryan不可思议, 2024
 # Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
@@ -428,6 +429,17 @@ msgid ""
 "namespace (e.g. :func:`runpy.run_path` when executing Python files from "
 "disk)."
 msgstr ""
+"在已优化的作用域中对 :func:`locals` 语义的这项修改也会影响隐式地以 "
+"``locals()`` 为目标的代码执行函数的默认行为，如果没有提供显式命名空间的话（例"
+"如 :func:`exec` 和 :func:`eval` 等）。 在之前的版本中，在调用代码执行函数后是"
+"否可以通过调用 ``locals()`` 访问更改情况取决于具体的实现。 具体到 CPython 而"
+"言，此类代码通常会按预期运作，但有时可能会在基于其他代码（包括调试器和代码执"
+"行跟踪工具）的已优化作用域中失败，因为代码有可能重置该作用域中的共享快照。 现"
+"在，代码在已优化作用域中将始终针对局部变量的独立快照运行，因此在后续调用 "
+"``locals()`` 时将永远看不到更改。 要访问在这些情况下所做的更改，现在必须将一"
+"个显式命名空间引用传递给相关的函数。 或者，也可以更新受影响的代码以使用更高级"
+"别的代码执行 API 返回结果代码执行命名空间 （例如，当执行磁盘上的 Python 文件"
+"时使用 :func:`runpy.run_path` 函数）。"
 
 #: ../../whatsnew/3.13.rst:284
 msgid ""
@@ -450,6 +462,9 @@ msgid ""
 "`Python APIs <pep667-porting-notes-py>` and :ref:`C APIs <pep667-porting-"
 "notes-c>`."
 msgstr ""
+"请参阅 :pep:`667` 了解详情，包括相关的 C API 更改和弃用。 下文还针对受影响"
+"的 :ref:`Python API <pep667-porting-notes-py>` 和 :ref:`C API <pep667-"
+"porting-notes-c>` 提供了移植说明。"
 
 #: ../../whatsnew/3.13.rst:294
 msgid ""
@@ -457,6 +472,8 @@ msgid ""
 "`74929`. Documentation updates provided by Guido van Rossum and Alyssa "
 "Coghlan.)"
 msgstr ""
+"（PEP 和实现由 Mark Shannon 和 Tian Gao 在 :gh:`74929` 中贡献。 文档更新由 "
+"Guido van Rossum 和 Alyssa Coghlan 提供。）"
 
 #: ../../whatsnew/3.13.rst:299
 msgid "Incremental Garbage Collection"
@@ -512,19 +529,19 @@ msgid ""
 "When CPython is configured using the ``--enable-experimental-jit`` option, a "
 "just-in-time compiler is added which may speed up some Python programs."
 msgstr ""
-"当 CPython 被配置为使用 ``--enable-experimental-jit`` 选项时，将会添加一个可"
-"以让部分 Python 程序提升速度的即时编译器。"
+"使用 ``--enable-experimental-jit`` 选项配置 CPython 时，会添加一个可以让部分 "
+"Python 程序提升速度的即时编译器。"
 
 #: ../../whatsnew/3.13.rst:330
 msgid "The internal architecture is roughly as follows."
-msgstr "其内部架构大致所下所述。"
+msgstr "其内部架构大致如下。"
 
 #: ../../whatsnew/3.13.rst:332
 msgid ""
 "We start with specialized *Tier 1 bytecode*. See :ref:`What's new in 3.11 "
 "<whatsnew311-pep659>` for details."
 msgstr ""
-"我们将从专门的 *第 1 层级字节码* 开始。 请参阅 :ref:`3.11 有什么新变化 "
+"我们将从特化的 *第 1 层级字节码* 开始。 请参阅 :ref:`3.11 有什么新变化 "
 "<whatsnew311-pep659>` 了解详情。"
 
 #: ../../whatsnew/3.13.rst:335
@@ -547,8 +564,7 @@ msgstr ""
 msgid ""
 "We have several optimization passes for Tier 2 IR, which are applied before "
 "it is interpreted or translated to machine code."
-msgstr ""
-"针对第 2 层级 IR 我们有一些优化通路，会在它被解释或翻译为机器码之前预先应用。"
+msgstr "在第 2 层级 IR 被解释或翻译为机器码之前，我们会预先应用一些优化通路。"
 
 #: ../../whatsnew/3.13.rst:344
 msgid ""
@@ -556,15 +572,15 @@ msgid ""
 "earlier stages of the optimization pipeline. The Tier 2 interpreter can be "
 "enabled by configuring Python with ``--enable-experimental-jit=interpreter``."
 msgstr ""
-"存在一个第 2 层级解释器，但它主要是用于对优化管线的先前阶段进行调试。 第 2 层"
-"级解释器可通过为 Python 配置``--enable-experimental-jit=interpreter`` 选项来"
-"启用。"
+"虽然第 2 层级解释器存在，但它主要用于对优化管线的先前阶段进行调试。可通过为 "
+"Python 配置 ``--enable-experimental-jit=interpreter`` 选项启用第 2 层级解释"
+"器。"
 
 #: ../../whatsnew/3.13.rst:349
 msgid ""
 "When the JIT is enabled, the optimized Tier 2 IR is translated to machine "
 "code, which is then executed."
-msgstr "当启用 JIT 时，经优化的第 2 层级 IR 将被翻译为机器码，然后再执行。"
+msgstr "启用 JIT 时，经优化的第 2 层级 IR 将被翻译为机器码后再执行。"
 
 #: ../../whatsnew/3.13.rst:352
 msgid ""
@@ -572,8 +588,8 @@ msgid ""
 "patch*. It has no runtime dependencies, but there is a new build-time "
 "dependency on LLVM."
 msgstr ""
-"这个机器码翻译过程使用了名为 *拷贝并打补丁* 的技巧。 它没有运行时依赖，但新增"
-"了对 LLVM 的编译时依赖。"
+"这个机器码翻译过程使用了名为 *拷贝并打补丁* 的技巧。 它没有运行时依赖，但增加"
+"了构建时对 LLVM 的依赖。"
 
 #: ../../whatsnew/3.13.rst:356
 msgid ""
@@ -590,28 +606,36 @@ msgid ""
 "the JIT. To disable the JIT at runtime, pass the environment variable "
 "``PYTHON_JIT=0``."
 msgstr ""
+"``yes`` (当提供了该旗标但没有可选值时的默认值) -- 启用 JIT。 要在运行时禁用 "
+"JIT，请传入环境变量 ``PYTHON_JIT=0``。"
 
 #: ../../whatsnew/3.13.rst:364
 msgid ""
 "``yes-off`` -- Build the JIT but disable it by default. To enable the JIT at "
 "runtime, pass the environment variable ``PYTHON_JIT=1``."
 msgstr ""
+"``yes-off`` -- 构建 JIT 但默认禁用它。要在运行时启用 JIT，请传入环境变量 "
+"``PYTHON_JIT=1``。"
 
 #: ../../whatsnew/3.13.rst:368
 msgid ""
 "``interpreter`` -- Enable the Tier 2 interpreter but disable the JIT. The "
 "interpreter can be disabled by running with ``PYTHON_JIT=0``."
 msgstr ""
+"``interpreter`` -- 启用第 2 层级解释器，但是禁用 JIT。运行时传入 "
+"``PYTHON_JIT=0`` 可以禁用解释器。"
 
 #: ../../whatsnew/3.13.rst:372
 msgid ""
 "(On Windows, use ``PCbuild/build.bat --experimental-jit`` to enable the JIT "
 "or ``--experimental-jit-interpreter`` to enable the Tier 2 interpreter.)"
 msgstr ""
+"（在 Windows 上，使用 ``PCbuild/build.bat --experimental-jit`` 启用 JIT，使"
+"用 ``--experimental-jit-interpreter`` 启用第 2 层级解释器。）"
 
 #: ../../whatsnew/3.13.rst:375
 msgid "See :pep:`744` for more details."
-msgstr ""
+msgstr "详见 :pep:`744`。"
 
 #: ../../whatsnew/3.13.rst:377
 msgid ""
@@ -619,10 +643,13 @@ msgid ""
 "Kjolstad. Tier 2 IR by Mark Shannon and Guido van Rossum. Tier 2 optimizer "
 "by Ken Jin.)"
 msgstr ""
+"（JIT 来自 Brandt Bucher 且受到 Haoran Xu 和 Fredrik Kjolstad 论文的启发。第 "
+"2 层级 IR 来自 Mark Shannon 和 Guido van Rossum。第 2 层级解释器来自 Ken "
+"Jin。）"
 
 #: ../../whatsnew/3.13.rst:384
 msgid "Free-threaded CPython"
-msgstr ""
+msgstr "自由线程的 CPython"
 
 #: ../../whatsnew/3.13.rst:386
 msgid ""
@@ -633,6 +660,10 @@ msgid ""
 "builds that are marked as *free-threaded*. See :pep:`703` \"Making the "
 "Global Interpreter Lock Optional in CPython\" for more detail."
 msgstr ""
+"在构建时使用 ``--disable-gil`` 选项配置时，CPython 将在运行时禁用 :term:`全局"
+"解释器锁` （GIL）。这是一个实验性特性，因此默认情况下不使用。用户需要编译自己"
+"的解释器，或者安装一个标记为 *free-threaded* 的实验性构建。有关更多详细信息，"
+"请参阅 :pep:`703` “在 CPython 中使全局解释器锁成为可选的”。"
 
 #: ../../whatsnew/3.13.rst:393
 msgid ""
@@ -641,12 +672,15 @@ msgid ""
 "While not all software will benefit from this automatically, programs "
 "designed with threading in mind will run faster on multicore hardware."
 msgstr ""
+"自由线程允许通过在可用的 CPU 核心上并行运行线程来充分地利用可用的处理能力。虽"
+"然并非所有软件都会自动受益于此，但考虑到多线程设计的程序将在多核硬件上运行地"
+"更快。"
 
 #: ../../whatsnew/3.13.rst:398
 msgid ""
 "Work is still ongoing: expect some bugs and a substantial single-threaded "
 "performance hit."
-msgstr ""
+msgstr "工作仍在进行中：预计会出现一些错误和显著的单线程性能损失。"
 
 #: ../../whatsnew/3.13.rst:401
 msgid ""
@@ -654,6 +688,8 @@ msgid ""
 "enabled at runtime using the environment variable :envvar:`PYTHON_GIL` or "
 "the command line option :option:`-X gil`."
 msgstr ""
+"自由线程构建仍然支持在运行时使用环境变量 :envvar:`PYTHON_GIL` 或命令行选项 :"
+"option:`-X gil` 选择性地启用 GIL。"
 
 #: ../../whatsnew/3.13.rst:405
 msgid ""
@@ -662,6 +698,9 @@ msgid ""
 "`GIL` is actually disabled in the running process, the :func:`!sys."
 "_is_gil_enabled` function can be used."
 msgstr ""
+"要检查当前解释器是否配置了 ``--disable-gil``，请使用 ``sysconfig."
+"get_config_var(\"Py_GIL_DISABLED\")``。要检查 :term:`GIL` 是否在正在运行的进"
+"程中实际被禁用，可以使用 :func:`!sys._is_gil_enabled` 函数。"
 
 #: ../../whatsnew/3.13.rst:410
 msgid ""
@@ -674,12 +713,17 @@ msgid ""
 "disabled with the :envvar:`PYTHON_GIL` environment variable or the :option:`-"
 "X gil=0` option."
 msgstr ""
+"C-API 扩展模块需要专门为自由线程构建而构建。支持在禁用 :term:`GIL` 的情况下运"
+"行的扩展应使用 :c:data:`Py_mod_gil` 插槽。使用单阶段初始化的扩展应使用 :c:"
+"func:`PyUnstable_Module_SetGIL` 来指示它们是否支持在禁用 GIL 的情况下运行。导"
+"入不使用这些机制的 C 扩展将导致启用 GIL，除非使用 :envvar:`PYTHON_GIL` 环境变"
+"量或 :option:`-X gil=0` 选项明确禁用 GIL。"
 
 #: ../../whatsnew/3.13.rst:419
 msgid ""
 "pip 24.1b1 or newer is required to install packages with C extensions in the "
 "free-threaded build."
-msgstr ""
+msgstr "需要 pip 24.1b1 或更新版本才能在自由线程构建中安装带有 C 扩展的包。"
 
 #: ../../whatsnew/3.13.rst:423
 msgid "Other Language Changes"
@@ -690,6 +734,8 @@ msgid ""
 "Allow the *count* argument of :meth:`str.replace` to be a keyword. "
 "(Contributed by Hugo van Kemenade in :gh:`106487`.)"
 msgstr ""
+"允许 :meth:`str.replace` 的 *count* 参数为关键字参数。 （由 Hugo van "
+"Kemenade 在 :gh:`106487` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:428
 msgid ""
@@ -699,6 +745,10 @@ msgid ""
 "about 5%. This change will affect tools using docstrings, like :mod:"
 "`doctest`. (Contributed by Inada Naoki in :gh:`81283`.)"
 msgstr ""
+"编译器现在会删除文档字符串中的缩进。这将减少 :term:`字节码缓存 <bytecode>`"
+"（例如 ``.pyc`` 文件）的大小。例如，SQLAlchemy 2.0 中 ``sqlalchemy.orm."
+"session`` 的缓存文件大小减少了约 5%。此更改将影响使用文档字符串的工具，例如 :"
+"mod:`doctest`。（由 Inada Naoki 在 :gh:`81283` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:435
 msgid ""
@@ -707,6 +757,9 @@ msgid ""
 "the returned ``AST`` is optimized according to the value of the ``optimize`` "
 "argument. (Contributed by Irit Katriel in :gh:`108113`)."
 msgstr ""
+":func:`compile` 内置函数现在可以接受新的旗标 ``ast.PyCF_OPTIMIZED_AST``，它"
+"与 ``ast.PyCF_ONLY_AST`` 类似，不同之处在于返回的 ``AST`` 是根据 "
+"``optimize`` 参数的值进行优化的。（由 Irit Katriel 在 :gh:`108113` 中贡献）。"
 
 #: ../../whatsnew/3.13.rst:441
 msgid ""
@@ -715,12 +768,18 @@ msgid ""
 "default number of worker threads and processes. Get the CPU affinity if "
 "supported. (Contributed by Victor Stinner in :gh:`109649`.)"
 msgstr ""
+":mod:`multiprocessing`、:mod:`concurrent.futures`、:mod:`compileall`：将 :"
+"func:`os.cpu_count` 替换为 :func:`os.process_cpu_count`，以选择默认的工作线程"
+"和进程数。如果支持，则获取 CPU 亲和性。（由 Victor Stinner 在 :gh:`109649` 中"
+"贡献。）"
 
 #: ../../whatsnew/3.13.rst:447
 msgid ""
 ":func:`os.path.realpath` now resolves MS-DOS style file names even if the "
 "file is not accessible. (Contributed by Moonsik Park in :gh:`82367`.)"
 msgstr ""
+"即使文件不可访问，:func:`os.path.realpath` 现在也能解析 MS-DOS 样式的文件名。"
+"（由 Moonsik Park 在 :gh:`82367` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:451
 msgid ""
@@ -728,6 +787,9 @@ msgid ""
 "block is rejected when the global is used in the :keyword:`else` block. "
 "(Contributed by Irit Katriel in :gh:`111123`.)"
 msgstr ""
+"修复了当在 :keyword:`else` 块中使用全局变量时 :keyword:`except` 块中的 :"
+"keyword:`global` 声明被拒绝的错误。（由 Irit Katriel 在 :gh:`111123` 中贡"
+"献。）"
 
 #: ../../whatsnew/3.13.rst:455
 msgid ""
@@ -735,6 +797,8 @@ msgid ""
 "descriptor argument. This can help catch some errors earlier. (Contributed "
 "by Serhiy Storchaka in :gh:`82626`.)"
 msgstr ""
+"现在许多函数会对将布尔值作为文件描述符参数发出警告。这可以帮助尽早发现一些错"
+"误。（由 Serhiy Storchaka 在 :gh:`82626` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:460
 msgid ""
@@ -743,6 +807,9 @@ msgid ""
 "machinery, equivalent of the :option:`-X frozen_modules <-X>` command-line "
 "option. (Contributed by Yilei Yang in :gh:`111374`.)"
 msgstr ""
+"添加了新的环境变量 :envvar:`PYTHON_FROZEN_MODULES`。它决定导入机制是否忽略冻"
+"结模块，相当于 :option:`-X frozen_modules <-X>`  命令行选项。（由 Yilei Yang "
+"在 :gh:`111374` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:465
 msgid ""
@@ -751,6 +818,9 @@ msgid ""
 "`PYTHON_PERF_JIT_SUPPORT` and command-line option :option:`-X perf_jit <-X>` "
 "(Contributed by Pablo Galindo in :gh:`118518`.)"
 msgstr ""
+"添加无需帧指针即可工作的 :ref:`性能分析器支持 <perf_profiling>`，可通过新的环"
+"境变量 :envvar:`PYTHON_PERF_JIT_SUPPORT` 和命令行选项 :option:`-X perf_jit <-"
+"X>`启用（由 Pablo Galindo 在 :gh:`118518` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:470
 msgid ""
@@ -758,6 +828,9 @@ msgid ""
 "the location of a ``.python_history`` file. (Contributed by Levi Sabah, "
 "Zackery Spytz and Hugo van Kemenade in :gh:`73965`.)"
 msgstr ""
+"新的 :envvar:`PYTHON_HISTORY` 环境变量可用于更改 ``.python_history`` 文件的位"
+"置。（由 Levi Sabah、Zackery Spytz 和 Hugo van Kemenade 在 :gh:`73965` 中贡"
+"献。）"
 
 #: ../../whatsnew/3.13.rst:475
 msgid ""
@@ -765,12 +838,16 @@ msgid ""
 "exc:`RuntimeError` is raised when an operation is blocked during the :term:"
 "`Python finalization <interpreter shutdown>`."
 msgstr ""
+"添加 :exc:`PythonFinalizationError` 异常。当操作在 :term:`解释器关闭 "
+"<interpreter shutdown>` 期间被阻止时，会抛出此派生自 :exc:`RuntimeError` 的异"
+"常。"
 
 #: ../../whatsnew/3.13.rst:479
 msgid ""
 "The following functions now raise PythonFinalizationError, instead of :exc:"
 "`RuntimeError`:"
 msgstr ""
+"下列函数现在会引发 PythonFinalizationError，而不是 :exc:`RuntimeError`:"
 
 #: ../../whatsnew/3.13.rst:482
 msgid ":func:`_thread.start_new_thread`."
@@ -798,36 +875,40 @@ msgid ""
 "file-like objects in modules :mod:`bz2`, :mod:`lzma`, :mod:`tarfile` and :"
 "mod:`zipfile`. (Contributed by Serhiy Storchaka in :gh:`115961`.)"
 msgstr ""
+"为 :mod:`bz2`, :mod:`lzma`, :mod:`tarfile` 和 :mod:`zipfile` 等模块中的已压缩"
+"和已归档文件型对象添加了 :attr:`!name` 和 :attr:`!mode` 属性。 （由 Serhiy "
+"Storchaka 在 :gh:`115961` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:494
 msgid ""
 "Allow controlling Expat >=2.6.0 reparse deferral (:cve:`2023-52425`) by "
 "adding five new methods:"
 msgstr ""
+"通过添加五个新方法来允许控制 Expat >=2.6.0 重解析延迟 (:cve:`2023-52425`)："
 
 #: ../../whatsnew/3.13.rst:497
 msgid ":meth:`xml.etree.ElementTree.XMLParser.flush`"
-msgstr ""
+msgstr ":meth:`xml.etree.ElementTree.XMLParser.flush`"
 
 #: ../../whatsnew/3.13.rst:498
 msgid ":meth:`xml.etree.ElementTree.XMLPullParser.flush`"
-msgstr ""
+msgstr ":meth:`xml.etree.ElementTree.XMLPullParser.flush`"
 
 #: ../../whatsnew/3.13.rst:499
 msgid ":meth:`xml.parsers.expat.xmlparser.GetReparseDeferralEnabled`"
-msgstr ""
+msgstr ":meth:`xml.parsers.expat.xmlparser.GetReparseDeferralEnabled`"
 
 #: ../../whatsnew/3.13.rst:500
 msgid ":meth:`xml.parsers.expat.xmlparser.SetReparseDeferralEnabled`"
-msgstr ""
+msgstr ":meth:`xml.parsers.expat.xmlparser.SetReparseDeferralEnabled`"
 
 #: ../../whatsnew/3.13.rst:501
 msgid ":meth:`!xml.sax.expatreader.ExpatParser.flush`"
-msgstr ""
+msgstr ":meth:`!xml.sax.expatreader.ExpatParser.flush`"
 
 #: ../../whatsnew/3.13.rst:503
 msgid "(Contributed by Sebastian Pipping in :gh:`115623`.)"
-msgstr ""
+msgstr "（由 Sebastian Pipping 在 :gh:`115623` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:505
 msgid ""
@@ -835,6 +916,8 @@ msgid ""
 "VERIFY_X509_PARTIAL_CHAIN` and :data:`ssl.VERIFY_X509_STRICT` in its default "
 "flags."
 msgstr ""
+":func:`ssl.create_default_context` API 现在默认包含 :data:`ssl."
+"VERIFY_X509_PARTIAL_CHAIN` 和 :data:`ssl.VERIFY_X509_STRICT` 旗标。"
 
 #: ../../whatsnew/3.13.rst:511
 msgid ""
@@ -842,10 +925,13 @@ msgid ""
 "certificates that the underlying OpenSSL implementation otherwise would "
 "accept. While disabling this is not recommended, you can do so using::"
 msgstr ""
+":data:`ssl.VERIFY_X509_STRICT` 可能会拒绝底层 OpenSSL 实现本来会接受的 :rfc:"
+"`5280` 之前的证书或格式错误的证书。虽然不建议禁用此功能，但您可以使用以下方法"
+"禁用："
 
 #: ../../whatsnew/3.13.rst:518
 msgid "(Contributed by William Woodruff in :gh:`112389`.)"
-msgstr ""
+msgstr "（由 William Woodruff 在 :gh:`112389` 贡献。）"
 
 #: ../../whatsnew/3.13.rst:520
 msgid ""
@@ -853,6 +939,8 @@ msgid ""
 "named ones if configured to do so. (Contributed by Pedro Sousa Lacerda in :"
 "gh:`66449`.)"
 msgstr ""
+":class:`configparser.ConfigParser` 现在可以被配置为在命名部分之前接受未命名部"
+"分。（由 Pedro Sousa Lacerda 在 :gh:`66449` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:524
 msgid ""
@@ -861,6 +949,9 @@ msgid ""
 "class scopes are not inlined into their parent scope. (Contributed by Jelle "
 "Zijlstra in :gh:`109118` and :gh:`118160`.)"
 msgstr ""
+"类作用域内的 :ref:`标注作用域 <annotation-scopes>` 现在可以包含 lambda 和推导"
+"式。位于类范围内的推导式不会内联到其父作用域中。（由 Jelle Zijlstra 在 :gh:"
+"`109118` 和 :gh:`118160` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:529
 msgid ""
@@ -868,6 +959,8 @@ msgid ""
 "compiler, with the line number of the first line of the class definition. "
 "(Contributed by Serhiy Storchaka in :gh:`118465`.)"
 msgstr ""
+"类有一个新的 :attr:`!__firstlineno__` 属性，由编译器填充，其中包含类定义第一"
+"行的行号。（由 Serhiy Storchaka 在 :gh:`118465` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:534
 msgid ""
@@ -875,6 +968,8 @@ msgid ""
 "imports if dots are present before the module name. (Contributed by Jeremiah "
 "Gabriel Pascual in :gh:`118216`.)"
 msgstr ""
+"现在如果模块名前有点，``from __future__ import ...`` 语句只是普通的相对导入。"
+"（由 Jeremiah Gabriel Pascual 在 :gh:`118216` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:540
 msgid "New Modules"
@@ -899,6 +994,9 @@ msgid ""
 "options, positional arguments and subcommands. (Contributed by Serhiy "
 "Storchaka in :gh:`83648`.)"
 msgstr ""
+"为 :meth:`~argparse.ArgumentParser.add_argument` 和 :meth:`!add_parser` 方法"
+"添加了形参 *deprecated* 以允许弃用命令行选项、位置参数和子命令。 （由 Serhiy "
+"Storchaka 在 :gh:`83648` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:558
 msgid "array"

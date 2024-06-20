@@ -13,10 +13,10 @@
 # Dai Xu <daixu61@hotmail.com>, 2023
 # Alpha Du <alphanow@gmail.com>, 2023
 # ppcfish <ppcfish@gmail.com>, 2023
-# Nyuan Zhang, 2023
 # Sefank <sefank@foxmail.com>, 2023
 # 乐成 王, 2024
 # F-park, 2024
+# Nyuan Zhang, 2024
 # Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-07 14:15+0000\n"
+"POT-Creation-Date: 2024-06-20 06:40+0000\n"
 "PO-Revision-Date: 2021-06-28 01:16+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -1267,11 +1267,11 @@ msgstr "一个特殊的类型标注构造，用于将 :class:`TypedDict` 的项�
 
 #: ../../library/typing.rst:1239
 msgid "There is no runtime checking for this property."
-msgstr ""
+msgstr "这个属性没有运行时检查。"
 
 #: ../../library/typing.rst:1241
 msgid "See :class:`TypedDict` and :pep:`705` for more details."
-msgstr ""
+msgstr "详见 :class:`TypedDict` 和 :pep:`705`。"
 
 #: ../../library/typing.rst:1247
 msgid "Special typing form to add context-specific metadata to an annotation."
@@ -1426,7 +1426,7 @@ msgstr "该 PEP 将 ``Annotated`` 引入到标准库中。"
 #: ../../library/typing.rst:1388 ../../library/typing.rst:1472
 msgid ""
 "Special typing construct for marking user-defined type predicate functions."
-msgstr ""
+msgstr "特殊类型注解构造，用于标记用户定义的谓词函数。"
 
 #: ../../library/typing.rst:1390
 msgid ""
@@ -1435,6 +1435,8 @@ msgid ""
 "runtime, functions marked this way should return a boolean and take at least "
 "one positional argument."
 msgstr ""
+"``TypeIs`` 能用来注解用户定义的谓词函数的返回值类型。``TypeIs`` 接受单个类型"
+"参数。如此标注的函数在运行时应当有至少一个位置参数，并且返回一个布尔值。"
 
 #: ../../library/typing.rst:1395
 msgid ""
@@ -1445,6 +1447,9 @@ msgid ""
 "conditional expression here is sometimes referred to as a \"type "
 "predicate\"::"
 msgstr ""
+"``TypeIs`` 旨在方便 *类型收窄* -- 一个被静态类型检查器使用，用来更精准地决定"
+"程序代码流中表达式类型的技巧。通常类型收窄通过分析有条件的代码流并对代码块执"
+"行类型收窄实现。此处的条件表达式有时也被称为“类型谓词”。"
 
 #: ../../library/typing.rst:1410
 msgid ""
@@ -1456,12 +1461,17 @@ msgid ""
 "incompatible (e.g., ``list[object]`` to ``list[int]``) or when the function "
 "does not return ``True`` for all instances of the narrowed type."
 msgstr ""
+"使用一个用户定义的布尔函数作为类型谓词有时很方便。这样的函数应当将 "
+"``TypeIs[...]`` 或 :data:`TypeGuard` 作为它的返回类型，以向静态类型检查器传达"
+"这个意图。``TypeIs`` 的行为通常比 ``TypeGuard`` 更直观，但在函数的输入与输出"
+"类型不兼容 (例如从 ``list[object]`` 到 ``list[int]``) 或函数不会对所有收窄后"
+"类型的实例返回 ``True`` 时不能使用。"
 
 #: ../../library/typing.rst:1418
 msgid ""
 "Using  ``-> TypeIs[NarrowedType]`` tells the static type checker that for a "
 "given function:"
-msgstr ""
+msgstr "使用 ``-> TypeIs[NarrowedType]`` 告诉静态类型检查器对于给定的函数："
 
 #: ../../library/typing.rst:1421 ../../library/typing.rst:1482
 msgid "The return value is a boolean."
@@ -1472,12 +1482,14 @@ msgid ""
 "If the return value is ``True``, the type of its argument is the "
 "intersection of the argument's original type and ``NarrowedType``."
 msgstr ""
+"如果返回值是 ``True``，那么其参数的类型收窄到参数本身类型与 ``NarrowedType`` "
+"的并。"
 
 #: ../../library/typing.rst:1424
 msgid ""
 "If the return value is ``False``, the type of its argument is narrowed to "
 "exclude ``NarrowedType``."
-msgstr ""
+msgstr "如果返回值是 ``False``，那么其参数的类型收窄到排除 ``NarrowedType``。"
 
 #: ../../library/typing.rst:1450
 msgid ""
@@ -1487,12 +1499,15 @@ msgid ""
 "behavior in the type system; it is the user's responsibility to write such "
 "functions in a type-safe manner."
 msgstr ""
+"``TypeIs`` 内的类型必须与函数参数类型契合，否则静态类型检查器会引发错误。编写"
+"不正确的 ``TypeIs`` 可能导致类型系统中出现不健全行为，以类型安全的方式编写这"
+"些函数是用户的责任。"
 
 #: ../../library/typing.rst:1456
 msgid ""
 "If a ``TypeIs`` function is a class or instance method, then the type in "
-"``TypeIs`` maps to the type of the second parameter after ``cls`` or "
-"``self``."
+"``TypeIs`` maps to the type of the second parameter (after ``cls`` or "
+"``self``)."
 msgstr ""
 
 #: ../../library/typing.rst:1460
@@ -1501,12 +1516,17 @@ msgid ""
 "if ``foo(arg)`` returns ``True``, then ``arg`` is an instance of ``TypeB``, "
 "and if it returns ``False``, it is not an instance of ``TypeB``."
 msgstr ""
+"简单来说，``def foo(arg: TypeA) -> TypeIs[TypeB]: ...`` 意味着如果 "
+"``foo(arg)`` 返回 ``True``，那么 ``arg`` 就是 ``TypeB`` 的实例，如果返回 "
+"``False``，它就不是 ``TypeB``.的实例。"
 
 #: ../../library/typing.rst:1464
 msgid ""
 "``TypeIs`` also works with type variables.  For more information, see :pep:"
 "`742` (Narrowing types with ``TypeIs``)."
 msgstr ""
+"``TypeIs`` 同样可作用于类型变量，详见 :pep:`742` (使用 ``TypeIs`` 收窄类"
+"型) 。"
 
 #: ../../library/typing.rst:1474
 msgid ""
@@ -1515,6 +1535,9 @@ msgid ""
 "similarly to :data:`TypeIs`, but has subtly different effects on type "
 "checking behavior (see below)."
 msgstr ""
+"类型谓词函数是由用户定义的函数，它的返回值指示参数是否为某个特定类型的实例。"
+"``TypeGuard`` 和 :data:`TypeIs` 用法相近，但是对类型检查行为有不同的影响（如"
+"下）。"
 
 #: ../../library/typing.rst:1479
 msgid ""
@@ -1536,7 +1559,7 @@ msgstr "``TypeGuard`` 也适用于类型变量。 详情参见 :pep:`647`。"
 
 #: ../../library/typing.rst:1502
 msgid "``TypeIs`` and ``TypeGuard`` differ in the following ways:"
-msgstr ""
+msgstr "``TypeIs`` 和 ``TypeGuard`` 有以下不同："
 
 #: ../../library/typing.rst:1504
 msgid ""
@@ -1545,6 +1568,9 @@ msgid ""
 "narrowing ``list[object]`` to ``list[str]`` even though the latter is not a "
 "subtype of the former, since ``list`` is invariant."
 msgstr ""
+"``TypeIs`` 要求收窄的类型是输入类型的子类型，但 ``TypeGuard`` 不要求。这主要"
+"是为了允许将 ``list[object]`` 缩小为 ``list[str]``，即使后者不是前者的子类"
+"型，因为 ``list`` 是不变的。"
 
 #: ../../library/typing.rst:1508
 msgid ""
@@ -1554,6 +1580,10 @@ msgid ""
 "combining the previously known type of the variable with the ``TypeIs`` "
 "type. (Technically, this is known as an intersection type.)"
 msgstr ""
+"当 ``TypeGuard`` 函数返回 ``True`` 时，类型检查器会将变量的类型精确地收窄到 "
+"``TypeGuard`` 类型。当 ``TypeIs`` 函数返回 ``True`` 时，类型检查程序可以结合"
+"先前已知的变量类型和 ``TypeIs`` 类型推断出更精确的类型。（从技术上讲，这叫做"
+"交类型。）"
 
 #: ../../library/typing.rst:1512
 msgid ""
@@ -1562,6 +1592,9 @@ msgid ""
 "``False``, type checkers can narrow the type of the variable to exclude the "
 "``TypeIs`` type."
 msgstr ""
+"当 ``TypeGuard`` 函数返回 ``False`` 时，类型检查器不会收窄变量的类型范围。当 "
+"``TypeIs`` 函数返回 ``False`` 时，类型检查器可以收窄变量的类型范围至排除 "
+"``TypeIs`` 类型。"
 
 #: ../../library/typing.rst:1521
 msgid "Typing operator to conceptually mark an object as having been unpacked."
@@ -1717,9 +1750,9 @@ msgid ""
 msgstr ""
 "类型变量的种类是在其通过 :ref:`类型形参语法 <type-params>` 创建时或是在传入 "
 "``infer_variance=True`` 时由类型检查器推断得到的。 手动创建的类型变量可通过传"
-"入 ``covariant=True`` 或 ``contravariant=True`` 被显式地标记为 covariant 或 "
-"contravariant。 在默认情况下，手动创建的类型变量为 invariant。 请参阅 :pep:"
-"`484` 和 :pep:`695` 了解更多细节。"
+"入 ``covariant=True`` 或 ``contravariant=True`` 被显式地标记为协变或逆变。 在"
+"默认情况下，手动创建的类型变量为不变。 请参阅 :pep:`484` 和 :pep:`695` 了解更"
+"多细节。"
 
 #: ../../library/typing.rst:1677
 msgid ""
@@ -1801,7 +1834,7 @@ msgstr ""
 msgid ""
 "The default value of the type variable, or :data:`typing.NoDefault` if it "
 "has no default."
-msgstr ""
+msgstr "类型变量的默认值，如果没有默认值，则为 :data:`typing.NoDefault`。"
 
 #: ../../library/typing.rst:1764
 msgid ""
@@ -1810,6 +1843,9 @@ msgid ""
 "NoDefault` singleton, except that it does not force evaluation of the :ref:"
 "`lazily evaluated <lazy-evaluation>` default value."
 msgstr ""
+"返回类型变量是否有默认值。它等价于检查 :attr:`__default__` 是否为 :data:"
+"`typing.NoDefault` 单例，但它不要求对 :ref:`惰性求值 <lazy-evaluation>` 的默"
+"认值求值。"
 
 #: ../../library/typing.rst:1773
 msgid ""
@@ -1823,7 +1859,7 @@ msgstr ""
 #: ../../library/typing.rst:1779 ../../library/typing.rst:1918
 #: ../../library/typing.rst:2020
 msgid "Support for default values was added."
-msgstr ""
+msgstr "增加了对默认值的支持。"
 
 #: ../../library/typing.rst:1785
 msgid ""
@@ -1927,7 +1963,7 @@ msgstr "类型变量元组的名称。"
 msgid ""
 "The default value of the type variable tuple, or :data:`typing.NoDefault` if "
 "it has no default."
-msgstr ""
+msgstr "类型变量元组的默认值，如果没有默认值，则为 :data:`typing.NoDefault`。"
 
 #: ../../library/typing.rst:1902
 msgid ""
@@ -1936,6 +1972,9 @@ msgid ""
 "NoDefault` singleton, except that it does not force evaluation of the :ref:"
 "`lazily evaluated <lazy-evaluation>` default value."
 msgstr ""
+"返回类型变量元组是否有默认值。它等价于检查 :attr:`__default__` 是否为 :data:"
+"`typing.NoDefault` 单例，但它不要求对 :ref:`惰性求值 <lazy-evaluation>` 的默"
+"认值求值。"
 
 #: ../../library/typing.rst:1913
 msgid ""
@@ -2044,7 +2083,7 @@ msgstr "形参规格的名称。"
 msgid ""
 "The default value of the parameter specification, or :data:`typing."
 "NoDefault` if it has no default."
-msgstr ""
+msgstr "形参规格的默认值，如果没有默认值，则为 :data:`typing.NoDefault`。"
 
 #: ../../library/typing.rst:1998
 msgid ""
@@ -2053,6 +2092,9 @@ msgid ""
 "`typing.NoDefault` singleton, except that it does not force evaluation of "
 "the :ref:`lazily evaluated <lazy-evaluation>` default value."
 msgstr ""
+"返回形参规格是否有默认值。它等价于检查 :attr:`__default__` 是否为 :data:"
+"`typing.NoDefault` 单例，但它不要求对 :ref:`惰性求值 <lazy-evaluation>` 的默"
+"认值求值。"
 
 #: ../../library/typing.rst:2005
 msgid ""
@@ -2222,6 +2264,9 @@ msgid ""
 "(``NT = NamedTuple(\"NT\", x=int)``) is deprecated, and will be disallowed "
 "in 3.15. Use the class-based syntax or the functional syntax instead."
 msgstr ""
+"创建命名元组 NamedTuple 的关键字参数语法 (``NT = NamedTuple(\"NT\", "
+"x=int)``) 未被写入文档且已被弃用，它将在 3.15 中被禁止。使用基于类的语法或函"
+"数式语法作为替代。"
 
 #: ../../library/typing.rst:2212
 msgid ""
@@ -2232,6 +2277,11 @@ msgid ""
 "Python 3.15. To create a NamedTuple class with 0 fields, use ``class "
 "NT(NamedTuple): pass`` or ``NT = NamedTuple(\"NT\", [])``."
 msgstr ""
+"使用函数式语法创建 NamedTuple 类时，不向 'fields' 形参传值(``NT = "
+"NamedTuple(\"NT\")``) 或向 'fields' 形参传递 ``None`` (``NT = "
+"NamedTuple(\"NT\", None)``) 的行为已被弃用，且在 Python 3.15 中都将被禁止。要"
+"创建一个无字段的 NamedTuple 类，请使用 ``class NT(NamedTuple): pass`` 或 "
+"``NT = NamedTuple(\"NT\", [])``。"
 
 #: ../../library/typing.rst:2216
 msgid "Helper class to create low-overhead :ref:`distinct types <distinct>`."
@@ -2390,6 +2440,8 @@ msgid ""
 "An alternative way to create a ``TypedDict`` is by using function-call "
 "syntax. The second argument must be a literal :class:`dict`::"
 msgstr ""
+"另一种创建 ``TypedDict`` 的方法是使用函数调用语法。第二个参数必须是一个 :"
+"class:`dict` 字面值："
 
 #: ../../library/typing.rst:2374
 msgid ""
@@ -2397,6 +2449,8 @@ msgid ""
 "`identifiers <identifiers>`, for example because they are keywords or "
 "contain hyphens::"
 msgstr ""
+"这种函数式语法允许定义因为是关键字或包含连字符而不是有效 :ref:`标识符 "
+"<identifiers>` 的键，例如："
 
 #: ../../library/typing.rst:2386
 msgid ""
@@ -2495,6 +2549,11 @@ msgid ""
 "use :attr:`__required_keys__` and :attr:`__optional_keys__` for "
 "introspection."
 msgstr ""
+"该属性 *只* 反映传给当前 ``TypedDict`` 类的 ``total`` 参数的值，而不反映这个"
+"类在语义上是否完整。 例如，一个 ``__total__`` 被设为 ``True`` 的 "
+"``TypedDict`` 可能有用 :data:`NotRequired` 标记的键，或者它可能继承自另一个设"
+"置了 ``total=False`` 的 ``TypedDict``。 因此，使用 :attr:`__required_keys__` "
+"和 :attr:`__optional_keys__` 进行内省通常会更好。"
 
 #: ../../library/typing.rst:2512
 msgid ""
@@ -2542,19 +2601,23 @@ msgstr ""
 
 #: ../../library/typing.rst:2549
 msgid "Support for :data:`ReadOnly` is reflected in the following attributes:"
-msgstr ""
+msgstr "对 :data:`ReadOnly` 的支持反映在下列属性中："
 
 #: ../../library/typing.rst:2553
 msgid ""
 "A :class:`frozenset` containing the names of all read-only keys. Keys are "
 "read-only if they carry the :data:`ReadOnly` qualifier."
 msgstr ""
+"一个包含所有只读键名称的 :class:`frozenset`。\n"
+"带有 :data:`ReadOnly` 限定符的键被认为是只读的。"
 
 #: ../../library/typing.rst:2560
 msgid ""
 "A :class:`frozenset` containing the names of all mutable keys. Keys are "
 "mutable if they do not carry the :data:`ReadOnly` qualifier."
 msgstr ""
+"一个包含所有可变键名称的 :class:`frozenset`。\n"
+"不带有 :data:`ReadOnly` 限定符的键被认为是可变的。"
 
 #: ../../library/typing.rst:2565
 msgid ""
@@ -2577,11 +2640,11 @@ msgstr "添加对泛型 ``TypedDict`` 的支持。"
 msgid ""
 "Removed support for the keyword-argument method of creating ``TypedDict``\\ "
 "s."
-msgstr ""
+msgstr "移除了对使用关键字参数方法创建 ``TypedDict`` 的支持。"
 
 #: ../../library/typing.rst:2579
 msgid "Support for the :data:`ReadOnly` qualifier was added."
-msgstr ""
+msgstr "添加了对 :data:`ReadOnly` 限定符的支持。"
 
 #: ../../library/typing.rst:2588
 msgid ""
@@ -2592,6 +2655,11 @@ msgid ""
 "Python 3.15. To create a TypedDict class with 0 fields, use ``class "
 "TD(TypedDict): pass`` or ``TD = TypedDict(\"TD\", {})``."
 msgstr ""
+"使用函数式语法创建 TypedDict 类时，不向 'fields' 形参传值(``TD = "
+"TypedDict(\"TD\")``) 或向 'fields' 形参传递 ``None`` (``TD = TypedDict "
+"(\"TD\", None)``) 的行为已被弃用，且在 Python 3.15 中都将被禁止。要创建一个无"
+"字段的 TypedDict 类，请使用 ``class TD(TypedDict ): pass`` 或 ``TD = "
+"TypedDict (\"TD\", {})``。"
 
 #: ../../library/typing.rst:2591
 msgid "Protocols"
@@ -3157,6 +3225,8 @@ msgid ""
 "No type checker ever added support for ``@no_type_check_decorator``. It is "
 "therefore deprecated, and will be removed in Python 3.15."
 msgstr ""
+"``@no_type_check_decorator`` 没有任何类型检查器支持过，所以它被弃用，并将在 "
+"Python 3.15 中被移除。"
 
 #: ../../library/typing.rst:3018
 msgid ""
@@ -3229,6 +3299,7 @@ msgid ""
 "This is often the same as ``obj.__annotations__``, but this function makes "
 "the following changes to the annotations dictionary:"
 msgstr ""
+"该函数通常与 ``obj.__annotations__`` 相同，但会对注解字典进行以下更改："
 
 #: ../../library/typing.rst:3086
 msgid ""
@@ -3238,16 +3309,22 @@ msgid ""
 "*globalns* or *localns* is not given, appropriate namespace dictionaries are "
 "inferred from *obj*."
 msgstr ""
+"以字符串字面形式或 :class:`ForwardRef` 对象编码的前向引用会在 *globalns*, "
+"*localns* 和 (如适用) *obj* 的 :ref:`类型形参 <type-params>` 命名空间中求值。"
+"如果没有传入 *globalns* 或 *localns*，则会从 *obj* 中推断出适当的命名空间字"
+"典。"
 
 #: ../../library/typing.rst:3091
 msgid "``None`` is replaced with :class:`types.NoneType`."
-msgstr ""
+msgstr "``None`` 被替换为 :class:`types.NoneType`。"
 
 #: ../../library/typing.rst:3092
 msgid ""
 "If :func:`@no_type_check <no_type_check>` has been applied to *obj*, an "
 "empty dictionary is returned."
 msgstr ""
+"如果在 *obj* 上应用了 :func:`@no_type_check <no_type_check>`，返回一个空字"
+"典。"
 
 #: ../../library/typing.rst:3094
 msgid ""
@@ -3258,6 +3335,10 @@ msgid ""
 "in the :term:`method resolution order` always take precedence over "
 "annotations on classes appearing later in the method resolution order."
 msgstr ""
+"如果 *obj* 是一个类 ``C``，函数会返回一个合并了 ``C`` 的基类与 ``C`` 本身注解"
+"的字典。这是通过遍历 ``C.__mro__`` 并反复合并 ``__annotations__`` 字典来实现"
+"的。在 :term:`method resolution order` 中出现较早的类的注解总是优先于出现较晚"
+"的类的注解。"
 
 #: ../../library/typing.rst:3100
 msgid ""
@@ -3265,12 +3346,16 @@ msgid ""
 "with ``T``, unless *include_extras* is set to ``True`` (see :class:"
 "`Annotated` for more information)."
 msgstr ""
+"除非 *include_extras* 设置为 ``True``，否则函数会递归地将所有出现的 "
+"``Annotated[T, ...]`` 替换为 ``T`` (详见 :class:`Annotated`)。"
 
 #: ../../library/typing.rst:3104
 msgid ""
 "See also :func:`inspect.get_annotations`, a lower-level function that "
 "returns annotations more directly."
 msgstr ""
+"另请参阅 :func:`inspect.get_annotations`，这是一个以更直接方式返回注解的低级"
+"函数。"
 
 #: ../../library/typing.rst:3109
 msgid ""
@@ -3280,6 +3365,9 @@ msgid ""
 "aliases <type-aliases>` that include forward references, or with names "
 "imported under :data:`if TYPE_CHECKING <TYPE_CHECKING>`."
 msgstr ""
+"如果 *obj* 注解中的任何前向引用不可解析或不是有效的 Python 代码，此函数将引"
+"发 :exc:`NameError` 等异常。例如导入的 :ref:`类型别名 <type-aliases>` 包含正"
+"向引用，或名称在 :data:`if TYPE_CHECKING <TYPE_CHECKING>` 下导入。"
 
 #: ../../library/typing.rst:3115
 msgid ""
@@ -3343,15 +3431,15 @@ msgstr ""
 
 #: ../../library/typing.rst:3170
 msgid "Return the set of members defined in a :class:`Protocol`."
-msgstr ""
+msgstr "返回 :class:`Protocol` 中定义的成员构成的集合。"
 
 #: ../../library/typing.rst:3181
 msgid "Raise :exc:`TypeError` for arguments that are not Protocols."
-msgstr ""
+msgstr "如果参数不是协议，引发 :exc:`TypeError`。"
 
 #: ../../library/typing.rst:3187
 msgid "Determine if a type is a :class:`Protocol`."
-msgstr ""
+msgstr "检查一个类型是否为 :class:`Protocol`。"
 
 #: ../../library/typing.rst:3202
 msgid "Check if a type is a :class:`TypedDict`."
@@ -3386,7 +3474,7 @@ msgstr ""
 msgid ""
 "A sentinel object used to indicate that a type parameter has no default "
 "value. For example:"
-msgstr ""
+msgstr "一个用于指示类型形参没有默认值的哨兵对象。例如："
 
 #: ../../library/typing.rst:3253
 msgid "Constant"
@@ -3924,11 +4012,11 @@ msgstr ""
 
 #: ../../library/typing.rst:3653
 msgid "The ``SendType`` defaults to :const:`!None`::"
-msgstr ""
+msgstr "``SendType`` 默认为 :const:`!None`："
 
 #: ../../library/typing.rst:3660
 msgid "It is also possible to set this type explicitly::"
-msgstr ""
+msgstr "也可以显式设置它的类型："
 
 #: ../../library/typing.rst:3667
 msgid ""
@@ -3948,7 +4036,7 @@ msgstr ""
 
 #: ../../library/typing.rst:3682
 msgid "The ``SendType`` parameter now has a default."
-msgstr ""
+msgstr "``SendType`` 形参现在有默认值。"
 
 #: ../../library/typing.rst:3687
 msgid "Deprecated alias to :class:`collections.abc.AsyncIterable`."
@@ -4053,16 +4141,16 @@ msgid ""
 "invariantly."
 msgstr ""
 "注意，与 typing 模块里的其他泛型不同， :class:`Generator` 的 ``SendType`` 属"
-"于逆变行为，不是协变行为，也是不变行为。"
+"于逆变行为，不是协变或不变行为。"
 
 #: ../../library/typing.rst:3768
 msgid ""
 "The ``SendType`` and ``ReturnType`` parameters default to :const:`!None`::"
-msgstr ""
+msgstr "``SendType`` 和 ``ReturnType`` 形参默认为 :const:`!None`："
 
 #: ../../library/typing.rst:3775
 msgid "It is also possible to set these types explicitly::"
-msgstr ""
+msgstr "也可以显式设置这些类型："
 
 #: ../../library/typing.rst:3782
 msgid ""
@@ -4082,7 +4170,7 @@ msgstr ""
 
 #: ../../library/typing.rst:3794
 msgid "Default values for the send and return types were added."
-msgstr ""
+msgstr "添加了发送和返回类型的默认值。"
 
 #: ../../library/typing.rst:3799
 msgid "Deprecated alias to :class:`collections.abc.Hashable`."
@@ -4127,6 +4215,9 @@ msgid ""
 "``ExitT_co``, which defaults to ``bool | None``, represents the type "
 "returned by the :meth:`~object.__exit__` method."
 msgstr ""
+"第一个类型形参 ``T_co`` 表示 :meth:`~object.__enter__` 方法返回值的类型。可选"
+"的第二个类型形参 ``ExitT_co`` 默认为 ``bool | None``，它表示 :meth:`~object."
+"__exit__` 方法返回的类型。"
 
 #: ../../library/typing.rst:3835
 msgid ""
@@ -4138,7 +4229,7 @@ msgstr ""
 
 #: ../../library/typing.rst:3840
 msgid "Added the optional second type parameter, ``ExitT_co``."
-msgstr ""
+msgstr "添加了可选的第二个类型形参，``ExitT_co``。"
 
 #: ../../library/typing.rst:3845
 msgid "Deprecated alias to :class:`contextlib.AbstractAsyncContextManager`."
@@ -4151,6 +4242,9 @@ msgid ""
 "``AExitT_co``, which defaults to ``bool | None``, represents the type "
 "returned by the :meth:`~object.__aexit__` method."
 msgstr ""
+"第一个类型形参 ``T_co`` 表示 :meth:`~object.__aenter__` 方法返回值的类型。可"
+"选的第二个类型形参 ``AExitT_co`` 默认为 ``bool | None``，它表示 :meth:"
+"`~object.__aexit__` 方法返回的类型。"
 
 #: ../../library/typing.rst:3854
 msgid ""
@@ -4162,7 +4256,7 @@ msgstr ""
 
 #: ../../library/typing.rst:3859
 msgid "Added the optional second type parameter, ``AExitT_co``."
-msgstr ""
+msgstr "添加了可选的第二个类型形参，``AExitT_co``。"
 
 #: ../../library/typing.rst:3863
 msgid "Deprecation Timeline of Major Features"
@@ -4261,7 +4355,7 @@ msgstr ":pep:`695`"
 
 #: ../../library/typing.rst:3896
 msgid ":func:`@typing.no_type_check_decorator <no_type_check_decorator>`"
-msgstr ""
+msgstr ":func:`@typing.no_type_check_decorator <no_type_check_decorator>`"
 
 #: ../../library/typing.rst:3897 ../../library/typing.rst:3901
 msgid "3.13"
@@ -4269,20 +4363,20 @@ msgstr "3.13"
 
 #: ../../library/typing.rst:3898
 msgid "3.15"
-msgstr ""
+msgstr "3.15"
 
 #: ../../library/typing.rst:3899
 msgid ":gh:`106309`"
-msgstr ""
+msgstr ":gh:`106309`"
 
 #: ../../library/typing.rst:3900
 msgid ":data:`typing.AnyStr`"
-msgstr ""
+msgstr ":data:`typing.AnyStr`"
 
 #: ../../library/typing.rst:3902
 msgid "3.18"
-msgstr ""
+msgstr "3.18"
 
 #: ../../library/typing.rst:3903
 msgid ":gh:`105578`"
-msgstr ""
+msgstr ":gh:`105578`"
