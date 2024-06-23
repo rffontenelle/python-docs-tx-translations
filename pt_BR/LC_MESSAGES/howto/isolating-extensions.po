@@ -840,6 +840,10 @@ msgid ""
 "the state, you need to first get the *defining class*, and then get the "
 "module state from it."
 msgstr ""
+"Acessar o estado do módulo a partir de métodos de uma classe já é um pouco "
+"mais complicado, mas passou a ser possível graças à API introduzida no "
+"Python 3.9. Para conseguir o estado, é necessário primeiro acessar a *classe "
+"definidora*, e então obter o estado do módulo a partir dela."
 
 #: ../../howto/isolating-extensions.rst:481
 msgid ""
@@ -847,6 +851,9 @@ msgid ""
 "that method's \"defining class\" for short. The defining class can have a "
 "reference to the module it is part of."
 msgstr ""
+"O maior obstáculo é encontrar *a classe na qual um método foi definido*, ou, "
+"abreviando, a *classe definidora* desse método. A classe definidora pode "
+"guardar uma referência para o módulo do qual ela é parte."
 
 #: ../../howto/isolating-extensions.rst:485
 msgid ""
@@ -854,12 +861,18 @@ msgid ""
 "called on a *subclass* of your type, ``Py_TYPE(self)`` will refer to that "
 "subclass, which may be defined in different module than yours."
 msgstr ""
+"Não confunda a classe definidora com ``Py_TYPE(self)``. Se o método for "
+"chamado em uma *subclasse* do seu tipo, ``Py_TYPE(self)`` será uma "
+"referência àquela subclasse, a qual pode ter sido definida em um módulo "
+"diferente do seu."
 
 #: ../../howto/isolating-extensions.rst:490
 msgid ""
 "The following Python code can illustrate the concept. ``Base."
 "get_defining_class`` returns ``Base`` even if ``type(self) == Sub``:"
 msgstr ""
+"O código Python a seguir ilustra esse conceito. ``Base.get_defining_class`` "
+"retorna ``Base`` mesmo quando ``type(self) == Sub``:"
 
 #: ../../howto/isolating-extensions.rst:506
 msgid ""
@@ -868,12 +881,18 @@ msgid ""
 "METH_KEYWORDS>` :c:type:`calling convention <PyMethodDef>` and the "
 "corresponding :c:type:`PyCMethod` signature::"
 msgstr ""
+"Para um método acessar a sua \"classe definidora\", ele precisa usar a :c:"
+"type:`convenção de chamada <PyMethodDef>` :ref:`METH_METHOD | METH_FASTCALL "
+"| METH_KEYWORDS <METH_METHOD-METH_FASTCALL-METH_KEYWORDS>` e a assinatura :c:"
+"type:`PyCMethod` correspondente:"
 
 #: ../../howto/isolating-extensions.rst:518
 msgid ""
 "Once you have the defining class, call :c:func:`PyType_GetModuleState` to "
 "get the state of its associated module."
 msgstr ""
+"Uma vez que vc tem a classe definidora, chame :c:func:"
+"`PyType_GetModuleState` para obter o estado do módulo associado a ela."
 
 #: ../../howto/isolating-extensions.rst:521
 msgid "For example::"
@@ -881,11 +900,11 @@ msgstr "Por exemplo::"
 
 #: ../../howto/isolating-extensions.rst:549
 msgid "Module State Access from Slot Methods, Getters and Setters"
-msgstr ""
+msgstr "Acesso ao estado do módulo a partir de métodos slot, getters e setters"
 
 #: ../../howto/isolating-extensions.rst:553
 msgid "This is new in Python 3.11."
-msgstr ""
+msgstr "Adicionado na versão 3.11"
 
 #: ../../howto/isolating-extensions.rst:561
 msgid ""
@@ -896,6 +915,12 @@ msgid ""
 "`PyCMethod`. The same goes for getters and setters defined with :c:type:"
 "`PyGetSetDef`."
 msgstr ""
+"Métodos slot—os métodos rápidos em C equivalentes aos métodos especiais, "
+"como :c:member:`~PyNumberMethods.nb_add` para :py:attr:`~object.__add__` ou :"
+"c:member:`~PyTypeObject.tp_new` para inicialização—têm uma API muito simples "
+"que não permite passar a classe definidora, ao contrário do :c:type:"
+"`PyCMethod`. O mesmo vale para getters e setters definidos com :c:type:"
+"`PyGetSetDef`."
 
 #: ../../howto/isolating-extensions.rst:568
 msgid ""
@@ -903,6 +928,9 @@ msgid ""
 "`PyType_GetModuleByDef` function, and pass in the module definition. Once "
 "you have the module, call :c:func:`PyModule_GetState` to get the state::"
 msgstr ""
+"Para acessar o estado do módulo nesses casos, use a função :c:func:"
+"`PyType_GetModuleByDef`, e passe a definição do módulo. Uma vez encontrado o "
+"módulo, chame :c:func:`PyModule_GetState` para obter o estado::"
 
 #: ../../howto/isolating-extensions.rst:579
 msgid ""
@@ -910,6 +938,9 @@ msgid ""
 "resolution order` (i.e. all superclasses) for the first superclass that has "
 "a corresponding module."
 msgstr ""
+"Essa função :c:func:`!PyType_GetModuleByDef` funciona procurando na :term:"
+"`ordem de resolução de métodos` (isto é, todas as superclasses) a primeira "
+"superclasse que tem um módulo correspondente."
 
 #: ../../howto/isolating-extensions.rst:585
 msgid ""
@@ -918,10 +949,15 @@ msgid ""
 "the module of the true defining class. However, it will always return a "
 "module with the same definition, ensuring a compatible C memory layout."
 msgstr ""
+"Em casos muito exóticos (cadeias hereditárias espalhadas através de "
+"múltiplos módulos criados a partir da mesma definição), a :c:func:`!"
+"PyType_GetModuleByDef` pode não retornar o módulo da classe definidora "
+"correta. De todo modo, essa função sempre vai retornar um módulo com a mesma "
+"definição, garantindo um layout de memória C compatível."
 
 #: ../../howto/isolating-extensions.rst:593
 msgid "Lifetime of the Module State"
-msgstr ""
+msgstr "Tempo de vida do estado do módulo"
 
 #: ../../howto/isolating-extensions.rst:595
 msgid ""
@@ -929,6 +965,9 @@ msgid ""
 "each pointer to (a part of) the module state, you must hold a reference to "
 "the module object."
 msgstr ""
+"Quando um objeto de módulo é coletado como lixo, o seu estado de módulo é "
+"liberado. Para cada ponteiro para o estado do módulo (ou uma parte dele), é "
+"necessário possuir uma referência ao objeto de módulo."
 
 #: ../../howto/isolating-extensions.rst:599
 msgid ""
@@ -938,14 +977,21 @@ msgid ""
 "reference module state from other places, such as callbacks for external "
 "libraries."
 msgstr ""
+"Isso não costuma ser um problema, dado que tipos criados com :c:func:"
+"`PyType_FromModuleAndSpec`, bem como suas instâncias, guardam referências ao "
+"módulo. Mesmo assim, é necessário tomar cuidado com a contagem de "
+"referências ao referenciar o estado do módulo a partir de outros lugares, "
+"como funções de retorno para bibliotecas externas."
 
 #: ../../howto/isolating-extensions.rst:608
 msgid "Open Issues"
-msgstr ""
+msgstr "Problemas em aberto"
 
 #: ../../howto/isolating-extensions.rst:610
 msgid "Several issues around per-module state and heap types are still open."
 msgstr ""
+"Vários problemas relacionados aos estados por módulo e aos tipos no heap "
+"ainda estão em aberto."
 
 #: ../../howto/isolating-extensions.rst:612
 msgid ""
@@ -953,10 +999,13 @@ msgid ""
 "mailing list <https://mail.python.org/mailman3/lists/capi-sig.python.org/"
 ">`__."
 msgstr ""
+"O melhor lugar para discussões sobre como melhorar a situação é a `lista de "
+"discussão do capi-sig <https://mail.python.org/mailman3/lists/capi-sig."
+"python.org/>`__."
 
 #: ../../howto/isolating-extensions.rst:617
 msgid "Per-Class Scope"
-msgstr ""
+msgstr "Escopo por classe"
 
 #: ../../howto/isolating-extensions.rst:619
 msgid ""
@@ -965,13 +1014,20 @@ msgid ""
 "may change in the future—perhaps, ironically, to allow a proper solution for "
 "per-class scope)."
 msgstr ""
+"Atualmente (desde o Python 3.11) não é possível anexar estado a *tipos* "
+"individuais sem depender de detalhes de implementação do CPython (os quais "
+"podem mudar no futuro—talvez, ironicamente, para possibilitar uma solução "
+"adequada para o escopo por classe)."
 
 #: ../../howto/isolating-extensions.rst:626
 msgid "Lossless Conversion to Heap Types"
-msgstr ""
+msgstr "Conversão sem perdas para tipos no heap"
 
 #: ../../howto/isolating-extensions.rst:628
 msgid ""
 "The heap type API was not designed for \"lossless\" conversion from static "
 "types; that is, creating a type that works exactly like a given static type."
 msgstr ""
+"A API de tipos no heap não foi projetada para conversão \"sem perdas\" de "
+"tipos estáticos. isto é, para criar um tipo que funciona exatamente como um "
+"dado tipo estático."
