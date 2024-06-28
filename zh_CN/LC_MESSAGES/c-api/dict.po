@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-24 14:15+0000\n"
+"POT-Creation-Date: 2024-06-28 14:15+0000\n"
 "PO-Revision-Date: 2021-06-28 00:48+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -343,7 +343,14 @@ msgstr ""
 "字典 *p* 不应该在遍历期间发生改变。在遍历字典时，改变键中的值是安全的，但仅限"
 "于键的集合不发生改变。例如::"
 
-#: ../../c-api/dict.rst:296
+#: ../../c-api/dict.rst:293
+msgid ""
+"The function is not thread-safe in the :term:`free-threaded <free "
+"threading>` build without external synchronization.  You can use :c:macro:"
+"`Py_BEGIN_CRITICAL_SECTION` to lock the dictionary while iterating over it::"
+msgstr ""
+
+#: ../../c-api/dict.rst:307
 msgid ""
 "Iterate over mapping object *b* adding key-value pairs to dictionary *a*. "
 "*b* may be a dictionary, or any object supporting :c:func:`PyMapping_Keys` "
@@ -358,7 +365,7 @@ msgstr ""
 "替换，否则如果在 *a* 中没有相同的键则只是添加键值对。 当成功时返回 ``0`` 或者"
 "当引发异常时返回 ``-1``。"
 
-#: ../../c-api/dict.rst:306
+#: ../../c-api/dict.rst:317
 msgid ""
 "This is the same as ``PyDict_Merge(a, b, 1)`` in C, and is similar to ``a."
 "update(b)`` in Python except that :c:func:`PyDict_Update` doesn't fall back "
@@ -371,7 +378,7 @@ msgstr ""
 "时不会回退到迭代键值对的序列。 当成功时返回 ``0`` 或者当引发异常时返回 "
 "``-1``。"
 
-#: ../../c-api/dict.rst:315
+#: ../../c-api/dict.rst:326
 msgid ""
 "Update or merge into dictionary *a*, from the key-value pairs in *seq2*. "
 "*seq2* must be an iterable object producing iterable objects of length 2, "
@@ -384,7 +391,7 @@ msgstr ""
 "胜出。 当成功时返回 ``0`` 或者当引发异常时返回 ``-1``。 等价的 Python 代码"
 "（返回值除外）::"
 
-#: ../../c-api/dict.rst:329
+#: ../../c-api/dict.rst:340
 msgid ""
 "Register *callback* as a dictionary watcher. Return a non-negative integer "
 "id which must be passed to future calls to :c:func:`PyDict_Watch`. In case "
@@ -395,7 +402,7 @@ msgstr ""
 "用 :c:func:`PyDict_Watch` 的时候使用。如果出现错误（比如没有足够的可用 "
 "watcher ID），返回 ``-1`` 并且设置异常。"
 
-#: ../../c-api/dict.rst:338
+#: ../../c-api/dict.rst:349
 msgid ""
 "Clear watcher identified by *watcher_id* previously returned from :c:func:"
 "`PyDict_AddWatcher`. Return ``0`` on success, ``-1`` on error (e.g. if the "
@@ -405,7 +412,7 @@ msgstr ""
 "watcher。 成功时返回 ``0``，出错时（例如当给定的 *watcher_id* 未被注册）返回 "
 "``-1``。"
 
-#: ../../c-api/dict.rst:346
+#: ../../c-api/dict.rst:357
 msgid ""
 "Mark dictionary *dict* as watched. The callback granted *watcher_id* by :c:"
 "func:`PyDict_AddWatcher` will be called when *dict* is modified or "
@@ -415,7 +422,7 @@ msgstr ""
 "*watcher_id* 对应的回调将在 *dict* 被修改或释放时被调用。 成功时返回 ``0``，"
 "出错时返回 ``-1``。"
 
-#: ../../c-api/dict.rst:354
+#: ../../c-api/dict.rst:365
 msgid ""
 "Mark dictionary *dict* as no longer watched. The callback granted "
 "*watcher_id* by :c:func:`PyDict_AddWatcher` will no longer be called when "
@@ -426,7 +433,7 @@ msgstr ""
 "*watcher_id* 对应的回调在 *dict* 被修改或释放时将不再被调用。 该字典在此之前"
 "必须已被此监视器所监视。 成功时返回 ``0``，出错时返回 ``-1``。"
 
-#: ../../c-api/dict.rst:363
+#: ../../c-api/dict.rst:374
 msgid ""
 "Enumeration of possible dictionary watcher events: ``PyDict_EVENT_ADDED``, "
 "``PyDict_EVENT_MODIFIED``, ``PyDict_EVENT_DELETED``, "
@@ -438,11 +445,11 @@ msgstr ""
 "``PyDict_EVENT_CLONED``, ``PyDict_EVENT_CLEARED`` 或 "
 "``PyDict_EVENT_DEALLOCATED``。"
 
-#: ../../c-api/dict.rst:371
+#: ../../c-api/dict.rst:382
 msgid "Type of a dict watcher callback function."
 msgstr "字典监视器回调函数的类型。"
 
-#: ../../c-api/dict.rst:373
+#: ../../c-api/dict.rst:384
 msgid ""
 "If *event* is ``PyDict_EVENT_CLEARED`` or ``PyDict_EVENT_DEALLOCATED``, both "
 "*key* and *new_value* will be ``NULL``. If *event* is ``PyDict_EVENT_ADDED`` "
@@ -456,7 +463,7 @@ msgstr ""
 "*key* 的新值。 如果 *event* 是 ``PyDict_EVENT_DELETED``，则将从字典中删除 "
 "*key* 而 *new_value* 将为 ``NULL``。"
 
-#: ../../c-api/dict.rst:379
+#: ../../c-api/dict.rst:390
 msgid ""
 "``PyDict_EVENT_CLONED`` occurs when *dict* was previously empty and another "
 "dict is merged into it. To maintain efficiency of this operation, per-key "
@@ -467,7 +474,7 @@ msgstr ""
 "此操作的效率，该场景不会发出针对单个键的 ``PyDict_EVENT_ADDED`` 事件；而是发"
 "出单个 ``PyDict_EVENT_CLONED``，而 *key* 将为源字典。"
 
-#: ../../c-api/dict.rst:385
+#: ../../c-api/dict.rst:396
 msgid ""
 "The callback may inspect but must not modify *dict*; doing so could have "
 "unpredictable effects, including infinite recursion. Do not trigger Python "
@@ -476,7 +483,7 @@ msgstr ""
 "该回调可以检查但不能修改 *dict*；否则会产生不可预料的影响，包括无限递归。 请"
 "不要在该回调中触发 Python 代码的执行，因为它可能产生修改 dict 的附带影响。"
 
-#: ../../c-api/dict.rst:389
+#: ../../c-api/dict.rst:400
 msgid ""
 "If *event* is ``PyDict_EVENT_DEALLOCATED``, taking a new reference in the "
 "callback to the about-to-be-destroyed dictionary will resurrect it and "
@@ -488,7 +495,7 @@ msgstr ""
 "字典的新引用将使其重生并阻止其在此时被释放。 当重生的对象以后再被销毁时，任何"
 "在当时已激活的监视器回调将再次被调用。"
 
-#: ../../c-api/dict.rst:395
+#: ../../c-api/dict.rst:406
 msgid ""
 "Callbacks occur before the notified modification to *dict* takes place, so "
 "the prior state of *dict* can be inspected."
@@ -496,7 +503,7 @@ msgstr ""
 "回调会在已通知的对 *dict* 的修改完成之前执行，这样在此之前的 *dict* 状态可以"
 "被检查。"
 
-#: ../../c-api/dict.rst:398
+#: ../../c-api/dict.rst:409
 msgid ""
 "If the callback sets an exception, it must return ``-1``; this exception "
 "will be printed as an unraisable exception using :c:func:"
@@ -505,7 +512,7 @@ msgstr ""
 "如果该回调设置了一个异常，则它必须返回 ``-1``；此异常将作为不可引发的异常使"
 "用 :c:func:`PyErr_WriteUnraisable` 打印出来。 在其他情况下它应当返回 ``0``。"
 
-#: ../../c-api/dict.rst:402
+#: ../../c-api/dict.rst:413
 msgid ""
 "There may already be a pending exception set on entry to the callback. In "
 "this case, the callback should return ``0`` with the same exception still "

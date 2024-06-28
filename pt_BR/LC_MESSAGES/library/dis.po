@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-21 14:14+0000\n"
+"POT-Creation-Date: 2024-06-28 14:15+0000\n"
 "PO-Revision-Date: 2021-06-28 01:04+0000\n"
 "Last-Translator: Pedro Fonini, 2024\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
@@ -86,12 +86,12 @@ msgid ""
 "shown by passing ``adaptive=True``."
 msgstr ""
 "Algumas instruções vêm acompanhadas de uma ou mais entradas de cache em "
-"linha, as quais assumem a forma de instruções :opcode:`CACHE`.Tais "
+"linha, as quais assumem a forma de instruções :opcode:`CACHE`. Tais "
 "instruções são escondidas por padrão, mas podem ser visualizadas passando "
 "``show_caches=True`` para qualquer utilidade do :mod:`dis`. Além disso, o "
-"interpretador adapta o bytecode para especializá-lo a diferentes condições "
-"de tempo de execução. O bytecode adaptativo pode ser visualizado passando "
-"``adaptive=True``."
+"interpretador agora adapta o bytecode para especializá-lo a diferentes "
+"condições de tempo de execução. O bytecode adaptativo pode ser visualizado "
+"passando ``adaptive=True``."
 
 #: ../../library/dis.rst:45
 msgid ""
@@ -175,7 +175,7 @@ msgstr ""
 
 #: ../../library/dis.rst:110
 msgid "Bytecode analysis"
-msgstr "Análise do Bytecode"
+msgstr "Análise de bytecode"
 
 #: ../../library/dis.rst:114
 msgid ""
@@ -215,6 +215,10 @@ msgid ""
 "source line information (if any) is taken directly from the disassembled "
 "code object."
 msgstr ""
+"Se *first_line* não for ``None``, ele indica o número de linha que deve ser "
+"reportado para a primeira linha de código-fonte no código desmontado.  Caso "
+"contrário, a informação de linha de código-fonte (se houver) é extraída "
+"diretamente da desconstrução do objeto de código."
 
 #: ../../library/dis.rst:134
 msgid ""
@@ -222,61 +226,80 @@ msgid ""
 "the disassembled code. Setting this means :meth:`.dis` will display a "
 "\"current instruction\" marker against the specified opcode."
 msgstr ""
+"Se *current_offset* não for ``None``, ele é um deslocamento em instruções no "
+"código desconstruído. Definir este argumento significa que o :meth:`.dis` "
+"vai mostrar um marcador de \"instrução atual\" sobre o opcode especificado."
 
 #: ../../library/dis.rst:138
 msgid ""
 "If *show_caches* is ``True``, :meth:`.dis` will display inline cache entries "
 "used by the interpreter to specialize the bytecode."
 msgstr ""
+"Se *show_caches* for ``True``, o :meth:`.dis` vai exibir entradas de cache "
+"em linha usadas pelo interpretador para especializar o bytecode."
 
 #: ../../library/dis.rst:141
 msgid ""
 "If *adaptive* is ``True``, :meth:`.dis` will display specialized bytecode "
 "that may be different from the original bytecode."
 msgstr ""
+"Se *adaptive* for ``True``, o :meth:`.dis` vai exibir bytecode especializado "
+"que pode ser diferente do bytecode original."
 
 #: ../../library/dis.rst:144
 msgid ""
 "If *show_offsets* is ``True``, :meth:`.dis` will include instruction offsets "
 "in the output."
 msgstr ""
+"Se *show_offsets* for ``True``, o :meth:`.dis` vai incluir deslocamentos em "
+"instruções na saída."
 
 #: ../../library/dis.rst:149
 msgid ""
 "Construct a :class:`Bytecode` instance from the given traceback, setting "
 "*current_offset* to the instruction responsible for the exception."
 msgstr ""
+"Constrói uma instância de :class:`Bytecode` a partir do traceback fornecido, "
+"definindo *current_offset* apontando para a instrução responsável pela "
+"exceção."
 
 #: ../../library/dis.rst:154
 msgid "The compiled code object."
-msgstr ""
+msgstr "O objeto de código compilado."
 
 #: ../../library/dis.rst:158
 msgid "The first source line of the code object (if available)"
 msgstr ""
+"A primeira linha de código-fonte do objeto de código (caso disponível)."
 
 #: ../../library/dis.rst:162
 msgid ""
 "Return a formatted view of the bytecode operations (the same as printed by :"
 "func:`dis.dis`, but returned as a multi-line string)."
 msgstr ""
+"Retorna uma visualização formatada das operações em bytecode (as mesmas que "
+"seriam impressas pela :func:`dis.dis`, mas retornadas como uma string "
+"multilinha)."
 
 #: ../../library/dis.rst:167
 msgid ""
 "Return a formatted multi-line string with detailed information about the "
 "code object, like :func:`code_info`."
 msgstr ""
+"Retorna uma string multilinha formatada com informação detalhada sobre o "
+"objeto de código, como :func:`code_info`."
 
 #: ../../library/dis.rst:170 ../../library/dis.rst:210
 #: ../../library/dis.rst:262
 msgid "This can now handle coroutine and asynchronous generator objects."
 msgstr ""
+"Este método agora lida com objetos de corrotina e de gerador assíncrono."
 
 #: ../../library/dis.rst:173 ../../library/dis.rst:265
 #: ../../library/dis.rst:282 ../../library/dis.rst:312
 #: ../../library/dis.rst:335
 msgid "Added the *show_caches* and *adaptive* parameters."
-msgstr ""
+msgstr "Adicionados os parâmetros *show_caches* e *adaptive*."
 
 #: ../../library/dis.rst:176
 msgid "Example:"
@@ -284,7 +307,7 @@ msgstr "Exemplo:"
 
 #: ../../library/dis.rst:192
 msgid "Analysis functions"
-msgstr ""
+msgstr "Funções de análise"
 
 #: ../../library/dis.rst:194
 msgid ""
@@ -293,6 +316,10 @@ msgid ""
 "a single operation is being performed, so the intermediate analysis object "
 "isn't useful:"
 msgstr ""
+"O módulo :mod:`dis` também define as seguintes funções que convertem a "
+"entrada diretamente para a saída desejada. Elas podem ser úteis se somente "
+"uma única operação está sendo feita, de forma que o objeto de análise "
+"intermediário não é útil:"
 
 #: ../../library/dis.rst:200
 msgid ""
@@ -300,6 +327,9 @@ msgid ""
 "for the supplied function, generator, asynchronous generator, coroutine, "
 "method, source code string or code object."
 msgstr ""
+"Retorna uma string multilinha formatada com informação detalhada sobre o "
+"objeto de código correspondente à função, gerador, gerador assíncrono, "
+"corrotina, método, string de código-fonte ou objeto de código fornecido."
 
 #: ../../library/dis.rst:204
 msgid ""
@@ -307,6 +337,9 @@ msgid ""
 "dependent and they may change arbitrarily across Python VMs or Python "
 "releases."
 msgstr ""
+"Observe que o conteúdo exato de strings de informação de código são "
+"altamente dependentes da implementação e podem mudar de forma arbitrária "
+"através de VMs Python ou lançamentos do Python."
 
 #: ../../library/dis.rst:216
 msgid ""
@@ -314,17 +347,22 @@ msgid ""
 "source code string or code object to *file* (or ``sys.stdout`` if *file* is "
 "not specified)."
 msgstr ""
+"Imprime no arquivo *file* (ou ``sys.stdout`` caso *file* não seja "
+"especificado) informações detalhadas sobre o objeto de código correspondente "
+"à função, método, string de código-fonte fornecido."
 
 #: ../../library/dis.rst:220
 msgid ""
 "This is a convenient shorthand for ``print(code_info(x), file=file)``, "
 "intended for interactive exploration at the interpreter prompt."
 msgstr ""
+"Este é um atalho conveniente para ``print(code_info(x), file=file)``, "
+"destinado à exploração interativa no prompt do interpretador."
 
 #: ../../library/dis.rst:225 ../../library/dis.rst:256
 #: ../../library/dis.rst:279 ../../library/dis.rst:309
 msgid "Added *file* parameter."
-msgstr ""
+msgstr "Adicionado o parâmetro *file*."
 
 #: ../../library/dis.rst:231
 msgid ""
@@ -341,6 +379,19 @@ msgid ""
 "before being disassembled.  If no object is provided, this function "
 "disassembles the last traceback."
 msgstr ""
+"Desmonta o objeto *x*.  *x* pode denotar um módulo, uma classe, um método, "
+"uma função, um gerador, um gerador assíncrono, uma corrotina, um objeto de "
+"código, uma string de código-fonte ou uma sequência de bytes contendo "
+"bytecode bruto. Para um módulo, são desmontadas todas as funções. Para uma "
+"classe, são desmontados todos os métodos (incluindo métodos de classe e "
+"estáticos). Para um objeto de código ou sequência de bytecodes brutos, é "
+"impressa uma linha para cada instrução de bytecode. Além disso, objetos de "
+"código aninhados são desmontados recursivamente. Estes podem incluir "
+"expressões geradoras, funções aninhadas, corpos de classes aninhadas, e "
+"objetos de código usados para :ref:`escopos de anotação <annotation-"
+"scopes>`. Strings são compiladas para objetos de código com a função "
+"embutida :func:`compile` antes de serem desmontadas.  Se nenhum objeto for "
+"fornecido, o último traceback é desmontado."
 
 #: ../../library/dis.rst:244 ../../library/dis.rst:276
 #: ../../library/dis.rst:306
@@ -348,28 +399,37 @@ msgid ""
 "The disassembly is written as text to the supplied *file* argument if "
 "provided and to ``sys.stdout`` otherwise."
 msgstr ""
+"O resultado é escrito como texto no arquivo *file* caso tenha sido fornecido "
+"como argumento, ou para ``sys.stdout`` caso contrário."
 
 #: ../../library/dis.rst:247
 msgid ""
 "The maximal depth of recursion is limited by *depth* unless it is ``None``. "
 "``depth=0`` means no recursion."
 msgstr ""
+"A profundidade máxima de recursão é limitada por *depth* a menos que seja "
+"``None``. ``depth=0`` significa não fazer recursão."
 
 #: ../../library/dis.rst:250
 msgid ""
 "If *show_caches* is ``True``, this function will display inline cache "
 "entries used by the interpreter to specialize the bytecode."
 msgstr ""
+"Se *show_caches* for ``True``, essa função vai exibir entradas de cache em "
+"linha usadas pelo interpretador para especializar o bytecode."
 
 #: ../../library/dis.rst:253
 msgid ""
 "If *adaptive* is ``True``, this function will display specialized bytecode "
 "that may be different from the original bytecode."
 msgstr ""
+"Se *adaptive* for ``True``, essa função vai exibir bytecode especializado "
+"que pode ser diferente do bytecode original."
 
 #: ../../library/dis.rst:259
 msgid "Implemented recursive disassembling and added *depth* parameter."
 msgstr ""
+"Foi implementada a desmontagem recursiva, e adicionado o parâmetro *depth*."
 
 #: ../../library/dis.rst:272
 msgid ""
@@ -377,66 +437,78 @@ msgid ""
 "traceback if none was passed.  The instruction causing the exception is "
 "indicated."
 msgstr ""
+"Desmonta a função no topo da pilha de um traceback, usando o último "
+"traceback caso nenhum tenha sido passado.  A instrução que causou a exceção "
+"é indicada."
 
 #: ../../library/dis.rst:285 ../../library/dis.rst:315
 msgid "Added the *show_offsets* parameter."
-msgstr ""
+msgstr "Foi adicionado o parâmetro *show_offsets*."
 
 #: ../../library/dis.rst:292
 msgid ""
 "Disassemble a code object, indicating the last instruction if *lasti* was "
 "provided.  The output is divided in the following columns:"
 msgstr ""
+"Desmonta um objeto de código, indicando a última instrução se *lasti* tiver "
+"sido fornecido.  A saída é dividida em colunas da seguinte forma:"
 
 #: ../../library/dis.rst:295
 msgid "the line number, for the first instruction of each line"
-msgstr ""
+msgstr "o número da linha, para a primeira instrução de cada linha"
 
 #: ../../library/dis.rst:296
 msgid "the current instruction, indicated as ``-->``,"
-msgstr ""
+msgstr "a instrução atual, indicada por ``-->``,"
 
 #: ../../library/dis.rst:297
 msgid "a labelled instruction, indicated with ``>>``,"
-msgstr ""
+msgstr "um rótulo da instrução, indicado com ``>>``,"
 
 #: ../../library/dis.rst:298
 msgid "the address of the instruction,"
-msgstr ""
+msgstr "o endereço da instrução"
 
 #: ../../library/dis.rst:299
 msgid "the operation code name,"
-msgstr ""
+msgstr "o nome do código da operação,"
 
 #: ../../library/dis.rst:300
 msgid "operation parameters, and"
-msgstr ""
+msgstr "os parâmetros da operação, e"
 
 #: ../../library/dis.rst:301
 msgid "interpretation of the parameters in parentheses."
-msgstr ""
+msgstr "a interpretação dos parâmetros, em parênteses."
 
 #: ../../library/dis.rst:303
 msgid ""
 "The parameter interpretation recognizes local and global variable names, "
 "constant values, branch targets, and compare operators."
 msgstr ""
+"A interpretação dos parâmetros reconhece nomes de variáveis locais e "
+"globais, valores de constantes, alvos de ramificações, e operadores de "
+"comparação."
 
 #: ../../library/dis.rst:320
 msgid ""
 "Return an iterator over the instructions in the supplied function, method, "
 "source code string or code object."
 msgstr ""
+"Retorna um iterador sobre as instruções na função, método, string de código-"
+"fonte ou objeto de código fornecido."
 
 #: ../../library/dis.rst:323
 msgid ""
 "The iterator generates a series of :class:`Instruction` named tuples giving "
 "the details of each operation in the supplied code."
 msgstr ""
+"O iterador gera uma série de tuplas nomeadas :class:`Instruction` contendo "
+"detalhes de cada operação no código fornecido."
 
 #: ../../library/dis.rst:331
 msgid "The *adaptive* parameter works as it does in :func:`dis`."
-msgstr ""
+msgstr "O parâmetro *adaptive* funciona assim como na função :func:`dis`."
 
 #: ../../library/dis.rst:338
 msgid ""
@@ -445,6 +517,10 @@ msgid ""
 "populated (regardless of the value of *show_caches*) and it no longer "
 "generates separate items for the cache entries."
 msgstr ""
+"O parâmetro *show_caches* foi descontinuado e não tem mais efeito. O "
+"iterador gera as instâncias da :class:`Instruction` com o campo *cache_info* "
+"populado (independentemente do valor de *show_caches*) e não gera mais items "
+"separados para as entradas de cache."
 
 #: ../../library/dis.rst:346
 msgid ""
@@ -453,10 +529,15 @@ msgid ""
 "of lines in the source code.  They are generated as ``(offset, lineno)`` "
 "pairs."
 msgstr ""
+"Essa função geradora usa o método :meth:`~codeobject.co_lines` do :ref:"
+"`objeto de código <code-objects>` *code* para encontrar as posições que "
+"correspondem aos inícios de cada linha do código-fonte.  Elas são geradas em "
+"pares ``(offset, lineno)``."
 
 #: ../../library/dis.rst:351
 msgid "Line numbers can be decreasing. Before, they were always increasing."
 msgstr ""
+"Números de linhas podem ser decrescentes. Antes, eles eram sempre crescentes."
 
 #: ../../library/dis.rst:354
 msgid ""
@@ -464,21 +545,28 @@ msgid ""
 "attr:`~codeobject.co_firstlineno` and :attr:`~codeobject.co_lnotab` "
 "attributes of the :ref:`code object <code-objects>`."
 msgstr ""
+"O método :meth:`~codeobject.co_lines` da :pep:`626` é usado ao invés dos "
+"atributos :attr:`~codeobject.co_firstlineno` e :attr:`~codeobject.co_lnotab` "
+"do :ref:`objeto de código <code-objects>`."
 
 #: ../../library/dis.rst:359
 msgid ""
 "Line numbers can be ``None`` for bytecode that does not map to source lines."
 msgstr ""
+"Números de linha podem ser ``None`` para bytecode que não corresponde a um "
+"código-fonte."
 
 #: ../../library/dis.rst:365
 msgid ""
 "Detect all offsets in the raw compiled bytecode string *code* which are jump "
 "targets, and return a list of these offsets."
 msgstr ""
+"Detecta todas as posições na string de bytecode compilado bruto *code* que "
+"são alvos de pulos, e as retorna em uma lista."
 
 #: ../../library/dis.rst:371
 msgid "Compute the stack effect of *opcode* with argument *oparg*."
-msgstr ""
+msgstr "Calcula o efeito que o *opcode* com argumento *oparg* tem na pilha."
 
 #: ../../library/dis.rst:373
 msgid ""
@@ -487,6 +575,11 @@ msgid ""
 "return the stack effect of not jumping. And if *jump* is ``None`` (default), "
 "it will return the maximal stack effect of both cases."
 msgstr ""
+"Se a operação tiver um alvo de pulo e *jump* for ``True``, :func:"
+"`~stack_effect` vai retornar o efeito na pilha de realizar o pulo.  Se "
+"*jump* for ``False``, ela vai retornar o efeito na pilha de não pular. E se "
+"*jump* for ``None`` (o padrão), vai retornar o efeito máximo na pilha dentre "
+"os dois casos."
 
 #: ../../library/dis.rst:380
 msgid "Added *jump* parameter."
@@ -499,111 +592,134 @@ msgid ""
 "is also no longer an error to pass an integer ``oparg`` when the ``opcode`` "
 "does not use it; the ``oparg`` in this case is ignored."
 msgstr ""
+"Se ``oparg`` for omitido (ou ``None``), agora é retornado o efeito na pilha "
+"para o caso ``oparg=0``. Anteriormente isso era um erro caso o opcode usasse "
+"o seu argumento. Além disso, agora não é mais um erro passar um ``oparg`` "
+"inteiro quando o ``opcode`` não o usa; o ``oparg`` nesse caso é ignorado."
 
 #: ../../library/dis.rst:393
 msgid "Python Bytecode Instructions"
-msgstr ""
+msgstr "Instruções em bytecode do Python"
 
 #: ../../library/dis.rst:395
 msgid ""
 "The :func:`get_instructions` function and :class:`Bytecode` class provide "
 "details of bytecode instructions as :class:`Instruction` instances:"
 msgstr ""
+"A função :func:`get_instructions` e a classe :class:`Bytecode` fornecem "
+"detalhes de instruções de bytecode como instâncias de :class:`Instruction`:"
 
 #: ../../library/dis.rst:400
 msgid "Details for a bytecode operation"
-msgstr ""
+msgstr "Detalhes de uma operação em bytecode"
 
 #: ../../library/dis.rst:404
 msgid ""
 "numeric code for operation, corresponding to the opcode values listed below "
 "and the bytecode values in the :ref:`opcode_collections`."
 msgstr ""
+"código numérico da operação, correspondendo aos valores dos opcodes listados "
+"abaixo e aos valores dos bytecodes nas :ref:`opcode_collections`."
 
 #: ../../library/dis.rst:410
 msgid "human readable name for operation"
-msgstr ""
+msgstr "nome legível por humanos para a operação"
 
 #: ../../library/dis.rst:415
 msgid ""
 "numeric code for the base operation if operation is specialized; otherwise "
 "equal to :data:`opcode`"
 msgstr ""
+"código numérico para a operação base caso a operação seja especializada; "
+"caso contrário, igual ao :data:`opcode`"
 
 #: ../../library/dis.rst:421
 msgid ""
 "human readable name for the base operation if operation is specialized; "
 "otherwise equal to :data:`opname`"
 msgstr ""
+"nome legível por humanos para a operação base caso a operação seja "
+"especializada; caso contrário, igual ao :data:`opname`"
 
 #: ../../library/dis.rst:427
 msgid "numeric argument to operation (if any), otherwise ``None``"
 msgstr ""
+"argumento numérico para a operação (se houver), caso contrário ``None``"
 
 #: ../../library/dis.rst:431
 msgid "alias for :data:`arg`"
-msgstr ""
+msgstr "apelido para :data:`arg`"
 
 #: ../../library/dis.rst:435
 msgid "resolved arg value (if any), otherwise ``None``"
-msgstr ""
+msgstr "valor resolvido do argumento (se houver), caso contrário ``None``"
 
 #: ../../library/dis.rst:440
 msgid ""
 "human readable description of operation argument (if any), otherwise an "
 "empty string."
 msgstr ""
+"descrição legível por humanos do argumento da operação (se houver), caso "
+"contrário uma string vazia."
 
 #: ../../library/dis.rst:446
 msgid "start index of operation within bytecode sequence"
-msgstr ""
+msgstr "índice de início da operação dentro da sequência de bytecodes"
 
 #: ../../library/dis.rst:451
 msgid ""
 "start index of operation within bytecode sequence, including prefixed "
 "``EXTENDED_ARG`` operations if present; otherwise equal to :data:`offset`"
 msgstr ""
+"índice de início da operação dentro da sequência de bytecodes, incluindo as "
+"operações de ``EXTENDED_ARG`` prefixadas, caso presentes; caso contrário, "
+"igual a :data:`offset`"
 
 #: ../../library/dis.rst:457
 msgid "start index of the cache entries following the operation"
-msgstr ""
+msgstr "índice de início das entradas de cache que seguem a operação"
 
 #: ../../library/dis.rst:462
 msgid "end index of the cache entries following the operation"
-msgstr ""
+msgstr "índice de fim das entradas de cache que seguem a operação"
 
 #: ../../library/dis.rst:467
 msgid "``True`` if this opcode starts a source line, otherwise ``False``"
-msgstr ""
+msgstr "``True`` se esse opcode inicia uma linha, ``False`` caso contrário"
 
 #: ../../library/dis.rst:472
 msgid ""
 "source line number associated with this opcode (if any), otherwise ``None``"
 msgstr ""
+"linha de código-fonte associada a esse opcode (se houver), senão ``None``"
 
 #: ../../library/dis.rst:477
 msgid "``True`` if other code jumps to here, otherwise ``False``"
-msgstr ""
+msgstr "``True`` se algum outro código pula para cá, senão ``False``"
 
 #: ../../library/dis.rst:482
 msgid ""
 "bytecode index of the jump target if this is a jump operation, otherwise "
 "``None``"
 msgstr ""
+"índice do bytecode que é alvo do pulo caso essa seja uma operação de pulo, "
+"caso contrário ``None``"
 
 #: ../../library/dis.rst:488
 msgid ""
 ":class:`dis.Positions` object holding the start and end locations that are "
 "covered by this instruction."
 msgstr ""
+"objeto :class:`dis.Positions` contendo os pontos de início e fim cobertos "
+"por esta instrução."
 
 #: ../../library/dis.rst:503
 msgid "Field ``positions`` is added."
-msgstr ""
+msgstr "Adicionado o campo ``positions``."
 
 #: ../../library/dis.rst:507
 msgid "Changed field ``starts_line``."
-msgstr ""
+msgstr "Alterado o campo ``starts_line``."
 
 #: ../../library/dis.rst:509
 msgid ""
@@ -611,11 +727,15 @@ msgid ""
 "``baseopname``, ``baseopcode``, ``jump_target``, ``oparg``, ``line_number`` "
 "and ``cache_info``."
 msgstr ""
+"Adicionados os campos ``start_offset``, ``cache_offset``, ``end_offset``, "
+"``baseopname``, ``baseopcode``, ``jump_target``, ``oparg``, ``line_number`` "
+"e ``cache_info``."
 
 #: ../../library/dis.rst:516
 msgid ""
 "In case the information is not available, some fields might be ``None``."
 msgstr ""
+"Caso a informação não esteja disponível, alguns campos podem ser ``None``."
 
 #: ../../library/dis.rst:526
 msgid ""
