@@ -95,6 +95,9 @@ msgid ""
 "c:expr:`const char*` UTF-8 encoded bytes string, rather than a :c:expr:"
 "`PyObject*`."
 msgstr ""
+"É o mesmo que :c:func:`PyDict_Contains`, mas *key* é especificada como uma "
+"string de bytes :c:expr:`const char*` codificada em UTF-8, em vez de um :c:"
+"expr:`PyObject*`."
 
 #: ../../c-api/dict.rst:69
 msgid "Return a new dictionary that contains the same key-value pairs as *p*."
@@ -149,24 +152,29 @@ msgid ""
 "Return a new :term:`strong reference` to the object from dictionary *p* "
 "which has a key *key*:"
 msgstr ""
+"Retorna uma nova :term:`referência forte` para o objeto dicionário *p* que "
+"possui uma chave *key*:"
 
 #: ../../c-api/dict.rst:107
 msgid ""
 "If the key is present, set *\\*result* to a new :term:`strong reference` to "
 "the value and return ``1``."
 msgstr ""
+"Se a chave estiver presente, define *\\*result* como uma nova :term:"
+"`referência forte` para o valor e retorna ``1``."
 
 #: ../../c-api/dict.rst:109
 msgid "If the key is missing, set *\\*result* to ``NULL`` and return ``0``."
 msgstr ""
+"Se a chave estiver ausente, define *\\*result* como ``NULL`` e retorna ``0``."
 
 #: ../../c-api/dict.rst:110 ../../c-api/dict.rst:207
 msgid "On error, raise an exception and return ``-1``."
-msgstr ""
+msgstr "Em caso de erro, levanta uma exceção e retorna ``-1``."
 
 #: ../../c-api/dict.rst:114
 msgid "See also the :c:func:`PyObject_GetItem` function."
-msgstr ""
+msgstr "Veja também a função :c:func:`PyObject_GetItem`."
 
 #: ../../c-api/dict.rst:119
 msgid ""
@@ -174,6 +182,9 @@ msgid ""
 "has a key *key*.  Return ``NULL`` if the key *key* is missing *without* "
 "setting an exception."
 msgstr ""
+"Retorna um :term:`referência emprestada` para o objeto do dicionário *p* que "
+"possui uma chave *key*. Retorna ``NULL`` se a chave *key* não estiver "
+"presente, mas *sem* definir uma exceção."
 
 #: ../../c-api/dict.rst:125
 msgid ""
@@ -232,6 +243,9 @@ msgid ""
 "expr:`const char*` UTF-8 encoded bytes string, rather than a :c:expr:"
 "`PyObject*`."
 msgstr ""
+"Similar a :c:func:`PyDict_GetItemRef`, mas *key* é especificada como uma "
+"string de bytes :c:expr:`const char*` codificada em UTF-8, em vez de um :c:"
+"expr:`PyObject*`."
 
 #: ../../c-api/dict.rst:168
 msgid ""
@@ -259,6 +273,14 @@ msgid ""
 "and *default_value* was inserted. On failure, returns ``-1``, sets an "
 "exception, and sets ``*result`` to ``NULL``."
 msgstr ""
+"Insere *default_value* no dicionário *p* com uma chave *key* se a chave "
+"ainda não estiver presente no dicionário. Se *result* não for ``NULL``, "
+"então *\\*result* é definido como uma :term:`referência forte` para "
+"*default_value*, se a chave não estiver presente, ou para o valor existente, "
+"se *key* já estava presente no dicionário. Retorna ``1`` se a chave estava "
+"presente e *default_value* não foi inserido, ou ``0`` se a chave não estava "
+"presente e *default_value* foi inserido. Em caso de falha, retorna ``-1``, "
+"define uma exceção e define ``*result`` como ``NULL``."
 
 #: ../../c-api/dict.rst:189
 msgid ""
@@ -267,36 +289,52 @@ msgid ""
 "both *default_value* and *\\*result* (if it's not ``NULL``). These may refer "
 "to the same object: in that case you hold two separate references to it."
 msgstr ""
+"Para maior clareza: se você tiver uma referência forte para *default_value* "
+"antes de chamar esta função, então depois que ela retornar, você terá uma "
+"referência forte para *default_value* e *\\*result* (se não for ``NULL``). "
+"Estes podem referir-se ao mesmo objeto: nesse caso você mantém duas "
+"referências separadas para ele."
 
 #: ../../c-api/dict.rst:200
 msgid ""
 "Remove *key* from dictionary *p* and optionally return the removed value. Do "
 "not raise :exc:`KeyError` if the key missing."
 msgstr ""
+"Remove *key* do dicionário *p* e, opcionalmente, retorna o valor removido. "
+"Não levanta :exc:`KeyError` se a chave estiver ausente."
 
 #: ../../c-api/dict.rst:203
 msgid ""
 "If the key is present, set *\\*result* to a new reference to the removed "
 "value if *result* is not ``NULL``, and return ``1``."
 msgstr ""
+"Se a chave estiver presente, define *\\*result* como uma nova referência "
+"para o valor se *result* não for ``NULL`` e retorna ``1``."
 
 #: ../../c-api/dict.rst:205
 msgid ""
 "If the key is missing, set *\\*result* to ``NULL`` if *result* is not "
 "``NULL``, and return ``0``."
 msgstr ""
+"Se a chave estiver ausente, define *\\*result* como ``NULL`` se *result* não "
+"for ``NULL`` e retorna ``0``."
 
 #: ../../c-api/dict.rst:209
 msgid ""
 "This is similar to :meth:`dict.pop`, but without the default value and not "
 "raising :exc:`KeyError` if the key missing."
 msgstr ""
+"Isto é semelhante a :meth:`dict.pop`, mas sem o valor padrão e sem levantar :"
+"exc:`KeyError` se a chave estiver ausente."
 
 #: ../../c-api/dict.rst:217
 msgid ""
 "Similar to :c:func:`PyDict_Pop`, but *key* is specified as a :c:expr:`const "
 "char*` UTF-8 encoded bytes string, rather than a :c:expr:`PyObject*`."
 msgstr ""
+"Similar a :c:func:`PyDict_Pop`, mas *key* é especificada como uma string de "
+"bytes :c:expr:`const char*` codificada em UTF-8, em vez de um :c:expr:"
+"`PyObject*`."
 
 #: ../../c-api/dict.rst:226
 msgid ""
@@ -370,6 +408,10 @@ msgid ""
 "threading>` build without external synchronization.  You can use :c:macro:"
 "`Py_BEGIN_CRITICAL_SECTION` to lock the dictionary while iterating over it::"
 msgstr ""
+"A função não é segura para thread na construção com :term:`threads livres "
+"<free threading>` sem sincronização externa. Você pode usar :c:macro:"
+"`Py_BEGIN_CRITICAL_SECTION` para travar o dicionário enquanto itera sobre "
+"ele::"
 
 #: ../../c-api/dict.rst:307
 msgid ""
