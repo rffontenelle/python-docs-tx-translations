@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-24 14:15+0000\n"
+"POT-Creation-Date: 2024-07-05 14:16+0000\n"
 "PO-Revision-Date: 2021-06-28 01:15+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -994,6 +994,9 @@ msgid ""
 "meth:`~RLock.acquire` and :meth:`~RLock.release` to handle acquiring and "
 "releasing the lock for a block of code."
 msgstr ""
+"重入型锁支持 :ref:`上下文管理协议 <with-locks>`，因此推荐使用 :keyword:"
+"`with` 而不是手动调用 :meth:`~RLock.acquire` 和 :meth:`~RLock.release` 来针对"
+"一个代码块处理锁的获取和释放。"
 
 #: ../../library/threading.rst:611
 msgid ""
@@ -1003,6 +1006,10 @@ msgid ""
 "pair) resets the lock to an unlocked state and allows another thread blocked "
 "in :meth:`~RLock.acquire` to proceed."
 msgstr ""
+"RLock 的 :meth:`~RLock.acquire`/:meth:`~RLock.release` 调用对可以嵌套，这不同"
+"于 Lock 的 :meth:`~Lock.acquire`/:meth:`~Lock.release`。 只有最终的 :meth:"
+"`~RLock.release` (最外面一对的 :meth:`~Lock.release`) 会将锁重置为已解锁状态"
+"并允许在 :meth:`~RLock.acquire` 中被阻塞的其他线程继续执行。"
 
 #: ../../library/threading.rst:617
 msgid ""
@@ -1011,6 +1018,9 @@ msgid ""
 "Failing to call release as many times the lock has been acquired can lead to "
 "deadlock."
 msgstr ""
+":meth:`~RLock.acquire`/:meth:`~RLock.release` 必须成对使用：每个 acquire 必须"
+"在获取锁的线程中有对应的 release。 如果锁调用 release 的次数未能与 acquire 的"
+"次数一致则会导致死锁。"
 
 #: ../../library/threading.rst:624
 msgid ""
@@ -1033,28 +1043,31 @@ msgstr ""
 
 #: ../../library/threading.rst:640
 msgid ":ref:`Using RLock as a context manager <with-locks>`"
-msgstr ""
+msgstr ":ref:`将 RLock 用作上下文管理器 <with-locks>`"
 
 #: ../../library/threading.rst:641
 msgid ""
 "Recommended over manual :meth:`!acquire` and :meth:`release` calls whenever "
 "practical."
 msgstr ""
+"在大多数场合下相比手动的 :meth:`!acquire` 和 :meth:`release` 调用更为推荐。"
 
 #: ../../library/threading.rst:645
 msgid ""
 "When invoked with the *blocking* argument set to ``True`` (the default):"
-msgstr ""
+msgstr "当发起调用时将 *blocking* 参数设为 ``True`` (默认值):"
 
 #: ../../library/threading.rst:647 ../../library/threading.rst:659
 msgid "If no thread owns the lock, acquire the lock and return immediately."
-msgstr ""
+msgstr "如无任何线程持有锁，则获取锁并立即返回。"
 
 #: ../../library/threading.rst:649
 msgid ""
 "If another thread owns the lock, block until we are able to acquire lock, or "
 "*timeout*, if set to a positive float value."
 msgstr ""
+"如有其他线程持有锁，则阻塞执行直至能够获取锁，或直至 *timeout*，如果将其设为"
+"一个正浮点数值的话。"
 
 #: ../../library/threading.rst:652
 msgid ""
@@ -1063,20 +1076,23 @@ msgid ""
 "RLock`; :class:`Lock` handles this case the same as the previous, blocking "
 "until the lock can be acquired."
 msgstr ""
+"如同一线程持有锁，则再次获取该锁，并立即返回。 这是 :class:`Lock` 和 :class:"
+"`!RLock` 之间的区别；:class:`Lock` 将以与之前相同的方式处理此情况，即阻塞执行"
+"直至能够获取锁。"
 
 #: ../../library/threading.rst:657
 msgid "When invoked with the *blocking* argument set to ``False``:"
-msgstr ""
+msgstr "当发起调用时将 *blocking* 参数设为 ``False``:"
 
 #: ../../library/threading.rst:661
 msgid "If another thread owns the lock, return immediately."
-msgstr ""
+msgstr "如有其他线程持有锁，则立即返回。"
 
 #: ../../library/threading.rst:663
 msgid ""
 "If the same thread owns the lock, acquire the lock again and return "
 "immediately."
-msgstr ""
+msgstr "如同一线程持有锁，则再次获取该锁并立即返回。"
 
 #: ../../library/threading.rst:666
 msgid ""
@@ -1084,6 +1100,8 @@ msgid ""
 "If the thread was unable to acquire the lock (i.e. if not blocking or the "
 "timeout was reached) return ``False``."
 msgstr ""
+"在所有情况下，如果线程能够获取锁，则返回 ``True``。 如果线程不能获取锁（即未"
+"阻塞执行或达到超时限制）则返回 ``False``。"
 
 #: ../../library/threading.rst:670
 msgid ""
@@ -1091,6 +1109,8 @@ msgid ""
 "times may lead to deadlock. Consider using :class:`!RLock` as a context "
 "manager rather than calling acquire/release directly."
 msgstr ""
+"如果被多次调用，则未能调用相同次数的 :meth:`~RLock.release` 可能导致死锁。 请"
+"考虑将 :class:`!RLock` 用作上下文管理器而不是直接调用 acquire/release。"
 
 #: ../../library/threading.rst:680
 msgid ""
@@ -1110,6 +1130,8 @@ msgid ""
 "`RuntimeError` is raised if this method is called when the lock is not "
 "acquired."
 msgstr ""
+"只有在调用方线程持有锁时才能调用此方法。 如果在未获取锁的情况下调用此方法则会"
+"引发 :exc:`RuntimeError`。"
 
 #: ../../library/threading.rst:696
 msgid "Condition Objects"
