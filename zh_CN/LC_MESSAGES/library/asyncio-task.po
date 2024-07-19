@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-11 18:37+0000\n"
+"POT-Creation-Date: 2024-07-12 14:15+0000\n"
 "PO-Revision-Date: 2021-06-28 00:55+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -462,6 +462,10 @@ msgid ""
 "group will process its exceptions, and then the outer task group will "
 "receive another cancellation and process its own exceptions."
 msgstr ""
+"对于任务组应当注意不要将用于“唤醒”其 :meth:`~object.__aexit__` 的内部取消请求"
+"与其他地方对其运行的任务提出的取消请求相混淆。 具体来说，当一个任务组在语法上"
+"嵌套于另一个任务组中，而两个任务组的某个子任务同时发生异常时，内层的任务组将"
+"处理其异常，然后外层的任务组将收到另一个取消请求并处理它自己的异常。"
 
 #: ../../library/asyncio-task.rst:403
 msgid ""
@@ -470,18 +474,21 @@ msgid ""
 "Task.cancel` method. This ensures that a :exc:`asyncio.CancelledError` will "
 "be raised at the next :keyword:`await`, so the cancellation is not lost."
 msgstr ""
+"对于任务组在外部被取消同时必须引发 :exc:`ExceptionGroup` 的情况，它将调用父任"
+"务的 :meth:`~asyncio.Task.cancel` 方法。 这样可以确保 :exc:`asyncio."
+"CancelledError` 会在下一次 :keyword:`await` 时被引发，因此取消操作不会丢失。"
 
 #: ../../library/asyncio-task.rst:409
 msgid ""
 "Task groups preserve the cancellation count reported by :meth:`asyncio.Task."
 "cancelling`."
-msgstr ""
+msgstr "任务组将保留 :meth:`asyncio.Task.cancelling` 所报告的取消次数。"
 
 #: ../../library/asyncio-task.rst:414
 msgid ""
 "Improved handling of simultaneous internal and external cancellations and "
 "correct preservation of cancellation counts."
-msgstr ""
+msgstr "改进了同时处理内部和外部取消操作以及正确保留取消计数的功能。"
 
 #: ../../library/asyncio-task.rst:418
 msgid "Sleeping"
@@ -524,7 +531,7 @@ msgstr "移除了 *loop* 形参。"
 
 #: ../../library/asyncio-task.rst:457
 msgid "Raises :exc:`ValueError` if *delay* is :data:`~math.nan`."
-msgstr ""
+msgstr "如果 *delay* 不为 :data:`~math.nan` 则会引发 :exc:`ValueError`。"
 
 #: ../../library/asyncio-task.rst:462
 msgid "Running Tasks Concurrently"
@@ -610,6 +617,10 @@ msgid ""
 "calling ``gather.cancel()`` after catching an exception (raised by one of "
 "the awaitables) from gather won't cancel any other awaitables."
 msgstr ""
+"如果 *return_exceptions* 为假值，则在 gather() 被标记为完成后取消它将不会取消"
+"任何已提交的可等待对象。 例如，在将一个异常传播给调用者之后，gather 可被标记"
+"为已完成，因此，在从 gather 捕获一个（由可等待对象所引发的）异常之后调用 "
+"``gather.cancel()`` 将不会取消任何其他可等待对象。"
 
 #: ../../library/asyncio-task.rst:548
 msgid ""
@@ -1028,6 +1039,8 @@ msgid ""
 "concurrently. The returned object can be iterated to obtain the results of "
 "the awaitables as they finish."
 msgstr ""
+"并发地运行 *aws* 可迭代对象中的 :ref:`可等待对象 <asyncio-awaitables>`。 返回"
+"的对象可以被迭代以获取可等待对象结束时的结果。"
 
 #: ../../library/asyncio-task.rst:895
 msgid ""
@@ -1037,12 +1050,18 @@ msgid ""
 "are tasks or futures. This makes it easy to correlate previously-scheduled "
 "tasks with their results. Example::"
 msgstr ""
+"由 ``as_completed()`` 返回的对象可作为 :term:`asynchronous iterator` 或普通"
+"的 :term:`iterator` 被迭代。 当使用异步迭代时，原来提供的可等待对象如果为 "
+"Task 或 Future 对象则会被产出。 这样可以更容易地将之前加入计划的任务与其结果"
+"进行对应。 例如::"
 
 #: ../../library/asyncio-task.rst:915
 msgid ""
 "During asynchronous iteration, implicitly-created tasks will be yielded for "
 "supplied awaitables that aren't tasks or futures."
 msgstr ""
+"在异步迭代期间，将为不属于 Task 或 Future 对象的可等待对象产出隐式创建的任"
+"务。"
 
 #: ../../library/asyncio-task.rst:918
 msgid ""
@@ -1050,6 +1069,8 @@ msgid ""
 "returns the result or raises the exception of the next completed awaitable. "
 "This pattern is compatible with Python versions older than 3.13::"
 msgstr ""
+"当被用作普通的迭代器时，每次迭代将产出一个返回结果的新协程或是引发下一个完成"
+"的等待对象对应的异常。 此模式将与 Python 3.13 之前的版本保持兼容::"
 
 #: ../../library/asyncio-task.rst:932
 msgid ""
@@ -1057,6 +1078,8 @@ msgid ""
 "are done. This is raised by the ``async for`` loop during asynchronous "
 "iteration or by the coroutines yielded during plain iteration."
 msgstr ""
+"如果在所有可等待对象完成之前达到超时限制则会引发 :exc:`TimeoutError`。 这将在"
+"异步迭代期间由 ``async for`` 循环引发或是在普通迭代期间由所产出的协程引发。"
 
 #: ../../library/asyncio-task.rst:939
 msgid ""
@@ -1071,6 +1094,8 @@ msgid ""
 "The result can now be used as either an :term:`asynchronous iterator` or as "
 "a plain :term:`iterator` (previously it was only a plain iterator)."
 msgstr ""
+"该结果现在可被用作 :term:`asynchronous iterator` 或是普通的 :term:`iterator` "
+"(在之前它只是普通的迭代器)。"
 
 #: ../../library/asyncio-task.rst:952
 msgid "Running in Threads"
@@ -1598,6 +1623,8 @@ msgid ""
 "exc:`CancelledError`, it needs to call this method to remove the "
 "cancellation state."
 msgstr ""
+"如果最终用户代码出于某种原因通过捕获 :exc:`CancelledError` 抑制撤销操作，那么"
+"它需要调用此方法来移除撤销状态。"
 
 #: ../../library/asyncio-task.rst:1393
 msgid ""
@@ -1607,10 +1634,13 @@ msgid ""
 "that arrangement will be rescinded (by resetting the internal "
 "``_must_cancel`` flag)."
 msgstr ""
+"当该方法将取消计数递减至零，该方法会检查之前的 :meth:`cancel` 调用是否已安排"
+"将 :exc:`CancelledError` 抛出到任务中。 如果尚未抛出，则该安排将被撤销（通过"
+"重置内部的 ``_must_cancel`` 旗标 ）。"
 
 #: ../../library/asyncio-task.rst:1399
 msgid "Changed to rescind pending cancellation requests upon reaching zero."
-msgstr ""
+msgstr "更改为在到达零值时撤回待处理的取消请求。"
 
 #: ../../library/asyncio-task.rst:1404
 msgid ""
