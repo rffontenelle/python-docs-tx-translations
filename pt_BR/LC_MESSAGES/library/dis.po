@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-19 15:26+0000\n"
+"POT-Creation-Date: 2024-07-20 01:54+0000\n"
 "PO-Revision-Date: 2023-05-24 02:14+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
@@ -612,6 +612,10 @@ msgid ""
 "itself. It is automatically hidden by all ``dis`` utilities, but can be "
 "viewed with ``show_caches=True``."
 msgstr ""
+"Ao invés de ser uma instrução de fato, este opcode é usado para demarcar "
+"espaço extra para o interpretador armazernar dados úteis diretamente no "
+"próprio bytecode. É escondido automaticamente por todas as utilidades do "
+"``dis``, mas pode ser visualizado com ``show_caches=True``."
 
 #: ../../library/dis.rst:468
 msgid ""
@@ -619,6 +623,9 @@ msgid ""
 "expect to be followed by an exact number of caches, and will instruct the "
 "interpreter to skip over them at runtime."
 msgstr ""
+"Do ponto de vista lógico, este espaço faz parte da instrução anterior. "
+"Muitos opcodes esperam ser seguidos por um número exato de caches, e "
+"instruem o interpretador a pulá-los em tempo de execução."
 
 #: ../../library/dis.rst:472
 msgid ""
@@ -626,16 +633,21 @@ msgid ""
 "be taken when reading or modifying raw, adaptive bytecode containing "
 "quickened data."
 msgstr ""
+"Caches populados podem se parecer com qualquer instrução, de forma que ler "
+"ou modificar bytecode adaptativo bruto contendo dados \"quickened\" requer "
+"muito cuidado."
 
 #: ../../library/dis.rst:479
 msgid "**Unary operations**"
-msgstr ""
+msgstr "**Operações unárias**"
 
 #: ../../library/dis.rst:481
 msgid ""
 "Unary operations take the top of the stack, apply the operation, and push "
 "the result back on the stack."
 msgstr ""
+"Operações unárias tiram o topo da pilha, aplicam a operação, e põem o "
+"resultado de volta na pilha."
 
 #: ../../library/dis.rst:486
 msgid "Implements ``TOS = +TOS``."
@@ -665,7 +677,7 @@ msgstr ""
 
 #: ../../library/dis.rst:517
 msgid "**Binary and in-place operations**"
-msgstr ""
+msgstr "**Operações binárias e internas**"
 
 #: ../../library/dis.rst:519
 msgid ""
@@ -702,7 +714,7 @@ msgstr ""
 
 #: ../../library/dis.rst:552
 msgid "**Coroutine opcodes**"
-msgstr ""
+msgstr "**Opcodes para corrotinas**"
 
 #: ../../library/dis.rst:556
 msgid ""
@@ -716,6 +728,7 @@ msgid ""
 "If the ``where`` operand is nonzero, it indicates where the instruction "
 "occurs:"
 msgstr ""
+"Se o operando ``where`` não for zero, ele indica onde a instrução ocorre:"
 
 #: ../../library/dis.rst:564
 msgid "``1`` After a call to ``__aenter__``"
@@ -727,7 +740,7 @@ msgstr ""
 
 #: ../../library/dis.rst:569
 msgid "Previously, this instruction did not have an oparg."
-msgstr ""
+msgstr "Anteriormente, esta instrução não tinha um oparg."
 
 #: ../../library/dis.rst:575
 msgid "Implements ``TOS = TOS.__aiter__()``."
@@ -735,7 +748,7 @@ msgstr ""
 
 #: ../../library/dis.rst:578
 msgid "Returning awaitable objects from ``__aiter__`` is no longer supported."
-msgstr ""
+msgstr "Não é mais aceitado que o ``__aiter__`` retorne objetos aguardáveis."
 
 #: ../../library/dis.rst:585
 msgid ""
@@ -756,6 +769,8 @@ msgstr ""
 msgid ""
 "Exception representation on the stack now consist of one, not three, items."
 msgstr ""
+"A representação da exceção na pilha consiste agora de um item, ao invés de "
+"três."
 
 #: ../../library/dis.rst:605
 msgid ""
@@ -765,7 +780,7 @@ msgstr ""
 
 #: ../../library/dis.rst:612
 msgid "**Miscellaneous opcodes**"
-msgstr ""
+msgstr "**Opcodes genéricos**"
 
 #: ../../library/dis.rst:616
 msgid ""
@@ -801,6 +816,10 @@ msgid ""
 "off, the container object remains on the stack so that it is available for "
 "further iterations of the loop."
 msgstr ""
+"Para as instruções :opcode:`SET_ADD`, :opcode:`LIST_APPEND` e :opcode:"
+"`MAP_ADD`, o valor ou par chave/valor é removido da pilha, mas o objeto de "
+"contêiner continua na pilha para que ele esteja disponível para as iterações "
+"seguintes do laço."
 
 #: ../../library/dis.rst:648
 msgid "Returns with TOS to the caller of the function."
@@ -817,6 +836,10 @@ msgid ""
 "module body contains :term:`variable annotations <variable annotation>` "
 "statically."
 msgstr ""
+"Verifica se ``__annotations__`` está definido em ``locals()`` e, se não "
+"estiver, é inicializado como um ``dict`` vazio. Este opcode é emitido "
+"somente se o corpo de uma classe ou módulo contém :term:`anotações de "
+"variáveis <anotação de variável>` estaticamente."
 
 #: ../../library/dis.rst:669
 msgid ""
@@ -829,6 +852,8 @@ msgstr ""
 msgid ""
 "Pops a value from the stack, which is used to restore the exception state."
 msgstr ""
+"Remove o valor no topo da pilha, o qual é usado para restaurar o estado de "
+"exceção."
 
 #: ../../library/dis.rst:683
 msgid ""
@@ -836,6 +861,9 @@ msgid ""
 "pops an additional value from the stack which is used to set :attr:`~frame."
 "f_lasti` of the current frame."
 msgstr ""
+"Re-levanta a exceção que se encontra no topo da pilha. Se o oparg não for "
+"zero, remove um valor adicional do topo da pilha, o qual é atribuído ao :"
+"attr:`~frame.f_lasti`` do quadro atual."
 
 #: ../../library/dis.rst:694
 msgid ""
@@ -843,6 +871,9 @@ msgid ""
 "stack. Pushes the value originally popped back to the stack. Used in "
 "exception handlers."
 msgstr ""
+"Remove um valor do topo da pilha. Põe a exceção atual no topo da pilha. Põe "
+"de volta no topo da pilha o valor que foi removido inicialmente. Usado em "
+"tratadores de exceções."
 
 #: ../../library/dis.rst:702
 msgid ""
@@ -863,6 +894,11 @@ msgid ""
 "subgroup. When there is no match, pops one item (the match type) and pushes "
 "``None``."
 msgstr ""
+"No caso de uma correspondência, remove dois itens do topo da pilha e põe "
+"nela o subgrupo que falhou a correspondência (``None`` caso a "
+"correspondência tenha sido total), seguido pelo subgrupo que correspondeu. "
+"Quando não há correspondência nenhuma, remove um item (o tipo da "
+"correspondêcia) e põe ``None`` no seu lugar."
 
 #: ../../library/dis.rst:721
 msgid ""
