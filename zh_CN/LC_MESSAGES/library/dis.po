@@ -7,6 +7,7 @@
 # 云line, 2023
 # Alpha Du <alphanow@gmail.com>, 2023
 # Dai Xu <daixu61@hotmail.com>, 2023
+# lqks, 2024
 # Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
@@ -14,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-19 14:16+0000\n"
+"POT-Creation-Date: 2024-07-20 00:52+0000\n"
 "PO-Revision-Date: 2021-06-28 01:04+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -151,6 +152,8 @@ msgid ""
 "stdout. Otherwise, disassembly is performed on compiled source code received "
 "from stdin."
 msgstr ""
+"如果指定了 :file:`infile`，其反汇编代码将被写入到标准输出。 在其他情况下，反"
+"汇编将在从标准输入接收的已编译源代码上进行。"
 
 #: ../../library/dis.rst:110
 msgid "Bytecode analysis"
@@ -199,8 +202,8 @@ msgid ""
 "the disassembled code. Setting this means :meth:`.dis` will display a "
 "\"current instruction\" marker against the specified opcode."
 msgstr ""
-"如果 *current_offset* 不是 ``None`` ，则它指的是反汇编代码中的指令偏移量。设"
-"置它意味着 :meth:`.dis` 将针对指定的操作码显示“当前指令”标记。"
+"如果 *current_offset* 不是 ``None`` ，它指的就是汇编代码中的指令偏移量。设置"
+"它意味着 :meth:`.dis` 将针对指定的操作码显示“当前指令”标记。"
 
 #: ../../library/dis.rst:138
 msgid ""
@@ -222,7 +225,7 @@ msgstr ""
 msgid ""
 "If *show_offsets* is ``True``, :meth:`.dis` will include instruction offsets "
 "in the output."
-msgstr ""
+msgstr "若 *show_offsets* 是 ``True``，:meth:`.dis` 的输出将会显示指令偏移量。"
 
 #: ../../library/dis.rst:149
 msgid ""
@@ -395,7 +398,7 @@ msgstr ""
 
 #: ../../library/dis.rst:285 ../../library/dis.rst:315
 msgid "Added the *show_offsets* parameter."
-msgstr ""
+msgstr "添加了*show_offsets*参数。"
 
 #: ../../library/dis.rst:292
 msgid ""
@@ -454,7 +457,7 @@ msgstr ""
 
 #: ../../library/dis.rst:331
 msgid "The *adaptive* parameter works as it does in :func:`dis`."
-msgstr ""
+msgstr "参数 *adaptive* 和其在 :func:`dis` 中的工作方式一样。"
 
 #: ../../library/dis.rst:338
 msgid ""
@@ -463,6 +466,8 @@ msgid ""
 "populated (regardless of the value of *show_caches*) and it no longer "
 "generates separate items for the cache entries."
 msgstr ""
+"*show_caches* 参数被弃用并且失效。 迭代器保证 :class:`Instruction` 实例一定"
+"有 *cache_info* 字段（无论 *show_caches* 传入什么），不再生成单独的缓存项。"
 
 #: ../../library/dis.rst:346
 msgid ""
@@ -492,7 +497,7 @@ msgstr ""
 #: ../../library/dis.rst:359
 msgid ""
 "Line numbers can be ``None`` for bytecode that does not map to source lines."
-msgstr ""
+msgstr "若字节码不对应任何一行，行号可以是``None``。"
 
 #: ../../library/dis.rst:365
 msgid ""
@@ -528,6 +533,9 @@ msgid ""
 "is also no longer an error to pass an integer ``oparg`` when the ``opcode`` "
 "does not use it; the ``oparg`` in this case is ignored."
 msgstr ""
+"如果``oparg`` 被省略（或传入``None`` ），过去如果字节码使用参数，此时会抛出错"
+"误，而现在会返回``oparg=0``时的结果 。当``opcode`` 不使用整数 ``oparg`` 时，"
+"传入的``oparg``将被忽略，不会抛出错误。"
 
 #: ../../library/dis.rst:393
 msgid "Python Bytecode Instructions"
@@ -561,13 +569,13 @@ msgstr "人类可读的操作名称"
 msgid ""
 "numeric code for the base operation if operation is specialized; otherwise "
 "equal to :data:`opcode`"
-msgstr ""
+msgstr "如果操作是专用的则为基本操作的数字码；否则等于 :data:`opcode`"
 
 #: ../../library/dis.rst:421
 msgid ""
 "human readable name for the base operation if operation is specialized; "
 "otherwise equal to :data:`opname`"
-msgstr ""
+msgstr "如果操作是专用的则为基本操作的人类易读的名称；否则等于 :data:`opname`"
 
 #: ../../library/dis.rst:427
 msgid "numeric argument to operation (if any), otherwise ``None``"
@@ -575,7 +583,7 @@ msgstr "操作的数字参数（如果有的话），否则为 ``None``"
 
 #: ../../library/dis.rst:431
 msgid "alias for :data:`arg`"
-msgstr ""
+msgstr ":data:`arg` 的别名"
 
 #: ../../library/dis.rst:435
 msgid "resolved arg value (if any), otherwise ``None``"
@@ -589,30 +597,32 @@ msgstr "人类可读的操作参数（如果存在）的描述，否则为空字
 
 #: ../../library/dis.rst:446
 msgid "start index of operation within bytecode sequence"
-msgstr "在字节码序列中启动操作索引"
+msgstr "在字节码序列中的起始操作索引"
 
 #: ../../library/dis.rst:451
 msgid ""
 "start index of operation within bytecode sequence, including prefixed "
 "``EXTENDED_ARG`` operations if present; otherwise equal to :data:`offset`"
 msgstr ""
+"在字节码序列中的起始索引，包括前面的 ``EXTENDED_ARG`` 操作（如有），否则和 :"
+"data:`offset` 相等。"
 
 #: ../../library/dis.rst:457
 msgid "start index of the cache entries following the operation"
-msgstr ""
+msgstr "在操作后面的缓存条目的起始索引"
 
 #: ../../library/dis.rst:462
 msgid "end index of the cache entries following the operation"
-msgstr ""
+msgstr "操作后面的缓存条目的结束索引"
 
 #: ../../library/dis.rst:467
 msgid "``True`` if this opcode starts a source line, otherwise ``False``"
-msgstr ""
+msgstr "如果这个操作在源代码行的开始，为``True``，否则为``False``。"
 
 #: ../../library/dis.rst:472
 msgid ""
 "source line number associated with this opcode (if any), otherwise ``None``"
-msgstr ""
+msgstr "操作码对应的源代码行号（如有），否则为``None``"
 
 #: ../../library/dis.rst:477
 msgid "``True`` if other code jumps to here, otherwise ``False``"
@@ -622,7 +632,7 @@ msgstr "如果其他代码跳到这里，则为 ``True`` ，否则为 ``False``"
 msgid ""
 "bytecode index of the jump target if this is a jump operation, otherwise "
 "``None``"
-msgstr ""
+msgstr "跳转的目标的字节码索引，如果有跳转操作，否则为``None``"
 
 #: ../../library/dis.rst:488
 msgid ""
@@ -636,7 +646,7 @@ msgstr "增加了 ``positions`` 字段。"
 
 #: ../../library/dis.rst:507
 msgid "Changed field ``starts_line``."
-msgstr ""
+msgstr "更改了字段``starts_line``。"
 
 #: ../../library/dis.rst:509
 msgid ""
@@ -644,6 +654,9 @@ msgid ""
 "``baseopname``, ``baseopcode``, ``jump_target``, ``oparg``, ``line_number`` "
 "and ``cache_info``."
 msgstr ""
+"添加了字段``start_offset``、``cache_offset``、``end_offset``、"
+"``baseopname``、``baseopcode``、``jump_target``、``oparg``、``line_number``和"
+"``cache_info``"
 
 #: ../../library/dis.rst:516
 msgid ""
@@ -682,7 +695,7 @@ msgstr "移除除堆栈顶部的项："
 msgid ""
 "Removes the top-of-stack item. Equivalent to ``POP_TOP``. Used to clean up "
 "at the end of loops, hence the name."
-msgstr ""
+msgstr "移除栈顶。 等价于 ``POP_TOP``。用于循环结束时的清理，因此而得名。"
 
 #: ../../library/dis.rst:559
 msgid "Implements ``del STACK[-2]``. Used to clean up when a generator exits."
@@ -748,7 +761,7 @@ msgstr "实现 ``STACK[-1] = not STACK[-1]`` 。"
 #: ../../library/dis.rst:618 ../../library/dis.rst:1309
 #: ../../library/dis.rst:1325
 msgid "This instruction now requires an exact :class:`bool` operand."
-msgstr ""
+msgstr "现在，操作对象需要是 :class:`bool` 类型。"
 
 #: ../../library/dis.rst:624
 msgid "Implements ``STACK[-1] = ~STACK[-1]``."
@@ -768,7 +781,7 @@ msgstr ""
 
 #: ../../library/dis.rst:642
 msgid "Implements ``STACK[-1] = bool(STACK[-1])``."
-msgstr ""
+msgstr "实现``STACK[-1] = bool(STACK[-1])``。"
 
 #: ../../library/dis.rst:647
 msgid "**Binary and in-place operations**"
@@ -955,6 +968,7 @@ msgid ""
 "oparg is ``1`` if this instruction is part of a yield-from or await, and "
 "``0`` otherwise."
 msgstr ""
+"如果该指令是 yield-from 或 await 的一部分则 oparg 为 ``1``，否则为 ``0``。"
 
 #: ../../library/dis.rst:865
 msgid ""
@@ -1308,6 +1322,12 @@ msgid ""
 "Otherwise, ``NULL`` and the object returned by the attribute lookup are "
 "pushed."
 msgstr ""
+"如果 ``namei`` 的低位已设置，则会尝试从 ``STACK[-1]`` 对象加载名为 "
+"``co_names[namei>>1]`` 的方法。 ``STACK[-1]`` 会被弹出。 此字节码会区分两种情"
+"况：如果 ``STACK[-1]`` 具有一个名称正确的方法，字节码会推入未绑定的方法和 "
+"``STACK[-1]``。 ``STACK[-1]`` 将被 :opcode:`CALL` 或者 :opcode:`CALL_KW` 用作"
+"调用未绑定方法时的第一个参数 (``self``)。 否则，将推入 ``NULL`` 和属性查询所"
+"返回的对象。"
 
 #: ../../library/dis.rst:1207
 msgid ""
@@ -1329,19 +1349,19 @@ msgstr ""
 
 #: ../../library/dis.rst:1218
 msgid "It pops three values from the stack (from top of stack down):"
-msgstr ""
+msgstr "它从栈弹出三个值（栈顶在前）："
 
 #: ../../library/dis.rst:1220
 msgid "``self``: the first argument to the current method"
-msgstr ""
+msgstr "``self``：当前方法的第一个参数"
 
 #: ../../library/dis.rst:1221
 msgid "``cls``: the class within which the current method was defined"
-msgstr ""
+msgstr "``cls``：当前方法被定义的类"
 
 #: ../../library/dis.rst:1222
 msgid "the global ``super``"
-msgstr ""
+msgstr "全局的``super``"
 
 #: ../../library/dis.rst:1224
 msgid ""
@@ -1374,12 +1394,14 @@ msgid ""
 "``cmp_op[opname >> 5]``. If the fifth-lowest bit of ``opname`` is set "
 "(``opname & 16``), the result should be coerced to ``bool``."
 msgstr ""
+"执行布尔操作。操作名可以在``cmp_op[opname >> 5]``中找到。如果``opname``的第五"
+"低位是1（``opname & 16``），则结果将被强制转换为``bool``。"
 
 #: ../../library/dis.rst:1243
 msgid ""
 "The fifth-lowest bit of the oparg now indicates a forced conversion to :"
 "class:`bool`."
-msgstr ""
+msgstr "现在参数的第五低位表示强制将结果转换为 :class:`bool`。"
 
 #: ../../library/dis.rst:1250
 msgid "Performs ``is`` comparison, or ``is not`` if ``invert`` is 1."
@@ -1629,7 +1651,7 @@ msgstr ""
 msgid ""
 "Calls a callable object with the number of arguments specified by ``argc``. "
 "On the stack are (in ascending order):"
-msgstr ""
+msgstr "调用callable对象，以``argc``指定的参数个数。堆栈上是（升序）："
 
 #: ../../library/dis.rst:1482 ../../library/dis.rst:1506
 msgid "The callable"
@@ -1637,7 +1659,7 @@ msgstr "可调用对象"
 
 #: ../../library/dis.rst:1483 ../../library/dis.rst:1507
 msgid "``self`` or ``NULL``"
-msgstr ""
+msgstr "``self``或者``NULL``"
 
 #: ../../library/dis.rst:1484 ../../library/dis.rst:1508
 msgid "The remaining positional arguments"
@@ -1645,7 +1667,7 @@ msgstr "其余的位置参数"
 
 #: ../../library/dis.rst:1486
 msgid "``argc`` is the total of the positional arguments, excluding ``self``."
-msgstr ""
+msgstr "``argc`` 是位置参数的数量，不包括 ``self``。"
 
 #: ../../library/dis.rst:1488
 msgid ""
@@ -1658,17 +1680,18 @@ msgstr ""
 
 #: ../../library/dis.rst:1494
 msgid "The callable now always appears at the same position on the stack."
-msgstr ""
+msgstr "Callable现在总是出现在栈的同一位置。"
 
 #: ../../library/dis.rst:1497
 msgid "Calls with keyword arguments are now handled by :opcode:`CALL_KW`."
-msgstr ""
+msgstr "有关键字参数的调用现在由 :opcode:`CALL_KW` 处理。"
 
 #: ../../library/dis.rst:1503
 msgid ""
 "Calls a callable object with the number of arguments specified by ``argc``, "
 "including one or more named arguments. On the stack are (in ascending order):"
 msgstr ""
+"调用一个可调用对象并传入由 ``argc`` 指定数量的参数。 在栈上为（升序）："
 
 #: ../../library/dis.rst:1509
 msgid "The named arguments"
@@ -1676,7 +1699,7 @@ msgstr "关键字参数"
 
 #: ../../library/dis.rst:1510
 msgid "A :class:`tuple` of keyword argument names"
-msgstr ""
+msgstr "由关键字参数名称组成的 :class:`tuple`"
 
 #: ../../library/dis.rst:1512
 msgid ""
@@ -1684,6 +1707,8 @@ msgid ""
 "``self``. The length of the tuple of keyword argument names is the number of "
 "named arguments."
 msgstr ""
+"``argc`` 是位置参数和关键字参数的总数，不包括 ``self``。 关键字参数名称元组的"
+"长度为关键字参数的数量。"
 
 #: ../../library/dis.rst:1515
 msgid ""
@@ -1691,6 +1716,8 @@ msgid ""
 "off the stack, calls the callable object with those arguments, and pushes "
 "the return value returned by the callable object."
 msgstr ""
+"``CALL_KW`` 会将所有参数、关键字名称和可调用对象从栈中弹出，用这些参数调用可"
+"调用对象，并将返回值推入栈。"
 
 #: ../../library/dis.rst:1524
 msgid ""
@@ -1721,7 +1748,7 @@ msgstr ""
 msgid ""
 "Pushes a new function object on the stack built from the code object at "
 "``STACK[1]``."
-msgstr ""
+msgstr "从``STACK[1]``的代码对象构建函数，并推入栈。"
 
 #: ../../library/dis.rst:1550
 msgid "Flag value ``0x04`` is a tuple of strings instead of dictionary"
@@ -1736,6 +1763,8 @@ msgid ""
 "Extra function attributes on the stack, signaled by oparg flags, were "
 "removed. They now use :opcode:`SET_FUNCTION_ATTRIBUTE`."
 msgstr ""
+"操作参数曾指示额外的函数属性，现已被移除。 现在使用 :opcode:"
+"`SET_FUNCTION_ATTRIBUTE`。"
 
 #: ../../library/dis.rst:1563
 msgid ""
@@ -1744,6 +1773,9 @@ msgid ""
 "and leaves the function at ``STACK[-1]``. The flag determines which "
 "attribute to set:"
 msgstr ""
+"在函数对象上设置一个属性。将``STACK[-1]``的元素作为函数对象，``STACK[-2]``作"
+"为要设置的属性值，消耗这两个元素，将函数对象留在``STACK[-1]``。参数flag决定了"
+"要设置哪个属性："
 
 #: ../../library/dis.rst:1567
 msgid ""
@@ -1791,32 +1823,32 @@ msgstr ""
 
 #: ../../library/dis.rst:1606
 msgid "Convert value to a string, depending on ``oparg``::"
-msgstr ""
+msgstr "将值转化为字符串，以``oparg``指定的方式::"
 
 #: ../../library/dis.rst:1612
 msgid "``oparg == 1``: call :func:`str` on *value*"
-msgstr ""
+msgstr "``oparg == 1``: 在 *value* 上调用 :func:`str`"
 
 #: ../../library/dis.rst:1613
 msgid "``oparg == 2``: call :func:`repr` on *value*"
-msgstr ""
+msgstr "``oparg == 2``: 在 *value* 上调用 :func:`repr`"
 
 #: ../../library/dis.rst:1614
 msgid "``oparg == 3``: call :func:`ascii` on *value*"
-msgstr ""
+msgstr "``oparg == 3``: 在 *value* 上调用 :func:`ascii`"
 
 #: ../../library/dis.rst:1616 ../../library/dis.rst:1629
 #: ../../library/dis.rst:1642
 msgid "Used for implementing formatted literal strings (f-strings)."
-msgstr ""
+msgstr "用于实现格式化的字面值字符串（f-string）。"
 
 #: ../../library/dis.rst:1623
 msgid "Formats the value on top of stack::"
-msgstr ""
+msgstr "格式化栈顶的值::"
 
 #: ../../library/dis.rst:1635
 msgid "Formats the given value with the given format spec::"
-msgstr ""
+msgstr "使用给定的格式说明来格式化给定的值::"
 
 #: ../../library/dis.rst:1649
 msgid ""
@@ -1847,6 +1879,7 @@ msgid ""
 "The ``context`` oparand consists of two parts. The lowest two bits indicate "
 "where the ``RESUME`` occurs:"
 msgstr ""
+"``context`` 操作数由两部分组成。 最低的两个比特位指明 ``RESUME`` 在何处发生："
 
 #: ../../library/dis.rst:1672
 msgid ""
@@ -1871,10 +1904,12 @@ msgid ""
 "The next bit is ``1`` if the RESUME is at except-depth ``1``, and ``0`` "
 "otherwise."
 msgstr ""
+"如果 RESUME 在 except 深度 ``1`` 上发生则下一个比特位值为 ``1``，否则为 "
+"``0``。"
 
 #: ../../library/dis.rst:1683
 msgid "The oparg value changed to include information about except-depth"
-msgstr ""
+msgstr "oparg 值已被修改以包括有关 except 深度的信息"
 
 #: ../../library/dis.rst:1689
 msgid ""
@@ -1915,7 +1950,7 @@ msgstr ""
 msgid ""
 "If your application uses pseudo instructions or specialized instructions, "
 "use the :data:`hasarg` collection instead."
-msgstr ""
+msgstr "如果你的应用程序使用了伪指令或专用指令，请改用 :data:`hasarg` 多项集。"
 
 #: ../../library/dis.rst:1717
 msgid ""
@@ -1936,7 +1971,7 @@ msgstr ""
 
 #: ../../library/dis.rst:1726
 msgid "Use :data:`hasarg` instead."
-msgstr ""
+msgstr "使用 :data:`hasarg` 来代替。"
 
 #: ../../library/dis.rst:1731
 msgid ""
@@ -1997,7 +2032,7 @@ msgstr "``INTRINSIC_ASYNC_GEN_WRAP``"
 
 #: ../../library/dis.rst:1751
 msgid "Wraps an async generator value"
-msgstr ""
+msgstr "包裹一个异常生成器值"
 
 #: ../../library/dis.rst:1753
 msgid "``INTRINSIC_UNARY_POSITIVE``"
@@ -2173,16 +2208,16 @@ msgstr "非定向相对跳转指令会被汇编器转换为它们定向版本（
 msgid ""
 "Pushes a reference to the cell contained in slot ``i`` of the \"fast "
 "locals\" storage."
-msgstr ""
+msgstr "将一个引用推入到 \"fast locals\" 存储包含在 ``i`` 号槽位的单元内。"
 
 #: ../../library/dis.rst:1862
 msgid ""
 "Note that ``LOAD_CLOSURE`` is replaced with ``LOAD_FAST`` in the assembler."
-msgstr ""
+msgstr "请注意在汇编程序中 ``LOAD_CLOSURE`` 将被替换为 ``LOAD_FAST``。"
 
 #: ../../library/dis.rst:1864
 msgid "This opcode is now a pseudo-instruction."
-msgstr ""
+msgstr "该操作码现在是一个伪指令。"
 
 #: ../../library/dis.rst:1870
 msgid ""
@@ -2248,7 +2283,7 @@ msgstr "按名称访问属性的字节码序列。"
 
 #: ../../library/dis.rst:1929
 msgid "Sequence of bytecodes that have a jump target. All jumps are relative."
-msgstr ""
+msgstr "具有一个跳转目标的字节码序列。 所有跳转都是相对的。"
 
 #: ../../library/dis.rst:1936
 msgid "Sequence of bytecodes that access a local variable."
@@ -2268,7 +2303,7 @@ msgstr "具有相对跳转目标的字节码序列。"
 
 #: ../../library/dis.rst:1954
 msgid "All jumps are now relative. Use :data:`hasjump`."
-msgstr ""
+msgstr "所有跳转现在都是相对的。 使用 :data:`hasjump`。"
 
 #: ../../library/dis.rst:1960
 msgid "Sequence of bytecodes that have an absolute jump target."
@@ -2276,7 +2311,7 @@ msgstr "具有绝对跳转目标的字节码序列。"
 
 #: ../../library/dis.rst:1962
 msgid "All jumps are now relative. This list is empty."
-msgstr ""
+msgstr "所有跳转现在都是相对的。 该列表将为空。"
 
 #: ../../library/dis.rst:1578
 msgid "built-in function"
