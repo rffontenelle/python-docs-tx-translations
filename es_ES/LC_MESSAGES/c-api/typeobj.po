@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-20 01:54+0000\n"
+"POT-Creation-Date: 2024-07-29 05:06+0000\n"
 "PO-Revision-Date: 2023-05-24 02:09+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -2471,6 +2471,8 @@ msgid ""
 "This flag is inherited by types that do not already set :c:macro:"
 "`Py_TPFLAGS_MAPPING`."
 msgstr ""
+"Esta bandera es heredada por los tipos que aún no establecen :c:macro:"
+"`Py_TPFLAGS_MAPPING`."
 
 #: ../../c-api/typeobj.rst:1287
 msgid ""
@@ -2492,6 +2494,9 @@ msgid ""
 "is only used if the :c:macro:`Py_TPFLAGS_HAVE_GC` flag bit is set.  The "
 "signature is::"
 msgstr ""
+"Un puntero opcional a una función transversal para el recolector de basura.  "
+"Sólo se utiliza si el bit :c:macro:`Py_TPFLAGS_HAVE_GC` está activado.  La "
+"firma es::"
 
 #: ../../c-api/typeobj.rst:1303 ../../c-api/typeobj.rst:1424
 msgid ""
@@ -2510,6 +2515,12 @@ msgid ""
 "owns. For example, this is function :c:func:`!local_traverse` from the :mod:"
 "`!_thread` extension module::"
 msgstr ""
+"El puntero :c:member:`~PyTypeObject.tp_traverse` lo utiliza el recolector de "
+"basura para detectar ciclos de referencia. Una implementación típica de una "
+"función :c:member:`~PyTypeObject.tp_traverse` simplemente llama a :c:func:"
+"`Py_VISIT` en cada uno de los miembros de la instancia que son objetos "
+"Python que la instancia posee. Por ejemplo, esta es la función :c:func:`!"
+"local_traverse` del módulo de extensión :mod:`!_thread`::"
 
 #: ../../c-api/typeobj.rst:1321
 msgid ""
@@ -2546,6 +2557,16 @@ msgid ""
 "machinery, but the instance has no strong reference to the elements inside "
 "it, as they are allowed to be removed even if the instance is still alive)."
 msgstr ""
+"Cuando se implementa :c:member:`~PyTypeObject.tp_traverse`, sólo los "
+"miembros que la instancia *owns* (teniendo :term:`strong references <strong "
+"reference>` a ellos) se deben visitar. Por ejemplo, si un objeto soporta "
+"referencias débiles a través de la ranura :c:member:`~PyTypeObject."
+"tp_weaklist`, el puntero que soporta la lista enlazada (a lo que "
+"*tp_weaklist* apunta) no se debe visitar, ya que la instancia no posee "
+"directamente las referencias débiles a sí misma (la lista de referencias "
+"débiles está ahí para soportar la maquinaria de referencias débiles, pero la "
+"instancia no tiene referencias fuertes a los elementos dentro de ella, ya "
+"que se les permite ser eliminados incluso si la instancia sigue viva)."
 
 #: ../../c-api/typeobj.rst:1341
 msgid ""
@@ -2565,6 +2586,11 @@ msgid ""
 "``tp_traverse`` of another heap-allocated type (such as a heap-allocated "
 "superclass). If they do not, the type object may not be garbage-collected."
 msgstr ""
+"Las instancias de :ref:`heap-allocated types <heap-types>` contienen una "
+"referencia a su tipo. Por lo tanto, su función transversal debe visitar :c:"
+"func:`Py_TYPE(self) <Py_TYPE>`, o delegar esta responsabilidad llamando a "
+"``tp_traverse`` de otro tipo heap-allocated (como una superclase heap-"
+"allocated). Si no lo hacen, el objeto de tipo puede no ser recolectado."
 
 #: ../../c-api/typeobj.rst:1354
 msgid ""
@@ -2584,6 +2610,10 @@ msgid ""
 "member:`~PyTypeObject.tp_traverse`, and :c:member:`~PyTypeObject.tp_clear` "
 "are all inherited from the base type if they are all zero in the subtype."
 msgstr ""
+"Este campo es heredado por los subtipos junto con :c:member:`~PyTypeObject."
+"tp_clear` y el bit de bandera :c:macro:`Py_TPFLAGS_HAVE_GC`: el bit de "
+"bandera, :c:member:`~PyTypeObject.tp_traverse`, y :c:member:`~PyTypeObject."
+"tp_clear` son heredados del tipo base si son todos cero en el subtipo."
 
 #: ../../c-api/typeobj.rst:1371
 msgid ""
@@ -2591,6 +2621,9 @@ msgid ""
 "only used if the :c:macro:`Py_TPFLAGS_HAVE_GC` flag bit is set.  The "
 "signature is::"
 msgstr ""
+"Un puntero opcional a una función de borrado para el recolector de basura. "
+"Sólo se utiliza si el bit :c:macro:`Py_TPFLAGS_HAVE_GC` está activado.  La "
+"firma es::"
 
 #: ../../c-api/typeobj.rst:1376
 msgid ""
@@ -2645,6 +2678,18 @@ msgid ""
 "contained object can no longer be used.  The :c:func:`Py_CLEAR` macro "
 "performs the operations in a safe order."
 msgstr ""
+"Debería usarse la macro :c:func:`Py_CLEAR`, porque limpiar referencias es "
+"delicado: la referencia al objeto contenido no debe ser liberada (vía :c:"
+"func:`Py_DECREF`) hasta después de que el puntero al objeto contenido sea "
+"puesto a ``NULL``. Esto es porque liberar la referencia puede causar que el "
+"objeto contenido se convierta en basura, desencadenando una cadena de "
+"actividad de reclamación que puede incluir la invocación de código Python "
+"arbitrario (debido a finalizadores, o callbacks weakref, asociados con el "
+"objeto contenido). Si es posible que dicho código haga referencia a *self* "
+"de nuevo, es importante que el puntero al objeto contenido sea ``NULL`` en "
+"ese momento, para que *self* sepa que el objeto contenido ya no puede ser "
+"usado.  La macro :c:func:`Py_CLEAR` realiza las operaciones en un orden "
+"seguro."
 
 #: ../../c-api/typeobj.rst:1412
 msgid ""
@@ -2682,6 +2727,10 @@ msgid ""
 "c:member:`~PyTypeObject.tp_traverse`, and :c:member:`~PyTypeObject.tp_clear` "
 "are all inherited from the base type if they are all zero in the subtype."
 msgstr ""
+"Este campo es heredado por los subtipos junto con :c:member:`~PyTypeObject."
+"tp_traverse` y el bit de bandera :c:macro:`Py_TPFLAGS_HAVE_GC`: el bit de "
+"bandera, :c:member:`~PyTypeObject.tp_traverse`, y :c:member:`~PyTypeObject."
+"tp_clear` son heredados del tipo base si son todos cero en el subtipo."
 
 #: ../../c-api/typeobj.rst:1439
 msgid ""
@@ -2772,7 +2821,7 @@ msgstr ""
 
 #: ../../c-api/typeobj.rst:1482
 msgid "The returned value is a new :term:`strong reference`."
-msgstr ""
+msgstr "El valor devuelto es una nueva :term:`strong reference`."
 
 #: ../../c-api/typeobj.rst:1484
 msgid "On error, sets an exception and returns ``NULL`` from the function."
@@ -2800,6 +2849,11 @@ msgid ""
 "is used and instances of the type will not be able to participate in any "
 "comparisons."
 msgstr ""
+":c:data:`PyBaseObject_Type` proporciona una implementación de :c:member:"
+"`~PyTypeObject.tp_richcompare`, que se puede heredar.  Sin embargo, si sólo "
+"se define :c:member:`~PyTypeObject.tp_hash`, ni siquiera se utiliza la "
+"función heredada y las instancias del tipo no podrán participar en ninguna "
+"comparación."
 
 #: ../../c-api/typeobj.rst:1508
 msgid ""
@@ -2810,6 +2864,13 @@ msgid ""
 "functions.  The instance structure needs to include a field of type :c:expr:"
 "`PyObject*` which is initialized to ``NULL``."
 msgstr ""
+"Si las instancias de este tipo son débilmente referenciables, este campo es "
+"mayor que cero y contiene el desplazamiento en la estructura de instancia de "
+"la cabecera de la lista de referencia débil (ignorando la cabecera GC, si "
+"está presente); este desplazamiento es utilizado por :c:func:"
+"`PyObject_ClearWeakRefs` y las funciones ``PyWeakref_*``.  La estructura de "
+"instancia debe incluir un campo de tipo :c:expr:`PyObject*` que se "
+"inicializa en ``NULL``."
 
 #: ../../c-api/typeobj.rst:1515
 msgid ""
@@ -2864,6 +2925,10 @@ msgid ""
 "object.  Its presence normally signals that the instances of this type are :"
 "term:`iterable` (although sequences may be iterable without this function)."
 msgstr ""
+"Un puntero opcional a una función que devuelve un :term:`iterator` para el "
+"objeto.  Su presencia normalmente indica que las instancias de este tipo "
+"son :term:`iterables` (aunque las secuencias pueden ser iterables sin esta "
+"función)."
 
 #: ../../c-api/typeobj.rst:1546
 msgid "This function has the same signature as :c:func:`PyObject_GetIter`::"
@@ -2874,6 +2939,8 @@ msgid ""
 "An optional pointer to a function that returns the next item in an :term:"
 "`iterator`. The signature is::"
 msgstr ""
+"Un puntero opcional a una función que devuelve el siguiente elemento de un :"
+"term:`iterator`. La firma es::"
 
 #: ../../c-api/typeobj.rst:1562
 msgid ""
@@ -3012,6 +3079,11 @@ msgid ""
 "Compilers may support this (gcc does), MSVC does not. Both compilers are "
 "strictly standard conforming in this particular behavior."
 msgstr ""
+"Sin embargo, el operador unario '&' aplicado a una variable no estática "
+"como :c:data:`PyBaseObject_Type` no es necesario para producir una constante "
+"de dirección.  Los compiladores pueden soportar esto (gcc lo hace), MSVC no. "
+"Ambos compiladores cumplen estrictamente la norma en este comportamiento "
+"concreto."
 
 #: ../../c-api/typeobj.rst:1642
 msgid ""
@@ -3138,6 +3210,12 @@ msgid ""
 "need to allocate memory for the dictionary, so it is may be more efficient "
 "to call :c:func:`PyObject_GetAttr` when accessing an attribute on the object."
 msgstr ""
+"El :c:member:`~PyTypeObject.tp_dictoffset` debe considerarse como de sólo "
+"escritura. Para obtener el puntero al diccionario llame a :c:func:"
+"`PyObject_GenericGetDict`. Llamar a :c:func:`PyObject_GenericGetDict` puede "
+"necesitar asignar memoria para el diccionario, por lo que puede ser más "
+"eficiente llamar a :c:func:`PyObject_GetAttr` cuando se accede a un atributo "
+"del objeto."
 
 #: ../../c-api/typeobj.rst:1744
 msgid ""
@@ -3177,6 +3255,9 @@ msgid ""
 "field is ``NULL`` then no :attr:`~object.__dict__` gets created for "
 "instances."
 msgstr ""
+"Esta ranura no tiene valor por defecto.  Para :ref:`static types <static-"
+"types>`, si el campo es ``NULL`` no se crea :attr:`~object.__dict__` para "
+"las instancias."
 
 #: ../../c-api/typeobj.rst:1769
 msgid "An optional pointer to an instance initialization function."
@@ -3189,6 +3270,10 @@ msgid ""
 "without calling :meth:`!__init__`, and it is possible to reinitialize an "
 "instance by calling its :meth:`!__init__` method again."
 msgstr ""
+"Esta función corresponde al método :meth:`~object.__init__` de las clases.  "
+"Al igual que :meth:`!__init__`, es posible crear una instancia sin llamar a :"
+"meth:`!__init__`, y es posible reinicializar una instancia llamando de nuevo "
+"a su método :meth:`!__init__`."
 
 #: ../../c-api/typeobj.rst:1780
 msgid ""
@@ -3196,6 +3281,9 @@ msgid ""
 "arguments represent positional and keyword arguments of the call to :meth:"
 "`~object.__init__`."
 msgstr ""
+"El argumento self es la instancia que se va a inicializar; los argumentos "
+"*args* y *kwds* representan argumentos posicionales y de palabra clave de la "
+"llamada a :meth:`~object.__init__`."
 
 #: ../../c-api/typeobj.rst:1784
 msgid ""
@@ -3227,6 +3315,8 @@ msgstr ""
 msgid ""
 "For :ref:`static types <static-types>` this field does not have a default."
 msgstr ""
+"Para los tipos :ref:`static <static-types>` este campo no tiene valor por "
+"defecto."
 
 #: ../../c-api/typeobj.rst:1804
 msgid "An optional pointer to an instance allocation function."
@@ -3255,6 +3345,9 @@ msgid ""
 "`PyType_GenericAlloc`.  That is the recommended value for all statically "
 "defined types."
 msgstr ""
+"Para los subtipos estáticos, :c:data:`PyBaseObject_Type` utiliza :c:func:"
+"`PyType_GenericAlloc`.  Este es el valor recomendado para todos los tipos "
+"definidos estáticamente."
 
 #: ../../c-api/typeobj.rst:1828
 msgid "An optional pointer to an instance creation function."
@@ -3299,6 +3392,8 @@ msgid ""
 "Set the :c:macro:`Py_TPFLAGS_DISALLOW_INSTANTIATION` flag to disallow "
 "creating instances of the type in Python."
 msgstr ""
+"Establezca la bandera :c:macro:`Py_TPFLAGS_DISALLOW_INSTANTIATION` para no "
+"permitir la creación de instancias del tipo en Python."
 
 #: ../../c-api/typeobj.rst:1853
 msgid ""
@@ -3306,6 +3401,9 @@ msgid ""
 "`static types <static-types>` whose :c:member:`~PyTypeObject.tp_base` is "
 "``NULL`` or ``&PyBaseObject_Type``."
 msgstr ""
+"Este campo es heredado por los subtipos, excepto que no es heredado por los :"
+"ref:`static types <static-types>` cuyo :c:member:`~PyTypeObject.tp_base` es "
+"``NULL`` o ``&PyBaseObject_Type``."
 
 #: ../../c-api/typeobj.rst:1859
 msgid ""
@@ -3314,6 +3412,10 @@ msgid ""
 "instances; presumably there is some other way to create instances, like a "
 "factory function."
 msgstr ""
+"Para ref:`static types <static-types>` este campo no tiene valor por "
+"defecto. Esto significa que si la ranura se define como ``NULL``, el tipo no "
+"puede ser llamado para crear nuevas instancias; presumiblemente hay alguna "
+"otra forma de crear instancias, como una función de fábrica."
 
 #: ../../c-api/typeobj.rst:1867
 msgid ""
@@ -3342,11 +3444,16 @@ msgid ""
 "func:`PyType_GenericAlloc` and the value of the :c:macro:"
 "`Py_TPFLAGS_HAVE_GC` flag bit."
 msgstr ""
+"En los subtipos dinámicos, este campo se establece en un desasignador "
+"adecuado para que coincida con :c:func:`PyType_GenericAlloc` y el valor del "
+"bit de bandera :c:macro:`Py_TPFLAGS_HAVE_GC`."
 
 #: ../../c-api/typeobj.rst:1884
 msgid ""
 "For static subtypes, :c:data:`PyBaseObject_Type` uses :c:func:`PyObject_Del`."
 msgstr ""
+"Para los subtipos estáticos, :c:data:`PyBaseObject_Type` utiliza :c:func:"
+"`PyObject_Del`."
 
 #: ../../c-api/typeobj.rst:1889
 msgid "An optional pointer to a function called by the garbage collector."
@@ -3363,6 +3470,14 @@ msgid ""
 "return ``1`` for a collectible instance, and ``0`` for a non-collectible "
 "instance. The signature is::"
 msgstr ""
+"El recolector de basura necesita saber si un objeto concreto es recolectable "
+"o no.  Normalmente, basta con consultar el campo :c:member:`~PyTypeObject."
+"tp_flags` del tipo de objeto y comprobar el bit de indicador :c:macro:"
+"`Py_TPFLAGS_HAVE_GC`.  Pero algunos tipos tienen una mezcla de instancias "
+"asignadas estática y dinámicamente, y las instancias asignadas estáticamente "
+"no son coleccionables.  Estos tipos deberían definir esta función; debería "
+"devolver ``1`` para una instancia coleccionable, y ``0`` para una instancia "
+"no coleccionable. La firma es::"
 
 #: ../../c-api/typeobj.rst:1901
 msgid ""
@@ -3370,12 +3485,17 @@ msgid ""
 "`PyType_Type`, defines this function to distinguish between statically and :"
 "ref:`dynamically allocated types <heap-types>`.)"
 msgstr ""
+"(El único ejemplo de esto son los propios tipos.  El metateipo, :c:data:"
+"`PyType_Type`, define esta función para distinguir entre tipos asignados "
+"estáticamente y :ref:`dinámicamente <heap-types>`)."
 
 #: ../../c-api/typeobj.rst:1911
 msgid ""
 "This slot has no default.  If this field is ``NULL``, :c:macro:"
 "`Py_TPFLAGS_HAVE_GC` is used as the functional equivalent."
 msgstr ""
+"Esta ranura no tiene valor por defecto.  Si este campo es ``NULL``, se "
+"utiliza :c:macro:`Py_TPFLAGS_HAVE_GC` como equivalente funcional."
 
 #: ../../c-api/typeobj.rst:1917
 msgid "Tuple of base types."
@@ -3386,6 +3506,8 @@ msgid ""
 "This field should be set to ``NULL`` and treated as read-only. Python will "
 "fill it in when the type is :c:func:`initialized <PyType_Ready>`."
 msgstr ""
+"Este campo debe establecerse en ``NULL`` y tratarse como de sólo lectura. "
+"Python lo rellenará cuando el tipo sea :c:func:`initialized <PyType_Ready>`."
 
 #: ../../c-api/typeobj.rst:1922
 msgid ""
@@ -3393,6 +3515,9 @@ msgid ""
 "<PyType_Slot>` can be used instead of the *bases* argument of :c:func:"
 "`PyType_FromSpecWithBases`. The argument form is preferred."
 msgstr ""
+"Para las clases creadas dinámicamente, se puede utilizar el argumento "
+"``Py_tp_bases``:c:type:`slot <PyType_Slot>` en lugar del argumento *bases* "
+"de :c:func:`PyType_FromSpecWithBases`. Se prefiere la forma de argumento."
 
 #: ../../c-api/typeobj.rst:1929
 msgid ""
@@ -3400,6 +3525,9 @@ msgid ""
 "set ``tp_bases`` to a tuple, Python will not raise an error, but some slots "
 "will only be inherited from the first base."
 msgstr ""
+"La herencia múltiple no funciona bien para tipos definidos estáticamente. Si "
+"establece ``tp_bases`` en una tupla, Python no generará un error, pero "
+"algunas ranuras sólo se heredarán de la primera base."
 
 #: ../../c-api/typeobj.rst:1935 ../../c-api/typeobj.rst:1958
 #: ../../c-api/typeobj.rst:1967 ../../c-api/typeobj.rst:1977
@@ -3512,6 +3640,9 @@ msgid ""
 "`Py_TPFLAGS_HAVE_FINALIZE` flags bit in order for this field to be used.  "
 "This is no longer required."
 msgstr ""
+"Antes de la versión 3.8 era necesario activar el bit banderas :c:macro:"
+"`Py_TPFLAGS_HAVE_FINALIZE` para poder utilizar este campo.  Ahora ya no es "
+"necesario."
 
 #: ../../c-api/typeobj.rst:2047
 msgid "\"Safe object finalization\" (:pep:`442`)"
@@ -3524,6 +3655,11 @@ msgid ""
 "If ``tp_vectorcall`` is ``NULL``, the default call implementation using :"
 "meth:`~object.__new__` and :meth:`~object.__init__` is used."
 msgstr ""
+"Función vectorcall a utilizar para las llamadas de este objeto de tipo. En "
+"otras palabras, se utiliza para implementar :ref:`vectorcall <vectorcall>` "
+"para ``type.__call__``. Si ``tp_vectorcall`` es ``NULL``, se utiliza la "
+"implementación de llamada por defecto que utiliza :meth:`~object.__new__` y :"
+"meth:`~object.__init__`."
 
 #: ../../c-api/typeobj.rst:2060
 msgid "This field is never inherited."
@@ -3537,7 +3673,7 @@ msgstr ""
 
 #: ../../c-api/typeobj.rst:2068
 msgid "Static Types"
-msgstr ""
+msgstr "Tipos estáticos"
 
 #: ../../c-api/typeobj.rst:2070
 msgid ""
@@ -3589,6 +3725,10 @@ msgid ""
 "<limited-c-api>` as an opaque struct, any extension modules using static "
 "types must be compiled for a specific Python minor version."
 msgstr ""
+"Además, dado que :c:type:`PyTypeObject` sólo forma parte de la :ref:`Limited "
+"API <limited-c-api>` como estructura opaca, cualquier módulo de ampliación "
+"que utilice tipos estáticos debe compilarse para una versión menor "
+"específica de Python."
 
 #: ../../c-api/typeobj.rst:2092
 msgid "Heap Types"
@@ -3601,6 +3741,10 @@ msgid ""
 "created by Python's ``class`` statement. Heap types have the :c:macro:"
 "`Py_TPFLAGS_HEAPTYPE` flag set."
 msgstr ""
+"Una alternativa a :ref:`static types <static-types>` es *heap-allocated "
+"types*, o *heap types* para abreviar, que se corresponden estrechamente con "
+"las clases creadas por la sentencia ``class`` de Python. Los tipos de montón "
+"tienen la bandera :c:macro:`Py_TPFLAGS_HEAPTYPE` activada."
 
 #: ../../c-api/typeobj.rst:2099
 msgid ""
@@ -3649,6 +3793,9 @@ msgid ""
 "``NULL``.  It was previously called :c:member:`!nb_long`, and was renamed in "
 "Python 3.0.1."
 msgstr ""
+"El campo :c:member:`~PyNumberMethods.nb_reserved` debe ser siempre "
+"``NULL``.  Anteriormente se llamaba :c:member:`!nb_long`, y se le cambió el "
+"nombre en Python 3.0.1."
 
 #: ../../c-api/typeobj.rst:2221
 msgid "Mapping Object Structures"
@@ -3693,6 +3840,12 @@ msgid ""
 "If this slot is ``NULL``, the object does not support item assignment and "
 "deletion."
 msgstr ""
+"Esta función es utilizada por :c:func:`PyObject_SetItem`, :c:func:"
+"`PyObject_DelItem`, :c:func:`PySequence_SetSlice` y :c:func:"
+"`PySequence_DelSlice`. Tiene la misma firma que :c:func:`!PyObject_SetItem`, "
+"pero *v* también se puede establecer en ``NULL`` para eliminar un elemento.  "
+"Si esta ranura es ``NULL``, el objeto no admite la asignación y eliminación "
+"de elementos."
 
 #: ../../c-api/typeobj.rst:2258
 msgid "Sequence Object Structures"
@@ -3761,6 +3914,11 @@ msgid ""
 "`~PySequenceMethods.sq_item`.  If :c:member:`!sq_length` is ``NULL``, the "
 "index is passed as is to the function."
 msgstr ""
+"Los índices negativos se tratan de la siguiente manera: si la ranura :c:"
+"member:`~PySequenceMethods.sq_length` está llena, se llama y la longitud de "
+"la secuencia se utiliza para calcular un índice positivo que se pasa a :c:"
+"member:`~PySequenceMethods.sq_item`.  Si :c:member:`!sq_length` es ``NULL``, "
+"el índice se pasa tal cual a la función."
 
 #: ../../c-api/typeobj.rst:2302
 msgid ""
@@ -3855,6 +4013,8 @@ msgid ""
 "Check if the request can be met. If not, raise :exc:`BufferError`, set :c:"
 "expr:`view->obj` to ``NULL`` and return ``-1``."
 msgstr ""
+"Comprueba si se puede satisfacer la petición. En caso negativo, eleva :exc:"
+"`BufferError`, establece :c:expr:`view->obj` en ``NULL`` y devuelve ``-1``."
 
 #: ../../c-api/typeobj.rst:2363
 msgid "Fill in the requested fields."
@@ -3868,6 +4028,8 @@ msgstr "Incrementar un contador interno para el número de exportaciones."
 msgid ""
 "Set :c:expr:`view->obj` to *exporter* and increment :c:expr:`view->obj`."
 msgstr ""
+"Establezca :c:expr:`view->obj` en *exporter* e incremente :c:expr:`view-"
+">obj`."
 
 #: ../../c-api/typeobj.rst:2369
 msgid "Return ``0``."
@@ -3886,12 +4048,16 @@ msgid ""
 "Re-export: Each member of the tree acts as the exporting object and sets :c:"
 "expr:`view->obj` to a new reference to itself."
 msgstr ""
+"Reexportación: Cada miembro del árbol actúa como objeto exportador y "
+"establece :c:expr:`view->obj` en una nueva referencia a sí mismo."
 
 #: ../../c-api/typeobj.rst:2377
 msgid ""
 "Redirect: The buffer request is redirected to the root object of the tree. "
 "Here, :c:expr:`view->obj` will be a new reference to the root object."
 msgstr ""
+"Redirigir: La petición del buffer se redirige al objeto raíz del árbol. "
+"Aquí, :c:expr:`view->obj` será una nueva referencia al objeto raíz."
 
 #: ../../c-api/typeobj.rst:2381
 msgid ""
@@ -3974,6 +4140,9 @@ msgid ""
 "automatically in :c:func:`PyBuffer_Release` (this scheme is useful for "
 "breaking reference cycles)."
 msgstr ""
+"Esta función NO DEBE decrementar :c:expr:`view->obj`, ya que eso se hace "
+"automáticamente en :c:func:`PyBuffer_Release` (este esquema es útil para "
+"romper ciclos de referencia)."
 
 #: ../../c-api/typeobj.rst:2425
 msgid ""
@@ -4000,6 +4169,8 @@ msgid ""
 "The returned object must be an :term:`iterator`, i.e. :c:func:`PyIter_Check` "
 "must return ``1`` for it."
 msgstr ""
+"El objeto devuelto debe ser un :term:`iterator`, es decir, :c:func:"
+"`PyIter_Check` debe devolver ``1`` para él."
 
 #: ../../c-api/typeobj.rst:2462
 msgid ""
@@ -4013,6 +4184,8 @@ msgid ""
 "Must return an :term:`asynchronous iterator` object. See :meth:`~object."
 "__anext__` for details."
 msgstr ""
+"Debe devolver un objeto  :term:`asynchronous iterator``. Ver para más "
+"detalles :meth:`~object.__anext__`."
 
 #: ../../c-api/typeobj.rst:2473
 msgid ""
@@ -4027,11 +4200,15 @@ msgid ""
 "Must return an :term:`awaitable` object. See :meth:`~object.__anext__` for "
 "details. This slot may be set to ``NULL``."
 msgstr ""
+"Debe devolver un objeto :term:`awaitable`. Ver :meth:`~object.__anext__` "
+"para más detalles. Esta ranura puede establecerse en ``NULL``."
 
 #: ../../c-api/typeobj.rst:2492
 msgid ""
 "See :c:func:`PyIter_Send` for details. This slot may be set to ``NULL``."
 msgstr ""
+"Ver :c:func:`PyIter_Send` para más detalles. Esta ranura puede configurarse "
+"en ``NULL``."
 
 #: ../../c-api/typeobj.rst:2501
 msgid "Slot Type typedefs"
@@ -4050,6 +4227,17 @@ msgid ""
 "a multiple of ``sizeof(void*)``; otherwise, *nitems* is not used and the "
 "length of the block should be :c:member:`~PyTypeObject.tp_basicsize`."
 msgstr ""
+"El propósito de esta función es separar la asignación de memoria de la "
+"inicialización de memoria.  Debe devolver un puntero a un bloque de memoria "
+"de longitud adecuada para la instancia, convenientemente alineado e "
+"inicializado a ceros, pero con :c:member:`~PyObject.ob_refcnt` establecido a "
+"``1`` y :c:member:`~PyObject.ob_type` establecido al argumento de tipo.  Si "
+"el tipo :c:member:`~PyTypeObject.tp_itemsize` es distinto de cero, el campo :"
+"c:member:`~PyVarObject.ob_size` del objeto debe inicializarse a *nitems* y "
+"la longitud del bloque de memoria asignado debe ser ``tp_basicsize + "
+"nitems*tp_itemsize``, redondeado a un múltiplo de ``sizeof(void*)``; en caso "
+"contrario, *nitems* no se utiliza y la longitud del bloque debe ser :c:"
+"member:`~PyTypeObject.tp_basicsize`."
 
 #: ../../c-api/typeobj.rst:2515
 msgid ""
@@ -4099,11 +4287,11 @@ msgstr "Ver :c:member:`~PyTypeObject.tp_setattro`."
 
 #: ../../c-api/typeobj.rst:2560
 msgid "See :c:member:`~PyTypeObject.tp_descr_get`."
-msgstr ""
+msgstr "Ver :c:member:`~PyTypeObject.tp_descr_get`."
 
 #: ../../c-api/typeobj.rst:2564
 msgid "See :c:member:`~PyTypeObject.tp_descr_set`."
-msgstr ""
+msgstr "Ver :c:member:`~PyTypeObject.tp_descr_set`."
 
 #: ../../c-api/typeobj.rst:2568
 msgid "See :c:member:`~PyTypeObject.tp_hash`."
@@ -4123,7 +4311,7 @@ msgstr "Ver :c:member:`~PyTypeObject.tp_iternext`."
 
 #: ../../c-api/typeobj.rst:2594
 msgid "See :c:member:`~PyAsyncMethods.am_send`."
-msgstr ""
+msgstr "Ver :c:member:`~PyAsyncMethods.am_send`."
 
 #: ../../c-api/typeobj.rst:2610
 msgid "Examples"
@@ -4143,7 +4331,7 @@ msgstr ""
 
 #: ../../c-api/typeobj.rst:2617
 msgid "A basic :ref:`static type <static-types>`::"
-msgstr ""
+msgstr "Un básicoo :ref:`static type<static-types>`::"
 
 #: ../../c-api/typeobj.rst:2634
 msgid ""
@@ -4163,17 +4351,24 @@ msgid ""
 "instances (e.g. uses a separate factory func) using :c:macro:"
 "`Py_TPFLAGS_DISALLOW_INSTANTIATION` flag::"
 msgstr ""
+"Una subclase str que no se puede subclasificar ni se puede llamar para crear "
+"instancias (por ejemplo, utiliza una función de fábrica separada) utilizando "
+"la bandera :c:macro:`Py_TPFLAGS_DISALLOW_INSTANTIATION`::"
 
 #: ../../c-api/typeobj.rst:2724
 msgid ""
 "The simplest :ref:`static type <static-types>` with fixed-length instances::"
 msgstr ""
+"El :ref:`static type <static-types>` más sencillo con instancias de longitud "
+"fija::"
 
 #: ../../c-api/typeobj.rst:2735
 msgid ""
 "The simplest :ref:`static type <static-types>` with variable-length "
 "instances::"
 msgstr ""
+"El  :ref:`static type <static-types>` más sencillo con instancias de "
+"longitud variable::"
 
 #: ../../c-api/typeobj.rst:807 ../../c-api/typeobj.rst:872
 msgid "built-in function"
