@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-26 14:49+0000\n"
+"POT-Creation-Date: 2024-07-29 04:36+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
 "Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -218,6 +218,12 @@ msgid ""
 "(starts at 0) and *value* is the new code point value which should be "
 "written to that location."
 msgstr ""
+"Escribe en una representación canónica *data* (tal como se obtiene con :c:"
+"func:`PyUnicode_DATA`).  Esta función no realiza comprobaciones sensatas, y "
+"está pensada para su uso en bucles.  La persona que llama debe almacenar en "
+"caché el valor *kind* y el puntero *data* obtenidos de otras llamadas.  "
+"*index* es el índice en la cadena (comienza en 0) y *value* es el nuevo "
+"valor de punto de código que debería escribirse en esa ubicación."
 
 #: ../../c-api/unicode.rst:163
 msgid ""
@@ -234,6 +240,9 @@ msgid ""
 "\"canonical\" representation.  This is less efficient than :c:func:"
 "`PyUnicode_READ` if you do multiple consecutive reads."
 msgstr ""
+"Lee un carácter de un objeto Unicode *unicode*, que debe estar en la "
+"representación \"canónica\".  Esto es menos eficiente que :c:func:"
+"`PyUnicode_READ` si se realizan varias lecturas consecutivas."
 
 #: ../../c-api/unicode.rst:180
 msgid ""
@@ -241,6 +250,9 @@ msgid ""
 "based on *unicode*, which must be in the \"canonical\" representation.  This "
 "is always an approximation but more efficient than iterating over the string."
 msgstr ""
+"Devuelve el punto de código máximo que es adecuado para crear otra cadena "
+"basada en *unicode*, que debe estar en la representación \"canónica\".  Esto "
+"es siempre una aproximación pero más eficiente que iterar sobre la cadena."
 
 #: ../../c-api/unicode.rst:189
 msgid ""
@@ -375,18 +387,24 @@ msgid ""
 "Return the character *ch* converted to a decimal positive integer.  Return "
 "``-1`` if this is not possible.  This function does not raise exceptions."
 msgstr ""
+"Devuelve el carácter *ch* convertido a un entero decimal positivo.  Devuelve "
+"``-1`` si no es posible.  Esta función no genera excepciones."
 
 #: ../../c-api/unicode.rst:301
 msgid ""
 "Return the character *ch* converted to a single digit integer. Return ``-1`` "
 "if this is not possible.  This function does not raise exceptions."
 msgstr ""
+"Devuelve el carácter *ch* convertido a un entero de un solo dígito. Devuelve "
+"``-1`` si no es posible.  Esta función no genera excepciones."
 
 #: ../../c-api/unicode.rst:307
 msgid ""
 "Return the character *ch* converted to a double. Return ``-1.0`` if this is "
 "not possible.  This function does not raise exceptions."
 msgstr ""
+"Devuelve el carácter *ch* convertido a doble. Devuelve ``-1.0`` si no es "
+"posible.  Esta función no genera excepciones."
 
 #: ../../c-api/unicode.rst:311
 msgid "These APIs can be used to work with surrogates:"
@@ -411,6 +429,10 @@ msgid ""
 "surrogate pair. *high* must be in the range [0xD800; 0xDBFF] and *low* must "
 "be in the range [0xDC00; 0xDFFF]."
 msgstr ""
+"Une dos caracteres sustitutos y devuelve un único valor :c:type:`Py_UCS4`. "
+"*high* y *low* son, respectivamente, los sustitutos inicial y final de un "
+"par de sustitutos. *high* debe estar en el rango [0xD800; 0xDBFF] y *low* "
+"debe estar en el rango [0xDC00; 0xDFFF]."
 
 #: ../../c-api/unicode.rst:334
 msgid "Creating and accessing Unicode strings"
@@ -461,6 +483,10 @@ msgid ""
 "macro:`PyUnicode_4BYTE_KIND`) and it consists only of codepoints in the UCS1 "
 "range, it will be transformed into UCS1 (:c:macro:`PyUnicode_1BYTE_KIND`)."
 msgstr ""
+"Si es necesario, el *buffer* de entrada se copia y se transforma en la "
+"representación canónica.  Por ejemplo, si el *buffer* es una cadena UCS4 (:c:"
+"macro:`PyUnicode_4BYTE_KIND`) y consta sólo de codepuntos en el rango UCS1, "
+"se transformará en UCS1 (:c:macro:`PyUnicode_1BYTE_KIND`)."
 
 #: ../../c-api/unicode.rst:370
 msgid ""
@@ -469,28 +495,34 @@ msgid ""
 "object. The return value might be a shared object, i.e. modification of the "
 "data is not allowed."
 msgstr ""
+"Crea un objeto Unicode a partir del búfer char *str*.  Los bytes se "
+"interpretarán como codificados en UTF-8.  El búfer se copia en el nuevo "
+"objeto. El valor devuelto puede ser un objeto compartido, es decir, no se "
+"permite la modificación de los datos."
 
 #: ../../c-api/unicode.rst:376
 msgid "This function raises :exc:`SystemError` when:"
-msgstr ""
+msgstr "Esta función plantea :exc:`SystemError` cuando:"
 
 #: ../../c-api/unicode.rst:378
 msgid "*size* < 0,"
-msgstr ""
+msgstr "*size* < 0,"
 
 #: ../../c-api/unicode.rst:379
 msgid "*str* is ``NULL`` and *size* > 0"
-msgstr ""
+msgstr "*str* es ``NULL`` y *size* > 0"
 
 #: ../../c-api/unicode.rst:381
 msgid "*str* == ``NULL`` with *size* > 0 is not allowed anymore."
-msgstr ""
+msgstr "*str* == ``NULL`` con *size* > 0 ya no está permitido."
 
 #: ../../c-api/unicode.rst:387
 msgid ""
 "Create a Unicode object from a UTF-8 encoded null-terminated char buffer "
 "*str*."
 msgstr ""
+"Crea un objeto Unicode a partir de un búfer de caracteres de terminación "
+"nula codificados en UTF-8 *str*."
 
 #: ../../c-api/unicode.rst:393
 msgid ""
@@ -500,22 +532,31 @@ msgid ""
 "must be C types and must correspond exactly to the format characters in the "
 "*format* ASCII-encoded string."
 msgstr ""
+"Toma una cadena C :c:func:`printf`\\ -style *format* y un número variable de "
+"argumentos, calcula el tamaño de la cadena Python Unicode resultante y "
+"devuelve una cadena con los valores formateados en ella.  Los argumentos "
+"variables deben ser de tipo C y deben corresponder exactamente a los "
+"caracteres de formato de la cadena *format* codificada en ASCII."
 
 #: ../../c-api/unicode.rst:399
 msgid ""
 "A conversion specifier contains two or more characters and has the following "
 "components, which must occur in this order:"
 msgstr ""
+"Un especificador de conversión contiene dos o más caracteres y tiene los "
+"siguientes componentes, que deben aparecer en este orden:"
 
 #: ../../c-api/unicode.rst:402
 msgid "The ``'%'`` character, which marks the start of the specifier."
-msgstr ""
+msgstr "El carácter ``'%'``, que marca el inicio del especificador."
 
 #: ../../c-api/unicode.rst:404
 msgid ""
 "Conversion flags (optional), which affect the result of some conversion "
 "types."
 msgstr ""
+"Indicadores de conversión (opcionales), que afectan al resultado de algunos "
+"tipos de conversión."
 
 #: ../../c-api/unicode.rst:407
 msgid ""
@@ -524,6 +565,10 @@ msgid ""
 "`int`, and the object to convert comes after the minimum field width and "
 "optional precision."
 msgstr ""
+"Anchura mínima del campo (opcional). Si se especifica como ``'*'`` "
+"(asterisco), la anchura real se da en el siguiente argumento, que debe ser "
+"del tipo :c:expr:`int`, y el objeto a convertir viene después de la anchura "
+"mínima de campo y la precisión opcional."
 
 #: ../../c-api/unicode.rst:412
 msgid ""
@@ -532,22 +577,26 @@ msgid ""
 "next argument, which must be of type :c:expr:`int`, and the value to convert "
 "comes after the precision."
 msgstr ""
+"Precisión (opcional), dada como ``'.'`` (punto) seguido de la precisión. Si "
+"se especifica como ``'*'`` (un asterisco), la precisión real se da en el "
+"siguiente argumento, que debe ser del tipo :c:expr:`int`, y el valor a "
+"convertir viene después de la precisión."
 
 #: ../../c-api/unicode.rst:417
 msgid "Length modifier (optional)."
-msgstr ""
+msgstr "Modificador de longitud (opcional)."
 
 #: ../../c-api/unicode.rst:419
 msgid "Conversion type."
-msgstr ""
+msgstr "Tipo de conversión."
 
 #: ../../c-api/unicode.rst:421
 msgid "The conversion flag characters are:"
-msgstr ""
+msgstr "Los caracteres de la bandera de conversión son:"
 
 #: ../../c-api/unicode.rst:426
 msgid "Flag"
-msgstr ""
+msgstr "Bandera"
 
 #: ../../c-api/unicode.rst:426
 msgid "Meaning"
@@ -555,21 +604,23 @@ msgstr "Significado"
 
 #: ../../c-api/unicode.rst:428
 msgid "``0``"
-msgstr ""
+msgstr "``0``"
 
 #: ../../c-api/unicode.rst:428
 msgid "The conversion will be zero padded for numeric values."
-msgstr ""
+msgstr "La conversión tendrá un relleno cero para los valores numéricos."
 
 #: ../../c-api/unicode.rst:430
 msgid "``-``"
-msgstr ""
+msgstr "``-``"
 
 #: ../../c-api/unicode.rst:430
 msgid ""
 "The converted value is left adjusted (overrides the ``0`` flag if both are "
 "given)."
 msgstr ""
+"El valor convertido se deja ajustado (anula la bandera ``0`` si se dan "
+"ambas)."
 
 #: ../../c-api/unicode.rst:434
 msgid ""
@@ -577,10 +628,13 @@ msgid ""
 "``u``, ``x``, or ``X``) specify the type of the argument (:c:expr:`int` by "
 "default):"
 msgstr ""
+"Los modificadores de longitud para las siguientes conversiones de enteros "
+"(``d``, ``i``, ``o``, ``u``, ``x``, o ``X``) especifican el tipo del "
+"argumento (:c:expr:`int` por defecto):"
 
 #: ../../c-api/unicode.rst:441
 msgid "Modifier"
-msgstr ""
+msgstr "Modificador"
 
 #: ../../c-api/unicode.rst:441
 msgid "Types"
@@ -588,57 +642,59 @@ msgstr "Tipos"
 
 #: ../../c-api/unicode.rst:443
 msgid "``l``"
-msgstr ""
+msgstr "``l``"
 
 #: ../../c-api/unicode.rst:443
 msgid ":c:expr:`long` or :c:expr:`unsigned long`"
-msgstr ""
+msgstr ":c:expr:`long` o :c:expr:`unsigned long`"
 
 #: ../../c-api/unicode.rst:445
 msgid "``ll``"
-msgstr ""
+msgstr "``ll``"
 
 #: ../../c-api/unicode.rst:445
 msgid ":c:expr:`long long` or :c:expr:`unsigned long long`"
-msgstr ""
+msgstr ":c:expr:`long long` o :c:expr:`unsigned long long`"
 
 #: ../../c-api/unicode.rst:447
 msgid "``j``"
-msgstr ""
+msgstr "``j``"
 
 #: ../../c-api/unicode.rst:447
 msgid ":c:type:`intmax_t` or :c:type:`uintmax_t`"
-msgstr ""
+msgstr ":c:type:`intmax_t` o :c:type:`uintmax_t`"
 
 #: ../../c-api/unicode.rst:449
 msgid "``z``"
-msgstr ""
+msgstr "``z``"
 
 #: ../../c-api/unicode.rst:449
 msgid ":c:type:`size_t` or :c:type:`ssize_t`"
-msgstr ""
+msgstr ":c:type:`size_t` o :c:type:`ssize_t`"
 
 #: ../../c-api/unicode.rst:451
 msgid "``t``"
-msgstr ""
+msgstr "``t``"
 
 #: ../../c-api/unicode.rst:451
 msgid ":c:type:`ptrdiff_t`"
-msgstr ""
+msgstr ":c:type:`ptrdiff_t`"
 
 #: ../../c-api/unicode.rst:454
 msgid ""
 "The length modifier ``l`` for following conversions ``s`` or ``V`` specify "
 "that the type of the argument is :c:expr:`const wchar_t*`."
 msgstr ""
+"El modificador de longitud ``l`` para las siguientes conversiones ``s`` o "
+"``V`` especifican que el tipo del argumento es :c:expr:`const wchar_t*`."
 
 #: ../../c-api/unicode.rst:457
 msgid "The conversion specifiers are:"
-msgstr ""
+msgstr "Los especificadores de conversión son:"
 
 #: ../../c-api/unicode.rst:463
 msgid "Conversion Specifier"
-msgstr ""
+msgstr "Especificador de conversión"
 
 #: ../../c-api/unicode.rst:464
 msgid "Type"
@@ -650,7 +706,7 @@ msgstr "Comentario"
 
 #: ../../c-api/unicode.rst:467
 msgid "``%``"
-msgstr ""
+msgstr "``%``"
 
 #: ../../c-api/unicode.rst:468
 msgid "*n/a*"
@@ -658,57 +714,57 @@ msgstr "*n/a*"
 
 #: ../../c-api/unicode.rst:469
 msgid "The literal ``%`` character."
-msgstr ""
+msgstr "El carácter literal ``%``."
 
 #: ../../c-api/unicode.rst:471
 msgid "``d``, ``i``"
-msgstr ""
+msgstr "``d``, ``i``"
 
 #: ../../c-api/unicode.rst:472 ../../c-api/unicode.rst:476
 #: ../../c-api/unicode.rst:480 ../../c-api/unicode.rst:484
 #: ../../c-api/unicode.rst:488
 msgid "Specified by the length modifier"
-msgstr ""
+msgstr "Especificado por el modificador de longitud"
 
 #: ../../c-api/unicode.rst:473
 msgid "The decimal representation of a signed C integer."
-msgstr ""
+msgstr "La representación decimal de un entero C con signo."
 
 #: ../../c-api/unicode.rst:475
 msgid "``u``"
-msgstr ""
+msgstr "``u``"
 
 #: ../../c-api/unicode.rst:477
 msgid "The decimal representation of an unsigned C integer."
-msgstr ""
+msgstr "La representación decimal de un entero C sin signo."
 
 #: ../../c-api/unicode.rst:479
 msgid "``o``"
-msgstr ""
+msgstr "``o``"
 
 #: ../../c-api/unicode.rst:481
 msgid "The octal representation of an unsigned C integer."
-msgstr ""
+msgstr "La representación octal de un entero C sin signo."
 
 #: ../../c-api/unicode.rst:483
 msgid "``x``"
-msgstr ""
+msgstr "``x``"
 
 #: ../../c-api/unicode.rst:485
 msgid "The hexadecimal representation of an unsigned C integer (lowercase)."
-msgstr ""
+msgstr "La representación hexadecimal de un entero C sin signo (minúsculas)."
 
 #: ../../c-api/unicode.rst:487
 msgid "``X``"
-msgstr ""
+msgstr "``X``"
 
 #: ../../c-api/unicode.rst:489
 msgid "The hexadecimal representation of an unsigned C integer (uppercase)."
-msgstr ""
+msgstr "La representación hexadecimal de un entero C sin signo (mayúsculas)."
 
 #: ../../c-api/unicode.rst:491
 msgid "``c``"
-msgstr ""
+msgstr "``c``"
 
 #: ../../c-api/unicode.rst:492
 msgid ":c:expr:`int`"
@@ -716,15 +772,15 @@ msgstr ":c:expr:`int`"
 
 #: ../../c-api/unicode.rst:493
 msgid "A single character."
-msgstr ""
+msgstr "Un solo carácter."
 
 #: ../../c-api/unicode.rst:495
 msgid "``s``"
-msgstr ""
+msgstr "``s``"
 
 #: ../../c-api/unicode.rst:496
 msgid ":c:expr:`const char*` or :c:expr:`const wchar_t*`"
-msgstr ""
+msgstr ":c:expr:`const char*` o :c:expr:`const wchar_t*`"
 
 #: ../../c-api/unicode.rst:497
 msgid "A null-terminated C character array."
@@ -732,11 +788,11 @@ msgstr "Una matriz de caracteres C terminada en nulo."
 
 #: ../../c-api/unicode.rst:499
 msgid "``p``"
-msgstr ""
+msgstr "``p``"
 
 #: ../../c-api/unicode.rst:500
 msgid ":c:expr:`const void*`"
-msgstr ""
+msgstr ":c:expr:`const void*`"
 
 #: ../../c-api/unicode.rst:501
 msgid ""
@@ -744,15 +800,18 @@ msgid ""
 "``printf(\"%p\")`` except that it is guaranteed to start with the literal "
 "``0x`` regardless of what the platform's ``printf`` yields."
 msgstr ""
+"La representación hexadecimal de un puntero C. Equivale en gran medida a "
+"``printf(\"%p\")``, salvo que se garantiza que comienza con el literal "
+"``0x``, independientemente de lo que indique la plataforma ``printf``."
 
 #: ../../c-api/unicode.rst:506
 msgid "``A``"
-msgstr ""
+msgstr "``A``"
 
 #: ../../c-api/unicode.rst:507 ../../c-api/unicode.rst:511
 #: ../../c-api/unicode.rst:521 ../../c-api/unicode.rst:525
 msgid ":c:expr:`PyObject*`"
-msgstr ""
+msgstr ":c:expr:`PyObject*`"
 
 #: ../../c-api/unicode.rst:508
 msgid "The result of calling :func:`ascii`."
@@ -760,7 +819,7 @@ msgstr "El resultado de llamar a :func:`ascii`."
 
 #: ../../c-api/unicode.rst:510
 msgid "``U``"
-msgstr ""
+msgstr "``U``"
 
 #: ../../c-api/unicode.rst:512
 msgid "A Unicode object."
@@ -768,11 +827,11 @@ msgstr "Un objeto Unicode."
 
 #: ../../c-api/unicode.rst:514
 msgid "``V``"
-msgstr ""
+msgstr "``V``"
 
 #: ../../c-api/unicode.rst:515
 msgid ":c:expr:`PyObject*`, :c:expr:`const char*` or :c:expr:`const wchar_t*`"
-msgstr ""
+msgstr ":c:expr:`PyObject*`, :c:expr:`const char*` o :c:expr:`const wchar_t*`"
 
 #: ../../c-api/unicode.rst:516
 msgid ""
@@ -786,7 +845,7 @@ msgstr ""
 
 #: ../../c-api/unicode.rst:520
 msgid "``S``"
-msgstr ""
+msgstr "``S``"
 
 #: ../../c-api/unicode.rst:522
 msgid "The result of calling :c:func:`PyObject_Str`."
@@ -794,7 +853,7 @@ msgstr "El resultado de llamar a :c:func:`PyObject_Str`."
 
 #: ../../c-api/unicode.rst:524
 msgid "``R``"
-msgstr ""
+msgstr "``R``"
 
 #: ../../c-api/unicode.rst:526
 msgid "The result of calling :c:func:`PyObject_Repr`."
@@ -809,6 +868,13 @@ msgid ""
 "``\"%A\"``, ``\"%U\"``, ``\"%S\"``, ``\"%R\"`` and ``\"%V\"`` (if the "
 "``PyObject*`` argument is not ``NULL``)."
 msgstr ""
+"La unidad del formateador de anchura es el número de caracteres en lugar de "
+"bytes. La unidad del formateador de precisión es el número de bytes o "
+"elementos de :c:type:`wchar_t` (si se utiliza el modificador de longitud "
+"``l`` ) para ``\"%s\"`` y ``\"%V\"`` (si el argumento ``PyObject*`` es "
+"``NULL``), y un número de caracteres para ``\"%A\"``, ``\"%U\"``, "
+"``\"%S\"``, ``\"%R\"`` y ``\"%V\"`` (si el argumento ``PyObject*`` no es "
+"``NULL``)."
 
 #: ../../c-api/unicode.rst:537
 msgid ""
@@ -816,6 +882,9 @@ msgid ""
 "is given for integer conversions (``d``, ``i``, ``u``, ``o``, ``x``, or "
 "``X``)."
 msgstr ""
+"A diferencia de C :c:func:`printf` la bandera ``0`` tiene efecto incluso "
+"cuando se da una precisión para conversiones de enteros (``d``, ``i``, "
+"``u``, ``o``, ``x``, o ``X``)."
 
 #: ../../c-api/unicode.rst:541
 msgid "Support for ``\"%lld\"`` and ``\"%llu\"`` added."
@@ -842,6 +911,12 @@ msgid ""
 "``s`` and ``V``. Support for variable width and precision ``*``. Support for "
 "flag ``-``."
 msgstr ""
+"Compatibilidad con los especificadores de conversión ``o`` y ``X``. "
+"Compatibilidad con los modificadores de longitud ``j`` y ``t``. Los "
+"modificadores de longitud se aplican ahora a todas las conversiones de "
+"enteros. El modificador de longitud ``l`` se aplica ahora a los "
+"especificadores de conversión ``s`` y ``V``. Soporte para anchura y "
+"precisión variables ``*``. Soporte para la bandera ``-``."
 
 #: ../../c-api/unicode.rst:559
 msgid ""
@@ -849,6 +924,10 @@ msgid ""
 "versions it caused all the rest of the format string to be copied as-is to "
 "the result string, and any extra arguments discarded."
 msgstr ""
+"Un carácter de formato no reconocido ahora establece un :exc:`SystemError`. "
+"En versiones anteriores provocaba que todo el resto de la cadena de formato "
+"se copiara tal cual a la cadena de resultado, y cualquier argumento extra se "
+"descartaba."
 
 #: ../../c-api/unicode.rst:566
 msgid ""
@@ -864,6 +943,9 @@ msgid ""
 "necessary. If *obj* is already a true Unicode object (not a subtype), return "
 "a new :term:`strong reference` to the object."
 msgstr ""
+"Copia una instancia de un subtipo Unicode a un nuevo objeto Unicode "
+"verdadero si es necesario. Si *obj* ya es un objeto Unicode verdadero (no un "
+"subtipo), devuelve una nueva :term:`strong reference` al objeto."
 
 #: ../../c-api/unicode.rst:576
 msgid ""
@@ -915,6 +997,10 @@ msgid ""
 "memcpy` if possible.  Returns ``-1`` and sets an exception on error, "
 "otherwise returns the number of copied characters."
 msgstr ""
+"Copia caracteres de un objeto Unicode a otro.  Esta función realiza la "
+"conversión de caracteres cuando es necesario y vuelve a :c:func:`!memcpy` si "
+"es posible.  Devuelve ``-1`` y establece una excepción en caso de error; en "
+"caso contrario, devuelve el número de caracteres copiados."
 
 #: ../../c-api/unicode.rst:621
 msgid ""
@@ -966,12 +1052,19 @@ msgid ""
 "Unicode object and the index is not out of bounds, in contrast to :c:func:"
 "`PyUnicode_READ_CHAR`, which performs no error checking."
 msgstr ""
+"Lee un carácter de una cadena.  Esta función comprueba que *unicode* es un "
+"objeto Unicode y que el índice no está fuera de los límites, a diferencia "
+"de :c:func:`PyUnicode_READ_CHAR`, que no realiza ninguna comprobación de "
+"errores."
 
 #: ../../c-api/unicode.rst:659
 msgid ""
 "Return a substring of *unicode*, from character index *start* (included) to "
 "character index *end* (excluded).  Negative indices are not supported."
 msgstr ""
+"Devuelve una subcadena de *unicode*, desde el índice de caracteres *start* "
+"(incluido) hasta el índice de caracteres *end* (excluido).  No se admiten "
+"índices negativos."
 
 #: ../../c-api/unicode.rst:668
 msgid ""
@@ -980,6 +1073,10 @@ msgid ""
 "particular, a :exc:`SystemError` if *buflen* is smaller than the length of "
 "*unicode*).  *buffer* is returned on success."
 msgstr ""
+"Copia la cadena *unicode* en un búfer UCS4, incluyendo un carácter nulo, si "
+"*copy_null* está establecido.  Devuelve ``NULL`` y lanza una excepción en "
+"caso de error (en particular, :exc:`SystemError` si *buflen* es menor que la "
+"longitud de *unicode*).  *buffer* se devuelve en caso de éxito."
 
 #: ../../c-api/unicode.rst:678
 msgid ""
@@ -988,6 +1085,10 @@ msgid ""
 "`MemoryError` set.  The returned buffer always has an extra null code point "
 "appended."
 msgstr ""
+"Copia la cadena *unicode* en un nuevo búfer UCS4 que se asigna usando :c:"
+"func:`PyMem_Malloc`.  Si esto falla, se devuelve ``NULL`` con :exc:"
+"`MemoryError`.  El búfer devuelto siempre tiene un punto de código nulo "
+"extra añadido."
 
 #: ../../c-api/unicode.rst:687
 msgid "Locale Encoding"
@@ -1021,10 +1122,12 @@ msgid ""
 "Use :c:func:`PyUnicode_DecodeFSDefaultAndSize` to decode a string from the :"
 "term:`filesystem encoding and error handler`."
 msgstr ""
+"Utilice :c:func:`PyUnicode_DecodeFSDefaultAndSize` para descodificar una "
+"cadena del :term:`filesystem encoding and error handler`."
 
 #: ../../c-api/unicode.rst:706 ../../c-api/unicode.rst:741
 msgid "This function ignores the :ref:`Python UTF-8 Mode <utf8-mode>`."
-msgstr ""
+msgstr "Esta función ignora el :ref:`Python UTF-8 Mode <utf8-mode>`."
 
 #: ../../c-api/unicode.rst:710 ../../c-api/unicode.rst:807
 msgid "The :c:func:`Py_DecodeLocale` function."
