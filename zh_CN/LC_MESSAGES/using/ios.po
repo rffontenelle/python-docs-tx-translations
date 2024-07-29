@@ -104,6 +104,11 @@ msgid ""
 "simulator`` would compile an ARM64 simulator build with a deployment target "
 "of 15.4."
 msgstr ""
+"受支持的最低 iOS 版本是在编译时指定的，对 ``configure`` 使用 :option:`--"
+"host` 选项。 在默认情况下，当针对 iOS 编译时，Python 编译将设置受支持的最低 "
+"iOS 版本为 13.0。 我使用不同的最低 iOS 版本，请将版本号作为 :option:`!--"
+"host` 参数的一部分提供 —— 例如，``--host=arm64-apple-ios15.4-simulator`` 将编"
+"译一份部署目标为 15.4 的 ARM64 模拟器构建版。"
 
 #: ../../using/ios.rst:48
 msgid "Platform identification"
@@ -456,12 +461,19 @@ msgid ""
 "Name the step \"Install Target Specific Python Standard Library\", disable "
 "the \"Based on dependency analysis\" checkbox, and set the script content to:"
 msgstr ""
+"添加一个用于将 Python 标准库拷贝到你的 app 中的构建步骤。 在 \"Build "
+"Phases\" 选项卡中，在 \"Embed Frameworks\" 步骤 *之前*，\"Copy Bundle "
+"Resources\" 步骤 *之后* 添加一个新的 \"Run Script\" 构建步骤。 将该步骤命名"
+"为 \"Install Target Specific Python Standard Library\"，取消 \"Based on "
+"dependency analysis\" 复选框，并将脚本内容设为："
 
 #: ../../using/ios.rst:233
 msgid ""
 "Note that the name of the simulator \"slice\" in the XCframework may be "
 "different, depending the CPU architectures your ``XCFramework`` supports."
 msgstr ""
+"请注意 XCframework 中的模拟器名称 \"slice\" 可能有所不同，具体取决于你的 "
+"``XCFramework`` 所支持的 CPU 架构。"
 
 #: ../../using/ios.rst:236
 msgid ""
@@ -471,12 +483,17 @@ msgid ""
 "Modules\". It should also have \"Based on dependency analysis\" unchecked, "
 "with the following script content:"
 msgstr ""
+"再添加第二个用于将标准库中的二进制扩展模块处理为 \"Framework\" 格式的构建步"
+"骤。 紧随你在第 8 步添加的步骤 *之后立即* 添加一个 \"Run Script\" 构建步骤，"
+"命名为 \"Prepare Python Binary Modules\"。 它应当取消选择 \"Based on "
+"dependency analysis\"，并将脚本内容设为："
 
 #: ../../using/ios.rst:292
 msgid ""
 "Add Objective C code to initialize and use a Python interpreter in embedded "
 "mode. You should ensure that:"
 msgstr ""
+"添加 Objective C 代码来初始化并使用嵌入模式的 Python 解释器。 你应当确保："
 
 #: ../../using/ios.rst:295
 msgid ":c:member:`UTF-8 mode <PyPreConfig.utf8_mode>` is *enabled*;"
@@ -500,6 +517,8 @@ msgid ""
 "``PYTHONHOME`` for the interpreter is configured to point at the ``python`` "
 "subfolder of your app's bundle; and"
 msgstr ""
+"用于解释器的 ``PYTHONHOME`` 将被配置为指向你的 app 捆绑包的 ``python`` 子文件"
+"夹；并且"
 
 #: ../../using/ios.rst:301
 msgid "The ``PYTHONPATH`` for the interpreter includes:"
@@ -523,6 +542,7 @@ msgid ""
 "Your app's bundle location can be determined using ``[[NSBundle mainBundle] "
 "resourcePath]``."
 msgstr ""
+"你的 app 捆绑包的位置可使用 ``[[NSBundle mainBundle] resourcePath]`` 来确定。"
 
 #: ../../using/ios.rst:310
 msgid ""
@@ -530,6 +550,9 @@ msgid ""
 "of pure Python application code, named ``app``. If you have third-party "
 "binary modules in your app, some additional steps will be required:"
 msgstr ""
+"这些说明的步骤 8, 9 和 10 均假定你有一个单独的纯 Python 应用程序代码文件夹，"
+"其名称为 ``app``。 如果在你的 app 中还存在第三方二进制模块，则还需要一些额外"
+"的步骤："
 
 #: ../../using/ios.rst:314
 msgid ""
@@ -539,6 +562,9 @@ msgid ""
 "specific build is targeting (i.e., delete any device binaries if you're "
 "building an app targeting the simulator)."
 msgstr ""
+"你需要确保任何包含第二方二进制文件的文件夹均已关联到 app 目标，或已作为第 8 "
+"步的一部分被拷贝。 第 8 步还应当清理任何对于特定构建目标的平台来说不适用的二"
+"进制文件（即当你要构建以该模拟器为目标的 app 就应删除任何设备二进制文件）。"
 
 #: ../../using/ios.rst:320
 msgid ""
@@ -546,12 +572,17 @@ msgid ""
 "framework form by step 9. The invocation of ``install_dylib`` that processes "
 "the ``lib-dynload`` folder can be copied and adapted for this purpose."
 msgstr ""
+"任何包含第三方二进制文件的文件夹都必须通过第 9 步处理为框架形式。 可以拷贝并"
+"调整对于处理 ``lib-dynload`` 文件夹的 ``install_dylib`` 发起调用的代码以符合"
+"这一目的。"
 
 #: ../../using/ios.rst:324
 msgid ""
 "If you're using a separate folder for third-party packages, ensure that "
 "folder is included as part of the ``PYTHONPATH`` configuration in step 10."
 msgstr ""
+"如果你使用了不同的文件夹来存放第三方包，请确保该文件夹已在第 10 步中被包括为 "
+"``PYTHONPATH`` 配置的一部分。"
 
 #: ../../using/ios.rst:328
 msgid "App Store Compliance"
@@ -565,6 +596,9 @@ msgid ""
 "validation rules that inspect the submitted application bundle for "
 "problematic code."
 msgstr ""
+"将 app 发布到第三方 iOS 设备的唯一机制是将 app 提交到 iOS App Store；提交发布"
+"的 app 必须通过 Apple 的 app 审核进程。 此进程包括一组在所提交的应用程序包中"
+"自动检查有问题代码的验证规则。"
 
 #: ../../using/ios.rst:335
 msgid ""
@@ -573,6 +607,9 @@ msgid ""
 "Apple's review rules cannot be challenged; so, it is necessary to modify the "
 "Python standard library for an app to pass App Store review."
 msgstr ""
+"Python 标准库包含了一些已知会违反这些自动规则的代码。 虽然这些违规情况看来是"
+"属于误报，但 Apple 的审核规则是不可挑战的；因此，有必要修改 Python 标准库以"
+"便 app 能够通过 App Store 的审核。"
 
 #: ../../using/ios.rst:340
 msgid ""
@@ -581,3 +618,6 @@ msgid ""
 "issues with the App Store review process. This patch is applied "
 "automatically when building for iOS."
 msgstr ""
+"Python 源代码树包含 :source:`一个补丁文件 <Mac/Resources/app-store-"
+"compliance.patch>` 可移除所有已知的会导致 App Store 审核过程出现问题的代码。 "
+"这个补丁会在针对 iOS 进行构建时自动应用。"
