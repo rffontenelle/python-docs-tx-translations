@@ -11,11 +11,12 @@
 # Kaizhao Zhang <zhangkaizhao@gmail.com>, 2024
 # Sefank <sefank@foxmail.com>, 2024
 # ppcfish <ppcfish@gmail.com>, 2024
-# Alpha Du <alphanow@gmail.com>, 2024
 # Dai Xu <daixu61@hotmail.com>, 2024
 # Bryan不可思议, 2024
 # Nyuan Zhang, 2024
 # lqks, 2024
+# Kevin Deng <kevindeng55+transifex@gmail.com>, 2024
+# Alpha Du <alphanow@gmail.com>, 2024
 # Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
@@ -23,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-29 04:06+0000\n"
+"POT-Creation-Date: 2024-08-02 14:15+0000\n"
 "PO-Revision-Date: 2024-05-11 01:09+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -1138,6 +1139,10 @@ msgid ""
 "objects that were passed in, making it easier to associate results with the "
 "tasks being completed. (Contributed by Justin Arthur in :gh:`77714`.)"
 msgstr ""
+"现在 :func:`asyncio.as_completed` 将返回一个既是 :term:`asynchronous "
+"iterator` 又是基本的产生可等待对象的 :term:`iterator` 的对象。 由异步迭代所产"
+"生的可等待对象包括传入的原始 Task 或 Future 对象，使得将结果与正在完成的任务"
+"相关联更为容易。 （由 Justin Arthur 在 :gh:`77714` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:627
 msgid ""
@@ -1146,6 +1151,10 @@ msgid ""
 "exc:`RuntimeWarning` about the given coroutine being never awaited). "
 "(Contributed by Arthur Tacca and Jason Zhang in :gh:`115957`.)"
 msgstr ""
+"当在一个未激活的 :class:`asyncio.TaskGroup` 上调用 :func:`asyncio.TaskGroup."
+"create_task` 时，给定的协程将被关闭（这将防止引发有关给定的协程从未被等待的 :"
+"exc:`RuntimeWarning`）。 （由 Arthur Tacca 和 Jason Zhang 在 :gh:`115957` 中"
+"贡献。）"
 
 #: ../../whatsnew/3.13.rst:633
 msgid ""
@@ -1155,6 +1164,9 @@ msgid ""
 "simultaneously, it was possible that the outer task group would hang, "
 "because its internal cancellation was swallowed by the inner task group."
 msgstr ""
+"改进了 :class:`asyncio.TaskGroup` 在外部的取消操作与内部的取消操作发生冲突时"
+"的行为。 例如，当嵌套两个任务分组并且两者同时在某个子任务中遇到异常时，外层的"
+"任务组有可能被挂起，因为其内部的取消操作已由内层的任务组进行处理。"
 
 #: ../../whatsnew/3.13.rst:639
 msgid ""
@@ -1163,12 +1175,17 @@ msgid ""
 "Task.cancel` method.  This ensures that a :exc:`asyncio.CancelledError` will "
 "be raised at the next :keyword:`await`, so the cancellation is not lost."
 msgstr ""
+"对于任务组在外部被取消同时必须引发 :exc:`ExceptionGroup` 的情况，现在它将调用"
+"父任务的 :meth:`~asyncio.Task.cancel` 方法。 这样可以确保 :exc:`asyncio."
+"CancelledError` 会在下一次 :keyword:`await` 时被引发，因此取消操作不会丢失。"
 
 #: ../../whatsnew/3.13.rst:645
 msgid ""
 "An added benefit of these changes is that task groups now preserve the "
 "cancellation count (:meth:`asyncio.Task.cancelling`)."
 msgstr ""
+"这些更改的一个附加好处是现在任务组会保留取消操作计数 (:meth:`asyncio.Task."
+"cancelling`)。"
 
 #: ../../whatsnew/3.13.rst:648
 msgid ""
@@ -1176,10 +1193,12 @@ msgid ""
 "reset the undocumented ``_must_cancel`` flag when the cancellation count "
 "reaches zero."
 msgstr ""
+"为了处理某些边界情况，现在 :meth:`asyncio.Task.uncancel` 可以在取消操作计数达"
+"到零时重置未写入文档的 ``_must_cancel`` 旗标。"
 
 #: ../../whatsnew/3.13.rst:652
 msgid "(Inspired by an issue reported by Arthur Tacca in :gh:`116720`.)"
-msgstr ""
+msgstr "（受到由 Arthur Tacca 在 :gh:`116720` 中报告的问题的启发。）"
 
 #: ../../whatsnew/3.13.rst:654
 msgid ""
@@ -1187,6 +1206,8 @@ msgid ""
 "for queue termination. (Contributed by Laurie Opperman and Yves Duprat in :"
 "gh:`104228`.)"
 msgstr ""
+"增加了 :meth:`asyncio.Queue.shutdown` (以及 :exc:`asyncio.QueueShutDown`) 用"
+"于队列的终结。 （由 Laurie Opperman 和 Yves Duprat 在 :gh:`104228` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:658
 msgid ""
@@ -1208,6 +1229,9 @@ msgid ""
 "zeromq.org/spec/32/>`_ for more information. (Contributed by Matan Perelman "
 "in :gh:`75299`.)"
 msgstr ""
+"增加了 :func:`base64.z85encode` 和 :func:`base64.z85decode` 函数以允许编码和"
+"解码 Z85 数据。 请参阅 `Z85 规范说明 <https://rfc.zeromq.org/spec/32/>`_ 了解"
+"详情。 （由 Matan Perelman 在 :gh:`75299` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:671
 msgid "copy"
@@ -1224,6 +1248,12 @@ msgid ""
 "which define the :meth:`!__replace__` method. (Contributed by Serhiy "
 "Storchaka in :gh:`108751`.)"
 msgstr ""
+"增加了 :func:`copy.replace` 函数以允许创建一个对象的修改过的副本，它对可变对"
+"象特别有用。 它支持用工厂函数 :func:`collections.namedtuple` 创建的具名元"
+"组, :class:`~dataclasses.dataclass` 实例, 各种 :mod:`datetime` 对象, :class:"
+"`~inspect.Signature` 对象, :class:`~inspect.Parameter` 对象, :ref:`代码对象 "
+"<code-objects>` 以及任何定义了 :meth:`!__replace__` 方法的用户自定义类。 "
+"（由 Serhiy Storchaka 在 :gh:`108751` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:683
 msgid "dbm"
@@ -1235,6 +1265,8 @@ msgid ""
 "remove all items from the database. (Contributed by Donghee Na in :gh:"
 "`107122`.)"
 msgstr ""
+"增加了 :meth:`dbm.gnu.gdbm.clear` 和 :meth:`dbm.ndbm.ndbm.clear` 方法。这些方"
+"法可以从数据库中清除所有项目。（由Donghee Na在 :gh:`107122` 中贡献）"
 
 #: ../../whatsnew/3.13.rst:689
 msgid ""
@@ -1242,6 +1274,8 @@ msgid ""
 "backend. (Contributed by Raymond Hettinger and Erlend E. Aasland in :gh:"
 "`100414`.)"
 msgstr ""
+"新增了 :mod:`dbm.sqlite3` 后端，并将其设定为 :mod:`!dbm` 的默认后端。（由"
+"Raymond Hettinger和Erlend E. Aasland在 :gh:`100414` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:693
 msgid "dis"
@@ -1275,6 +1309,10 @@ msgid ""
 "NO_COLOR|_ and |FORCE_COLOR|_ environment variables. See also :ref:`using-on-"
 "controlling-color`. (Contributed by Hugo van Kemenade in :gh:`117225`.)"
 msgstr ""
+"输出文字现已默认添加颜色。此行为可以使用全新的 :envvar:`PYTHON_COLORS` 环境变"
+"量控制，也可以使用正统的 |NO_COLOR|_ 和 |FORCE_COLOR|_ 环境变量控制。 参见 :"
+"ref:`using-on-controlling-color` 。（由Hugo van Kemenade在 :gh:`117225` 中贡"
+"献。）"
 
 #: ../../whatsnew/3.13.rst:719
 msgid ""
@@ -1369,31 +1407,31 @@ msgstr "importlib"
 #: ../../whatsnew/3.13.rst:778
 msgid ""
 "Previously deprecated :mod:`importlib.resources` functions are un-deprecated:"
-msgstr ""
+msgstr ":mod:`importlib.resources` 中先前被弃用的如下方法现已被重新启用："
 
 #: ../../whatsnew/3.13.rst:780
 msgid ":func:`~importlib.resources.is_resource()`"
-msgstr ""
+msgstr ":func:`~importlib.resources.is_resource()`"
 
 #: ../../whatsnew/3.13.rst:781
 msgid ":func:`~importlib.resources.open_binary()`"
-msgstr ""
+msgstr ":func:`~importlib.resources.open_binary()`"
 
 #: ../../whatsnew/3.13.rst:782
 msgid ":func:`~importlib.resources.open_text()`"
-msgstr ""
+msgstr ":func:`~importlib.resources.open_text()`"
 
 #: ../../whatsnew/3.13.rst:783
 msgid ":func:`~importlib.resources.path()`"
-msgstr ""
+msgstr ":func:`~importlib.resources.path()`"
 
 #: ../../whatsnew/3.13.rst:784
 msgid ":func:`~importlib.resources.read_binary()`"
-msgstr ""
+msgstr ":func:`~importlib.resources.read_binary()`"
 
 #: ../../whatsnew/3.13.rst:785
 msgid ":func:`~importlib.resources.read_text()`"
-msgstr ""
+msgstr ":func:`~importlib.resources.read_text()`"
 
 #: ../../whatsnew/3.13.rst:787
 msgid ""
@@ -1413,6 +1451,9 @@ msgid ""
 "the full-featured :class:`~importlib.resources.abc.Traversable` API. "
 "However, there is now no plan to remove it."
 msgstr ""
+":func:`~importlib.resources.contents()` 方法依然保持弃用状态。推荐使用功能更"
+"完整的 :class:`~importlib.resources.abc.Traversable` API。不过，现阶段没有计"
+"划完全移除之。"
 
 #: ../../whatsnew/3.13.rst:797
 msgid "(Contributed by Petr Viktorin in :gh:`106532`.)"
@@ -1448,6 +1489,9 @@ msgid ""
 "IPv4Address`, :class:`~ipaddress.IPv6Address`, :class:`~ipaddress."
 "IPv4Network` and :class:`~ipaddress.IPv6Network`."
 msgstr ""
+"修正了 ``is_global`` 和 ``is_private`` 在 :class:`~ipaddress."
+"IPv4Address` 、 :class:`~ipaddress.IPv6Address` 、 :class:`~ipaddress."
+"IPv4Network` 、 :class:`~ipaddress.IPv6Network` 这四个类中的行为。"
 
 #: ../../whatsnew/3.13.rst:820
 msgid "itertools"
@@ -1459,6 +1503,9 @@ msgid ""
 "`ValueError` if the final batch is shorter than the specified batch size. "
 "(Contributed by Raymond Hettinger in :gh:`113202`.)"
 msgstr ""
+":func:`itertools.batched` 方法新增了 ``strict`` 选项。若最后一批次的数据小于"
+"指定的批次大小，该方法会抛出 :exc:`ValueError` 异常。（由Raymond Hettinger"
+"在 :gh:`113202` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:828
 msgid "marshal"
@@ -1485,6 +1532,11 @@ msgid ""
 "\"fusedMultiplyAdd\" operation for special cases. (Contributed by Mark "
 "Dickinson and Victor Stinner in :gh:`73468`.)"
 msgstr ""
+"新增了 :func:`~math.fma` 函数。这个函数只需要一轮运算即能计算 ``x * y + z`` "
+"的值，从而有效避免了分步运算中间值时所导致的精度损失。该函数包装了 C99 标准中"
+"提供的 ``fma()`` 方法，并且遵从 IEEE 754 标准针对特殊情况所定义"
+"的“fusedMultiplyAdd”运算符。（由Mark Dickinson和Victor Stinner在 :gh:`73468` "
+"中贡献。）"
 
 #: ../../whatsnew/3.13.rst:846
 msgid "mimetypes"
@@ -1496,6 +1548,9 @@ msgid ""
 "path. Passing file path instead of URL in :func:`~mimetypes.guess_type` is :"
 "term:`soft deprecated`. (Contributed by Serhiy Storchaka in :gh:`66543`.)"
 msgstr ""
+"添加了 :func:`~mimetypes.guess_file_type` 方法，该方法适用于文件路径。向 :"
+"func:`~mimetypes.guess_type` 方法传入文件路径而非URL的做法现已 :term:`soft "
+"deprecated` 。（由Serhiy Storchaka在 :gh:`66543` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:853
 msgid "mmap"
@@ -1522,6 +1577,9 @@ msgid ""
 "memory is inaccessible due to file system errors or access violations. "
 "(Contributed by Jannis Weigend in :gh:`118209`.)"
 msgstr ""
+":class:`mmap.mmap` 在Windows操作系统上现已提供额外保护。若被映射的内存区域由"
+"于文件系统的错误或者是访问权限的限制而不可访问时，解释器将不再崩溃。（由"
+"Jannis Weigend在 :gh:`118209` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:867
 msgid "opcode"
@@ -1533,6 +1591,9 @@ msgid ""
 "This field was added in 3.12, it was never documented and is not intended "
 "for external usage. (Contributed by Irit Katriel in :gh:`105481`.)"
 msgstr ""
+"将 ``opcode.ENABLE_SPECIALIZATION`` 移动至 ``_opcode."
+"ENABLE_SPECIALIZATION`` 。这个字段于3.12中加入，从未被文档记载，也无意向开放"
+"给外部使用。（由Irit Katriel在 :gh:`105481` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:873
 msgid ""
@@ -1620,6 +1681,9 @@ msgid ""
 "system. This function is only available on Windows. (Contributed by Barney "
 "Gale in :gh:`88569`.)"
 msgstr ""
+"新增了 :func:`os.path.isreserved` 方法。使用者可以利用这个函数检查给定的路径"
+"是否为当前系统所预留的路径。该方法为Windows限定。（由Barney Gale在 :gh:"
+"`88569` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:930
 msgid ""
@@ -1644,6 +1708,9 @@ msgid ""
 "`NotImplementedError` when a path operation isn't supported. (Contributed by "
 "Barney Gale in :gh:`89812`.)"
 msgstr ""
+"新增 :exc:`pathlib.UnsupportedOperation` 异常。该异常将替代 :exc:"
+"`NotImplementedError` ，在给定的路径操作不支持的情况下抛出。（由Barney Gale"
+"在 :gh:`89812` 贡献。）"
 
 #: ../../whatsnew/3.13.rst:945
 msgid ""
@@ -1769,6 +1836,8 @@ msgid ""
 "`locale encoding` if the UTF-8 decoding fails. (Contributed by Inada Naoki "
 "in :gh:`117802`.)"
 msgstr ""
+":file:`.pth` 文件现在将首选尝试使用UTF-8解码。当UTF-8解码尝试失败时，使用 :"
+"term:`locale encoding` 解码。（由Inada Naoki在 :gh:`117802` 贡献。）"
 
 #: ../../whatsnew/3.13.rst:1023
 msgid "sqlite3"
@@ -2307,6 +2376,9 @@ msgid ""
 "and ``re.TEMPLATE`` flag (and ``re.T`` alias). (Contributed by Serhiy "
 "Storchaka and Nikita Sobolev in :gh:`105687`.)"
 msgstr ""
+"移除了从未被记载、从未正确运作、并且早已弃用的 ``re.template`` 方法、 ``re."
+"TEMPLATE`` 旗标、以及前者的别名 ``re.T`` 。（由Serhiy Storchaka在 :gh:"
+"`105687` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:1404
 msgid "turtle"
@@ -2406,6 +2478,9 @@ msgid ""
 "(introduced in Python 3.2) instead. (Contributed by Hugo van Kemenade in :gh:"
 "`104804`.)"
 msgstr ""
+"在 :mod:`webbrowser` 模组中，移除了在Python 3.11版本中弃用的，未被记载也未经"
+"过测试的 :class:`!MacOSX` 类。请使用Python 3.2版本中引入的 :class:`!"
+"MacOSXOSAScript` 类作为替代。（由Hugo van Kemenade在 :gh:`104804` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:1462
 msgid ""
@@ -2438,9 +2513,10 @@ msgstr ""
 
 #: ../../whatsnew/3.13.rst:1484
 msgid ""
-":mod:`ctypes`: Deprecate undocumented :func:`!ctypes.SetPointerType` and :"
-"func:`!ctypes.ARRAY` functions. Replace ``ctypes.ARRAY(item_type, size)`` "
-"with ``item_type * size``. (Contributed by Victor Stinner in :gh:`105733`.)"
+":mod:`ctypes`: Deprecate undocumented :func:`!ctypes.SetPointerType` "
+"function. :term:`Soft-deprecate <soft deprecated>` the :func:`ctypes.ARRAY` "
+"function in favor of multiplication. (Contributed by Victor Stinner in :gh:"
+"`105733`.)"
 msgstr ""
 
 #: ../../whatsnew/3.13.rst:1489
@@ -2539,6 +2615,8 @@ msgid ""
 ":mod:`pydoc`: Deprecate undocumented :func:`!pydoc.ispackage` function. "
 "(Contributed by Zackery Spytz in :gh:`64020`.)"
 msgstr ""
+":mod:`pydoc` ：弃用未记载的 :func:`!pydoc.ispackage` 方法。（由Zackery Spytz"
+"在 :gh:`64020` 中贡献。）"
 
 #: ../../whatsnew/3.13.rst:1551
 msgid ""
@@ -2601,6 +2679,8 @@ msgid ""
 ":mod:`tarfile`: The undocumented and unused ``tarfile`` attribute of :class:"
 "`tarfile.TarFile` is deprecated and scheduled for removal in Python 3.16."
 msgstr ""
+":mod:`tarfile` ：在 :class:`tarfile.TarFile` 类中未记载亦未使用的 "
+"``tarfile`` 属性现已弃用，并计划于Python 3.16版本中移除。"
 
 #: ../../whatsnew/3.13.rst:1580
 msgid ""
@@ -2672,7 +2752,7 @@ msgstr ""
 "``getmark()``, ``setmark()`` 和 ``getmarkers()`` 方法。 它们将在 Python 3.15 "
 "中被移除。 （由 Victor Stinner 在 :gh:`105096` 中贡献。）"
 
-#: ../../whatsnew/3.13.rst:2241
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:2
 #: ../../deprecations/pending-removal-in-3.14.rst:2
 msgid "Pending Removal in Python 3.14"
 msgstr "计划在 Python 3.14 中移除"
@@ -2936,7 +3016,7 @@ msgstr ""
 ":mod:`urllib`: :class:`!urllib.parse.Quoter` 已被弃用：它不应被作为公有 "
 "API。 （由 Gregory P. Smith 在 :gh:`88168` 中贡献。）"
 
-#: ../../whatsnew/3.13.rst:2285
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:2
 #: ../../deprecations/pending-removal-in-3.15.rst:2
 msgid "Pending Removal in Python 3.15"
 msgstr "Python 3.15 中的待移除功能"
@@ -3034,14 +3114,18 @@ msgid ""
 ":mod:`array`: :class:`array.array` ``'u'`` type (:c:type:`wchar_t`): use the "
 "``'w'`` type instead (``Py_UCS4``)."
 msgstr ""
+":mod:`array`: :class:`array.array` ``'u'`` 类型 (:c:type:`wchar_t`): 改用 "
+"``'w'`` 类型 (``Py_UCS4``)。"
 
 #: ../../deprecations/pending-removal-in-3.16.rst:8
 msgid ""
 ":mod:`symtable`: Deprecate :meth:`symtable.Class.get_methods` due to the "
 "lack of interest. (Contributed by Bénédikt Tran in :gh:`119698`.)"
 msgstr ""
+":mod:`symtable`: :meth:`symtable.Class.get_methods` 因缺少适当的场景已被弃"
+"用。 （由 Bénédikt Tran 在 :gh:`119698` 中贡献。）"
 
-#: ../../whatsnew/3.13.rst:2306
+#: ../../deprecations/c-api-pending-removal-in-future.rst:2
 #: ../../deprecations/pending-removal-in-future.rst:2
 msgid "Pending Removal in Future Versions"
 msgstr "计划在未来版本中移除"
@@ -3139,6 +3223,9 @@ msgid ""
 "single positional argument. (Contributed by Serhiy Storchaka in :gh:"
 "`109218`.)"
 msgstr ""
+"传入一个复数作为 :func:`complex` 构造器中的 *real* 或 *imag* 参数的做法现在已"
+"被弃用；它应当仅作为单个位置参数被传入。 （由 Serhiy Storchaka 在 :gh:"
+"`109218` 中贡献。）.)"
 
 #: ../../deprecations/pending-removal-in-future.rst:42
 msgid ""
@@ -4332,11 +4419,19 @@ msgid ""
 "used instead. (Contributed by Serhiy Storchaka in :gh:`86493`.)"
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2200
+#: ../../whatsnew/3.13.rst:2199
+msgid ""
+"Remove undocumented ``PY_TIMEOUT_MAX`` constant from the limited C API. "
+"(Contributed by Victor Stinner in :gh:`110014`.)"
+msgstr ""
+"从受限 C API 移除了未写入文档的 ``PY_TIMEOUT_MAX`` 常量。 （由 Victor "
+"Stinner 在 :gh:`110014` 中贡献。）"
+
+#: ../../whatsnew/3.13.rst:2203
 msgid "Deprecated C APIs"
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2202
+#: ../../whatsnew/3.13.rst:2205
 msgid ""
 "Deprecate the old ``Py_UNICODE`` and ``PY_UNICODE_TYPE`` types: use directly "
 "the :c:type:`wchar_t` type instead. Since Python 3.3, ``Py_UNICODE`` and "
@@ -4344,56 +4439,62 @@ msgid ""
 "Victor Stinner in :gh:`105156`.)"
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2207
+#: ../../whatsnew/3.13.rst:2210
 msgid "Deprecate old Python initialization functions:"
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2209 ../../whatsnew/3.13.rst:2295
+#: ../../whatsnew/3.13.rst:2212
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:12
 msgid ""
 ":c:func:`PySys_ResetWarnOptions`: clear :data:`sys.warnoptions` and :data:`!"
 "warnings.filters` instead."
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2211 ../../whatsnew/3.13.rst:2297
+#: ../../whatsnew/3.13.rst:2214
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:14
 msgid ":c:func:`Py_GetExecPrefix`: get :data:`sys.exec_prefix` instead."
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2212 ../../whatsnew/3.13.rst:2298
+#: ../../whatsnew/3.13.rst:2215
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:15
 msgid ":c:func:`Py_GetPath`: get :data:`sys.path` instead."
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2213 ../../whatsnew/3.13.rst:2299
+#: ../../whatsnew/3.13.rst:2216
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:16
 msgid ":c:func:`Py_GetPrefix`: get :data:`sys.prefix` instead."
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2214 ../../whatsnew/3.13.rst:2300
+#: ../../whatsnew/3.13.rst:2217
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:17
 msgid ":c:func:`Py_GetProgramFullPath`: get :data:`sys.executable` instead."
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2215 ../../whatsnew/3.13.rst:2301
+#: ../../whatsnew/3.13.rst:2218
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:18
 msgid ":c:func:`Py_GetProgramName`: get :data:`sys.executable` instead."
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2216 ../../whatsnew/3.13.rst:2302
+#: ../../whatsnew/3.13.rst:2219
 msgid ""
 ":c:func:`Py_GetPythonHome`: get :c:member:`PyConfig.home` or :envvar:"
 "`PYTHONHOME` environment variable instead."
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2219
+#: ../../whatsnew/3.13.rst:2222
 msgid ""
 "Functions scheduled for removal in Python 3.15. (Contributed by Victor "
 "Stinner in :gh:`105145`.)"
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2222
+#: ../../whatsnew/3.13.rst:2225
 msgid ""
 "Deprecate the :c:func:`PyImport_ImportModuleNoBlock` function which is just "
 "an alias to :c:func:`PyImport_ImportModule` since Python 3.3. Scheduled for "
 "removal in Python 3.15. (Contributed by Victor Stinner in :gh:`105396`.)"
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2227
+#: ../../whatsnew/3.13.rst:2230
 msgid ""
 "Deprecate the :c:func:`PyWeakref_GetObject` and :c:func:"
 "`PyWeakref_GET_OBJECT` functions, which return a :term:`borrowed reference`: "
@@ -4403,7 +4504,7 @@ msgid ""
 "on Python 3.12 and older. (Contributed by Victor Stinner in :gh:`105927`.)"
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2235
+#: ../../whatsnew/3.13.rst:2238
 msgid ""
 "Deprecate the :c:func:`PyEval_GetBuiltins`, :c:func:`PyEval_GetGlobals`, "
 "and :c:func:`PyEval_GetLocals` functions, which return a :term:`borrowed "
@@ -4411,315 +4512,332 @@ msgid ""
 "recommended replacements. (Soft deprecated as part of :pep:`667`.)"
 msgstr ""
 
-#: ../../whatsnew/3.13.rst:2243
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:4
 msgid ""
-"Creating immutable types (:c:macro:`Py_TPFLAGS_IMMUTABLETYPE`) with mutable "
-"bases using the C API."
+"The ``ma_version_tag`` field in :c:type:`PyDictObject` for extension modules "
+"(:pep:`699`; :gh:`101193`)."
 msgstr ""
-"使用 C API 创建基于可变基类创建不可变类型 (:c:macro:"
-"`Py_TPFLAGS_IMMUTABLETYPE`)。"
+":c:type:`PyDictObject` 中的 ``ma_version_tag`` 字段用于扩展模块 ( :pep:"
+"`699` ; :gh:`101193` )。"
 
-#: ../../whatsnew/3.13.rst:2246
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:7
 msgid ""
-"Functions to configure the Python initialization, deprecated in Python 3.11:"
-msgstr "用于配置 Python 初始化的函数，在 Python 3.11 中已弃用："
+"Creating :c:data:`immutable types <Py_TPFLAGS_IMMUTABLETYPE>` with mutable "
+"bases (:gh:`95388`)."
+msgstr ""
+"创建 :c:data:`immutable types<Py_TPFLAGS_IMMUTABLETYPE>`  的可变基础 ( :gh:"
+"`95388` )。"
 
-#: ../../whatsnew/3.13.rst:2248
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:10
+msgid ""
+"Functions to configure Python's initialization, deprecated in Python 3.11:"
+msgstr "用于配置 Python 的初始化的函数，在 Python 3.11 中已弃用："
+
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:12
 msgid "``PySys_SetArgvEx()``: set :c:member:`PyConfig.argv` instead."
 msgstr "``PySys_SetArgvEx()``: 改为设置 :c:member:`PyConfig.argv`。"
 
-#: ../../whatsnew/3.13.rst:2249
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:13
 msgid "``PySys_SetArgv()``: set :c:member:`PyConfig.argv` instead."
 msgstr "``PySys_SetArgv()``: 改为设置 :c:member:`PyConfig.argv`。"
 
-#: ../../whatsnew/3.13.rst:2250
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:14
 msgid "``Py_SetProgramName()``: set :c:member:`PyConfig.program_name` instead."
 msgstr "``Py_SetProgramName()``: 改为设置 :c:member:`PyConfig.program_name`。"
 
-#: ../../whatsnew/3.13.rst:2251
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:15
 msgid "``Py_SetPythonHome()``: set :c:member:`PyConfig.home` instead."
 msgstr "``Py_SetPythonHome()``: 改为设置 :c:member:`PyConfig.home`。"
 
-#: ../../whatsnew/3.13.rst:2253 ../../whatsnew/3.13.rst:2281
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:17
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:45
 msgid ""
 "The :c:func:`Py_InitializeFromConfig` API should be used with :c:type:"
 "`PyConfig` instead."
 msgstr ""
 ":c:func:`Py_InitializeFromConfig` API 应与 :c:type:`PyConfig` 一起使用。"
 
-#: ../../whatsnew/3.13.rst:2256
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:20
 msgid "Global configuration variables:"
 msgstr "全局配置变量："
 
-#: ../../whatsnew/3.13.rst:2258
-msgid ":c:var:`Py_DebugFlag`: use :c:member:`PyConfig.parser_debug`"
-msgstr ":c:var:`Py_DebugFlag`: 使用 :c:member:`PyConfig.parser_debug`"
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:22
+msgid ":c:var:`Py_DebugFlag`: use :c:member:`PyConfig.parser_debug` instead."
+msgstr ":c:var:`Py_DebugFlag`: 改用 :c:member:`PyConfig.parser_debug`。"
 
-#: ../../whatsnew/3.13.rst:2259
-msgid ":c:var:`Py_VerboseFlag`: use :c:member:`PyConfig.verbose`"
-msgstr ":c:var:`Py_VerboseFlag`: 使用 :c:member:`PyConfig.verbose`"
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:23
+msgid ":c:var:`Py_VerboseFlag`: use :c:member:`PyConfig.verbose` instead."
+msgstr ":c:var:`Py_VerboseFlag`: 改用 :c:member:`PyConfig.verbose`。"
 
-#: ../../whatsnew/3.13.rst:2260
-msgid ":c:var:`Py_QuietFlag`: use :c:member:`PyConfig.quiet`"
-msgstr ":c:var:`Py_QuietFlag`: 使用 :c:member:`PyConfig.quiet`"
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:24
+msgid ":c:var:`Py_QuietFlag`: use :c:member:`PyConfig.quiet` instead."
+msgstr ":c:var:`Py_QuietFlag`: 改用 :c:member:`PyConfig.quiet`。"
 
-#: ../../whatsnew/3.13.rst:2261
-msgid ":c:var:`Py_InteractiveFlag`: use :c:member:`PyConfig.interactive`"
-msgstr ":c:var:`Py_InteractiveFlag`: 使用 :c:member:`PyConfig.interactive`"
-
-#: ../../whatsnew/3.13.rst:2262
-msgid ":c:var:`Py_InspectFlag`: use :c:member:`PyConfig.inspect`"
-msgstr ":c:var:`Py_InspectFlag`: 使用 :c:member:`PyConfig.inspect`"
-
-#: ../../whatsnew/3.13.rst:2263
-msgid ":c:var:`Py_OptimizeFlag`: use :c:member:`PyConfig.optimization_level`"
-msgstr ":c:var:`Py_OptimizeFlag`: 使用 :c:member:`PyConfig.optimization_level`"
-
-#: ../../whatsnew/3.13.rst:2264
-msgid ":c:var:`Py_NoSiteFlag`: use :c:member:`PyConfig.site_import`"
-msgstr ":c:var:`Py_NoSiteFlag`: 使用 :c:member:`PyConfig.site_import`"
-
-#: ../../whatsnew/3.13.rst:2265
-msgid ":c:var:`Py_BytesWarningFlag`: use :c:member:`PyConfig.bytes_warning`"
-msgstr ":c:var:`Py_BytesWarningFlag`: 使用 :c:member:`PyConfig.bytes_warning`"
-
-#: ../../whatsnew/3.13.rst:2266
-msgid ":c:var:`Py_FrozenFlag`: use :c:member:`PyConfig.pathconfig_warnings`"
-msgstr ":c:var:`Py_FrozenFlag`: 使用 :c:member:`PyConfig.pathconfig_warnings`"
-
-#: ../../whatsnew/3.13.rst:2267
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:25
 msgid ""
-":c:var:`Py_IgnoreEnvironmentFlag`: use :c:member:`PyConfig.use_environment`"
-msgstr ""
-":c:var:`Py_IgnoreEnvironmentFlag`: 使用 :c:member:`PyConfig.use_environment`"
+":c:var:`Py_InteractiveFlag`: use :c:member:`PyConfig.interactive` instead."
+msgstr ":c:var:`Py_InteractiveFlag`: 改用 :c:member:`PyConfig.interactive`。"
 
-#: ../../whatsnew/3.13.rst:2268
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:26
+msgid ":c:var:`Py_InspectFlag`: use :c:member:`PyConfig.inspect` instead."
+msgstr ":c:var:`Py_InspectFlag`: 改用 :c:member:`PyConfig.inspect`。"
+
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:27
 msgid ""
-":c:var:`Py_DontWriteBytecodeFlag`: use :c:member:`PyConfig.write_bytecode`"
+":c:var:`Py_OptimizeFlag`: use :c:member:`PyConfig.optimization_level` "
+"instead."
 msgstr ""
-":c:var:`Py_DontWriteBytecodeFlag`: 使用 :c:member:`PyConfig.write_bytecode`"
+":c:var:`Py_OptimizeFlag`: 改用 :c:member:`PyConfig.optimization_level`。"
 
-#: ../../whatsnew/3.13.rst:2269
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:28
+msgid ":c:var:`Py_NoSiteFlag`: use :c:member:`PyConfig.site_import` instead."
+msgstr ":c:var:`Py_NoSiteFlag`: 改用 :c:member:`PyConfig.site_import`。"
+
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:29
 msgid ""
-":c:var:`Py_NoUserSiteDirectory`: use :c:member:`PyConfig.user_site_directory`"
+":c:var:`Py_BytesWarningFlag`: use :c:member:`PyConfig.bytes_warning` instead."
 msgstr ""
-":c:var:`Py_NoUserSiteDirectory`: 使用 :c:member:`PyConfig."
-"user_site_directory`"
+":c:var:`Py_BytesWarningFlag`: 改用 :c:member:`PyConfig.bytes_warning`。"
 
-#: ../../whatsnew/3.13.rst:2270
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:30
 msgid ""
-":c:var:`Py_UnbufferedStdioFlag`: use :c:member:`PyConfig.buffered_stdio`"
+":c:var:`Py_FrozenFlag`: use :c:member:`PyConfig.pathconfig_warnings` instead."
 msgstr ""
-":c:var:`Py_UnbufferedStdioFlag`: 使用 :c:member:`PyConfig.buffered_stdio`"
+":c:var:`Py_FrozenFlag`: 改用 :c:member:`PyConfig.pathconfig_warnings`。"
 
-#: ../../whatsnew/3.13.rst:2271
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:31
+msgid ""
+":c:var:`Py_IgnoreEnvironmentFlag`: use :c:member:`PyConfig.use_environment` "
+"instead."
+msgstr ""
+
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:32
+msgid ""
+":c:var:`Py_DontWriteBytecodeFlag`: use :c:member:`PyConfig.write_bytecode` "
+"instead."
+msgstr ""
+
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:33
+msgid ""
+":c:var:`Py_NoUserSiteDirectory`: use :c:member:`PyConfig."
+"user_site_directory` instead."
+msgstr ""
+
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:34
+msgid ""
+":c:var:`Py_UnbufferedStdioFlag`: use :c:member:`PyConfig.buffered_stdio` "
+"instead."
+msgstr ""
+
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:35
 msgid ""
 ":c:var:`Py_HashRandomizationFlag`: use :c:member:`PyConfig.use_hash_seed` "
-"and :c:member:`PyConfig.hash_seed`"
+"and :c:member:`PyConfig.hash_seed` instead."
 msgstr ""
-":c:var:`Py_HashRandomizationFlag`: 使用 :c:member:`PyConfig.use_hash_seed` "
-"和 :c:member:`PyConfig.hash_seed`"
 
-#: ../../whatsnew/3.13.rst:2273
-msgid ":c:var:`Py_IsolatedFlag`: use :c:member:`PyConfig.isolated`"
-msgstr ":c:var:`Py_IsolatedFlag`: 使用 :c:member:`PyConfig.isolated`"
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:37
+msgid ":c:var:`Py_IsolatedFlag`: use :c:member:`PyConfig.isolated` instead."
+msgstr ""
 
-#: ../../whatsnew/3.13.rst:2274
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:38
 msgid ""
 ":c:var:`Py_LegacyWindowsFSEncodingFlag`: use :c:member:`PyPreConfig."
-"legacy_windows_fs_encoding`"
+"legacy_windows_fs_encoding` instead."
 msgstr ""
-":c:var:`Py_LegacyWindowsFSEncodingFlag`: 使用 :c:member:`PyPreConfig."
-"legacy_windows_fs_encoding`"
 
-#: ../../whatsnew/3.13.rst:2275
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:39
 msgid ""
 ":c:var:`Py_LegacyWindowsStdioFlag`: use :c:member:`PyConfig."
-"legacy_windows_stdio`"
+"legacy_windows_stdio` instead."
 msgstr ""
-":c:var:`Py_LegacyWindowsStdioFlag`: 使用 :c:member:`PyConfig."
-"legacy_windows_stdio`"
 
-#: ../../whatsnew/3.13.rst:2276
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:40
 msgid ""
 ":c:var:`!Py_FileSystemDefaultEncoding`: use :c:member:`PyConfig."
-"filesystem_encoding`"
+"filesystem_encoding` instead."
 msgstr ""
-":c:var:`!Py_FileSystemDefaultEncoding`: 使用 :c:member:`PyConfig."
-"filesystem_encoding`"
 
-#: ../../whatsnew/3.13.rst:2277
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:41
 msgid ""
 ":c:var:`!Py_HasFileSystemDefaultEncoding`: use :c:member:`PyConfig."
-"filesystem_encoding`"
+"filesystem_encoding` instead."
 msgstr ""
-":c:var:`!Py_HasFileSystemDefaultEncoding`: 使用 :c:member:`PyConfig."
-"filesystem_encoding`"
 
-#: ../../whatsnew/3.13.rst:2278
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:42
 msgid ""
 ":c:var:`!Py_FileSystemDefaultEncodeErrors`: use :c:member:`PyConfig."
-"filesystem_errors`"
+"filesystem_errors` instead."
 msgstr ""
-":c:var:`!Py_FileSystemDefaultEncodeErrors`: 使用 :c:member:`PyConfig."
-"filesystem_errors`"
 
-#: ../../whatsnew/3.13.rst:2279
+#: ../../deprecations/c-api-pending-removal-in-3.14.rst:43
 msgid ""
-":c:var:`!Py_UTF8Mode`: use :c:member:`PyPreConfig.utf8_mode` (see :c:func:"
-"`Py_PreInitialize`)"
+":c:var:`!Py_UTF8Mode`: use :c:member:`PyPreConfig.utf8_mode` instead. (see :"
+"c:func:`Py_PreInitialize`)"
 msgstr ""
-":c:var:`!Py_UTF8Mode`: 使用 :c:member:`PyPreConfig.utf8_mode` (参见 :c:func:"
-"`Py_PreInitialize`)"
 
-#: ../../whatsnew/3.13.rst:2287
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:4
 msgid "The bundled copy of ``libmpdecimal``."
 msgstr "捆绑的 ``libmpdecimal`` 副本。"
 
-#: ../../whatsnew/3.13.rst:2288
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:5
 msgid ""
-":c:func:`PyImport_ImportModuleNoBlock`: use :c:func:`PyImport_ImportModule`."
+":c:func:`PyImport_ImportModuleNoBlock`: use :c:func:`PyImport_ImportModule` "
+"instead."
 msgstr ""
-":c:func:`PyImport_ImportModuleNoBlock`: 使用 :c:func:"
-"`PyImport_ImportModule`。"
 
-#: ../../whatsnew/3.13.rst:2289
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:6
 msgid ":c:func:`PyWeakref_GET_OBJECT`: use :c:func:`PyWeakref_GetRef` instead."
 msgstr ":c:func:`PyWeakref_GET_OBJECT`: 改用 :c:func:`PyWeakref_GetRef`。"
 
-#: ../../whatsnew/3.13.rst:2290
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:7
 msgid ":c:func:`PyWeakref_GetObject`: use :c:func:`PyWeakref_GetRef` instead."
 msgstr ":c:func:`PyWeakref_GetObject`: 改用 :c:func:`PyWeakref_GetRef`。"
 
-#: ../../whatsnew/3.13.rst:2291
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:8
 msgid ":c:type:`!Py_UNICODE_WIDE` type: use :c:type:`wchar_t` instead."
 msgstr ":c:type:`!Py_UNICODE_WIDE` 类型：改用 :c:type:`wchar_t`。"
 
-#: ../../whatsnew/3.13.rst:2292
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:9
 msgid ":c:type:`Py_UNICODE` type: use :c:type:`wchar_t` instead."
 msgstr ":c:type:`Py_UNICODE` 类型：改用 :c:type:`wchar_t`。"
 
-#: ../../whatsnew/3.13.rst:2293
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:10
 msgid "Python initialization functions:"
 msgstr "Python 初始化函数"
 
-#: ../../whatsnew/3.13.rst:2308
+#: ../../deprecations/c-api-pending-removal-in-3.15.rst:19
 msgid ""
-"The following APIs were deprecated in earlier Python versions and will be "
-"removed, although there is currently no date scheduled for their removal."
+":c:func:`Py_GetPythonHome`: get :c:member:`PyConfig.home` or the :envvar:"
+"`PYTHONHOME` environment variable instead."
 msgstr ""
-"下列 API 在更早的 Python 版本中已被弃用并将被移除，但目前还没有确定它们的移除"
-"日期。"
 
-#: ../../whatsnew/3.13.rst:2311
-msgid ":c:macro:`Py_TPFLAGS_HAVE_FINALIZE`: no needed since Python 3.8."
+#: ../../deprecations/c-api-pending-removal-in-future.rst:4
+msgid ""
+"The following APIs are deprecated and will be removed, although there is "
+"currently no date scheduled for their removal."
+msgstr "以下 API 已被弃用，将被移除，但目前尚未确定移除日期。"
+
+#: ../../deprecations/c-api-pending-removal-in-future.rst:7
+msgid ":c:macro:`Py_TPFLAGS_HAVE_FINALIZE`: unneeded since Python 3.8."
 msgstr ":c:macro:`Py_TPFLAGS_HAVE_FINALIZE`: 自 Python 3.8 起不再需要。"
 
-#: ../../whatsnew/3.13.rst:2312
-msgid ":c:func:`PyErr_Fetch`: use :c:func:`PyErr_GetRaisedException`."
-msgstr ":c:func:`PyErr_Fetch`: 使用 :c:func:`PyErr_GetRaisedException`。"
+#: ../../deprecations/c-api-pending-removal-in-future.rst:8
+msgid ":c:func:`PyErr_Fetch`: use :c:func:`PyErr_GetRaisedException` instead."
+msgstr ":c:func:`PyErr_Fetch`: 改用 :c:func:`PyErr_GetRaisedException`。"
 
-#: ../../whatsnew/3.13.rst:2313
+#: ../../deprecations/c-api-pending-removal-in-future.rst:9
 msgid ""
-":c:func:`PyErr_NormalizeException`: use :c:func:`PyErr_GetRaisedException`."
+":c:func:`PyErr_NormalizeException`: use :c:func:`PyErr_GetRaisedException` "
+"instead."
 msgstr ""
-":c:func:`PyErr_NormalizeException`: 使用 :c:func:`PyErr_GetRaisedException`。"
+":c:func:`PyErr_NormalizeException`: 改用 :c:func:`PyErr_GetRaisedException`。"
 
-#: ../../whatsnew/3.13.rst:2314
-msgid ":c:func:`PyErr_Restore`: use :c:func:`PyErr_SetRaisedException`."
-msgstr ":c:func:`PyErr_Restore`: 使用 :c:func:`PyErr_SetRaisedException`。"
-
-#: ../../whatsnew/3.13.rst:2315
+#: ../../deprecations/c-api-pending-removal-in-future.rst:10
 msgid ""
-":c:func:`PyModule_GetFilename`: use :c:func:`PyModule_GetFilenameObject`."
+":c:func:`PyErr_Restore`: use :c:func:`PyErr_SetRaisedException` instead."
+msgstr ":c:func:`PyErr_Restore`: 改用 :c:func:`PyErr_SetRaisedException`。"
+
+#: ../../deprecations/c-api-pending-removal-in-future.rst:11
+msgid ""
+":c:func:`PyModule_GetFilename`: use :c:func:`PyModule_GetFilenameObject` "
+"instead."
 msgstr ""
-":c:func:`PyModule_GetFilename`: 使用 :c:func:`PyModule_GetFilenameObject`。"
+":c:func:`PyModule_GetFilename`: 改用 :c:func:`PyModule_GetFilenameObject`。"
 
-#: ../../whatsnew/3.13.rst:2316
-msgid ":c:func:`PyOS_AfterFork`: use :c:func:`PyOS_AfterFork_Child()`."
-msgstr ":c:func:`PyOS_AfterFork`: 使用 :c:func:`PyOS_AfterFork_Child()`。"
+#: ../../deprecations/c-api-pending-removal-in-future.rst:12
+msgid ":c:func:`PyOS_AfterFork`: use :c:func:`PyOS_AfterFork_Child` instead."
+msgstr ":c:func:`PyOS_AfterFork`: 改用 :c:func:`PyOS_AfterFork_Child`。"
 
-#: ../../whatsnew/3.13.rst:2317
-msgid ":c:func:`PySlice_GetIndicesEx`."
-msgstr ":c:func:`PySlice_GetIndicesEx`。"
+#: ../../deprecations/c-api-pending-removal-in-future.rst:13
+msgid ""
+":c:func:`PySlice_GetIndicesEx`: use :c:func:`PySlice_Unpack` and :c:func:"
+"`PySlice_AdjustIndices` instead."
+msgstr ""
+":c:func:`PySlice_GetIndicesEx`: 改用 :c:func:`PySlice_Unpack` 和 :c:func:"
+"`PySlice_AdjustIndices`。"
 
-#: ../../whatsnew/3.13.rst:2318
-msgid ":c:func:`!PyUnicode_AsDecodedObject`."
-msgstr ":c:func:`!PyUnicode_AsDecodedObject`。"
+#: ../../deprecations/c-api-pending-removal-in-future.rst:14
+msgid ""
+":c:func:`!PyUnicode_AsDecodedObject`: use :c:func:`PyCodec_Decode` instead."
+msgstr ":c:func:`!PyUnicode_AsDecodedObject`: 改用 :c:func:`PyCodec_Decode`。"
 
-#: ../../whatsnew/3.13.rst:2319
-msgid ":c:func:`!PyUnicode_AsDecodedUnicode`."
-msgstr ":c:func:`!PyUnicode_AsDecodedUnicode`。"
+#: ../../deprecations/c-api-pending-removal-in-future.rst:15
+msgid ""
+":c:func:`!PyUnicode_AsDecodedUnicode`: use :c:func:`PyCodec_Decode` instead."
+msgstr ":c:func:`!PyUnicode_AsDecodedUnicode`: 改用 :c:func:`PyCodec_Decode`。"
 
-#: ../../whatsnew/3.13.rst:2320
-msgid ":c:func:`!PyUnicode_AsEncodedObject`."
-msgstr ":c:func:`!PyUnicode_AsEncodedObject`。"
+#: ../../deprecations/c-api-pending-removal-in-future.rst:16
+msgid ""
+":c:func:`!PyUnicode_AsEncodedObject`: use :c:func:`PyCodec_Encode` instead."
+msgstr ""
 
-#: ../../whatsnew/3.13.rst:2321
-msgid ":c:func:`!PyUnicode_AsEncodedUnicode`."
-msgstr ":c:func:`!PyUnicode_AsEncodedUnicode`。"
+#: ../../deprecations/c-api-pending-removal-in-future.rst:17
+msgid ""
+":c:func:`!PyUnicode_AsEncodedUnicode`: use :c:func:`PyCodec_Encode` instead."
+msgstr ""
 
-#: ../../whatsnew/3.13.rst:2322
-msgid ":c:func:`PyUnicode_READY`: not needed since Python 3.12."
-msgstr ":c:func:`PyUnicode_READY`: 自 Python 3.12 起不再需要。"
+#: ../../deprecations/c-api-pending-removal-in-future.rst:18
+msgid ":c:func:`PyUnicode_READY`: unneeded since Python 3.12"
+msgstr ":c:func:`PyUnicode_READY` ：自 Python 3.12 起不再需要"
 
-#: ../../whatsnew/3.13.rst:2323
-msgid ":c:func:`!_PyErr_ChainExceptions`."
-msgstr ":c:func:`!_PyErr_ChainExceptions`。"
+#: ../../deprecations/c-api-pending-removal-in-future.rst:19
+msgid ":c:func:`!PyErr_Display`: use :c:func:`PyErr_DisplayException` instead."
+msgstr ""
 
-#: ../../whatsnew/3.13.rst:2324
+#: ../../deprecations/c-api-pending-removal-in-future.rst:20
+msgid ""
+":c:func:`!_PyErr_ChainExceptions`: use ``_PyErr_ChainExceptions1`` instead."
+msgstr ""
+
+#: ../../deprecations/c-api-pending-removal-in-future.rst:21
 msgid ""
 ":c:member:`!PyBytesObject.ob_shash` member: call :c:func:`PyObject_Hash` "
 "instead."
 msgstr ""
 ":c:member:`!PyBytesObject.ob_shash` 成员：改为调用 :c:func:`PyObject_Hash`。"
 
-#: ../../whatsnew/3.13.rst:2326
+#: ../../deprecations/c-api-pending-removal-in-future.rst:23
 msgid ":c:member:`!PyDictObject.ma_version_tag` member."
 msgstr ":c:member:`!PyDictObject.ma_version_tag` 成员。"
 
-#: ../../whatsnew/3.13.rst:2327
-msgid "TLS API:"
-msgstr "TLS API："
+#: ../../deprecations/c-api-pending-removal-in-future.rst:24
+msgid "Thread Local Storage (TLS) API:"
+msgstr "线程本地存储 (TLS) API："
 
-#: ../../whatsnew/3.13.rst:2329
-msgid ":c:func:`PyThread_create_key`: use :c:func:`PyThread_tss_alloc`."
-msgstr ":c:func:`PyThread_create_key`: 使用 :c:func:`PyThread_tss_alloc`。"
-
-#: ../../whatsnew/3.13.rst:2330
-msgid ":c:func:`PyThread_delete_key`: use :c:func:`PyThread_tss_free`."
-msgstr ":c:func:`PyThread_delete_key`: 使用 :c:func:`PyThread_tss_free`。"
-
-#: ../../whatsnew/3.13.rst:2331
-msgid ":c:func:`PyThread_set_key_value`: use :c:func:`PyThread_tss_set`."
-msgstr ":c:func:`PyThread_set_key_value`: 使用 :c:func:`PyThread_tss_set`。"
-
-#: ../../whatsnew/3.13.rst:2332
-msgid ":c:func:`PyThread_get_key_value`: use :c:func:`PyThread_tss_get`."
-msgstr ":c:func:`PyThread_get_key_value`: 使用 :c:func:`PyThread_tss_get`。"
-
-#: ../../whatsnew/3.13.rst:2333
-msgid ":c:func:`PyThread_delete_key_value`: use :c:func:`PyThread_tss_delete`."
-msgstr ""
-":c:func:`PyThread_delete_key_value`: 使用 :c:func:`PyThread_tss_delete`。"
-
-#: ../../whatsnew/3.13.rst:2334
-msgid ":c:func:`PyThread_ReInitTLS`: no longer needed."
-msgstr ":c:func:`PyThread_ReInitTLS`: 不再需要。"
-
-#: ../../whatsnew/3.13.rst:2336
+#: ../../deprecations/c-api-pending-removal-in-future.rst:26
 msgid ""
-"Remove undocumented ``PY_TIMEOUT_MAX`` constant from the limited C API. "
-"(Contributed by Victor Stinner in :gh:`110014`.)"
+":c:func:`PyThread_create_key`: use :c:func:`PyThread_tss_alloc` instead."
 msgstr ""
-"从受限 C API 移除了未写入文档的 ``PY_TIMEOUT_MAX`` 常量。 （由 Victor "
-"Stinner 在 :gh:`110014` 中贡献。）"
 
-#: ../../whatsnew/3.13.rst:2341
+#: ../../deprecations/c-api-pending-removal-in-future.rst:27
+msgid ":c:func:`PyThread_delete_key`: use :c:func:`PyThread_tss_free` instead."
+msgstr ""
+
+#: ../../deprecations/c-api-pending-removal-in-future.rst:28
+msgid ""
+":c:func:`PyThread_set_key_value`: use :c:func:`PyThread_tss_set` instead."
+msgstr ""
+
+#: ../../deprecations/c-api-pending-removal-in-future.rst:29
+msgid ""
+":c:func:`PyThread_get_key_value`: use :c:func:`PyThread_tss_get` instead."
+msgstr ""
+
+#: ../../deprecations/c-api-pending-removal-in-future.rst:30
+msgid ""
+":c:func:`PyThread_delete_key_value`: use :c:func:`PyThread_tss_delete` "
+"instead."
+msgstr ""
+
+#: ../../deprecations/c-api-pending-removal-in-future.rst:31
+msgid ":c:func:`PyThread_ReInitTLS`: unneeded since Python 3.7."
+msgstr ""
+
+#: ../../whatsnew/3.13.rst:2252
 msgid "Regression Test Changes"
 msgstr "回归测试的变化"
 
-#: ../../whatsnew/3.13.rst:2343
+#: ../../whatsnew/3.13.rst:2254
 msgid ""
 "Python built with :file:`configure` :option:`--with-pydebug` now supports a :"
 "option:`-X presite=package.module <-X>` command-line option. If used, it "
