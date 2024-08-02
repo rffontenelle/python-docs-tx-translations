@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-29 05:06+0000\n"
+"POT-Creation-Date: 2024-08-02 15:26+0000\n"
 "PO-Revision-Date: 2023-05-24 02:09+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -239,6 +239,12 @@ msgid ""
 "(starts at 0) and *value* is the new code point value which should be "
 "written to that location."
 msgstr ""
+"Escribe en una representación canónica *data* (tal como se obtiene con :c:"
+"func:`PyUnicode_DATA`).  Esta función no realiza comprobaciones sensatas, y "
+"está pensada para su uso en bucles.  La persona que llama debe almacenar en "
+"caché el valor *kind* y el puntero *data* obtenidos de otras llamadas.  "
+"*index* es el índice en la cadena (comienza en 0) y *value* es el nuevo "
+"valor de punto de código que debería escribirse en esa ubicación."
 
 #: ../../c-api/unicode.rst:187
 msgid ""
@@ -255,6 +261,9 @@ msgid ""
 "\"canonical\" representation.  This is less efficient than :c:func:"
 "`PyUnicode_READ` if you do multiple consecutive reads."
 msgstr ""
+"Lee un carácter de un objeto Unicode *unicode*, que debe estar en la "
+"representación \"canónica\".  Esto es menos eficiente que :c:func:"
+"`PyUnicode_READ` si se realizan varias lecturas consecutivas."
 
 #: ../../c-api/unicode.rst:204
 msgid ""
@@ -262,6 +271,9 @@ msgid ""
 "based on *unicode*, which must be in the \"canonical\" representation.  This "
 "is always an approximation but more efficient than iterating over the string."
 msgstr ""
+"Devuelve el punto de código máximo que es adecuado para crear otra cadena "
+"basada en *unicode*, que debe estar en la representación \"canónica\".  Esto "
+"es siempre una aproximación pero más eficiente que iterar sobre la cadena."
 
 #: ../../c-api/unicode.rst:213
 msgid ""
@@ -526,6 +538,10 @@ msgid ""
 "macro:`PyUnicode_4BYTE_KIND`) and it consists only of codepoints in the UCS1 "
 "range, it will be transformed into UCS1 (:c:macro:`PyUnicode_1BYTE_KIND`)."
 msgstr ""
+"Si es necesario, el *buffer* de entrada se copia y se transforma en la "
+"representación canónica.  Por ejemplo, si el *buffer* es una cadena UCS4 (:c:"
+"macro:`PyUnicode_4BYTE_KIND`) y consta sólo de codepuntos en el rango UCS1, "
+"se transformará en UCS1 (:c:macro:`PyUnicode_1BYTE_KIND`)."
 
 #: ../../c-api/unicode.rst:436
 msgid ""
@@ -548,6 +564,8 @@ msgid ""
 "Create a Unicode object from a UTF-8 encoded null-terminated char buffer "
 "*str*."
 msgstr ""
+"Crea un objeto Unicode a partir de un búfer de caracteres de terminación "
+"nula codificados en UTF-8 *str*."
 
 #: ../../c-api/unicode.rst:454
 msgid ""
@@ -864,6 +882,9 @@ msgid ""
 "necessary. If *obj* is already a true Unicode object (not a subtype), return "
 "a new :term:`strong reference` to the object."
 msgstr ""
+"Copia una instancia de un subtipo Unicode a un nuevo objeto Unicode "
+"verdadero si es necesario. Si *obj* ya es un objeto Unicode verdadero (no un "
+"subtipo), devuelve una nueva :term:`strong reference` al objeto."
 
 #: ../../c-api/unicode.rst:581
 msgid ""
@@ -915,6 +936,10 @@ msgid ""
 "memcpy` if possible.  Returns ``-1`` and sets an exception on error, "
 "otherwise returns the number of copied characters."
 msgstr ""
+"Copia caracteres de un objeto Unicode a otro.  Esta función realiza la "
+"conversión de caracteres cuando es necesario y vuelve a :c:func:`!memcpy` si "
+"es posible.  Devuelve ``-1`` y establece una excepción en caso de error; en "
+"caso contrario, devuelve el número de caracteres copiados."
 
 #: ../../c-api/unicode.rst:626
 msgid ""
@@ -966,12 +991,19 @@ msgid ""
 "Unicode object and the index is not out of bounds, in contrast to :c:func:"
 "`PyUnicode_READ_CHAR`, which performs no error checking."
 msgstr ""
+"Lee un carácter de una cadena.  Esta función comprueba que *unicode* es un "
+"objeto Unicode y que el índice no está fuera de los límites, a diferencia "
+"de :c:func:`PyUnicode_READ_CHAR`, que no realiza ninguna comprobación de "
+"errores."
 
 #: ../../c-api/unicode.rst:664
 msgid ""
 "Return a substring of *unicode*, from character index *start* (included) to "
 "character index *end* (excluded).  Negative indices are not supported."
 msgstr ""
+"Devuelve una subcadena de *unicode*, desde el índice de caracteres *start* "
+"(incluido) hasta el índice de caracteres *end* (excluido).  No se admiten "
+"índices negativos."
 
 #: ../../c-api/unicode.rst:673
 msgid ""
@@ -980,6 +1012,10 @@ msgid ""
 "particular, a :exc:`SystemError` if *buflen* is smaller than the length of "
 "*unicode*).  *buffer* is returned on success."
 msgstr ""
+"Copia la cadena *unicode* en un búfer UCS4, incluyendo un carácter nulo, si "
+"*copy_null* está establecido.  Devuelve ``NULL`` y lanza una excepción en "
+"caso de error (en particular, :exc:`SystemError` si *buflen* es menor que la "
+"longitud de *unicode*).  *buffer* se devuelve en caso de éxito."
 
 #: ../../c-api/unicode.rst:683
 msgid ""
@@ -988,6 +1024,10 @@ msgid ""
 "`MemoryError` set.  The returned buffer always has an extra null code point "
 "appended."
 msgstr ""
+"Copia la cadena *unicode* en un nuevo búfer UCS4 que se asigna usando :c:"
+"func:`PyMem_Malloc`.  Si esto falla, se devuelve ``NULL`` con :exc:"
+"`MemoryError`.  El búfer devuelto siempre tiene un punto de código nulo "
+"extra añadido."
 
 #: ../../c-api/unicode.rst:692
 msgid "Deprecated Py_UNICODE APIs"
@@ -1099,7 +1139,7 @@ msgstr ""
 
 #: ../../c-api/unicode.rst:785 ../../c-api/unicode.rst:821
 msgid "This function ignores the :ref:`Python UTF-8 Mode <utf8-mode>`."
-msgstr ""
+msgstr "Esta función ignora el :ref:`Python UTF-8 Mode <utf8-mode>`."
 
 #: ../../c-api/unicode.rst:789 ../../c-api/unicode.rst:892
 msgid "The :c:func:`Py_DecodeLocale` function."
