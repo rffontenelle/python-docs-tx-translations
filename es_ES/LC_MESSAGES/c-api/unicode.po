@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-02 15:26+0000\n"
+"POT-Creation-Date: 2024-08-04 00:23+0000\n"
 "PO-Revision-Date: 2023-05-24 02:09+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -1162,6 +1162,8 @@ msgid ""
 "Similar to :c:func:`PyUnicode_DecodeLocaleAndSize`, but compute the string "
 "length using :c:func:`!strlen`."
 msgstr ""
+"Similar a :c:func:`PyUnicode_DecodeLocaleAndSize`, pero calcula la longitud "
+"de la cadena utilizando :c:func:`!strlen`."
 
 #: ../../c-api/unicode.rst:810
 msgid ""
@@ -1222,6 +1224,11 @@ msgid ""
 "*result* must be a :c:expr:`PyBytesObject*` which must be released when it "
 "is no longer used."
 msgstr ""
+"Conversor ParseTuple: codifica objetos :class:`str` -- obtenidos "
+"directamente o a través de la interfaz :class:`os.PathLike` -- a :class:"
+"`bytes` utilizando :c:func:`PyUnicode_EncodeFSDefault`; los objetos :class:"
+"`bytes` se emiten tal cual. El *resultado* debe ser un :c:expr:"
+"`PyBytesObject*` que debe ser liberado cuando ya no se utilice."
 
 #: ../../c-api/unicode.rst:857 ../../c-api/unicode.rst:874
 msgid "Accepts a :term:`path-like object`."
@@ -1245,10 +1252,17 @@ msgid ""
 "objects are output as-is. *result* must be a :c:expr:`PyUnicodeObject*` "
 "which must be released when it is no longer used."
 msgstr ""
+"Conversor ParseTuple: decodifica objetos :class:`bytes` -- obtenidos directa "
+"o indirectamente a través de la interfaz :class:`os.PathLike` -- a :class:"
+"`str` utilizando :c:func:`PyUnicode_DecodeFSDefaultAndSize`; los objetos :"
+"class:`str` se emiten tal cual. El *resultado* debe ser un :c:expr:"
+"`PyUnicodeObject*` que debe ser liberado cuando ya no se utilice."
 
 #: ../../c-api/unicode.rst:880
 msgid "Decode a string from the :term:`filesystem encoding and error handler`."
 msgstr ""
+"Decodifica una cadena a partir del :term:`filesystem encoding and error "
+"handler`."
 
 #: ../../c-api/unicode.rst:882 ../../c-api/unicode.rst:903
 #: ../../c-api/unicode.rst:919
@@ -1275,6 +1289,8 @@ msgid ""
 "Decode a null-terminated string from the :term:`filesystem encoding and "
 "error handler`."
 msgstr ""
+"Decodifica una cadena acabada en cero a partir del :term:`filesystem "
+"encoding and error handler`."
 
 #: ../../c-api/unicode.rst:906
 msgid ""
@@ -1302,7 +1318,7 @@ msgstr "wchar_t Support"
 
 #: ../../c-api/unicode.rst:938
 msgid ":c:type:`wchar_t` support for platforms which support it:"
-msgstr ""
+msgstr ":c:type:`wchar_t` para las plataformas que lo admiten:"
 
 #: ../../c-api/unicode.rst:942
 msgid ""
@@ -1311,6 +1327,10 @@ msgid ""
 "itself compute the length, using :c:func:`!wcslen`. Return ``NULL`` on "
 "failure."
 msgstr ""
+"Crea un objeto Unicode a partir del búfer :c:type:`wchar_t` *wstr* del "
+"*size* dado. Pasar ``-1`` como *size* indica que la función debe calcular "
+"por sí misma la longitud, usando :c:func:`!wcslen`. Devuelve ``NULL`` en "
+"caso de fallo."
 
 #: ../../c-api/unicode.rst:950
 msgid ""
@@ -1319,12 +1339,18 @@ msgid ""
 "trailing null termination character).  Return the number of :c:type:"
 "`wchar_t` characters copied or ``-1`` in case of an error."
 msgstr ""
+"Copia el contenido del objeto Unicode en el búfer :c:type:`wchar_t` *wstr*.  "
+"Se copian como máximo *size* :c:type:`wchar_t` caracteres (excluyendo un "
+"posible carácter de terminación nulo al final).  Devuelve el número de "
+"caracteres :c:type:`wchar_t` copiados o ``-1`` en caso de error."
 
 #: ../../c-api/unicode.rst:955
 msgid ""
 "When *wstr* is ``NULL``, instead return the *size* that would be required to "
 "store all of *unicode* including a terminating null."
 msgstr ""
+"Cuando *wstr* es ``NULL``, en su lugar devuelve el *size* que se necesitaría "
+"para almacenar todo *unicode* incluyendo un null de terminación."
 
 #: ../../c-api/unicode.rst:958
 msgid ""
@@ -1335,6 +1361,12 @@ msgid ""
 "null characters, which would cause the string to be truncated when used with "
 "most C functions."
 msgstr ""
+"Tenga en cuenta que la cadena :c:expr:`wchar_t*` resultante puede o no estar "
+"terminada en cero.  Es responsabilidad de quien llama asegurarse de que la "
+"cadena :c:expr:`wchar_t*` está terminada en cero en caso de que así lo "
+"requiera la aplicación. Además, tenga en cuenta que la cadena :c:expr:"
+"`wchar_t*` puede contener caracteres nulos, lo que provocaría que la cadena "
+"se truncara al utilizarla con la mayoría de las funciones C."
 
 #: ../../c-api/unicode.rst:968
 msgid ""
@@ -1346,6 +1378,14 @@ msgid ""
 "when used with most C functions. If *size* is ``NULL`` and the :c:expr:"
 "`wchar_t*` string contains null characters a :exc:`ValueError` is raised."
 msgstr ""
+"Convierte el objeto Unicode en una cadena de caracteres anchos. La cadena de "
+"salida siempre termina con un carácter nulo. Si *tamaño* no es ``NULL``, "
+"escriba el número de caracteres anchos (excluyendo el carácter nulo de "
+"terminación final) en *tamaño*. Tenga en cuenta que la cadena :c:type:"
+"`wchar_t` resultante puede contener caracteres nulos, lo que provocaría que "
+"la cadena se truncara al utilizarla con la mayoría de las funciones C. Si "
+"*tamaño* es ``NULL`` y la cadena :c:expr:`wchar_t*` contiene caracteres "
+"nulos, se produce un :exc:`ValueError`."
 
 #: ../../c-api/unicode.rst:976
 msgid ""
@@ -1353,12 +1393,18 @@ msgid ""
 "to free it) on success. On error, returns ``NULL`` and *\\*size* is "
 "undefined. Raises a :exc:`MemoryError` if memory allocation is failed."
 msgstr ""
+"Devuelve un búfer asignado por :c:macro:`PyMem_New` (utilice :c:func:"
+"`PyMem_Free` para liberarlo) en caso de éxito. En caso de error, devuelve "
+"``NULL`` y *\\*size* es indefinido. Lanza un :exc:`MemoryError` si falla la "
+"asignación de memoria."
 
 #: ../../c-api/unicode.rst:983
 msgid ""
 "Raises a :exc:`ValueError` if *size* is ``NULL`` and the :c:expr:`wchar_t*` "
 "string contains null characters."
 msgstr ""
+"Lanza un :exc:`ValueError` si *size* es ``NULL`` y la cadena :c:expr:"
+"`wchar_t*` contiene caracteres nulos."
 
 #: ../../c-api/unicode.rst:991
 msgid "Built-in Codecs"
@@ -1429,6 +1475,11 @@ msgid ""
 "looked up using the Python codec registry.  Return ``NULL`` if an exception "
 "was raised by the codec."
 msgstr ""
+"Crea un objeto Unicode descodificando *size* bytes de la cadena codificada "
+"*str*. *encoding* y *errors* tienen el mismo significado que los parámetros "
+"del mismo nombre en la función incorporada :func:`str`.  El códec a utilizar "
+"se busca utilizando el registro de códecs de Python.  Devuelve ``NULL`` si "
+"el códec ha lanzado una excepción."
 
 #: ../../c-api/unicode.rst:1035
 msgid ""
@@ -1457,6 +1508,8 @@ msgid ""
 "Create a Unicode object by decoding *size* bytes of the UTF-8 encoded string "
 "*str*. Return ``NULL`` if an exception was raised by the codec."
 msgstr ""
+"Crea un objeto Unicode decodificando *size* bytes de la cadena codificada en "
+"UTF-8 *str*. Devuelve ``NULL`` si el códec ha lanzado una excepción."
 
 #: ../../c-api/unicode.rst:1057
 msgid ""
@@ -1522,7 +1575,7 @@ msgstr "El tipo de retorno es ahora ``const char *`` en lugar de ``char *``."
 
 #: ../../c-api/unicode.rst:1091
 msgid "This function is a part of the :ref:`limited API <limited-c-api>`."
-msgstr ""
+msgstr "Esta función forma parte de :ref:`limited API <limited-c-api>`."
 
 #: ../../c-api/unicode.rst:1097
 msgid "As :c:func:`PyUnicode_AsUTF8AndSize`, but does not store the size."
@@ -1691,6 +1744,8 @@ msgid ""
 "Create a Unicode object by decoding *size* bytes of the UTF-7 encoded string "
 "*str*.  Return ``NULL`` if an exception was raised by the codec."
 msgstr ""
+"Crea un objeto Unicode decodificando *size* bytes de la cadena codificada en "
+"UTF-7 *str*.  Devuelve ``NULL`` si el códec ha lanzado una excepción."
 
 #: ../../c-api/unicode.rst:1221
 msgid ""
@@ -1718,6 +1773,9 @@ msgid ""
 "encoded string *str*.  Return ``NULL`` if an exception was raised by the "
 "codec."
 msgstr ""
+"Crea un objeto Unicode decodificando *size* bytes de la cadena *str* "
+"codificada con Unicode-Escape.  Devuelve ``NULL`` si el códec ha lanzado una "
+"excepción."
 
 #: ../../c-api/unicode.rst:1242
 msgid ""
@@ -1743,6 +1801,9 @@ msgid ""
 "encoded string *str*.  Return ``NULL`` if an exception was raised by the "
 "codec."
 msgstr ""
+"Crea un objeto Unicode decodificando *size* bytes de la cadena codificada "
+"Raw-Unicode-Escape *str*.  Devuelve ``NULL`` si el códec ha lanzado una "
+"excepción."
 
 #: ../../c-api/unicode.rst:1262
 msgid ""
@@ -1772,6 +1833,8 @@ msgid ""
 "Create a Unicode object by decoding *size* bytes of the Latin-1 encoded "
 "string *str*.  Return ``NULL`` if an exception was raised by the codec."
 msgstr ""
+"Crea un objeto Unicode decodificando *size* bytes de la cadena codificada en "
+"Latin-1 *str*.  Devuelve ``NULL`` si el códec ha lanzado una excepción."
 
 #: ../../c-api/unicode.rst:1282
 msgid ""
@@ -1800,6 +1863,8 @@ msgid ""
 "Create a Unicode object by decoding *size* bytes of the ASCII encoded string "
 "*str*.  Return ``NULL`` if an exception was raised by the codec."
 msgstr ""
+"Crea un objeto Unicode decodificando *size* bytes de la cadena codificada "
+"ASCII *str*.  Devuelve ``NULL`` si el códec ha lanzado una excepción."
 
 #: ../../c-api/unicode.rst:1302
 msgid ""
@@ -1824,6 +1889,13 @@ msgid ""
 "the :meth:`~object.__getitem__` mapping interface; dictionaries and "
 "sequences work well."
 msgstr ""
+"Este códec es especial en el sentido de que puede utilizarse para "
+"implementar muchos códecs diferentes (y esto es, de hecho, lo que se hizo "
+"para obtener la mayoría de los códecs estándar incluidos en el paquete :mod:"
+"`!encodings` ). El códec utiliza mapeados para codificar y descodificar "
+"caracteres.  Los objetos de mapeo proporcionados deben soportar la interfaz "
+"de mapeo :meth:`~object.__getitem__`; los diccionarios y las secuencias "
+"funcionan bien."
 
 #: ../../c-api/unicode.rst:1316
 msgid "These are the mapping codec APIs:"
@@ -1835,6 +1907,9 @@ msgid ""
 "using the given *mapping* object.  Return ``NULL`` if an exception was "
 "raised by the codec."
 msgstr ""
+"Crea un objeto Unicode decodificando *size* bytes de la cadena codificada "
+"*str* utilizando el objeto *mapping* dado.  Devuelve ``NULL`` si el códec ha "
+"lanzado una excepción."
 
 #: ../../c-api/unicode.rst:1325
 msgid ""
@@ -1905,6 +1980,10 @@ msgid ""
 "dictionaries and sequences work well.  Unmapped character ordinals (ones "
 "which cause a :exc:`LookupError`) are left untouched and are copied as-is."
 msgstr ""
+"Las tablas de asignación sólo deben proporcionar la interfaz :meth:`~object."
+"__getitem__`; los diccionarios y las secuencias funcionan bien.  Los "
+"ordinales de caracteres no mapeados (los que provocan un :exc:`LookupError`) "
+"se dejan intactos y se copian tal cual."
 
 #: ../../c-api/unicode.rst:1361
 msgid ""
@@ -1936,6 +2015,8 @@ msgid ""
 "Create a Unicode object by decoding *size* bytes of the MBCS encoded string "
 "*str*. Return ``NULL`` if an exception was raised by the codec."
 msgstr ""
+"Crea un objeto Unicode decodificando *size* bytes de la cadena codificada "
+"MBCS *str*. Devuelve ``NULL`` si el códec ha lanzado una excepción."
 
 #: ../../c-api/unicode.rst:1382
 msgid ""
@@ -1965,6 +2046,10 @@ msgid ""
 "bytes object.  Return ``NULL`` if an exception was raised by the codec. Use :"
 "c:macro:`!CP_ACP` code page to get the MBCS encoder."
 msgstr ""
+"Codifica el objeto Unicode utilizando la página de códigos especificada y "
+"devuelve un objeto Python bytes.  Devuelve ``NULL`` si el códec ha lanzado "
+"una excepción. Utilice :c:macro:`!CP_ACP` code page para obtener el "
+"codificador MBCS."
 
 #: ../../c-api/unicode.rst:1405
 msgid "Methods & Slots"
@@ -2013,6 +2098,10 @@ msgid ""
 "CRLF is considered to be one line break.  If *keepends* is ``0``, the Line "
 "break characters are not included in the resulting strings."
 msgstr ""
+"Divide una cadena Unicode en los saltos de línea, devolviendo una lista de "
+"cadenas Unicode. CRLF se considera un salto de línea.  Si *keepends* es "
+"``0``, los caracteres de salto de línea no se incluyen en las cadenas "
+"resultantes."
 
 #: ../../c-api/unicode.rst:1442
 msgid ""
@@ -2028,6 +2117,10 @@ msgid ""
 "end (*direction* == ``-1`` means to do a prefix match, *direction* == ``1`` "
 "a suffix match), ``0`` otherwise. Return ``-1`` if an error occurred."
 msgstr ""
+"Devuelve ``1`` si *substr* coincide con ``unicode[start:end]`` en la cola "
+"dada (*direction* == ``-1`` significa hacer una coincidencia de prefijo, "
+"*direction* == ``1`` una coincidencia de sufijo), ``0`` en caso contrario. "
+"Devuelve ``-1`` si se ha producido un error."
 
 #: ../../c-api/unicode.rst:1457
 msgid ""
@@ -2037,6 +2130,12 @@ msgid ""
 "the first match; a value of ``-1`` indicates that no match was found, and "
 "``-2`` indicates that an error occurred and an exception has been set."
 msgstr ""
+"Devuelve la primera posición de *substr* en ``unicode[start:end]`` "
+"utilizando la *direction* dada (*direction* == ``1`` significa hacer una "
+"búsqueda hacia delante, *direction* == ``-1`` una búsqueda hacia atrás).  El "
+"valor devuelto es el índice de la primera coincidencia; un valor de ``-1`` "
+"indica que no se ha encontrado ninguna coincidencia, y ``-2`` indica que se "
+"ha producido un error y se ha establecido una excepción."
 
 #: ../../c-api/unicode.rst:1467
 msgid ""
@@ -2047,17 +2146,27 @@ msgid ""
 "found, and ``-2`` indicates that an error occurred and an exception has been "
 "set."
 msgstr ""
+"Devuelve la primera posición del carácter *ch* en ``unicode[start:end]`` "
+"utilizando la *direction* dada (*direction* == ``1`` significa hacer una "
+"búsqueda hacia delante, *direction* == ``-1`` una búsqueda hacia atrás).  El "
+"valor devuelto es el índice de la primera coincidencia; un valor de ``-1`` "
+"indica que no se ha encontrado ninguna coincidencia, y ``-2`` indica que se "
+"ha producido un error y se ha establecido una excepción."
 
 #: ../../c-api/unicode.rst:1475
 msgid ""
 "*start* and *end* are now adjusted to behave like ``unicode[start:end]``."
 msgstr ""
+"*start* y *end* se ajustan ahora para comportarse como ``unicode[start:"
+"end]``."
 
 #: ../../c-api/unicode.rst:1482
 msgid ""
 "Return the number of non-overlapping occurrences of *substr* in "
 "``unicode[start:end]``.  Return ``-1`` if an error occurred."
 msgstr ""
+"Devuelve el número de apariciones no solapadas de *substr* en "
+"``unicode[start:end]``.  Devuelve ``-1`` si se ha producido un error."
 
 #: ../../c-api/unicode.rst:1489
 msgid ""
@@ -2065,6 +2174,9 @@ msgid ""
 "*replstr* and return the resulting Unicode object. *maxcount* == ``-1`` "
 "means replace all occurrences."
 msgstr ""
+"Reemplaza como máximo *maxcount* ocurrencias de *substr* en *unicode* con "
+"*replstr* y devuelve el objeto Unicode resultante. *maxcount* == ``-1`` "
+"significa reemplazar todas las ocurrencias."
 
 #: ../../c-api/unicode.rst:1496
 msgid ""
@@ -2089,6 +2201,10 @@ msgid ""
 "pass only ASCII-encoded strings, but the function interprets the input "
 "string as ISO-8859-1 if it contains non-ASCII characters."
 msgstr ""
+"Compara un objeto Unicode, *unicode*, con *cadena* y devuelve ``-1``, ``0``, "
+"``1`` para menor que, igual que y mayor que, respectivamente. Es mejor pasar "
+"sólo cadenas codificadas en ASCII, pero la función interpreta la cadena de "
+"entrada como ISO-8859-1 si contiene caracteres no ASCII."
 
 #: ../../c-api/unicode.rst:1510
 msgid "This function does not raise exceptions."
@@ -2106,16 +2222,21 @@ msgstr "``NULL`` en caso de que se haya producido una excepción."
 #: ../../c-api/unicode.rst:1518
 msgid ":c:data:`Py_True` or :c:data:`Py_False` for successful comparisons"
 msgstr ""
+":c:data:`Py_True` o :c:data:`Py_False` para realizar comparaciones con éxito"
 
 #: ../../c-api/unicode.rst:1519
 msgid ":c:data:`Py_NotImplemented` in case the type combination is unknown"
 msgstr ""
+":c:data:`Py_NotImplemented` en caso de que se desconozca la combinación de "
+"tipos"
 
 #: ../../c-api/unicode.rst:1521
 msgid ""
 "Possible values for *op* are :c:macro:`Py_GT`, :c:macro:`Py_GE`, :c:macro:"
 "`Py_EQ`, :c:macro:`Py_NE`, :c:macro:`Py_LT`, and :c:macro:`Py_LE`."
 msgstr ""
+"Los posibles valores de *op* son :c:macro:`Py_GT`, :c:macro:`Py_GE`, :c:"
+"macro:`Py_EQ`, :c:macro:`Py_NE`, :c:macro:`Py_LT` y :c:macro:`Py_LE`."
 
 #: ../../c-api/unicode.rst:1527
 msgid ""
@@ -2130,12 +2251,16 @@ msgid ""
 "Check whether *substr* is contained in *unicode* and return true or false "
 "accordingly."
 msgstr ""
+"Comprueba si *substr* está contenido en *unicode* y devuelve true o false "
+"según corresponda."
 
 #: ../../c-api/unicode.rst:1536
 msgid ""
 "*substr* has to coerce to a one element Unicode string. ``-1`` is returned "
 "if there was an error."
 msgstr ""
+"*substr* tiene que coaccionar a una cadena Unicode de un elemento. ``-1`` se "
+"devuelve si hubo un error."
 
 #: ../../c-api/unicode.rst:1542
 msgid ""
@@ -2150,6 +2275,16 @@ msgid ""
 "reference-neutral; you own the object after the call if and only if you "
 "owned it before the call.)"
 msgstr ""
+"Interna el argumento :c:expr:`*p_unicode` en su lugar.  El argumento debe "
+"ser la dirección de una variable puntero que apunte a un objeto cadena "
+"Unicode de Python.  Si hay una cadena internada existente que es la misma "
+"que :c:expr:`*p_unicode`, establece :c:expr:`*p_unicode` a ella (liberando "
+"la referencia al objeto de cadena antiguo y creando una nueva :term:`strong "
+"reference` al objeto de cadena internado), de lo contrario deja :c:expr:"
+"`*p_unicode` solo y lo interna (creando una nueva :term:`strong reference`). "
+"(Aclaración: aunque se habla mucho de referencias, piense en esta función "
+"como neutra en cuanto a referencias; usted posee el objeto después de la "
+"llamada si y sólo si lo poseía antes de la llamada)."
 
 #: ../../c-api/unicode.rst:1555
 msgid ""
