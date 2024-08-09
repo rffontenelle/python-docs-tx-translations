@@ -130,6 +130,12 @@ jobs:
           pip3 install --upgrade pip
           pip3 install -r requirements.txt -r cpython/Doc/requirements.txt
 
+      - name: Patch to fix cpython issue \#122629 in cpython 3.13
+        if: ${{ matrix.cpython_version == '3.13' }}
+        working-directory: cpython
+        run: |
+          curl https://patch-diff.githubusercontent.com/raw/python/cpython/pull/122653.patch | git apply -v
+
       - name: Change Transifex project name if Python version != python-newest
         if: ${{ matrix.cpython_version != needs.trigger.outputs.current }}
         shell: bash
