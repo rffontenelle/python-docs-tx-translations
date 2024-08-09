@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-03 20:15+0000\n"
+"POT-Creation-Date: 2024-08-09 16:36+0000\n"
 "PO-Revision-Date: 2021-06-28 00:49+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -743,6 +743,8 @@ msgid ""
 "Raises an :ref:`auditing event <auditing>` ``cpython."
 "_PySys_ClearAuditHooks`` with no arguments."
 msgstr ""
+"引发一个不带参数的 :ref:`审计事件 <auditing>` ``cpython."
+"_PySys_ClearAuditHooks``。"
 
 #: ../../c-api/init.rst:435
 msgid ""
@@ -1693,6 +1695,8 @@ msgid ""
 "Raises an :ref:`auditing event <auditing>` ``cpython."
 "PyInterpreterState_New`` with no arguments."
 msgstr ""
+"引发一个不带参数的 :ref:`审计事件 <auditing>` ``cpython."
+"PyInterpreterState_New``。"
 
 #: ../../c-api/init.rst:1181
 msgid ""
@@ -1705,6 +1709,8 @@ msgid ""
 "Raises an :ref:`auditing event <auditing>` ``cpython."
 "PyInterpreterState_Clear`` with no arguments."
 msgstr ""
+"引发一个不带参数的 :ref:`审计事件 <auditing>` ``cpython."
+"PyInterpreterState_Clear``。"
 
 #: ../../c-api/init.rst:1189
 msgid ""
@@ -2771,18 +2777,24 @@ msgid ""
 "`PyRefTracer_DESTROY`). The **data** argument is the opaque pointer that was "
 "provided when :c:func:`PyRefTracer_SetTracer` was called."
 msgstr ""
+"使用 :c:func:`PyRefTracer_SetTracer` 注册的追踪函数的类型。 第一个形参是刚创"
+"建（当 **event** 被设为 :c:data:`PyRefTracer_CREATE` 时）或将销毁（当 "
+"**event** 被设为 :c:data:`PyRefTracer_DESTROY` 时）的 Python 对象。 **data** "
+"参数是当 :c:func:`PyRefTracer_SetTracer` 被调用时所提供的不透明指针。"
 
 #: ../../c-api/init.rst:1936
 msgid ""
 "The value for the *event* parameter to :c:type:`PyRefTracer` functions when "
 "a Python object has been created."
 msgstr ""
+"当一个 Python 对象被创建时传给 :c:type:`PyRefTracer` 函数的 *event* 形参。"
 
 #: ../../c-api/init.rst:1941
 msgid ""
 "The value for the *event* parameter to :c:type:`PyRefTracer` functions when "
 "a Python object has been destroyed."
 msgstr ""
+"当一个 Python 对象被销毁时传给 :c:type:`PyRefTracer` 函数的 *event* 形参。"
 
 #: ../../c-api/init.rst:1946
 msgid ""
@@ -2792,6 +2804,9 @@ msgid ""
 "the tracer function is called. Return ``0`` on success. Set an exception and "
 "return ``-1`` on error."
 msgstr ""
+"注册一个引用追踪函数。 该函数将在新的 Python 对象被创建或对象被销毁时被调"
+"用。 如果提供了 **data** 则它必须是一个当追踪函数被调用时所提供的不透明指"
+"针。 成功时返回 ``0``。 发生错误时将设置一个异常并返回 ``-1``。"
 
 #: ../../c-api/init.rst:1952
 msgid ""
@@ -2800,10 +2815,12 @@ msgid ""
 "any existing exception or set an exception.  The GIL will be held every time "
 "the tracer function is called."
 msgstr ""
+"请注意该追踪函数 **不可** 在其内部创建 Python 对象否则调用将被重入。 该追踪器"
+"也 **不可** 清除任何现有异常或者设置异常。 每次当追踪器被调用时都将持有 GIL。"
 
 #: ../../c-api/init.rst:1957 ../../c-api/init.rst:1968
 msgid "The GIL must be held when calling this function."
-msgstr ""
+msgstr "当调用此函数时必须持有 GIL。"
 
 #: ../../c-api/init.rst:1963
 msgid ""
@@ -2812,6 +2829,9 @@ msgid ""
 "called. If no tracer was registered this function will return NULL and will "
 "set the **data** pointer to NULL."
 msgstr ""
+"获取已注册的引用追踪函数以及当 :c:func:`PyRefTracer_SetTracer` 被调用时所注册"
+"的不透明数据指针的值。 如果未注册任何追踪器则此函数将返回 NULL 并将 **data** "
+"指针设为 NULL。"
 
 #: ../../c-api/init.rst:1975
 msgid "Advanced Debugger Support"
@@ -3085,6 +3105,7 @@ msgid ""
 "A mutual exclusion lock.  The :c:type:`!PyMutex` should be initialized to "
 "zero to represent the unlocked state.  For example::"
 msgstr ""
+"一个互斥锁。 :c:type:`!PyMutex` 应当被初始化为零以代表未加锁状态。 例如::"
 
 #: ../../c-api/init.rst:2179
 msgid ""
@@ -3092,6 +3113,8 @@ msgid ""
 "contents and address of a :c:type:`!PyMutex` are meaningful, and it must "
 "remain at a fixed, writable location in memory."
 msgstr ""
+":c:type:`!PyMutex` 的实例不应被拷贝或移动。 :c:type:`!PyMutex` 的内容和地址都"
+"是有意义的，它必须在内存中保持一个固定的、可写的位置。"
 
 #: ../../c-api/init.rst:2185
 msgid ""
@@ -3099,6 +3122,8 @@ msgid ""
 "considered unstable.  The size may change in future Python releases without "
 "a deprecation period."
 msgstr ""
+":c:type:`!PyMutex` 目前占用一个字节，但这个大小应当被视为是不稳定的。 这个大"
+"小可能在未来的 Python 发布版中发生改变而不会设置弃用期。"
 
 #: ../../c-api/init.rst:2193
 msgid ""
@@ -3106,16 +3131,18 @@ msgid ""
 "will block until the mutex is unlocked.  While blocked, the thread will "
 "temporarily release the :term:`GIL` if it is held."
 msgstr ""
+"锁定互斥锁 *m*。 如果另一个线程已经锁定了它，调用方线程将阻塞直至互斥锁被解"
+"锁。 在阻塞期间，如果线程持有 :term:`GIL` 则会临时释放它。"
 
 #: ../../c-api/init.rst:2201
 msgid ""
 "Unlock mutex *m*. The mutex must be locked --- otherwise, the function will "
 "issue a fatal error."
-msgstr ""
+msgstr "解锁互斥锁 *m*。 该互斥锁必须已被锁定 --- 否则，此函数将发生致命错误。"
 
 #: ../../c-api/init.rst:2209
 msgid "Python Critical Section API"
-msgstr ""
+msgstr "Python 关键节 API"
 
 #: ../../c-api/init.rst:2211
 msgid ""
@@ -3124,6 +3151,9 @@ msgid ""
 "intended to replace reliance on the :term:`global interpreter lock`, and are "
 "no-ops in versions of Python with the global interpreter lock."
 msgstr ""
+"此关键节 API 为 :term:`自由线程 <free threading>` CPython 的每对象锁之上提供"
+"了一个死锁避免层。 它们旨在替代对 :term:`global interpreter lock` 的依赖，而"
+"在具有全局解释器锁的 Python 版本上将不做任何操作。"
 
 #: ../../c-api/init.rst:2216
 msgid ""
@@ -3134,6 +3164,10 @@ msgid ""
 "the critical section API provides weaker guarantees than traditional locks "
 "-- they are useful because their behavior is similar to the :term:`GIL`."
 msgstr ""
+"关键节机制通过在调用 :c:func:`PyEval_SaveThread` 期间隐式地挂起活动的关键节并"
+"释放锁来避免死锁。 当 :c:func:`PyEval_RestoreThread` 被调用时，最近的关键节将"
+"被恢复，并重新获取它的锁。 这意味着关键节 API 提供了与传统锁相比更弱的保证 "
+"-- 它们有用是因为它们的行为与 :term:`GIL` 类似。"
 
 #: ../../c-api/init.rst:2223
 msgid ""
@@ -3142,6 +3176,8 @@ msgid ""
 "expansions. Note that the sizes and contents of the structures may change in "
 "future Python versions."
 msgstr ""
+"宏所使用的函数和结构体是针对 C 宏不可用的场景而公开的。 它们应当仅被用于给定"
+"的宏扩展中。 请注意这些结构体的大小和内容在未来的 Python 版本中可能发生改变。"
 
 #: ../../c-api/init.rst:2230
 msgid ""
@@ -3151,6 +3187,9 @@ msgid ""
 "suspend the outer critical sections.  This API does not provide a way to "
 "lock more than two objects at once."
 msgstr ""
+"需要同时锁定两个对象的操作必须使用 :c:macro:`Py_BEGIN_CRITICAL_SECTION2`。 "
+"你 *不可* 使用嵌套的关键节来同时锁定一个以上的对象，因为内层的关键节可能会挂"
+"起外层的关键节。  这个 API 没有提供同时锁定两个以上对象的办法。"
 
 #: ../../c-api/init.rst:2236
 msgid "Example usage::"
@@ -3165,29 +3204,33 @@ msgid ""
 "if the code triggered by the finalizer blocks and calls :c:func:"
 "`PyEval_SaveThread`."
 msgstr ""
+"在上面的例子中，:c:macro:`Py_SETREF` 调用了 :c:macro:`Py_DECREF`，它可以通过"
+"一个对象的取消分配函数来调用任意代码。 当由最终化器触发的代码发生阻塞并调用 :"
+"c:func:`PyEval_SaveThread` 时关键节 API 将通过允许运行时临时挂起关键节来避免"
+"由于重入和锁顺序导致的潜在死锁。"
 
 #: ../../c-api/init.rst:2255
 msgid ""
 "Acquires the per-object lock for the object *op* and begins a critical "
 "section."
-msgstr ""
+msgstr "为对象 *op* 获取每对象锁并开始一个关键节。"
 
 #: ../../c-api/init.rst:2258 ../../c-api/init.rst:2272
 #: ../../c-api/init.rst:2287 ../../c-api/init.rst:2301
 msgid "In the free-threaded build, this macro expands to::"
-msgstr ""
+msgstr "在自由线程构建版中，该宏将扩展为::"
 
 #: ../../c-api/init.rst:2264 ../../c-api/init.rst:2293
 msgid "In the default build, this macro expands to ``{``."
-msgstr ""
+msgstr "在默认构建版中，该宏将扩展为 ``{``。"
 
 #: ../../c-api/init.rst:2270
 msgid "Ends the critical section and releases the per-object lock."
-msgstr ""
+msgstr "结束关键节并释放每对象锁。"
 
 #: ../../c-api/init.rst:2277 ../../c-api/init.rst:2306
 msgid "In the default build, this macro expands to ``}``."
-msgstr ""
+msgstr "在默认构建版中，该宏将扩展为 ``}``。"
 
 #: ../../c-api/init.rst:2283
 msgid ""
@@ -3195,10 +3238,12 @@ msgid ""
 "critical section.  The locks are acquired in a consistent order (lowest "
 "address first) to avoid lock ordering deadlocks."
 msgstr ""
+"为对象 *a* 和 *b* 获取每对象锁并开始一个关键节。 这些锁是按连续顺序获取的（最"
+"低的地址在最前）以避免锁顺序列死锁。"
 
 #: ../../c-api/init.rst:2299
 msgid "Ends the critical section and releases the per-object locks."
-msgstr ""
+msgstr "结束关键节并释放每对象锁。"
 
 #: ../../c-api/init.rst:335
 msgid "PyEval_InitThreads()"
