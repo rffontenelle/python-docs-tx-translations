@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-04 00:23+0000\n"
+"POT-Creation-Date: 2024-08-09 15:28+0000\n"
 "PO-Revision-Date: 2023-05-24 02:10+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -390,6 +390,11 @@ msgid ""
 "needed at the end; it is a sentinel that marks the end of the array.  The :c:"
 "member:`~PyMethodDef.ml_name` field of the sentinel must be ``NULL``."
 msgstr ""
+"Debe definirse una entrada para cada método proporcionado por el tipo; no se "
+"necesitan entradas para los métodos heredados de un tipo base.  Se necesita "
+"una entrada adicional al final; es un centinela que marca el final del "
+"array.  El campo :c:member:`~PyMethodDef.ml_name` del centinela debe ser "
+"``NULL``."
 
 #: ../../extending/newtypes.rst:275
 msgid ""
@@ -463,12 +468,22 @@ msgid ""
 "the descriptor from the class object, and get the doc string using its :attr:"
 "`!__doc__` attribute."
 msgstr ""
+"Una ventaja interesante de utilizar la tabla :c:member:`~PyTypeObject."
+"tp_members` para construir descriptores que se utilizan en tiempo de "
+"ejecución es que cualquier atributo definido de esta manera puede tener una "
+"cadena doc asociada simplemente proporcionando el texto en la tabla.  Una "
+"aplicación puede utilizar la API de introspección para recuperar el "
+"descriptor del objeto de clase, y obtener la cadena doc utilizando su "
+"atributo :attr:`!__doc__`."
 
 #: ../../extending/newtypes.rst:326
 msgid ""
 "As with the :c:member:`~PyTypeObject.tp_methods` table, a sentinel entry "
 "with a :c:member:`~PyMethodDef.ml_name` value of ``NULL`` is required."
 msgstr ""
+"Al igual que en la tabla :c:member:`~PyTypeObject.tp_methods`, se requiere "
+"una entrada centinela con un valor :c:member:`~PyMethodDef.ml_name` de "
+"``NULL``."
 
 #: ../../extending/newtypes.rst:340
 msgid "Type-specific Attribute Management"
@@ -484,6 +499,13 @@ msgid ""
 "handler functions are called, so that if you do need to extend their "
 "functionality, you'll understand what needs to be done."
 msgstr ""
+"Para simplificar, aquí sólo se mostrará la versión :c:expr:`char\\*`; el "
+"tipo del parámetro name es la única diferencia entre las versiones :c:expr:"
+"`char\\*` y :c:expr:`PyObject*` de la interfaz. Este ejemplo hace "
+"efectivamente lo mismo que el ejemplo genérico anterior, pero no usa el "
+"soporte genérico añadido en Python 2.2.  Explica cómo se llaman las "
+"funciones handler, de modo que si necesitas extender su funcionalidad, "
+"entenderás lo que hay que hacer."
 
 #: ../../extending/newtypes.rst:350
 msgid ""
@@ -491,6 +513,9 @@ msgid ""
 "requires an attribute look-up.  It is called in the same situations where "
 "the :meth:`~object.__getattr__` method of a class would be called."
 msgstr ""
+"Se llama al manejador :c:member:`~PyTypeObject.tp_getattr` cuando el objeto "
+"requiere una búsqueda de atributos.  Se llama en las mismas situaciones en "
+"las que se llamaría al método :meth:`~object.__getattr__` de una clase."
 
 #: ../../extending/newtypes.rst:354
 msgid "Here is an example::"
@@ -505,6 +530,12 @@ msgid ""
 "exception; if this were really all you wanted, the :c:member:`~PyTypeObject."
 "tp_setattr` handler should be set to ``NULL``. ::"
 msgstr ""
+"Se llama el manejador :c:member:`~PyTypeObject.tp_setattr` cuando el método :"
+"meth:`~object.__setattr__` o :meth:`~object.__delattr__` de una instancia de "
+"clase sería llamado.  Cuando se deba eliminar un atributo, el tercer "
+"parámetro será ``NULL``.  Aquí hay un ejemplo que simplemente lanza una "
+"excepción; si esto fuera realmente todo lo que quisieras, el manejador :c:"
+"member:`~PyTypeObject.tp_setattr` debería establecerse en ``NULL``. ::"
 
 #: ../../extending/newtypes.rst:384
 msgid "Object Comparison"
@@ -517,6 +548,10 @@ msgid ""
 "methods <richcmpfuncs>`, like :meth:`!__lt__`, and also called by :c:func:"
 "`PyObject_RichCompare` and :c:func:`PyObject_RichCompareBool`."
 msgstr ""
+"Se llama al manejador :c:member:`~PyTypeObject.tp_richcompare` cuando se "
+"necesitan comparaciones.  Es análogo :ref:`rich comparison methods "
+"<richcmpfuncs>`, como :meth:`!__lt__`, y también se llama por :c:func:"
+"`PyObject_RichCompare` y :c:func:`PyObject_RichCompareBool`."
 
 #: ../../extending/newtypes.rst:395
 msgid ""
@@ -618,6 +653,10 @@ msgid ""
 "which is why you should be careful to avoid returning it when hash "
 "computation is successful, as seen above."
 msgstr ""
+":c:type:`!Py_hash_t` es un tipo entero con signo con una anchura que varía "
+"según la plataforma. Devolver ``-1`` desde :c:member:`~PyTypeObject.tp_hash` "
+"indica un error, por lo que debe tener cuidado de evitar devolverlo cuando "
+"el cálculo hash tiene éxito, como se ha visto anteriormente."
 
 #: ../../extending/newtypes.rst:485
 msgid ""
@@ -680,6 +719,13 @@ msgid ""
 "`~PyTypeObject.tp_iternext` corresponds to the Python :meth:`~iterator."
 "__next__` method."
 msgstr ""
+"Estas funciones proporcionan soporte para el protocolo iterador.  Ambos "
+"manejadores toman exactamente un parámetro, la instancia para la que están "
+"siendo llamados, y devuelven una nueva referencia.  En caso de error, deben "
+"lanzar una excepción y devolver ``NULL``. :c:member:`~PyTypeObject.tp_iter` "
+"corresponde al método de Python :meth:`~object.__iter__`, mientras que :c:"
+"member:`~PyTypeObject.tp_iternext` corresponde al método de Python :meth:"
+"`~iterator.__next__`."
 
 #: ../../extending/newtypes.rst:536
 msgid ""
@@ -850,27 +896,27 @@ msgstr "objeto"
 
 #: ../../extending/newtypes.rst:56
 msgid "deallocation"
-msgstr ""
+msgstr "deslocalización"
 
 #: ../../extending/newtypes.rst:56
 msgid "deallocation, object"
-msgstr ""
+msgstr "desasignación, objeto"
 
 #: ../../extending/newtypes.rst:56
 msgid "finalization"
-msgstr ""
+msgstr "finalización"
 
 #: ../../extending/newtypes.rst:56
 msgid "finalization, of objects"
-msgstr ""
+msgstr "finalización, de objetos"
 
 #: ../../extending/newtypes.rst:91
 msgid "PyErr_Fetch (C function)"
-msgstr ""
+msgstr "PyErr_Fetch (función C)"
 
 #: ../../extending/newtypes.rst:91
 msgid "PyErr_Restore (C function)"
-msgstr ""
+msgstr "PyErr_Restore (función C)"
 
 #: ../../extending/newtypes.rst:150
 msgid "string"
@@ -878,7 +924,7 @@ msgstr "cadena"
 
 #: ../../extending/newtypes.rst:150
 msgid "object representation"
-msgstr ""
+msgstr "representación de objetos"
 
 #: ../../extending/newtypes.rst:150
 msgid "built-in function"
