@@ -6,17 +6,17 @@
 # Translators:
 # Fei Yin <icebirds@163.com>, 2018
 # ppcfish <ppcfish@gmail.com>, 2019
-# Freesand Leo <yuqinju@163.com>, 2024
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-20 02:59+0000\n"
+"POT-Creation-Date: 2024-08-09 18:56+0000\n"
 "PO-Revision-Date: 2017-02-16 23:42+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -677,6 +677,8 @@ msgid ""
 "until there are no more lines in the file.  This means you can now read each "
 "line of a file using code like this::"
 msgstr ""
+"文件也提供了一个迭代器，它会调用 :meth:`readline` 方法，直到文件中没有更多的"
+"行。这意味着你现在可以使用类似这样的代码来读取文件的每一行："
 
 #: ../../whatsnew/2.2.rst:526
 msgid ""
@@ -685,6 +687,9 @@ msgid ""
 "object could provide such additional capabilities, but the iterator protocol "
 "only requires a :meth:`next` method."
 msgstr ""
+"请注意，你只能在迭代器中向前移动；没有办法获取前一个元素、重置迭代器或复制迭"
+"代器。一个迭代器对象可以提供这些额外的功能，但迭代器协议只要求有一个 :meth:"
+"`next` 方法。"
 
 #: ../../whatsnew/2.2.rst:535
 msgid ":pep:`234` - Iterators"
@@ -824,6 +829,9 @@ msgid ""
 "knight to every square of an $NxN$ chessboard without visiting any square "
 "twice)."
 msgstr ""
+"在 :file:`Lib/test/test_generators.py` 中还有另外两个例子，它们分别解决了N皇"
+"后问题（在$NxN$的棋盘上放置$N$个皇后，使得没有任何皇后威胁到其他皇后）和骑士"
+"巡游问题（在$NxN$的棋盘上，骑士访问每一个方格且不重复访问任何方格的路径）。"
 
 #: ../../whatsnew/2.2.rst:634
 msgid ""
@@ -911,6 +919,8 @@ msgid ""
 "You can still distinguish them with the :func:`type` built-in function, but "
 "that's rarely needed."
 msgstr ""
+"在大多数情况下，整数和长整数现在将被视为相同。你仍然可以使用内置的 :func:"
+"`type` 函数区分它们，但这很少需要。"
 
 #: ../../whatsnew/2.2.rst:702
 msgid ":pep:`237` - Unifying Long Integers and Integers"
@@ -939,6 +949,11 @@ msgid ""
 "the two operands and because Python is dynamically typed, it can be "
 "difficult to determine the possible types of the operands."
 msgstr ""
+"Python 2.2中最具争议的变化预示着修复一个自Python诞生以来的旧设计缺陷的努力的"
+"开始。目前，Python的除法操作符 ``/`` 在接收两个整数参数时表现得像C语言的除法"
+"操作符：它返回一个被截断为整数的结果。例如，``3/2`` 是1，而不是1.5，"
+"``(-1)/2`` 是-1，而不是-0.5。这意味着除法的结果可能会根据两个操作数的类型而意"
+"外变化，并且由于Python是动态类型的，确定操作数的可能类型可能会很困难。"
 
 #: ../../whatsnew/2.2.rst:721
 msgid ""
@@ -949,6 +964,10 @@ msgid ""
 "either side here and will stick to describing what's  implemented in 2.2.  "
 "Read :pep:`238` for a summary of arguments and counter-arguments.)"
 msgstr ""
+"（争议在于这是否*真的*算是一个设计缺陷，以及是否值得为了修复它而破坏现有代"
+"码。这在python-dev上引发了无休止的讨论，并在2001年7月爆发成一场在 :newsgroup:"
+"`comp.lang.python` 的充满讽刺性言辞的风暴。我不会在这里为任何一方辩护，只会描"
+"述在2.2中实现的内容。请阅读 :pep:`238` 以获取争论和反驳的摘要。）"
 
 #: ../../whatsnew/2.2.rst:728
 msgid ""
@@ -970,6 +989,11 @@ msgid ""
 "operands are integers, and returns the result of true division when one of "
 "the operands is a floating-point number."
 msgstr ""
+"首先，我将借用一些来自 :pep:`238` 的术语。“真除法”是大多数非程序员所熟悉的除"
+"法：3/2是1.5，1/4是0.25，等等。“地板除法”是Python的 ``/`` 操作符在给定整数操"
+"作数时当前执行的操作；其结果是真除法返回值的地板值。“经典除法”是当前 ``/`` 操"
+"作符的混合行为；当操作数是整数时，它返回地板除法的结果，而当其中一个操作数是"
+"浮点数时，它返回真除法的结果。"
 
 #: ../../whatsnew/2.2.rst:740
 msgid "Here are the changes 2.2 introduces:"
@@ -982,12 +1006,17 @@ msgid ""
 "no matter what the types of its operands are, so ``1 // 2`` is 0 and "
 "``1.0 // 2.0`` is also 0.0."
 msgstr ""
+"一个新的操作符，``//`` 是地板除法操作符。 （是的，我们知道它看起来像 C++ 的注"
+"释符号。） ``//`` *始终* 执行地板除法，无论其操作数的类型是什么，因此 ``1 // "
+"2`` 是 0，``1.0 // 2.0`` 也是0.0。"
 
 #: ../../whatsnew/2.2.rst:747
 msgid ""
 "``//`` is always available in Python 2.2; you don't need to enable it using "
 "a ``__future__`` statement."
 msgstr ""
+"``//`` 操作符在Python 2.2中始终可用；你不需要通过 ``__future__`` 语句来启用"
+"它。"
 
 #: ../../whatsnew/2.2.rst:750
 msgid ""
@@ -996,6 +1025,9 @@ msgid ""
 "is 0.5.  Without the ``__future__`` statement, ``/`` still means classic "
 "division. The default meaning of ``/`` will not change until Python 3.0."
 msgstr ""
+"通过在模块中包含 ``from __future__ import division``，``/``操作符将被更改为返"
+"回真除法的结果，因此 ``1/2`` 是0.5。如果没有这条 ``__future__`` 语句，``/`` "
+"仍然表示经典除法。``/`` 的默认含义在Python 3.0之前不会改变。"
 
 #: ../../whatsnew/2.2.rst:755
 msgid ""
@@ -1042,6 +1074,10 @@ msgid ""
 "script.   (It's also possible to specify :option:`!--disable-unicode` to "
 "completely disable Unicode support.)"
 msgstr ""
+"Python的Unicode支持在2.2版本中有所增强。Unicode字符串通常以UCS-2形式存储，即"
+"16位无符号整数。通过向配置脚本提供 :option:`!--enable-unicode=ucs4` 选项，"
+"Python 2.2也可以编译为使用UCS-4（32位无符号整数）作为其内部编码。（也可以指"
+"定 :option:`!--disable-unicode` 选项来完全禁用Unicode支持。）"
 
 #: ../../whatsnew/2.2.rst:786
 msgid ""
@@ -1071,6 +1107,8 @@ msgid ""
 "related to Unicode.  For example, codecs have been added for uu-encoding, "
 "MIME's base64 encoding, and compression with the :mod:`zlib` module::"
 msgstr ""
+"利用这一新特性，编解码器被添加用于与Unicode不直接相关的任务。例如，已经添加了"
+"用于uu编码、MIME的base64编码以及使用 :mod:`zlib` 模块进行压缩的编解码器："
 
 #: ../../whatsnew/2.2.rst:822
 msgid ""
@@ -1106,6 +1144,10 @@ msgid ""
 "scopes from my \"What's New in Python 2.1\" document; if you read it when "
 "2.1 came out, you can skip the rest of this section."
 msgstr ""
+"在Python 2.1中，静态嵌套作用域作为一个可选特性被添加，需要通过 ``from "
+"__future__ import nested_scopes`` 指令来启用。在2.2版本中，嵌套作用域不再需要"
+"特别启用，现在总是存在。本节的其余部分是从我的《Python 2.1的新特性》文档中复"
+"制的嵌套作用域描述；如果你在2.1发布时已经阅读过，可以跳过本节的其余部分。"
 
 #: ../../whatsnew/2.2.rst:848
 msgid ""
@@ -1248,6 +1290,8 @@ msgid ""
 "The new :mod:`hmac` module implements the HMAC algorithm described by :rfc:"
 "`2104`. (Contributed by Gerhard Häring.)"
 msgstr ""
+"新的 :mod:`hmac` 模块实现了由 :rfc:`2104` 描述的HMAC算法。（由Gerhard Häring"
+"贡献。）"
 
 #: ../../whatsnew/2.2.rst:965
 msgid ""
@@ -1266,6 +1310,9 @@ msgid ""
 "now this can be written more clearly as ``file_size = os.stat(filename)."
 "st_size``."
 msgstr ""
+"例如，使用旧的元组来获取文件的大小时，你可能会写成 ``file_size = os."
+"stat(filename)[stat.ST_SIZE]`` ，但现在可以更清晰地写成 ``file_size = os."
+"stat(filename).st_size``。"
 
 #: ../../whatsnew/2.2.rst:976
 msgid "The original patch for this feature was contributed by Nick Mathewson."
@@ -1286,6 +1333,8 @@ msgid ""
 "option:`!--enable-ipv6` option to Python's configure script.  (Contributed "
 "by Jun-ichiro \"itojun\" Hagino.)"
 msgstr ""
+":mod:`socket` 模块可以编译为支持IPv6；为Python的配置脚本指定 :option:`!--"
+"enable-ipv6` 选项。（由Jun-ichiro \"itojun\" Hagino贡献。）"
 
 #: ../../whatsnew/2.2.rst:985
 msgid ""
@@ -1305,6 +1354,11 @@ msgid ""
 "their help text. (Contributed by Guido van Rossum, using Ka-Ping Yee's :mod:"
 "`pydoc` module.)"
 msgstr ""
+"在解释器的交互模式下，有一个新的内置函数 :func:`help`，它使用在Python 2.1 中"
+"引入的 :mod:`pydoc` 模块来提供交互式帮助。 ``help(object)`` 显示关于*object*"
+"的任何可用帮助文本。不带参数调用 :func:`help` 会进入一个在线帮助工具，在那里"
+"你可以输入函数、类或模块的名称来阅读它们的帮助文本。（由Guido van Rossum贡"
+"献，使用Ka-Ping Yee的 :mod:`pydoc` 模块。）"
 
 #: ../../whatsnew/2.2.rst:998
 msgid ""
@@ -1324,6 +1378,9 @@ msgid ""
 "program and the mail transport agent being handed a message.  :mod:`smtplib` "
 "also supports SMTP authentication.  (Contributed by Gerhard Häring.)"
 msgstr ""
+":mod:`smtplib` 模块现在支持 :rfc:`2487`：\"Secure SMTP over TLS\"，因此现在可"
+"以加密Python程序与接收消息的邮件传输代理之间的SMTP流量。:mod:`smtplib` 还支持"
+"SMTP身份验证。（由Gerhard Häring贡献。）"
 
 #: ../../whatsnew/2.2.rst:1011
 msgid ""
@@ -1332,6 +1389,9 @@ msgid ""
 "SORT, GETACL and SETACL.  (Contributed by Anthony Baxter and Michel "
 "Pelletier.)"
 msgstr ""
+":mod:`imaplib` 模块由 Piers Lauder 维护，支持几个新扩展: :rfc:`2342` 中定义"
+"的 NAMESPACE 扩展、SORT、GETACL和SETACL。（由 Anthony Baxter 和 Michel "
+"Pelletier 贡献。）"
 
 #: ../../whatsnew/2.2.rst:1015
 msgid ""
@@ -1406,6 +1466,12 @@ msgid ""
 "exist, and have simply been changed to use the new C-level interface.  "
 "(Contributed by Fred L. Drake, Jr.)"
 msgstr ""
+"性能分析和追踪函数现在可以用 C 语言来实现，相比基于 Python 的函数能够显著提高"
+"运行速度并能够减少性能分析和追踪的资源开销。 Python 开发环境的编写者对此将会"
+"很感兴趣。 Python 的 API 增加了两个新的 C 函数，:c:func:`PyEval_SetProfile` "
+"和 :c:func:`PyEval_SetTrace`。 现有的 :func:`sys.setprofile` 和 :func:`sys."
+"settrace` 函数仍然存在，并已简单地更改为使用新的 C 层级接口。 （由 Fred L. "
+"Drake, Jr. 贡献。）"
 
 #: ../../whatsnew/2.2.rst:1065
 msgid ""
@@ -1478,6 +1544,12 @@ msgid ""
 "converts them to the specified new encoding. (Contributed by M.-A. Lemburg, "
 "and used for the MBCS support on Windows described in the following section.)"
 msgstr ""
+"向 :c:func:`PyArg_ParseTuple` 添加了一个新的 ``et`` 格式序列；``et`` 接受一个"
+"形参和一个编码格式名称，如果该形参值是一个 Unicode 字符串则将其转换为给定的编"
+"码格式，或者如果它是一个 8 比特位字符串则让其保持原样，即假定它已经使用了适当"
+"的编码格式。 这不同于 ``es`` 格式字符，它假定该 8 比特位字符串是使用 Python "
+"默认的 ASCII 编码格式并将其转换为指定的新编码格式。 （由 M.-A. Lemburg 贡献，"
+"用于下一节所描述的 Windows 上的 MBCS 支持。）"
 
 #: ../../whatsnew/2.2.rst:1102
 msgid ""
@@ -1515,6 +1587,9 @@ msgid ""
 "can simply be discarded when porting code from earlier versions to Python "
 "2.2."
 msgstr ""
+":c:func:`_PyTuple_Resize` 函数去掉了一个未使用的形参，因此现在它接受 2 个形参"
+"而不是 3 个。 第三个参数从未被使用，在将代码从较早的版本移植到 Python 2.2 时"
+"可以简单地丢弃它。"
 
 #: ../../whatsnew/2.2.rst:1129
 msgid "Other Changes and Fixes"
@@ -1559,6 +1634,13 @@ msgid ""
 "application, porting the MacPython IDE, possibly using Python as a standard "
 "OSA scripting language and much more.\""
 msgstr ""
+"最重要的变化是能够将 Python 作为框架来进行构建，这可以通过在编译 Python 时向"
+"配置脚本提供 :option:`!--enable-framework` 选项来启用。 根据 Jack Jansen 的说"
+"法，“这会将一个独立的 Python 安装版加上 OS X 框架‘粘合起来’放到 :file:`/"
+"Library/Frameworks/Python.framework` 中（或者其他选定的位置）。 就目前而言这"
+"样做并没有什么直接的额外好处（实际上，这样做还存在必须更改 PATH 才能找到"
+"Python 的坏处），但它是创建完整的 Python 应用程序、移植 MacPython IDE、并可能"
+"使用 Python 作为标准 OSA 脚本语言及其他更多功能的基础。”"
 
 #: ../../whatsnew/2.2.rst:1153
 msgid ""
@@ -1567,6 +1649,9 @@ msgid ""
 "been left commented out in :file:`setup.py`.  People who want to experiment "
 "with these modules can uncomment them manually."
 msgstr ""
+"作为 MacOS API 如 windowing, QuickTime, scripting 等的接口的许多 MacPython 工"
+"具箱模块已被移植到 OS X，但它们在 :file:`setup.py` 中被注释掉了。 希望尝试这"
+"些模块的人可以手动取消注释它们。"
 
 #: ../../whatsnew/2.2.rst:1176
 msgid ""
@@ -1574,6 +1659,8 @@ msgid ""
 "cause a :exc:`TypeError` exception to be raised, with the message "
 "\"*function* takes no keyword arguments\"."
 msgstr ""
+"现在将关键字参数传给不接受它们的内置函数会导致引发 :exc:`TypeError` 异常，并"
+"附带消息 \"*function* takes no keyword arguments\"。"
 
 #: ../../whatsnew/2.2.rst:1180
 msgid ""
@@ -1582,6 +1669,9 @@ msgid ""
 "The :exc:`ReferenceError` exception has therefore moved from the :mod:"
 "`weakref` module to become a built-in exception."
 msgstr ""
+"在 Python 2.1 中作为扩展模块加入的弱引用现在已成为核心组成部分，因为它们被用"
+"于新式类的实现。 为此 :exc:`ReferenceError` 异常也已从 :mod:`weakref` 模块移"
+"出成为一个内置异常。"
 
 #: ../../whatsnew/2.2.rst:1185
 msgid ""
@@ -1589,6 +1679,8 @@ msgid ""
 "automatically removes obsolete ``__future__`` statements from Python source "
 "code."
 msgstr ""
+"由 Tim Peters 编写的新脚本 :file:`Tools/scripts/cleanfuture.py` 可自动从 "
+"Python 源代码移除过时的 ``__future__`` 语句。"
 
 #: ../../whatsnew/2.2.rst:1189
 msgid ""
@@ -1598,6 +1690,10 @@ msgid ""
 "other development environments.  This is described in :pep:`264`. "
 "(Contributed by Michael Hudson.)"
 msgstr ""
+"向内置函数 :func:`compile` 添加了一个额外的 *flags* 参数，以便现在 "
+"``__future__`` 语句的行为能在模拟的 shell，例如由 IDLE 和其他开发环境所提供的"
+"此类工具中被正确地观察。 此特性的描述参见 :pep:`264`。 （由 Michael Hudson 贡"
+"献。）"
 
 #: ../../whatsnew/2.2.rst:1195
 msgid ""
@@ -1700,6 +1796,10 @@ msgid ""
 "such scripts, in case they're also usable as modules.  (Implemented by David "
 "Bolen.)"
 msgstr ""
+"在 Windows 上现在将会导入以 ``.pyw`` 结尾的文件。 ``.pyw`` 是 Windows 专属"
+"的，用来指明一个脚本需要使用 PYTHONW.EXE 而不是 PYTHON.EXE 来运行以避免弹出 "
+"DOS 控制台来显示输出。 该补丁使得导入这样的脚本成为可能，让它们也可以作为模块"
+"来使用。 （由 David Bolen 实现。）"
 
 #: ../../whatsnew/2.2.rst:1245
 msgid ""
@@ -1708,6 +1808,9 @@ msgid ""
 "`dlopen` using the :func:`sys.getdlopenflags` and :func:`sys.setdlopenflags` "
 "functions. (Contributed by Bram Stolk.)"
 msgstr ""
+"在 Python 会使用 C :c:func:`dlopen` 函数来加载扩展模块的平台上，现在可以使"
+"用 :func:`sys.getdlopenflags` 和 :func:`sys.setdlopenflags` 等函数来设置 :c:"
+"func:`dlopen` 所使用的旗标。 （由 Bram Stolk 贡献。）"
 
 #: ../../whatsnew/2.2.rst:1250
 msgid ""
