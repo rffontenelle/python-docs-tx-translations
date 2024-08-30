@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-09 14:48+0000\n"
+"POT-Creation-Date: 2024-08-30 14:55+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -583,6 +583,10 @@ msgid ""
 "path. In all other cases, such as the paths referencing different drives, :"
 "exc:`ValueError` is raised.::"
 msgstr ""
+"*walk_up* がFalseの場合（デフォルト）、パスは *other* から始まる必要がありま"
+"す。引数に True を指定すると ``..`` を追加して相対パスを作成する場合がありま"
+"す。異なるドライブを参照するなど、それ以外のケースでは :exc:`ValueError` が送"
+"出されます。::"
 
 #: ../../library/pathlib.rst:643
 msgid ""
@@ -700,7 +704,7 @@ msgstr ""
 
 #: ../../library/pathlib.rst:803
 msgid "Expanding and resolving paths"
-msgstr ""
+msgstr "パスの展開と解決"
 
 #: ../../library/pathlib.rst:807
 msgid ""
@@ -775,7 +779,7 @@ msgstr "( :func:`os.readlink` が返す) シンボリックリンクが指すパ
 
 #: ../../library/pathlib.rst:896
 msgid "Querying file type and status"
-msgstr ""
+msgstr "ファイルの種類とステータスを問い合わせる"
 
 #: ../../library/pathlib.rst:900
 msgid ""
@@ -798,6 +802,9 @@ msgid ""
 "path, like :func:`os.stat`. The result is looked up at each call to this "
 "method."
 msgstr ""
+"(:func:`os.stat` と同様の) 現在のパスについて :class:`os.stat_result` オブ"
+"ジェクトが含む情報を返します。値はそれぞれのメソッドを呼び出した時点のものに"
+"なります。"
 
 #: ../../library/pathlib.rst:913
 msgid ""
@@ -959,7 +966,7 @@ msgstr ""
 
 #: ../../library/pathlib.rst:1065
 msgid "Reading and writing files"
-msgstr ""
+msgstr "ファイルを読み書きする"
 
 #: ../../library/pathlib.rst:1070
 msgid ""
@@ -1017,7 +1024,7 @@ msgstr "同じ名前のファイルがすでにあれば上書きされます。
 
 #: ../../library/pathlib.rst:1146
 msgid "Reading directories"
-msgstr ""
+msgstr "ディレクトリを読む"
 
 #: ../../library/pathlib.rst:1150
 msgid ""
@@ -1034,12 +1041,18 @@ msgid ""
 "directory after creating the iterator, it is unspecified whether a path "
 "object for that file is included."
 msgstr ""
+"子の要素は任意の順番で yield されます。特殊なパスの ``'.'`` と ``'..'`` は含"
+"まれません。イテレーターを生成したあとにディレクトリにファイルを削除または追"
+"加した場合に、そのファイルのパスオブジェクトが含まれるかは定義されていませ"
+"ん。"
 
 #: ../../library/pathlib.rst:1169
 msgid ""
 "If the path is not a directory or otherwise inaccessible, :exc:`OSError` is "
 "raised."
 msgstr ""
+"パスがディレクトリでないかアクセスできない場合は :exc:`OSError` を送出しま"
+"す。"
 
 #: ../../library/pathlib.rst:1174
 msgid ""
@@ -1218,7 +1231,7 @@ msgstr ""
 
 #: ../../library/pathlib.rst:1341
 msgid "Creating files and directories"
-msgstr ""
+msgstr "ファイルとディレクトリの作成"
 
 #: ../../library/pathlib.rst:1345
 msgid ""
@@ -1228,6 +1241,11 @@ msgid ""
 "(and its modification time is updated to the current time), otherwise :exc:"
 "`FileExistsError` is raised."
 msgstr ""
+"与えられたパスにファイルを作成します。*mode* が与えられた場合、プロセスの "
+"``umask`` 値と組み合わせてファイルのモードとアクセスフラグが決定されます。"
+"ファイルがすでに存在した場合、*exist_ok* が真ならばこの関数は正常に終了しま"
+"す (そしてファイルの更新日付が現在の日時に変更されます)。その他の場合は :exc:"
+"`FileExistsError` が送出されます。"
 
 #: ../../library/pathlib.rst:1352
 msgid ""
@@ -1241,6 +1259,9 @@ msgid ""
 "combined with the process's ``umask`` value to determine the file mode and "
 "access flags.  If the path already exists, :exc:`FileExistsError` is raised."
 msgstr ""
+"与えられたパスに新しくディレクトリを作成します。*mode* が与えられていた場合、"
+"プロセスの ``umask`` 値と組み合わせてファイルのモードとアクセスフラグを決定し"
+"ます。パスがすでに存在していた場合 :exc:`FileExistsError` が送出されます。"
 
 #: ../../library/pathlib.rst:1363
 msgid ""
@@ -1308,7 +1329,7 @@ msgstr "引数の並び (link, target) は :func:`os.link` とは逆です。"
 
 #: ../../library/pathlib.rst:1419
 msgid "Renaming and deleting"
-msgstr ""
+msgstr "リネームと削除"
 
 #: ../../library/pathlib.rst:1423
 msgid ""
@@ -1318,6 +1339,13 @@ msgid ""
 "if *target* exists, :exc:`FileExistsError` will be raised. *target* can be "
 "either a string or another path object::"
 msgstr ""
+"このファイルかディレクトリを与えられた *target* にリネームし、 *target* を指"
+"す新しい :class:`!Path` のインスタンスを返します。\n"
+"Unix では *target* が存在するファイルの場合、ユーザにパーミッションがあれば静"
+"かに置換されます。\n"
+"Windows では *target* が存在する場合、:exc:`FileExistsError` が送出されま"
+"す。\n"
+"*target* は文字列か別のパスオブジェクトです::"
 
 #: ../../library/pathlib.rst:1438 ../../library/pathlib.rst:1454
 msgid ""
@@ -1325,6 +1353,9 @@ msgid ""
 "relative to the current working directory, *not* the directory of the :class:"
 "`!Path` object."
 msgstr ""
+"targetパスは絶対または相対で指定できます。相対パスは現在の作業ディレクトリか"
+"らの相対パスとして解釈し、:class:`!Path` オブジェクトのディレクトリ *ではあり"
+"ません*。"
 
 #: ../../library/pathlib.rst:1442
 msgid ""
@@ -1334,7 +1365,7 @@ msgstr ""
 
 #: ../../library/pathlib.rst:1444 ../../library/pathlib.rst:1458
 msgid "Added return value, return the new :class:`!Path` instance."
-msgstr ""
+msgstr "戻り値を追加し、新しい :class:`!Path` インスタンスを返します。"
 
 #: ../../library/pathlib.rst:1450
 msgid ""
@@ -1342,6 +1373,9 @@ msgid ""
 "`!Path` instance pointing to *target*.  If *target* points to an existing "
 "file or empty directory, it will be unconditionally replaced."
 msgstr ""
+"現在のファイルまたはディレクトリの名前を *target* に変更し、 *target* を指す"
+"新しい :class:`!Path` のインスタンスを返します。*target* が既存のファイルか空"
+"のディレクトリを指していた場合、無条件に置き換えられます。"
 
 #: ../../library/pathlib.rst:1464
 msgid ""
@@ -1377,7 +1411,7 @@ msgstr "現在のディレクトリを削除します。ディレクトリは空
 
 #: ../../library/pathlib.rst:1483
 msgid "Permissions and ownership"
-msgstr ""
+msgstr "パーミッションと所有者"
 
 #: ../../library/pathlib.rst:1487
 msgid ""
@@ -1456,7 +1490,7 @@ msgstr ":func:`os.path.splitext`"
 
 #: ../../library/pathlib.rst:1535
 msgid ":attr:`PurePath.stem`, :attr:`PurePath.suffix`"
-msgstr ""
+msgstr ":attr:`PurePath.stem`, :attr:`PurePath.suffix`"
 
 #: ../../library/pathlib.rst:1536
 msgid ":func:`os.path.join`"
@@ -1464,7 +1498,7 @@ msgstr ":func:`os.path.join`"
 
 #: ../../library/pathlib.rst:1536
 msgid ":meth:`PurePath.joinpath`"
-msgstr ""
+msgstr ":meth:`PurePath.joinpath`"
 
 #: ../../library/pathlib.rst:1537
 msgid ":func:`os.path.isabs`"
@@ -1480,7 +1514,7 @@ msgstr ":func:`os.path.relpath`"
 
 #: ../../library/pathlib.rst:1538
 msgid ":meth:`PurePath.relative_to` [1]_"
-msgstr ""
+msgstr ":meth:`PurePath.relative_to` [1]_"
 
 #: ../../library/pathlib.rst:1539
 msgid ":func:`os.path.expanduser`"
@@ -1488,7 +1522,7 @@ msgstr ":func:`os.path.expanduser`"
 
 #: ../../library/pathlib.rst:1539
 msgid ":meth:`Path.expanduser` [2]_"
-msgstr ""
+msgstr ":meth:`Path.expanduser` [2]_"
 
 #: ../../library/pathlib.rst:1540
 msgid ":func:`os.path.realpath`"
@@ -1504,7 +1538,7 @@ msgstr ":func:`os.path.abspath`"
 
 #: ../../library/pathlib.rst:1541
 msgid ":meth:`Path.absolute` [3]_"
-msgstr ""
+msgstr ":meth:`Path.absolute` [3]_"
 
 #: ../../library/pathlib.rst:1542
 msgid ":func:`os.path.exists`"
@@ -1540,19 +1574,19 @@ msgstr ":meth:`Path.is_symlink`"
 
 #: ../../library/pathlib.rst:1546
 msgid ":func:`os.path.isjunction`"
-msgstr ""
+msgstr ":func:`os.path.isjunction`"
 
 #: ../../library/pathlib.rst:1546
 msgid ":meth:`Path.is_junction`"
-msgstr ""
+msgstr ":meth:`Path.is_junction`"
 
 #: ../../library/pathlib.rst:1547
 msgid ":func:`os.path.ismount`"
-msgstr ""
+msgstr ":func:`os.path.ismount`"
 
 #: ../../library/pathlib.rst:1547
 msgid ":meth:`Path.is_mount`"
-msgstr ""
+msgstr ":meth:`Path.is_mount`"
 
 #: ../../library/pathlib.rst:1548
 msgid ":func:`os.path.samefile`"
@@ -1568,7 +1602,7 @@ msgstr ":func:`os.getcwd`"
 
 #: ../../library/pathlib.rst:1549
 msgid ":meth:`Path.cwd`"
-msgstr ""
+msgstr ":meth:`Path.cwd`"
 
 #: ../../library/pathlib.rst:1550
 msgid ":func:`os.stat`"
@@ -1576,15 +1610,15 @@ msgstr ":func:`os.stat`"
 
 #: ../../library/pathlib.rst:1550
 msgid ":meth:`Path.stat`"
-msgstr ""
+msgstr ":meth:`Path.stat`"
 
 #: ../../library/pathlib.rst:1551
 msgid ":func:`os.lstat`"
-msgstr ""
+msgstr ":func:`os.lstat`"
 
 #: ../../library/pathlib.rst:1551
 msgid ":meth:`Path.lstat`"
-msgstr ""
+msgstr ":meth:`Path.lstat`"
 
 #: ../../library/pathlib.rst:1552
 msgid ":func:`os.listdir`"
@@ -1600,11 +1634,11 @@ msgstr ":func:`os.walk`"
 
 #: ../../library/pathlib.rst:1553
 msgid ":meth:`Path.walk` [4]_"
-msgstr ""
+msgstr ":meth:`Path.walk` [4]_"
 
 #: ../../library/pathlib.rst:1554
 msgid ":func:`os.mkdir`, :func:`os.makedirs`"
-msgstr ""
+msgstr ":func:`os.mkdir`, :func:`os.makedirs`"
 
 #: ../../library/pathlib.rst:1554
 msgid ":meth:`Path.mkdir`"
@@ -1676,11 +1710,11 @@ msgstr ":meth:`Path.chmod`"
 
 #: ../../library/pathlib.rst:1563
 msgid ":func:`os.lchmod`"
-msgstr ""
+msgstr ":func:`os.lchmod`"
 
 #: ../../library/pathlib.rst:1563
 msgid ":meth:`Path.lchmod`"
-msgstr ""
+msgstr ":meth:`Path.lchmod`"
 
 #: ../../library/pathlib.rst:1567
 msgid "Footnotes"
