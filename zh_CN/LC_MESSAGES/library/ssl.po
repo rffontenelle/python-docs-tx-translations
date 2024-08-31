@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 14:16+0000\n"
+"POT-Creation-Date: 2024-08-31 10:59+0000\n"
 "PO-Revision-Date: 2021-06-28 01:13+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -166,13 +166,51 @@ msgstr ""
 msgid "Client socket example with default context and IPv4/IPv6 dual stack::"
 msgstr "客户端套接字实例，采用默认上下文和IPv4/IPv6双栈::"
 
+#: ../../library/ssl.rst:86
+msgid ""
+"import socket\n"
+"import ssl\n"
+"\n"
+"hostname = 'www.python.org'\n"
+"context = ssl.create_default_context()\n"
+"\n"
+"with socket.create_connection((hostname, 443)) as sock:\n"
+"    with context.wrap_socket(sock, server_hostname=hostname) as ssock:\n"
+"        print(ssock.version())"
+msgstr ""
+
 #: ../../library/ssl.rst:97
 msgid "Client socket example with custom context and IPv4::"
 msgstr "客户端套接字示例，带有自定义上下文和IPv4::"
 
+#: ../../library/ssl.rst:99
+msgid ""
+"hostname = 'www.python.org'\n"
+"# PROTOCOL_TLS_CLIENT requires valid cert chain and hostname\n"
+"context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)\n"
+"context.load_verify_locations('path/to/cabundle.pem')\n"
+"\n"
+"with socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0) as sock:\n"
+"    with context.wrap_socket(sock, server_hostname=hostname) as ssock:\n"
+"        print(ssock.version())"
+msgstr ""
+
 #: ../../library/ssl.rst:109
 msgid "Server socket example listening on localhost IPv4::"
 msgstr "服务器套接字实例，在localhost上监听IPv4::"
+
+#: ../../library/ssl.rst:111
+msgid ""
+"context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)\n"
+"context.load_cert_chain('/path/to/certchain.pem', '/path/to/private.key')\n"
+"\n"
+"with socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0) as sock:\n"
+"    sock.bind(('127.0.0.1', 8443))\n"
+"    sock.listen(5)\n"
+"    with context.wrap_socket(sock, server_side=True) as ssock:\n"
+"        conn, addr = ssock.accept()\n"
+"        ..."
+msgstr ""
 
 #: ../../library/ssl.rst:123
 msgid "Context creation"
@@ -278,6 +316,12 @@ msgstr ""
 "认为 `完全不可用 <https://en.wikipedia.org/wiki/POODLE>`_。 如果你仍希望继续"
 "使用此函数但仍允许 SSL 3.0 连接，你可以使用以下代码重新启用它们::"
 
+#: ../../library/ssl.rst:178
+msgid ""
+"ctx = ssl.create_default_context(Purpose.CLIENT_AUTH)\n"
+"ctx.options &= ~ssl.OP_NO_SSLv3"
+msgstr ""
+
 #: ../../library/ssl.rst:182
 msgid ""
 "This context enables :data:`VERIFY_X509_STRICT` by default, which may reject "
@@ -288,6 +332,12 @@ msgstr ""
 "此上下文默认会启用 :data:`VERIFY_X509_STRICT`，它可能拒绝下层 OpenSSL 实现在"
 "其他情况下应当会接受的 :rfc:`5280` 之前的证书或格式错误的证书。 虽然不建议禁"
 "用此功能，但你可以使用以下方式做到这一点::"
+
+#: ../../library/ssl.rst:187
+msgid ""
+"ctx = ssl.create_default_context()\n"
+"ctx.verify_flags &= ~ssl.VERIFY_X509_STRICT"
+msgstr ""
 
 #: ../../library/ssl.rst:194
 msgid "RC4 was dropped from the default cipher string."
@@ -505,6 +555,17 @@ msgstr ""
 msgid "Here's an example:"
 msgstr "以下为示例代码:"
 
+#: ../../library/ssl.rst:367
+msgid ""
+">>> import ssl\n"
+">>> timestamp = ssl.cert_time_to_seconds(\"Jan  5 09:34:43 2018 GMT\")\n"
+">>> timestamp  \n"
+"1515144883\n"
+">>> from datetime import datetime\n"
+">>> print(datetime.utcfromtimestamp(timestamp))  \n"
+"2018-01-05 09:34:43"
+msgstr ""
+
 #: ../../library/ssl.rst:377
 msgid "\"notBefore\" or \"notAfter\" dates must use GMT (:rfc:`5280`)."
 msgstr "\"notBefore\" 或 \"notAfter\" 日期值必须使用 GMT (:rfc:`5280`)。"
@@ -638,6 +699,13 @@ msgstr ""
 #: ../../library/ssl.rst:1898
 msgid "Example::"
 msgstr "示例::"
+
+#: ../../library/ssl.rst:450
+msgid ""
+">>> ssl.enum_certificates(\"CA\")\n"
+"[(b'data...', 'x509_asn', {'1.3.6.1.5.5.7.3.1', '1.3.6.1.5.5.7.3.2'}),\n"
+" (b'data...', 'x509_asn', True)]"
+msgstr ""
 
 #: ../../library/ssl.rst:454 ../../library/ssl.rst:469
 msgid ":ref:`Availability <availability>`: Windows."
@@ -1200,15 +1268,35 @@ msgstr ""
 msgid "The version string of the OpenSSL library loaded by the interpreter::"
 msgstr "解释器所加载的 OpenSSL 库的版本字符串::"
 
+#: ../../library/ssl.rst:948
+msgid ""
+">>> ssl.OPENSSL_VERSION\n"
+"'OpenSSL 1.0.2k  26 Jan 2017'"
+msgstr ""
+
 #: ../../library/ssl.rst:955
 msgid ""
 "A tuple of five integers representing version information about the OpenSSL "
 "library::"
 msgstr "代表 OpenSSL 库的版本信息的五个整数所组成的元组::"
 
+#: ../../library/ssl.rst:958
+msgid ""
+">>> ssl.OPENSSL_VERSION_INFO\n"
+"(1, 0, 2, 11, 15)"
+msgstr ""
+
 #: ../../library/ssl.rst:965
 msgid "The raw version number of the OpenSSL library, as a single integer::"
 msgstr "OpenSSL 库的原始版本号，以单个整数表示::"
+
+#: ../../library/ssl.rst:967
+msgid ""
+">>> ssl.OPENSSL_VERSION_NUMBER\n"
+"268443839\n"
+">>> hex(ssl.OPENSSL_VERSION_NUMBER)\n"
+"'0x100020bf'"
+msgstr ""
 
 #: ../../library/ssl.rst:978
 msgid ""
@@ -1595,6 +1683,29 @@ msgstr ""
 "``subject`` 和 ``issuer`` 字段都是包含在证书中相应字段的数据结构中给出的相对"
 "专有名称（RDN）序列的元组，每个 RDN 均为 name-value 对的序列。 这里是一个实际"
 "的示例::"
+
+#: ../../library/ssl.rst:1194
+msgid ""
+"{'issuer': ((('countryName', 'IL'),),\n"
+"            (('organizationName', 'StartCom Ltd.'),),\n"
+"            (('organizationalUnitName',\n"
+"              'Secure Digital Certificate Signing'),),\n"
+"            (('commonName',\n"
+"              'StartCom Class 2 Primary Intermediate Server CA'),)),\n"
+" 'notAfter': 'Nov 22 08:15:19 2013 GMT',\n"
+" 'notBefore': 'Nov 21 03:09:52 2011 GMT',\n"
+" 'serialNumber': '95F0',\n"
+" 'subject': ((('description', '571208-SLe257oHY9fVQ07Z'),),\n"
+"             (('countryName', 'US'),),\n"
+"             (('stateOrProvinceName', 'California'),),\n"
+"             (('localityName', 'San Francisco'),),\n"
+"             (('organizationName', 'Electronic Frontier Foundation, "
+"Inc.'),),\n"
+"             (('commonName', '*.eff.org'),),\n"
+"             (('emailAddress', 'hostmaster@eff.org'),)),\n"
+" 'subjectAltName': (('DNS', '*.eff.org'), ('DNS', 'eff.org')),\n"
+" 'version': 3}"
+msgstr ""
 
 #: ../../library/ssl.rst:1213
 msgid ""
@@ -2065,6 +2176,12 @@ msgstr ""
 msgid "Example for a context with one CA cert and one other cert::"
 msgstr "具有一个 CA 证书和一个其他证书的上下文示例::"
 
+#: ../../library/ssl.rst:1499
+msgid ""
+">>> context.cert_store_stats()\n"
+"{'crl': 0, 'x509_ca': 1, 'x509': 2}"
+msgstr ""
+
 #: ../../library/ssl.rst:1507
 msgid ""
 "Load a private key and the corresponding certificate.  The *certfile* string "
@@ -2223,6 +2340,37 @@ msgid ""
 msgstr ""
 "获取已启用密码的列表。 该列表将按密码的优先级排序。 参见 :meth:`SSLContext."
 "set_ciphers`。"
+
+#: ../../library/ssl.rst:1601
+msgid ""
+">>> ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)\n"
+">>> ctx.set_ciphers('ECDHE+AESGCM:!ECDSA')\n"
+">>> ctx.get_ciphers()\n"
+"[{'aead': True,\n"
+"  'alg_bits': 256,\n"
+"  'auth': 'auth-rsa',\n"
+"  'description': 'ECDHE-RSA-AES256-GCM-SHA384 TLSv1.2 Kx=ECDH     Au=RSA  '\n"
+"                 'Enc=AESGCM(256) Mac=AEAD',\n"
+"  'digest': None,\n"
+"  'id': 50380848,\n"
+"  'kea': 'kx-ecdhe',\n"
+"  'name': 'ECDHE-RSA-AES256-GCM-SHA384',\n"
+"  'protocol': 'TLSv1.2',\n"
+"  'strength_bits': 256,\n"
+"  'symmetric': 'aes-256-gcm'},\n"
+" {'aead': True,\n"
+"  'alg_bits': 128,\n"
+"  'auth': 'auth-rsa',\n"
+"  'description': 'ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 Kx=ECDH     Au=RSA  '\n"
+"                 'Enc=AESGCM(128) Mac=AEAD',\n"
+"  'digest': None,\n"
+"  'id': 50380847,\n"
+"  'kea': 'kx-ecdhe',\n"
+"  'name': 'ECDHE-RSA-AES128-GCM-SHA256',\n"
+"  'protocol': 'TLSv1.2',\n"
+"  'strength_bits': 128,\n"
+"  'symmetric': 'aes-128-gcm'}]"
+msgstr ""
 
 #: ../../library/ssl.rst:1633
 msgid ""
@@ -2647,6 +2795,13 @@ msgstr ""
 "到其数字值的字典。 例如，下面是自该上下文创建以来会话缓存中的总点击数和失误"
 "数。::"
 
+#: ../../library/ssl.rst:1881
+msgid ""
+">>> stats = context.session_stats()\n"
+">>> stats['hits'], stats['misses']\n"
+"(0, 0)"
+msgstr ""
+
 #: ../../library/ssl.rst:1887
 msgid ""
 "Whether to match the peer cert's hostname in :meth:`SSLSocket.do_handshake`. "
@@ -2666,6 +2821,20 @@ msgstr ""
 "verify_mode` 从 :data:`CERT_NONE` 设为 :data:`CERT_REQUIRED`。 只要启用了主机"
 "名检查就无法将其设回 :data:`CERT_NONE`。 :data:`PROTOCOL_TLS_CLIENT` 协议默认"
 "启用主机名检查。 对于其他协议，则必须显式地启用主机名检查。"
+
+#: ../../library/ssl.rst:1900
+msgid ""
+"import socket, ssl\n"
+"\n"
+"context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)\n"
+"context.verify_mode = ssl.CERT_REQUIRED\n"
+"context.check_hostname = True\n"
+"context.load_default_certs()\n"
+"\n"
+"s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n"
+"ssl_sock = context.wrap_socket(s, server_hostname='www.verisign.com')\n"
+"ssl_sock.connect(('www.verisign.com', 443))"
+msgstr ""
 
 #: ../../library/ssl.rst:1915
 msgid ""
@@ -2896,6 +3065,27 @@ msgstr "client-identity 必须是一个非空字符串。"
 msgid "Example usage::"
 msgstr "用法示例::"
 
+#: ../../library/ssl.rst:2077
+msgid ""
+"context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)\n"
+"context.check_hostname = False\n"
+"context.verify_mode = ssl.CERT_NONE\n"
+"context.maximum_version = ssl.TLSVersion.TLSv1_2\n"
+"context.set_ciphers('PSK')\n"
+"\n"
+"# A simple lambda:\n"
+"psk = bytes.fromhex('c0ffee')\n"
+"context.set_psk_client_callback(lambda hint: (None, psk))\n"
+"\n"
+"# A table using the hint from the server:\n"
+"psk_table = { 'ServerId_1': bytes.fromhex('c0ffee'),\n"
+"              'ServerId_2': bytes.fromhex('facade')\n"
+"}\n"
+"def callback(hint):\n"
+"    return 'ClientId_1', psk_table.get(hint, b'')\n"
+"context.set_psk_client_callback(callback)"
+msgstr ""
+
 #: ../../library/ssl.rst:2095 ../../library/ssl.rst:2140
 msgid ""
 "This method will raise :exc:`NotImplementedError` if :data:`HAS_PSK` is "
@@ -2935,6 +3125,25 @@ msgstr ""
 msgid ""
 "When using TLS 1.3 the ``identity_hint`` parameter is not sent to the client."
 msgstr "当使用 TLS 1.3 时 ``identity_hint`` 形参将不会被发送给客户端。"
+
+#: ../../library/ssl.rst:2124
+msgid ""
+"context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)\n"
+"context.maximum_version = ssl.TLSVersion.TLSv1_2\n"
+"context.set_ciphers('PSK')\n"
+"\n"
+"# A simple lambda:\n"
+"psk = bytes.fromhex('c0ffee')\n"
+"context.set_psk_server_callback(lambda identity: psk)\n"
+"\n"
+"# A table using the identity of the client:\n"
+"psk_table = { 'ClientId_1': bytes.fromhex('c0ffee'),\n"
+"              'ClientId_2': bytes.fromhex('facade')\n"
+"}\n"
+"def callback(identity):\n"
+"    return psk_table.get(identity, b'')\n"
+"context.set_psk_server_callback(callback, 'ServerId_1')"
+msgstr ""
 
 #: ../../library/ssl.rst:2152
 msgid "Certificates"
@@ -3004,6 +3213,13 @@ msgstr ""
 "Python 使用文件来包含证书。 它们应当采用 \"PEM\" 格式 (参见 :rfc:`1422`)，这"
 "是一种带有头部行和尾部行的 base-64 编码包装形式::"
 
+#: ../../library/ssl.rst:2186
+msgid ""
+"-----BEGIN CERTIFICATE-----\n"
+"... (certificate in base64 PEM encoding) ...\n"
+"-----END CERTIFICATE-----"
+msgstr ""
+
 #: ../../library/ssl.rst:2191
 msgid "Certificate chains"
 msgstr "证书链"
@@ -3030,6 +3246,19 @@ msgstr ""
 "这些证书应当被拼接为一体。 例如，假设我们有一个包含三个证书的证书链，以我们的"
 "服务器证书打头，然后是为我们的服务器证书签名的证书颁发机构的证书，最后是为证"
 "书颁发机构的证书颁发证书的机构的根证书::"
+
+#: ../../library/ssl.rst:2206
+msgid ""
+"-----BEGIN CERTIFICATE-----\n"
+"... (certificate for your server)...\n"
+"-----END CERTIFICATE-----\n"
+"-----BEGIN CERTIFICATE-----\n"
+"... (the certificate for the CA)...\n"
+"-----END CERTIFICATE-----\n"
+"-----BEGIN CERTIFICATE-----\n"
+"... (the root certificate for the CA's issuer)...\n"
+"-----END CERTIFICATE-----"
+msgstr ""
 
 #: ../../library/ssl.rst:2217
 msgid "CA certificates"
@@ -3067,6 +3296,16 @@ msgstr ""
 "给 :meth:`SSLContext.load_cert_chain`。 如果私钥是与证书一起存储的，则它应当"
 "放在证书链的第一个证书之前::"
 
+#: ../../library/ssl.rst:2236
+msgid ""
+"-----BEGIN RSA PRIVATE KEY-----\n"
+"... (private key in base64 encoding) ...\n"
+"-----END RSA PRIVATE KEY-----\n"
+"-----BEGIN CERTIFICATE-----\n"
+"... (certificate in base64 PEM encoding) ...\n"
+"-----END CERTIFICATE-----"
+msgstr ""
+
 #: ../../library/ssl.rst:2244
 msgid "Self-signed certificates"
 msgstr "自签名证书"
@@ -3084,6 +3323,32 @@ msgstr ""
 "书。 有许多方式可以获取合适的证书，例如从证书颁发机构购买。 另一种常见做法是"
 "生成自签名证书。 生成自签名证书的最简单方式是使用 OpenSSL 软件包，代码如下所"
 "示::"
+
+#: ../../library/ssl.rst:2253
+msgid ""
+"% openssl req -new -x509 -days 365 -nodes -out cert.pem -keyout cert.pem\n"
+"Generating a 1024 bit RSA private key\n"
+".......++++++\n"
+".............................++++++\n"
+"writing new private key to 'cert.pem'\n"
+"-----\n"
+"You are about to be asked to enter information that will be incorporated\n"
+"into your certificate request.\n"
+"What you are about to enter is what is called a Distinguished Name or a DN.\n"
+"There are quite a few fields but you can leave some blank\n"
+"For some fields there will be a default value,\n"
+"If you enter '.', the field will be left blank.\n"
+"-----\n"
+"Country Name (2 letter code) [AU]:US\n"
+"State or Province Name (full name) [Some-State]:MyState\n"
+"Locality Name (eg, city) []:Some City\n"
+"Organization Name (eg, company) [Internet Widgits Pty Ltd]:My Organization, "
+"Inc.\n"
+"Organizational Unit Name (eg, section) []:My Group\n"
+"Common Name (eg, YOUR name) []:myserver.mygroup.myorganization.com\n"
+"Email Address []:ops@myserver.mygroup.myorganization.com\n"
+"%"
+msgstr ""
 
 #: ../../library/ssl.rst:2275
 msgid ""
@@ -3109,6 +3374,16 @@ msgid ""
 msgstr ""
 "要检测一个 Python 安装版中是否带有 SSL 支持，用户代码应当使用以下例程::"
 
+#: ../../library/ssl.rst:2289
+msgid ""
+"try:\n"
+"    import ssl\n"
+"except ImportError:\n"
+"    pass\n"
+"else:\n"
+"    ...  # do something that requires SSL support"
+msgstr ""
+
 #: ../../library/ssl.rst:2297
 msgid "Client-side operation"
 msgstr "客户端操作"
@@ -3121,6 +3396,10 @@ msgstr ""
 "这个例子创建了一个 SSL 上下文并使用客户端套接字的推荐安全设置，包括自动证书验"
 "证::"
 
+#: ../../library/ssl.rst:2302
+msgid ">>> context = ssl.create_default_context()"
+msgstr ""
+
 #: ../../library/ssl.rst:2304
 msgid ""
 "If you prefer to tune security settings yourself, you might create a context "
@@ -3128,6 +3407,12 @@ msgid ""
 msgstr ""
 "如果你喜欢自行调整安全设置，你可能需要从头创建一个上下文（但是请请注意避免不"
 "正确的设置）::"
+
+#: ../../library/ssl.rst:2308
+msgid ""
+">>> context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)\n"
+">>> context.load_verify_locations(\"/etc/ssl/certs/ca-bundle.crt\")"
+msgstr ""
 
 #: ../../library/ssl.rst:2311
 msgid ""
@@ -3162,9 +3447,20 @@ msgstr ""
 "check_hostname` 会验证服务器证书；它将确认服务器证书使用了某个 CA 证书进行签"
 "名，检查签名是否正确，并验证其他属性例如主机名的有效性和身份真实性::"
 
+#: ../../library/ssl.rst:2326
+msgid ""
+">>> conn = context.wrap_socket(socket.socket(socket.AF_INET),\n"
+"...                            server_hostname=\"www.python.org\")\n"
+">>> conn.connect((\"www.python.org\", 443))"
+msgstr ""
+
 #: ../../library/ssl.rst:2330
 msgid "You may then fetch the certificate::"
 msgstr "你可以随后获取该证书::"
+
+#: ../../library/ssl.rst:2332
+msgid ">>> cert = conn.getpeercert()"
+msgstr ""
 
 #: ../../library/ssl.rst:2334
 msgid ""
@@ -3174,11 +3470,81 @@ msgstr ""
 "可视化检查显示证书能够证明目标服务 (即 HTTPS 主机 ``www.python.org``) 的身"
 "份::"
 
+#: ../../library/ssl.rst:2337
+msgid ""
+">>> pprint.pprint(cert)\n"
+"{'OCSP': ('http://ocsp.digicert.com',),\n"
+" 'caIssuers': ('http://cacerts.digicert.com/"
+"DigiCertSHA2ExtendedValidationServerCA.crt',),\n"
+" 'crlDistributionPoints': ('http://crl3.digicert.com/sha2-ev-server-g1."
+"crl',\n"
+"                           'http://crl4.digicert.com/sha2-ev-server-g1."
+"crl'),\n"
+" 'issuer': ((('countryName', 'US'),),\n"
+"            (('organizationName', 'DigiCert Inc'),),\n"
+"            (('organizationalUnitName', 'www.digicert.com'),),\n"
+"            (('commonName', 'DigiCert SHA2 Extended Validation Server "
+"CA'),)),\n"
+" 'notAfter': 'Sep  9 12:00:00 2016 GMT',\n"
+" 'notBefore': 'Sep  5 00:00:00 2014 GMT',\n"
+" 'serialNumber': '01BB6F00122B177F36CAB49CEA8B6B26',\n"
+" 'subject': ((('businessCategory', 'Private Organization'),),\n"
+"             (('1.3.6.1.4.1.311.60.2.1.3', 'US'),),\n"
+"             (('1.3.6.1.4.1.311.60.2.1.2', 'Delaware'),),\n"
+"             (('serialNumber', '3359300'),),\n"
+"             (('streetAddress', '16 Allen Rd'),),\n"
+"             (('postalCode', '03894-4801'),),\n"
+"             (('countryName', 'US'),),\n"
+"             (('stateOrProvinceName', 'NH'),),\n"
+"             (('localityName', 'Wolfeboro'),),\n"
+"             (('organizationName', 'Python Software Foundation'),),\n"
+"             (('commonName', 'www.python.org'),)),\n"
+" 'subjectAltName': (('DNS', 'www.python.org'),\n"
+"                    ('DNS', 'python.org'),\n"
+"                    ('DNS', 'pypi.org'),\n"
+"                    ('DNS', 'docs.python.org'),\n"
+"                    ('DNS', 'testpypi.org'),\n"
+"                    ('DNS', 'bugs.python.org'),\n"
+"                    ('DNS', 'wiki.python.org'),\n"
+"                    ('DNS', 'hg.python.org'),\n"
+"                    ('DNS', 'mail.python.org'),\n"
+"                    ('DNS', 'packaging.python.org'),\n"
+"                    ('DNS', 'pythonhosted.org'),\n"
+"                    ('DNS', 'www.pythonhosted.org'),\n"
+"                    ('DNS', 'test.pythonhosted.org'),\n"
+"                    ('DNS', 'us.pycon.org'),\n"
+"                    ('DNS', 'id.python.org')),\n"
+" 'version': 3}"
+msgstr ""
+
 #: ../../library/ssl.rst:2377
 msgid ""
 "Now the SSL channel is established and the certificate verified, you can "
 "proceed to talk with the server::"
 msgstr "现在 SSL 通道已建立并已验证了证书，你可以继续与服务器对话了::"
+
+#: ../../library/ssl.rst:2380
+msgid ""
+">>> conn.sendall(b\"HEAD / HTTP/1.0\\r\\nHost: linuxfr.org\\r\\n\\r\\n\")\n"
+">>> pprint.pprint(conn.recv(1024).split(b\"\\r\\n\"))\n"
+"[b'HTTP/1.1 200 OK',\n"
+" b'Date: Sat, 18 Oct 2014 18:27:20 GMT',\n"
+" b'Server: nginx',\n"
+" b'Content-Type: text/html; charset=utf-8',\n"
+" b'X-Frame-Options: SAMEORIGIN',\n"
+" b'Content-Length: 45679',\n"
+" b'Accept-Ranges: bytes',\n"
+" b'Via: 1.1 varnish',\n"
+" b'Age: 2188',\n"
+" b'X-Served-By: cache-lcy1134-LCY',\n"
+" b'X-Cache: HIT',\n"
+" b'X-Cache-Hits: 11',\n"
+" b'Vary: Cookie',\n"
+" b'Strict-Transport-Security: max-age=63072000; includeSubDomains',\n"
+" b'Connection: close',\n"
+" b'',\n"
+" b'']"
+msgstr ""
 
 #: ../../library/ssl.rst:2404
 msgid "Server-side operation"
@@ -3196,6 +3562,18 @@ msgstr ""
 "个包含密钥和证书的上下文，这样客户端就能检查你的身份真实性。 然后你将打开一个"
 "套接字，将其绑定到一个端口，在其上调用 :meth:`listen`，并开始等待客户端连接::"
 
+#: ../../library/ssl.rst:2412
+msgid ""
+"import socket, ssl\n"
+"\n"
+"context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)\n"
+"context.load_cert_chain(certfile=\"mycertfile\", keyfile=\"mykeyfile\")\n"
+"\n"
+"bindsocket = socket.socket()\n"
+"bindsocket.bind(('myaddr.example.com', 10023))\n"
+"bindsocket.listen(5)"
+msgstr ""
+
 #: ../../library/ssl.rst:2421
 msgid ""
 "When a client connects, you'll call :meth:`accept` on the socket to get the "
@@ -3206,6 +3584,18 @@ msgstr ""
 "字，并使用上下文的 :meth:`SSLContext.wrap_socket` 方法来为连接创建一个服务器"
 "端 SSL 套接字::"
 
+#: ../../library/ssl.rst:2425
+msgid ""
+"while True:\n"
+"    newsocket, fromaddr = bindsocket.accept()\n"
+"    connstream = context.wrap_socket(newsocket, server_side=True)\n"
+"    try:\n"
+"        deal_with_client(connstream)\n"
+"    finally:\n"
+"        connstream.shutdown(socket.SHUT_RDWR)\n"
+"        connstream.close()"
+msgstr ""
+
 #: ../../library/ssl.rst:2434
 msgid ""
 "Then you'll read data from the ``connstream`` and do something with it till "
@@ -3213,6 +3603,20 @@ msgid ""
 msgstr ""
 "随后你将从 ``connstream`` 读取数据并对其进行处理，直至你结束与客户端的会话"
 "（或客户端结束与你的会话）::"
+
+#: ../../library/ssl.rst:2437
+msgid ""
+"def deal_with_client(connstream):\n"
+"    data = connstream.recv(1024)\n"
+"    # empty data means the client is finished with us\n"
+"    while data:\n"
+"        if not do_something(connstream, data):\n"
+"            # we'll assume do_something returns False\n"
+"            # when we're finished with client\n"
+"            break\n"
+"        data = connstream.recv(1024)\n"
+"    # finished with client"
+msgstr ""
 
 #: ../../library/ssl.rst:2448
 msgid ""
@@ -3309,6 +3713,18 @@ msgstr ""
 "SSL 握手本身将是非阻塞的: :meth:`SSLSocket.do_handshake` 方法必须不断重试直至"
 "其成功返回。 下面是一个使用 :func:`~select.select` 来等待套接字就绪的简短例"
 "子::"
+
+#: ../../library/ssl.rst:2499
+msgid ""
+"while True:\n"
+"    try:\n"
+"        sock.do_handshake()\n"
+"        break\n"
+"    except ssl.SSLWantReadError:\n"
+"        select.select([sock], [], [])\n"
+"    except ssl.SSLWantWriteError:\n"
+"        select.select([], [sock], [])"
+msgstr ""
 
 #: ../../library/ssl.rst:2510
 msgid ""
@@ -3660,6 +4076,15 @@ msgstr ""
 "例如，以下演示了你应当如何使用 :class:`smtplib.SMTP` 类来创建指向一个 SMTP 服"
 "务器的受信任且安全的连接::"
 
+#: ../../library/ssl.rst:2691
+msgid ""
+">>> import ssl, smtplib\n"
+">>> smtp = smtplib.SMTP(\"mail.python.org\", port=587)\n"
+">>> context = ssl.create_default_context()\n"
+">>> smtp.starttls(context=context)\n"
+"(220, b'2.0.0 Ready to start TLS')"
+msgstr ""
+
 #: ../../library/ssl.rst:2697
 msgid ""
 "If a client certificate is needed for the connection, it can be added with :"
@@ -3741,6 +4166,13 @@ msgstr ""
 "SSL 版本 2 和 3 被认为是不安全的因而使用它们会有风险。 如果你想要客户端和服务"
 "器之间有最大的兼容性，推荐使用 :const:`PROTOCOL_TLS_CLIENT` 或 :const:"
 "`PROTOCOL_TLS_SERVER` 作为协议版本。 SSLv2 和 SSLv3 默认会被禁用。"
+
+#: ../../library/ssl.rst:2743
+msgid ""
+">>> client_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)\n"
+">>> client_context.minimum_version = ssl.TLSVersion.TLSv1_3\n"
+">>> client_context.maximum_version = ssl.TLSVersion.TLSv1_3"
+msgstr ""
 
 #: ../../library/ssl.rst:2748
 msgid ""

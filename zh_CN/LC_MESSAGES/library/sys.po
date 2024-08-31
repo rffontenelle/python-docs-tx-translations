@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 14:16+0000\n"
+"POT-Creation-Date: 2024-08-31 10:59+0000\n"
 "PO-Revision-Date: 2021-06-28 01:14+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -517,6 +517,27 @@ msgstr ""
 #: ../../library/sys.rst:314
 msgid "Pseudo-code::"
 msgstr "伪代码::"
+
+#: ../../library/sys.rst:316
+msgid ""
+"def displayhook(value):\n"
+"    if value is None:\n"
+"        return\n"
+"    # Set '_' to None to avoid recursion\n"
+"    builtins._ = None\n"
+"    text = repr(value)\n"
+"    try:\n"
+"        sys.stdout.write(text)\n"
+"    except UnicodeEncodeError:\n"
+"        bytes = text.encode(sys.stdout.encoding, 'backslashreplace')\n"
+"        if hasattr(sys.stdout, 'buffer'):\n"
+"            sys.stdout.buffer.write(bytes)\n"
+"        else:\n"
+"            text = bytes.decode(sys.stdout.encoding, 'strict')\n"
+"            sys.stdout.write(text)\n"
+"    sys.stdout.write(\"\\n\")\n"
+"    builtins._ = value"
+msgstr ""
 
 #: ../../library/sys.rst:334
 msgid "Use ``'backslashreplace'`` error handler on :exc:`UnicodeEncodeError`."
@@ -1113,6 +1134,16 @@ msgstr ""
 "的字符串，且最多有 :attr:`!sys.float_info.dig` 位有效数字，那么将 ``s`` 转换"
 "为浮点数再转换回来将恢复为一个表示相同十进制值的字符串::"
 
+#: ../../library/sys.rst:705
+msgid ""
+">>> import sys\n"
+">>> sys.float_info.dig\n"
+"15\n"
+">>> s = '3.14159265358979'    # decimal string with 15 significant digits\n"
+">>> format(float(s), '.15g')  # convert to float and back -> same value\n"
+"'3.14159265358979'"
+msgstr ""
+
 #: ../../library/sys.rst:712
 msgid ""
 "But for strings with more than :attr:`sys.float_info.dig` significant "
@@ -1120,6 +1151,13 @@ msgid ""
 msgstr ""
 "但是对于超过 :attr:`sys.float_info.dig` 位有效数字的字符串，转换前后并非总是"
 "相同::"
+
+#: ../../library/sys.rst:715
+msgid ""
+">>> s = '9876543211234567'    # 16 significant digits is too many!\n"
+">>> format(float(s), '.16g')  # conversion changes value\n"
+"'9876543211234568'"
+msgstr ""
 
 #: ../../library/sys.rst:721
 msgid ""
@@ -1142,21 +1180,15 @@ msgid ""
 "regardless of their size.  This function is mainly useful for tracking and "
 "debugging memory leaks.  Because of the interpreter's internal caches, the "
 "result can vary from call to call; you may have to call :func:"
-"`_clear_internal_caches()` and :func:`gc.collect()` to get more predictable "
+"`_clear_internal_caches` and :func:`gc.collect` to get more predictable "
 "results."
 msgstr ""
-"返回解释器当前已分配的内存块数，无论它们的大小如何。 此函数主要用于跟踪和调试"
-"内存泄漏。 因为解释器有内部缓存，所以不同调用的结果会有变化； 你可能需要调"
-"用 :func:`_clear_internal_caches()` 和 :func:`gc.collect()` 来获得更为可预测"
-"的结果。"
 
 #: ../../library/sys.rst:741
 msgid ""
 "If a Python build or implementation cannot reasonably compute this "
-"information, :func:`getallocatedblocks()` is allowed to return 0 instead."
+"information, :func:`getallocatedblocks` is allowed to return 0 instead."
 msgstr ""
-"如果当前 Python 构建或实现无法合理地计算此信息，允许 :func:"
-"`getallocatedblocks()` 返回 0。"
 
 #: ../../library/sys.rst:749
 msgid "Return the number of unicode objects that have been interned."
@@ -1614,6 +1646,16 @@ msgid ""
 msgstr ""
 "编码为单个整数的版本号。该整数会确保每个版本都自增，其中适当包括了未发布版"
 "本。举例来说，要测试 Python 解释器的版本不低于 1.5.2，请使用::"
+
+#: ../../library/sys.rst:1080
+msgid ""
+"if sys.hexversion >= 0x010502F0:\n"
+"    # use some advanced feature\n"
+"    ...\n"
+"else:\n"
+"    # use an alternative implementation or warn the user\n"
+"    ..."
+msgstr ""
 
 #: ../../library/sys.rst:1087
 msgid ""
@@ -2150,6 +2192,12 @@ msgstr ""
 "并附加 ``uname -r`` 所返回的版本号的第一部分，例如 ``'sunos5'`` 或 "
 "``'freebsd8'``，*对应 Python 被构建的时间*。 除非你想要检测特定的系统版本，否"
 "则建议使用以下惯例::"
+
+#: ../../library/sys.rst:1402
+msgid ""
+"if sys.platform.startswith('freebsd'):\n"
+"    # FreeBSD-specific code here..."
+msgstr ""
 
 #: ../../library/sys.rst:1405
 msgid ""
@@ -3181,6 +3229,18 @@ msgid ""
 msgstr ""
 "一个字典，包含通过 :option:`-X` 命令行选项传递的旗标，这些旗标专属于各种具体"
 "实现。选项名称将会映射到对应的值（如果显式指定）或者 :const:`True`。例如:"
+
+#: ../../library/sys.rst:2029
+msgid ""
+"$ ./python -Xa=b -Xc\n"
+"Python 3.2a3+ (py3k, Oct 16 2010, 20:14:50)\n"
+"[GCC 4.4.3] on linux2\n"
+"Type \"help\", \"copyright\", \"credits\" or \"license\" for more "
+"information.\n"
+">>> import sys\n"
+">>> sys._xoptions\n"
+"{'a': 'b', 'c': True}"
+msgstr ""
 
 #: ../../library/sys.rst:2041
 msgid ""

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 14:16+0000\n"
+"POT-Creation-Date: 2024-08-31 10:59+0000\n"
 "PO-Revision-Date: 2021-06-28 01:18+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -60,6 +60,13 @@ msgstr ""
 "目录创建一个可执行的打包文件。 运行后该打包文件时，将会执行 ``myapp`` 模块中"
 "的 ``main`` 函数。"
 
+#: ../../library/zipapp.rst:30
+msgid ""
+"$ python -m zipapp myapp -m \"myapp:main\"\n"
+"$ python myapp.pyz\n"
+"<output from myapp>"
+msgstr ""
+
 #: ../../library/zipapp.rst:40
 msgid "Command-Line Interface"
 msgstr "命令行接口"
@@ -68,6 +75,10 @@ msgstr "命令行接口"
 msgid ""
 "When called as a program from the command line, the following form is used:"
 msgstr "若要从命令行调用，则采用以下形式："
+
+#: ../../library/zipapp.rst:44
+msgid "$ python -m zipapp source [options]"
+msgstr ""
 
 #: ../../library/zipapp.rst:48
 msgid ""
@@ -317,15 +328,35 @@ msgstr "例子"
 msgid "Pack up a directory into an archive, and run it."
 msgstr "将目录打包成一个文件并运行它。"
 
+#: ../../library/zipapp.rst:192
+msgid ""
+"$ python -m zipapp myapp\n"
+"$ python myapp.pyz\n"
+"<output from myapp>"
+msgstr ""
+
 #: ../../library/zipapp.rst:198
 msgid "The same can be done using the :func:`create_archive` function::"
 msgstr "同样还可用 :func:`create_archive` 函数完成："
+
+#: ../../library/zipapp.rst:200
+msgid ""
+">>> import zipapp\n"
+">>> zipapp.create_archive('myapp', 'myapp.pyz')"
+msgstr ""
 
 #: ../../library/zipapp.rst:203
 msgid ""
 "To make the application directly executable on POSIX, specify an interpreter "
 "to use."
 msgstr "要让应用程序能在 POSIX 平台上直接执行，需要指定所用的解释器。"
+
+#: ../../library/zipapp.rst:206
+msgid ""
+"$ python -m zipapp myapp -p \"/usr/bin/env python\"\n"
+"$ ./myapp.pyz\n"
+"<output from myapp>"
+msgstr ""
 
 #: ../../library/zipapp.rst:212
 msgid ""
@@ -334,6 +365,13 @@ msgid ""
 msgstr ""
 "若要替换已有打包文件中的释伴行，请用 :func:`create_archive` 函数另建一个修改"
 "好的打包文件："
+
+#: ../../library/zipapp.rst:215
+msgid ""
+">>> import zipapp\n"
+">>> zipapp.create_archive('old_archive.pyz', 'new_archive.pyz', '/usr/bin/"
+"python3')"
+msgstr ""
 
 #: ../../library/zipapp.rst:218
 msgid ""
@@ -348,6 +386,16 @@ msgstr ""
 "覆盖源文件。 请注意原地覆盖文件存在发生错误时丢失原始文件的风险。 这段代码没"
 "有考虑发生错误的情况，但生产性代码应该要考虑。 另外，此方法将仅在内存能容纳打"
 "包文件时才适用::"
+
+#: ../../library/zipapp.rst:225
+msgid ""
+">>> import zipapp\n"
+">>> import io\n"
+">>> temp = io.BytesIO()\n"
+">>> zipapp.create_archive('myapp.pyz', temp, '/usr/bin/python2')\n"
+">>> with open('myapp.pyz', 'wb') as f:\n"
+">>>     f.write(temp.getvalue())"
+msgstr ""
 
 #: ../../library/zipapp.rst:236
 msgid "Specifying the Interpreter"
@@ -436,6 +484,10 @@ msgid ""
 "using pip:"
 msgstr "用 pip 将应用程序的所有依赖项装入 ``myapp`` 目录。"
 
+#: ../../library/zipapp.rst:276
+msgid "$ python -m pip install -r requirements.txt --target myapp"
+msgstr ""
+
 #: ../../library/zipapp.rst:280
 msgid ""
 "(this assumes you have your project requirements in a ``requirements.txt`` "
@@ -448,6 +500,10 @@ msgstr ""
 #: ../../library/zipapp.rst:284
 msgid "Package the application using:"
 msgstr "用以下命令打包："
+
+#: ../../library/zipapp.rst:286
+msgid "$ python -m zipapp -p \"interpreter\" myapp"
+msgstr ""
 
 #: ../../library/zipapp.rst:290
 msgid ""
@@ -534,13 +590,9 @@ msgid ""
 "interpreter name, and then a newline (``b'\\n'``) character.  The "
 "interpreter name can be anything acceptable to the OS \"shebang\" "
 "processing, or the Python launcher on Windows.  The interpreter should be "
-"encoded in UTF-8 on Windows, and in :func:`sys.getfilesystemencoding()` on "
+"encoded in UTF-8 on Windows, and in :func:`sys.getfilesystemencoding` on "
 "POSIX."
 msgstr ""
-"可选的释伴行，包含字符 ``b'#!'``，后面是解释器名，然后是换行符 "
-"（``b'\\n'``）。 解释器名可为操作系统 “释伴”处理所能接受的任意值，或为 "
-"Windows 系统中的 Python 启动程序。解释器名在 Windows 中应用 UTF-8 编码，在 "
-"POSIX 中则用 :func:`sys.getfilesystemencoding()`。"
 
 #: ../../library/zipapp.rst:336
 msgid ""

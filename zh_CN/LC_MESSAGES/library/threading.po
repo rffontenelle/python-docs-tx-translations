@@ -14,7 +14,7 @@
 # Alpha Du <alphanow@gmail.com>, 2022
 # ww song <sww4718168@gmail.com>, 2022
 # Dai Xu <daixu61@hotmail.com>, 2022
-# Bryan不可思议, 2023
+# ProgramRipper, 2023
 # Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-20 00:52+0000\n"
+"POT-Creation-Date: 2024-08-31 10:59+0000\n"
 "PO-Revision-Date: 2021-06-28 01:15+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -423,6 +423,12 @@ msgstr ""
 "线程本地数据是特定线程的数据。管理线程本地数据，只需要创建一个 :class:"
 "`local` （或者一个子类型）的实例并在实例中储存属性："
 
+#: ../../library/threading.rst:267
+msgid ""
+"mydata = threading.local()\n"
+"mydata.x = 1"
+msgstr ""
+
 #: ../../library/threading.rst:270
 msgid "The instance's values will be different for separate threads."
 msgstr "在不同的线程中，实例的值会不同。"
@@ -665,6 +671,17 @@ msgstr ""
 #: ../../library/threading.rst:395
 msgid "Example::"
 msgstr "示例："
+
+#: ../../library/threading.rst:397
+msgid ""
+">>> from threading import Thread\n"
+">>> t = Thread(target=print, args=[1])\n"
+">>> t.run()\n"
+"1\n"
+">>> t = Thread(target=print, args=(1,))\n"
+">>> t.run()\n"
+"1"
+msgstr ""
 
 #: ../../library/threading.rst:409
 msgid ""
@@ -1213,6 +1230,20 @@ msgstr ""
 "notify_all` 方法。例如，下面的代码是一个通用的无限缓冲区容量的生产者-消费者情"
 "形："
 
+#: ../../library/threading.rst:734
+msgid ""
+"# Consume one item\n"
+"with cv:\n"
+"    while not an_item_is_available():\n"
+"        cv.wait()\n"
+"    get_an_available_item()\n"
+"\n"
+"# Produce one item\n"
+"with cv:\n"
+"    make_an_item_available()\n"
+"    cv.notify()"
+msgstr ""
+
 #: ../../library/threading.rst:745
 msgid ""
 "The ``while`` loop checking for the application's condition is necessary "
@@ -1226,6 +1257,14 @@ msgstr ""
 "`~Condition.wait` 方法可能要经过不确定长度的时间后才会返回，而此时导致 :meth:"
 "`~Condition.notify` 方法调用的那个条件可能已经不再成立。这是多线程编程所固有"
 "的问题。 :meth:`~Condition.wait_for` 方法可自动化条件检查，并简化超时计算。"
+
+#: ../../library/threading.rst:752
+msgid ""
+"# Consume an item\n"
+"with cv:\n"
+"    cv.wait_for(an_item_is_available)\n"
+"    get_an_available_item()"
+msgstr ""
 
 #: ../../library/threading.rst:757
 msgid ""
@@ -1353,6 +1392,12 @@ msgid ""
 "Ignoring the timeout feature, calling this method is roughly equivalent to "
 "writing::"
 msgstr "忽略超时功能，调用此方法大致相当于编写::"
+
+#: ../../library/threading.rst:828
+msgid ""
+"while not predicate():\n"
+"    cv.wait()"
+msgstr ""
 
 #: ../../library/threading.rst:831
 msgid ""
@@ -1554,6 +1599,13 @@ msgstr ""
 "信号量通常用于保护数量有限的资源，例如数据库服务器。在资源数量固定的任何情况"
 "下，都应该使用有界信号量。在生成任何工作线程前，应该在主线程中初始化信号量。"
 
+#: ../../library/threading.rst:956
+msgid ""
+"maxconnections = 5\n"
+"# ...\n"
+"pool_sema = BoundedSemaphore(value=maxconnections)"
+msgstr ""
+
 #: ../../library/threading.rst:960
 msgid ""
 "Once spawned, worker threads call the semaphore's acquire and release "
@@ -1561,6 +1613,16 @@ msgid ""
 msgstr ""
 "工作线程生成后，当需要连接服务器时，这些线程将调用信号量的 acquire 和 "
 "release 方法："
+
+#: ../../library/threading.rst:963
+msgid ""
+"with pool_sema:\n"
+"    conn = connectdb()\n"
+"    try:\n"
+"        # ... use connection ...\n"
+"    finally:\n"
+"        conn.close()"
+msgstr ""
 
 #: ../../library/threading.rst:970
 msgid ""
@@ -1680,6 +1742,15 @@ msgstr ""
 msgid "For example::"
 msgstr "例如："
 
+#: ../../library/threading.rst:1048
+msgid ""
+"def hello():\n"
+"    print(\"hello, world\")\n"
+"\n"
+"t = Timer(30.0, hello)\n"
+"t.start()  # after 30 seconds, \"hello, world\" will be printed"
+msgstr ""
+
 #: ../../library/threading.rst:1057
 msgid ""
 "Create a timer that will run *function* with arguments *args* and  keyword "
@@ -1725,6 +1796,24 @@ msgid ""
 "thread::"
 msgstr "这是一个使用简便的方法实现客户端进程与服务端进程同步的例子："
 
+#: ../../library/threading.rst:1086
+msgid ""
+"b = Barrier(2, timeout=5)\n"
+"\n"
+"def server():\n"
+"    start_server()\n"
+"    b.wait()\n"
+"    while True:\n"
+"        connection = accept_connection()\n"
+"        process_server_connection(connection)\n"
+"\n"
+"def client():\n"
+"    b.wait()\n"
+"    while True:\n"
+"        connection = make_connection()\n"
+"        process_client_connection(connection)"
+msgstr ""
+
 #: ../../library/threading.rst:1104
 msgid ""
 "Create a barrier object for *parties* number of threads.  An *action*, when "
@@ -1755,6 +1844,14 @@ msgid ""
 msgstr ""
 "函数返回值是一个整数，取值范围在0到 *parties* -- 1，在每个线程中的返回值不相"
 "同。可用于从所有线程中选择唯一的一个线程执行一些特别的工作。例如："
+
+#: ../../library/threading.rst:1120
+msgid ""
+"i = barrier.wait()\n"
+"if i == 0:\n"
+"    # Only one thread needs to print this\n"
+"    print(\"passed the barrier\")"
+msgstr ""
 
 #: ../../library/threading.rst:1125
 msgid ""
@@ -1849,9 +1946,24 @@ msgstr ""
 "`with` 语句的上下文管理器。 进入语句块时将调用 ``acquire`` 方法，退出语句块时"
 "将调用 ``release`` 方法。 因此，下面的代码段::"
 
+#: ../../library/threading.rst:1184
+msgid ""
+"with some_lock:\n"
+"    # do something..."
+msgstr ""
+
 #: ../../library/threading.rst:1187
 msgid "is equivalent to::"
 msgstr "相当于::"
+
+#: ../../library/threading.rst:1189
+msgid ""
+"some_lock.acquire()\n"
+"try:\n"
+"    # do something...\n"
+"finally:\n"
+"    some_lock.release()"
+msgstr ""
 
 #: ../../library/threading.rst:1195
 msgid ""

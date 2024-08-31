@@ -14,7 +14,7 @@
 # Xu Siyuan, 2021
 # chen_chao <wenbushi@gmail.com>, 2021
 # Alpha Du <alphanow@gmail.com>, 2022
-# Bryan不可思议, 2023
+# ProgramRipper, 2023
 # Freesand Leo <yuqinju@163.com>, 2023
 #
 #, fuzzy
@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-21 14:14+0000\n"
+"POT-Creation-Date: 2024-08-31 10:59+0000\n"
 "PO-Revision-Date: 2021-06-28 00:53+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -431,6 +431,15 @@ msgstr ""
 "式。在表达式 ``for X in Y``，Y 要么自身是一个迭代器，要么能够由 :func:`iter` "
 "创建一个迭代器。以下两种表达是等价的::"
 
+#: ../../howto/functional.rst:224
+msgid ""
+"for i in iter(obj):\n"
+"    print(i)\n"
+"\n"
+"for i in obj:\n"
+"    print(i)"
+msgstr ""
+
 #: ../../howto/functional.rst:230
 msgid ""
 "Iterators can be materialized as lists or tuples by using the :func:`list` "
@@ -498,6 +507,26 @@ msgid ""
 "the dictionary's keys::"
 msgstr "对字典调用 :func:`iter` 会返回一个遍历字典的键的迭代器::"
 
+#: ../../howto/functional.rst:275
+msgid ""
+">>> m = {'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,\n"
+"...      'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12}\n"
+">>> for key in m:\n"
+"...     print(key, m[key])\n"
+"Jan 1\n"
+"Feb 2\n"
+"Mar 3\n"
+"Apr 4\n"
+"May 5\n"
+"Jun 6\n"
+"Jul 7\n"
+"Aug 8\n"
+"Sep 9\n"
+"Oct 10\n"
+"Nov 11\n"
+"Dec 12"
+msgstr ""
+
 #: ../../howto/functional.rst:292
 msgid ""
 "Note that starting with Python 3.7, dictionary iteration order is guaranteed "
@@ -535,11 +564,31 @@ msgstr ""
 "文件也可以通过调用 :meth:`~io.TextIOBase.readline` 来遍历，直到穷尽文件中所有"
 "的行。这意味着你可以像这样读取文件中的每一行::"
 
+#: ../../howto/functional.rst:313
+msgid ""
+"for line in file:\n"
+"    # do something for each line\n"
+"    ..."
+msgstr ""
+
 #: ../../howto/functional.rst:317
 msgid ""
 "Sets can take their contents from an iterable and let you iterate over the "
 "set's elements::"
 msgstr "集合可以从可遍历的对象获取内容，也可以让你遍历集合的元素::"
+
+#: ../../howto/functional.rst:320
+msgid ""
+">>> S = {2, 3, 5, 7, 11, 13}\n"
+">>> for i in S:\n"
+"...     print(i)\n"
+"2\n"
+"3\n"
+"5\n"
+"7\n"
+"11\n"
+"13"
+msgstr ""
 
 #: ../../howto/functional.rst:333
 msgid "Generator expressions and list comprehensions"
@@ -568,10 +617,27 @@ msgstr ""
 "明，这个形式借鉴自函数式编程语言 Haskell (https://www.haskell.org/)。 你可以"
 "用以下代码去掉一个字符串流中的所有空白符:"
 
+#: ../../howto/functional.rst:346
+msgid ""
+">>> line_list = ['  line 1\\n', 'line 2  \\n', ' \\n', '']\n"
+"\n"
+">>> # Generator expression -- returns iterator\n"
+">>> stripped_iter = (line.strip() for line in line_list)\n"
+"\n"
+">>> # List comprehension -- returns list\n"
+">>> stripped_list = [line.strip() for line in line_list]"
+msgstr ""
+
 #: ../../howto/functional.rst:354
 msgid ""
 "You can select only certain elements by adding an ``\"if\"`` condition::"
 msgstr "你可以加上条件语句 ``\"if\"`` 来选取特定的元素:"
+
+#: ../../howto/functional.rst:356
+msgid ""
+">>> stripped_list = [line.strip() for line in line_list\n"
+"...                  if line != \"\"]"
+msgstr ""
 
 #: ../../howto/functional.rst:359
 msgid ""
@@ -596,6 +662,19 @@ msgid ""
 msgstr ""
 "生成器表达式两边使用圆括号 (\"()\") ，而列表推导式则使用方括号 (\"[]\")。生成"
 "器表达式的形式为::"
+
+#: ../../howto/functional.rst:370
+msgid ""
+"( expression for expr in sequence1\n"
+"             if condition1\n"
+"             for expr2 in sequence2\n"
+"             if condition2\n"
+"             for expr3 in sequence3\n"
+"             ...\n"
+"             if condition3\n"
+"             for exprN in sequenceN\n"
+"             if conditionN )"
+msgstr ""
 
 #: ../../howto/functional.rst:380
 msgid ""
@@ -622,6 +701,10 @@ msgstr ""
 "生成器表达式总是写在圆括号里面，不过也可以算上调用函数时用的括号。如果你想即"
 "时创建一个传递给函数的迭代器，可以这么写::"
 
+#: ../../howto/functional.rst:391
+msgid "obj_total = sum(obj.count for obj in list_all_objects())"
+msgstr ""
+
 #: ../../howto/functional.rst:393
 msgid ""
 "The ``for...in`` clauses contain the sequences to be iterated over.  The "
@@ -642,6 +725,23 @@ msgid ""
 "equivalent to the following Python code::"
 msgstr "换句话说，列表推导式器是和下面的 Python 代码等价::"
 
+#: ../../howto/functional.rst:402
+msgid ""
+"for expr1 in sequence1:\n"
+"    if not (condition1):\n"
+"        continue   # Skip this element\n"
+"    for expr2 in sequence2:\n"
+"        if not (condition2):\n"
+"            continue   # Skip this element\n"
+"        ...\n"
+"        for exprN in sequenceN:\n"
+"            if not (conditionN):\n"
+"                continue   # Skip this element\n"
+"\n"
+"            # Output the value of\n"
+"            # the expression."
+msgstr ""
+
 #: ../../howto/functional.rst:416
 msgid ""
 "This means that when there are multiple ``for...in`` clauses but no ``if`` "
@@ -660,6 +760,14 @@ msgid ""
 msgstr ""
 "为了不让 Python 语法变得含糊，如果 ``expression`` 会生成元组，那这个元组必须"
 "要用括号括起来。下面第一个列表推导式语法错误，第二个则是正确的::"
+
+#: ../../howto/functional.rst:432
+msgid ""
+"# Syntax error\n"
+"[x, y for x in seq1 for y in seq2]\n"
+"# Correct\n"
+"[(x, y) for x in seq1 for y in seq2]"
+msgstr ""
 
 #: ../../howto/functional.rst:439
 msgid "Generators"
@@ -770,6 +878,20 @@ msgstr ""
 "包含在 Python 库中的测试套件 :source:`Lib/test/test_generators.py` 里有很多非"
 "常有趣的例子。这里是一个用生成器实现树的递归中序遍历示例。::"
 
+#: ../../howto/functional.rst:511
+msgid ""
+"# A recursive generator that generates Tree leaves in in-order.\n"
+"def inorder(t):\n"
+"    if t:\n"
+"        for x in inorder(t.left):\n"
+"            yield x\n"
+"\n"
+"        yield t.label\n"
+"\n"
+"        for x in inorder(t.right):\n"
+"            yield x"
+msgstr ""
+
 #: ../../howto/functional.rst:522
 msgid ""
 "Two other examples in ``test_generators.py`` produce solutions for the N-"
@@ -808,6 +930,10 @@ msgid ""
 msgstr ""
 "在 Python 2.5 里有一个简单的将值传递给生成器的方法。:keyword:`yield` 变成了一"
 "个表达式，返回一个可以赋给变量或执行操作的值::"
+
+#: ../../howto/functional.rst:543
+msgid "val = (yield i)"
+msgstr ""
 
 #: ../../howto/functional.rst:545
 msgid ""
@@ -848,6 +974,19 @@ msgid ""
 "Here's a simple counter that increments by 1 and allows changing the value "
 "of the internal counter."
 msgstr "这里有一个简单的每次加1的计数器，并允许改变内部计数器的值。"
+
+#: ../../howto/functional.rst:564
+msgid ""
+"def counter(maximum):\n"
+"    i = 0\n"
+"    while i < maximum:\n"
+"        val = (yield i)\n"
+"        # If value provided, change counter\n"
+"        if val is not None:\n"
+"            i = val\n"
+"        else:\n"
+"            i += 1"
+msgstr ""
 
 #: ../../howto/functional.rst:576
 msgid "And here's an example of changing the counter:"
@@ -981,11 +1120,28 @@ msgstr ""
 ":func:`enumerate(iter, start=0) <enumerate>` 计数可迭代对象中的元素，然后返回"
 "包含每个计数（从 **start** 开始）和元素两个值的元组。::"
 
+#: ../../howto/functional.rst:669
+msgid ""
+">>> for item in enumerate(['subject', 'verb', 'object']):\n"
+"...     print(item)\n"
+"(0, 'subject')\n"
+"(1, 'verb')\n"
+"(2, 'object')"
+msgstr ""
+
 #: ../../howto/functional.rst:675
 msgid ""
 ":func:`enumerate` is often used when looping through a list and recording "
 "the indexes at which certain conditions are met::"
 msgstr ":func:`enumerate` 常常用于遍历列表并记录达到特定条件时的下标::"
+
+#: ../../howto/functional.rst:678
+msgid ""
+"f = open('data.txt', 'r')\n"
+"for i, line in enumerate(f):\n"
+"    if line.strip() == '':\n"
+"        print('Blank line at line #%i' % i)"
+msgstr ""
 
 #: ../../howto/functional.rst:683
 msgid ""
@@ -997,6 +1153,19 @@ msgstr ""
 ":func:`sorted(iterable, key=None, reverse=False) <sorted>` 会将 iterable 中的"
 "元素收集到一个列表中，然后排序并返回结果。其中 *key* 和 *reverse* 参数会传递"
 "给所创建列表的 :meth:`~list.sort` 方法。::"
+
+#: ../../howto/functional.rst:688
+msgid ""
+">>> import random\n"
+">>> # Generate 8 random numbers between [0, 10000)\n"
+">>> rand_list = random.sample(range(10000), 8)\n"
+">>> rand_list  \n"
+"[769, 7953, 9828, 6431, 8442, 9878, 6213, 2207]\n"
+">>> sorted(rand_list)  \n"
+"[769, 2207, 6213, 6431, 7953, 8442, 9828, 9878]\n"
+">>> sorted(rand_list, reverse=True)  \n"
+"[9878, 9828, 8442, 7953, 6431, 6213, 2207, 769]"
+msgstr ""
 
 #: ../../howto/functional.rst:698
 msgid ""
@@ -1022,6 +1191,12 @@ msgstr ""
 ":func:`zip(iterA, iterB, ...) <zip>` 从每个可迭代对象中选取单个元素组成列表并"
 "返回::"
 
+#: ../../howto/functional.rst:723
+msgid ""
+"zip(['a', 'b', 'c'], (1, 2, 3)) =>\n"
+"  ('a', 1), ('b', 2), ('c', 3)"
+msgstr ""
+
 #: ../../howto/functional.rst:726
 msgid ""
 "It doesn't construct an in-memory list and exhaust all the input iterators "
@@ -1041,6 +1216,12 @@ msgid ""
 msgstr ""
 "这个迭代器设计用于长度相同的可迭代对象。如果可迭代对象的长度不一致，返回的数"
 "据流的长度会和最短的可迭代对象相同"
+
+#: ../../howto/functional.rst:735
+msgid ""
+"zip(['a', 'b'], (1, 2, 3)) =>\n"
+"  ('a', 1), ('b', 2)"
+msgstr ""
 
 #: ../../howto/functional.rst:738
 msgid ""
@@ -1098,6 +1279,16 @@ msgstr ""
 ":func:`itertools.count(start, step) <itertools.count>` 返回一个等分的无限数据"
 "流。初始值默认为0，间隔默认为1，你也选择可以指定初始值和间隔::"
 
+#: ../../howto/functional.rst:764
+msgid ""
+"itertools.count() =>\n"
+"  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ...\n"
+"itertools.count(10) =>\n"
+"  10, 11, 12, 13, 14, 15, 16, 17, 18, 19, ...\n"
+"itertools.count(10, 5) =>\n"
+"  10, 15, 20, 25, 30, 35, 40, 45, 50, 55, ..."
+msgstr ""
+
 #: ../../howto/functional.rst:771
 msgid ""
 ":func:`itertools.cycle(iter) <itertools.cycle>` saves a copy of the contents "
@@ -1109,6 +1300,12 @@ msgstr ""
 "副本，并返回一个能产生整个可迭代对象序列的新迭代器。新迭代器会无限重复这些元"
 "素。::"
 
+#: ../../howto/functional.rst:775
+msgid ""
+"itertools.cycle([1, 2, 3, 4, 5]) =>\n"
+"  1, 2, 3, 4, 5, 1, 2, 3, 4, 5, ..."
+msgstr ""
+
 #: ../../howto/functional.rst:778
 msgid ""
 ":func:`itertools.repeat(elem, [n]) <itertools.repeat>` returns the provided "
@@ -1117,6 +1314,14 @@ msgid ""
 msgstr ""
 ":func:`itertools.repeat(elem, [n]) <itertools.repeat>` 返回 *n* 次所提供的元"
 "素，当 *n* 不存在时，返回无数次所提供的元素。 ::"
+
+#: ../../howto/functional.rst:781
+msgid ""
+"itertools.repeat('abc') =>\n"
+"  abc, abc, abc, abc, abc, abc, abc, abc, abc, abc, ...\n"
+"itertools.repeat('abc', 5) =>\n"
+"  abc, abc, abc, abc, abc"
+msgstr ""
 
 #: ../../howto/functional.rst:786
 msgid ""
@@ -1128,6 +1333,12 @@ msgstr ""
 ":func:`itertools.chain(iterA, iterB, ...) <itertools.chain>` 接受任意数量的可"
 "迭代对象作为输入，首先返回第一个迭代器的所有元素，然后是第二个的所有元素，如"
 "此一直进行下去，直到消耗掉所有输入的可迭代对象。"
+
+#: ../../howto/functional.rst:791
+msgid ""
+"itertools.chain(['a', 'b', 'c'], (1, 2, 3)) =>\n"
+"  a, b, c, 1, 2, 3"
+msgstr ""
 
 #: ../../howto/functional.rst:794
 msgid ""
@@ -1146,6 +1357,16 @@ msgstr ""
 "的字符串和列表切片不同，你不能在 *start*, *stop* 或者 *step* 这些参数中使用负"
 "数。::"
 
+#: ../../howto/functional.rst:801
+msgid ""
+"itertools.islice(range(10), 8) =>\n"
+"  0, 1, 2, 3, 4, 5, 6, 7\n"
+"itertools.islice(range(10), 2, 8) =>\n"
+"  2, 3, 4, 5, 6, 7\n"
+"itertools.islice(range(10), 2, 8, 2) =>\n"
+"  2, 4, 6"
+msgstr ""
+
 #: ../../howto/functional.rst:808
 msgid ""
 ":func:`itertools.tee(iter, [n]) <itertools.tee>` replicates an iterator; it "
@@ -1159,6 +1380,18 @@ msgstr ""
 "*n* 个能够返回源迭代器内容的独立迭代器。如果你不提供参数 *n*，默认值为 2。复"
 "制迭代器需要保存源迭代器的一部分内容，因此在源迭代器比较大的时候会显著地占用"
 "内存；同时，在所有新迭代器中，有一个迭代器会比其他迭代器占用更多的内存。"
+
+#: ../../howto/functional.rst:816
+msgid ""
+"itertools.tee( itertools.count() ) =>\n"
+"   iterA, iterB\n"
+"\n"
+"where iterA ->\n"
+"   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ...\n"
+"\n"
+"and   iterB ->\n"
+"   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ..."
+msgstr ""
 
 #: ../../howto/functional.rst:827
 msgid "Calling functions on elements"
@@ -1186,6 +1419,15 @@ msgstr ""
 ":func:`itertools.starmap(func, iter) <itertools.starmap>` 假定可迭代对象能够"
 "返回一个元组的流，并且利用这些元组作为参数来调用 *func*::"
 
+#: ../../howto/functional.rst:839
+msgid ""
+"itertools.starmap(os.path.join,\n"
+"                  [('/bin', 'python'), ('/usr', 'bin', 'java'),\n"
+"                   ('/usr', 'bin', 'perl'), ('/usr', 'bin', 'ruby')])\n"
+"=>\n"
+"  /bin/python, /usr/bin/java, /usr/bin/perl, /usr/bin/ruby"
+msgstr ""
+
 #: ../../howto/functional.rst:847
 msgid "Selecting elements"
 msgstr "选择元素"
@@ -1205,6 +1447,12 @@ msgstr ""
 ":func:`itertools.filterfalse(predicate, iter) <itertools.filterfalse>` 和  :"
 "func:`filter` 相反，返回所有让 predicate 返回 false 的元素::"
 
+#: ../../howto/functional.rst:856
+msgid ""
+"itertools.filterfalse(is_even, itertools.count()) =>\n"
+"  1, 3, 5, 7, 9, 11, 13, 15, ..."
+msgstr ""
+
 #: ../../howto/functional.rst:859
 msgid ""
 ":func:`itertools.takewhile(predicate, iter) <itertools.takewhile>` returns "
@@ -1215,6 +1463,18 @@ msgstr ""
 "让 predicate 返回 true 的元素。一旦 predicate 返回 false，迭代器就会发出终止"
 "结果的信号。::"
 
+#: ../../howto/functional.rst:863
+msgid ""
+"def less_than_10(x):\n"
+"    return x < 10\n"
+"\n"
+"itertools.takewhile(less_than_10, itertools.count()) =>\n"
+"  0, 1, 2, 3, 4, 5, 6, 7, 8, 9\n"
+"\n"
+"itertools.takewhile(is_even, itertools.count()) =>\n"
+"  0"
+msgstr ""
+
 #: ../../howto/functional.rst:872
 msgid ""
 ":func:`itertools.dropwhile(predicate, iter) <itertools.dropwhile>` discards "
@@ -1223,6 +1483,15 @@ msgid ""
 msgstr ""
 ":func:`itertools.dropwhile(predicate, iter) <itertools.dropwhile>` 在 "
 "predicate 返回 true 的时候丢弃元素，并且返回可迭代对象的剩余结果。::"
+
+#: ../../howto/functional.rst:876
+msgid ""
+"itertools.dropwhile(less_than_10, itertools.count()) =>\n"
+"  10, 11, 12, 13, 14, 15, 16, 17, 18, 19, ...\n"
+"\n"
+"itertools.dropwhile(is_even, itertools.count()) =>\n"
+"  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ..."
+msgstr ""
 
 #: ../../howto/functional.rst:882
 msgid ""
@@ -1234,6 +1503,12 @@ msgstr ""
 ":func:`itertools.compress(data, selectors) <itertools.compress>` 接受两个迭代"
 "器，然后返回 *data* 中使相应地 *selector* 中的元素为真的元素；它会在任一个迭"
 "代器耗尽的时候停止::"
+
+#: ../../howto/functional.rst:886
+msgid ""
+"itertools.compress([1, 2, 3, 4, 5], [True, True, False, False, True]) =>\n"
+"   1, 2, 5"
+msgstr ""
 
 #: ../../howto/functional.rst:891
 msgid "Combinatoric functions"
@@ -1248,6 +1523,20 @@ msgstr ""
 ":func:`itertools.combinations(iterable, r) <itertools.combinations>` 返回一个"
 "迭代器，它能给出输入迭代器中所包含的元素的所有可能的 *r* 元元组的组合。::"
 
+#: ../../howto/functional.rst:897
+msgid ""
+"itertools.combinations([1, 2, 3, 4, 5], 2) =>\n"
+"  (1, 2), (1, 3), (1, 4), (1, 5),\n"
+"  (2, 3), (2, 4), (2, 5),\n"
+"  (3, 4), (3, 5),\n"
+"  (4, 5)\n"
+"\n"
+"itertools.combinations([1, 2, 3, 4, 5], 3) =>\n"
+"  (1, 2, 3), (1, 2, 4), (1, 2, 5), (1, 3, 4), (1, 3, 5), (1, 4, 5),\n"
+"  (2, 3, 4), (2, 3, 5), (2, 4, 5),\n"
+"  (3, 4, 5)"
+msgstr ""
+
 #: ../../howto/functional.rst:908
 msgid ""
 "The elements within each tuple remain in the same order as *iterable* "
@@ -1260,6 +1549,21 @@ msgstr ""
 "1 总是会在 2, 3, 4 或 5 前面。一个类似的函数，:func:`itertools."
 "permutations(iterable, r=None) <itertools.permutations>`，取消了保持顺序的限"
 "制，返回所有可能的长度为 *r* 的排列::"
+
+#: ../../howto/functional.rst:915
+msgid ""
+"itertools.permutations([1, 2, 3, 4, 5], 2) =>\n"
+"  (1, 2), (1, 3), (1, 4), (1, 5),\n"
+"  (2, 1), (2, 3), (2, 4), (2, 5),\n"
+"  (3, 1), (3, 2), (3, 4), (3, 5),\n"
+"  (4, 1), (4, 2), (4, 3), (4, 5),\n"
+"  (5, 1), (5, 2), (5, 3), (5, 4)\n"
+"\n"
+"itertools.permutations([1, 2, 3, 4, 5]) =>\n"
+"  (1, 2, 3, 4, 5), (1, 2, 3, 5, 4), (1, 2, 4, 3, 5),\n"
+"  ...\n"
+"  (5, 4, 3, 2, 1)"
+msgstr ""
 
 #: ../../howto/functional.rst:927
 msgid ""
@@ -1275,6 +1579,13 @@ msgid ""
 "position and don't require that the contents of *iterable* are unique::"
 msgstr ""
 "注意这些函数会输出所有可能的位置组合，并不要求 *可迭代对象* 的内容不重复::"
+
+#: ../../howto/functional.rst:933
+msgid ""
+"itertools.permutations('aba', 3) =>\n"
+"  ('a', 'b', 'a'), ('a', 'a', 'b'), ('b', 'a', 'a'),\n"
+"  ('b', 'a', 'a'), ('a', 'a', 'b'), ('a', 'b', 'a')"
+msgstr ""
 
 #: ../../howto/functional.rst:937
 msgid ""
@@ -1295,6 +1606,16 @@ msgstr ""
 "combinations_with_replacement>` 函数放松了一个不同的限制：元组中的元素可以重"
 "复。从概念讲，为每个元组第一个位置选取一个元素，然后在选择第二个元素前替换掉"
 "它。::"
+
+#: ../../howto/functional.rst:946
+msgid ""
+"itertools.combinations_with_replacement([1, 2, 3, 4, 5], 2) =>\n"
+"  (1, 1), (1, 2), (1, 3), (1, 4), (1, 5),\n"
+"  (2, 2), (2, 3), (2, 4), (2, 5),\n"
+"  (3, 3), (3, 4), (3, 5),\n"
+"  (4, 4), (4, 5),\n"
+"  (5, 5)"
+msgstr ""
 
 #: ../../howto/functional.rst:955
 msgid "Grouping elements"
@@ -1322,6 +1643,31 @@ msgstr ""
 ":func:`~itertools.groupby` 从所依据的可迭代对象中连续地收集具有相同值的元素，"
 "然后返回一个长度为2的元组的数据流, 每个元组包含键值以及对应这个键值的元素所组"
 "成的迭代器。"
+
+#: ../../howto/functional.rst:968
+msgid ""
+"city_list = [('Decatur', 'AL'), ('Huntsville', 'AL'), ('Selma', 'AL'),\n"
+"             ('Anchorage', 'AK'), ('Nome', 'AK'),\n"
+"             ('Flagstaff', 'AZ'), ('Phoenix', 'AZ'), ('Tucson', 'AZ'),\n"
+"             ...\n"
+"            ]\n"
+"\n"
+"def get_state(city_state):\n"
+"    return city_state[1]\n"
+"\n"
+"itertools.groupby(city_list, get_state) =>\n"
+"  ('AL', iterator-1),\n"
+"  ('AK', iterator-2),\n"
+"  ('AZ', iterator-3), ...\n"
+"\n"
+"where\n"
+"iterator-1 =>\n"
+"  ('Decatur', 'AL'), ('Huntsville', 'AL'), ('Selma', 'AL')\n"
+"iterator-2 =>\n"
+"  ('Anchorage', 'AK'), ('Nome', 'AK')\n"
+"iterator-3 =>\n"
+"  ('Flagstaff', 'AZ'), ('Phoenix', 'AZ'), ('Tucson', 'AZ')"
+msgstr ""
 
 #: ../../howto/functional.rst:990
 msgid ""
@@ -1378,6 +1724,19 @@ msgstr ""
 msgid "Here's a small but realistic example::"
 msgstr "这里有一个很小但很现实的例子::"
 
+#: ../../howto/functional.rst:1017
+msgid ""
+"import functools\n"
+"\n"
+"def log(message, subsystem):\n"
+"    \"\"\"Write the contents of 'message' to the specified subsystem.\"\"\"\n"
+"    print('%s: %s' % (subsystem, message))\n"
+"    ...\n"
+"\n"
+"server_log = functools.partial(log, subsystem='server')\n"
+"server_log('Unable to open socket')"
+msgstr ""
+
 #: ../../howto/functional.rst:1027
 msgid ""
 ":func:`functools.reduce(func, iter, [initial_value]) <functools.reduce>` "
@@ -1401,6 +1760,21 @@ msgstr ""
 "exc:`TypeError` 异常就会抛出。如果提供了初值(initial value)，它会被用作起始"
 "值，也就是先计算 ``func(initial_value, A)`` 。::"
 
+#: ../../howto/functional.rst:1039
+msgid ""
+">>> import operator, functools\n"
+">>> functools.reduce(operator.concat, ['A', 'BB', 'C'])\n"
+"'ABBC'\n"
+">>> functools.reduce(operator.concat, [])\n"
+"Traceback (most recent call last):\n"
+"  ...\n"
+"TypeError: reduce() of empty sequence with no initial value\n"
+">>> functools.reduce(operator.mul, [1, 2, 3], 1)\n"
+"6\n"
+">>> functools.reduce(operator.mul, [], 1)\n"
+"1"
+msgstr ""
+
 #: ../../howto/functional.rst:1051
 msgid ""
 "If you use :func:`operator.add` with :func:`functools.reduce`, you'll add up "
@@ -1419,6 +1793,18 @@ msgstr ""
 "不过, 对于很多使用 :func:`functools.reduce` 的情形, 使用明显的 :keyword:"
 "`for` 循环会更清晰::"
 
+#: ../../howto/functional.rst:1066
+msgid ""
+"import functools\n"
+"# Instead of:\n"
+"product = functools.reduce(operator.mul, [1, 2, 3], 1)\n"
+"\n"
+"# You can write:\n"
+"product = 1\n"
+"for i in [1, 2, 3]:\n"
+"    product *= i"
+msgstr ""
+
 #: ../../howto/functional.rst:1075
 msgid ""
 "A related function is :func:`itertools.accumulate(iterable, func=operator."
@@ -1429,6 +1815,15 @@ msgstr ""
 "一个相关的函数是 :func:`itertools.accumulate(iterable, func=operator.add) "
 "<itertools.accumulate>`。 它执行同样的计算，但 :func:`~itertools.accumulate` "
 "不是仅仅返回最终结果，而是返回一个会产生每个部分结果的迭代器::"
+
+#: ../../howto/functional.rst:1080
+msgid ""
+"itertools.accumulate([1, 2, 3, 4, 5]) =>\n"
+"  1, 3, 6, 10, 15\n"
+"\n"
+"itertools.accumulate([1, 2, 3, 4, 5], operator.mul) =>\n"
+"  1, 2, 6, 24, 120"
+msgstr ""
 
 #: ../../howto/functional.rst:1088
 msgid "The operator module"
@@ -1496,6 +1891,12 @@ msgid ""
 msgstr ""
 "如果合适的 Python 内置的或者其他模块中的函数，你就一点也不需要定义新的函数::"
 
+#: ../../howto/functional.rst:1115
+msgid ""
+"stripped_lines = [line.strip() for line in lines]\n"
+"existing_files = filter(os.path.exists, file_list)"
+msgstr ""
+
 #: ../../howto/functional.rst:1118
 msgid ""
 "If the function you need doesn't exist, you need to write it.  One way to "
@@ -1508,11 +1909,27 @@ msgstr ""
 "keyword:`lambda` 表达式。``lambda`` 接受一组参数以及组合这些参数的表达式，它"
 "会创建一个返回表达式值的匿名函数::"
 
+#: ../../howto/functional.rst:1123
+msgid ""
+"adder = lambda x, y: x+y\n"
+"\n"
+"print_assign = lambda name, value: name + '=' + str(value)"
+msgstr ""
+
 #: ../../howto/functional.rst:1127
 msgid ""
 "An alternative is to just use the ``def`` statement and define a function in "
 "the usual way::"
 msgstr "另一种替代方案就是通常的使用 ``def`` 语句来定义函数::"
+
+#: ../../howto/functional.rst:1130
+msgid ""
+"def adder(x, y):\n"
+"    return x + y\n"
+"\n"
+"def print_assign(name, value):\n"
+"    return name + '=' + str(value)"
+msgstr ""
 
 #: ../../howto/functional.rst:1136
 msgid ""
@@ -1535,6 +1952,12 @@ msgstr ""
 "或者 ``try... except`` 语句。如果你尝试在 ``lambda`` 语句中做太多事情，你最终"
 "会把表达式过于复杂以至于难以阅读。你能快速的说出下面的代码做了什么事情吗？::"
 
+#: ../../howto/functional.rst:1146
+msgid ""
+"import functools\n"
+"total = functools.reduce(lambda a, b: (0, a[1] + b[1]), items)[1]"
+msgstr ""
+
 #: ../../howto/functional.rst:1149
 msgid ""
 "You can figure it out, but it takes time to disentangle the expression to "
@@ -1544,13 +1967,33 @@ msgstr ""
 "你可以弄明白，不过要花上时间来理清表达式来搞清楚发生了什么。使用一个简短的嵌"
 "套的 ``def`` 语句可以让情况变得更好::"
 
+#: ../../howto/functional.rst:1153
+msgid ""
+"import functools\n"
+"def combine(a, b):\n"
+"    return 0, a[1] + b[1]\n"
+"\n"
+"total = functools.reduce(combine, items)[1]"
+msgstr ""
+
 #: ../../howto/functional.rst:1159
 msgid "But it would be best of all if I had simply used a ``for`` loop::"
 msgstr "如果我仅仅使用一个 ``for`` 循环会更好::"
 
+#: ../../howto/functional.rst:1161
+msgid ""
+"total = 0\n"
+"for a, b in items:\n"
+"    total += b"
+msgstr ""
+
 #: ../../howto/functional.rst:1165
 msgid "Or the :func:`sum` built-in and a generator expression::"
 msgstr "或者使用内置的 :func:`sum` 和一个生成器表达式::"
+
+#: ../../howto/functional.rst:1167
+msgid "total = sum(b for a, b in items)"
+msgstr ""
 
 #: ../../howto/functional.rst:1169
 msgid ""

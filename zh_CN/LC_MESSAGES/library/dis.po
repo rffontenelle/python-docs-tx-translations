@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-09 16:36+0000\n"
+"POT-Creation-Date: 2024-08-31 10:59+0000\n"
 "PO-Revision-Date: 2021-06-28 01:04+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -112,11 +112,28 @@ msgstr ""
 msgid "Example: Given the function :func:`!myfunc`::"
 msgstr "示例：给定函数 :func:`!myfunc`::"
 
+#: ../../library/dis.rst:61
+msgid ""
+"def myfunc(alist):\n"
+"    return len(alist)"
+msgstr ""
+
 #: ../../library/dis.rst:64
 msgid ""
 "the following command can be used to display the disassembly of :func:`!"
 "myfunc`:"
 msgstr "可以使用以下命令显示 :func:`!myfunc` 的反汇编："
+
+#: ../../library/dis.rst:67
+msgid ""
+">>> dis.dis(myfunc)\n"
+"  2           RESUME                   0\n"
+"\n"
+"  3           LOAD_GLOBAL              1 (len + NULL)\n"
+"              LOAD_FAST                0 (alist)\n"
+"              CALL                     1\n"
+"              RETURN_VALUE"
+msgstr ""
 
 #: ../../library/dis.rst:77
 msgid "(The \"2\" is a line number)."
@@ -129,6 +146,10 @@ msgstr "命令行接口"
 #: ../../library/dis.rst:84
 msgid "The :mod:`dis` module can be invoked as a script from the command line:"
 msgstr ":mod:`dis` 模块可以在命令行下作为一个脚本来发起调用："
+
+#: ../../library/dis.rst:86
+msgid "python -m dis [-h] [-C] [-O] [infile]"
+msgstr ""
 
 #: ../../library/dis.rst:90
 msgid "The following options are accepted:"
@@ -272,6 +293,19 @@ msgstr "增加了 *show_caches* 和 *adaptive* 形参。"
 #: ../../library/dis.rst:176
 msgid "Example:"
 msgstr "示例:"
+
+#: ../../library/dis.rst:178
+msgid ""
+">>> bytecode = dis.Bytecode(myfunc)\n"
+">>> for instr in bytecode:\n"
+"...     print(instr.opname)\n"
+"...\n"
+"RESUME\n"
+"LOAD_GLOBAL\n"
+"LOAD_FAST\n"
+"CALL\n"
+"RETURN_VALUE"
+msgstr ""
 
 #: ../../library/dis.rst:192
 msgid "Analysis functions"
@@ -691,6 +725,10 @@ msgstr "无操作代码。 被字节码优化器用作占位符，以及生成�
 msgid "Removes the top-of-stack item::"
 msgstr "移除除堆栈顶部的项："
 
+#: ../../library/dis.rst:545
+msgid "STACK.pop()"
+msgstr ""
+
 #: ../../library/dis.rst:550
 msgid ""
 "Removes the top-of-stack item. Equivalent to ``POP_TOP``. Used to clean up "
@@ -707,9 +745,19 @@ msgid ""
 "original location::"
 msgstr "将第 *i* 项推入栈顶，并不移除原项："
 
+#: ../../library/dis.rst:570
+msgid ""
+"assert i > 0\n"
+"STACK.append(STACK[-i])"
+msgstr ""
+
 #: ../../library/dis.rst:578
 msgid "Swap the top of the stack with the i-th element::"
 msgstr "将栈顶的项与栈中第 *i* 项互换："
+
+#: ../../library/dis.rst:580
+msgid "STACK[-i], STACK[-1] = STACK[-1], STACK[-i]"
+msgstr ""
 
 #: ../../library/dis.rst:587
 msgid ""
@@ -811,6 +859,13 @@ msgid ""
 "*op*)::"
 msgstr "实现双目和原地操作运算符（取决于 *op* 的值）："
 
+#: ../../library/dis.rst:662
+msgid ""
+"rhs = STACK.pop()\n"
+"lhs = STACK.pop()\n"
+"STACK.append(lhs op rhs)"
+msgstr ""
+
 #: ../../library/dis.rst:671 ../../library/dis.rst:680
 #: ../../library/dis.rst:690 ../../library/dis.rst:698
 #: ../../library/dis.rst:710 ../../library/dis.rst:798
@@ -820,6 +875,45 @@ msgstr "实现双目和原地操作运算符（取决于 *op* 的值）："
 #: ../../library/dis.rst:1180
 msgid "Implements::"
 msgstr "实现："
+
+#: ../../library/dis.rst:673
+msgid ""
+"key = STACK.pop()\n"
+"container = STACK.pop()\n"
+"STACK.append(container[key])"
+msgstr ""
+
+#: ../../library/dis.rst:682
+msgid ""
+"key = STACK.pop()\n"
+"container = STACK.pop()\n"
+"value = STACK.pop()\n"
+"container[key] = value"
+msgstr ""
+
+#: ../../library/dis.rst:692
+msgid ""
+"key = STACK.pop()\n"
+"container = STACK.pop()\n"
+"del container[key]"
+msgstr ""
+
+#: ../../library/dis.rst:700
+msgid ""
+"end = STACK.pop()\n"
+"start = STACK.pop()\n"
+"container = STACK.pop()\n"
+"STACK.append(container[start:end])"
+msgstr ""
+
+#: ../../library/dis.rst:712
+msgid ""
+"end = STACK.pop()\n"
+"start = STACK.pop()\n"
+"container = STACK.pop()\n"
+"values = STACK.pop()\n"
+"container[start:end] = value"
+msgstr ""
 
 #: ../../library/dis.rst:721
 msgid "**Coroutine opcodes**"
@@ -907,17 +1001,40 @@ msgstr ""
 "从 ``STACK[-1]`` 解析 ``__aenter__`` 和 ``__aexit__`` 。 将 ``__aexit__`` 和 "
 "``__aenter__()`` 的结果推入栈中："
 
+#: ../../library/dis.rst:788
+msgid "STACK.extend((__aexit__, __aenter__())"
+msgstr ""
+
 #: ../../library/dis.rst:794
 msgid "**Miscellaneous opcodes**"
 msgstr "**其他操作码**"
+
+#: ../../library/dis.rst:800
+msgid ""
+"item = STACK.pop()\n"
+"set.add(STACK[-i], item)"
+msgstr ""
 
 #: ../../library/dis.rst:803
 msgid "Used to implement set comprehensions."
 msgstr "用于实现集合推导式。"
 
+#: ../../library/dis.rst:810
+msgid ""
+"item = STACK.pop()\n"
+"list.append(STACK[-i], item)"
+msgstr ""
+
 #: ../../library/dis.rst:813
 msgid "Used to implement list comprehensions."
 msgstr "用于实现列表推导式。"
+
+#: ../../library/dis.rst:820
+msgid ""
+"value = STACK.pop()\n"
+"key = STACK.pop()\n"
+"dict.__setitem__(STACK[-i], key, value)"
+msgstr ""
 
 #: ../../library/dis.rst:824
 msgid "Used to implement dict comprehensions."
@@ -1151,6 +1268,12 @@ msgstr ""
 "将 ``STACK[-1]`` 解包为 *count* 个单独的值，然后自右向左放入栈中。要求有确切"
 "的 *count* 值："
 
+#: ../../library/dis.rst:1016
+msgid ""
+"assert(len(STACK[-1]) == count)\n"
+"STACK.extend(STACK.pop()[:-count-1:-1])"
+msgstr ""
+
 #: ../../library/dis.rst:1022
 msgid ""
 "Implements assignment with a starred target: Unpacks an iterable in "
@@ -1185,6 +1308,13 @@ msgstr ""
 "提取出来的值被自右向左放入栈中，也就是说 ``a, *b, c = d`` 在执行完成之后会被"
 "这样储存： ``STACK.extend((a, b, c))`` 。"
 
+#: ../../library/dis.rst:1043
+msgid ""
+"obj = STACK.pop()\n"
+"value = STACK.pop()\n"
+"obj.name = value"
+msgstr ""
+
 #: ../../library/dis.rst:1047
 msgid ""
 "where *namei* is the index of name in :attr:`~codeobject.co_names` of the :"
@@ -1192,6 +1322,12 @@ msgid ""
 msgstr ""
 "其中 *namei* 是 name 在 :ref:`代码对象 <code-objects>` 的 :attr:`~codeobject."
 "co_names` 中的索引。"
+
+#: ../../library/dis.rst:1054
+msgid ""
+"obj = STACK.pop()\n"
+"del obj.name"
+msgstr ""
 
 #: ../../library/dis.rst:1057
 msgid ""
@@ -1249,6 +1385,17 @@ msgid ""
 "resulting tuple onto the stack::"
 msgstr "创建一个使用来自栈的 *count* 个条目的元组，并将结果元组推入栈顶::"
 
+#: ../../library/dis.rst:1107
+msgid ""
+"if count == 0:\n"
+"    value = ()\n"
+"else:\n"
+"    STACK = STACK[:-count]\n"
+"    value = tuple(STACK[-count:])\n"
+"\n"
+"STACK.append(value)"
+msgstr ""
+
 #: ../../library/dis.rst:1118
 msgid "Works as :opcode:`BUILD_TUPLE`, but creates a list."
 msgstr "类似于 :opcode:`BUILD_TUPLE` 但会创建一个列表。"
@@ -1287,13 +1434,31 @@ msgid ""
 "onto the stack."
 msgstr "拼接 *count* 个来自栈的字符串并将结果字符串推入栈顶。"
 
+#: ../../library/dis.rst:1158
+msgid ""
+"seq = STACK.pop()\n"
+"list.extend(STACK[-i], seq)"
+msgstr ""
+
 #: ../../library/dis.rst:1161
 msgid "Used to build lists."
 msgstr "用于构建列表。"
 
+#: ../../library/dis.rst:1170
+msgid ""
+"seq = STACK.pop()\n"
+"set.update(STACK[-i], seq)"
+msgstr ""
+
 #: ../../library/dis.rst:1173
 msgid "Used to build sets."
 msgstr "用于构建集合。"
+
+#: ../../library/dis.rst:1182
+msgid ""
+"map = STACK.pop()\n"
+"dict.update(STACK[-i], map)"
+msgstr ""
 
 #: ../../library/dis.rst:1185
 msgid "Used to build dicts."
@@ -1802,9 +1967,24 @@ msgid ""
 "implements::"
 msgstr "将一个切片对象推入栈中， *argc* 必须为2或3。 如果其为2，则实现："
 
+#: ../../library/dis.rst:1586
+msgid ""
+"end = STACK.pop()\n"
+"start = STACK.pop()\n"
+"STACK.append(slice(start, end))"
+msgstr ""
+
 #: ../../library/dis.rst:1590
 msgid "if it is 3, implements::"
 msgstr "如果其为3，则实现："
+
+#: ../../library/dis.rst:1592
+msgid ""
+"step = STACK.pop()\n"
+"end = STACK.pop()\n"
+"start = STACK.pop()\n"
+"STACK.append(slice(start, end, step))"
+msgstr ""
 
 #: ../../library/dis.rst:1597
 msgid "See the :func:`slice` built-in function for more information."
@@ -1824,6 +2004,13 @@ msgstr ""
 #: ../../library/dis.rst:1610
 msgid "Convert value to a string, depending on ``oparg``::"
 msgstr "将值转化为字符串，以``oparg``指定的方式::"
+
+#: ../../library/dis.rst:1612
+msgid ""
+"value = STACK.pop()\n"
+"result = func(value)\n"
+"STACK.append(result)"
+msgstr ""
 
 #: ../../library/dis.rst:1616
 msgid "``oparg == 1``: call :func:`str` on *value*"
@@ -1846,9 +2033,24 @@ msgstr "用于实现格式化的字面值字符串（f-string）。"
 msgid "Formats the value on top of stack::"
 msgstr "格式化栈顶的值::"
 
+#: ../../library/dis.rst:1629
+msgid ""
+"value = STACK.pop()\n"
+"result = value.__format__(\"\")\n"
+"STACK.append(result)"
+msgstr ""
+
 #: ../../library/dis.rst:1639
 msgid "Formats the given value with the given format spec::"
 msgstr "使用给定的格式说明来格式化给定的值::"
+
+#: ../../library/dis.rst:1641
+msgid ""
+"spec = STACK.pop()\n"
+"value = STACK.pop()\n"
+"result = value.__format__(spec)\n"
+"STACK.append(result)"
+msgstr ""
 
 #: ../../library/dis.rst:1653
 msgid ""
@@ -2100,6 +2302,14 @@ msgid ""
 "Calls an intrinsic function with two arguments. Used to implement "
 "functionality that is not performance critical::"
 msgstr "调用内联的函数并附带两个参数。 用于实现对性能不敏感的功能::"
+
+#: ../../library/dis.rst:1788
+msgid ""
+"arg2 = STACK.pop()\n"
+"arg1 = STACK.pop()\n"
+"result = intrinsic2(arg1, arg2)\n"
+"STACK.append(result)"
+msgstr ""
 
 #: ../../library/dis.rst:1798
 msgid "``INTRINSIC_2_INVALID``"

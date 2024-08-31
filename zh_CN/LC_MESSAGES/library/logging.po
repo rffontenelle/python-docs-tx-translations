@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-09 16:36+0000\n"
+"POT-Creation-Date: 2024-08-31 10:59+0000\n"
 "PO-Revision-Date: 2021-06-28 01:09+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -77,9 +77,43 @@ msgstr ""
 msgid "Here's a simple example of idiomatic usage: ::"
 msgstr "这是一个惯例用法的简单示例: ::"
 
+#: ../../library/logging.rst:35
+msgid ""
+"# myapp.py\n"
+"import logging\n"
+"import mylib\n"
+"logger = logging.getLogger(__name__)\n"
+"\n"
+"def main():\n"
+"    logging.basicConfig(filename='myapp.log', level=logging.INFO)\n"
+"    logger.info('Started')\n"
+"    mylib.do_something()\n"
+"    logger.info('Finished')\n"
+"\n"
+"if __name__ == '__main__':\n"
+"    main()"
+msgstr ""
+
+#: ../../library/logging.rst:51
+msgid ""
+"# mylib.py\n"
+"import logging\n"
+"logger = logging.getLogger(__name__)\n"
+"\n"
+"def do_something():\n"
+"    logger.info('Doing something')"
+msgstr ""
+
 #: ../../library/logging.rst:58
 msgid "If you run *myapp.py*, you should see this in *myapp.log*:"
 msgstr "如果你运行 *myapp.py* ，你应该在 *myapp.log* 中看到："
+
+#: ../../library/logging.rst:60
+msgid ""
+"INFO:__main__:Started\n"
+"INFO:mylib:Doing something\n"
+"INFO:__main__:Finished"
+msgstr ""
 
 #: ../../library/logging.rst:66
 msgid ""
@@ -476,6 +510,10 @@ msgstr ""
 "您可以独立于 *exc_info* 来指定 *stack_info*，例如，即使在未引发任何异常的情况"
 "下，也可以显示如何到达代码中的特定点。堆栈帧在标题行之后打印："
 
+#: ../../library/logging.rst:291
+msgid "Stack (most recent call last):"
+msgstr ""
+
 #: ../../library/logging.rst:295
 msgid ""
 "This mimics the ``Traceback (most recent call last):`` which is used when "
@@ -511,9 +549,24 @@ msgstr ""
 "的、带有用户自定义属性的 :class:`LogRecord` 中的 __dict__ 。然后可以按照需求"
 "使用这些自定义属性。例如，可以将它们合并到已记录的消息中："
 
+#: ../../library/logging.rst:312
+msgid ""
+"FORMAT = '%(asctime)s %(clientip)-15s %(user)-8s %(message)s'\n"
+"logging.basicConfig(format=FORMAT)\n"
+"d = {'clientip': '192.168.0.1', 'user': 'fbloggs'}\n"
+"logger = logging.getLogger('tcpserver')\n"
+"logger.warning('Protocol problem: %s', 'connection reset', extra=d)"
+msgstr ""
+
 #: ../../library/logging.rst:318
 msgid "would print something like"
 msgstr "输出类似于"
+
+#: ../../library/logging.rst:320
+msgid ""
+"2006-02-08 22:20:02,165 192.168.0.1 fbloggs  Protocol problem: connection "
+"reset"
+msgstr ""
 
 #: ../../library/logging.rst:324
 msgid ""
@@ -1458,6 +1511,18 @@ msgstr ""
 "在创建时可使用此功能将你自己的值注入 :class:`LogRecord`。 你可以使用以下模"
 "式::"
 
+#: ../../library/logging.rst:951
+msgid ""
+"old_factory = logging.getLogRecordFactory()\n"
+"\n"
+"def record_factory(*args, **kwargs):\n"
+"    record = old_factory(*args, **kwargs)\n"
+"    record.custom_attribute = 0xdecafbad\n"
+"    return record\n"
+"\n"
+"logging.setLogRecordFactory(record_factory)"
+msgstr ""
+
 #: ../../library/logging.rst:960
 msgid ""
 "With this pattern, multiple factories could be chained, and as long as they "
@@ -1990,6 +2055,12 @@ msgstr ""
 "返回标准的 :class:`Logger` 类，或是最近传给 :func:`setLoggerClass` 的类。 此"
 "函数可以从一个新的类定义中调用，以确保安装自定义的 :class:`Logger` 类不会撤销"
 "其他代码已经应用的自定义操作。 例如::"
+
+#: ../../library/logging.rst:1174
+msgid ""
+"class MyLogger(logging.getLoggerClass()):\n"
+"    # ... override behaviour here"
+msgstr ""
 
 #: ../../library/logging.rst:1180
 msgid "Return a callable which is used to create a :class:`LogRecord`."
