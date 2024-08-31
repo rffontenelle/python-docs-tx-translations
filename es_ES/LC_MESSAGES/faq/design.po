@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-09 14:48+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
 "Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -56,6 +56,14 @@ msgstr ""
 "agrupación percibida por el analizador sintáctico y el lector humano.  "
 "Ocasionalmente los programadores de C se encontrarán con un fragmento de "
 "código como este::"
+
+#: ../../faq/design.rst:21
+msgid ""
+"if (x <= y)\n"
+"        x++;\n"
+"        y--;\n"
+"z++;"
+msgstr ""
 
 #: ../../faq/design.rst:26
 msgid ""
@@ -120,6 +128,12 @@ msgstr "¿Por qué los cálculos de punto flotante son tan inexactos?"
 msgid "Users are often surprised by results like this::"
 msgstr "Los usuarios a menudo se sorprenden por resultados como este:"
 
+#: ../../faq/design.rst:58
+msgid ""
+">>> 1.2 - 1.0\n"
+"0.19999999999999996"
+msgstr ""
+
 #: ../../faq/design.rst:61
 msgid ""
 "and think it is a bug in Python.  It's not.  This has little to do with "
@@ -156,6 +170,10 @@ msgstr ""
 "pueden expresarse exactamente en coma flotante binaria.  Por ejemplo, "
 "después de::"
 
+#: ../../faq/design.rst:75
+msgid ">>> x = 1.2"
+msgstr ""
+
 #: ../../faq/design.rst:77
 msgid ""
 "the value stored for ``x`` is a (very good) approximation to the decimal "
@@ -166,9 +184,17 @@ msgstr ""
 "decimal ``1.2``, pero no es exactamente igual. En una máquina típica, el "
 "valor almacenado real es:"
 
+#: ../../faq/design.rst:81
+msgid "1.0011001100110011001100110011001100110011001100110011 (binary)"
+msgstr ""
+
 #: ../../faq/design.rst:83
 msgid "which is exactly::"
 msgstr "que es exactamente::"
+
+#: ../../faq/design.rst:85
+msgid "1.1999999999999999555910790149937383830547332763671875 (decimal)"
+msgstr ""
 
 #: ../../faq/design.rst:87
 msgid ""
@@ -325,6 +351,12 @@ msgstr ""
 "Expresiones de asignación utilizando el operador morsa ``:=`` asignar una "
 "variable en una expresión::"
 
+#: ../../faq/design.rst:161
+msgid ""
+"while chunk := fp.read(200):\n"
+"   print(chunk)"
+msgstr ""
+
 #: ../../faq/design.rst:164
 msgid "See :pep:`572` for more information."
 msgstr "Ver :pep:`572` para más información."
@@ -401,9 +433,17 @@ msgstr ""
 "módulo string.  La mayoría de estos nuevos métodos han sido ampliamente "
 "aceptados, pero el que parece incomodar a algunos programadores es::"
 
+#: ../../faq/design.rst:201
+msgid "\", \".join(['1', '2', '4', '8', '16'])"
+msgstr ""
+
 #: ../../faq/design.rst:203
 msgid "which gives the result::"
 msgstr "que da el resultado::"
+
+#: ../../faq/design.rst:205
+msgid "\"1, 2, 4, 8, 16\""
+msgstr ""
 
 #: ../../faq/design.rst:207
 msgid "There are two common arguments against this usage."
@@ -436,6 +476,10 @@ msgstr ""
 "Lamentablemente, no lo estás haciendo. Por alguna razón parece haber mucha "
 "menos dificultad con tener :meth:`~str.split` como un método de cadena, ya "
 "que en ese caso es fácil ver que ::"
+
+#: ../../faq/design.rst:220
+msgid "\"1, 2, 4, 8, 16\".split(\", \")"
+msgstr ""
 
 #: ../../faq/design.rst:222
 msgid ""
@@ -475,6 +519,15 @@ msgstr ""
 "se producen excepciones.  Capturar una excepción es caro.  En versiones de "
 "Python anteriores a la 2.0 era común usar este modismo::"
 
+#: ../../faq/design.rst:240
+msgid ""
+"try:\n"
+"    value = mydict[key]\n"
+"except KeyError:\n"
+"    mydict[key] = getvalue(key)\n"
+"    value = mydict[key]"
+msgstr ""
+
 #: ../../faq/design.rst:246
 msgid ""
 "This only made sense when you expected the dict to have the key almost all "
@@ -482,6 +535,14 @@ msgid ""
 msgstr ""
 "Esto solo tenía sentido cuando esperabas que el diccionario tuviera la clave "
 "casi todo el tiempo. Si ese no era el caso, lo codificaste así:"
+
+#: ../../faq/design.rst:249
+msgid ""
+"if key in mydict:\n"
+"    value = mydict[key]\n"
+"else:\n"
+"    value = mydict[key] = getvalue(key)"
+msgstr ""
 
 #: ../../faq/design.rst:254
 msgid ""
@@ -522,6 +583,16 @@ msgstr ""
 "posibilidades, puede crear un diccionario que asigne los valores de los "
 "casos a las funciones a las que hay que llamar.  Por ejemplo::"
 
+#: ../../faq/design.rst:272
+msgid ""
+"functions = {'a': function_1,\n"
+"             'b': function_2,\n"
+"             'c': self.method_1}\n"
+"\n"
+"func = functions[value]\n"
+"func()"
+msgstr ""
+
 #: ../../faq/design.rst:279
 msgid ""
 "For calling methods on objects, you can simplify yet further by using the :"
@@ -530,6 +601,18 @@ msgstr ""
 "Para llamar a los métodos de los objetos, puede simplificar aún más el uso "
 "de la :func:`getattr` incorporado para recuperar los métodos con un nombre "
 "en particular::"
+
+#: ../../faq/design.rst:282
+msgid ""
+"class MyVisitor:\n"
+"    def visit_a(self):\n"
+"        ...\n"
+"\n"
+"    def dispatch(self, value):\n"
+"        method_name = 'visit_' + str(value)\n"
+"        method = getattr(self, method_name)\n"
+"        method()"
+msgstr ""
 
 #: ../../faq/design.rst:291
 msgid ""
@@ -677,6 +760,13 @@ msgstr ""
 "En algunas implementaciones de Python, el siguiente código (que está bien en "
 "CPython) probablemente se quedará sin descriptores de archivo::"
 
+#: ../../faq/design.rst:356
+msgid ""
+"for file in very_long_list_of_files:\n"
+"    f = open(file)\n"
+"    c = f.read(1)"
+msgstr ""
+
 #: ../../faq/design.rst:360
 msgid ""
 "Indeed, using CPython's reference counting and destructor scheme, each new "
@@ -699,6 +789,13 @@ msgstr ""
 "Python, debes cerrar explícitamente el archivo o utilizar la sentencia :"
 "keyword:`with`; esto funcionará independientemente del esquema de gestión de "
 "memoria::"
+
+#: ../../faq/design.rst:369
+msgid ""
+"for file in very_long_list_of_files:\n"
+"    with open(file) as f:\n"
+"        c = f.read(1)"
+msgstr ""
 
 #: ../../faq/design.rst:375
 msgid "Why doesn't CPython use a more traditional garbage collection scheme?"
@@ -945,6 +1042,12 @@ msgstr ""
 "Listas hash por su dirección (ID de objeto).  Esto no funciona porque si "
 "construyes una nueva lista con el mismo valor no se encontrará; por ejemplo::"
 
+#: ../../faq/design.rst:483
+msgid ""
+"mydict = {[1, 2]: '12'}\n"
+"print(mydict[[1, 2]])"
+msgstr ""
+
 #: ../../faq/design.rst:486
 msgid ""
 "would raise a :exc:`KeyError` exception because the id of the ``[1, 2]`` "
@@ -1012,6 +1115,26 @@ msgstr ""
 "los objetos envolventes que residen en un diccionario (u otra estructura "
 "basada en hash), permanecen fijos mientras el objeto está en el diccionario "
 "(u otra estructura). ::"
+
+#: ../../faq/design.rst:513
+msgid ""
+"class ListWrapper:\n"
+"    def __init__(self, the_list):\n"
+"        self.the_list = the_list\n"
+"\n"
+"    def __eq__(self, other):\n"
+"        return self.the_list == other.the_list\n"
+"\n"
+"    def __hash__(self):\n"
+"        l = self.the_list\n"
+"        result = 98767 - len(l)*555\n"
+"        for i, el in enumerate(l):\n"
+"            try:\n"
+"                result = result + (hash(el) % 9999999) * 1001 + i\n"
+"            except Exception:\n"
+"                result = (result % 7777777) + i * 333\n"
+"        return result"
+msgstr ""
 
 #: ../../faq/design.rst:530
 msgid ""
@@ -1081,6 +1204,12 @@ msgstr ""
 "`sorted` en su lugar. Esta función crea una nueva lista a partir de un "
 "iterable proporcionado, la ordena y la devuelve. Por ejemplo, así es como se "
 "itera sobre las claves de un diccionario en orden ordenado:"
+
+#: ../../faq/design.rst:559
+msgid ""
+"for key in sorted(mydict):\n"
+"    ...  # do whatever with mydict[key]..."
+msgstr ""
 
 #: ../../faq/design.rst:564
 msgid "How do you specify and enforce an interface spec in Python?"
@@ -1217,6 +1346,19 @@ msgstr ""
 "usos razonables de las construcciones ``go`` o ``goto`` de C, Fortran y "
 "otros lenguajes.  Por ejemplo::"
 
+#: ../../faq/design.rst:620
+msgid ""
+"class label(Exception): pass  # declare a label\n"
+"\n"
+"try:\n"
+"    ...\n"
+"    if condition: raise label()  # goto label\n"
+"    ...\n"
+"except label:  # where to goto\n"
+"    pass\n"
+"..."
+msgstr ""
+
 #: ../../faq/design.rst:630
 msgid ""
 "This doesn't allow you to jump into the middle of a loop, but that's usually "
@@ -1268,12 +1410,23 @@ msgstr ""
 "todas las llamadas del sistema de Windows también aceptan barras diagonales "
 "hacia adelante::"
 
+#: ../../faq/design.rst:651
+msgid "f = open(\"/mydir/file.txt\")  # works fine!"
+msgstr ""
+
 #: ../../faq/design.rst:653
 msgid ""
 "If you're trying to build a pathname for a DOS command, try e.g. one of ::"
 msgstr ""
 "Si estás intentando construir una ruta de acceso para un comando de DOS, "
 "prueba por ejemplo uno de ::"
+
+#: ../../faq/design.rst:655
+msgid ""
+"dir = r\"\\this\\is\\my\\dos\\dir\" \"\\\\\"\n"
+"dir = r\"\\this\\is\\my\\dos\\dir\\ \"[:-1]\n"
+"dir = \"\\\\this\\\\is\\\\my\\\\dos\\\\dir\\\\\""
+msgstr ""
 
 #: ../../faq/design.rst:661
 msgid "Why doesn't Python have a \"with\" statement for attribute assignments?"
@@ -1290,6 +1443,13 @@ msgstr ""
 "Python tiene una sentencia :keyword:`with` que envuelve la ejecución de un "
 "bloque, llamando código a la entrada y salida del bloque.  Algunos lenguajes "
 "tienen una construcción parecida a esta::"
+
+#: ../../faq/design.rst:667
+msgid ""
+"with obj:\n"
+"    a = 1               # equivalent to obj.a = 1\n"
+"    total = total + 1   # obj.total = obj.total + 1"
+msgstr ""
 
 #: ../../faq/design.rst:671
 msgid "In Python, such a construct would be ambiguous."
@@ -1326,6 +1486,13 @@ msgstr ""
 msgid "For instance, take the following incomplete snippet::"
 msgstr "Por ejemplo, toma el siguiente fragmento incompleto:"
 
+#: ../../faq/design.rst:686
+msgid ""
+"def foo(a):\n"
+"    with a:\n"
+"        print(x)"
+msgstr ""
+
 #: ../../faq/design.rst:690
 msgid ""
 "The snippet assumes that ``a`` must have a member attribute called ``x``. "
@@ -1351,9 +1518,24 @@ msgstr ""
 "similares del lenguaje (reducción del volumen de código) puede conseguirse "
 "fácilmente en Python mediante asignaciones.  En lugar de::"
 
+#: ../../faq/design.rst:699
+msgid ""
+"function(args).mydict[index][index].a = 21\n"
+"function(args).mydict[index][index].b = 42\n"
+"function(args).mydict[index][index].c = 63"
+msgstr ""
+
 #: ../../faq/design.rst:703
 msgid "write this::"
 msgstr "escribe esto::"
+
+#: ../../faq/design.rst:705
+msgid ""
+"ref = function(args).mydict[index][index]\n"
+"ref.a = 21\n"
+"ref.b = 42\n"
+"ref.c = 63"
+msgstr ""
 
 #: ../../faq/design.rst:710
 msgid ""
@@ -1408,9 +1590,21 @@ msgstr ""
 "Los dos puntos son necesarios principalmente para mejorar la legibilidad "
 "(uno de los resultados del lenguaje experimental ABC). Considera esto::"
 
+#: ../../faq/design.rst:735
+msgid ""
+"if a == b\n"
+"    print(a)"
+msgstr ""
+
 #: ../../faq/design.rst:738
 msgid "versus ::"
 msgstr "versus ::"
+
+#: ../../faq/design.rst:740
+msgid ""
+"if a == b:\n"
+"    print(a)"
+msgstr ""
 
 #: ../../faq/design.rst:743
 msgid ""
@@ -1446,6 +1640,16 @@ msgstr ""
 "Python te permite agregar una coma final al final de las listas, tuplas y "
 "diccionarios::"
 
+#: ../../faq/design.rst:757
+msgid ""
+"[1, 2, 3,]\n"
+"('a', 'b', 'c',)\n"
+"d = {\n"
+"    \"A\": [1, 5],\n"
+"    \"B\": [6, 7],  # last trailing comma is optional but good style\n"
+"}"
+msgstr ""
+
 #: ../../faq/design.rst:765
 msgid "There are several reasons to allow this."
 msgstr "Hay varias razones para permitir esto."
@@ -1469,6 +1673,16 @@ msgid ""
 msgstr ""
 "Omitir accidentalmente la coma puede llevar a errores difíciles de "
 "diagnosticar. Por ejemplo::"
+
+#: ../../faq/design.rst:775
+msgid ""
+"x = [\n"
+"  \"fee\",\n"
+"  \"fie\"\n"
+"  \"foo\",\n"
+"  \"fum\"\n"
+"]"
+msgstr ""
 
 #: ../../faq/design.rst:782
 msgid ""

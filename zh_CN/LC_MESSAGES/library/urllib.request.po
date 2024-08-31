@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-03 23:51+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:34+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -1677,6 +1677,21 @@ msgid ""
 "of it. ::"
 msgstr "以下示例将读取 python.org 主页并显示前 300 个字节的内容："
 
+#: ../../library/urllib.request.rst:1201
+msgid ""
+">>> import urllib.request\n"
+">>> with urllib.request.urlopen('http://www.python.org/') as f:\n"
+"...     print(f.read(300))\n"
+"...\n"
+"b'<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n"
+"\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\\n\\n\\n<html\n"
+"xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" "
+"lang=\"en\">\\n\\n<head>\\n\n"
+"<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" /"
+">\\n\n"
+"<title>Python Programming '"
+msgstr ""
+
 #: ../../library/urllib.request.rst:1211
 msgid ""
 "Note that urlopen returns a bytes object.  This is because there is no way "
@@ -1706,11 +1721,29 @@ msgstr ""
 "python.org 网站已在 meta 标签中指明，采用的是 *utf-8* 编码，因此这里将用同样"
 "的格式对字节串进行解码。"
 
+#: ../../library/urllib.request.rst:1224
+msgid ""
+">>> with urllib.request.urlopen('http://www.python.org/') as f:\n"
+"...     print(f.read(100).decode('utf-8'))\n"
+"...\n"
+"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n"
+"\"http://www.w3.org/TR/xhtml1/DTD/xhtm"
+msgstr ""
+
 #: ../../library/urllib.request.rst:1230
 msgid ""
 "It is also possible to achieve the same result without using the :term:"
 "`context manager` approach. ::"
 msgstr "不用 :term:`context manager` 方法也能获得同样的结果："
+
+#: ../../library/urllib.request.rst:1233
+msgid ""
+">>> import urllib.request\n"
+">>> f = urllib.request.urlopen('http://www.python.org/')\n"
+">>> print(f.read(100).decode('utf-8'))\n"
+"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\"\n"
+"\"http://www.w3.org/TR/xhtml1/DTD/xhtm"
+msgstr ""
 
 #: ../../library/urllib.request.rst:1239
 msgid ""
@@ -1721,17 +1754,63 @@ msgstr ""
 "以下示例将会把数据流发送给某 CGI 的 stdin，并读取返回数据。请注意，该示例只能"
 "工作于 Python 装有 SSL 支持的环境。"
 
+#: ../../library/urllib.request.rst:1243
+msgid ""
+">>> import urllib.request\n"
+">>> req = urllib.request.Request(url='https://localhost/cgi-bin/test.cgi',\n"
+"...                       data=b'This data is passed to stdin of the CGI')\n"
+">>> with urllib.request.urlopen(req) as f:\n"
+"...     print(f.read().decode('utf-8'))\n"
+"...\n"
+"Got Data: \"This data is passed to stdin of the CGI\""
+msgstr ""
+
 #: ../../library/urllib.request.rst:1251
 msgid "The code for the sample CGI used in the above example is::"
 msgstr "上述示例中的 CGI 代码如下所示："
+
+#: ../../library/urllib.request.rst:1253
+msgid ""
+"#!/usr/bin/env python\n"
+"import sys\n"
+"data = sys.stdin.read()\n"
+"print('Content-type: text/plain\\n\\nGot Data: \"%s\"' % data)"
+msgstr ""
 
 #: ../../library/urllib.request.rst:1258
 msgid "Here is an example of doing a ``PUT`` request using :class:`Request`::"
 msgstr "下面是利用 :class:`Request` 发送 ``PUT`` 请求的示例："
 
+#: ../../library/urllib.request.rst:1260
+msgid ""
+"import urllib.request\n"
+"DATA = b'some data'\n"
+"req = urllib.request.Request(url='http://localhost:8080', data=DATA, "
+"method='PUT')\n"
+"with urllib.request.urlopen(req) as f:\n"
+"    pass\n"
+"print(f.status)\n"
+"print(f.reason)"
+msgstr ""
+
 #: ../../library/urllib.request.rst:1268
 msgid "Use of Basic HTTP Authentication::"
 msgstr "基本 HTTP 认证示例："
+
+#: ../../library/urllib.request.rst:1270
+msgid ""
+"import urllib.request\n"
+"# Create an OpenerDirector with support for Basic HTTP Authentication...\n"
+"auth_handler = urllib.request.HTTPBasicAuthHandler()\n"
+"auth_handler.add_password(realm='PDQ Application',\n"
+"                          uri='https://mahler:8092/site-updates.py',\n"
+"                          user='klem',\n"
+"                          passwd='kadidd!ehopper')\n"
+"opener = urllib.request.build_opener(auth_handler)\n"
+"# ...and install it globally so it can be used with urlopen.\n"
+"urllib.request.install_opener(opener)\n"
+"urllib.request.urlopen('http://www.example.com/login.html')"
+msgstr ""
 
 #: ../../library/urllib.request.rst:1282
 msgid ""
@@ -1755,6 +1834,18 @@ msgstr ""
 "这个示例将默认的 :class:`ProxyHandler` 替换为使用以编程方式提供的代理 URL，并"
 "通过 :class:`ProxyBasicAuthHandler` 添加代理认证支持。 ::"
 
+#: ../../library/urllib.request.rst:1292
+msgid ""
+"proxy_handler = urllib.request.ProxyHandler({'http': 'http://www.example."
+"com:3128/'})\n"
+"proxy_auth_handler = urllib.request.ProxyBasicAuthHandler()\n"
+"proxy_auth_handler.add_password('realm', 'host', 'username', 'password')\n"
+"\n"
+"opener = urllib.request.build_opener(proxy_handler, proxy_auth_handler)\n"
+"# This time, rather than install the OpenerDirector, we use it directly:\n"
+"opener.open('http://www.example.com/login.html')"
+msgstr ""
+
 #: ../../library/urllib.request.rst:1300
 msgid "Adding HTTP headers:"
 msgstr "添加 HTTP 头部信息："
@@ -1763,6 +1854,16 @@ msgstr "添加 HTTP 头部信息："
 msgid "Use the *headers* argument to the :class:`Request` constructor, or::"
 msgstr "可利用 :class:`Request` 构造函数的 *headers* 参数，或者是："
 
+#: ../../library/urllib.request.rst:1304
+msgid ""
+"import urllib.request\n"
+"req = urllib.request.Request('http://www.example.com/')\n"
+"req.add_header('Referer', 'http://www.python.org/')\n"
+"# Customize the default User-Agent header value:\n"
+"req.add_header('User-Agent', 'urllib-example/0.1 (Contact: . . .)')\n"
+"r = urllib.request.urlopen(req)"
+msgstr ""
+
 #: ../../library/urllib.request.rst:1311
 msgid ""
 ":class:`OpenerDirector` automatically adds a :mailheader:`User-Agent` header "
@@ -1770,6 +1871,14 @@ msgid ""
 msgstr ""
 ":class:`OpenerDirector` 自动会在每个 :class:`Request` 中加入一项 :mailheader:"
 "`User-Agent` 头部信息。若要修改，请参见以下语句："
+
+#: ../../library/urllib.request.rst:1314
+msgid ""
+"import urllib.request\n"
+"opener = urllib.request.build_opener()\n"
+"opener.addheaders = [('User-agent', 'Mozilla/5.0')]\n"
+"opener.open('http://www.example.com/')"
+msgstr ""
 
 #: ../../library/urllib.request.rst:1319
 msgid ""
@@ -1787,6 +1896,17 @@ msgid ""
 "containing parameters::"
 msgstr "以下会话示例用 ``GET`` 方法读取包含参数的 URL。"
 
+#: ../../library/urllib.request.rst:1329
+msgid ""
+">>> import urllib.request\n"
+">>> import urllib.parse\n"
+">>> params = urllib.parse.urlencode({'spam': 1, 'eggs': 2, 'bacon': 0})\n"
+">>> url = \"http://www.musi-cal.com/cgi-bin/query?%s\" % params\n"
+">>> with urllib.request.urlopen(url) as f:\n"
+"...     print(f.read().decode('utf-8'))\n"
+"..."
+msgstr ""
+
 #: ../../library/urllib.request.rst:1337
 msgid ""
 "The following example uses the ``POST`` method instead. Note that params "
@@ -1796,17 +1916,48 @@ msgstr ""
 "以下示例换用 ``POST`` 方法。请注意 urlencode 输出结果先被编码为字节串 data，"
 "再送入 urlopen。"
 
+#: ../../library/urllib.request.rst:1340
+msgid ""
+">>> import urllib.request\n"
+">>> import urllib.parse\n"
+">>> data = urllib.parse.urlencode({'spam': 1, 'eggs': 2, 'bacon': 0})\n"
+">>> data = data.encode('ascii')\n"
+">>> with urllib.request.urlopen(\"http://requestb.in/xrbl82xr\", data) as "
+"f:\n"
+"...     print(f.read().decode('utf-8'))\n"
+"..."
+msgstr ""
+
 #: ../../library/urllib.request.rst:1348
 msgid ""
 "The following example uses an explicitly specified HTTP proxy, overriding "
 "environment settings::"
 msgstr "以下示例显式指定了 HTTP 代理，以覆盖环境变量中的设置："
 
+#: ../../library/urllib.request.rst:1351
+msgid ""
+">>> import urllib.request\n"
+">>> proxies = {'http': 'http://proxy.example.com:8080/'}\n"
+">>> opener = urllib.request.FancyURLopener(proxies)\n"
+">>> with opener.open(\"http://www.python.org\") as f:\n"
+"...     f.read().decode('utf-8')\n"
+"..."
+msgstr ""
+
 #: ../../library/urllib.request.rst:1358
 msgid ""
 "The following example uses no proxies at all, overriding environment "
 "settings::"
 msgstr "以下示例根本不用代理，也覆盖了环境变量中的设置："
+
+#: ../../library/urllib.request.rst:1360
+msgid ""
+">>> import urllib.request\n"
+">>> opener = urllib.request.FancyURLopener({})\n"
+">>> with opener.open(\"http://www.python.org/\") as f:\n"
+"...     f.read().decode('utf-8')\n"
+"..."
+msgstr ""
 
 #: ../../library/urllib.request.rst:1368
 msgid "Legacy interface"
@@ -1856,6 +2007,15 @@ msgstr ""
 #: ../../library/urllib.request.rst:1392
 msgid "The following example illustrates the most common usage scenario::"
 msgstr "以下例子演示了大部分常用场景："
+
+#: ../../library/urllib.request.rst:1394
+msgid ""
+">>> import urllib.request\n"
+">>> local_filename, headers = urllib.request.urlretrieve('http://python."
+"org/')\n"
+">>> html = open(local_filename)\n"
+">>> html.close()"
+msgstr ""
 
 #: ../../library/urllib.request.rst:1399
 msgid ""

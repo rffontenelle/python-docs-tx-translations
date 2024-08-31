@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-02 14:51+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -407,6 +407,12 @@ msgstr ""
 "データを管理するには、単に :class:`local` (あるいはそのサブクラス) のインスタ"
 "ンスを作成して、その属性に値を設定してください::"
 
+#: ../../library/threading.rst:264
+msgid ""
+"mydata = threading.local()\n"
+"mydata.x = 1"
+msgstr ""
+
 #: ../../library/threading.rst:267
 msgid "The instance's values will be different for separate threads."
 msgstr "インスタンスの値はスレッドごとに違った値になります。"
@@ -665,6 +671,17 @@ msgstr ""
 #: ../../library/threading.rst:392
 msgid "Example::"
 msgstr "以下はプログラム例です::"
+
+#: ../../library/threading.rst:394
+msgid ""
+">>> from threading import Thread\n"
+">>> t = Thread(target=print, args=[1])\n"
+">>> t.run()\n"
+"1\n"
+">>> t = Thread(target=print, args=(1,))\n"
+">>> t.run()\n"
+"1"
+msgstr ""
 
 #: ../../library/threading.rst:406
 msgid ""
@@ -1220,6 +1237,20 @@ msgstr ""
 "す。例えば、以下のコードは無制限のバッファ容量のときの一般的な生産者-消費者問"
 "題です::"
 
+#: ../../library/threading.rst:730
+msgid ""
+"# Consume one item\n"
+"with cv:\n"
+"    while not an_item_is_available():\n"
+"        cv.wait()\n"
+"    get_an_available_item()\n"
+"\n"
+"# Produce one item\n"
+"with cv:\n"
+"    make_an_item_available()\n"
+"    cv.notify()"
+msgstr ""
+
 #: ../../library/threading.rst:741
 msgid ""
 "The ``while`` loop checking for the application's condition is necessary "
@@ -1235,6 +1266,14 @@ msgstr ""
 "レッドプログラミングに固有です。条件チェックを自動化するために :meth:"
 "`~Condition.wait_for` メソッドを使うことができ、それはタイムアウトの計算を簡"
 "略化します::"
+
+#: ../../library/threading.rst:748
+msgid ""
+"# Consume an item\n"
+"with cv:\n"
+"    cv.wait_for(an_item_is_available)\n"
+"    get_an_available_item()"
+msgstr ""
 
 #: ../../library/threading.rst:753
 msgid ""
@@ -1377,6 +1416,12 @@ msgid ""
 msgstr ""
 "タイムアウト機能を無視すれば、このメソッドの呼び出しは以下のように書くのとほ"
 "ぼ等価です::"
+
+#: ../../library/threading.rst:824
+msgid ""
+"while not predicate():\n"
+"    cv.wait()"
+msgstr ""
 
 #: ../../library/threading.rst:827
 msgid ""
@@ -1595,6 +1640,13 @@ msgstr ""
 "ばなりません。主スレッドは、作業スレッドを立ち上げる前にセマフォを初期化しま"
 "す::"
 
+#: ../../library/threading.rst:952
+msgid ""
+"maxconnections = 5\n"
+"# ...\n"
+"pool_sema = BoundedSemaphore(value=maxconnections)"
+msgstr ""
+
 #: ../../library/threading.rst:956
 msgid ""
 "Once spawned, worker threads call the semaphore's acquire and release "
@@ -1602,6 +1654,16 @@ msgid ""
 msgstr ""
 "作業スレッドは、ひとたび立ち上がると、サーバへ接続する必要が生じたときにセマ"
 "フォの :meth:`acquire` および :meth:`release` メソッドを呼び出します::"
+
+#: ../../library/threading.rst:959
+msgid ""
+"with pool_sema:\n"
+"    conn = connectdb()\n"
+"    try:\n"
+"        # ... use connection ...\n"
+"    finally:\n"
+"        conn.close()"
+msgstr ""
 
 #: ../../library/threading.rst:966
 msgid ""
@@ -1720,6 +1782,15 @@ msgstr ""
 msgid "For example::"
 msgstr "例えば::"
 
+#: ../../library/threading.rst:1044
+msgid ""
+"def hello():\n"
+"    print(\"hello, world\")\n"
+"\n"
+"t = Timer(30.0, hello)\n"
+"t.start()  # after 30 seconds, \"hello, world\" will be printed"
+msgstr ""
+
 #: ../../library/threading.rst:1053
 msgid ""
 "Create a timer that will run *function* with arguments *args* and  keyword "
@@ -1770,6 +1841,24 @@ msgstr ""
 "例として、クライアントとサーバの間でスレッドを同期させる単純な方法を紹介しま"
 "す::"
 
+#: ../../library/threading.rst:1082
+msgid ""
+"b = Barrier(2, timeout=5)\n"
+"\n"
+"def server():\n"
+"    start_server()\n"
+"    b.wait()\n"
+"    while True:\n"
+"        connection = accept_connection()\n"
+"        process_server_connection(connection)\n"
+"\n"
+"def client():\n"
+"    b.wait()\n"
+"    while True:\n"
+"        connection = make_connection()\n"
+"        process_client_connection(connection)"
+msgstr ""
+
 #: ../../library/threading.rst:1100
 msgid ""
 "Create a barrier object for *parties* number of threads.  An *action*, when "
@@ -1802,6 +1891,14 @@ msgstr ""
 "返り値は 0 から *parties* -- 1 の範囲の整数で、それぞれのスレッドに対して異な"
 "ります。これは、特別な後始末 (housekeeping) を行うスレッドを選択するために使"
 "用することができます。例えば::"
+
+#: ../../library/threading.rst:1116
+msgid ""
+"i = barrier.wait()\n"
+"if i == 0:\n"
+"    # Only one thread needs to print this\n"
+"    print(\"passed the barrier\")"
+msgstr ""
 
 #: ../../library/threading.rst:1121
 msgid ""
@@ -1897,9 +1994,24 @@ msgid ""
 "following snippet::"
 msgstr ""
 
+#: ../../library/threading.rst:1180
+msgid ""
+"with some_lock:\n"
+"    # do something..."
+msgstr ""
+
 #: ../../library/threading.rst:1183
 msgid "is equivalent to::"
 msgstr "は、以下と同じです ::"
+
+#: ../../library/threading.rst:1185
+msgid ""
+"some_lock.acquire()\n"
+"try:\n"
+"    # do something...\n"
+"finally:\n"
+"    some_lock.release()"
+msgstr ""
 
 #: ../../library/threading.rst:1191
 msgid ""

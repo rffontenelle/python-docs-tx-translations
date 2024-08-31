@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-11 19:07+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:34+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -302,9 +302,25 @@ msgstr ""
 "作用域 <annotation-scopes>`，因为它可以访问所包含的类作用域。 这意味着以下代"
 "码将会失败::"
 
+#: ../../reference/executionmodel.rst:176
+msgid ""
+"class A:\n"
+"    a = 42\n"
+"    b = list(a + i for i in range(10))"
+msgstr ""
+
 #: ../../reference/executionmodel.rst:180
 msgid "However, the following will succeed::"
 msgstr "但是，下面的代码将会成功::"
+
+#: ../../reference/executionmodel.rst:182
+msgid ""
+"class A:\n"
+"    type Alias = Nested\n"
+"    class Nested: pass\n"
+"\n"
+"print(A.Alias.__value__)  # <type 'A.Nested'>"
+msgstr ""
 
 #: ../../reference/executionmodel.rst:191
 msgid "Annotation scopes"
@@ -434,6 +450,21 @@ msgstr ""
 msgid "Example:"
 msgstr "示例:"
 
+#: ../../reference/executionmodel.rst:249
+msgid ""
+">>> type Alias = 1/0\n"
+">>> Alias.__value__\n"
+"Traceback (most recent call last):\n"
+"  ...\n"
+"ZeroDivisionError: division by zero\n"
+">>> def func[T: 1/0](): pass\n"
+">>> T = func.__type_params__[0]\n"
+">>> T.__bound__\n"
+"Traceback (most recent call last):\n"
+"  ...\n"
+"ZeroDivisionError: division by zero"
+msgstr ""
+
 #: ../../reference/executionmodel.rst:263
 msgid ""
 "Here the exception is raised only when the ``__value__`` attribute of the "
@@ -450,6 +481,15 @@ msgid ""
 msgstr ""
 "此行为主要适用于当创建类型别名或类型变量时对尚未被定义的类型进行引用。 例如，"
 "惰性求值将允许创建相互递归的类型别名::"
+
+#: ../../reference/executionmodel.rst:271
+msgid ""
+"from typing import Literal\n"
+"\n"
+"type SimpleExpr = int | Parenthesized\n"
+"type Parenthesized = tuple[Literal[\"(\"], Expr, Literal[\")\"]]\n"
+"type Expr = SimpleExpr | tuple[SimpleExpr, Literal[\"+\", \"-\"], Expr]"
+msgstr ""
 
 #: ../../reference/executionmodel.rst:277
 msgid ""
@@ -502,6 +542,15 @@ msgid ""
 "This means that the following code will print 42::"
 msgstr ""
 "自由变量的名称解析发生于运行时而不是编译时。 这意味着以下代码将打印出 42::"
+
+#: ../../reference/executionmodel.rst:314
+msgid ""
+"i = 10\n"
+"def f():\n"
+"    print(i)\n"
+"i = 42\n"
+"f()"
+msgstr ""
 
 #: ../../reference/executionmodel.rst:322
 msgid ""

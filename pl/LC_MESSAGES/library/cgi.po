@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-19 14:50+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Polish (https://app.transifex.com/python-doc/teams/5390/pl/)\n"
@@ -135,6 +135,12 @@ msgstr ""
 "rodzaju dane nastąpią potem. Kod języka pytonowskiego aby wytworzyć "
 "minimalny rozdział nagłówkowy wygląda następująco::"
 
+#: ../../library/cgi.rst:68
+msgid ""
+"print(\"Content-Type: text/html\")    # HTML is following\n"
+"print()                             # blank line, end of headers"
+msgstr ""
+
 #: ../../library/cgi.rst:71
 msgid ""
 "The second section is usually HTML, which allows the client software to "
@@ -144,6 +150,13 @@ msgstr ""
 "Drugi rozdziałem jest zwykle HTML, który pozwala oprogramowaniu klienta "
 "wyświetlić ładnie sformatowany tekst z nagłówkiem, obrazkami w-jednej-linii "
 "itp. Tu jest kod języka pytonowskiego który drukuje prosty kawałek HTML-a::"
+
+#: ../../library/cgi.rst:75
+msgid ""
+"print(\"<TITLE>CGI script output</TITLE>\")\n"
+"print(\"<H1>This is my first CGI script</H1>\")\n"
+"print(\"Hello, world!\")"
+msgstr ""
 
 #: ../../library/cgi.rst:83
 msgid "Using the cgi module"
@@ -157,12 +170,24 @@ msgstr "Zacznij przez napisanie ``import cgi``."
 msgid "When you write a new script, consider adding these lines::"
 msgstr "Gdy piszesz nowy skrypt, rozważ dodanie tych linii::"
 
+#: ../../library/cgi.rst:89 ../../library/cgi.rst:505
+msgid ""
+"import cgitb\n"
+"cgitb.enable()"
+msgstr ""
+
 #: ../../library/cgi.rst:92
 msgid ""
 "This activates a special exception handler that will display detailed "
 "reports in the web browser if any errors occur.  If you'd rather not show "
 "the guts of your program to users of your script, you can have the reports "
 "saved to files instead, with code like this::"
+msgstr ""
+
+#: ../../library/cgi.rst:97
+msgid ""
+"import cgitb\n"
+"cgitb.enable(display=0, logdir=\"/path/to/logdir\")"
 msgstr ""
 
 #: ../../library/cgi.rst:100
@@ -211,6 +236,18 @@ msgstr ""
 "`Content-Type` i puste linie zostały już wydrukowane) sprawdza czy pola "
 "``nazwa`` i ``addr`` zostały oba ustawione na nie-pusty ciąg znaków::"
 
+#: ../../library/cgi.rst:127
+msgid ""
+"form = cgi.FieldStorage()\n"
+"if \"name\" not in form or \"addr\" not in form:\n"
+"    print(\"<H1>Error</H1>\")\n"
+"    print(\"Please fill in the name and addr fields.\")\n"
+"    return\n"
+"print(\"<p>name:\", form[\"name\"].value)\n"
+"print(\"<p>addr:\", form[\"addr\"].value)\n"
+"...further form processing here..."
+msgstr ""
+
 #: ../../library/cgi.rst:136
 msgid ""
 "Here the fields, accessed through ``form[key]``, are themselves instances "
@@ -234,6 +271,12 @@ msgid ""
 "username fields, separated by commas::"
 msgstr ""
 
+#: ../../library/cgi.rst:153
+msgid ""
+"value = form.getlist(\"username\")\n"
+"usernames = \",\".join(value)"
+msgstr ""
+
 #: ../../library/cgi.rst:156
 msgid ""
 "If a field represents an uploaded file, accessing the value via the :attr:"
@@ -245,6 +288,18 @@ msgid ""
 "automatically closed as part of the garbage collection of the :class:"
 "`FieldStorage` instance (the :func:`~io.RawIOBase.read` and :func:`~io."
 "IOBase.readline` methods will return bytes)::"
+msgstr ""
+
+#: ../../library/cgi.rst:167
+msgid ""
+"fileitem = form[\"userfile\"]\n"
+"if fileitem.file:\n"
+"    # It's an uploaded file; count lines\n"
+"    linecount = 0\n"
+"    while True:\n"
+"        line = fileitem.file.readline()\n"
+"        if not line: break\n"
+"        linecount = linecount + 1"
 msgstr ""
 
 #: ../../library/cgi.rst:176
@@ -354,6 +409,15 @@ msgstr ""
 "razem gdy spodziewałeś się że użytkownik opublikuje więcej niż jedną wartość "
 "pod jedną nazwą::"
 
+#: ../../library/cgi.rst:228
+msgid ""
+"item = form.getvalue(\"item\")\n"
+"if isinstance(item, list):\n"
+"    # The user is requesting more than one item.\n"
+"else:\n"
+"    # The user is requesting only one item."
+msgstr ""
+
 #: ../../library/cgi.rst:234
 msgid ""
 "This situation is common for example when a form contains a group of "
@@ -361,6 +425,12 @@ msgid ""
 msgstr ""
 "Ta sytuacja jest obecna dla przykładu gdy formularz zawiera grupę wielu pól "
 "zaznaczania o tej samej nazwie::"
+
+#: ../../library/cgi.rst:237
+msgid ""
+"<input type=\"checkbox\" name=\"item\" value=\"1\" />\n"
+"<input type=\"checkbox\" name=\"item\" value=\"2\" />"
+msgstr ""
 
 #: ../../library/cgi.rst:240
 msgid ""
@@ -372,6 +442,10 @@ msgstr ""
 "formularza o określonej nazwie w formularzu i wtedy oczekujesz i "
 "potrzebujesz tylko jednej wartości powiązanej z tą nazwą. Więc piszesz "
 "skrypt zawierający dla przykładu ten kod::"
+
+#: ../../library/cgi.rst:244
+msgid "user = form.getvalue(\"user\").upper()"
+msgstr ""
 
 #: ../../library/cgi.rst:246
 msgid ""
@@ -443,6 +517,15 @@ msgstr ""
 #: ../../library/cgi.rst:279
 msgid "Using these methods you can write nice compact code::"
 msgstr "Używając tych sposobów postępowania możesz napisać ładny zgrabny kod::"
+
+#: ../../library/cgi.rst:281
+msgid ""
+"import cgi\n"
+"form = cgi.FieldStorage()\n"
+"user = form.getfirst(\"user\", \"\").upper()    # This way it's safe.\n"
+"for item in form.getlist(\"item\"):\n"
+"    do_something(item)"
+msgstr ""
 
 #: ../../library/cgi.rst:291
 msgid "Functions"
@@ -530,6 +613,14 @@ msgstr ""
 msgid "For example, with :class:`email.message.EmailMessage`::"
 msgstr ""
 
+#: ../../library/cgi.rst:352
+msgid ""
+"from email.message import EmailMessage\n"
+"msg = EmailMessage()\n"
+"msg['content-type'] = 'application/json; charset=\"utf8\"'\n"
+"main, params = msg.get_content_type(), msg['content-type'].params"
+msgstr ""
+
 #: ../../library/cgi.rst:360
 msgid ""
 "Robust test CGI script, usable as main program. Writes minimal HTTP headers "
@@ -607,6 +698,10 @@ msgstr ""
 "kolumnie 1 po której następuje ścieżka dostępu do pliku programu "
 "interpretującego polecenia języka pytonowskiego, dla przykładu::"
 
+#: ../../library/cgi.rst:416
+msgid "#!/usr/local/bin/python"
+msgstr ""
+
 #: ../../library/cgi.rst:418
 msgid ""
 "Make sure the Python interpreter exists and is executable by \"others\"."
@@ -651,6 +746,13 @@ msgstr ""
 "Jeśli potrzebujesz załadować moduły z katalogu który nie jest domyślną "
 "ścieżką przeszukiwania modułów języka pytonowskiego, możesz zmienić ścieżkę "
 "w twoim skrypcie, przez importowaniem innych modułów. Dla przykładu::"
+
+#: ../../library/cgi.rst:435
+msgid ""
+"import sys\n"
+"sys.path.insert(0, \"/usr/home/joe/lib/python\")\n"
+"sys.path.insert(0, \"/usr/local/lib/python\")"
+msgstr ""
 
 #: ../../library/cgi.rst:439
 msgid "(This way, the directory inserted last will be searched first!)"
@@ -712,6 +814,10 @@ msgid ""
 "your browser of the form:"
 msgstr ""
 
+#: ../../library/cgi.rst:473
+msgid "http://yourhostname/cgi-bin/cgi.py?name=Joe+Blow&addr=At+Home"
+msgstr ""
+
 #: ../../library/cgi.rst:477
 msgid ""
 "If this gives an error of type 404, the server cannot find the script -- "
@@ -740,6 +846,10 @@ msgstr ""
 "Następnym krokiem mogłoby być wezwanie zadania :func:`test` modułu :mod:"
 "`cgi` z twojego skryptu: zamiana jej głównego kodu na pojedyncze "
 "stwierdzenie::"
+
+#: ../../library/cgi.rst:489
+msgid "cgi.test()"
+msgstr ""
 
 #: ../../library/cgi.rst:491
 msgid ""
@@ -792,6 +902,15 @@ msgstr ""
 "Jeśli podejrzewasz, że może być problem w importowaniu modułu :mod:`cgitb`, "
 "możesz użyć nawet jeszcze bardziej wydajnego podejścia (które używa tylko "
 "modułów wbudowanych)::"
+
+#: ../../library/cgi.rst:515
+msgid ""
+"import sys\n"
+"sys.stderr = sys.stdout\n"
+"print(\"Content-Type: text/plain\")\n"
+"print()\n"
+"...your code here..."
+msgstr ""
 
 #: ../../library/cgi.rst:521
 msgid ""

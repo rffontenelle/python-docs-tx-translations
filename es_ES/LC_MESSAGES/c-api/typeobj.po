@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-26 14:49+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
 "Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -647,9 +647,28 @@ msgstr "**\"T \"**: encendido :c:data:`PyType_Type`"
 msgid "**\"D\"**:  default (if slot is set to ``NULL``)"
 msgstr "**\"D \"**: por defecto (si la ranura está configurada en ``NULL``)"
 
+#: ../../c-api/typeobj.rst:172
+msgid ""
+"X - PyType_Ready sets this value if it is NULL\n"
+"~ - PyType_Ready always sets this value (it should be NULL)\n"
+"? - PyType_Ready may set this value depending on other slots\n"
+"\n"
+"Also see the inheritance column (\"I\")."
+msgstr ""
+
 #: ../../c-api/typeobj.rst:180
 msgid "**\"I\"**:  inheritance"
 msgstr "**\"I \"**: herencia"
+
+#: ../../c-api/typeobj.rst:182
+msgid ""
+"X - type slot is inherited via *PyType_Ready* if defined with a *NULL* "
+"value\n"
+"% - the slots of the sub-struct are inherited individually\n"
+"G - inherited, but only in combination with other slots; see the slot's "
+"description\n"
+"? - it's complicated; see the slot's description"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:189
 msgid ""
@@ -1192,6 +1211,96 @@ msgstr ""
 "en :file:`Include/object.h`. Para mayor comodidad de referencia, esto repite "
 "la definición encontrada allí."
 
+#: ../../c-api/typeobj.rst:481
+msgid ""
+"typedef struct _typeobject {\n"
+"    PyObject_VAR_HEAD\n"
+"    const char *tp_name; /* For printing, in format \"<module>.<name>\" */\n"
+"    Py_ssize_t tp_basicsize, tp_itemsize; /* For allocation */\n"
+"\n"
+"    /* Methods to implement standard operations */\n"
+"\n"
+"    destructor tp_dealloc;\n"
+"    Py_ssize_t tp_vectorcall_offset;\n"
+"    getattrfunc tp_getattr;\n"
+"    setattrfunc tp_setattr;\n"
+"    PyAsyncMethods *tp_as_async; /* formerly known as tp_compare (Python 2)\n"
+"                                    or tp_reserved (Python 3) */\n"
+"    reprfunc tp_repr;\n"
+"\n"
+"    /* Method suites for standard classes */\n"
+"\n"
+"    PyNumberMethods *tp_as_number;\n"
+"    PySequenceMethods *tp_as_sequence;\n"
+"    PyMappingMethods *tp_as_mapping;\n"
+"\n"
+"    /* More standard operations (here for binary compatibility) */\n"
+"\n"
+"    hashfunc tp_hash;\n"
+"    ternaryfunc tp_call;\n"
+"    reprfunc tp_str;\n"
+"    getattrofunc tp_getattro;\n"
+"    setattrofunc tp_setattro;\n"
+"\n"
+"    /* Functions to access object as input/output buffer */\n"
+"    PyBufferProcs *tp_as_buffer;\n"
+"\n"
+"    /* Flags to define presence of optional/expanded features */\n"
+"    unsigned long tp_flags;\n"
+"\n"
+"    const char *tp_doc; /* Documentation string */\n"
+"\n"
+"    /* Assigned meaning in release 2.0 */\n"
+"    /* call function for all accessible objects */\n"
+"    traverseproc tp_traverse;\n"
+"\n"
+"    /* delete references to contained objects */\n"
+"    inquiry tp_clear;\n"
+"\n"
+"    /* Assigned meaning in release 2.1 */\n"
+"    /* rich comparisons */\n"
+"    richcmpfunc tp_richcompare;\n"
+"\n"
+"    /* weak reference enabler */\n"
+"    Py_ssize_t tp_weaklistoffset;\n"
+"\n"
+"    /* Iterators */\n"
+"    getiterfunc tp_iter;\n"
+"    iternextfunc tp_iternext;\n"
+"\n"
+"    /* Attribute descriptor and subclassing stuff */\n"
+"    struct PyMethodDef *tp_methods;\n"
+"    struct PyMemberDef *tp_members;\n"
+"    struct PyGetSetDef *tp_getset;\n"
+"    // Strong reference on a heap type, borrowed reference on a static type\n"
+"    struct _typeobject *tp_base;\n"
+"    PyObject *tp_dict;\n"
+"    descrgetfunc tp_descr_get;\n"
+"    descrsetfunc tp_descr_set;\n"
+"    Py_ssize_t tp_dictoffset;\n"
+"    initproc tp_init;\n"
+"    allocfunc tp_alloc;\n"
+"    newfunc tp_new;\n"
+"    freefunc tp_free; /* Low-level free-memory routine */\n"
+"    inquiry tp_is_gc; /* For PyObject_IS_GC */\n"
+"    PyObject *tp_bases;\n"
+"    PyObject *tp_mro; /* method resolution order */\n"
+"    PyObject *tp_cache;\n"
+"    PyObject *tp_subclasses;\n"
+"    PyObject *tp_weaklist;\n"
+"    destructor tp_del;\n"
+"\n"
+"    /* Type attribute cache version tag. Added in version 2.6 */\n"
+"    unsigned int tp_version_tag;\n"
+"\n"
+"    destructor tp_finalize;\n"
+"    vectorcallfunc tp_vectorcall;\n"
+"\n"
+"    /* bitset of which type-watchers care about this type */\n"
+"    unsigned char tp_watched;\n"
+"} PyTypeObject;\n"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:485
 msgid "PyObject Slots"
 msgstr "Ranuras PyObject"
@@ -1290,6 +1399,10 @@ msgstr ""
 "inicializar este campo explícitamente al comienzo de la función de "
 "inicialización del módulo, antes de hacer cualquier otra cosa.  Esto se hace "
 "típicamente así::"
+
+#: ../../c-api/typeobj.rst:519
+msgid "Foo_Type.ob_type = &PyType_Type;"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:521
 msgid ""
@@ -1571,6 +1684,10 @@ msgstr ""
 "desasignadas (como es el caso de los singletons ``None`` y ``Ellipsis``).  "
 "La firma de la función es::"
 
+#: ../../c-api/typeobj.rst:663
+msgid "void tp_dealloc(PyObject *self);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:665
 msgid ""
 "The destructor function is called by the :c:func:`Py_DECREF` and :c:func:"
@@ -1614,6 +1731,15 @@ msgstr ""
 "`Py_TPFLAGS_HAVE_GC` activado), el destructor debe llamar a :c:func:"
 "`PyObject_GC_UnTrack` antes de borrar cualquier campo miembro."
 
+#: ../../c-api/typeobj.rst:684
+msgid ""
+"static void foo_dealloc(foo_object *self) {\n"
+"    PyObject_GC_UnTrack(self);\n"
+"    Py_CLEAR(self->ref);\n"
+"    Py_TYPE(self)->tp_free((PyObject *)self);\n"
+"}"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:692
 msgid ""
 "Finally, if the type is heap allocated (:c:macro:`Py_TPFLAGS_HEAPTYPE`), the "
@@ -1626,6 +1752,16 @@ msgstr ""
 "su objeto de tipo (vía :c:func:`Py_DECREF`) después de llamar al liberador "
 "de tipos. Para evitar punteros colgantes, la forma recomendada de "
 "conseguirlo es:"
+
+#: ../../c-api/typeobj.rst:698
+msgid ""
+"static void foo_dealloc(foo_object *self) {\n"
+"    PyTypeObject *tp = Py_TYPE(self);\n"
+"    // free references and buffers here\n"
+"    tp->tp_free(self);\n"
+"    Py_DECREF(tp);\n"
+"}"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:715
 msgid ""
@@ -1821,6 +1957,10 @@ msgstr ""
 msgid "The signature is the same as for :c:func:`PyObject_Repr`::"
 msgstr "La firma es la misma que para :c:func:`PyObject_Repr`::"
 
+#: ../../c-api/typeobj.rst:816
+msgid "PyObject *tp_repr(PyObject *self);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:818
 msgid ""
 "The function must return a string or a Unicode object.  Ideally, this "
@@ -1923,6 +2063,10 @@ msgstr ""
 msgid "The signature is the same as for :c:func:`PyObject_Hash`::"
 msgstr "La firma es la misma que para :c:func:`PyObject_Hash`::"
 
+#: ../../c-api/typeobj.rst:881
+msgid "Py_hash_t tp_hash(PyObject *);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:883
 msgid ""
 "The value ``-1`` should not be returned as a normal return value; when an "
@@ -1996,6 +2140,10 @@ msgstr ""
 "ser ``NULL`` si el objeto no es invocable.  La firma es la misma que para :c:"
 "func:`PyObject_Call`::"
 
+#: ../../c-api/typeobj.rst:915
+msgid "PyObject *tp_call(PyObject *self, PyObject *args, PyObject *kwargs);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:924
 msgid ""
 "An optional pointer to a function that implements the built-in operation :"
@@ -2013,6 +2161,10 @@ msgstr ""
 #: ../../c-api/typeobj.rst:929
 msgid "The signature is the same as for :c:func:`PyObject_Str`::"
 msgstr "La firma es la misma que para :c:func:`PyObject_Str`::"
+
+#: ../../c-api/typeobj.rst:931
+msgid "PyObject *tp_str(PyObject *self);"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:933
 msgid ""
@@ -2040,6 +2192,10 @@ msgstr "Un puntero opcional a la función get-attribute."
 #: ../../c-api/typeobj.rst:951
 msgid "The signature is the same as for :c:func:`PyObject_GetAttr`::"
 msgstr "La firma es la misma que para :c:func:`PyObject_GetAttr`::"
+
+#: ../../c-api/typeobj.rst:953
+msgid "PyObject *tp_getattro(PyObject *self, PyObject *attr);"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:955
 msgid ""
@@ -2072,6 +2228,10 @@ msgstr ":c:data:`PyBaseObject_Type` utiliza :c:func:`PyObject_GenericGetAttr`."
 #: ../../c-api/typeobj.rst:975
 msgid "The signature is the same as for :c:func:`PyObject_SetAttr`::"
 msgstr "La firma es la misma que para :c:func:`PyObject_SetAttr`::"
+
+#: ../../c-api/typeobj.rst:977
+msgid "int tp_setattro(PyObject *self, PyObject *attr, PyObject *value);"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:979
 msgid ""
@@ -2645,6 +2805,10 @@ msgstr ""
 "Sólo se utiliza si el bit :c:macro:`Py_TPFLAGS_HAVE_GC` está activado.  La "
 "firma es::"
 
+#: ../../c-api/typeobj.rst:1366
+msgid "int tp_traverse(PyObject *self, visitproc visit, void *arg);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:1368 ../../c-api/typeobj.rst:1489
 msgid ""
 "More information about Python's garbage collection scheme can be found in "
@@ -2668,6 +2832,18 @@ msgstr ""
 "`Py_VISIT` en cada uno de los miembros de la instancia que son objetos "
 "Python que la instancia posee. Por ejemplo, esta es la función :c:func:`!"
 "local_traverse` del módulo de extensión :mod:`!_thread`::"
+
+#: ../../c-api/typeobj.rst:1377
+msgid ""
+"static int\n"
+"local_traverse(localobject *self, visitproc visit, void *arg)\n"
+"{\n"
+"    Py_VISIT(self->args);\n"
+"    Py_VISIT(self->kw);\n"
+"    Py_VISIT(self->dict);\n"
+"    return 0;\n"
+"}"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:1386
 msgid ""
@@ -2772,6 +2948,10 @@ msgstr ""
 "Sólo se utiliza si el bit :c:macro:`Py_TPFLAGS_HAVE_GC` está activado.  La "
 "firma es::"
 
+#: ../../c-api/typeobj.rst:1439
+msgid "int tp_clear(PyObject *);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:1441
 msgid ""
 "The :c:member:`~PyTypeObject.tp_clear` member function is used to break "
@@ -2810,6 +2990,19 @@ msgstr ""
 "referencias de la instancia a aquellos de sus miembros que puedan ser "
 "objetos de Python, y establecer los punteros a esos miembros a ``NULL``, "
 "como en el siguiente ejemplo::"
+
+#: ../../c-api/typeobj.rst:1455
+msgid ""
+"static int\n"
+"local_clear(localobject *self)\n"
+"{\n"
+"    Py_CLEAR(self->key);\n"
+"    Py_CLEAR(self->args);\n"
+"    Py_CLEAR(self->kw);\n"
+"    Py_CLEAR(self->dict);\n"
+"    return 0;\n"
+"}"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:1465
 msgid ""
@@ -2884,6 +3077,10 @@ msgid ""
 "An optional pointer to the rich comparison function, whose signature is::"
 msgstr ""
 "Un puntero opcional a la función de comparación enriquecida, cuya firma es::"
+
+#: ../../c-api/typeobj.rst:1506
+msgid "PyObject *tp_richcompare(PyObject *self, PyObject *other, int op);"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:1508
 msgid ""
@@ -3085,6 +3282,10 @@ msgstr ""
 msgid "This function has the same signature as :c:func:`PyObject_GetIter`::"
 msgstr "Esta función tiene la misma firma que :c:func:`PyObject_GetIter`::."
 
+#: ../../c-api/typeobj.rst:1612
+msgid "PyObject *tp_iter(PyObject *self);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:1621
 msgid ""
 "An optional pointer to a function that returns the next item in an :term:"
@@ -3092,6 +3293,10 @@ msgid ""
 msgstr ""
 "Un puntero opcional a una función que devuelve el siguiente elemento de un :"
 "term:`iterator`. La firma es::"
+
+#: ../../c-api/typeobj.rst:1624
+msgid "PyObject *tp_iternext(PyObject *self);"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:1626
 msgid ""
@@ -3331,6 +3536,10 @@ msgstr "Un puntero opcional a una función \"descriptor get\"."
 msgid "The function signature is::"
 msgstr "La firma de la función es::"
 
+#: ../../c-api/typeobj.rst:1763
+msgid "PyObject * tp_descr_get(PyObject *self, PyObject *obj, PyObject *type);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:1774
 msgid ""
 "An optional pointer to a function for setting and deleting a descriptor's "
@@ -3338,6 +3547,10 @@ msgid ""
 msgstr ""
 "Un puntero opcional a una función para establecer y eliminar el valor de un "
 "descriptor."
+
+#: ../../c-api/typeobj.rst:1779
+msgid "int tp_descr_set(PyObject *self, PyObject *obj, PyObject *value);"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:1781
 msgid "The *value* argument is set to ``NULL`` to delete the value."
@@ -3452,6 +3665,10 @@ msgstr ""
 "meth:`!__init__`, y es posible reinicializar una instancia llamando de nuevo "
 "a su método :meth:`!__init__`."
 
+#: ../../c-api/typeobj.rst:1843
+msgid "int tp_init(PyObject *self, PyObject *args, PyObject *kwds);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:1845
 msgid ""
 "The self argument is the instance to be initialized; the *args* and *kwds* "
@@ -3499,6 +3716,10 @@ msgstr ""
 msgid "An optional pointer to an instance allocation function."
 msgstr "Un puntero opcional a una función de asignación de instancias."
 
+#: ../../c-api/typeobj.rst:1873
+msgid "PyObject *tp_alloc(PyTypeObject *self, Py_ssize_t nitems);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:1877
 msgid ""
 "This field is inherited by static subtypes, but not by dynamic subtypes "
@@ -3529,6 +3750,11 @@ msgstr ""
 #: ../../c-api/typeobj.rst:1893
 msgid "An optional pointer to an instance creation function."
 msgstr "Un puntero opcional a una función de creación de instancias."
+
+#: ../../c-api/typeobj.rst:1897
+msgid ""
+"PyObject *tp_new(PyTypeObject *subtype, PyObject *args, PyObject *kwds);"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:1899
 msgid ""
@@ -3601,6 +3827,10 @@ msgstr ""
 "Un puntero opcional a una función de desasignación de instancias. Su firma "
 "es:"
 
+#: ../../c-api/typeobj.rst:1934
+msgid "void tp_free(void *self);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:1936
 msgid ""
 "An initializer that is compatible with this signature is :c:func:"
@@ -3655,6 +3885,10 @@ msgstr ""
 "no son coleccionables.  Estos tipos deberían definir esta función; debería "
 "devolver ``1`` para una instancia coleccionable, y ``0`` para una instancia "
 "no coleccionable. La firma es::"
+
+#: ../../c-api/typeobj.rst:1964
+msgid "int tp_is_gc(PyObject *self);"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:1966
 msgid ""
@@ -3792,6 +4026,10 @@ msgid ""
 msgstr ""
 "Un puntero opcional a una función de finalización de instancia. Su firma es:"
 
+#: ../../c-api/typeobj.rst:2078
+msgid "void tp_finalize(PyObject *self);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:2080
 msgid ""
 "If :c:member:`~PyTypeObject.tp_finalize` is set, the interpreter calls it "
@@ -3817,6 +4055,23 @@ msgstr ""
 ":c:member:`~PyTypeObject.tp_finalize` no debe modificar el estado actual de "
 "la excepción; por lo tanto, una forma recomendada de escribir un finalizador "
 "no trivial es:"
+
+#: ../../c-api/typeobj.rst:2090
+msgid ""
+"static void\n"
+"local_finalize(PyObject *self)\n"
+"{\n"
+"    PyObject *error_type, *error_value, *error_traceback;\n"
+"\n"
+"    /* Save the current exception, if any. */\n"
+"    PyErr_Fetch(&error_type, &error_value, &error_traceback);\n"
+"\n"
+"    /* ... */\n"
+"\n"
+"    /* Restore the saved exception. */\n"
+"    PyErr_Restore(error_type, error_value, error_traceback);\n"
+"}"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:2104
 msgid ""
@@ -3985,6 +4240,52 @@ msgstr ""
 #: ../../c-api/typeobj.rst:2207 ../../c-api/typeobj.rst:2531
 msgid "Here is the structure definition::"
 msgstr "Aquí está la definición de la estructura::"
+
+#: ../../c-api/typeobj.rst:2209
+msgid ""
+"typedef struct {\n"
+"     binaryfunc nb_add;\n"
+"     binaryfunc nb_subtract;\n"
+"     binaryfunc nb_multiply;\n"
+"     binaryfunc nb_remainder;\n"
+"     binaryfunc nb_divmod;\n"
+"     ternaryfunc nb_power;\n"
+"     unaryfunc nb_negative;\n"
+"     unaryfunc nb_positive;\n"
+"     unaryfunc nb_absolute;\n"
+"     inquiry nb_bool;\n"
+"     unaryfunc nb_invert;\n"
+"     binaryfunc nb_lshift;\n"
+"     binaryfunc nb_rshift;\n"
+"     binaryfunc nb_and;\n"
+"     binaryfunc nb_xor;\n"
+"     binaryfunc nb_or;\n"
+"     unaryfunc nb_int;\n"
+"     void *nb_reserved;\n"
+"     unaryfunc nb_float;\n"
+"\n"
+"     binaryfunc nb_inplace_add;\n"
+"     binaryfunc nb_inplace_subtract;\n"
+"     binaryfunc nb_inplace_multiply;\n"
+"     binaryfunc nb_inplace_remainder;\n"
+"     ternaryfunc nb_inplace_power;\n"
+"     binaryfunc nb_inplace_lshift;\n"
+"     binaryfunc nb_inplace_rshift;\n"
+"     binaryfunc nb_inplace_and;\n"
+"     binaryfunc nb_inplace_xor;\n"
+"     binaryfunc nb_inplace_or;\n"
+"\n"
+"     binaryfunc nb_floor_divide;\n"
+"     binaryfunc nb_true_divide;\n"
+"     binaryfunc nb_inplace_floor_divide;\n"
+"     binaryfunc nb_inplace_true_divide;\n"
+"\n"
+"     unaryfunc nb_index;\n"
+"\n"
+"     binaryfunc nb_matrix_multiply;\n"
+"     binaryfunc nb_inplace_matrix_multiply;\n"
+"} PyNumberMethods;"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:2254
 msgid ""
@@ -4213,6 +4514,10 @@ msgstr ""
 msgid "The signature of this function is::"
 msgstr "La firma de esta función es::"
 
+#: ../../c-api/typeobj.rst:2441
+msgid "int (PyObject *exporter, Py_buffer *view, int flags);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:2443
 msgid ""
 "Handle a request to *exporter* to fill in *view* as specified by *flags*. "
@@ -4317,6 +4622,10 @@ msgstr ""
 ":c:func:`PyObject_GetBuffer` es la interfaz para el consumidor que envuelve "
 "esta función."
 
+#: ../../c-api/typeobj.rst:2490
+msgid "void (PyObject *exporter, Py_buffer *view);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:2492
 msgid ""
 "Handle a request to release the resources of the buffer. If no resources "
@@ -4379,6 +4688,20 @@ msgstr ""
 "Esta estructura contiene punteros a las funciones necesarias para "
 "implementar objetos :term:`awaitable` y :term:`asynchronous iterator`."
 
+#: ../../c-api/typeobj.rst:2533
+msgid ""
+"typedef struct {\n"
+"    unaryfunc am_await;\n"
+"    unaryfunc am_aiter;\n"
+"    unaryfunc am_anext;\n"
+"    sendfunc am_send;\n"
+"} PyAsyncMethods;"
+msgstr ""
+
+#: ../../c-api/typeobj.rst:2544
+msgid "PyObject *am_await(PyObject *self);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:2546
 msgid ""
 "The returned object must be an :term:`iterator`, i.e. :c:func:`PyIter_Check` "
@@ -4393,6 +4716,10 @@ msgid ""
 msgstr ""
 "Esta ranura puede establecerse en ``NULL`` si un objeto no es un :term:"
 "`awaitable`."
+
+#: ../../c-api/typeobj.rst:2555
+msgid "PyObject *am_aiter(PyObject *self);"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:2557
 msgid ""
@@ -4410,6 +4737,10 @@ msgstr ""
 "Esta ranura puede establecerse en ``NULL`` si un objeto no implementa el "
 "protocolo de iteración asíncrona."
 
+#: ../../c-api/typeobj.rst:2567
+msgid "PyObject *am_anext(PyObject *self);"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:2569
 msgid ""
 "Must return an :term:`awaitable` object. See :meth:`~object.__anext__` for "
@@ -4417,6 +4748,10 @@ msgid ""
 msgstr ""
 "Debe devolver un objeto :term:`awaitable`. Ver :meth:`~object.__anext__` "
 "para más detalles. Esta ranura puede establecerse en ``NULL``."
+
+#: ../../c-api/typeobj.rst:2577
+msgid "PySendResult am_send(PyObject *self, PyObject *arg, PyObject **result);"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:2579
 msgid ""
@@ -4548,6 +4883,24 @@ msgstr ""
 msgid "A basic :ref:`static type <static-types>`::"
 msgstr "Un básicoo :ref:`static type<static-types>`::"
 
+#: ../../c-api/typeobj.rst:2706
+msgid ""
+"typedef struct {\n"
+"    PyObject_HEAD\n"
+"    const char *data;\n"
+"} MyObject;\n"
+"\n"
+"static PyTypeObject MyObject_Type = {\n"
+"    PyVarObject_HEAD_INIT(NULL, 0)\n"
+"    .tp_name = \"mymod.MyObject\",\n"
+"    .tp_basicsize = sizeof(MyObject),\n"
+"    .tp_doc = PyDoc_STR(\"My objects\"),\n"
+"    .tp_new = myobj_new,\n"
+"    .tp_dealloc = (destructor)myobj_dealloc,\n"
+"    .tp_repr = (reprfunc)myobj_repr,\n"
+"};"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:2721
 msgid ""
 "You may also find older code (especially in the CPython code base) with a "
@@ -4556,9 +4909,79 @@ msgstr ""
 "También puede encontrar código antiguo (especialmente en la base de código "
 "CPython) con un inicializador más verboso::"
 
+#: ../../c-api/typeobj.rst:2724
+msgid ""
+"static PyTypeObject MyObject_Type = {\n"
+"    PyVarObject_HEAD_INIT(NULL, 0)\n"
+"    \"mymod.MyObject\",               /* tp_name */\n"
+"    sizeof(MyObject),               /* tp_basicsize */\n"
+"    0,                              /* tp_itemsize */\n"
+"    (destructor)myobj_dealloc,      /* tp_dealloc */\n"
+"    0,                              /* tp_vectorcall_offset */\n"
+"    0,                              /* tp_getattr */\n"
+"    0,                              /* tp_setattr */\n"
+"    0,                              /* tp_as_async */\n"
+"    (reprfunc)myobj_repr,           /* tp_repr */\n"
+"    0,                              /* tp_as_number */\n"
+"    0,                              /* tp_as_sequence */\n"
+"    0,                              /* tp_as_mapping */\n"
+"    0,                              /* tp_hash */\n"
+"    0,                              /* tp_call */\n"
+"    0,                              /* tp_str */\n"
+"    0,                              /* tp_getattro */\n"
+"    0,                              /* tp_setattro */\n"
+"    0,                              /* tp_as_buffer */\n"
+"    0,                              /* tp_flags */\n"
+"    PyDoc_STR(\"My objects\"),        /* tp_doc */\n"
+"    0,                              /* tp_traverse */\n"
+"    0,                              /* tp_clear */\n"
+"    0,                              /* tp_richcompare */\n"
+"    0,                              /* tp_weaklistoffset */\n"
+"    0,                              /* tp_iter */\n"
+"    0,                              /* tp_iternext */\n"
+"    0,                              /* tp_methods */\n"
+"    0,                              /* tp_members */\n"
+"    0,                              /* tp_getset */\n"
+"    0,                              /* tp_base */\n"
+"    0,                              /* tp_dict */\n"
+"    0,                              /* tp_descr_get */\n"
+"    0,                              /* tp_descr_set */\n"
+"    0,                              /* tp_dictoffset */\n"
+"    0,                              /* tp_init */\n"
+"    0,                              /* tp_alloc */\n"
+"    myobj_new,                      /* tp_new */\n"
+"};"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:2765
 msgid "A type that supports weakrefs, instance dicts, and hashing::"
 msgstr "Un tipo que admite weakrefs, instance dicts y hashing::"
+
+#: ../../c-api/typeobj.rst:2767
+msgid ""
+"typedef struct {\n"
+"    PyObject_HEAD\n"
+"    const char *data;\n"
+"} MyObject;\n"
+"\n"
+"static PyTypeObject MyObject_Type = {\n"
+"    PyVarObject_HEAD_INIT(NULL, 0)\n"
+"    .tp_name = \"mymod.MyObject\",\n"
+"    .tp_basicsize = sizeof(MyObject),\n"
+"    .tp_doc = PyDoc_STR(\"My objects\"),\n"
+"    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE |\n"
+"         Py_TPFLAGS_HAVE_GC | Py_TPFLAGS_MANAGED_DICT |\n"
+"         Py_TPFLAGS_MANAGED_WEAKREF,\n"
+"    .tp_new = myobj_new,\n"
+"    .tp_traverse = (traverseproc)myobj_traverse,\n"
+"    .tp_clear = (inquiry)myobj_clear,\n"
+"    .tp_alloc = PyType_GenericNew,\n"
+"    .tp_dealloc = (destructor)myobj_dealloc,\n"
+"    .tp_repr = (reprfunc)myobj_repr,\n"
+"    .tp_hash = (hashfunc)myobj_hash,\n"
+"    .tp_richcompare = PyBaseObject_Type.tp_richcompare,\n"
+"};"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:2790
 msgid ""
@@ -4570,12 +4993,42 @@ msgstr ""
 "instancias (por ejemplo, utiliza una función de fábrica separada) utilizando "
 "la bandera :c:macro:`Py_TPFLAGS_DISALLOW_INSTANTIATION`::"
 
+#: ../../c-api/typeobj.rst:2794
+msgid ""
+"typedef struct {\n"
+"    PyUnicodeObject raw;\n"
+"    char *extra;\n"
+"} MyStr;\n"
+"\n"
+"static PyTypeObject MyStr_Type = {\n"
+"    PyVarObject_HEAD_INIT(NULL, 0)\n"
+"    .tp_name = \"mymod.MyStr\",\n"
+"    .tp_basicsize = sizeof(MyStr),\n"
+"    .tp_base = NULL,  // set to &PyUnicode_Type in module init\n"
+"    .tp_doc = PyDoc_STR(\"my custom str\"),\n"
+"    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_DISALLOW_INSTANTIATION,\n"
+"    .tp_repr = (reprfunc)myobj_repr,\n"
+"};"
+msgstr ""
+
 #: ../../c-api/typeobj.rst:2809
 msgid ""
 "The simplest :ref:`static type <static-types>` with fixed-length instances::"
 msgstr ""
 "El :ref:`static type <static-types>` más sencillo con instancias de longitud "
 "fija::"
+
+#: ../../c-api/typeobj.rst:2811
+msgid ""
+"typedef struct {\n"
+"    PyObject_HEAD\n"
+"} MyObject;\n"
+"\n"
+"static PyTypeObject MyObject_Type = {\n"
+"    PyVarObject_HEAD_INIT(NULL, 0)\n"
+"    .tp_name = \"mymod.MyObject\",\n"
+"};"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:2820
 msgid ""
@@ -4584,6 +5037,21 @@ msgid ""
 msgstr ""
 "El  :ref:`static type <static-types>` más sencillo con instancias de "
 "longitud variable::"
+
+#: ../../c-api/typeobj.rst:2822
+msgid ""
+"typedef struct {\n"
+"    PyObject_VAR_HEAD\n"
+"    const char *data[1];\n"
+"} MyObject;\n"
+"\n"
+"static PyTypeObject MyObject_Type = {\n"
+"    PyVarObject_HEAD_INIT(NULL, 0)\n"
+"    .tp_name = \"mymod.MyObject\",\n"
+"    .tp_basicsize = sizeof(MyObject) - sizeof(char *),\n"
+"    .tp_itemsize = sizeof(char *),\n"
+"};"
+msgstr ""
 
 #: ../../c-api/typeobj.rst:809 ../../c-api/typeobj.rst:874
 msgid "built-in function"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-26 14:49+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:34+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -616,6 +616,15 @@ msgstr ""
 "使这个函数变成一个生成器函数，而在一个 :keyword:`async def` 函数的内部使用它"
 "则会让这个协程函数变成一个异步生成器函数。 例如::"
 
+#: ../../reference/expressions.rst:466
+msgid ""
+"def gen():  # defines a generator function\n"
+"    yield 123\n"
+"\n"
+"async def agen(): # defines an asynchronous generator function\n"
+"    yield 123"
+msgstr ""
+
 #: ../../reference/expressions.rst:472
 msgid ""
 "Due to their side effects on the containing scope, ``yield`` expressions are "
@@ -908,6 +917,34 @@ msgid ""
 "Here is a simple example that demonstrates the behavior of generators and "
 "generator functions::"
 msgstr "这里是一个简单的例子，演示了生成器和生成器函数的行为::"
+
+#: ../../reference/expressions.rst:645
+msgid ""
+">>> def echo(value=None):\n"
+"...     print(\"Execution starts when 'next()' is called for the first time."
+"\")\n"
+"...     try:\n"
+"...         while True:\n"
+"...             try:\n"
+"...                 value = (yield value)\n"
+"...             except Exception as e:\n"
+"...                 value = e\n"
+"...     finally:\n"
+"...         print(\"Don't forget to clean up when 'close()' is called.\")\n"
+"...\n"
+">>> generator = echo(1)\n"
+">>> print(next(generator))\n"
+"Execution starts when 'next()' is called for the first time.\n"
+"1\n"
+">>> print(next(generator))\n"
+"None\n"
+">>> print(generator.send(2))\n"
+"2\n"
+">>> generator.throw(TypeError, \"spam\")\n"
+"TypeError('spam',)\n"
+">>> generator.close()\n"
+"Don't forget to clean up when 'close()' is called."
+msgstr ""
 
 #: ../../reference/expressions.rst:669
 msgid ""
@@ -1460,6 +1497,21 @@ msgstr ""
 "这样做的一个后果是虽然 ``*expression`` 句法可能出现于显式的关键字参数 *之后"
 "*，但它会在关键字参数（以及任何 ``**expression`` 参数 -- 见下文） *之前* 被处"
 "理。 因此::"
+
+#: ../../reference/expressions.rst:1088
+msgid ""
+">>> def f(a, b):\n"
+"...     print(a, b)\n"
+"...\n"
+">>> f(b=1, *(2,))\n"
+"2 1\n"
+">>> f(a=1, *(2,))\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"TypeError: f() got multiple values for keyword argument 'a'\n"
+">>> f(1, *(2,))\n"
+"1 2"
+msgstr ""
 
 #: ../../reference/expressions.rst:1100
 msgid ""
@@ -2497,9 +2549,21 @@ msgstr ""
 msgid "One common use case is when handling matched regular expressions:"
 msgstr "一个常见用例是在处理匹配的正则表达式的时候:"
 
+#: ../../reference/expressions.rst:1813
+msgid ""
+"if matching := pattern.search(data):\n"
+"    do_something(matching)"
+msgstr ""
+
 #: ../../reference/expressions.rst:1818
 msgid "Or, when processing a file stream in chunks:"
 msgstr "或者是在处理分块的文件流的时候:"
+
+#: ../../reference/expressions.rst:1820
+msgid ""
+"while chunk := file.read(9000):\n"
+"    process(chunk)"
+msgstr ""
 
 #: ../../reference/expressions.rst:1825
 msgid ""
@@ -2557,6 +2621,12 @@ msgstr ""
 "lambda 表达式（有时称为 lambda 构型）被用于创建匿名函数。 表达式 ``lambda "
 "parameters: expression`` 会产生一个函数对象 。 该未命名对象的行为类似于用以下"
 "方式定义的函数:"
+
+#: ../../reference/expressions.rst:1881
+msgid ""
+"def <lambda>(parameters):\n"
+"    return expression"
+msgstr ""
 
 #: ../../reference/expressions.rst:1886
 msgid ""
@@ -2626,6 +2696,16 @@ msgid ""
 "In the following lines, expressions will be evaluated in the arithmetic "
 "order of their suffixes::"
 msgstr "在以下几行中，表达式将按其后缀的算术优先顺序被求值。::"
+
+#: ../../reference/expressions.rst:1948
+msgid ""
+"expr1, expr2, expr3, expr4\n"
+"(expr1, expr2, expr3, expr4)\n"
+"{expr1: expr2, expr3: expr4}\n"
+"expr1 + expr2 * (expr3 - expr4)\n"
+"expr1(expr2, expr3, *expr4, **expr5)\n"
+"expr3, expr4 = expr1, expr2"
+msgstr ""
 
 #: ../../reference/expressions.rst:1959
 msgid "Operator precedence"

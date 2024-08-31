@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 # Inada Naoki <songofacandy@gmail.com>, 2024
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 14:55+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
-"Last-Translator: Inada Naoki <songofacandy@gmail.com>, 2024\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
 "ja/)\n"
 "MIME-Version: 1.0\n"
@@ -242,11 +242,22 @@ msgstr "簡単な例"
 msgid "A very simple example is::"
 msgstr "ごく簡単な例は::"
 
+#: ../../howto/logging.rst:111
+msgid ""
+"import logging\n"
+"logging.warning('Watch out!')  # will print a message to the console\n"
+"logging.info('I told you so')  # will not print anything"
+msgstr ""
+
 #: ../../howto/logging.rst:115
 msgid "If you type these lines into a script and run it, you'll see:"
 msgstr ""
 "これらの行をスクリプトにタイプして実行すると、次のようにコンソールに出力され"
 "ます:"
+
+#: ../../howto/logging.rst:117
+msgid "WARNING:root:Watch out!"
+msgstr ""
 
 #: ../../howto/logging.rst:121
 msgid ""
@@ -284,6 +295,18 @@ msgstr ""
 "を見て行きましょう。以下のサンプルを試すときは Python インタプリタを新しく起"
 "動して、上のセッションの続きにならないようにしてください::"
 
+#: ../../howto/logging.rst:142
+msgid ""
+"import logging\n"
+"logger = logging.getLogger(__name__)\n"
+"logging.basicConfig(filename='example.log', encoding='utf-8', level=logging."
+"DEBUG)\n"
+"logger.debug('This message should go to the log file')\n"
+"logger.info('So should this')\n"
+"logger.warning('And this, too')\n"
+"logger.error('And non-ASCII stuff, too, like Øresund and Malmö')"
+msgstr ""
+
 #: ../../howto/logging.rst:150
 msgid ""
 "The *encoding* argument was added. In earlier Python versions, or if not "
@@ -304,6 +327,14 @@ msgid ""
 "messages:"
 msgstr "そして、ファイルの中身を確認すると、ログメッセージが確認できます:"
 
+#: ../../howto/logging.rst:160
+msgid ""
+"DEBUG:__main__:This message should go to the log file\n"
+"INFO:__main__:So should this\n"
+"WARNING:__main__:And this, too\n"
+"ERROR:__main__:And non-ASCII stuff, too, like Øresund and Malmö"
+msgstr ""
+
 #: ../../howto/logging.rst:167
 msgid ""
 "This example also shows how you can set the logging level which acts as the "
@@ -319,12 +350,20 @@ msgid ""
 "If you want to set the logging level from a command-line option such as:"
 msgstr "次のようなコマンドラインオプションでログレベルを設定したいと考え:"
 
+#: ../../howto/logging.rst:173
+msgid "--log=INFO"
+msgstr ""
+
 #: ../../howto/logging.rst:177
 msgid ""
 "and you have the value of the parameter passed for ``--log`` in some "
 "variable *loglevel*, you can use::"
 msgstr ""
 "``--log`` に渡されたパラメータの値を変数 *loglevel* に保存しているとしたら、"
+
+#: ../../howto/logging.rst:180
+msgid "getattr(logging, loglevel.upper())"
+msgstr ""
 
 #: ../../howto/logging.rst:182
 msgid ""
@@ -335,6 +374,17 @@ msgstr ""
 "というコードを使い、 :func:`basicConfig` の *level* 引数に渡すべき値が得られ"
 "ます。ユーザの入力値をすべてエラーチェックしたくなり、次の例のように実装する"
 "こともあるでしょう::"
+
+#: ../../howto/logging.rst:186
+msgid ""
+"# assuming loglevel is bound to the string value obtained from the\n"
+"# command line argument. Convert to upper case to allow the user to\n"
+"# specify --log=DEBUG or --log=debug\n"
+"numeric_level = getattr(logging, loglevel.upper(), None)\n"
+"if not isinstance(numeric_level, int):\n"
+"    raise ValueError('Invalid log level: %s' % loglevel)\n"
+"logging.basicConfig(level=numeric_level, ...)"
+msgstr ""
 
 #: ../../howto/logging.rst:194
 msgid ""
@@ -354,6 +404,12 @@ msgstr ""
 "*example.log* に加えられます。以前の実行によるメッセージを記憶せず、実行ごと"
 "に新たに始めたいなら、上記の例での呼び出しを次のように変え、*filemode* 引数を"
 "指定する方法がとれます::"
+
+#: ../../howto/logging.rst:203
+msgid ""
+"logging.basicConfig(filename='example.log', filemode='w', level=logging."
+"DEBUG)"
+msgstr ""
 
 #: ../../howto/logging.rst:205
 msgid ""
@@ -375,9 +431,19 @@ msgstr ""
 "変数データのログを取るには、イベント記述メッセージにフォーマット文字列を使"
 "い、引数に変数データを加えてください。例えば::"
 
+#: ../../howto/logging.rst:215
+msgid ""
+"import logging\n"
+"logging.warning('%s before you %s', 'Look', 'leap!')"
+msgstr ""
+
 #: ../../howto/logging.rst:218
 msgid "will display:"
 msgstr "により、次のように表示されます:"
+
+#: ../../howto/logging.rst:220
+msgid "WARNING:root:Look before you leap!"
+msgstr ""
 
 #: ../../howto/logging.rst:224
 msgid ""
@@ -407,9 +473,26 @@ msgstr ""
 "メッセージを表示するのに使われるフォーマットを変更するには、使いたいフォー"
 "マットを指定する必要があります::"
 
+#: ../../howto/logging.rst:238
+msgid ""
+"import logging\n"
+"logging.basicConfig(format='%(levelname)s:%(message)s', level=logging."
+"DEBUG)\n"
+"logging.debug('This message should appear on the console')\n"
+"logging.info('So should this')\n"
+"logging.warning('And this, too')"
+msgstr ""
+
 #: ../../howto/logging.rst:244
 msgid "which would print:"
 msgstr "により、次のように表示されます:"
+
+#: ../../howto/logging.rst:246
+msgid ""
+"DEBUG:This message should appear on the console\n"
+"INFO:So should this\n"
+"WARNING:And this, too"
+msgstr ""
 
 #: ../../howto/logging.rst:252
 msgid ""
@@ -438,9 +521,20 @@ msgstr ""
 "イベントの日付と時刻を表示するには、フォーマット文字列に '%(asctime)s' を置い"
 "てください::"
 
+#: ../../howto/logging.rst:266
+msgid ""
+"import logging\n"
+"logging.basicConfig(format='%(asctime)s %(message)s')\n"
+"logging.warning('is when this event was logged.')"
+msgstr ""
+
 #: ../../howto/logging.rst:270
 msgid "which should print something like this:"
 msgstr "これは以下の様なフォーマットで表示されます:"
+
+#: ../../howto/logging.rst:272
+msgid "2010-12-12 11:41:42,612 is when this event was logged."
+msgstr ""
 
 #: ../../howto/logging.rst:276
 msgid ""
@@ -452,9 +546,21 @@ msgstr ""
 "`3339` に似ています。日付と時間のフォーマットをより詳細に制御する必要があるな"
 "ら、以下の例の様に、 ``basicConfig`` に *datefmt* 引数を指定してください::"
 
+#: ../../howto/logging.rst:280
+msgid ""
+"import logging\n"
+"logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:"
+"%M:%S %p')\n"
+"logging.warning('is when this event was logged.')"
+msgstr ""
+
 #: ../../howto/logging.rst:284
 msgid "which would display something like this:"
 msgstr "これは次のように表示されます:"
+
+#: ../../howto/logging.rst:286
+msgid "12/12/2010 11:46:36 AM is when this event was logged."
+msgstr ""
 
 #: ../../howto/logging.rst:290
 msgid ""
@@ -572,6 +678,10 @@ msgstr ""
 "ロガーに名前をつけるときの良い習慣は、ロギングを使う各モジュールに、以下のよ"
 "うに名付けられた、モジュールレベルロガーを使うことです::"
 
+#: ../../howto/logging.rst:342
+msgid "logger = logging.getLogger(__name__)"
+msgstr ""
+
 #: ../../howto/logging.rst:344
 msgid ""
 "This means that logger names track the package/module hierarchy, and it's "
@@ -635,6 +745,10 @@ msgid "The default format set by :func:`basicConfig` for messages is:"
 msgstr ""
 ":func:`basicConfig` が設定するデフォルトのメッセージのフォーマットは次のよう"
 "になります:"
+
+#: ../../howto/logging.rst:370
+msgid "severity:logger name:message"
+msgstr ""
 
 #: ../../howto/logging.rst:374
 msgid ""
@@ -809,11 +923,11 @@ msgid ""
 msgstr ""
 "ロガーには、*有効レベル (effective level)* の概念があります。ロガーにレベルが"
 "明示的に設定されていなければ、代わりに親のレベルがその有効レベルとして使われ"
-"ます。親のレベルが設定されなければ、*その* 親のレベルが確かめられ、以下同様"
-"に、明示的に設定されたレベルが見つかるまで祖先が探されます。ルートロガーは、"
-"必ず明示的なレベルが設定されています (デフォルトでは ``WARNING`` です)。イベ"
-"ントを処理するかを決定するとき、ロガーの有効レベルを使って、イベントがロガー"
-"のハンドラに渡されるかが決められます。"
+"ます。親のレベルが設定されなければ、*その* 親のレベルが確かめられ、明示的に設"
+"定されたレベルが見つかるまで祖先が探されます。ルートロガーは、必ず明示的なレ"
+"ベルが設定されています (デフォルトでは ``WARNING`` です)。イベントを処理する"
+"かを決定するとき、ロガーの有効レベルを使って、イベントがロガーのハンドラに渡"
+"されるかが決められます。"
 
 #: ../../howto/logging.rst:494
 msgid ""
@@ -949,6 +1063,10 @@ msgstr ""
 "す。また、日付フォーマットに何も渡さない場合は、デフォルトで以下のフォーマッ"
 "トが利用されます:"
 
+#: ../../howto/logging.rst:559
+msgid "%Y-%m-%d %H:%M:%S"
+msgstr ""
+
 #: ../../howto/logging.rst:563
 msgid ""
 "with the milliseconds tacked on at the end. The ``style`` is one of ``'%'``, "
@@ -987,6 +1105,10 @@ msgid ""
 msgstr ""
 "次のメッセージフォーマット文字列は、人が読みやすい形式の時刻、メッセージの深"
 "刻度、およびメッセージの内容を、順番に出力します::"
+
+#: ../../howto/logging.rst:580
+msgid "'%(asctime)s - %(levelname)s - %(message)s'"
+msgstr ""
 
 #: ../../howto/logging.rst:582
 msgid ""
@@ -1045,11 +1167,51 @@ msgstr ""
 "下の例では、Python コードを使って、とても簡単なロガー、コンソールハンドラ、そ"
 "して簡単なフォーマッタを設定しています::"
 
+#: ../../howto/logging.rst:609
+msgid ""
+"import logging\n"
+"\n"
+"# create logger\n"
+"logger = logging.getLogger('simple_example')\n"
+"logger.setLevel(logging.DEBUG)\n"
+"\n"
+"# create console handler and set level to debug\n"
+"ch = logging.StreamHandler()\n"
+"ch.setLevel(logging.DEBUG)\n"
+"\n"
+"# create formatter\n"
+"formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - "
+"%(message)s')\n"
+"\n"
+"# add formatter to ch\n"
+"ch.setFormatter(formatter)\n"
+"\n"
+"# add ch to logger\n"
+"logger.addHandler(ch)\n"
+"\n"
+"# 'application' code\n"
+"logger.debug('debug message')\n"
+"logger.info('info message')\n"
+"logger.warning('warn message')\n"
+"logger.error('error message')\n"
+"logger.critical('critical message')"
+msgstr ""
+
 #: ../../howto/logging.rst:635
 msgid ""
 "Running this module from the command line produces the following output:"
 msgstr ""
 "このモジュールを実行すると、コマンドラインによって以下の出力がなされます:"
+
+#: ../../howto/logging.rst:637
+msgid ""
+"$ python simple_logging_module.py\n"
+"2005-03-19 15:10:26,618 - simple_example - DEBUG - debug message\n"
+"2005-03-19 15:10:26,620 - simple_example - INFO - info message\n"
+"2005-03-19 15:10:26,695 - simple_example - WARNING - warn message\n"
+"2005-03-19 15:10:26,697 - simple_example - ERROR - error message\n"
+"2005-03-19 15:10:26,773 - simple_example - CRITICAL - critical message"
+msgstr ""
 
 #: ../../howto/logging.rst:646
 msgid ""
@@ -1060,14 +1222,73 @@ msgstr ""
 "以下の Python モジュールは、ロガー、ハンドラ、フォーマッタをほとんど上述の例"
 "と同じように生成していますが、オブジェクト名だけが異なります::"
 
+#: ../../howto/logging.rst:650
+msgid ""
+"import logging\n"
+"import logging.config\n"
+"\n"
+"logging.config.fileConfig('logging.conf')\n"
+"\n"
+"# create logger\n"
+"logger = logging.getLogger('simpleExample')\n"
+"\n"
+"# 'application' code\n"
+"logger.debug('debug message')\n"
+"logger.info('info message')\n"
+"logger.warning('warn message')\n"
+"logger.error('error message')\n"
+"logger.critical('critical message')"
+msgstr ""
+
 #: ../../howto/logging.rst:665
 msgid "Here is the logging.conf file:"
 msgstr "これが logging.conf ファイルです:"
+
+#: ../../howto/logging.rst:667
+msgid ""
+"[loggers]\n"
+"keys=root,simpleExample\n"
+"\n"
+"[handlers]\n"
+"keys=consoleHandler\n"
+"\n"
+"[formatters]\n"
+"keys=simpleFormatter\n"
+"\n"
+"[logger_root]\n"
+"level=DEBUG\n"
+"handlers=consoleHandler\n"
+"\n"
+"[logger_simpleExample]\n"
+"level=DEBUG\n"
+"handlers=consoleHandler\n"
+"qualname=simpleExample\n"
+"propagate=0\n"
+"\n"
+"[handler_consoleHandler]\n"
+"class=StreamHandler\n"
+"level=DEBUG\n"
+"formatter=simpleFormatter\n"
+"args=(sys.stdout,)\n"
+"\n"
+"[formatter_simpleFormatter]\n"
+"format=%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+msgstr ""
 
 #: ../../howto/logging.rst:697
 msgid ""
 "The output is nearly identical to that of the non-config-file-based example:"
 msgstr "出力は、設定ファイルに基づく例とだいたい同じです:"
+
+#: ../../howto/logging.rst:699
+msgid ""
+"$ python simple_logging_config.py\n"
+"2005-03-19 15:38:55,977 - simpleExample - DEBUG - debug message\n"
+"2005-03-19 15:38:55,979 - simpleExample - INFO - info message\n"
+"2005-03-19 15:38:56,054 - simpleExample - WARNING - warn message\n"
+"2005-03-19 15:38:56,055 - simpleExample - ERROR - error message\n"
+"2005-03-19 15:38:56,130 - simpleExample - CRITICAL - critical message"
+msgstr ""
 
 #: ../../howto/logging.rst:708
 msgid ""
@@ -1158,6 +1379,28 @@ msgid ""
 "new dictionary-based approach:"
 msgstr ""
 "以下は、上記と同じ設定を辞書ベースの新しい手法で記載した YAML 形式の例です:"
+
+#: ../../howto/logging.rst:753
+msgid ""
+"version: 1\n"
+"formatters:\n"
+"  simple:\n"
+"    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'\n"
+"handlers:\n"
+"  console:\n"
+"    class: logging.StreamHandler\n"
+"    level: DEBUG\n"
+"    formatter: simple\n"
+"    stream: ext://sys.stdout\n"
+"loggers:\n"
+"  simpleExample:\n"
+"    level: DEBUG\n"
+"    handlers: [console]\n"
+"    propagate: no\n"
+"root:\n"
+"  level: DEBUG\n"
+"  handlers: [console]"
+msgstr ""
 
 #: ../../howto/logging.rst:774
 msgid ""
@@ -1283,6 +1526,12 @@ msgstr ""
 "く *ないなら*) ライブラリの名前空間で使われるトップレベルロガーに取り付けられ"
 "ます。ライブラリ *foo* によるすべてのロギングが、 'foo.x', 'foo.x.y' その他に"
 "該当する名前のロガーによってなされるなら::"
+
+#: ../../howto/logging.rst:836
+msgid ""
+"import logging\n"
+"logging.getLogger('foo').addHandler(logging.NullHandler())"
+msgstr ""
 
 #: ../../howto/logging.rst:839
 msgid ""
@@ -1774,6 +2023,13 @@ msgstr ""
 "決定するために :meth:`~Logger.isEnabledFor` メソッドを呼ぶことができます。こ"
 "のメソッドは引数にレベルを取って、そのレベルの呼び出しに対して Logger がイベ"
 "ントを生成するなら true を返します。このようにコードを書くことができます::"
+
+#: ../../howto/logging.rst:1076
+msgid ""
+"if logger.isEnabledFor(logging.DEBUG):\n"
+"    logger.debug('Message with %s, %s', expensive_func1(),\n"
+"                                        expensive_func2())"
+msgstr ""
 
 #: ../../howto/logging.rst:1080
 msgid ""

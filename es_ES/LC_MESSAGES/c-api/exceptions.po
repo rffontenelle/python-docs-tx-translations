@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-31 14:49+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
 "Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -90,16 +90,11 @@ msgstr ""
 
 #: ../../c-api/exceptions.rst:37
 msgid ""
-"The error indicator is **not** the result of :func:`sys.exc_info()`. The "
+"The error indicator is **not** the result of :func:`sys.exc_info`. The "
 "former corresponds to an exception that is not yet caught (and is therefore "
 "still propagating), while the latter returns an exception after it is caught "
 "(and has therefore stopped propagating)."
 msgstr ""
-"El indicador de error **no** es el resultado de :func:`sys.exc_info()`. El "
-"primero corresponde a una excepción que aún no se ha capturado (y que, por "
-"tanto, aún se está propagando), mientras que el segundo devuelve una "
-"excepción después de haber sido capturada (y que, por tanto, ha dejado de "
-"propagarse)."
 
 #: ../../c-api/exceptions.rst:44
 msgid "Printing and clearing"
@@ -683,6 +678,17 @@ msgstr ""
 msgid "For example::"
 msgstr "Por ejemplo::"
 
+#: ../../c-api/exceptions.rst:438
+msgid ""
+"{\n"
+"   PyObject *exc = PyErr_GetRaisedException();\n"
+"\n"
+"   /* ... code that might produce other errors ... */\n"
+"\n"
+"   PyErr_SetRaisedException(exc);\n"
+"}"
+msgstr ""
+
 #: ../../c-api/exceptions.rst:446
 msgid ""
 ":c:func:`PyErr_GetHandledException`, to save the exception currently being "
@@ -730,6 +736,18 @@ msgstr ""
 "Esta función normalmente sólo es utilizada por código heredado que necesita "
 "atrapar excepciones o guardar y restaurar el indicador de error "
 "temporalmente."
+
+#: ../../c-api/exceptions.rst:482
+msgid ""
+"{\n"
+"   PyObject *type, *value, *traceback;\n"
+"   PyErr_Fetch(&type, &value, &traceback);\n"
+"\n"
+"   /* ... code that might produce other errors ... */\n"
+"\n"
+"   PyErr_Restore(type, value, traceback);\n"
+"}"
+msgstr ""
 
 #: ../../c-api/exceptions.rst:496
 msgid "Use :c:func:`PyErr_SetRaisedException` instead."
@@ -800,6 +818,13 @@ msgstr ""
 "Esta función *no* establece implícitamente el atributo :attr:`~BaseException."
 "__traceback__` en el valor de la excepción. Si se desea establecer el "
 "rastreo de forma apropiada, se necesita el siguiente fragmento adicional::"
+
+#: ../../c-api/exceptions.rst:537
+msgid ""
+"if (tb != NULL) {\n"
+"  PyException_SetTraceback(val, tb);\n"
+"}"
+msgstr ""
 
 #: ../../c-api/exceptions.rst:544
 msgid ""

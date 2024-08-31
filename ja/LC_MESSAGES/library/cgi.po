@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-19 14:50+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -137,6 +137,12 @@ msgstr ""
 "アントに通知します。最小のヘッダセクションを生成するための Python のコードは"
 "以下のようなものです::"
 
+#: ../../library/cgi.rst:68
+msgid ""
+"print(\"Content-Type: text/html\")    # HTML is following\n"
+"print()                             # blank line, end of headers"
+msgstr ""
+
 #: ../../library/cgi.rst:71
 msgid ""
 "The second section is usually HTML, which allows the client software to "
@@ -146,6 +152,13 @@ msgstr ""
 "二つ目のセクションは通常、ヘッダやインラインイメージ等の付属したテキストをう"
 "まくフォーマットして表示できるようにした HTML です。以下に単純な HTML を出力"
 "する Python コードを示します::"
+
+#: ../../library/cgi.rst:75
+msgid ""
+"print(\"<TITLE>CGI script output</TITLE>\")\n"
+"print(\"<H1>This is my first CGI script</H1>\")\n"
+"print(\"Hello, world!\")"
+msgstr ""
 
 #: ../../library/cgi.rst:83
 msgid "Using the cgi module"
@@ -160,6 +173,12 @@ msgid "When you write a new script, consider adding these lines::"
 msgstr ""
 "新たにスクリプトを書く際には、以下の行を付加するかどうか検討してください::"
 
+#: ../../library/cgi.rst:89 ../../library/cgi.rst:505
+msgid ""
+"import cgitb\n"
+"cgitb.enable()"
+msgstr ""
+
 #: ../../library/cgi.rst:92
 msgid ""
 "This activates a special exception handler that will display detailed "
@@ -170,6 +189,12 @@ msgstr ""
 "これによって、特別な例外処理が有効にされ、エラーが発生した際に web ブラウザ上"
 "に詳細なレポートを出力するようになります。ユーザにスクリプトの内部を見せたく"
 "ないのなら、以下のようにしてレポートをファイルに保存できます::"
+
+#: ../../library/cgi.rst:97
+msgid ""
+"import cgitb\n"
+"cgitb.enable(display=0, logdir=\"/path/to/logdir\")"
+msgstr ""
 
 #: ../../library/cgi.rst:100
 msgid ""
@@ -232,6 +257,18 @@ msgstr ""
 "た後とします) は ``name`` および ``addr`` フィールドが両方とも空の文字列に設"
 "定されていないか調べます::"
 
+#: ../../library/cgi.rst:127
+msgid ""
+"form = cgi.FieldStorage()\n"
+"if \"name\" not in form or \"addr\" not in form:\n"
+"    print(\"<H1>Error</H1>\")\n"
+"    print(\"Please fill in the name and addr fields.\")\n"
+"    return\n"
+"print(\"<p>name:\", form[\"name\"].value)\n"
+"print(\"<p>addr:\", form[\"addr\"].value)\n"
+"...further form processing here..."
+msgstr ""
+
 #: ../../library/cgi.rst:136
 msgid ""
 "Here the fields, accessed through ``form[key]``, are themselves instances "
@@ -271,6 +308,12 @@ msgstr ""
 "する必要はありません)。例えば、以下のコードは任意の数のユーザ名フィールドを結"
 "合し、コンマで分割された文字列にします::"
 
+#: ../../library/cgi.rst:153
+msgid ""
+"value = form.getlist(\"username\")\n"
+"usernames = \",\".join(value)"
+msgstr ""
+
 #: ../../library/cgi.rst:156
 msgid ""
 "If a field represents an uploaded file, accessing the value via the :attr:"
@@ -293,6 +336,18 @@ msgstr ""
 "じられるまでの間に、 :attr:`!file` 属性から以下のようにデータを読み込むことが"
 "できます (:func:`~io.RawIOBase.read` および :func:`~io.IOBase.readline` メ"
 "ソッドはバイト列を返します):"
+
+#: ../../library/cgi.rst:167
+msgid ""
+"fileitem = form[\"userfile\"]\n"
+"if fileitem.file:\n"
+"    # It's an uploaded file; count lines\n"
+"    linecount = 0\n"
+"    while True:\n"
+"        line = fileitem.file.readline()\n"
+"        if not line: break\n"
+"        linecount = linecount + 1"
+msgstr ""
 
 #: ../../library/cgi.rst:176
 msgid ""
@@ -409,6 +464,15 @@ msgstr ""
 "前節では、一つのフィールド名に対して二つ以上の値が入力されるかもしれない場合"
 "には、常に以下のようなコードを書くよう学びました::"
 
+#: ../../library/cgi.rst:228
+msgid ""
+"item = form.getvalue(\"item\")\n"
+"if isinstance(item, list):\n"
+"    # The user is requesting more than one item.\n"
+"else:\n"
+"    # The user is requesting only one item."
+msgstr ""
+
 #: ../../library/cgi.rst:234
 msgid ""
 "This situation is common for example when a form contains a group of "
@@ -416,6 +480,12 @@ msgid ""
 msgstr ""
 "こういった状況は、例えば以下のように、同じ名前を持った複数のチェックボックス"
 "からなるグループがフォームに入っているような場合によく起きます::"
+
+#: ../../library/cgi.rst:237
+msgid ""
+"<input type=\"checkbox\" name=\"item\" value=\"1\" />\n"
+"<input type=\"checkbox\" name=\"item\" value=\"2\" />"
+msgstr ""
 
 #: ../../library/cgi.rst:240
 msgid ""
@@ -427,6 +497,10 @@ msgstr ""
 "はただ一つしかないので、その名前に関連付けられた値はただ一つしかないはずだと"
 "考えるでしょう。そこで、スクリプトには例えば以下のようなコードを書くでしょ"
 "う::"
+
+#: ../../library/cgi.rst:244
+msgid "user = form.getvalue(\"user\").upper()"
+msgstr ""
 
 #: ../../library/cgi.rst:246
 msgid ""
@@ -500,6 +574,15 @@ msgid "Using these methods you can write nice compact code::"
 msgstr ""
 "これらのメソッドを使うことで、以下のようにナイスでコンパクトにコードを書けま"
 "す::"
+
+#: ../../library/cgi.rst:281
+msgid ""
+"import cgi\n"
+"form = cgi.FieldStorage()\n"
+"user = form.getfirst(\"user\", \"\").upper()    # This way it's safe.\n"
+"for item in form.getlist(\"item\"):\n"
+"    do_something(item)"
+msgstr ""
 
 #: ../../library/cgi.rst:291
 msgid "Functions"
@@ -593,6 +676,14 @@ msgstr ""
 msgid "For example, with :class:`email.message.EmailMessage`::"
 msgstr ""
 
+#: ../../library/cgi.rst:352
+msgid ""
+"from email.message import EmailMessage\n"
+"msg = EmailMessage()\n"
+"msg['content-type'] = 'application/json; charset=\"utf8\"'\n"
+"main, params = msg.get_content_type(), msg['content-type'].params"
+msgstr ""
+
 #: ../../library/cgi.rst:360
 msgid ""
 "Robust test CGI script, usable as main program. Writes minimal HTTP headers "
@@ -678,6 +769,10 @@ msgstr ""
 "`` で開始し、その後に Python インタプリタへのパス名が続いていることを確認して"
 "ください。例えば::"
 
+#: ../../library/cgi.rst:416
+msgid "#!/usr/local/bin/python"
+msgstr ""
+
 #: ../../library/cgi.rst:418
 msgid ""
 "Make sure the Python interpreter exists and is executable by \"others\"."
@@ -719,6 +814,13 @@ msgstr ""
 "モジュールを Python の標準設定におけるモジュール検索パス上にないディレクトリ"
 "からロードする必要がある場合、他のモジュールを取り込む前にスクリプト内で検索"
 "パスを変更できます。例えば::"
+
+#: ../../library/cgi.rst:435
+msgid ""
+"import sys\n"
+"sys.path.insert(0, \"/usr/home/joe/lib/python\")\n"
+"sys.path.insert(0, \"/usr/local/lib/python\")"
+msgstr ""
 
 #: ../../library/cgi.rst:439
 msgid "(This way, the directory inserted last will be searched first!)"
@@ -787,6 +889,10 @@ msgstr ""
 "リにインストールされていれば、以下のような URL をブラウザに入力してリクエスト"
 "を送信できるはずです:"
 
+#: ../../library/cgi.rst:473
+msgid "http://yourhostname/cgi-bin/cgi.py?name=Joe+Blow&addr=At+Home"
+msgstr ""
+
 #: ../../library/cgi.rst:477
 msgid ""
 "If this gives an error of type 404, the server cannot find the script -- "
@@ -814,6 +920,10 @@ msgid ""
 msgstr ""
 "次のステップでは :mod:`cgi` モジュールの :func:`test` 関数を呼び出すことにな"
 "ります: メインプログラムコードを以下の 1 文と置き換えてください ::"
+
+#: ../../library/cgi.rst:489
+msgid "cgi.test()"
+msgstr ""
 
 #: ../../library/cgi.rst:491
 msgid ""
@@ -865,6 +975,15 @@ msgid ""
 msgstr ""
 ":mod:`cgitb` モジュールのインポートに問題がありそうだと思うなら、(組み込みモ"
 "ジュールだけを使った) もっと堅牢なアプローチを取れます::"
+
+#: ../../library/cgi.rst:515
+msgid ""
+"import sys\n"
+"sys.stderr = sys.stdout\n"
+"print(\"Content-Type: text/plain\")\n"
+"print()\n"
+"...your code here..."
+msgstr ""
 
 #: ../../library/cgi.rst:521
 msgid ""

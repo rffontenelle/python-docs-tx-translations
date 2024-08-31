@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-23 14:51+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
@@ -25,7 +25,7 @@ msgstr ""
 
 #: ../../library/struct.rst:2
 msgid ":mod:`!struct` --- Interpret bytes as packed binary data"
-msgstr ""
+msgstr ":mod:`!struct` --- Interpreta bytes como dados binários empacotados"
 
 #: ../../library/struct.rst:7
 msgid "**Source code:** :source:`Lib/struct.py`"
@@ -41,6 +41,13 @@ msgid ""
 "connections), or data transfer between the Python application and the C "
 "layer."
 msgstr ""
+"Este módulo converte entre valores Python e structs C representados como "
+"objetos :class:`bytes` do Python. :ref:`Strings de formato <struct-format-"
+"strings>` compactas descrevem as conversões pretendidas de/para valores "
+"Python. As funções e objetos do módulo podem ser usados ​​para duas aplicações "
+"amplamente distintas, troca de dados com fontes externas (arquivos ou "
+"conexões de rede) ou transferência de dados entre a aplicação Python e a "
+"camada C."
 
 #: ../../library/struct.rst:25
 msgid ""
@@ -53,6 +60,14 @@ msgid ""
 "for defining byte ordering and padding between elements. See :ref:`struct-"
 "alignment` for details."
 msgstr ""
+"Quando nenhum caractere de prefixo é fornecido, o modo nativo é o padrão. "
+"Ele empacota ou descompacta dados com base na plataforma e no compilador nos "
+"quais o interpretador Python foi construído. O resultado do empacotamento de "
+"uma dada estrutura C inclui bytes de preenchimento que mantêm o alinhamento "
+"adequado para os tipos C envolvidos; similarmente, o alinhamento é levado em "
+"conta ao desempacotar. Em contraste, ao comunicar dados entre fontes "
+"externas, o programador é responsável por definir a ordenação de bytes e o "
+"preenchimento entre os elementos. Veja :ref:`struct-alignment` para detalhes."
 
 #: ../../library/struct.rst:35
 msgid ""
@@ -64,20 +79,29 @@ msgid ""
 "implement the buffer protocol, so that they can be read/filled without "
 "additional copying from a :class:`bytes` object."
 msgstr ""
+"Várias funções :mod:`struct` (e métodos de :class:`Struct`) recebem um "
+"argumento *buffer*. Isso se refere a objetos que implementam :ref:"
+"`bufferobjects` e fornecem um buffer legível ou de leitura-gravação. Os "
+"tipos mais comuns usados ​​para esse propósito são :class:`bytes` e :class:"
+"`bytearray`, mas muitos outros tipos que podem ser vistos como uma matriz de "
+"bytes implementam o protocolo de buffer, para que possam ser lidos/"
+"preenchidos sem cópia adicional de um objeto :class:`bytes`."
 
 #: ../../library/struct.rst:44
 msgid "Functions and Exceptions"
-msgstr "Funções e Exceções"
+msgstr "Funções e exceções"
 
 #: ../../library/struct.rst:46
 msgid "The module defines the following exception and functions:"
-msgstr ""
+msgstr "O módulo define as seguintes exceções e funções:"
 
 #: ../../library/struct.rst:51
 msgid ""
 "Exception raised on various occasions; argument is a string describing what "
 "is wrong."
 msgstr ""
+"Exceção levantada em várias ocasiões; argumento é uma string que descreve o "
+"que está errado."
 
 #: ../../library/struct.rst:57
 msgid ""
@@ -495,7 +519,7 @@ msgstr "``q``"
 
 #: ../../library/struct.rst:244
 msgid ":c:expr:`long long`"
-msgstr ""
+msgstr ":c:expr:`long long`"
 
 #: ../../library/struct.rst:244 ../../library/struct.rst:246
 #: ../../library/struct.rst:257
@@ -508,7 +532,7 @@ msgstr "``Q``"
 
 #: ../../library/struct.rst:246
 msgid ":c:expr:`unsigned long long`"
-msgstr ""
+msgstr ":c:expr:`unsigned long long`"
 
 #: ../../library/struct.rst:249
 msgid "``n``"
@@ -746,8 +770,27 @@ msgid ""
 "ordering::"
 msgstr ""
 
+#: ../../library/struct.rst:386
+msgid ""
+">>> from struct import *\n"
+">>> pack(\">bhl\", 1, 2, 3)\n"
+"b'\\x01\\x00\\x02\\x00\\x00\\x00\\x03'\n"
+">>> unpack('>bhl', b'\\x01\\x00\\x02\\x00\\x00\\x00\\x03')\n"
+"(1, 2, 3)\n"
+">>> calcsize('>bhl')\n"
+"7"
+msgstr ""
+
 #: ../../library/struct.rst:394
 msgid "Attempt to pack an integer which is too large for the defined field::"
+msgstr ""
+
+#: ../../library/struct.rst:396
+msgid ""
+">>> pack(\">h\", 99999)\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"struct.error: 'h' format requires -32768 <= number <= 32767"
 msgstr ""
 
 #: ../../library/struct.rst:401
@@ -755,10 +798,29 @@ msgid ""
 "Demonstrate the difference between ``'s'`` and ``'c'`` format characters::"
 msgstr ""
 
+#: ../../library/struct.rst:404
+msgid ""
+">>> pack(\"@ccc\", b'1', b'2', b'3')\n"
+"b'123'\n"
+">>> pack(\"@3s\", b'123')\n"
+"b'123'"
+msgstr ""
+
 #: ../../library/struct.rst:409
 msgid ""
 "Unpacked fields can be named by assigning them to variables or by wrapping "
 "the result in a named tuple::"
+msgstr ""
+
+#: ../../library/struct.rst:412
+msgid ""
+">>> record = b'raymond   \\x32\\x12\\x08\\x01\\x08'\n"
+">>> name, serialnum, school, gradelevel = unpack('<10sHHb', record)\n"
+"\n"
+">>> from collections import namedtuple\n"
+">>> Student = namedtuple('Student', 'name serialnum school gradelevel')\n"
+">>> Student._make(unpack('<10sHHb', record))\n"
+"Student(name=b'raymond   ', serialnum=4658, school=264, gradelevel=8)"
 msgstr ""
 
 #: ../../library/struct.rst:420
@@ -771,10 +833,28 @@ msgid ""
 "a little endian machine::"
 msgstr ""
 
+#: ../../library/struct.rst:428
+msgid ""
+">>> pack('@ci', b'#', 0x12131415)\n"
+"b'#\\x00\\x00\\x00\\x15\\x14\\x13\\x12'\n"
+">>> pack('@ic', 0x12131415, b'#')\n"
+"b'\\x15\\x14\\x13\\x12#'\n"
+">>> calcsize('@ci')\n"
+"8\n"
+">>> calcsize('@ic')\n"
+"5"
+msgstr ""
+
 #: ../../library/struct.rst:437
 msgid ""
 "The following format ``'llh0l'`` results in two pad bytes being added at the "
 "end, assuming the platform's longs are aligned on 4-byte boundaries::"
+msgstr ""
+
+#: ../../library/struct.rst:440
+msgid ""
+">>> pack('@llh0l', 1, 2, 3)\n"
+"b'\\x00\\x00\\x00\\x01\\x00\\x00\\x00\\x02\\x00\\x03\\x00\\x00'"
 msgstr ""
 
 #: ../../library/struct.rst:446
@@ -835,11 +915,25 @@ msgid ""
 "Consider these two simple examples (on a 64-bit, little-endian machine)::"
 msgstr ""
 
+#: ../../library/struct.rst:485
+msgid ""
+">>> calcsize('@lhl')\n"
+"24\n"
+">>> calcsize('@llh')\n"
+"18"
+msgstr ""
+
 #: ../../library/struct.rst:490
 msgid ""
 "Data is not padded to an 8-byte boundary at the end of the second format "
 "string without the use of extra padding.  A zero-repeat format code solves "
 "that problem::"
+msgstr ""
+
+#: ../../library/struct.rst:494
+msgid ""
+">>> calcsize('@llh0l')\n"
+"24"
 msgstr ""
 
 #: ../../library/struct.rst:497
@@ -872,11 +966,39 @@ msgid ""
 "from the previous section, we have::"
 msgstr ""
 
+#: ../../library/struct.rst:521
+msgid ""
+">>> calcsize('<qh6xq')\n"
+"24\n"
+">>> pack('<qh6xq', 1, 2, 3) == pack('@lhl', 1, 2, 3)\n"
+"True\n"
+">>> calcsize('@llh')\n"
+"18\n"
+">>> pack('@llh', 1, 2, 3) == pack('<qqh', 1, 2, 3)\n"
+"True\n"
+">>> calcsize('<qqh6x')\n"
+"24\n"
+">>> calcsize('@llh0l')\n"
+"24\n"
+">>> pack('@llh0l', 1, 2, 3) == pack('<qqh6x', 1, 2, 3)\n"
+"True"
+msgstr ""
+
 #: ../../library/struct.rst:536
 msgid ""
 "The above results (executed on a 64-bit machine) aren't guaranteed to match "
 "when executed on different machines.  For example, the examples below were "
 "executed on a 32-bit machine::"
+msgstr ""
+
+#: ../../library/struct.rst:540
+msgid ""
+">>> calcsize('<qqh6x')\n"
+"24\n"
+">>> calcsize('@llh0l')\n"
+"12\n"
+">>> pack('@llh0l', 1, 2, 3) == pack('<qqh6x', 1, 2, 3)\n"
+"False"
 msgstr ""
 
 #: ../../library/struct.rst:551

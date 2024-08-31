@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-09 14:48+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -1030,6 +1030,10 @@ msgstr ""
 "Python インタプリタのバージョンを返します。バージョンは、次のような形式の文字"
 "列です ::"
 
+#: ../../c-api/init.rst:663
+msgid "\"3.0a5+ (py3k:63103M, May 12 2008, 00:53:55) \\n[GCC 4.2.3]\""
+msgstr ""
+
 #: ../../c-api/init.rst:667
 msgid ""
 "The first word (up to the first space character) is the current Python "
@@ -1094,6 +1098,10 @@ msgstr ""
 "現在使っているバージョンの Python をビルドする際に用いたコンパイラを示す文字"
 "列を、角括弧で囲った文字列を返します。例えば::"
 
+#: ../../c-api/init.rst:705
+msgid "\"[GCC 2.7.2.2]\""
+msgstr ""
+
 #: ../../c-api/init.rst:709 ../../c-api/init.rst:723
 msgid ""
 "The returned string points into static storage; the caller should not modify "
@@ -1111,6 +1119,10 @@ msgid ""
 msgstr ""
 "現在使っている Python インタプリタインスタンスの、シーケンス番号とビルド日時"
 "に関する情報を返します。例えば ::"
+
+#: ../../c-api/init.rst:719
+msgid "\"#67, Aug  1 1997, 22:34:28\""
+msgstr ""
 
 #: ../../c-api/init.rst:735
 msgid ""
@@ -1188,6 +1200,10 @@ msgstr ""
 "3.1.3 より前のバージョンでは、 :c:func:`PySys_SetArgv` の呼び出しが完了した後"
 "に :data:`sys.path` の先頭の要素を取り出すことで、同じ効果が得られます。例え"
 "ばこのように使います::"
+
+#: ../../c-api/init.rst:776
+msgid "PyRun_SimpleString(\"import sys; sys.path.pop(0)\\n\");"
+msgstr ""
 
 #: ../../c-api/init.rst:788
 msgid ""
@@ -1312,11 +1328,27 @@ msgid ""
 msgstr ""
 ":term:`GIL` を操作するほとんどのコードは、次のような単純な構造になります::"
 
+#: ../../c-api/init.rst:882
+msgid ""
+"Save the thread state in a local variable.\n"
+"Release the global interpreter lock.\n"
+"... Do some blocking I/O operation ...\n"
+"Reacquire the global interpreter lock.\n"
+"Restore the thread state from the local variable."
+msgstr ""
+
 #: ../../c-api/init.rst:888
 msgid "This is so common that a pair of macros exists to simplify it::"
 msgstr ""
 "この構造は非常に一般的なので、作業を単純にするために2つのマクロが用意されてい"
 "ます::"
+
+#: ../../c-api/init.rst:890
+msgid ""
+"Py_BEGIN_ALLOW_THREADS\n"
+"... Do some blocking I/O operation ...\n"
+"Py_END_ALLOW_THREADS"
+msgstr ""
 
 #: ../../c-api/init.rst:898
 msgid ""
@@ -1330,6 +1362,15 @@ msgstr ""
 #: ../../c-api/init.rst:902
 msgid "The block above expands to the following code::"
 msgstr "上のブロックは次のコードに展開されます::"
+
+#: ../../c-api/init.rst:904
+msgid ""
+"PyThreadState *_save;\n"
+"\n"
+"_save = PyEval_SaveThread();\n"
+"... Do some blocking I/O operation ...\n"
+"PyEval_RestoreThread(_save);"
+msgstr ""
 
 #: ../../c-api/init.rst:914
 msgid ""
@@ -1409,6 +1450,19 @@ msgstr ""
 ":c:func:`PyGILState_Ensure` と :c:func:`PyGILState_Release` はこの処理を自動"
 "的に行います。 Cのスレッドから Python を呼び出す典型的な方法は以下のとおりで"
 "す::"
+
+#: ../../c-api/init.rst:955
+msgid ""
+"PyGILState_STATE gstate;\n"
+"gstate = PyGILState_Ensure();\n"
+"\n"
+"/* Perform Python actions here. */\n"
+"result = CallSomeFunction();\n"
+"/* evaluate result or handle exception */\n"
+"\n"
+"/* Release the thread. No Python API allowed beyond this point. */\n"
+"PyGILState_Release(gstate);"
+msgstr ""
 
 #: ../../c-api/init.rst:965
 msgid ""
@@ -2311,6 +2365,20 @@ msgstr ""
 msgid ""
 "Sub-interpreters are most effective when isolated from each other, with "
 "certain functionality restricted::"
+msgstr ""
+
+#: ../../c-api/init.rst:1638
+msgid ""
+"PyInterpreterConfig config = {\n"
+"    .use_main_obmalloc = 0,\n"
+"    .allow_fork = 0,\n"
+"    .allow_exec = 0,\n"
+"    .allow_threads = 1,\n"
+"    .allow_daemon_threads = 0,\n"
+"    .check_multi_interp_extensions = 1,\n"
+"    .gil = PyInterpreterConfig_OWN_GIL,\n"
+"};\n"
+"PyThreadState *tstate = Py_NewInterpreterFromConfig(&config);"
 msgstr ""
 
 #: ../../c-api/init.rst:1649

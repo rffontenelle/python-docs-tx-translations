@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-11 19:07+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:34+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -68,11 +68,35 @@ msgstr ""
 "模块内部，通过全局变量 ``__name__`` 可以获取模块名（即字符串）。例如，用文本"
 "编辑器在当前目录下创建 :file:`fibo.py` 文件，输入以下内容："
 
+#: ../../tutorial/modules.rst:28
+msgid ""
+"# Fibonacci numbers module\n"
+"\n"
+"def fib(n):    # write Fibonacci series up to n\n"
+"    a, b = 0, 1\n"
+"    while a < n:\n"
+"        print(a, end=' ')\n"
+"        a, b = b, a+b\n"
+"    print()\n"
+"\n"
+"def fib2(n):   # return Fibonacci series up to n\n"
+"    result = []\n"
+"    a, b = 0, 1\n"
+"    while a < n:\n"
+"        result.append(a)\n"
+"        a, b = b, a+b\n"
+"    return result"
+msgstr ""
+
 #: ../../tutorial/modules.rst:45
 msgid ""
 "Now enter the Python interpreter and import this module with the following "
 "command::"
 msgstr "现在，进入 Python 解释器，用以下命令导入该模块："
+
+#: ../../tutorial/modules.rst:48
+msgid ">>> import fibo"
+msgstr ""
 
 #: ../../tutorial/modules.rst:50
 msgid ""
@@ -85,10 +109,27 @@ msgstr ""
 "参阅 :ref:`tut-scopes` 了解详情）；它只是将模块名称 ``fibo`` 添加到那里。 使"
 "用该模块名称你可以访问其中的函数::"
 
+#: ../../tutorial/modules.rst:55
+msgid ""
+">>> fibo.fib(1000)\n"
+"0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987\n"
+">>> fibo.fib2(100)\n"
+"[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]\n"
+">>> fibo.__name__\n"
+"'fibo'"
+msgstr ""
+
 #: ../../tutorial/modules.rst:62
 msgid ""
 "If you intend to use a function often you can assign it to a local name::"
 msgstr "如果经常使用某个函数，可以把它赋值给局部变量："
+
+#: ../../tutorial/modules.rst:64
+msgid ""
+">>> fib = fibo.fib\n"
+">>> fib(500)\n"
+"0 1 1 2 3 5 8 13 21 34 55 89 144 233 377"
+msgstr ""
 
 #: ../../tutorial/modules.rst:72
 msgid "More on Modules"
@@ -138,6 +179,13 @@ msgstr ""
 "还有一种 :keyword:`import` 语句的变化形式可以将来自某个模块的名称直接导入到导"
 "入方模块的命名空间中。 例如::"
 
+#: ../../tutorial/modules.rst:94
+msgid ""
+">>> from fibo import fib, fib2\n"
+">>> fib(500)\n"
+"0 1 1 2 3 5 8 13 21 34 55 89 144 233 377"
+msgstr ""
+
 #: ../../tutorial/modules.rst:98
 msgid ""
 "This does not introduce the module name from which the imports are taken in "
@@ -149,6 +197,13 @@ msgstr ""
 #: ../../tutorial/modules.rst:101
 msgid "There is even a variant to import all names that a module defines::"
 msgstr "还有一种变体可以导入模块内定义的所有名称："
+
+#: ../../tutorial/modules.rst:103
+msgid ""
+">>> from fibo import *\n"
+">>> fib(500)\n"
+"0 1 1 2 3 5 8 13 21 34 55 89 144 233 377"
+msgstr ""
 
 #: ../../tutorial/modules.rst:107
 msgid ""
@@ -177,6 +232,13 @@ msgstr ""
 "模块名后使用 :keyword:`!as` 时，直接把 :keyword:`!as` 后的名称与导入模块绑"
 "定。"
 
+#: ../../tutorial/modules.rst:121
+msgid ""
+">>> import fibo as fib\n"
+">>> fib.fib(500)\n"
+"0 1 1 2 3 5 8 13 21 34 55 89 144 233 377"
+msgstr ""
+
 #: ../../tutorial/modules.rst:125
 msgid ""
 "This is effectively importing the module in the same way that ``import "
@@ -189,6 +251,13 @@ msgstr ""
 msgid ""
 "It can also be used when utilising :keyword:`from` with similar effects::"
 msgstr ":keyword:`from` 中也可以使用这种方式，效果类似："
+
+#: ../../tutorial/modules.rst:130
+msgid ""
+">>> from fibo import fib as fibonacci\n"
+">>> fibonacci(500)\n"
+"0 1 1 2 3 5 8 13 21 34 55 89 144 233 377"
+msgstr ""
 
 #: ../../tutorial/modules.rst:137
 msgid ""
@@ -210,6 +279,10 @@ msgstr "以脚本方式执行模块"
 msgid "When you run a Python module with ::"
 msgstr "可以用以下方式运行 Python 模块："
 
+#: ../../tutorial/modules.rst:151
+msgid "python fibo.py <arguments>"
+msgstr ""
+
 #: ../../tutorial/modules.rst:153
 msgid ""
 "the code in the module will be executed, just as if you imported it, but "
@@ -218,6 +291,13 @@ msgid ""
 msgstr ""
 "这项操作将执行模块里的代码，和导入模块一样，但会把 ``__name__`` 赋值为 "
 "``\"__main__\"``。 也就是把下列代码添加到模块末尾："
+
+#: ../../tutorial/modules.rst:157
+msgid ""
+"if __name__ == \"__main__\":\n"
+"    import sys\n"
+"    fib(int(sys.argv[1]))"
+msgstr ""
 
 #: ../../tutorial/modules.rst:161
 msgid ""
@@ -228,9 +308,21 @@ msgstr ""
 "这个文件既能被用作脚本，又能被用作一个可供导入的模块，因为解析命令行参数的那"
 "两行代码只有在模块作为“main”文件执行时才会运行："
 
+#: ../../tutorial/modules.rst:165
+msgid ""
+"$ python fibo.py 50\n"
+"0 1 1 2 3 5 8 13 21 34"
+msgstr ""
+
 #: ../../tutorial/modules.rst:170
 msgid "If the module is imported, the code is not run::"
 msgstr "当这个模块被导入到其它模块时，那两行代码不运行："
+
+#: ../../tutorial/modules.rst:172
+msgid ""
+">>> import fibo\n"
+">>>"
+msgstr ""
 
 #: ../../tutorial/modules.rst:175
 msgid ""
@@ -418,6 +510,19 @@ msgstr ""
 "一个 Python 编译器中。``sys.ps1`` 和 ``sys.ps2`` 变量定义了一些字符，它们可以"
 "用作主提示符和辅助提示符::"
 
+#: ../../tutorial/modules.rst:281
+msgid ""
+">>> import sys\n"
+">>> sys.ps1\n"
+"'>>> '\n"
+">>> sys.ps2\n"
+"'... '\n"
+">>> sys.ps1 = 'C> '\n"
+"C> print('Yuck!')\n"
+"Yuck!\n"
+"C>"
+msgstr ""
+
 #: ../../tutorial/modules.rst:292
 msgid ""
 "These two variables are only defined if the interpreter is in interactive "
@@ -436,6 +541,12 @@ msgstr ""
 "量 :envvar:`PYTHONPATH` 提取的默认路径进行初始化，如未设置 :envvar:"
 "`PYTHONPATH`，则使用内置的默认路径。可以用标准列表操作修改该变量："
 
+#: ../../tutorial/modules.rst:300
+msgid ""
+">>> import sys\n"
+">>> sys.path.append('/ufs/guido/lib/python')"
+msgstr ""
+
 #: ../../tutorial/modules.rst:307
 msgid "The :func:`dir` Function"
 msgstr ":func:`dir` 函数"
@@ -447,10 +558,55 @@ msgid ""
 msgstr ""
 "内置函数 :func:`dir` 用于查找模块定义的名称。返回结果是经过排序的字符串列表："
 
+#: ../../tutorial/modules.rst:312
+msgid ""
+">>> import fibo, sys\n"
+">>> dir(fibo)\n"
+"['__name__', 'fib', 'fib2']\n"
+">>> dir(sys)  \n"
+"['__breakpointhook__', '__displayhook__', '__doc__', '__excepthook__',\n"
+" '__interactivehook__', '__loader__', '__name__', '__package__', "
+"'__spec__',\n"
+" '__stderr__', '__stdin__', '__stdout__', '__unraisablehook__',\n"
+" '_clear_type_cache', '_current_frames', '_debugmallocstats', '_framework',\n"
+" '_getframe', '_git', '_home', '_xoptions', 'abiflags', 'addaudithook',\n"
+" 'api_version', 'argv', 'audit', 'base_exec_prefix', 'base_prefix',\n"
+" 'breakpointhook', 'builtin_module_names', 'byteorder', 'call_tracing',\n"
+" 'callstats', 'copyright', 'displayhook', 'dont_write_bytecode', "
+"'exc_info',\n"
+" 'excepthook', 'exec_prefix', 'executable', 'exit', 'flags', 'float_info',\n"
+" 'float_repr_style', 'get_asyncgen_hooks', "
+"'get_coroutine_origin_tracking_depth',\n"
+" 'getallocatedblocks', 'getdefaultencoding', 'getdlopenflags',\n"
+" 'getfilesystemencodeerrors', 'getfilesystemencoding', 'getprofile',\n"
+" 'getrecursionlimit', 'getrefcount', 'getsizeof', 'getswitchinterval',\n"
+" 'gettrace', 'hash_info', 'hexversion', 'implementation', 'int_info',\n"
+" 'intern', 'is_finalizing', 'last_traceback', 'last_type', 'last_value',\n"
+" 'maxsize', 'maxunicode', 'meta_path', 'modules', 'path', 'path_hooks',\n"
+" 'path_importer_cache', 'platform', 'prefix', 'ps1', 'ps2', "
+"'pycache_prefix',\n"
+" 'set_asyncgen_hooks', 'set_coroutine_origin_tracking_depth', "
+"'setdlopenflags',\n"
+" 'setprofile', 'setrecursionlimit', 'setswitchinterval', 'settrace', "
+"'stderr',\n"
+" 'stdin', 'stdout', 'thread_info', 'unraisablehook', 'version', "
+"'version_info',\n"
+" 'warnoptions']"
+msgstr ""
+
 #: ../../tutorial/modules.rst:338
 msgid ""
 "Without arguments, :func:`dir` lists the names you have defined currently::"
 msgstr "没有参数时，:func:`dir` 列出当前已定义的名称："
+
+#: ../../tutorial/modules.rst:340
+msgid ""
+">>> a = [1, 2, 3, 4, 5]\n"
+">>> import fibo\n"
+">>> fib = fibo.fib\n"
+">>> dir()\n"
+"['__builtins__', '__name__', 'a', 'fib', 'fibo', 'sys']"
+msgstr ""
 
 #: ../../tutorial/modules.rst:346
 msgid ""
@@ -465,6 +621,42 @@ msgid ""
 msgstr ""
 ":func:`dir` 不会列出内置函数和变量的名称。这些内容的定义在标准模块 :mod:"
 "`builtins` 中："
+
+#: ../../tutorial/modules.rst:354
+msgid ""
+">>> import builtins\n"
+">>> dir(builtins)  \n"
+"['ArithmeticError', 'AssertionError', 'AttributeError', 'BaseException',\n"
+" 'BlockingIOError', 'BrokenPipeError', 'BufferError', 'BytesWarning',\n"
+" 'ChildProcessError', 'ConnectionAbortedError', 'ConnectionError',\n"
+" 'ConnectionRefusedError', 'ConnectionResetError', 'DeprecationWarning',\n"
+" 'EOFError', 'Ellipsis', 'EnvironmentError', 'Exception', 'False',\n"
+" 'FileExistsError', 'FileNotFoundError', 'FloatingPointError',\n"
+" 'FutureWarning', 'GeneratorExit', 'IOError', 'ImportError',\n"
+" 'ImportWarning', 'IndentationError', 'IndexError', 'InterruptedError',\n"
+" 'IsADirectoryError', 'KeyError', 'KeyboardInterrupt', 'LookupError',\n"
+" 'MemoryError', 'NameError', 'None', 'NotADirectoryError', "
+"'NotImplemented',\n"
+" 'NotImplementedError', 'OSError', 'OverflowError',\n"
+" 'PendingDeprecationWarning', 'PermissionError', 'ProcessLookupError',\n"
+" 'ReferenceError', 'ResourceWarning', 'RuntimeError', 'RuntimeWarning',\n"
+" 'StopIteration', 'SyntaxError', 'SyntaxWarning', 'SystemError',\n"
+" 'SystemExit', 'TabError', 'TimeoutError', 'True', 'TypeError',\n"
+" 'UnboundLocalError', 'UnicodeDecodeError', 'UnicodeEncodeError',\n"
+" 'UnicodeError', 'UnicodeTranslateError', 'UnicodeWarning', 'UserWarning',\n"
+" 'ValueError', 'Warning', 'ZeroDivisionError', '_', '__build_class__',\n"
+" '__debug__', '__doc__', '__import__', '__name__', '__package__', 'abs',\n"
+" 'all', 'any', 'ascii', 'bin', 'bool', 'bytearray', 'bytes', 'callable',\n"
+" 'chr', 'classmethod', 'compile', 'complex', 'copyright', 'credits',\n"
+" 'delattr', 'dict', 'dir', 'divmod', 'enumerate', 'eval', 'exec', 'exit',\n"
+" 'filter', 'float', 'format', 'frozenset', 'getattr', 'globals', 'hasattr',\n"
+" 'hash', 'help', 'hex', 'id', 'input', 'int', 'isinstance', 'issubclass',\n"
+" 'iter', 'len', 'license', 'list', 'locals', 'map', 'max', 'memoryview',\n"
+" 'min', 'next', 'object', 'oct', 'open', 'ord', 'pow', 'print', 'property',\n"
+" 'quit', 'range', 'repr', 'reversed', 'round', 'set', 'setattr', 'slice',\n"
+" 'sorted', 'staticmethod', 'str', 'sum', 'super', 'tuple', 'type', 'vars',\n"
+" 'zip']"
+msgstr ""
 
 #: ../../tutorial/modules.rst:389
 msgid "Packages"
@@ -505,6 +697,33 @@ msgstr ""
 "现对声音数据的不同处理（例如，混声、添加回声、均衡器功能、创造人工立体声效"
 "果），还要编写无穷无尽的模块流。下面这个分级文件树展示了这个包的架构："
 
+#: ../../tutorial/modules.rst:410
+msgid ""
+"sound/                          Top-level package\n"
+"      __init__.py               Initialize the sound package\n"
+"      formats/                  Subpackage for file format conversions\n"
+"              __init__.py\n"
+"              wavread.py\n"
+"              wavwrite.py\n"
+"              aiffread.py\n"
+"              aiffwrite.py\n"
+"              auread.py\n"
+"              auwrite.py\n"
+"              ...\n"
+"      effects/                  Subpackage for sound effects\n"
+"              __init__.py\n"
+"              echo.py\n"
+"              surround.py\n"
+"              reverse.py\n"
+"              ...\n"
+"      filters/                  Subpackage for filters\n"
+"              __init__.py\n"
+"              equalizer.py\n"
+"              vocoder.py\n"
+"              karaoke.py\n"
+"              ..."
+msgstr ""
+
 #: ../../tutorial/modules.rst:436
 msgid ""
 "When importing the package, Python searches through the directories on ``sys."
@@ -533,6 +752,10 @@ msgid ""
 "example::"
 msgstr "还可以从包中导入单个模块，例如："
 
+#: ../../tutorial/modules.rst:450
+msgid "import sound.effects.echo"
+msgstr ""
+
 #: ../../tutorial/modules.rst:452
 msgid ""
 "This loads the submodule :mod:`!sound.effects.echo`.  It must be referenced "
@@ -540,9 +763,17 @@ msgid ""
 msgstr ""
 "这将加载子模块 :mod:`!sound.effects.echo`。 它必须通过其全名来引用。 ::"
 
+#: ../../tutorial/modules.rst:455
+msgid "sound.effects.echo.echofilter(input, output, delay=0.7, atten=4)"
+msgstr ""
+
 #: ../../tutorial/modules.rst:457
 msgid "An alternative way of importing the submodule is::"
 msgstr "另一种导入子模块的方法是 ："
+
+#: ../../tutorial/modules.rst:459
+msgid "from sound.effects import echo"
+msgstr ""
 
 #: ../../tutorial/modules.rst:461
 msgid ""
@@ -551,11 +782,19 @@ msgid ""
 msgstr ""
 "这也会加载子模块 :mod:`!echo`，并使其不必加包前缀，因此可按如下方式使用::"
 
+#: ../../tutorial/modules.rst:464
+msgid "echo.echofilter(input, output, delay=0.7, atten=4)"
+msgstr ""
+
 #: ../../tutorial/modules.rst:466
 msgid ""
 "Yet another variation is to import the desired function or variable "
 "directly::"
 msgstr "Import 语句的另一种变体是直接导入所需的函数或变量："
+
+#: ../../tutorial/modules.rst:468
+msgid "from sound.effects.echo import echofilter"
+msgstr ""
 
 #: ../../tutorial/modules.rst:470
 msgid ""
@@ -564,6 +803,10 @@ msgid ""
 msgstr ""
 "同样，这将加载子模块 :mod:`!echo`，但这使其函数 :func:`!echofilter` 直接可"
 "用::"
+
+#: ../../tutorial/modules.rst:473
+msgid "echofilter(input, output, delay=0.7, atten=4)"
+msgstr ""
 
 #: ../../tutorial/modules.rst:475
 msgid ""
@@ -624,6 +867,10 @@ msgstr ""
 "表。如果包的作者认为没有必要在包中执行导入 \\* 操作，也可以不提供此列表。例"
 "如，:file:`sound/effects/__init__.py` 文件可以包含以下代码："
 
+#: ../../tutorial/modules.rst:511
+msgid "__all__ = [\"echo\", \"surround\", \"reverse\"]"
+msgstr ""
+
 #: ../../tutorial/modules.rst:513
 msgid ""
 "This would mean that ``from sound.effects import *`` would import the three "
@@ -646,6 +893,18 @@ msgstr ""
 "import *`` 将只导入 ``echo`` 和 ``surround`` 这两个子模块，但 **不会** 导入 "
 "``reverse`` 子模块，因为它被本地定义的 ``reverse`` 函数所遮挡::"
 
+#: ../../tutorial/modules.rst:523
+msgid ""
+"__all__ = [\n"
+"    \"echo\",      # refers to the 'echo.py' file\n"
+"    \"surround\",  # refers to the 'surround.py' file\n"
+"    \"reverse\",   # !!! refers to the 'reverse' function now !!!\n"
+"]\n"
+"\n"
+"def reverse(msg: str):  # <-- this name shadows the 'reverse.py' submodule\n"
+"    return msg[::-1]    #     in the case of a 'from sound.effects import *'"
+msgstr ""
+
 #: ../../tutorial/modules.rst:532
 msgid ""
 "If ``__all__`` is not defined, the statement ``from sound.effects import *`` "
@@ -664,6 +923,13 @@ msgstr ""
 "码），然后再导入包中定义的任何名称。 这包括由 :file:`__init__.py` 定义的任何"
 "名称（以及显式加载的子模块）。 它还包括先前 :keyword:`import` 语句显式加载的"
 "包里的任何子模块。 请看以下代码::"
+
+#: ../../tutorial/modules.rst:541
+msgid ""
+"import sound.effects.echo\n"
+"import sound.effects.surround\n"
+"from sound.effects import *"
+msgstr ""
 
 #: ../../tutorial/modules.rst:545
 msgid ""
@@ -722,6 +988,13 @@ msgstr ""
 "你还可以编写相对导入代码，即使用 ``from module import name`` 形式的 import 语"
 "句。 这些导入使用前导点号来表示相对导入所涉及的当前包和上级包。 例如对于 :"
 "mod:`!surround` 模块，可以使用::"
+
+#: ../../tutorial/modules.rst:576
+msgid ""
+"from . import echo\n"
+"from .. import formats\n"
+"from ..filters import equalizer"
+msgstr ""
 
 #: ../../tutorial/modules.rst:580
 msgid ""

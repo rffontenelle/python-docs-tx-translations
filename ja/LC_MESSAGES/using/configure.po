@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-30 14:55+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:34+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -103,6 +103,14 @@ msgid ""
 "files. Commands to regenerate all generated files::"
 msgstr ""
 
+#: ../../using/configure.rst:54
+msgid ""
+"make regen-all\n"
+"make regen-stdlib-module-names\n"
+"make regen-limited-abi\n"
+"make regen-configure"
+msgstr ""
+
 #: ../../using/configure.rst:59
 msgid ""
 "The ``Makefile.pre.in`` file documents generated files, their inputs, and "
@@ -125,6 +133,10 @@ msgstr ""
 msgid "The container is optional, the following command can be run locally::"
 msgstr ""
 
+#: ../../using/configure.rst:72
+msgid "autoreconf -ivf -Werror"
+msgstr ""
+
 #: ../../using/configure.rst:74
 msgid ""
 "The generated files can change depending on the exact ``autoconf-archive``, "
@@ -138,6 +150,10 @@ msgstr "Configureオプション"
 #: ../../using/configure.rst:83
 msgid "List all ``./configure`` script options using::"
 msgstr "次のコマンドで、全ての ``./configure`` オプションを表示できます。"
+
+#: ../../using/configure.rst:85
+msgid "./configure --help"
+msgstr ""
 
 #: ../../using/configure.rst:87
 msgid ""
@@ -806,7 +822,7 @@ msgstr ""
 
 #: ../../using/configure.rst:517
 msgid "Linker options"
-msgstr ""
+msgstr "リンカのオプション"
 
 #: ../../using/configure.rst:521
 msgid "Enable building a shared Python library: ``libpython`` (default is no)."
@@ -1071,50 +1087,70 @@ msgstr ""
 
 #: ../../using/configure.rst:695
 msgid "path to build ``python`` binary for cross compiling"
-msgstr "クロスコンパイル用のビルド ``python`` バイナリへのパス。"
+msgstr "クロスコンパイル用のビルド ``python`` バイナリへのパス。"
 
 #: ../../using/configure.rst:701
 msgid "An environment variable that points to a file with configure overrides."
-msgstr ""
+msgstr "構成をオーバーライドするファイルを指す環境変数。"
 
 #: ../../using/configure.rst:703
 msgid "Example *config.site* file:"
+msgstr "*config.site* ファイルの例:"
+
+#: ../../using/configure.rst:705
+msgid ""
+"# config.site-aarch64\n"
+"ac_cv_buggy_getaddrinfo=no\n"
+"ac_cv_file__dev_ptmx=yes\n"
+"ac_cv_file__dev_ptc=no"
 msgstr ""
 
 #: ../../using/configure.rst:713
 msgid "Cross compiling example::"
 msgstr "クロスコンパイルの例::"
 
+#: ../../using/configure.rst:715
+msgid ""
+"CONFIG_SITE=config.site-aarch64 ../configure \\\n"
+"    --build=x86_64-pc-linux-gnu \\\n"
+"    --host=aarch64-unknown-linux-gnu \\\n"
+"    --with-build-python=../x86_64/python"
+msgstr ""
+
 #: ../../using/configure.rst:722
 msgid "Python Build System"
-msgstr ""
+msgstr "Python ビルドシステム"
 
 #: ../../using/configure.rst:725
 msgid "Main files of the build system"
-msgstr ""
+msgstr "ビルドシステムの主要なファイル"
 
 #: ../../using/configure.rst:727
 msgid ":file:`configure.ac` => :file:`configure`;"
-msgstr ""
+msgstr ":file:`configure.ac` => :file:`configure`;"
 
 #: ../../using/configure.rst:728
 msgid ""
 ":file:`Makefile.pre.in` => :file:`Makefile` (created by :file:`configure`);"
 msgstr ""
+":file:`Makefile.pre.in` => :file:`Makefile` (:file:`configure` により作成され"
+"ます);"
 
 #: ../../using/configure.rst:729
 msgid ":file:`pyconfig.h` (created by :file:`configure`);"
-msgstr ""
+msgstr ":file:`pyconfig.h` (:file:`configure` により作成されます);"
 
 #: ../../using/configure.rst:730
 msgid ""
 ":file:`Modules/Setup`: C extensions built by the Makefile using :file:"
 "`Module/makesetup` shell script;"
 msgstr ""
+":file:`Modules/Setup`: :file:`Module/makesetup` シェルスクリプトを使用して "
+"Makefile がビルドする C 拡張。"
 
 #: ../../using/configure.rst:734
 msgid "Main build steps"
-msgstr ""
+msgstr "主要なビルドステップ"
 
 #: ../../using/configure.rst:736
 msgid "C files (``.c``) are built as object files (``.o``)."
@@ -1195,11 +1231,32 @@ msgid ""
 "modules have no ``__file__`` attribute:"
 msgstr ""
 
+#: ../../using/configure.rst:770
+msgid ""
+">>> import sys\n"
+">>> sys\n"
+"<module 'sys' (built-in)>\n"
+">>> sys.__file__\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"AttributeError: module 'sys' has no attribute '__file__'"
+msgstr ""
+
 #: ../../using/configure.rst:780
 msgid ""
 "Other C extensions are built as dynamic libraries, like the ``_asyncio`` "
 "module. They are built with the ``Py_BUILD_CORE_MODULE`` macro defined. "
 "Example on Linux x86-64:"
+msgstr ""
+
+#: ../../using/configure.rst:784
+msgid ""
+">>> import _asyncio\n"
+">>> _asyncio\n"
+"<module '_asyncio' from '/usr/lib64/python3.9/lib-dynload/_asyncio."
+"cpython-39-x86_64-linux-gnu.so'>\n"
+">>> _asyncio.__file__\n"
+"'/usr/lib64/python3.9/lib-dynload/_asyncio.cpython-39-x86_64-linux-gnu.so'"
 msgstr ""
 
 #: ../../using/configure.rst:792
@@ -1281,7 +1338,7 @@ msgstr ""
 
 #: ../../using/configure.rst:849
 msgid "C compiler command."
-msgstr ""
+msgstr "C コンパイラのコマンド。"
 
 #: ../../using/configure.rst:851
 msgid "Example: ``gcc -pthread``."
@@ -1297,7 +1354,7 @@ msgstr ""
 
 #: ../../using/configure.rst:861
 msgid "C compiler flags."
-msgstr ""
+msgstr "C コンパイラのフラグ。"
 
 #: ../../using/configure.rst:865
 msgid ""

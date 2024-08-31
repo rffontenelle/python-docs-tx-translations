@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-19 14:50+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Ukrainian (https://app.transifex.com/python-doc/teams/5390/"
@@ -135,6 +135,12 @@ msgstr ""
 "які дані слідують. Код Python для створення мінімального розділу заголовка "
 "виглядає так:"
 
+#: ../../library/cgi.rst:68
+msgid ""
+"print(\"Content-Type: text/html\")    # HTML is following\n"
+"print()                             # blank line, end of headers"
+msgstr ""
+
 #: ../../library/cgi.rst:71
 msgid ""
 "The second section is usually HTML, which allows the client software to "
@@ -145,6 +151,13 @@ msgstr ""
 "забезпеченню відображати гарно відформатований текст із заголовком, "
 "вбудованими зображеннями тощо. Ось код Python, який друкує простий фрагмент "
 "HTML::"
+
+#: ../../library/cgi.rst:75
+msgid ""
+"print(\"<TITLE>CGI script output</TITLE>\")\n"
+"print(\"<H1>This is my first CGI script</H1>\")\n"
+"print(\"Hello, world!\")"
+msgstr ""
 
 #: ../../library/cgi.rst:83
 msgid "Using the cgi module"
@@ -158,6 +171,12 @@ msgstr "Почніть з написання ``import cgi``."
 msgid "When you write a new script, consider adding these lines::"
 msgstr "Коли ви пишете новий сценарій, додайте такі рядки::"
 
+#: ../../library/cgi.rst:89 ../../library/cgi.rst:505
+msgid ""
+"import cgitb\n"
+"cgitb.enable()"
+msgstr ""
+
 #: ../../library/cgi.rst:92
 msgid ""
 "This activates a special exception handler that will display detailed "
@@ -169,6 +188,12 @@ msgstr ""
 "у веб-браузері, якщо виникнуть будь-які помилки. Якщо ви не бажаєте "
 "показувати нутрощі вашої програми користувачам вашого сценарію, ви можете "
 "натомість зберегти звіти у файлах із таким кодом::"
+
+#: ../../library/cgi.rst:97
+msgid ""
+"import cgitb\n"
+"cgitb.enable(display=0, logdir=\"/path/to/logdir\")"
+msgstr ""
 
 #: ../../library/cgi.rst:100
 msgid ""
@@ -230,6 +255,18 @@ msgstr ""
 "Type` і порожній рядок уже надруковано) перевіряє, що поля ``name`` і "
 "``addr`` мають значення не- порожній рядок::"
 
+#: ../../library/cgi.rst:127
+msgid ""
+"form = cgi.FieldStorage()\n"
+"if \"name\" not in form or \"addr\" not in form:\n"
+"    print(\"<H1>Error</H1>\")\n"
+"    print(\"Please fill in the name and addr fields.\")\n"
+"    return\n"
+"print(\"<p>name:\", form[\"name\"].value)\n"
+"print(\"<p>addr:\", form[\"addr\"].value)\n"
+"...further form processing here..."
+msgstr ""
+
 #: ../../library/cgi.rst:136
 msgid ""
 "Here the fields, accessed through ``form[key]``, are themselves instances "
@@ -268,6 +305,12 @@ msgstr ""
 "одиничний випадок). Наприклад, цей код об’єднує будь-яку кількість полів "
 "імені користувача, розділених комами:"
 
+#: ../../library/cgi.rst:153
+msgid ""
+"value = form.getlist(\"username\")\n"
+"usernames = \",\".join(value)"
+msgstr ""
+
 #: ../../library/cgi.rst:156
 msgid ""
 "If a field represents an uploaded file, accessing the value via the :attr:"
@@ -288,6 +331,18 @@ msgstr ""
 "прочитати дані з атрибута :attr:`!file`, перш ніж він автоматично закриється "
 "як частина збірки сміття екземпляра :class:`FieldStorage` (:func:`~io."
 "RawIOBase.read` і :func:`~io.IOBase.readline` методи повертатимуть байти)::"
+
+#: ../../library/cgi.rst:167
+msgid ""
+"fileitem = form[\"userfile\"]\n"
+"if fileitem.file:\n"
+"    # It's an uploaded file; count lines\n"
+"    linecount = 0\n"
+"    while True:\n"
+"        line = fileitem.file.readline()\n"
+"        if not line: break\n"
+"        linecount = linecount + 1"
+msgstr ""
 
 #: ../../library/cgi.rst:176
 msgid ""
@@ -403,6 +458,15 @@ msgstr ""
 "У попередньому розділі ви навчилися писати такий код щоразу, коли очікували, "
 "що користувач опублікує більше одного значення під одним іменем:"
 
+#: ../../library/cgi.rst:228
+msgid ""
+"item = form.getvalue(\"item\")\n"
+"if isinstance(item, list):\n"
+"    # The user is requesting more than one item.\n"
+"else:\n"
+"    # The user is requesting only one item."
+msgstr ""
+
 #: ../../library/cgi.rst:234
 msgid ""
 "This situation is common for example when a form contains a group of "
@@ -410,6 +474,12 @@ msgid ""
 msgstr ""
 "Така ситуація типова, наприклад, коли форма містить групу кількох прапорців "
 "з однаковою назвою::"
+
+#: ../../library/cgi.rst:237
+msgid ""
+"<input type=\"checkbox\" name=\"item\" value=\"1\" />\n"
+"<input type=\"checkbox\" name=\"item\" value=\"2\" />"
+msgstr ""
 
 #: ../../library/cgi.rst:240
 msgid ""
@@ -420,6 +490,10 @@ msgstr ""
 "Однак у більшості ситуацій у формі є лише один елемент керування з певним "
 "ім’ям, і тоді ви очікуєте та потребуєте лише одного значення, пов’язаного з "
 "цим ім’ям. Отже, ви пишете сценарій, який містить, наприклад, цей код::"
+
+#: ../../library/cgi.rst:244
+msgid "user = form.getvalue(\"user\").upper()"
+msgstr ""
 
 #: ../../library/cgi.rst:246
 msgid ""
@@ -491,6 +565,15 @@ msgstr ""
 #: ../../library/cgi.rst:279
 msgid "Using these methods you can write nice compact code::"
 msgstr "Використовуючи ці методи, ви можете написати гарний компактний код:"
+
+#: ../../library/cgi.rst:281
+msgid ""
+"import cgi\n"
+"form = cgi.FieldStorage()\n"
+"user = form.getfirst(\"user\", \"\").upper()    # This way it's safe.\n"
+"for item in form.getlist(\"item\"):\n"
+"    do_something(item)"
+msgstr ""
 
 #: ../../library/cgi.rst:291
 msgid "Functions"
@@ -594,6 +677,14 @@ msgstr ""
 msgid "For example, with :class:`email.message.EmailMessage`::"
 msgstr ""
 
+#: ../../library/cgi.rst:352
+msgid ""
+"from email.message import EmailMessage\n"
+"msg = EmailMessage()\n"
+"msg['content-type'] = 'application/json; charset=\"utf8\"'\n"
+"main, params = msg.get_content_type(), msg['content-type'].params"
+msgstr ""
+
 #: ../../library/cgi.rst:360
 msgid ""
 "Robust test CGI script, usable as main program. Writes minimal HTTP headers "
@@ -680,6 +771,10 @@ msgstr ""
 "``#!``, починаючи зі стовпця 1, за яким іде шлях до інтерпретатора Python, "
 "наприклад::"
 
+#: ../../library/cgi.rst:416
+msgid "#!/usr/local/bin/python"
+msgstr ""
+
 #: ../../library/cgi.rst:418
 msgid ""
 "Make sure the Python interpreter exists and is executable by \"others\"."
@@ -722,6 +817,13 @@ msgstr ""
 "Якщо вам потрібно завантажити модулі з каталогу, який не входить до "
 "стандартного шляху пошуку модулів Python, ви можете змінити шлях у своєму "
 "сценарії перед імпортом інших модулів. Наприклад::"
+
+#: ../../library/cgi.rst:435
+msgid ""
+"import sys\n"
+"sys.path.insert(0, \"/usr/home/joe/lib/python\")\n"
+"sys.path.insert(0, \"/usr/local/lib/python\")"
+msgstr ""
 
 #: ../../library/cgi.rst:439
 msgid "(This way, the directory inserted last will be searched first!)"
@@ -792,6 +894,10 @@ msgstr ""
 "bin`, можна буде надіслати запит, ввівши URL-адресу у вашому браузері у "
 "формі:"
 
+#: ../../library/cgi.rst:473
+msgid "http://yourhostname/cgi-bin/cgi.py?name=Joe+Blow&addr=At+Home"
+msgstr ""
+
 #: ../../library/cgi.rst:477
 msgid ""
 "If this gives an error of type 404, the server cannot find the script -- "
@@ -819,6 +925,10 @@ msgid ""
 msgstr ""
 "Наступним кроком може бути виклик функції :func:`test` модуля :mod:`cgi` з "
 "вашого сценарію: замініть його основний код одним оператором ::"
+
+#: ../../library/cgi.rst:489
+msgid "cgi.test()"
+msgstr ""
 
 #: ../../library/cgi.rst:491
 msgid ""
@@ -873,6 +983,15 @@ msgstr ""
 "Якщо ви підозрюєте, що може виникнути проблема з імпортом модуля :mod:"
 "`cgitb`, ви можете скористатися навіть більш надійним підходом (який "
 "використовує лише вбудовані модулі):"
+
+#: ../../library/cgi.rst:515
+msgid ""
+"import sys\n"
+"sys.stderr = sys.stdout\n"
+"print(\"Content-Type: text/plain\")\n"
+"print()\n"
+"...your code here..."
+msgstr ""
 
 #: ../../library/cgi.rst:521
 msgid ""

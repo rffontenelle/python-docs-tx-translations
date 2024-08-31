@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-16 14:48+0000\n"
+"POT-Creation-Date: 2024-08-31 11:30+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -1163,6 +1163,10 @@ msgstr ""
 "Devuelve la versión de este intérprete de Python.  Se trata de una cadena "
 "con un aspecto similar a ::"
 
+#: ../../c-api/init.rst:663
+msgid "\"3.0a5+ (py3k:63103M, May 12 2008, 00:53:55) \\n[GCC 4.2.3]\""
+msgstr ""
+
 #: ../../c-api/init.rst:667
 msgid ""
 "The first word (up to the first space character) is the current Python "
@@ -1229,6 +1233,10 @@ msgstr ""
 "Devuelve una indicación del compilador utilizado para compilar la versión "
 "actual de Python, entre corchetes, por ejemplo::"
 
+#: ../../c-api/init.rst:705
+msgid "\"[GCC 2.7.2.2]\""
+msgstr ""
+
 #: ../../c-api/init.rst:709 ../../c-api/init.rst:723
 msgid ""
 "The returned string points into static storage; the caller should not modify "
@@ -1246,6 +1254,10 @@ msgid ""
 msgstr ""
 "Devuelve información sobre el número de secuencia y la fecha y hora de "
 "compilación de la instancia actual del intérprete de Python, por ejemplo ::"
+
+#: ../../c-api/init.rst:719
+msgid "\"#67, Aug  1 1997, 22:34:28\""
+msgstr ""
 
 #: ../../c-api/init.rst:735
 msgid ""
@@ -1336,6 +1348,10 @@ msgstr ""
 "En versiones anteriores a la 3.1.3, puede conseguir el mismo efecto haciendo "
 "saltar manualmente el primer elemento :data:`sys.path` después de haber "
 "llamado a :c:func:`PySys_SetArgv`, por ejemplo utilizando"
+
+#: ../../c-api/init.rst:776
+msgid "PyRun_SimpleString(\"import sys; sys.path.pop(0)\\n\");"
+msgstr ""
 
 #: ../../c-api/init.rst:788
 msgid ""
@@ -1469,9 +1485,25 @@ msgstr ""
 "La mayor parte del código de extensión que manipula el :term:`GIL` tiene la "
 "siguiente estructura simple::"
 
+#: ../../c-api/init.rst:882
+msgid ""
+"Save the thread state in a local variable.\n"
+"Release the global interpreter lock.\n"
+"... Do some blocking I/O operation ...\n"
+"Reacquire the global interpreter lock.\n"
+"Restore the thread state from the local variable."
+msgstr ""
+
 #: ../../c-api/init.rst:888
 msgid "This is so common that a pair of macros exists to simplify it::"
 msgstr "Esto es tan común que existe un par de macros para simplificarlo::"
+
+#: ../../c-api/init.rst:890
+msgid ""
+"Py_BEGIN_ALLOW_THREADS\n"
+"... Do some blocking I/O operation ...\n"
+"Py_END_ALLOW_THREADS"
+msgstr ""
 
 #: ../../c-api/init.rst:898
 msgid ""
@@ -1486,6 +1518,15 @@ msgstr ""
 #: ../../c-api/init.rst:902
 msgid "The block above expands to the following code::"
 msgstr "El bloque anterior se expande al siguiente código::"
+
+#: ../../c-api/init.rst:904
+msgid ""
+"PyThreadState *_save;\n"
+"\n"
+"_save = PyEval_SaveThread();\n"
+"... Do some blocking I/O operation ...\n"
+"PyEval_RestoreThread(_save);"
+msgstr ""
 
 #: ../../c-api/init.rst:914
 msgid ""
@@ -1570,6 +1611,19 @@ msgstr ""
 "Las funciones :c:func:`PyGILState_Ensure` y :c:func:`PyGILState_Release` "
 "hacen todo lo anterior automáticamente.  El lenguaje típico para llamar a "
 "Python desde un hilo C es::"
+
+#: ../../c-api/init.rst:955
+msgid ""
+"PyGILState_STATE gstate;\n"
+"gstate = PyGILState_Ensure();\n"
+"\n"
+"/* Perform Python actions here. */\n"
+"result = CallSomeFunction();\n"
+"/* evaluate result or handle exception */\n"
+"\n"
+"/* Release the thread. No Python API allowed beyond this point. */\n"
+"PyGILState_Release(gstate);"
+msgstr ""
 
 #: ../../c-api/init.rst:965
 msgid ""
@@ -2607,6 +2661,20 @@ msgid ""
 msgstr ""
 "Los subinterpretadores son más eficaces cuando están aislados unos de otros, "
 "con ciertas funciones restringidas::"
+
+#: ../../c-api/init.rst:1638
+msgid ""
+"PyInterpreterConfig config = {\n"
+"    .use_main_obmalloc = 0,\n"
+"    .allow_fork = 0,\n"
+"    .allow_exec = 0,\n"
+"    .allow_threads = 1,\n"
+"    .allow_daemon_threads = 0,\n"
+"    .check_multi_interp_extensions = 1,\n"
+"    .gil = PyInterpreterConfig_OWN_GIL,\n"
+"};\n"
+"PyThreadState *tstate = Py_NewInterpreterFromConfig(&config);"
+msgstr ""
 
 #: ../../c-api/init.rst:1649
 msgid ""
