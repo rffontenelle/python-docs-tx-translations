@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-09 15:28+0000\n"
+"POT-Creation-Date: 2024-08-31 12:03+0000\n"
 "PO-Revision-Date: 2023-05-24 02:14+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
@@ -1894,12 +1894,22 @@ msgid ""
 "implementation never overflows. :class:`!datetime` instances in a repeated "
 "interval are never equal to :class:`!datetime` instances in other time zone."
 msgstr ""
+"Se ambos os comparandos forem conscientes e tiverem o mesmo atributo :attr:`!"
+"tzinfo`, os atributos :attr:`!tzinfo` e :attr:`~.datetime.fold` serão "
+"ignorados e os datetimes base serão comparados. Se ambos os comparandos "
+"forem conscientes e tiverem atributos :attr:`~.datetime.tzinfo` diferentes, "
+"a comparação atua como se os comparandos fossem primeiro convertidos para "
+"datetimes UTC, exceto que a implementação nunca estoura. Instâncias :class:`!"
+"datetime` em um intervalo repetido nunca são iguais a instâncias :class:`!"
+"datetime` em outro fuso horário."
 
 #: ../../library/datetime.rst:1198
 msgid ""
 "*datetime1* is considered less than *datetime2* when *datetime1* precedes "
 "*datetime2* in time, taking into account the time zone."
 msgstr ""
+"*datetime1* é considerado menor que *datetime2* quando *datetime1* precede "
+"*datetime2* no tempo. levando em consideração o fuso horário."
 
 #: ../../library/datetime.rst:1201
 msgid ""
@@ -1917,6 +1927,12 @@ msgid ""
 "comparands were first converted to UTC datetimes except that the "
 "implementation never overflows."
 msgstr ""
+"Se ambos os comparandos forem conscientes e tiverem o mesmo atributo :attr:`!"
+"tzinfo`, os atributos :attr:`!tzinfo` e :attr:`~.datetime.fold` serão "
+"ignorados e os datetimes base serão comparados. Se ambos os comparandos "
+"forem conscientes e tiverem atributos :attr:`~.datetime.tzinfo` diferentes, "
+"a comparação atua como se os comparandos fossem primeiro convertidos para "
+"datetimes UTC, exceto que a implementação nunca estoura."
 
 #: ../../library/datetime.rst:1212
 msgid ""
@@ -2111,6 +2127,10 @@ msgid ""
 "regardless of what ``d.dst()`` returns. DST is never in effect for a UTC "
 "time."
 msgstr ""
+"Se a instância :class:`.datetime` *d* é ingênua, isto é o mesmo que ``d."
+"timetuple()`` exceto que :attr:`~.time.struct_time.tm_isdst` é forçado para "
+"0 independente do que ``d.dst()`` retorna. DST nunca é afetado por um "
+"horário UTC."
 
 #: ../../library/datetime.rst:1352
 msgid ""
@@ -2329,7 +2349,7 @@ msgstr ""
 
 #: ../../library/datetime.rst:1494 ../../library/datetime.rst:1869
 msgid "Added the *timespec* parameter."
-msgstr ""
+msgstr "Adicionado o  parâmetro *timespec*."
 
 #: ../../library/datetime.rst:1500
 msgid ""
@@ -2389,7 +2409,7 @@ msgstr "Exemplos de uso: :class:`.datetime`"
 
 #: ../../library/datetime.rst:1542
 msgid "Examples of working with :class:`.datetime` objects:"
-msgstr ""
+msgstr "Exemplos para trabalhar com objetos :class:`.datetime`:"
 
 #: ../../library/datetime.rst:1595
 msgid ""
@@ -2414,6 +2434,9 @@ msgid ""
 "A :class:`.time` object represents a (local) time of day, independent of any "
 "particular day, and subject to adjustment via a :class:`tzinfo` object."
 msgstr ""
+"Um objeto :class:`.time` representa a hora (local) do dia, independente de "
+"qualquer dia em particular, e sujeito a ajustes através de um objeto :class:"
+"`tzinfo`."
 
 #: ../../library/datetime.rst:1675
 msgid ""
@@ -2468,12 +2491,17 @@ msgid ""
 ":class:`.time` objects support equality and order comparisons, where *a* is "
 "considered less than *b* when *a* precedes *b* in time."
 msgstr ""
+"Objetos :class:`.time` suportam comparações de igualdade e ordem, onde *a* é "
+"considerado menor que *b* quando *a* precede *b* no tempo."
 
 #: ../../library/datetime.rst:1749
 msgid ""
 "Naive and aware :class:`!time` objects are never equal. Order comparison "
 "between naive and aware :class:`!time` objects raises :exc:`TypeError`."
 msgstr ""
+"Objetos :class:`!time` ingênuos e conscientes nunca são iguais. A comparação "
+"de ordem entre objetos :class:`!time` ingênuos e conscientes levanta :exc:"
+"`TypeError`."
 
 #: ../../library/datetime.rst:1753
 msgid ""
@@ -2483,12 +2511,19 @@ msgid ""
 "different :attr:`!tzinfo` attributes, the comparands are first adjusted by "
 "subtracting their UTC offsets (obtained from ``self.utcoffset()``)."
 msgstr ""
+"Se ambos os comparandos são conscientes, e tem o mesmo atributo :attr:`~."
+"time.tzinfo`, os atributos :attr:`!tzinfo` e :attr:`!fold` são ignorados e "
+"os tempos base são comparados. Se ambos os comparandos são conscientes e tem "
+"atributos :attr:`!tzinfo` diferentes, os comparandos são primeiro ajustados "
+"subtraindo sua diferença em UTC (obtida através de ``self.utcoffset()``)."
 
 #: ../../library/datetime.rst:1759
 msgid ""
 "Equality comparisons between aware and naive :class:`.time` instances don't "
 "raise :exc:`TypeError`."
 msgstr ""
+"Comparações de igualdade entre instâncias de :class:`.time` conscientes e "
+"nativas não levantam :exc:`TypeError`."
 
 #: ../../library/datetime.rst:1763
 msgid ""
@@ -2707,6 +2742,10 @@ msgid ""
 "otherwise it can be pickled but possibly not unpickled again. This is a "
 "technical requirement that may be relaxed in the future."
 msgstr ""
+"Requisito especial para preservação: uma subclasse :class:`tzinfo` deve ter "
+"um método :meth:`~object.__init__` que pode ser chamado sem nenhum "
+"argumento, caso contrário ele pode ser conservado, mas não alterado "
+"novamente. Isso é um requisito técnico que pode ser relaxado no futuro."
 
 #: ../../library/datetime.rst:1978
 msgid ""
@@ -2714,6 +2753,10 @@ msgid ""
 "methods. Exactly which methods are needed depends on the uses made of aware :"
 "mod:`!datetime` objects. If in doubt, simply implement all of them."
 msgstr ""
+"Uma subclasse concreta de :class:`tzinfo` pode precisar implementar os "
+"seguintes métodos. Exatamente quais métodos são necessários depende do uso "
+"feito de objetos :mod:`!datetime` conscientes. Se estiver em dúvida, "
+"simplesmente implemente todos eles."
 
 #: ../../library/datetime.rst:1985
 msgid ""
@@ -2816,7 +2859,7 @@ msgstr ""
 
 #: ../../library/datetime.rst:2045
 msgid "or::"
-msgstr "or::"
+msgstr "ou::"
 
 #: ../../library/datetime.rst:2057
 msgid ""
