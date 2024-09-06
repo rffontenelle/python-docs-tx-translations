@@ -25,17 +25,17 @@
 # WH-2099 <wh2099@outlook.com>, 2023
 # LeeWendao <LeeWendao@outlook.com>, 2023
 # Alpha Du <alphanow@gmail.com>, 2024
-# Freesand Leo <yuqinju@163.com>, 2024
 # lqks, 2024
+# Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 10:59+0000\n"
+"POT-Creation-Date: 2024-09-06 14:16+0000\n"
 "PO-Revision-Date: 2021-06-28 01:19+0000\n"
-"Last-Translator: lqks, 2024\n"
+"Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -564,6 +564,10 @@ msgid ""
 "bytes objects.  Also, bytes objects can be decoded to strings via the :meth:"
 "`~bytes.decode` method."
 msgstr ""
+"字节串对象是不是变的数组。 其中的条目是 8 比特位的字节，以取值范围 0 <= x < "
+"256 内的整数表示。 字节串字面值 (如 ``b'abc'``) 和内置的 :func:`bytes` 构造器"
+"可被用来创建字节串对象。 并且，字节串对象还可通过 :meth:`~bytes.decode` 方法"
+"被解码为字符串。"
 
 #: ../../reference/datamodel.rst:386
 msgid "Mutable sequences"
@@ -730,10 +734,9 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:499
 msgid ""
-"Dictionaries are mutable; they can be created by the ``{...}`` notation (see "
+"Dictionaries are mutable; they can be created by the ``{}`` notation (see "
 "section :ref:`dict`)."
 msgstr ""
-"字典是可变的；它们可通过 ``{...}`` 标注来创建 (参见 :ref:`dict` 小节)。"
 
 #: ../../reference/datamodel.rst:506
 msgid ""
@@ -2610,6 +2613,8 @@ msgid ""
 "def __hash__(self):\n"
 "    return hash((self.name, self.nick, self.color))"
 msgstr ""
+"def __hash__(self):\n"
+"    return hash((self.name, self.nick, self.color))"
 
 #: ../../reference/datamodel.rst:1856
 msgid ""
@@ -2932,6 +2937,18 @@ msgid ""
 "\n"
 "sys.modules[__name__].__class__ = VerboseModule"
 msgstr ""
+"import sys\n"
+"from types import ModuleType\n"
+"\n"
+"class VerboseModule(ModuleType):\n"
+"    def __repr__(self):\n"
+"        return f'Verbose {self.__name__}'\n"
+"\n"
+"    def __setattr__(self, attr, value):\n"
+"        print(f'Setting {attr}...')\n"
+"        super().__setattr__(attr, value)\n"
+"\n"
+"sys.modules[__name__].__class__ = VerboseModule"
 
 #: ../../reference/datamodel.rst:2060
 msgid ""
@@ -3400,6 +3417,13 @@ msgid ""
 "class AustralianPhilosopher(Philosopher, default_name=\"Bruce\"):\n"
 "    pass"
 msgstr ""
+"class Philosopher:\n"
+"    def __init_subclass__(cls, /, default_name, **kwargs):\n"
+"        super().__init_subclass__(**kwargs)\n"
+"        cls.default_name = default_name\n"
+"\n"
+"class AustralianPhilosopher(Philosopher, default_name=\"Bruce\"):\n"
+"    pass"
 
 #: ../../reference/datamodel.rst:2350
 msgid ""
@@ -3440,6 +3464,8 @@ msgid ""
 "class A:\n"
 "    x = C()  # Automatically calls: x.__set_name__(A, 'x')"
 msgstr ""
+"class A:\n"
+"    x = C()  # 自动调用: x.__set_name__(A, 'x')"
 
 #: ../../reference/datamodel.rst:2374
 msgid ""
@@ -3459,6 +3485,12 @@ msgid ""
 "A.x = c                  # The hook is not called\n"
 "c.__set_name__(A, 'x')   # Manually invoke the hook"
 msgstr ""
+"class A:\n"
+"   pass\n"
+"\n"
+"c = C()\n"
+"A.x = c                  # 钩子未被调用\n"
+"c.__set_name__(A, 'x')   # 手动发起调用钩子"
 
 #: ../../reference/datamodel.rst:2385
 msgid "See :ref:`class-object-creation` for more details."
@@ -3499,6 +3531,14 @@ msgid ""
 "class MySubclass(MyClass):\n"
 "    pass"
 msgstr ""
+"class Meta(type):\n"
+"    pass\n"
+"\n"
+"class MyClass(metaclass=Meta):\n"
+"    pass\n"
+"\n"
+"class MySubclass(MyClass):\n"
+"    pass"
 
 #: ../../reference/datamodel.rst:2418
 msgid ""
@@ -4027,6 +4067,28 @@ msgid ""
 "            f\"'{class_of_obj.__name__}' object is not subscriptable\"\n"
 "        )"
 msgstr ""
+"from inspect import isclass\n"
+"\n"
+"def subscribe(obj, x):\n"
+"    \"\"\"返回表达式 'obj[x]' 的结果\"\"\"\n"
+"\n"
+"    class_of_obj = type(obj)\n"
+"\n"
+"    # 如果 obj 所属的类定义了 __getitem__，\n"
+"    # 则调用 class_of_obj.__getitem__(obj, x)\n"
+"    if hasattr(class_of_obj, '__getitem__'):\n"
+"        return class_of_obj.__getitem__(obj, x)\n"
+"\n"
+"    # 否则，如果 obj 是一个类并且定义了 __class_getitem__，\n"
+"    # 则调用 obj.__class_getitem__(x)\n"
+"    elif isclass(obj) and hasattr(obj, '__class_getitem__'):\n"
+"        return obj.__class_getitem__(x)\n"
+"\n"
+"    # 否则，引发一个异常\n"
+"    else:\n"
+"        raise TypeError(\n"
+"            f\"'{class_of_obj.__name__}' object is not subscriptable\"\n"
+"        )"
 
 #: ../../reference/datamodel.rst:2720
 msgid ""
@@ -4221,7 +4283,7 @@ msgstr "切片是通过下述三个专门方法完成的。以下形式的调用
 
 #: ../../reference/datamodel.rst:2860
 msgid "a[1:2] = b"
-msgstr ""
+msgstr "a[1:2] = b"
 
 #: ../../reference/datamodel.rst:2862
 msgid "is translated to ::"
@@ -4229,7 +4291,7 @@ msgstr "会为转写为 ::"
 
 #: ../../reference/datamodel.rst:2864
 msgid "a[slice(1, 2, None)] = b"
-msgstr ""
+msgstr "a[slice(1, 2, None)] = b"
 
 #: ../../reference/datamodel.rst:2866
 msgid "and so forth.  Missing slice items are always filled in with ``None``."
@@ -4757,6 +4819,15 @@ msgid ""
 "  File \"<stdin>\", line 1, in <module>\n"
 "TypeError: object of type 'C' has no len()"
 msgstr ""
+">>> class C:\n"
+"...     pass\n"
+"...\n"
+">>> c = C()\n"
+">>> c.__len__ = lambda: 5\n"
+">>> len(c)\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"TypeError: object of type 'C' has no len()"
 
 #: ../../reference/datamodel.rst:3276
 msgid ""
@@ -4779,6 +4850,12 @@ msgid ""
 "  File \"<stdin>\", line 1, in <module>\n"
 "TypeError: descriptor '__hash__' of 'int' object needs an argument"
 msgstr ""
+">>> 1 .__hash__() == hash(1)\n"
+"True\n"
+">>> int.__hash__() == hash(int)\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"TypeError: descriptor '__hash__' of 'int' object needs an argument"
 
 #: ../../reference/datamodel.rst:3290
 msgid ""
@@ -4796,6 +4873,10 @@ msgid ""
 ">>> type(int).__hash__(int) == hash(int)\n"
 "True"
 msgstr ""
+">>> type(1).__hash__(1) == hash(1)\n"
+"True\n"
+">>> type(int).__hash__(int) == hash(int)\n"
+"True"
 
 #: ../../reference/datamodel.rst:3299
 msgid ""
@@ -5032,6 +5113,18 @@ msgid ""
 "            raise StopAsyncIteration\n"
 "        return val"
 msgstr ""
+"class Reader:\n"
+"    async def readline(self):\n"
+"        ...\n"
+"\n"
+"    def __aiter__(self):\n"
+"        return self\n"
+"\n"
+"    async def __anext__(self):\n"
+"        val = await self.readline()\n"
+"        if val == b'':\n"
+"            raise StopAsyncIteration\n"
+"        return val"
 
 #: ../../reference/datamodel.rst:3468
 msgid ""
@@ -5098,6 +5191,12 @@ msgid ""
 "    async def __aexit__(self, exc_type, exc, tb):\n"
 "        await log('exiting context')"
 msgstr ""
+"class AsyncContextManager:\n"
+"    async def __aenter__(self):\n"
+"        await log('entering context')\n"
+"\n"
+"    async def __aexit__(self, exc_type, exc, tb):\n"
+"        await log('exiting context')"
 
 #: ../../reference/datamodel.rst:3511
 msgid "Footnotes"

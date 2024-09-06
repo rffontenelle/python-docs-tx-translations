@@ -99,6 +99,8 @@ msgid ""
 ">>> import spam\n"
 ">>> status = spam.system(\"ls -l\")"
 msgstr ""
+">>> import spam\n"
+">>> status = spam.system(\"ls -l\")"
 
 #: ../../extending/extending.rst:53
 msgid ""
@@ -120,6 +122,8 @@ msgid ""
 "#define PY_SSIZE_T_CLEAN\n"
 "#include <Python.h>"
 msgstr ""
+"#define PY_SSIZE_T_CLEAN\n"
+"#include <Python.h>"
 
 #: ../../extending/extending.rst:63
 msgid ""
@@ -188,6 +192,17 @@ msgid ""
 "    return PyLong_FromLong(sts);\n"
 "}"
 msgstr ""
+"static PyObject *\n"
+"spam_system(PyObject *self, PyObject *args)\n"
+"{\n"
+"    const char *command;\n"
+"    int sts;\n"
+"\n"
+"    if (!PyArg_ParseTuple(args, \"s\", &command))\n"
+"        return NULL;\n"
+"    sts = system(command);\n"
+"    return PyLong_FromLong(sts);\n"
+"}"
 
 #: ../../extending/extending.rst:101
 msgid ""
@@ -409,7 +424,7 @@ msgstr ""
 
 #: ../../extending/extending.rst:209
 msgid "static PyObject *SpamError;"
-msgstr ""
+msgstr "static PyObject *SpamError;"
 
 #: ../../extending/extending.rst:211
 msgid ""

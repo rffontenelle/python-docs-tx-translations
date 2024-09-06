@@ -8,7 +8,7 @@
 # Pan Felix <tinylambda@gmail.com>, 2021
 # kevin wong <huagang517@126.com>, 2021
 # 钢 彭 <szhairui@gmail.com>, 2021
-# Freesand Leo <yuqinju@163.com>, 2023
+# Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
 msgid ""
@@ -17,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-31 10:59+0000\n"
 "PO-Revision-Date: 2021-06-28 00:54+0000\n"
-"Last-Translator: Freesand Leo <yuqinju@163.com>, 2023\n"
+"Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -88,7 +88,7 @@ msgstr ""
 
 #: ../../library/asyncio-dev.rst:40
 msgid "logging.basicConfig(level=logging.DEBUG)"
-msgstr ""
+msgstr "logging.basicConfig(level=logging.DEBUG)"
 
 #: ../../library/asyncio-dev.rst:42
 msgid ""
@@ -163,7 +163,7 @@ msgstr ""
 
 #: ../../library/asyncio-dev.rst:79
 msgid "loop.call_soon_threadsafe(callback, *args)"
-msgstr ""
+msgstr "loop.call_soon_threadsafe(callback, *args)"
 
 #: ../../library/asyncio-dev.rst:81
 msgid ""
@@ -178,7 +178,7 @@ msgstr ""
 
 #: ../../library/asyncio-dev.rst:87
 msgid "loop.call_soon_threadsafe(fut.cancel)"
-msgstr ""
+msgstr "loop.call_soon_threadsafe(fut.cancel)"
 
 #: ../../library/asyncio-dev.rst:89
 msgid ""
@@ -200,6 +200,14 @@ msgid ""
 "# Wait for the result:\n"
 "result = future.result()"
 msgstr ""
+"async def coro_func():\n"
+"     return await asyncio.sleep(1, 42)\n"
+"\n"
+"# 随后在另一个 OS 线程中：\n"
+"\n"
+"future = asyncio.run_coroutine_threadsafe(coro_func(), loop)\n"
+"# 等待结果：\n"
+"result = future.result()"
 
 #: ../../library/asyncio-dev.rst:102
 msgid "To handle signals the event loop must be run in the main thread."
@@ -277,7 +285,7 @@ msgstr "默认的日志级别是 :py:const:`logging.INFO`，它可以被方便�
 
 #: ../../library/asyncio-dev.rst:148
 msgid "logging.getLogger(\"asyncio\").setLevel(logging.WARNING)"
-msgstr ""
+msgstr "logging.getLogger(\"asyncio\").setLevel(logging.WARNING)"
 
 #: ../../library/asyncio-dev.rst:151
 msgid ""
@@ -314,6 +322,15 @@ msgid ""
 "\n"
 "asyncio.run(main())"
 msgstr ""
+"import asyncio\n"
+"\n"
+"async def test():\n"
+"    print(\"never scheduled\")\n"
+"\n"
+"async def main():\n"
+"    test()\n"
+"\n"
+"asyncio.run(main())"
 
 #: ../../library/asyncio-dev.rst:176 ../../library/asyncio-dev.rst:221
 msgid "Output::"
@@ -324,6 +341,8 @@ msgid ""
 "test.py:7: RuntimeWarning: coroutine 'test' was never awaited\n"
 "  test()"
 msgstr ""
+"test.py:7: RuntimeWarning: coroutine 'test' was never awaited\n"
+"  test()"
 
 #: ../../library/asyncio-dev.rst:181 ../../library/asyncio-dev.rst:237
 msgid "Output in debug mode::"
@@ -342,6 +361,16 @@ msgid ""
 "    test()\n"
 "  test()"
 msgstr ""
+"test.py:7: RuntimeWarning: coroutine 'test' was never awaited\n"
+"Coroutine created at (most recent call last)\n"
+"  File \"../t.py\", line 9, in <module>\n"
+"    asyncio.run(main(), debug=True)\n"
+"\n"
+"  < .. >\n"
+"\n"
+"  File \"../t.py\", line 7, in main\n"
+"    test()\n"
+"  test()"
 
 #: ../../library/asyncio-dev.rst:194
 msgid ""
@@ -354,6 +383,8 @@ msgid ""
 "async def main():\n"
 "    await test()"
 msgstr ""
+"async def main():\n"
+"    await test()"
 
 #: ../../library/asyncio-dev.rst:202
 msgid "Detect never-retrieved exceptions"
@@ -385,6 +416,15 @@ msgid ""
 "\n"
 "asyncio.run(main())"
 msgstr ""
+"import asyncio\n"
+"\n"
+"async def bug():\n"
+"    raise Exception(\"not consumed\")\n"
+"\n"
+"async def main():\n"
+"    asyncio.create_task(bug())\n"
+"\n"
+"asyncio.run(main())"
 
 #: ../../library/asyncio-dev.rst:223
 msgid ""
@@ -397,6 +437,14 @@ msgid ""
 "    raise Exception(\"not consumed\")\n"
 "Exception: not consumed"
 msgstr ""
+"Task exception was never retrieved\n"
+"future: <Task finished coro=<bug() done, defined at test.py:3>\n"
+"  exception=Exception('not consumed')>\n"
+"\n"
+"Traceback (most recent call last):\n"
+"  File \"test.py\", line 4, in bug\n"
+"    raise Exception(\"not consumed\")\n"
+"Exception: not consumed"
 
 #: ../../library/asyncio-dev.rst:232
 msgid ""
@@ -406,7 +454,7 @@ msgstr ":ref:`激活调试模式 <asyncio-debug-mode>` 以获取任务创建处�
 
 #: ../../library/asyncio-dev.rst:235
 msgid "asyncio.run(main(), debug=True)"
-msgstr ""
+msgstr "asyncio.run(main(), debug=True)"
 
 #: ../../library/asyncio-dev.rst:239
 msgid ""
@@ -425,3 +473,17 @@ msgid ""
 "    raise Exception(\"not consumed\")\n"
 "Exception: not consumed"
 msgstr ""
+"Task exception was never retrieved\n"
+"future: <Task finished coro=<bug() done, defined at test.py:3>\n"
+"    exception=Exception('not consumed') created at asyncio/tasks.py:321>\n"
+"\n"
+"source_traceback: Object created at (most recent call last):\n"
+"  File \"../t.py\", line 9, in <module>\n"
+"    asyncio.run(main(), debug=True)\n"
+"\n"
+"< .. >\n"
+"\n"
+"Traceback (most recent call last):\n"
+"  File \"../t.py\", line 4, in bug\n"
+"    raise Exception(\"not consumed\")\n"
+"Exception: not consumed"

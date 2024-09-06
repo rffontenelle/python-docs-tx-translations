@@ -378,7 +378,7 @@ msgstr "这个 ExampleService 演示程序可通过命令行发起调用::"
 
 #: ../../library/xmlrpc.server.rst:262
 msgid "python -m xmlrpc.server"
-msgstr ""
+msgstr "python -m xmlrpc.server"
 
 #: ../../library/xmlrpc.server.rst:265
 msgid ""
@@ -405,6 +405,22 @@ msgid ""
 "except Error as v:\n"
 "    print(\"ERROR\", v)"
 msgstr ""
+"server = ServerProxy(\"http://localhost:8000\")\n"
+"\n"
+"try:\n"
+"    print(server.currentTime.getCurrentTime())\n"
+"except Error as v:\n"
+"    print(\"ERROR\", v)\n"
+"\n"
+"multi = MultiCall(server)\n"
+"multi.getData()\n"
+"multi.pow(2,9)\n"
+"multi.add(1,2)\n"
+"try:\n"
+"    for response in multi():\n"
+"        print(response)\n"
+"except Error as v:\n"
+"    print(\"ERROR\", v)"
 
 #: ../../library/xmlrpc.server.rst:285
 msgid ""
@@ -413,7 +429,7 @@ msgstr "这个可与示例 XMLRPC 服务器进行交互的客户端的启动方�
 
 #: ../../library/xmlrpc.server.rst:287
 msgid "python -m xmlrpc.client"
-msgstr ""
+msgstr "python -m xmlrpc.client"
 
 #: ../../library/xmlrpc.server.rst:291
 msgid "CGIXMLRPCRequestHandler"
@@ -487,6 +503,17 @@ msgid ""
 "handler.register_instance(MyFuncs())\n"
 "handler.handle_request()"
 msgstr ""
+"class MyFuncs:\n"
+"    def mul(self, x, y):\n"
+"        return x * y\n"
+"\n"
+"\n"
+"handler = CGIXMLRPCRequestHandler()\n"
+"handler.register_function(pow)\n"
+"handler.register_function(lambda x,y: x+y, 'add')\n"
+"handler.register_introspection_functions()\n"
+"handler.register_instance(MyFuncs())\n"
+"handler.handle_request()"
 
 #: ../../library/xmlrpc.server.rst:358
 msgid "Documenting XMLRPC server"

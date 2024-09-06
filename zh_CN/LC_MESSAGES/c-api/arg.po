@@ -18,6 +18,7 @@
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 # lqks, 2024
 # Freesand Leo <yuqinju@163.com>, 2024
+# Nyuan Zhang, 2024
 #
 #, fuzzy
 msgid ""
@@ -26,7 +27,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-31 10:59+0000\n"
 "PO-Revision-Date: 2021-06-28 00:47+0000\n"
-"Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
+"Last-Translator: Nyuan Zhang, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -758,7 +759,7 @@ msgstr ""
 
 #: ../../c-api/arg.rst:316
 msgid "status = converter(object, address);"
-msgstr ""
+msgstr "status = converter(object, address);"
 
 #: ../../c-api/arg.rst:318
 msgid ""
@@ -1039,6 +1040,16 @@ msgid ""
 "    // ... use value ...\n"
 "}"
 msgstr ""
+"// 使用 METH_O 调用规范的函数\n"
+"static PyObject*\n"
+"my_function(PyObject *module, PyObject *arg)\n"
+"{\n"
+"    int value;\n"
+"    if (!PyArg_Parse(arg, \"i:my_function\", &value)) {\n"
+"        return NULL;\n"
+"    }\n"
+"    // ... 使用 value ...\n"
+"}"
 
 #: ../../c-api/arg.rst:481
 msgid ""
@@ -1089,6 +1100,18 @@ msgid ""
 "    return result;\n"
 "}"
 msgstr ""
+"static PyObject *\n"
+"weakref_ref(PyObject *self, PyObject *args)\n"
+"{\n"
+"    PyObject *object;\n"
+"    PyObject *callback = NULL;\n"
+"    PyObject *result = NULL;\n"
+"\n"
+"    if (PyArg_UnpackTuple(args, \"ref\", 1, 2, &object, &callback)) {\n"
+"        result = PyWeakref_NewRef(object, callback);\n"
+"    }\n"
+"    return result;\n"
+"}"
 
 #: ../../c-api/arg.rst:512
 msgid ""
@@ -1100,7 +1123,7 @@ msgstr ""
 
 #: ../../c-api/arg.rst:515
 msgid "PyArg_ParseTuple(args, \"O|O:ref\", &object, &callback)"
-msgstr ""
+msgstr "PyArg_ParseTuple(args, \"O|O:ref\", &object, &callback)"
 
 #: ../../c-api/arg.rst:519
 msgid ""
