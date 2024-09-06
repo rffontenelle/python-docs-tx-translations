@@ -5,15 +5,16 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 11:30+0000\n"
+"POT-Creation-Date: 2024-09-06 15:04+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -37,6 +38,8 @@ msgid ""
 "This module provides an implementation of the heap queue algorithm, also "
 "known as the priority queue algorithm."
 msgstr ""
+"Этот модуль обеспечивает реализацию алгоритма очереди кучи, также известного "
+"как алгоритм очереди с приоритетами."
 
 #: ../../library/heapq.rst:19
 msgid ""
@@ -44,6 +47,9 @@ msgid ""
 "equal to any of its children.  We refer to this condition as the heap "
 "invariant."
 msgstr ""
+"Кучи — это бинарные деревья, в которых каждый родительский узел имеет "
+"значение, меньшее или равное любому из своих потомков. Мы называем это "
+"состояние инвариантом кучи."
 
 #: ../../library/heapq.rst:22
 msgid ""
@@ -64,6 +70,13 @@ msgid ""
 "\"max heap\" is more common in texts because of its suitability for in-place "
 "sorting)."
 msgstr ""
+"API ниже отличается от алгоритмов кучи учебника в двух аспектах: (a) Мы "
+"используем индексацию с нуля. Это делает связь между индексом для узла и "
+"индексами для его потомков немного менее очевидной, но более подходящей, "
+"поскольку Python использует индексацию с нуля. (b) Наш метод pop возвращает "
+"наименьший элемент, а не наибольший (называемый «min heap» в учебниках; «max "
+"heap» чаще встречается в текстах из-за его пригодности для сортировки на "
+"месте)."
 
 #: ../../library/heapq.rst:35
 msgid ""
@@ -84,7 +97,7 @@ msgstr ""
 
 #: ../../library/heapq.rst:47
 msgid "Push the value *item* onto the *heap*, maintaining the heap invariant."
-msgstr ""
+msgstr "Помещаем значение *item* в *кучу*, сохраняя кучность инвариантной."
 
 #: ../../library/heapq.rst:52
 msgid ""
@@ -102,7 +115,7 @@ msgstr ""
 
 #: ../../library/heapq.rst:66
 msgid "Transform list *x* into a heap, in-place, in linear time."
-msgstr ""
+msgstr "Преобразовать список *x* в кучу на месте за линейное время."
 
 #: ../../library/heapq.rst:71
 msgid ""
@@ -129,7 +142,7 @@ msgstr ""
 
 #: ../../library/heapq.rst:85
 msgid "The module also offers three general purpose functions based on heaps."
-msgstr ""
+msgstr "Модуль также предлагает три функции общего назначения на основе куч."
 
 #: ../../library/heapq.rst:90
 msgid ""
@@ -137,6 +150,9 @@ msgid ""
 "timestamped entries from multiple log files).  Returns an :term:`iterator` "
 "over the sorted values."
 msgstr ""
+"Объединить несколько отсортированных входов в один отсортированный выход "
+"(например, объединить записи с метками времени из нескольких файлов "
+"журнала). Возвращает :term:`iterator` по отсортированным значениям."
 
 #: ../../library/heapq.rst:94
 msgid ""
@@ -169,7 +185,7 @@ msgstr ""
 
 #: ../../library/heapq.rst:109
 msgid "Added the optional *key* and *reverse* parameters."
-msgstr ""
+msgstr "Добавлены необязательные параметры *key* и *reverse*."
 
 #: ../../library/heapq.rst:115
 msgid ""
@@ -349,6 +365,33 @@ msgid ""
 "            return task\n"
 "    raise KeyError('pop from an empty priority queue')"
 msgstr ""
+"pq = []                         # list of entries arranged in a heap\n"
+"entry_finder = {}               # mapping of tasks to entries\n"
+"REMOVED = '<removed-task>'      # placeholder for a removed task\n"
+"counter = itertools.count()     # unique sequence count\n"
+"\n"
+"def add_task(task, priority=0):\n"
+"    'Add a new task or update the priority of an existing task'\n"
+"    if task in entry_finder:\n"
+"        remove_task(task)\n"
+"    count = next(counter)\n"
+"    entry = [priority, count, task]\n"
+"    entry_finder[task] = entry\n"
+"    heappush(pq, entry)\n"
+"\n"
+"def remove_task(task):\n"
+"    'Mark an existing task as REMOVED.  Raise KeyError if not found.'\n"
+"    entry = entry_finder.pop(task)\n"
+"    entry[-1] = REMOVED\n"
+"\n"
+"def pop_task():\n"
+"    'Remove and return the lowest priority task. Raise KeyError if empty.'\n"
+"    while pq:\n"
+"        priority, count, task = heappop(pq)\n"
+"        if task is not REMOVED:\n"
+"            del entry_finder[task]\n"
+"            return task\n"
+"    raise KeyError('pop from an empty priority queue')"
 
 #: ../../library/heapq.rst:241
 msgid "Theory"
@@ -380,6 +423,15 @@ msgid ""
 "\n"
 "15 16   17 18   19 20   21 22   23 24   25 26   27 28   29 30"
 msgstr ""
+"                               0\n"
+"\n"
+"              1                                 2\n"
+"\n"
+"      3               4                5               6\n"
+"\n"
+"  7       8       9       10      11      12      13      14\n"
+"\n"
+"15 16   17 18   19 20   21 22   23 24   25 26   27 28   29 30"
 
 #: ../../library/heapq.rst:261
 msgid ""
@@ -404,6 +456,14 @@ msgid ""
 "logarithmic on the total number of items in the tree. By iterating over all "
 "items, you get an *O*\\ (*n* log *n*) sort."
 msgstr ""
+"Если этот инвариант кучи защищен все время, индекс 0, очевидно, является "
+"общим победителем. Самый простой алгоритмический способ удалить его и найти "
+"«следующего» победителя — переместить какой-нибудь проигравший (скажем, "
+"ячейку 30 на диаграмме выше) в позицию 0, а затем просачивать этот новый 0 "
+"вниз по дереву, обменивая значения, пока инвариант не будет восстановлен. "
+"Это, очевидно, логарифмически по общему количеству элементов в дереве. "
+"Выполняя итерацию по всем элементам, вы получаете сортировку *O*\\ (*n* log "
+"*n*)."
 
 #: ../../library/heapq.rst:277
 msgid ""
@@ -416,6 +476,15 @@ msgid ""
 "they can easily go into the heap.  So, a heap is a good structure for "
 "implementing schedulers (this is what I used for my MIDI sequencer :-)."
 msgstr ""
+"Приятной особенностью такого рода является то, что вы можете эффективно "
+"вставлять новые элементы во время сортировки, при условии, что вставленные "
+"элементы не \"лучше\", чем последний 0-й элемент, который вы извлекли. Это "
+"особенно полезно в контекстах моделирования, где дерево содержит все "
+"входящие события, а условие \"победы\" означает наименьшее запланированное "
+"время. Когда событие планирует другие события для выполнения, они "
+"планируются на будущее, поэтому их можно легко поместить в кучу. Таким "
+"образом, куча является хорошей структурой для реализации планировщиков (это "
+"то, что я использовал для своего MIDI-секвенсора :-)."
 
 #: ../../library/heapq.rst:286
 msgid ""
@@ -425,6 +494,11 @@ msgid ""
 "average case. However, there are other representations which are more "
 "efficient overall, yet the worst cases might be terrible."
 msgstr ""
+"Различные структуры для реализации планировщиков были тщательно изучены, и "
+"кучи хороши для этого, поскольку они достаточно быстры, скорость почти "
+"постоянна, и худший случай не сильно отличается от среднего. Однако есть и "
+"другие представления, которые в целом более эффективны, но худшие случаи "
+"могут быть ужасными."
 
 #: ../../library/heapq.rst:292
 msgid ""
@@ -450,12 +524,23 @@ msgid ""
 "the first heap is melting.  When the first heap completely vanishes, you "
 "switch heaps and start a new run.  Clever and quite effective!"
 msgstr ""
+"Более того, если вы выводите 0-й элемент на диск и получаете входные данные, "
+"которые могут не поместиться в текущем турнире (потому что значение "
+"\"выигрывает\" над последним выходным значением), оно не может поместиться в "
+"кучу, поэтому размер кучи уменьшается. Освобожденную память можно было бы "
+"ловко использовать повторно немедленно для постепенного построения второй "
+"кучи, которая растет точно с той же скоростью, с которой тает первая куча. "
+"Когда первая куча полностью исчезает, вы переключаете кучи и начинаете новый "
+"запуск. Умно и довольно эффективно!"
 
 #: ../../library/heapq.rst:310
 msgid ""
 "In a word, heaps are useful memory structures to know.  I use them in a few "
 "applications, and I think it is good to keep a 'heap' module around. :-)"
 msgstr ""
+"Одним словом, кучи — это полезные структуры памяти, которые нужно знать. Я "
+"использую их в нескольких приложениях, и я думаю, что хорошо иметь модуль "
+"«кучи» поблизости. :-)"
 
 #: ../../library/heapq.rst:314
 msgid "Footnotes"
@@ -473,3 +558,13 @@ msgid ""
 "Believe me, real good tape sorts were quite spectacular to watch! From all "
 "times, sorting has always been a Great Art! :-)"
 msgstr ""
+"Алгоритмы балансировки дисков, которые сейчас актуальны, скорее раздражают, "
+"чем умны, и это следствие возможностей поиска дисков. На устройствах, "
+"которые не могут искать, таких как большие ленточные накопители, история "
+"была совсем другой, и нужно было быть очень умным, чтобы гарантировать "
+"(задолго до этого), что каждое движение ленты будет максимально эффективным "
+"(то есть будет наилучшим образом участвовать в «продвижении» слияния). "
+"Некоторые ленты даже могли читать в обратном направлении, и это также "
+"использовалось, чтобы избежать времени перемотки. Поверьте мне, "
+"действительно хорошие сортировки лент были довольно захватывающими! Во все "
+"времена сортировка всегда была Великим Искусством! :-)"

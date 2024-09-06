@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# eulalio barbero espinosa <eulalio@disroot.org>, 2024
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# eulalio barbero espinosa <eulalio@disroot.org>, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 11:30+0000\n"
+"POT-Creation-Date: 2024-09-06 15:04+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
 "teams/5390/es_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -1165,7 +1165,7 @@ msgstr ""
 
 #: ../../c-api/init.rst:663
 msgid "\"3.0a5+ (py3k:63103M, May 12 2008, 00:53:55) \\n[GCC 4.2.3]\""
-msgstr ""
+msgstr "\"3.0a5+ (py3k:63103M, May 12 2008, 00:53:55) \\n[GCC 4.2.3]\""
 
 #: ../../c-api/init.rst:667
 msgid ""
@@ -1235,7 +1235,7 @@ msgstr ""
 
 #: ../../c-api/init.rst:705
 msgid "\"[GCC 2.7.2.2]\""
-msgstr ""
+msgstr "\"[GCC 2.7.2.2]\""
 
 #: ../../c-api/init.rst:709 ../../c-api/init.rst:723
 msgid ""
@@ -1257,7 +1257,7 @@ msgstr ""
 
 #: ../../c-api/init.rst:719
 msgid "\"#67, Aug  1 1997, 22:34:28\""
-msgstr ""
+msgstr "\"#67, Agosto  1 1997, 22:34:28\""
 
 #: ../../c-api/init.rst:735
 msgid ""
@@ -1351,7 +1351,7 @@ msgstr ""
 
 #: ../../c-api/init.rst:776
 msgid "PyRun_SimpleString(\"import sys; sys.path.pop(0)\\n\");"
-msgstr ""
+msgstr "PyRun_SimpleString(\"import sys; sys.path.pop(0)\\n\");"
 
 #: ../../c-api/init.rst:788
 msgid ""
@@ -1493,6 +1493,11 @@ msgid ""
 "Reacquire the global interpreter lock.\n"
 "Restore the thread state from the local variable."
 msgstr ""
+"Guarde el estado del subproceso en una variable local.\n"
+"Libere el bloqueo global del intérprete.\n"
+"... Realice alguna operación de bloqueo de E / S...\n"
+"Efectúe de nuevo el bloqueo global del intérprete\n"
+"Restaure el estado del subproceso desde la variable local."
 
 #: ../../c-api/init.rst:888
 msgid "This is so common that a pair of macros exists to simplify it::"
@@ -1504,6 +1509,9 @@ msgid ""
 "... Do some blocking I/O operation ...\n"
 "Py_END_ALLOW_THREADS"
 msgstr ""
+"Py_BEGIN_ALLOW_THREADS\n"
+"... Realice alguna operación de E/S de bloqueo...\n"
+"Py_END_ALLOW_THREADS"
 
 #: ../../c-api/init.rst:898
 msgid ""
@@ -1527,6 +1535,11 @@ msgid ""
 "... Do some blocking I/O operation ...\n"
 "PyEval_RestoreThread(_save);"
 msgstr ""
+"PyThreadState *_save;\n"
+"\n"
+"_save = PyEval_SaveThread();\n"
+"... Realice alguna operación de E/S de bloqueo ...\n"
+"PyEval_RestoreThread(_save);"
 
 #: ../../c-api/init.rst:914
 msgid ""
@@ -1624,6 +1637,15 @@ msgid ""
 "/* Release the thread. No Python API allowed beyond this point. */\n"
 "PyGILState_Release(gstate);"
 msgstr ""
+"PyGILState_STATE gstate;\n"
+"gstate = PyGILState_Ensure();\n"
+"\n"
+"/* Realice acciones de Python aquí. */\n"
+"result = CallSomeFunction();\n"
+"/* evaluar resultado o manejar excepción */\n"
+"\n"
+"/* Suelta el hilo. No se permite API de Python más allá de este punto. */\n"
+"PyGILState_Release(gstate);"
 
 #: ../../c-api/init.rst:965
 msgid ""
@@ -2675,6 +2697,16 @@ msgid ""
 "};\n"
 "PyThreadState *tstate = Py_NewInterpreterFromConfig(&config);"
 msgstr ""
+"PyInterpreterConfig config = {\n"
+"    .use_main_obmalloc = 0,\n"
+"    .allow_fork = 0,\n"
+"    .allow_exec = 0,\n"
+"    .allow_threads = 1,\n"
+"    .allow_daemon_threads = 0,\n"
+"    .check_multi_interp_extensions = 1,\n"
+"    .gil = PyInterpreterConfig_OWN_GIL,\n"
+"};\n"
+"PyThreadState *tstate = Py_NewInterpreterFromConfig(&config);"
 
 #: ../../c-api/init.rst:1649
 msgid ""

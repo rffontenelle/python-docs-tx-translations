@@ -5,15 +5,16 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 11:30+0000\n"
+"POT-Creation-Date: 2024-09-06 15:04+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -898,6 +899,31 @@ msgid ""
 ">>> h10.hexdigest()\n"
 "'3ad2a9b37c6070e374c7a8c508fe20ca86b6ed54e286e93a0318e95e881db5aa'"
 msgstr ""
+">>> from hashlib import blake2b\n"
+">>>\n"
+">>> FANOUT = 2\n"
+">>> DEPTH = 2\n"
+">>> LEAF_SIZE = 4096\n"
+">>> INNER_SIZE = 64\n"
+">>>\n"
+">>> buf = bytearray(6000)\n"
+">>>\n"
+">>> # Left leaf\n"
+"... h00 = blake2b(buf[0:LEAF_SIZE], fanout=FANOUT, depth=DEPTH,\n"
+"...               leaf_size=LEAF_SIZE, inner_size=INNER_SIZE,\n"
+"...               node_offset=0, node_depth=0, last_node=False)\n"
+">>> # Right leaf\n"
+"... h01 = blake2b(buf[LEAF_SIZE:], fanout=FANOUT, depth=DEPTH,\n"
+"...               leaf_size=LEAF_SIZE, inner_size=INNER_SIZE,\n"
+"...               node_offset=1, node_depth=0, last_node=True)\n"
+">>> # Root node\n"
+"... h10 = blake2b(digest_size=32, fanout=FANOUT, depth=DEPTH,\n"
+"...               leaf_size=LEAF_SIZE, inner_size=INNER_SIZE,\n"
+"...               node_offset=0, node_depth=1, last_node=True)\n"
+">>> h10.update(h00.digest())\n"
+">>> h10.update(h01.digest())\n"
+">>> h10.hexdigest()\n"
+"'3ad2a9b37c6070e374c7a8c508fe20ca86b6ed54e286e93a0318e95e881db5aa'"
 
 #: ../../library/hashlib.rst:769
 msgid "Credits"
@@ -940,6 +966,10 @@ msgid ""
 "and related and neighboring rights to this software to the public domain "
 "worldwide. This software is distributed without any warranty."
 msgstr ""
+"В той мере, в какой это возможно по закону, автор(ы) передали все авторские "
+"и смежные права на это программное обеспечение в общественное достояние по "
+"всему миру. Это программное обеспечение распространяется без каких-либо "
+"гарантий."
 
 #: ../../library/hashlib.rst:791
 msgid ""
@@ -954,6 +984,9 @@ msgid ""
 "changes to the project and the public domain according to the Creative "
 "Commons Public Domain Dedication 1.0 Universal:"
 msgstr ""
+"Следующие люди помогали в разработке или вносили свои изменения в проект и "
+"общественное достояние в соответствии с лицензией Creative Commons Public "
+"Domain Dedication 1.0 Universal:"
 
 #: ../../library/hashlib.rst:799
 msgid "*Alexandr Sokolovskiy*"
@@ -966,6 +999,7 @@ msgstr "Модуль :mod:`hmac`"
 #: ../../library/hashlib.rst:820
 msgid "A module to generate message authentication codes using hashes."
 msgstr ""
+"Модуль для генерации кодов аутентификации сообщений с использованием хэшей."
 
 #: ../../library/hashlib.rst:822
 msgid "Module :mod:`base64`"
@@ -973,7 +1007,7 @@ msgstr "Модуль :mod:`base64`"
 
 #: ../../library/hashlib.rst:823
 msgid "Another way to encode binary hashes for non-binary environments."
-msgstr ""
+msgstr "Еще один способ кодирования двоичных хэшей для недвоичных сред."
 
 #: ../../library/hashlib.rst:825
 msgid "https://nvlpubs.nist.gov/nistpubs/fips/nist.fips.180-4.pdf"
@@ -1031,7 +1065,7 @@ msgstr ""
 
 #: ../../library/hashlib.rst:12
 msgid "message digest, MD5"
-msgstr ""
+msgstr "message digest, MD5"
 
 #: ../../library/hashlib.rst:12
 msgid ""
