@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-26 17:08+0000\n"
+"POT-Creation-Date: 2024-09-06 22:14+0000\n"
 "PO-Revision-Date: 2020-05-30 11:54+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -124,6 +124,9 @@ msgid ""
 "considered a descriptor and can override default behavior upon being looked "
 "up as an attribute."
 msgstr ""
+"Eso es todo.  Defina cualquiera de estos métodos y un objeto se considera un "
+"descriptor y puede anular el comportamiento predeterminado al ser buscado "
+"como un atributo."
 
 #: ../../howto/descriptor.rst:61
 msgid ""
@@ -141,6 +144,12 @@ msgid ""
 "takes precedence.  If an instance's dictionary has an entry with the same "
 "name as a non-data descriptor, the dictionary entry takes precedence."
 msgstr ""
+"Los descriptores de datos y no datos difieren en cómo se calculan las "
+"anulaciones con respecto a las entradas del diccionario de una instancia.  "
+"Si el diccionario de una instancia tiene una entrada con el mismo nombre que "
+"un descriptor de datos, el descriptor de datos tiene prioridad.  Si el "
+"diccionario de una instancia tiene una entrada con el mismo nombre que un "
+"descriptor que no es de datos, la entrada del diccionario tiene preferencia."
 
 #: ../../howto/descriptor.rst:72
 msgid ""
@@ -149,6 +158,10 @@ msgid ""
 "called.  Defining the :meth:`__set__` method with an exception raising "
 "placeholder is enough to make it a data descriptor."
 msgstr ""
+"Para hacer un descriptor de datos de sólo lectura, defina :meth:`__get__` y :"
+"meth:`__set__` con :meth:`__set__` lanzando :exc:`AttributeError` cuando sea "
+"llamado.  Definir el método :meth:`__set__` con un marcador de excepción es "
+"suficiente para convertirlo en un descriptor de datos."
 
 #: ../../howto/descriptor.rst:79
 msgid "Invoking Descriptors"
@@ -194,7 +207,7 @@ msgstr ""
 
 #: ../../howto/descriptor.rst:110
 msgid "The important points to remember are:"
-msgstr ""
+msgstr "Los puntos importantes a recordar son:"
 
 #: ../../howto/descriptor.rst:112
 msgid "descriptors are invoked by the :meth:`__getattribute__` method"
@@ -268,7 +281,7 @@ msgstr ""
 
 #: ../../howto/descriptor.rst:188
 msgid "Properties"
-msgstr ""
+msgstr "Propiedades"
 
 #: ../../howto/descriptor.rst:190
 msgid ""
@@ -293,6 +306,9 @@ msgid ""
 "attribute access and then subsequent changes require the intervention of a "
 "method."
 msgstr ""
+"El builtin :func:`property` ayuda siempre que una interfaz de usuario haya "
+"concedido acceso a atributos y luego los cambios posteriores requieran la "
+"intervención de un método."
 
 #: ../../howto/descriptor.rst:247
 msgid ""
@@ -313,6 +329,9 @@ msgid ""
 "Python's object oriented features are built upon a function based "
 "environment. Using non-data descriptors, the two are merged seamlessly."
 msgstr ""
+"Las características orientadas a objetos de Python se basan en un entorno "
+"basado en funciones. Utilizando descriptores sin datos, ambos se fusionan a "
+"la perfección."
 
 #: ../../howto/descriptor.rst:268
 msgid ""
@@ -346,6 +365,8 @@ msgid ""
 "Non-data descriptors provide a simple mechanism for variations on the usual "
 "patterns of binding functions into methods."
 msgstr ""
+"Los descriptores sin datos ofrecen un mecanismo sencillo para variar los "
+"patrones habituales de vinculación de funciones a métodos."
 
 #: ../../howto/descriptor.rst:329
 msgid ""
@@ -357,11 +378,11 @@ msgstr ""
 
 #: ../../howto/descriptor.rst:334
 msgid "This chart summarizes the binding and its two most useful variants:"
-msgstr ""
+msgstr "Este cuadro resume la encuadernación y sus dos variantes más útiles:"
 
 #: ../../howto/descriptor.rst:337
 msgid "Transformation"
-msgstr ""
+msgstr "Transformación"
 
 #: ../../howto/descriptor.rst:337
 msgid "Called from an Object"
@@ -377,11 +398,11 @@ msgstr "función"
 
 #: ../../howto/descriptor.rst:340
 msgid "f(obj, \\*args)"
-msgstr ""
+msgstr "f(obj, \\*args)"
 
 #: ../../howto/descriptor.rst:340 ../../howto/descriptor.rst:342
 msgid "f(\\*args)"
-msgstr ""
+msgstr "f(\\*args)"
 
 #: ../../howto/descriptor.rst:342
 msgid "staticmethod"
@@ -393,7 +414,7 @@ msgstr "classmethod"
 
 #: ../../howto/descriptor.rst:344
 msgid "f(type(obj), \\*args)"
-msgstr ""
+msgstr "f(type(obj), \\*args)"
 
 #: ../../howto/descriptor.rst:344
 msgid "f(klass, \\*args)"
@@ -407,12 +428,18 @@ msgid ""
 "result, the function becomes identically accessible from either an object or "
 "a class."
 msgstr ""
+"Los métodos estáticos devuelven la función subyacente sin cambios.  Llamar a "
+"``c.f`` o ``C.f`` es equivalente a una búsqueda directa en ``object."
+"__getattribute__(c, \"f\")`` o ``object.__getattribute__(C, \"f\")``. Como "
+"resultado, la función es idénticamente accesible desde un objeto o una clase."
 
 #: ../../howto/descriptor.rst:353
 msgid ""
 "Good candidates for static methods are methods that do not reference the "
 "``self`` variable."
 msgstr ""
+"Los buenos candidatos para los métodos estáticos son los métodos que no "
+"hacen referencia a la variable ``self``."
 
 #: ../../howto/descriptor.rst:356
 msgid ""
@@ -425,6 +452,15 @@ msgid ""
 "particular dataset. It can be called either from an object or the class:  "
 "``s.erf(1.5) --> .9332`` or ``Sample.erf(1.5) --> .9332``."
 msgstr ""
+"Por ejemplo, un paquete estadístico puede incluir una clase contenedora para "
+"datos experimentales.  La clase proporciona métodos normales para calcular "
+"la media, el promedio, la mediana y otros estadísticos descriptivos que "
+"dependen de los datos. Sin embargo, puede haber funciones útiles que estén "
+"conceptualmente relacionadas pero que no dependan de los datos.  Por "
+"ejemplo, ``erf(x)`` es una práctica rutina de conversión que aparece en el "
+"trabajo estadístico pero que no depende directamente de un conjunto de datos "
+"concreto. Se puede llamar desde un objeto o desde la clase: ``s.erf(1.5) --"
+"> .9332`` o ``Sample.erf(1.5) --> .9332``."
 
 #: ../../howto/descriptor.rst:365
 msgid ""
