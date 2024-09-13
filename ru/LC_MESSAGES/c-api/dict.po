@@ -5,15 +5,16 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 11:30+0000\n"
+"POT-Creation-Date: 2024-09-13 14:48+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -44,12 +45,16 @@ msgid ""
 "Return true if *p* is a dict object or an instance of a subtype of the dict "
 "type.  This function always succeeds."
 msgstr ""
+"Возвращайте true, если *p* является объектом dict или экземпляром подтипа "
+"типа dict. Эта функция всегда завершается успешно."
 
 #: ../../c-api/dict.rst:30
 msgid ""
 "Return true if *p* is a dict object, but not an instance of a subtype of the "
 "dict type.  This function always succeeds."
 msgstr ""
+"Возвращайте true, если *p* является объектом dict, но не экземпляром подтипа "
+"типа dict. Эта функция всегда завершается успешно."
 
 #: ../../c-api/dict.rst:36
 msgid "Return a new empty dictionary, or ``NULL`` on failure."
@@ -64,7 +69,7 @@ msgstr ""
 
 #: ../../c-api/dict.rst:48
 msgid "Empty an existing dictionary of all key-value pairs."
-msgstr ""
+msgstr "Очистите существующий словарь от всех пар ключ-значение."
 
 #: ../../c-api/dict.rst:53
 msgid ""
@@ -75,7 +80,7 @@ msgstr ""
 
 #: ../../c-api/dict.rst:60
 msgid "Return a new dictionary that contains the same key-value pairs as *p*."
-msgstr ""
+msgstr "Верните новый словарь, содержащий те же пары ключ-значение, что и *p*."
 
 #: ../../c-api/dict.rst:65
 msgid ""
@@ -125,6 +130,8 @@ msgid ""
 "Calling this API without :term:`GIL` held had been allowed for historical "
 "reason. It is no longer allowed."
 msgstr ""
+"Вызов этого API без удержания :term:`GIL` был разрешен по историческим "
+"причинам. Это больше не разрешено."
 
 #: ../../c-api/dict.rst:111
 msgid ""
@@ -208,6 +215,13 @@ msgid ""
 "    ...\n"
 "}"
 msgstr ""
+"PyObject *key, *value;\n"
+"Py_ssize_t pos = 0;\n"
+"\n"
+"while (PyDict_Next(self->dict, &pos, &key, &value)) {\n"
+"    /* do something interesting with the values... */\n"
+"    ...\n"
+"}"
 
 #: ../../c-api/dict.rst:189
 msgid ""
@@ -215,6 +229,9 @@ msgid ""
 "modify the values of the keys as you iterate over the dictionary, but only "
 "so long as the set of keys does not change.  For example::"
 msgstr ""
+"Словарь *p* не должен изменяться во время итерации. Можно безопасно изменять "
+"значения ключей при переборе словаря, но только до тех пор, пока набор "
+"ключей не изменится. Например::"
 
 #: ../../c-api/dict.rst:193
 msgid ""
@@ -236,6 +253,23 @@ msgid ""
 "    Py_DECREF(o);\n"
 "}"
 msgstr ""
+"PyObject *key, *value;\n"
+"Py_ssize_t pos = 0;\n"
+"\n"
+"while (PyDict_Next(self->dict, &pos, &key, &value)) {\n"
+"    long i = PyLong_AsLong(value);\n"
+"    if (i == -1 && PyErr_Occurred()) {\n"
+"        return -1;\n"
+"    }\n"
+"    PyObject *o = PyLong_FromLong(i + 1);\n"
+"    if (o == NULL)\n"
+"        return -1;\n"
+"    if (PyDict_SetItem(self->dict, key, o) < 0) {\n"
+"        Py_DECREF(o);\n"
+"        return -1;\n"
+"    }\n"
+"    Py_DECREF(o);\n"
+"}"
 
 #: ../../c-api/dict.rst:214
 msgid ""
@@ -272,6 +306,10 @@ msgid ""
 "        if override or key not in a:\n"
 "            a[key] = value"
 msgstr ""
+"def PyDict_MergeFromSeq2(a, seq2, override):\n"
+"    for key, value in seq2:\n"
+"        if override or key not in a:\n"
+"            a[key] = value"
 
 #: ../../c-api/dict.rst:247
 msgid ""
@@ -313,7 +351,7 @@ msgstr ""
 
 #: ../../c-api/dict.rst:289
 msgid "Type of a dict watcher callback function."
-msgstr ""
+msgstr "Тип функции обратного вызова dict Watcher."
 
 #: ../../c-api/dict.rst:291
 msgid ""
@@ -338,6 +376,10 @@ msgid ""
 "unpredictable effects, including infinite recursion. Do not trigger Python "
 "code execution in the callback, as it could modify the dict as a side effect."
 msgstr ""
+"Обратный вызов может проверять, но не должен изменять *dict*; это может "
+"иметь непредсказуемые последствия, включая бесконечную рекурсию. Не "
+"запускайте выполнение кода Python в обратном вызове, поскольку это может "
+"изменить dict как побочный эффект."
 
 #: ../../c-api/dict.rst:307
 msgid ""
@@ -353,6 +395,8 @@ msgid ""
 "Callbacks occur before the notified modification to *dict* takes place, so "
 "the prior state of *dict* can be inspected."
 msgstr ""
+"Обратные вызовы происходят до того, как произойдет уведомление об изменении "
+"*dict*, поэтому можно проверить предыдущее состояние *dict*."
 
 #: ../../c-api/dict.rst:316
 msgid ""

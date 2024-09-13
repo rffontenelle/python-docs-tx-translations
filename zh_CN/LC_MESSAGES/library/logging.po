@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 11:30+0000\n"
+"POT-Creation-Date: 2024-09-13 14:48+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -84,6 +84,19 @@ msgid ""
 "if __name__ == '__main__':\n"
 "    main()"
 msgstr ""
+"# myapp.py\n"
+"import logging\n"
+"import mylib\n"
+"logger = logging.getLogger(__name__)\n"
+"\n"
+"def main():\n"
+"    logging.basicConfig(filename='myapp.log', level=logging.INFO)\n"
+"    logger.info('Started')\n"
+"    mylib.do_something()\n"
+"    logger.info('Finished')\n"
+"\n"
+"if __name__ == '__main__':\n"
+"    main()"
 
 #: ../../library/logging.rst:51
 msgid ""
@@ -94,6 +107,12 @@ msgid ""
 "def do_something():\n"
 "    logger.info('Doing something')"
 msgstr ""
+"# mylib.py\n"
+"import logging\n"
+"logger = logging.getLogger(__name__)\n"
+"\n"
+"def do_something():\n"
+"    logger.info('Doing something')"
 
 #: ../../library/logging.rst:58
 msgid "If you run *myapp.py*, you should see this in *myapp.log*:"
@@ -105,6 +124,9 @@ msgid ""
 "INFO:mylib:Doing something\n"
 "INFO:__main__:Finished"
 msgstr ""
+"INFO:__main__:Started\n"
+"INFO:mylib:Doing something\n"
+"INFO:__main__:Finished"
 
 #: ../../library/logging.rst:66
 msgid ""
@@ -503,7 +525,7 @@ msgstr ""
 
 #: ../../library/logging.rst:291
 msgid "Stack (most recent call last):"
-msgstr ""
+msgstr "Stack (most recent call last):"
 
 #: ../../library/logging.rst:295
 msgid ""
@@ -548,6 +570,11 @@ msgid ""
 "logger = logging.getLogger('tcpserver')\n"
 "logger.warning('Protocol problem: %s', 'connection reset', extra=d)"
 msgstr ""
+"FORMAT = '%(asctime)s %(clientip)-15s %(user)-8s %(message)s'\n"
+"logging.basicConfig(format=FORMAT)\n"
+"d = {'clientip': '192.168.0.1', 'user': 'fbloggs'}\n"
+"logger = logging.getLogger('tcpserver')\n"
+"logger.warning('Protocol problem: %s', 'connection reset', extra=d)"
 
 #: ../../library/logging.rst:318
 msgid "would print something like"
@@ -558,6 +585,8 @@ msgid ""
 "2006-02-08 22:20:02,165 192.168.0.1 fbloggs  Protocol problem: connection "
 "reset"
 msgstr ""
+"2006-02-08 22:20:02,165 192.168.0.1 fbloggs  Protocol problem: connection "
+"reset"
 
 #: ../../library/logging.rst:324
 msgid ""
@@ -1513,6 +1542,14 @@ msgid ""
 "\n"
 "logging.setLogRecordFactory(record_factory)"
 msgstr ""
+"old_factory = logging.getLogRecordFactory()\n"
+"\n"
+"def record_factory(*args, **kwargs):\n"
+"    record = old_factory(*args, **kwargs)\n"
+"    record.custom_attribute = 0xdecafbad\n"
+"    return record\n"
+"\n"
+"logging.setLogRecordFactory(record_factory)"
 
 #: ../../library/logging.rst:960
 msgid ""
@@ -1915,12 +1952,12 @@ msgstr ""
 "个 (*msg*, *kwargs*) 元组，其包含（可能经过修改的）传入参数。"
 
 #: ../../library/logging.rst:1097
-msgid "Delegates to the underlying :attr:`!manager`` on *logger*."
-msgstr "在 *logger* 中委托给下层的 :attr:`!manager``。"
+msgid "Delegates to the underlying :attr:`!manager` on *logger*."
+msgstr ""
 
 #: ../../library/logging.rst:1101
-msgid "Delegates to the underlying :meth:`!_log`` method on *logger*."
-msgstr "在 *logger* 中委托给下层的 :meth:`!_log`` 方法。"
+msgid "Delegates to the underlying :meth:`!_log` method on *logger*."
+msgstr ""
 
 #: ../../library/logging.rst:1103
 msgid ""
@@ -2037,6 +2074,8 @@ msgid ""
 "class MyLogger(logging.getLoggerClass()):\n"
 "    # ... override behaviour here"
 msgstr ""
+"class MyLogger(logging.getLoggerClass()):\n"
+"    # ... 在这里重写行为"
 
 #: ../../library/logging.rst:1172
 msgid "Return a callable which is used to create a :class:`LogRecord`."

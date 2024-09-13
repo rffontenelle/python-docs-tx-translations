@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 11:30+0000\n"
+"POT-Creation-Date: 2024-09-06 15:04+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -212,6 +212,9 @@ msgid ""
 "PyObject_CallMethod(PyObject *object, const char *method_name,\n"
 "                    const char *arg_format, ...);"
 msgstr ""
+"PyObject *\n"
+"PyObject_CallMethod(PyObject *object, const char *method_name,\n"
+"                    const char *arg_format, ...);"
 
 #: ../../faq/extending.rst:121
 msgid ""
@@ -240,6 +243,13 @@ msgid ""
 "        Py_DECREF(res);\n"
 "}"
 msgstr ""
+"res = PyObject_CallMethod(f, \"seek\", \"(ii)\", 10, 0);\n"
+"if (res == NULL) {\n"
+"        ... an exception occurred ...\n"
+"}\n"
+"else {\n"
+"        Py_DECREF(res);\n"
+"}"
 
 #: ../../faq/extending.rst:135
 msgid ""
@@ -283,6 +293,13 @@ msgid ""
 "foo\n"
 "hello world!"
 msgstr ""
+">>> import io, sys\n"
+">>> sys.stdout = io.StringIO()\n"
+">>> print('foo')\n"
+">>> print('hello world!')\n"
+">>> sys.stderr.write(sys.stdout.getvalue())\n"
+"foo\n"
+"hello world!"
 
 #: ../../faq/extending.rst:161
 msgid "A custom object to do the same would look like this:"
@@ -305,6 +322,20 @@ msgid ""
 "foo\n"
 "hello world!"
 msgstr ""
+">>> import io, sys\n"
+">>> class StdoutCatcher(io.TextIOBase):\n"
+"...     def __init__(self):\n"
+"...         self.data = []\n"
+"...     def write(self, stuff):\n"
+"...         self.data.append(stuff)\n"
+"...\n"
+">>> import sys\n"
+">>> sys.stdout = StdoutCatcher()\n"
+">>> print('foo')\n"
+">>> print('hello world!')\n"
+">>> sys.stderr.write(''.join(sys.stdout.data))\n"
+"foo\n"
+"hello world!"
 
 #: ../../faq/extending.rst:182
 msgid "How do I access a module written in Python from C?"
@@ -316,7 +347,7 @@ msgstr "你可以通过如下方式获得一个指向模块对象的指针::"
 
 #: ../../faq/extending.rst:186
 msgid "module = PyImport_ImportModule(\"<modulename>\");"
-msgstr ""
+msgstr "module = PyImport_ImportModule(\"<modulename>\");"
 
 #: ../../faq/extending.rst:188
 msgid ""
@@ -339,7 +370,7 @@ msgstr "之后你就可以通过如下方式来访问模块的属性（即模块
 
 #: ../../faq/extending.rst:197
 msgid "attr = PyObject_GetAttrString(module, \"<attrname>\");"
-msgstr ""
+msgstr "attr = PyObject_GetAttrString(module, \"<attrname>\");"
 
 #: ../../faq/extending.rst:199
 msgid ""
@@ -399,7 +430,7 @@ msgstr "在您的 ``.gdbinit`` 文件中（或交互式）添加命令："
 
 #: ../../faq/extending.rst:231
 msgid "br _PyImport_LoadDynamicModule"
-msgstr ""
+msgstr "br _PyImport_LoadDynamicModule"
 
 #: ../../faq/extending.rst:235
 msgid "Then, when you run GDB:"
@@ -414,6 +445,12 @@ msgid ""
 "gdb) br myfunction.c:50\n"
 "gdb) continue"
 msgstr ""
+"$ gdb /local/bin/python\n"
+"gdb) run myscript.py\n"
+"gdb) continue # 重复直到你的扩展被载入\n"
+"gdb) finish   # 你的扩展已被载入\n"
+"gdb) br myfunction.c:50\n"
+"gdb) continue"
 
 #: ../../faq/extending.rst:247
 msgid ""
