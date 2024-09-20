@@ -6,15 +6,16 @@
 # Translators:
 # Илья Панфилов, 2024
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-20 00:12+0000\n"
+"POT-Creation-Date: 2024-09-20 17:26+0000\n"
 "PO-Revision-Date: 2020-05-30 11:59+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -35,6 +36,10 @@ msgid ""
 "compatible data types, and allows calling functions in DLLs or shared "
 "libraries.  It can be used to wrap these libraries in pure Python."
 msgstr ""
+":mod:`ctypes` — это внешняя библиотека функций для Python. Он предоставляет "
+"типы данных, совместимые с C, и позволяет вызывать функции в DLL или общих "
+"библиотеках. Его можно использовать для обертывания этих библиотек в чистый "
+"Python."
 
 #: ../../library/ctypes.rst:19
 msgid "ctypes tutorial"
@@ -54,16 +59,22 @@ msgid ""
 "`c_long`. So, you should not be confused if :class:`c_long` is printed if "
 "you would expect :class:`c_int` --- they are actually the same type."
 msgstr ""
+"Примечание. Некоторые примеры кода ссылаются на тип ctypes :class:`c_int`. "
+"На платформах, где ``sizeof(long) == sizeof(int)``, это псевдоним :class:"
+"`c_long`. Итак, вас не должно смущать, если :class:`c_long` печатается, хотя "
+"вы ожидаете, что :class:`c_int` --- на самом деле они одного и того же типа."
 
 #: ../../library/ctypes.rst:33
 msgid "Loading dynamic link libraries"
-msgstr ""
+msgstr "Загрузка динамически подключаемых библиотек"
 
 #: ../../library/ctypes.rst:35
 msgid ""
 ":mod:`ctypes` exports the *cdll*, and on Windows *windll* and *oledll* "
 "objects, for loading dynamic link libraries."
 msgstr ""
+":mod:`ctypes` экспортирует объекты *cdll*, а в Windows *windll* и *oledll* "
+"для загрузки динамически подключаемых библиотек."
 
 #: ../../library/ctypes.rst:38
 msgid ""
@@ -90,10 +101,13 @@ msgid ""
 "C library containing most standard C functions, and uses the cdecl calling "
 "convention::"
 msgstr ""
+"Вот несколько примеров для Windows. Обратите внимание, что msvcrt — это "
+"стандартная библиотека C MS, содержащая большинство стандартных функций C и "
+"использующая соглашение о вызовах cdecl::"
 
 #: ../../library/ctypes.rst:63
 msgid "Windows appends the usual ``.dll`` file suffix automatically."
-msgstr ""
+msgstr "Windows автоматически добавляет обычный суффикс файла ``.dll``."
 
 #: ../../library/ctypes.rst:66
 msgid ""
@@ -102,6 +116,10 @@ msgid ""
 "used by Python. Where possible, use native Python functionality, or else "
 "import and use the ``msvcrt`` module."
 msgstr ""
+"Доступ к стандартной библиотеке C через ``cdll.msvcrt`` будет использовать "
+"устаревшую версию библиотеки, которая может быть несовместима с той, которая "
+"используется Python. Там, где это возможно, используйте встроенную "
+"функциональность Python или импортируйте и используйте модуль msvcrt."
 
 #: ../../library/ctypes.rst:71
 msgid ""
@@ -114,11 +132,11 @@ msgstr ""
 
 #: ../../library/ctypes.rst:89
 msgid "Accessing functions from loaded dlls"
-msgstr ""
+msgstr "Доступ к функциям из загруженных dll"
 
 #: ../../library/ctypes.rst:91
 msgid "Functions are accessed as attributes of dll objects::"
-msgstr ""
+msgstr "Доступ к функциям осуществляется как атрибуты объектов dll::"
 
 #: ../../library/ctypes.rst:106
 msgid ""
@@ -137,6 +155,10 @@ msgid ""
 "version you need by specifying ``GetModuleHandleA`` or ``GetModuleHandleW`` "
 "explicitly, and then call it with bytes or string objects respectively."
 msgstr ""
+"*windll* не пытается выбрать один из них по волшебству, вы должны получить "
+"доступ к нужной версии, явно указав ``GetModuleHandleA`` или "
+"``GetModuleHandleW``, а затем вызвать ее с байтовыми или строковыми "
+"объектами соответственно."
 
 #: ../../library/ctypes.rst:123
 msgid ""
@@ -144,6 +166,9 @@ msgid ""
 "identifiers, like ``\"??2@YAPAXI@Z\"``. In this case you have to use :func:"
 "`getattr` to retrieve the function::"
 msgstr ""
+"Иногда библиотеки DLL экспортируют функции с именами, которые не являются "
+"допустимыми идентификаторами Python, например ``\"??2@YAPAXI@Z\"``. В этом "
+"случае вам нужно использовать :func:`getattr` для получения функции::"
 
 #: ../../library/ctypes.rst:131
 msgid ""
@@ -151,6 +176,9 @@ msgid ""
 "functions can be accessed by indexing the dll object with the ordinal "
 "number::"
 msgstr ""
+"В Windows некоторые библиотеки DLL экспортируют функции не по имени, а по "
+"порядковому номеру. Доступ к этим функциям можно получить, проиндексировав "
+"объект dll порядковым номером::"
 
 #: ../../library/ctypes.rst:148
 msgid "Calling functions"
@@ -175,12 +203,16 @@ msgid ""
 ":exc:`ValueError` is raised when you call an ``stdcall`` function with the "
 "``cdecl`` calling convention, or vice versa::"
 msgstr ""
+":exc:`ValueError` возникает, когда вы вызываете функцию ``stdcall`` с "
+"соглашением о вызовах ``cdecl``, или наоборот::"
 
 #: ../../library/ctypes.rst:179
 msgid ""
 "To find out the correct calling convention you have to look into the C "
 "header file or the documentation for the function you want to call."
 msgstr ""
+"Чтобы узнать правильное соглашение о вызовах, вам нужно просмотреть "
+"заголовочный файл C или документацию для функции, которую вы хотите вызвать."
 
 #: ../../library/ctypes.rst:182
 msgid ""
@@ -188,6 +220,8 @@ msgid ""
 "prevent crashes from general protection faults when functions are called "
 "with invalid argument values::"
 msgstr ""
+"Чтобы узнать правильное соглашение о вызовах, вам нужно просмотреть "
+"заголовочный файл C или документацию для функции, которую вы хотите вызвать."
 
 #: ../../library/ctypes.rst:192
 msgid ""
@@ -196,6 +230,10 @@ msgid ""
 "debugging crashes (e.g. from segmentation faults produced by erroneous C "
 "library calls)."
 msgstr ""
+"Однако существует достаточно способов аварийно завершить работу Python с "
+"помощью :mod:`ctypes`, так что в любом случае вам следует быть осторожным. "
+"Модуль :mod:`faulthandler` может быть полезен при отладке сбоев (например, "
+"из-за ошибок сегментации, вызванных ошибочными вызовами библиотеки C)."
 
 #: ../../library/ctypes.rst:197
 msgid ""
@@ -213,6 +251,8 @@ msgid ""
 "Before we move on calling functions with other parameter types, we have to "
 "learn more about :mod:`ctypes` data types."
 msgstr ""
+"Прежде чем мы перейдем к вызову функций с другими типами параметров, нам "
+"нужно узнать больше о типах данных :mod:`ctypes`."
 
 #: ../../library/ctypes.rst:211 ../../library/ctypes.rst:2143
 msgid "Fundamental data types"
@@ -439,18 +479,21 @@ msgstr "int или ``None``"
 
 #: ../../library/ctypes.rst:264
 msgid "The constructor accepts any object with a truth value."
-msgstr ""
+msgstr "Конструктор принимает любой объект со значением истинности."
 
 #: ../../library/ctypes.rst:266
 msgid ""
 "All these types can be created by calling them with an optional initializer "
 "of the correct type and value::"
 msgstr ""
+"Все эти типы можно создать, вызвав их с необязательным инициализатором "
+"правильного типа и значения::"
 
 #: ../../library/ctypes.rst:277
 msgid ""
 "Since these types are mutable, their value can also be changed afterwards::"
 msgstr ""
+"Поскольку эти типы изменяемы, их значение впоследствии также можно изменить:"
 
 #: ../../library/ctypes.rst:289
 msgid ""
