@@ -9,8 +9,8 @@
 # Victor Matheus Castro <victormatheuscastro@gmail.com>, 2024
 # Claudio Rogerio Carvalho Filho <excriptbrasil@gmail.com>, 2024
 # Welington Carlos <wcarlos3@gmail.com>, 2024
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 # Adorilson Bezerra <adorilson@gmail.com>, 2024
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 #
 #, fuzzy
 msgid ""
@@ -19,7 +19,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-13 14:16+0000\n"
 "PO-Revision-Date: 2024-05-11 01:09+0000\n"
-"Last-Translator: Adorilson Bezerra <adorilson@gmail.com>, 2024\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
 "teams/5390/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -753,6 +753,9 @@ msgid ""
 "threading.github.io/porting/>`_: A community-maintained porting guide for "
 "extension authors."
 msgstr ""
+"`Portando módulos de extensão para oferecer suporte a threads livres "
+"<https://py-free-threading.github.io/porting/>`_: Um guia de portabilidade "
+"mantido pela comunidade para autores de extensões."
 
 #: ../../whatsnew/3.13.rst:370
 msgid "An experimental just-in-time (JIT) compiler"
@@ -1053,24 +1056,30 @@ msgid ""
 "invoked, it collects the young generation and an increment of the old "
 "generation, instead of collecting one or more generations."
 msgstr ""
+"Agora há apenas duas gerações: jovem e velha. Quando :func:`gc.collect` não "
+"é chamado diretamente, o GC é invocado com um pouco menos de frequência. "
+"Quando invocado, ele coleta a geração jovem e um incremento da geração "
+"velha, em vez de coletar uma ou mais gerações."
 
 #: ../../whatsnew/3.13.rst:509
 msgid "The behavior of :func:`!gc.collect` changes slightly:"
-msgstr ""
+msgstr "O comportamento de :func:`!gc.collect` mudou ligeiramente:"
 
 #: ../../whatsnew/3.13.rst:511
 msgid ""
 "``gc.collect(1)``: Performs an increment of GC, rather than collecting "
 "generation 1."
 msgstr ""
+"``gc.collect(1)``: Executa um incremento de GC, em vez de coletar a geração "
+"1."
 
 #: ../../whatsnew/3.13.rst:513
 msgid "Other calls to :func:`!gc.collect` are unchanged."
-msgstr ""
+msgstr "Outras chamadas para :func:`!gc.collect` não foram alteradas."
 
 #: ../../whatsnew/3.13.rst:515
 msgid "(Contributed by Mark Shannon in :gh:`108362`.)"
-msgstr ""
+msgstr "(Contribuição de Mark Shannon em :gh:`108362`.)"
 
 #: ../../whatsnew/3.13.rst:519
 msgid "Other Language Changes"
@@ -1980,6 +1989,12 @@ msgid ""
 "Development Mode <devmode>` or when using a :ref:`Python debug build <debug-"
 "build>`. (Contributed by Victor Stinner in :gh:`62948`.)"
 msgstr ""
+"O finalizador :class:`~io.IOBase` agora registra quaisquer erros levantados "
+"pelo método :meth:`~io.IOBase.close` com :data:`sys.unraisablehook`. "
+"Anteriormente, os erros eram ignorados silenciosamente por padrão e "
+"registrados apenas em :ref:`Modo de Desenvolvimento do Python <devmode>` ou "
+"ao usar uma :ref:`construção de depuração do Python <debug-build>`. "
+"(Contribuição de Victor Stinner em :gh:`62948`.)"
 
 #: ../../whatsnew/3.13.rst:978
 msgid "ipaddress"
@@ -3027,7 +3042,7 @@ msgstr "Módulos e APIs removidas"
 
 #: ../../whatsnew/3.13.rst:1533
 msgid "PEP 594: Remove \"dead batteries\" from the standard library"
-msgstr ""
+msgstr "PEP 594: Remover \"baterias mortas\" da biblioteca padrão"
 
 #: ../../whatsnew/3.13.rst:1535
 msgid ""
@@ -3036,6 +3051,10 @@ msgid ""
 "obsolete, or insecure status. All of the following modules were deprecated "
 "in Python 3.11, and are now removed:"
 msgstr ""
+":pep:`594` propôs remover 19 módulos da biblioteca padrão, coloquialmente "
+"chamados de \"baterias mortas\" devido ao seu status histórico, obsoleto ou "
+"inseguro. Todos os módulos a seguir foram descontinuados no Python 3.11 e "
+"agora foram removidos:"
 
 #: ../../whatsnew/3.13.rst:1541
 msgid ":mod:`!aifc`"
@@ -3051,7 +3070,7 @@ msgstr ":mod:`!chunk`"
 
 #: ../../whatsnew/3.13.rst:1544
 msgid ":mod:`!cgi` and :mod:`!cgitb`"
-msgstr ""
+msgstr ":mod:`!cgi` e :mod:`!cgitb`"
 
 #: ../../whatsnew/3.13.rst:1546
 msgid ""
@@ -3060,6 +3079,10 @@ msgid ""
 "message` module or the :pypi:`multipart` library for ``POST`` and ``PUT`` "
 "requests."
 msgstr ""
+":class:`!cgi.FieldStorage` normalmente pode ser substituído por :func:"
+"`urllib.parse.parse_qsl` para solicitações ``GET`` e ``HEAD``, e o módulo :"
+"mod:`email.message` ou a biblioteca :pypi:`multipart` para solicitações "
+"``POST`` e ``PUT``."
 
 #: ../../whatsnew/3.13.rst:1551
 msgid ""
@@ -3068,6 +3091,10 @@ msgid ""
 "data``, which should be replaced as described below for :func:`!cgi."
 "parse_multipart`."
 msgstr ""
+":func:`!cgi.parse` pode ser substituído chamando :func:`urllib.parse."
+"parse_qs` diretamente na string de consulta desejada, a menos que a entrada "
+"seja ``multipart/form-data``, que deve ser substituída conforme descrito "
+"abaixo para :func:`!cgi.parse_multipart`."
 
 #: ../../whatsnew/3.13.rst:1556
 msgid ""
@@ -3075,6 +3102,9 @@ msgid ""
 "`email` package, which implements the same MIME RFCs. For example, with :"
 "class:`email.message.EmailMessage`:"
 msgstr ""
+":func:`!cgi.parse_header` pode ser substituído pela funcionalidade do "
+"pacote :mod:`email`, que implementa os mesmos RFCs MIME. Por exemplo, com :"
+"class:`email.message.EmailMessage`::"
 
 #: ../../whatsnew/3.13.rst:1560
 msgid ""
@@ -3084,6 +3114,11 @@ msgid ""
 "msg['content-type'] = 'application/json; charset=\"utf8\"'\n"
 "main, params = msg.get_content_type(), msg['content-type'].params"
 msgstr ""
+"from email.message import EmailMessage\n"
+"\n"
+"msg = EmailMessage()\n"
+"msg['content-type'] = 'application/json; charset=\"utf8\"'\n"
+"main, params = msg.get_content_type(), msg['content-type'].params"
 
 #: ../../whatsnew/3.13.rst:1568
 msgid ""
@@ -3092,6 +3127,10 @@ msgid ""
 "`multipart` library. For example, the :class:`email.message.EmailMessage` "
 "and :class:`email.message.Message` classes."
 msgstr ""
+":func:`!cgi.parse_multipart` pode ser substituído pela funcionalidade no "
+"pacote :mod:`email`, que implementa os mesmos RFCs de MIME, ou pela "
+"biblioteca :pypi:`multipart`. Por exemplo, as classes :class:`email.message."
+"EmailMessage` e :class:`email.message.Message`."
 
 #: ../../whatsnew/3.13.rst:1574
 msgid ""
@@ -3099,6 +3138,10 @@ msgid ""
 "module may be an appropriate replacement when simply hashing a value is "
 "required. Otherwise, various third-party libraries on PyPI are available:"
 msgstr ""
+":mod:`!crypt` e a extensão privada :mod:`!_crypt`. O módulo :mod:`hashlib` "
+"pode ser uma substituição apropriada quando simplesmente fazer hash de um "
+"valor é necessário. Caso contrário, várias bibliotecas de terceiros no PyPI "
+"estão disponíveis:"
 
 #: ../../whatsnew/3.13.rst:1579
 msgid ""
@@ -3141,10 +3184,15 @@ msgid ""
 "puremagic.what` function can be used to replace the :func:`!imghdr.what` "
 "function for all file formats that were supported by :mod:`!imghdr`."
 msgstr ""
+":mod:`!imghdr`: As bibliotecas :pypi:`filetype`, :pypi:`puremagic` ou :pypi:"
+"`python-magic` devem ser usadas como substituições. Por exemplo, a função :"
+"func:`!puremagic.what` pode ser usada para substituir a função :func:`!"
+"imghdr.what` para todos os formatos de arquivo que eram suportados por :mod:"
+"`!imghdr`."
 
 #: ../../whatsnew/3.13.rst:1599
 msgid ":mod:`!mailcap`: Use the :mod:`mimetypes` module instead."
-msgstr ""
+msgstr ":mod:`!mailcap`: use o módulo :mod:`mimetypes`."
 
 #: ../../whatsnew/3.13.rst:1601
 msgid ":mod:`!msilib`"
@@ -3156,27 +3204,31 @@ msgstr ":mod:`!nis`"
 
 #: ../../whatsnew/3.13.rst:1603
 msgid ":mod:`!nntplib`: Use the :pypi:`nntplib` library from PyPI instead."
-msgstr ""
+msgstr ":mod:`!nntplib`: Use a biblioteca :pypi:`nntplib` do PyPI."
 
 #: ../../whatsnew/3.13.rst:1605
 msgid ""
 ":mod:`!ossaudiodev`: For audio playback, use the :pypi:`pygame` library from "
 "PyPI instead."
 msgstr ""
+":mod:`!ossaudiodev`: para reprodução de áudio, use a biblioteca :pypi:"
+"`pygame` do PyPI."
 
 #: ../../whatsnew/3.13.rst:1607
 msgid ":mod:`!pipes`: Use the :mod:`subprocess` module instead."
-msgstr ""
+msgstr ":mod:`!pipes`: use o módulo :mod:`subprocess`."
 
 #: ../../whatsnew/3.13.rst:1609
 msgid ""
 ":mod:`!sndhdr`: The :pypi:`filetype`, :pypi:`puremagic`, or :pypi:`python-"
 "magic` libraries should be used as replacements."
 msgstr ""
+":mod:`!sndhdr`: as bibliotecas :pypi:`filetype`, :pypi:`puremagic` ou :pypi:"
+"`python-magic` devem ser usadas como substitutas."
 
 #: ../../whatsnew/3.13.rst:1612
 msgid ":mod:`!spwd`: Use the :pypi:`python-pam` library from PyPI instead."
-msgstr ""
+msgstr ":mod:`!spwd`: use a biblioteca :pypi:`python-pam` do PyPI."
 
 #: ../../whatsnew/3.13.rst:1614
 msgid ":mod:`!sunau`"
@@ -3187,11 +3239,13 @@ msgid ""
 ":mod:`!telnetlib`, Use the :pypi:`telnetlib3` or :pypi:`Exscript` libraries "
 "from PyPI instead."
 msgstr ""
+":mod:`!telnetlib`, use as bibliotecas :pypi:`telnetlib3` ou :pypi:`Exscript` "
+"do PyPI."
 
 #: ../../whatsnew/3.13.rst:1617
 msgid ""
 ":mod:`!uu`: Use the :mod:`base64` module instead, as a modern alternative."
-msgstr ""
+msgstr ":mod:`!uu`: use o módulo :mod:`base64` como uma alternativa moderna."
 
 #: ../../whatsnew/3.13.rst:1619
 msgid ":mod:`!xdrlib`"
@@ -3202,6 +3256,8 @@ msgid ""
 "(Contributed by Victor Stinner and Zachary Ware in :gh:`104773` and :gh:"
 "`104780`.)"
 msgstr ""
+"(Contribuição de Victor Stinner e Zachary Ware em :gh:`104773` e :gh:"
+"`104780`.)"
 
 #: ../../whatsnew/3.13.rst:1625
 msgid "2to3"
@@ -3213,6 +3269,9 @@ msgid ""
 "previously deprecated in Python 3.11. (Contributed by Victor Stinner in :gh:"
 "`104780`.)"
 msgstr ""
+"Remove o programa :program:`2to3` e o módulo :mod:`!lib2to3`, já "
+"descontinuados no Python 3.11. (Contribuição de Victor Stinner em :gh:"
+"`104780`.)"
 
 #: ../../whatsnew/3.13.rst:1633
 msgid "builtins"
@@ -3227,6 +3286,13 @@ msgid ""
 "the :attr:`!__wrapped__` attribute that was added in Python 3.10. "
 "(Contributed by Raymond Hettinger in :gh:`89519`.)"
 msgstr ""
+"Remove suporte aos descritores :class:`classmethod` encadeados (introduzidos "
+"em :gh:`63272`). Eles não podem mais serem usados para agrupar outros "
+"descritores como :class:`property`. O design central desse recurso "
+"apresentava falhas e levou a problemas. Para \"passar\" um :class:"
+"`classmethod`, considere usar o atributo :attr:`!__wrapped__` que foi "
+"adicionado no Python 3.10. (Contribuição de Raymond Hettinger em :gh:"
+"`89519`.)"
 
 #: ../../whatsnew/3.13.rst:1648
 msgid ""
@@ -3234,6 +3300,9 @@ msgid ""
 "the docstring since Python 3.2, and at runtime since Python 3.11. "
 "(Contributed by Hugo van Kemenade in :gh:`104886`.)"
 msgstr ""
+"Remove a classe não documentada :class:`!LegacyInterpolation`, descontinuada "
+"na docstring desde Python 3.2 e em tempo de execução desde Python 3.11. "
+"(Contribuição de Hugo van Kemenade em :gh:`104886`.)"
 
 #: ../../whatsnew/3.13.rst:1655
 msgid "importlib.metadata"
@@ -3245,6 +3314,9 @@ msgid ""
 "`EntryPoint <entry-points>` objects. (Contributed by Jason R. Coombs in :gh:"
 "`113175`.)"
 msgstr ""
+"Remove o acesso descontinuado a subscrito (:meth:`~object.__getitem__`) para "
+"objetos :ref:`EntryPoint <entry-points>`. (Contribuição de Jason R. Coombs "
+"em :gh:`113175`.)"
 
 #: ../../whatsnew/3.13.rst:1663
 msgid "locale"
@@ -3256,6 +3328,9 @@ msgid ""
 "Use ``locale.setlocale(locale.LC_ALL, \"\")`` instead. (Contributed by "
 "Victor Stinner in :gh:`104783`.)"
 msgstr ""
+"Remove a função :func:`!locale.resetlocale` descontinuada no Python 3.11. "
+"Use ``locale.setlocale(locale.LC_ALL, \"\")`` em vez disso. (Contribuição de "
+"Victor Stinner em :gh:`104783`.)"
 
 #: ../../whatsnew/3.13.rst:1671
 msgid "opcode"
@@ -3280,6 +3355,11 @@ msgid ""
 "neither documented nor exposed through :mod:`dis`, and were not intended to "
 "be used externally. (Contributed by Irit Katriel in :gh:`105481`.)"
 msgstr ""
+"Remove :func:`!opcode.is_pseudo`, :attr:`!opcode.MIN_PSEUDO_OPCODE` e :attr:"
+"`!opcode.MAX_PSEUDO_OPCODE`, que foram adicionados no Python 3.12, mas nunca "
+"foram documentados nem expostos através de :mod:`dis`, e não foram "
+"planejados para serem usados externamente. (Contribuição de Irit Katriel em :"
+"gh:`105481`.)"
 
 #: ../../whatsnew/3.13.rst:1688
 msgid ""
@@ -3287,6 +3367,9 @@ msgid ""
 "managers. This functionality was deprecated and has had no effect since "
 "Python 3.9. (Contributed by Barney Gale in :gh:`83863`.)"
 msgstr ""
+"Remove a capacidade de usar objetos :class:`~pathlib.Path` como "
+"gerenciadores de contexto. Essa funcionalidade foi descontinuada e não tinha "
+"efeito desde o Python 3.9. (Contribuição de Barney Gale em :gh:`83863`.)"
 
 #: ../../whatsnew/3.13.rst:1696
 msgid ""
@@ -3294,10 +3377,13 @@ msgid ""
 "function and :attr:`!re.TEMPLATE` / :attr:`!re.T` flag. (Contributed by "
 "Serhiy Storchaka and Nikita Sobolev in :gh:`105687`.)"
 msgstr ""
+"Remove a função :func:`!re.template` não documentada, descontinuada e "
+"quebrada e o sinalizador :attr:`!re.TEMPLATE` / :attr:`!re.T`. (Contribuição "
+"de Serhiy Storchaka e Nikita Sobolev em :gh:`105687`.)"
 
 #: ../../whatsnew/3.13.rst:1702
 msgid "tkinter.tix"
-msgstr ""
+msgstr "tkinter.tix"
 
 #: ../../whatsnew/3.13.rst:1704
 msgid ""
@@ -3305,6 +3391,9 @@ msgid ""
 "party Tix library which the module wrapped is unmaintained. (Contributed by "
 "Zachary Ware in :gh:`75552`.)"
 msgstr ""
+"Remove o módulo :mod:`!tkinter.tix`, descontinuado no Python 3.6. A "
+"biblioteca Tix de terceiros que o módulo empacota não é mantida. "
+"(Contribuição de Zachary Ware em :gh:`75552`.)"
 
 #: ../../whatsnew/3.13.rst:1710
 msgid "turtle"
@@ -3316,6 +3405,9 @@ msgid ""
 "documentation since Python 3.1 and at runtime since Python 3.11. "
 "(Contributed by Hugo van Kemenade in :gh:`104876`.)"
 msgstr ""
+"Remove o método :meth:`!RawTurtle.settiltangle`, descontinuado na "
+"documentação desde o Python 3.1 e em tempo de execução desde o Python 3.11. "
+"(Contribuição de Hugo van Kemenade em :gh:`104876`.)"
 
 #: ../../whatsnew/3.13.rst:1721
 msgid ""
@@ -3324,6 +3416,10 @@ msgid ""
 "from the :mod:`typing` module. (Contributed by Sebastian Rittau in :gh:"
 "`92871`.)"
 msgstr ""
+"Remove os espaços de nomes :mod:`!typing.io` e :mod:`!typing.re`, "
+"descontinuados desde o Python 3.8. Os itens nesses espaços de nomes podem "
+"ser importados diretamente do módulo :mod:`typing`. (Contribuição de "
+"Sebastian Rittau em :gh:`92871`.)"
 
 #: ../../whatsnew/3.13.rst:1727
 msgid ""
@@ -3331,6 +3427,9 @@ msgid ""
 "types, deprecated in Python 3.11. (Contributed by Tomas Roun in :gh:"
 "`104786`.)"
 msgstr ""
+"Remove o método de argumento nomeado de criação de tipos :class:`~typing."
+"TypedDict`, descontinuados no Python 3.11. (Contribuição de Tomas Roun em :"
+"gh:`104786`.)"
 
 #: ../../whatsnew/3.13.rst:1733
 msgid "unittest"
@@ -3360,15 +3459,15 @@ msgstr "Em vez delas, use os métodos de :class:`~unittest.TestLoader`:"
 
 #: ../../whatsnew/3.13.rst:1743
 msgid ":meth:`~unittest.TestLoader.loadTestsFromModule`"
-msgstr ""
+msgstr ":meth:`~unittest.TestLoader.loadTestsFromModule`"
 
 #: ../../whatsnew/3.13.rst:1744
 msgid ":meth:`~unittest.TestLoader.loadTestsFromTestCase`"
-msgstr ""
+msgstr ":meth:`~unittest.TestLoader.loadTestsFromTestCase`"
 
 #: ../../whatsnew/3.13.rst:1745
 msgid ":meth:`~unittest.TestLoader.getTestCaseNames`"
-msgstr ""
+msgstr ":meth:`~unittest.TestLoader.getTestCaseNames`"
 
 #: ../../whatsnew/3.13.rst:1747
 msgid "(Contributed by Hugo van Kemenade in :gh:`104835`.)"
@@ -3380,6 +3479,9 @@ msgid ""
 "deprecated in Python 3.11. (Contributed by Hugo van Kemenade in :gh:"
 "`104992`.)"
 msgstr ""
+"Remove o método :meth:`!TestProgram.usageExit` não testado e não "
+"documentado, descontinuado no Python 3.11. (Contribuição de Hugo van "
+"Kemenade em :gh:`104992`.)"
 
 #: ../../whatsnew/3.13.rst:1755
 msgid "urllib"
@@ -3395,6 +3497,13 @@ msgid ""
 "system's trusted certificate authority (CA) certificates. (Contributed by "
 "Victor Stinner in :gh:`105382`.)"
 msgstr ""
+"Remove os parâmetros *cafile*, *capath* e *cadefault* da função :func:"
+"`urllib.request.urlopen`, descontinuada no Python 3.6. Use o parâmetro "
+"*context* em vez disso com uma instância de :class:`~ssl.SSLContext`. A "
+"função :meth:`ssl.SSLContext.load_cert_chain` pode ser usada para carregar "
+"certificados específicos ou deixe :func:`ssl.create_default_context` "
+"selecionar os certificados de autoridade certificadora (AC) confiável ​​do "
+"sistema operacional. (Contribuição de Victor Stinner em :gh:`105382`.)"
 
 #: ../../whatsnew/3.13.rst:1768
 msgid "webbrowser"
@@ -3406,6 +3515,10 @@ msgid ""
 "Python 3.11. Use the :class:`!MacOSXOSAScript` class (introduced in Python "
 "3.2) instead. (Contributed by Hugo van Kemenade in :gh:`104804`.)"
 msgstr ""
+"Remove a classe :class:`!MacOSX` não testada e não documentada, "
+"descontinuada no Python 3.11. Use a classe :class:`!MacOSXOSAScript` "
+"(introduzida no Python 3.2). (Contribuição de Hugo van Kemenade em :gh:"
+"`104804`.)"
 
 #: ../../whatsnew/3.13.rst:1775
 msgid ""
@@ -3413,6 +3526,9 @@ msgid ""
 "attr:`MacOSXOSAScript.name <webbrowser.controller.name>` attribute instead. "
 "(Contributed by Nikita Sobolev in :gh:`105546`.)"
 msgstr ""
+"Remove o atributo descontinuado :attr:`!MacOSXOSAScript._name`. Use o "
+"atributo :attr:`MacOSXOSAScript.name <webbrowser.controller.name>` em vez "
+"disso. (Contribuição de Nikita Sobolev em :gh:`105546`.)"
 
 #: ../../whatsnew/3.13.rst:1782
 msgid "New Deprecations"
@@ -4616,7 +4732,7 @@ msgstr ""
 
 #: ../../whatsnew/3.13.rst:1951
 msgid "C API Changes"
-msgstr "Mudanças na API C"
+msgstr "Alterações na API C"
 
 #: ../../whatsnew/3.13.rst:1956
 msgid ""
@@ -4853,9 +4969,9 @@ msgid ""
 "references) now supports the :ref:`Limited API <limited-c-api>`. "
 "(Contributed by Victor Stinner in :gh:`108634`.)"
 msgstr ""
-"Python construído com :file:`configure` :option:`--with-trace-refs` "
-"(referências de rastreamento) agora oferece suporte à :ref:`API Limitada "
-"<limited-c-api>`. (Contribuição de Victor Stinner em :gh:`108634`.)"
+"Python construído com :option:`--with-trace-refs` (referências de "
+"rastreamento) do :file:`configure` agora oferece suporte à :ref:`API "
+"Limitada <limited-c-api>`. (Contribuição de Victor Stinner em :gh:`108634`.)"
 
 #: ../../whatsnew/3.13.rst:2056
 msgid ""
@@ -5147,7 +5263,7 @@ msgstr ""
 
 #: ../../whatsnew/3.13.rst:2177
 msgid "Build Changes"
-msgstr "Mudanças na construção"
+msgstr "Alterações na construção"
 
 #: ../../whatsnew/3.13.rst:2179
 msgid ""
@@ -5181,10 +5297,10 @@ msgid ""
 "references) is now ABI compatible with the Python release build and :ref:"
 "`debug build <debug-build>`. (Contributed by Victor Stinner in :gh:`108634`.)"
 msgstr ""
-"Python construído com :file:`configure` :option:`--with-trace-refs` "
-"(referências de rastreamento) tem compatibilidade de ABI com a construção de "
-"lançamento do Python e a :ref:`construção de depuração <debug-build>`. "
-"(Contribuição de Victor Stinner em :gh:`108634`.)"
+"Python construído com :option:`--with-trace-refs` (referências de "
+"rastreamento) do :file:`configure` tem compatibilidade de ABI com a "
+"construção de lançamento do Python e a :ref:`construção de depuração <debug-"
+"build>`. (Contribuição de Victor Stinner em :gh:`108634`.)"
 
 #: ../../whatsnew/3.13.rst:2195
 msgid ""
@@ -5407,7 +5523,7 @@ msgid ""
 msgstr ""
 "``Python.h`` não inclui mais o cabeçalho padrão ``<ieeefp.h>``. Ele foi "
 "incluído para a função ``finite()`` que agora é fornecida pelo cabeçalho "
-"``<math.h>``. Agora deve ser incluído explicitamente, se necessário. Remova "
+"``<math.h>``. Agora deve ser incluído explicitamente, se necessário. Remove "
 "também a macro ``HAVE_IEEEFP_H``. (Contribuição de Victor Stinner em :gh:"
 "`108765`.)"
 
@@ -5642,7 +5758,7 @@ msgstr ""
 
 #: ../../whatsnew/3.13.rst:2398
 msgid "Remove functions deprecated in Python 3.9:"
-msgstr "Remova funções descontinuadas no Python 3.9:"
+msgstr "Remove funções descontinuadas no Python 3.9:"
 
 #: ../../whatsnew/3.13.rst:2400
 msgid ""
@@ -5686,7 +5802,7 @@ msgid ""
 "Remove old buffer protocols deprecated in Python 3.0. Use :ref:"
 "`bufferobjects` instead."
 msgstr ""
-"Remova protocolos de buffer antigos descontinuados no Python 3.0. Use :ref:"
+"Remove protocolos de buffer antigos descontinuados no Python 3.0. Use :ref:"
 "`bufferobjects` em vez disso."
 
 #: ../../whatsnew/3.13.rst:2417
@@ -5762,7 +5878,7 @@ msgid ""
 "Remove the following old functions to configure the Python initialization, "
 "deprecated in Python 3.11:"
 msgstr ""
-"Remova as seguintes funções antigas da configuração de inicialização do "
+"Remove as seguintes funções antigas da configuração de inicialização do "
 "Python, descontinuadas no Python 3.11:"
 
 #: ../../whatsnew/3.13.rst:2454
@@ -5901,9 +6017,9 @@ msgid ""
 "used instead. (Contributed by Serhiy Storchaka in :gh:`86493`.)"
 msgstr ""
 "A função :c:func:`PyModule_AddObject` agora está :term:`suavemente "
-"descontinuado`: funções :c:func:`PyModule_Add` ou :c:func:"
-"`PyModule_AddObjectRef` devem ser usadas em seu lugar. (Contribuição de "
-"Serhiy Storchaka em :gh:`86493`.)"
+"descontinuada <suavemente descontinuado>`: funções :c:func:`PyModule_Add` "
+"ou :c:func:`PyModule_AddObjectRef` devem ser usadas em seu lugar. "
+"(Contribuição de Serhiy Storchaka em :gh:`86493`.)"
 
 #: ../../whatsnew/3.13.rst:2505
 msgid ""
@@ -5931,7 +6047,7 @@ msgstr ""
 
 #: ../../whatsnew/3.13.rst:2516
 msgid "Deprecate old Python initialization functions:"
-msgstr "Descontinua antigas funções de inicialização do Python"
+msgstr "Descontinua antigas funções de inicialização do Python:"
 
 #: ../../whatsnew/3.13.rst:2518
 #: ../../deprecations/c-api-pending-removal-in-3.15.rst:12
@@ -6105,7 +6221,7 @@ msgstr ":c:var:`Py_OptimizeFlag`: use :c:member:`PyConfig.optimization_level`."
 
 #: ../../deprecations/c-api-pending-removal-in-3.14.rst:28
 msgid ":c:var:`Py_NoSiteFlag`: use :c:member:`PyConfig.site_import` instead."
-msgstr ":c:var:`Py_NoSiteFlag`: use :c:member:`PyConfig.site_import` ."
+msgstr ":c:var:`Py_NoSiteFlag`: use :c:member:`PyConfig.site_import`."
 
 #: ../../deprecations/c-api-pending-removal-in-3.14.rst:29
 msgid ""
@@ -6250,7 +6366,7 @@ msgid ""
 "The following APIs are deprecated and will be removed, although there is "
 "currently no date scheduled for their removal."
 msgstr ""
-"As APIs a seguir foram descontinuado e serão removidas, embora atualmente "
+"As APIs a seguir foram descontinuadas e serão removidas, embora atualmente "
 "não haja uma data agendada para sua remoção."
 
 #: ../../deprecations/c-api-pending-removal-in-future.rst:7

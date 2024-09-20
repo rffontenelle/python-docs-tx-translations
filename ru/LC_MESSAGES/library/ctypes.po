@@ -6,15 +6,16 @@
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 # Илья Панфилов, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 10:59+0000\n"
+"POT-Creation-Date: 2024-09-20 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 01:03+0000\n"
-"Last-Translator: Илья Панфилов, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +28,7 @@ msgstr ""
 
 #: ../../library/ctypes.rst:2
 msgid ":mod:`!ctypes` --- A foreign function library for Python"
-msgstr ""
+msgstr ":mod:`!ctypes` --- Сторонняя библиотека функций для Python"
 
 #: ../../library/ctypes.rst:9
 msgid "**Source code:** :source:`Lib/ctypes`"
@@ -39,6 +40,10 @@ msgid ""
 "compatible data types, and allows calling functions in DLLs or shared "
 "libraries.  It can be used to wrap these libraries in pure Python."
 msgstr ""
+":mod:`ctypes` — это внешняя библиотека функций для Python. Он предоставляет "
+"типы данных, совместимые с C, и позволяет вызывать функции в DLL или общих "
+"библиотеках. Его можно использовать для обертывания этих библиотек в чистый "
+"Python."
 
 #: ../../library/ctypes.rst:21
 msgid "ctypes tutorial"
@@ -50,6 +55,10 @@ msgid ""
 "they actually work.  Since some code samples behave differently under Linux, "
 "Windows, or macOS, they contain doctest directives in comments."
 msgstr ""
+"Примечание. В примерах кода в этом руководстве используется :mod:`doctest`, "
+"чтобы убедиться, что они действительно работают. Поскольку некоторые примеры "
+"кода ведут себя по-разному в Linux, Windows или macOS, они содержат "
+"директивы doctest в комментариях."
 
 #: ../../library/ctypes.rst:27
 msgid ""
@@ -58,16 +67,22 @@ msgid ""
 "`c_long`. So, you should not be confused if :class:`c_long` is printed if "
 "you would expect :class:`c_int` --- they are actually the same type."
 msgstr ""
+"Примечание. Некоторые примеры кода ссылаются на тип ctypes :class:`c_int`. "
+"На платформах, где ``sizeof(long) == sizeof(int)``, это псевдоним :class:"
+"`c_long`. Итак, вас не должно смущать, если :class:`c_long` печатается, хотя "
+"вы ожидаете, что :class:`c_int` --- на самом деле они одного и того же типа."
 
 #: ../../library/ctypes.rst:35
 msgid "Loading dynamic link libraries"
-msgstr ""
+msgstr "Загрузка динамически подключаемых библиотек"
 
 #: ../../library/ctypes.rst:37
 msgid ""
 ":mod:`ctypes` exports the *cdll*, and on Windows *windll* and *oledll* "
 "objects, for loading dynamic link libraries."
 msgstr ""
+":mod:`ctypes` экспортирует объекты *cdll*, а в Windows *windll* и *oledll* "
+"для загрузки динамически подключаемых библиотек."
 
 #: ../../library/ctypes.rst:40
 msgid ""
@@ -79,6 +94,14 @@ msgid ""
 "The error code is used to automatically raise an :class:`OSError` exception "
 "when the function call fails."
 msgstr ""
+"Вы загружаете библиотеки, обращаясь к ним как к атрибутам этих объектов. "
+"*cdll* загружает библиотеки, которые экспортируют функции, используя "
+"стандартное соглашение о вызовах ``cdecl``, тогда как библиотеки *windll* "
+"вызывают функции, используя соглашение о вызовах ``stdcall``. *oledll* также "
+"использует соглашение о вызовах ``stdcall`` и предполагает, что функции "
+"возвращают код ошибки Windows :c:type:`!HRESULT`. Код ошибки используется "
+"для автоматического создания исключения :class:`OSError` в случае сбоя "
+"вызова функции."
 
 #: ../../library/ctypes.rst:48
 msgid ""
@@ -94,6 +117,9 @@ msgid ""
 "C library containing most standard C functions, and uses the cdecl calling "
 "convention::"
 msgstr ""
+"Вот несколько примеров для Windows. Обратите внимание, что msvcrt — это "
+"стандартная библиотека C MS, содержащая большинство стандартных функций C и "
+"использующая соглашение о вызовах cdecl::"
 
 #: ../../library/ctypes.rst:57
 msgid ""
@@ -105,10 +131,17 @@ msgid ""
 ">>> libc = cdll.msvcrt      \n"
 ">>>"
 msgstr ""
+">>> from ctypes import *\n"
+">>> print(windll.kernel32)  \n"
+"<WinDLL 'kernel32', handle ... at ...>\n"
+">>> print(cdll.msvcrt)      \n"
+"<CDLL 'msvcrt', handle ... at ...>\n"
+">>> libc = cdll.msvcrt      \n"
+">>>"
 
 #: ../../library/ctypes.rst:65
 msgid "Windows appends the usual ``.dll`` file suffix automatically."
-msgstr ""
+msgstr "Windows автоматически добавляет обычный суффикс файла ``.dll``."
 
 #: ../../library/ctypes.rst:68
 msgid ""
@@ -117,6 +150,10 @@ msgid ""
 "used by Python. Where possible, use native Python functionality, or else "
 "import and use the ``msvcrt`` module."
 msgstr ""
+"Доступ к стандартной библиотеке C через ``cdll.msvcrt`` будет использовать "
+"устаревшую версию библиотеки, которая может быть несовместима с той, которая "
+"используется Python. Там, где это возможно, используйте встроенную "
+"функциональность Python или импортируйте и используйте модуль msvcrt."
 
 #: ../../library/ctypes.rst:73
 msgid ""
@@ -126,6 +163,11 @@ msgid ""
 "should be used, or you should load the library by creating an instance of "
 "CDLL by calling the constructor::"
 msgstr ""
+"В Linux для загрузки библиотеки необходимо указать имя файла, *включая* "
+"расширение, поэтому доступ к атрибутам нельзя использовать для загрузки "
+"библиотек. Либо следует использовать метод :meth:`~LibraryLoader."
+"LoadLibrary` загрузчиков dll, либо вам следует загрузить библиотеку, создав "
+"экземпляр CDLL, вызвав конструктор::"
 
 #: ../../library/ctypes.rst:79
 msgid ""
@@ -136,14 +178,20 @@ msgid ""
 "<CDLL 'libc.so.6', handle ... at ...>\n"
 ">>>"
 msgstr ""
+">>> cdll.LoadLibrary(\"libc.so.6\")  \n"
+"<CDLL 'libc.so.6', handle ... at ...>\n"
+">>> libc = CDLL(\"libc.so.6\")       \n"
+">>> libc                           \n"
+"<CDLL 'libc.so.6', handle ... at ...>\n"
+">>>"
 
 #: ../../library/ctypes.rst:92
 msgid "Accessing functions from loaded dlls"
-msgstr ""
+msgstr "Доступ к функциям из загруженных dll"
 
 #: ../../library/ctypes.rst:94
 msgid "Functions are accessed as attributes of dll objects::"
-msgstr ""
+msgstr "Доступ к функциям осуществляется как атрибуты объектов dll::"
 
 #: ../../library/ctypes.rst:96
 msgid ""
@@ -159,6 +207,17 @@ msgid ""
 "AttributeError: function 'MyOwnFunction' not found\n"
 ">>>"
 msgstr ""
+">>> libc.printf\n"
+"<_FuncPtr object at 0x...>\n"
+">>> print(windll.kernel32.GetModuleHandleA)  \n"
+"<_FuncPtr object at 0x...>\n"
+">>> print(windll.kernel32.MyOwnFunction)     \n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"  File \"ctypes.py\", line 239, in __getattr__\n"
+"    func = _StdcallFuncPtr(name, self)\n"
+"AttributeError: function 'MyOwnFunction' not found\n"
+">>>"
 
 #: ../../library/ctypes.rst:108
 msgid ""
@@ -170,6 +229,14 @@ msgid ""
 "following C prototype, and a macro is used to expose one of them as "
 "``GetModuleHandle`` depending on whether UNICODE is defined or not::"
 msgstr ""
+"Обратите внимание, что системные библиотеки Win32, такие как Kernel32 и "
+"User32, часто экспортируют версии функций как в формате ANSI, так и в "
+"формате UNICODE. Версия UNICODE экспортируется с добавлением к имени буквы "
+"``W``, а версия ANSI экспортируется с добавлением к имени ``A``. Win32-"
+"функция ``GetModuleHandle``, которая возвращает *дескриптор* модуля для "
+"заданного имени модуля, имеет следующий прототип C, и макрос используется "
+"для предоставления одного из них как ``GetModuleHandle`` в зависимости от "
+"того, определен ли UNICODE. или нет::"
 
 #: ../../library/ctypes.rst:116
 msgid ""
@@ -178,6 +245,10 @@ msgid ""
 "/* UNICODE version */\n"
 "HMODULE GetModuleHandleW(LPCWSTR lpModuleName);"
 msgstr ""
+"/* ANSI version */\n"
+"HMODULE GetModuleHandleA(LPCSTR lpModuleName);\n"
+"/* UNICODE version */\n"
+"HMODULE GetModuleHandleW(LPCWSTR lpModuleName);"
 
 #: ../../library/ctypes.rst:121
 msgid ""
@@ -185,6 +256,10 @@ msgid ""
 "version you need by specifying ``GetModuleHandleA`` or ``GetModuleHandleW`` "
 "explicitly, and then call it with bytes or string objects respectively."
 msgstr ""
+"*windll* не пытается выбрать один из них по волшебству, вы должны получить "
+"доступ к нужной версии, явно указав ``GetModuleHandleA`` или "
+"``GetModuleHandleW``, а затем вызвать ее с байтовыми или строковыми "
+"объектами соответственно."
 
 #: ../../library/ctypes.rst:125
 msgid ""
@@ -192,6 +267,9 @@ msgid ""
 "identifiers, like ``\"??2@YAPAXI@Z\"``. In this case you have to use :func:"
 "`getattr` to retrieve the function::"
 msgstr ""
+"Иногда библиотеки DLL экспортируют функции с именами, которые не являются "
+"допустимыми идентификаторами Python, например ``\"??2@YAPAXI@Z\"``. В этом "
+"случае вам нужно использовать :func:`getattr` для получения функции::"
 
 #: ../../library/ctypes.rst:129
 msgid ""
@@ -199,6 +277,9 @@ msgid ""
 "<_FuncPtr object at 0x...>\n"
 ">>>"
 msgstr ""
+">>> getattr(cdll.msvcrt, \"??2@YAPAXI@Z\")  \n"
+"<_FuncPtr object at 0x...>\n"
+">>>"
 
 #: ../../library/ctypes.rst:133
 msgid ""
@@ -206,6 +287,9 @@ msgid ""
 "functions can be accessed by indexing the dll object with the ordinal "
 "number::"
 msgstr ""
+"В Windows некоторые библиотеки DLL экспортируют функции не по имени, а по "
+"порядковому номеру. Доступ к этим функциям можно получить, проиндексировав "
+"объект dll порядковым номером::"
 
 #: ../../library/ctypes.rst:136
 msgid ""
@@ -219,6 +303,15 @@ msgid ""
 "AttributeError: function ordinal 0 not found\n"
 ">>>"
 msgstr ""
+">>> cdll.kernel32[1]  \n"
+"<_FuncPtr object at 0x...>\n"
+">>> cdll.kernel32[0]  \n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"  File \"ctypes.py\", line 310, in __getitem__\n"
+"    func = _StdcallFuncPtr(name, self)\n"
+"AttributeError: function ordinal 0 not found\n"
+">>>"
 
 #: ../../library/ctypes.rst:150
 msgid "Calling functions"
@@ -230,12 +323,17 @@ msgid ""
 "uses the ``rand()`` function, which takes no arguments and returns a pseudo-"
 "random integer::"
 msgstr ""
+"Вы можете вызывать эти функции, как и любые другие вызываемые функции "
+"Python. В этом примере используется функция rand(), которая не принимает "
+"аргументов и возвращает псевдослучайное целое число::"
 
 #: ../../library/ctypes.rst:155
 msgid ""
 ">>> print(libc.rand())  \n"
 "1804289383"
 msgstr ""
+">>> print(libc.rand())  \n"
+"1804289383"
 
 #: ../../library/ctypes.rst:158
 msgid ""
@@ -243,6 +341,9 @@ msgid ""
 "a win32 module handle (passing ``None`` as single argument to call it with a "
 "``NULL`` pointer)::"
 msgstr ""
+"В Windows вы можете вызвать функцию GetModuleHandleA(), которая возвращает "
+"дескриптор модуля win32 (передавая None в качестве единственного аргумента "
+"для вызова с указателем NULL)::"
 
 #: ../../library/ctypes.rst:161
 msgid ""
@@ -250,12 +351,17 @@ msgid ""
 "0x1d000000\n"
 ">>>"
 msgstr ""
+">>> print(hex(windll.kernel32.GetModuleHandleA(None)))  \n"
+"0x1d000000\n"
+">>>"
 
 #: ../../library/ctypes.rst:165
 msgid ""
 ":exc:`ValueError` is raised when you call an ``stdcall`` function with the "
 "``cdecl`` calling convention, or vice versa::"
 msgstr ""
+":exc:`ValueError` возникает, когда вы вызываете функцию ``stdcall`` с "
+"соглашением о вызовах ``cdecl``, или наоборот::"
 
 #: ../../library/ctypes.rst:168
 msgid ""
@@ -273,12 +379,27 @@ msgid ""
 "excess)\n"
 ">>>"
 msgstr ""
+">>> cdll.kernel32.GetModuleHandleA(None)  \n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"ValueError: Procedure probably called with not enough arguments (4 bytes "
+"missing)\n"
+">>>\n"
+"\n"
+">>> windll.msvcrt.printf(b\"spam\")  \n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"ValueError: Procedure probably called with too many arguments (4 bytes in "
+"excess)\n"
+">>>"
 
 #: ../../library/ctypes.rst:180
 msgid ""
 "To find out the correct calling convention you have to look into the C "
 "header file or the documentation for the function you want to call."
 msgstr ""
+"Чтобы узнать правильное соглашение о вызовах, вам нужно просмотреть "
+"заголовочный файл C или документацию для функции, которую вы хотите вызвать."
 
 #: ../../library/ctypes.rst:183
 msgid ""
@@ -286,6 +407,8 @@ msgid ""
 "prevent crashes from general protection faults when functions are called "
 "with invalid argument values::"
 msgstr ""
+"Чтобы узнать правильное соглашение о вызовах, вам нужно просмотреть "
+"заголовочный файл C или документацию для функции, которую вы хотите вызвать."
 
 #: ../../library/ctypes.rst:187
 msgid ""
@@ -295,6 +418,11 @@ msgid ""
 "OSError: exception: access violation reading 0x00000020\n"
 ">>>"
 msgstr ""
+">>> windll.kernel32.GetModuleHandleA(32)  \n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"OSError: exception: access violation reading 0x00000020\n"
+">>>"
 
 #: ../../library/ctypes.rst:193
 msgid ""
@@ -303,6 +431,10 @@ msgid ""
 "debugging crashes (e.g. from segmentation faults produced by erroneous C "
 "library calls)."
 msgstr ""
+"Однако существует достаточно способов аварийно завершить работу Python с "
+"помощью :mod:`ctypes`, так что в любом случае вам следует быть осторожным. "
+"Модуль :mod:`faulthandler` может быть полезен при отладке сбоев (например, "
+"из-за ошибок сегментации, вызванных ошибочными вызовами библиотеки C)."
 
 #: ../../library/ctypes.rst:198
 msgid ""
@@ -314,12 +446,21 @@ msgid ""
 "platform's default C :c:expr:`int` type, their value is masked to fit into "
 "the C type."
 msgstr ""
+"``Нет``, целые числа, байтовые объекты и строки (Юникод) — единственные "
+"собственные объекты Python, которые можно напрямую использовать в качестве "
+"параметров в этих вызовах функций. ``None`` передается как указатель C "
+"``NULL``, байтовые объекты и строки передаются как указатель на блок памяти, "
+"содержащий их данные (:c:expr:`char *` или :c:expr:` wchar_t *`). Целые "
+"числа Python передаются как тип C :c:expr:`int` платформы по умолчанию, их "
+"значение маскируется, чтобы соответствовать типу C."
 
 #: ../../library/ctypes.rst:205
 msgid ""
 "Before we move on calling functions with other parameter types, we have to "
 "learn more about :mod:`ctypes` data types."
 msgstr ""
+"Прежде чем мы перейдем к вызову функций с другими типами параметров, нам "
+"нужно узнать больше о типах данных :mod:`ctypes`."
 
 #: ../../library/ctypes.rst:212 ../../library/ctypes.rst:2203
 msgid "Fundamental data types"
@@ -454,7 +595,7 @@ msgstr ":class:`c_longlong`"
 
 #: ../../library/ctypes.rst:241
 msgid ":c:expr:`__int64` or :c:expr:`long long`"
-msgstr ""
+msgstr ":c:expr:`__int64` или :c:expr:`long long`"
 
 #: ../../library/ctypes.rst:243
 msgid ":class:`c_ulonglong`"
@@ -462,7 +603,7 @@ msgstr ":class:`c_ulonglong`"
 
 #: ../../library/ctypes.rst:243
 msgid ":c:expr:`unsigned __int64` or :c:expr:`unsigned long long`"
-msgstr ""
+msgstr ":c:expr:`unsigned __int64` or :c:expr:`unsigned long long`"
 
 #: ../../library/ctypes.rst:246
 msgid ":class:`c_size_t`"
@@ -523,7 +664,7 @@ msgstr ":class:`c_char_p`"
 
 #: ../../library/ctypes.rst:259
 msgid ":c:expr:`char *` (NUL terminated)"
-msgstr ""
+msgstr ":c:expr:`char *` (NUL terminated)"
 
 #: ../../library/ctypes.rst:259
 msgid "bytes object or ``None``"
@@ -535,7 +676,7 @@ msgstr ":class:`c_wchar_p`"
 
 #: ../../library/ctypes.rst:261
 msgid ":c:expr:`wchar_t *` (NUL terminated)"
-msgstr ""
+msgstr ":c:expr:`wchar_t *` (NUL terminated)"
 
 #: ../../library/ctypes.rst:261
 msgid "string or ``None``"
@@ -555,13 +696,15 @@ msgstr "int или ``None``"
 
 #: ../../library/ctypes.rst:267
 msgid "The constructor accepts any object with a truth value."
-msgstr ""
+msgstr "Конструктор принимает любой объект со значением истинности."
 
 #: ../../library/ctypes.rst:269
 msgid ""
 "All these types can be created by calling them with an optional initializer "
 "of the correct type and value::"
 msgstr ""
+"Все эти типы можно создать, вызвав их с необязательным инициализатором "
+"правильного типа и значения::"
 
 #: ../../library/ctypes.rst:272
 msgid ""
@@ -573,11 +716,19 @@ msgid ""
 "c_ushort(65533)\n"
 ">>>"
 msgstr ""
+">>> c_int()\n"
+"c_long(0)\n"
+">>> c_wchar_p(\"Hello, World\")\n"
+"c_wchar_p(140018365411392)\n"
+">>> c_ushort(-3)\n"
+"c_ushort(65533)\n"
+">>>"
 
 #: ../../library/ctypes.rst:280
 msgid ""
 "Since these types are mutable, their value can also be changed afterwards::"
 msgstr ""
+"Поскольку эти типы изменяемы, их значение впоследствии также можно изменить:"
 
 #: ../../library/ctypes.rst:282
 msgid ""
@@ -591,6 +742,15 @@ msgid ""
 "-99\n"
 ">>>"
 msgstr ""
+">>> i = c_int(42)\n"
+">>> print(i)\n"
+"c_long(42)\n"
+">>> print(i.value)\n"
+"42\n"
+">>> i.value = -99\n"
+">>> print(i.value)\n"
+"-99\n"
+">>>"
 
 #: ../../library/ctypes.rst:292
 msgid ""
