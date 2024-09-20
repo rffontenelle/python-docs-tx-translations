@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-17 15:17+0000\n"
+"POT-Creation-Date: 2024-09-20 15:42+0000\n"
 "PO-Revision-Date: 2023-05-24 02:11+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -142,7 +142,8 @@ msgid ""
 msgstr ""
 "この :class:`Weekday` 列挙型は、変数が1つの曜日を必要とする場合には優れていま"
 "すが、複数必要な場合はどうでしょうか？ 1週間の家事を記録する関数を作成してい"
-"て、listは使いたくない場合、別の型の :class:`Enum` を使用することができます::"
+"て、:class:`list` は使いたくない場合、別の型の :class:`Enum` を使用することが"
+"できます::"
 
 #: ../../howto/enum.rst:124
 msgid ""
@@ -420,6 +421,9 @@ msgid ""
 "class creation for lookup of existing members.  See :ref:`new-vs-init` for "
 "more details."
 msgstr ""
+":meth:`__new__` メソッドが定義されていれば、Enum 番号の作成時に使用されます; "
+"これは Enum の :meth:`__new__` と置き換えられ、クラスが作成された後の既存の番"
+"号を取得に使用されます。詳細は :ref:`new-vs-init` を参照してください。"
 
 #: ../../howto/enum.rst:438
 msgid "Restricted Enum subclassing"
@@ -491,12 +495,17 @@ msgid ""
 "meth:`__reduce_ex__` in the enumeration class.  The default method is by-"
 "value, but enums with complicated values may want to use by-name::"
 msgstr ""
+"列挙型クラスの :meth:`__reduce_ex__` を定義することで、列挙型のメンバがどのよ"
+"うに pickle 化や unpickle 化されるかを変更できます。デフォルトの方法は値に"
+"よってですが、複雑な値を持つ列挙型には名前によることを望むかもしれません::"
 
 #: ../../howto/enum.rst:503
 msgid ""
 "Using by-name for flags is not recommended, as unnamed aliases will not "
 "unpickle."
 msgstr ""
+"フラグに名前による pickle 化を使うことは、名前の無いエイリアスが unpickle 化"
+"されないため推奨されません。"
 
 #: ../../howto/enum.rst:508
 msgid "Functional API"
@@ -553,6 +562,11 @@ msgid ""
 "function in a separate module, and also may not work on IronPython or "
 "Jython). The solution is to specify the module name explicitly as follows::"
 msgstr ""
+"機能 API による Enum の pickle 化は、その列挙型がどのモジュールで作成されたか"
+"を見つけ出すためにフレームスタックの実装の詳細が使われるので、トリッキーにな"
+"ることがあります (例えば別のモジュールのユーティリティ関数を使うと失敗します"
+"し、IronPython や Jython ではうまくいきません)。解決策は、以下のようにモ"
+"ジュール名を明示的に指定することです::"
 
 #: ../../howto/enum.rst:553
 msgid ""
@@ -606,11 +620,11 @@ msgstr "またはマッピングでも指定できます::"
 
 #: ../../howto/enum.rst:595
 msgid "*module*: name of module where new enum class can be found."
-msgstr ""
+msgstr "*module*: 新しい enum クラスが属するモジュールの名前です。"
 
 #: ../../howto/enum.rst:597
 msgid "*qualname*: where in module new enum class can be found."
-msgstr ""
+msgstr "*qualname*: 新しい enum クラスが属するモジュールの場所です。"
 
 #: ../../howto/enum.rst:599
 msgid "*type*: type to mix in to new enum class."
@@ -747,7 +761,7 @@ msgid ""
 "The negation operator, ``~``, always returns an :class:`IntFlag` member with "
 "a positive value::"
 msgstr ""
-"否定の演算子,``~`` は、常に正の値を持つ:class:`IntFlag` メンバー を返す::"
+"否定の演算子 ``~`` は、常に正の値を持つ :class:`IntFlag` メンバー を返す::"
 
 #: ../../howto/enum.rst:751
 msgid ":class:`IntFlag` members can also be iterated over::"
@@ -800,7 +814,7 @@ msgstr ""
 
 #: ../../howto/enum.rst:811
 msgid ":class:`Flag` members can also be iterated over::"
-msgstr ""
+msgstr ":class:`Flag` メンバーは反復処理することもできます::"
 
 #: ../../howto/enum.rst:821
 msgid ""
@@ -908,6 +922,8 @@ msgid ""
 ":ref:`Formatted string literals <f-strings>`, :meth:`str.format`, and :func:"
 "`format` will use the enum's :meth:`__str__` method."
 msgstr ""
+":ref:`フォーマット済み文字列リテラル <f-strings>`、:meth:`str.format`、およ"
+"び :func:`format` はenumの :meth:`__str__` メソッドを使います。"
 
 #: ../../howto/enum.rst:866
 msgid ""
@@ -916,8 +932,8 @@ msgid ""
 "`__str__` method has been reset to their data types' :meth:`__str__` method."
 msgstr ""
 ":class:`IntEnum` 、:class:`IntFlag` 、:class:`StrEnum` は、既存の定数のドロッ"
-"プイン置換として設計されているため、それらの:meth:`__str__` メソッド は、それ"
-"らのデータ型の:meth:`__str__` メソッド にリセットされている。"
+"プイン置換として設計されているため、それらの :meth:`__str__` メソッドは、それ"
+"らのデータ型の :meth:`__str__` メソッドにリセットされている。"
 
 #: ../../howto/enum.rst:874
 msgid "When to use :meth:`__new__` vs. :meth:`__init__`"
@@ -1271,6 +1287,12 @@ msgid ""
 "final :class:`Enum` class are correct (such as :meth:`__new__`, :meth:"
 "`__getnewargs__`, :meth:`__str__` and :meth:`__repr__`)."
 msgstr ""
+":class:`EnumType` メタクラスは、:meth:`__contains__`、:meth:`__dir__`、:meth:"
+"`__iter__` および標準的なクラスでは失敗するが :class:`Enum` クラスでは動作す"
+"るその他のメソッド (``list(Color)`` や ``some_enum_var in Color`` など) を責"
+"任を持って提供します。:class:`EnumType` は最終的な :class:`Enum` クラスのさま"
+"ざまなメソッド (:meth:`__new__`、:meth:`__getnewargs__`、:meth:`__str__` およ"
+"び :meth:`__repr__`) が正しいことを責任を持って保証します。"
 
 #: ../../howto/enum.rst:1158
 msgid "Flag Classes"
