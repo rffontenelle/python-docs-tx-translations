@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 11:30+0000\n"
+"POT-Creation-Date: 2024-09-27 14:50+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: ../../library/optparse.rst:2
 msgid ":mod:`!optparse` --- Parser for command line options"
-msgstr ""
+msgstr ":mod:`!optparse` --- Анализатор параметров командной строки"
 
 #: ../../library/optparse.rst:11
 msgid "**Source code:** :source:`Lib/optparse.py`"
@@ -48,10 +48,17 @@ msgid ""
 "conventional GNU/POSIX syntax, and additionally generates usage and help "
 "messages for you."
 msgstr ""
+":mod:`optparse` — более удобная, гибкая и мощная библиотека для анализа "
+"параметров командной строки, чем старый модуль :mod:`getopt`. :mod:"
+"`optparse` использует более декларативный стиль анализа командной строки: вы "
+"создаете экземпляр :class:`OptionParser`, заполняете его опциями и "
+"анализируете командную строку. :mod:`optparse` позволяет пользователям "
+"указывать параметры в обычном синтаксисе GNU/POSIX, а также генерирует для "
+"вас сообщения об использовании и справку."
 
 #: ../../library/optparse.rst:26
 msgid "Here's an example of using :mod:`optparse` in a simple script::"
-msgstr ""
+msgstr "Вот пример использования :mod:`optparse` в простом скрипте::"
 
 #: ../../library/optparse.rst:28
 msgid ""
@@ -66,16 +73,28 @@ msgid ""
 "\n"
 "(options, args) = parser.parse_args()"
 msgstr ""
+"from optparse import OptionParser\n"
+"...\n"
+"parser = OptionParser()\n"
+"parser.add_option(\"-f\", \"--file\", dest=\"filename\",\n"
+"                  help=\"write report to FILE\", metavar=\"FILE\")\n"
+"parser.add_option(\"-q\", \"--quiet\",\n"
+"                  action=\"store_false\", dest=\"verbose\", default=True,\n"
+"                  help=\"don't print status messages to stdout\")\n"
+"\n"
+"(options, args) = parser.parse_args()"
 
 #: ../../library/optparse.rst:39
 msgid ""
 "With these few lines of code, users of your script can now do the \"usual "
 "thing\" on the command-line, for example::"
 msgstr ""
+"С помощью этих нескольких строк кода пользователи вашего скрипта теперь "
+"могут делать «обычные действия» в командной строке, например:"
 
 #: ../../library/optparse.rst:42
 msgid "<yourscript> --file=outfile -q"
-msgstr ""
+msgstr "<yourscript> --file=outfile -q"
 
 #: ../../library/optparse.rst:44
 msgid ""
@@ -89,6 +108,15 @@ msgid ""
 "variety of ways.  Thus, the following command lines are all equivalent to "
 "the above example::"
 msgstr ""
+"При анализе командной строки :mod:`optparse` устанавливает атрибуты объекта "
+"``options``, возвращаемого :meth:`~OptionParser.parse_args`, на основе "
+"значений командной строки, предоставленных пользователем. Когда :meth:"
+"`~OptionParser.parse_args` возвращается после анализа этой командной строки, "
+"``options.filename`` будет ``outfile'`, а ``options.verbose`` будет "
+"``False``. :mod:`optparse` поддерживает как длинные, так и короткие "
+"параметры, позволяет объединять короткие параметры и связывать параметры с "
+"их аргументами различными способами. Таким образом, следующие командные "
+"строки эквивалентны приведенному выше примеру:"
 
 #: ../../library/optparse.rst:53
 msgid ""
@@ -97,21 +125,27 @@ msgid ""
 "<yourscript> -q -foutfile\n"
 "<yourscript> -qfoutfile"
 msgstr ""
+"<yourscript> -f outfile --quiet\n"
+"<yourscript> --quiet --file outfile\n"
+"<yourscript> -q -foutfile\n"
+"<yourscript> -qfoutfile"
 
 #: ../../library/optparse.rst:58
 msgid "Additionally, users can run one of the following ::"
-msgstr ""
+msgstr "Кроме того, пользователи могут запустить одно из следующих действий::"
 
 #: ../../library/optparse.rst:60
 msgid ""
 "<yourscript> -h\n"
 "<yourscript> --help"
 msgstr ""
+"<yourscript> -h\n"
+"<yourscript> --help"
 
 #: ../../library/optparse.rst:63
 msgid ""
 "and :mod:`optparse` will print out a brief summary of your script's options:"
-msgstr ""
+msgstr "и :mod:`optparse` распечатает краткое описание опций вашего скрипта:"
 
 #: ../../library/optparse.rst:65
 msgid ""
@@ -122,12 +156,20 @@ msgid ""
 "  -f FILE, --file=FILE  write report to FILE\n"
 "  -q, --quiet           don't print status messages to stdout"
 msgstr ""
+"Usage: <yourscript> [options]\n"
+"\n"
+"Options:\n"
+"  -h, --help            show this help message and exit\n"
+"  -f FILE, --file=FILE  write report to FILE\n"
+"  -q, --quiet           don't print status messages to stdout"
 
 #: ../../library/optparse.rst:74
 msgid ""
 "where the value of *yourscript* is determined at runtime (normally from "
 "``sys.argv[0]``)."
 msgstr ""
+"где значение *yourscript* определяется во время выполнения (обычно из ``sys."
+"argv[0]``)."
 
 #: ../../library/optparse.rst:81
 msgid "Background"
@@ -141,6 +183,11 @@ msgid ""
 "conventionally used under Unix.  If you are unfamiliar with these "
 "conventions, read this section to acquaint yourself with them."
 msgstr ""
+":mod:`optparse` был специально разработан для поощрения создания программ с "
+"простыми, традиционными интерфейсами командной строки. С этой целью он "
+"поддерживает только наиболее распространенный синтаксис и семантику "
+"командной строки, традиционно используемые в Unix. Если вы не знакомы с "
+"этими соглашениями, прочтите этот раздел, чтобы ознакомиться с ними."
 
 #: ../../library/optparse.rst:93
 msgid "Terminology"
@@ -157,6 +204,10 @@ msgid ""
 "(``sys.argv[0]`` is the name of the program being executed).  Unix shells "
 "also use the term \"word\"."
 msgstr ""
+"строка, введенная в командной строке и передаваемая оболочкой в ​​``execl()`` "
+"или ``execv()``. В Python аргументы являются элементами ``sys.argv[1:]`` "
+"(``sys.argv[0]`` — это имя выполняемой программы). В оболочках Unix также "
+"используется термин «слово»."
 
 #: ../../library/optparse.rst:101
 msgid ""
@@ -165,6 +216,9 @@ msgid ""
 "argv[1:]``, or of some other list provided as a substitute for ``sys."
 "argv[1:]``\"."
 msgstr ""
+"Иногда желательно заменить список аргументов, отличный от ``sys.argv[1:]``, "
+"поэтому вам следует читать \"аргумент\" как \"элемент ``sys.argv[1:]`` или "
+"какой-либо другой другой список предоставлен вместо ``sys.argv[1:]``\"."
 
 #: ../../library/optparse.rst:106
 msgid "option"
@@ -181,16 +235,27 @@ msgid ""
 "separated words, e.g. ``--file`` or ``--dry-run``.  These are the only two "
 "option syntaxes provided by :mod:`optparse`."
 msgstr ""
+"аргумент, используемый для предоставления дополнительной информации для "
+"управления или настройки выполнения программы. Существует множество "
+"различных синтаксисов опций; традиционный синтаксис Unix представляет собой "
+"дефис (\"-\"), за которым следует одна буква, например ``-x`` или ``-F``. "
+"Кроме того, традиционный синтаксис Unix позволяет объединить несколько "
+"параметров в один аргумент, например, ``-x -F`` эквивалентен ``-xF``. Проект "
+"GNU представил ``--``, за которым следовал ряд слов, разделенных дефисом, "
+"например ``--file`` или ``--dry-run``. Это единственные два синтаксиса "
+"опций, предоставляемые :mod:`optparse`."
 
 #: ../../library/optparse.rst:116
 msgid "Some other option syntaxes that the world has seen include:"
-msgstr ""
+msgstr "Некоторые другие синтаксисы опций, которые видел мир, включают:"
 
 #: ../../library/optparse.rst:118
 msgid ""
 "a hyphen followed by a few letters, e.g. ``-pf`` (this is *not* the same as "
 "multiple options merged into a single argument)"
 msgstr ""
+"дефис, за которым следуют несколько букв, например ``-pf`` (это *не* то же "
+"самое, что несколько опций, объединенных в один аргумент)"
 
 #: ../../library/optparse.rst:121
 msgid ""
@@ -198,18 +263,25 @@ msgid ""
 "equivalent to the previous syntax, but they aren't usually seen in the same "
 "program)"
 msgstr ""
+"дефис, за которым следует целое слово, например ``-file`` (это технически "
+"эквивалентно предыдущему синтаксису, но они обычно не встречаются в одной и "
+"той же программе)"
 
 #: ../../library/optparse.rst:125
 msgid ""
 "a plus sign followed by a single letter, or a few letters, or a word, e.g. "
 "``+f``, ``+rgb``"
 msgstr ""
+"знак плюса, за которым следует одна буква, несколько букв или слово, "
+"например ``+f``, ``+rgb``"
 
 #: ../../library/optparse.rst:128
 msgid ""
 "a slash followed by a letter, or a few letters, or a word, e.g. ``/f``, ``/"
 "file``"
 msgstr ""
+"косая черта, за которой следует буква, несколько букв или слово, например ``/"
+"f``, ``/file``"
 
 #: ../../library/optparse.rst:131
 msgid ""
@@ -218,6 +290,11 @@ msgid ""
 "environment, and the last only makes sense if you're exclusively targeting "
 "Windows or certain legacy platforms (e.g. VMS, MS-DOS)."
 msgstr ""
+"Эти синтаксисы опций не поддерживаются :mod:`optparse` и никогда не будут "
+"поддерживаться. Это сделано намеренно: первые три нестандартны для любой "
+"среды, а последний имеет смысл только в том случае, если вы нацелены "
+"исключительно на Windows или определенные устаревшие платформы (например, "
+"VMS, MS-DOS)."
 
 #: ../../library/optparse.rst:136
 msgid "option argument"
@@ -230,22 +307,29 @@ msgid ""
 "`optparse`, option arguments may either be in a separate argument from their "
 "option:"
 msgstr ""
+"аргумент, следующий за опцией, тесно связан с этой опцией и используется из "
+"списка аргументов, когда эта опция есть. При использовании :mod:`optparse` "
+"аргументы опции могут находиться в отдельном аргументе от их опции:"
 
 #: ../../library/optparse.rst:142
 msgid ""
 "-f foo\n"
 "--file foo"
 msgstr ""
+"-f foo\n"
+"--file foo"
 
 #: ../../library/optparse.rst:147
 msgid "or included in the same argument:"
-msgstr ""
+msgstr "или включено в тот же аргумент:"
 
 #: ../../library/optparse.rst:149
 msgid ""
 "-ffoo\n"
 "--file=foo"
 msgstr ""
+"-ffoo\n"
+"--file=foo"
 
 #: ../../library/optparse.rst:154
 msgid ""
@@ -257,6 +341,13 @@ msgid ""
 "interpret ``-ab``?  Because of this ambiguity, :mod:`optparse` does not "
 "support this feature."
 msgstr ""
+"Обычно данная опция либо принимает аргумент, либо нет. Многим людям нужна "
+"функция «дополнительные аргументы опций», означающая, что некоторые опции "
+"будут принимать аргумент, если они его увидят, и не будут, если они его не "
+"увидят. Это несколько спорно, поскольку делает синтаксический анализ "
+"неоднозначным: если ``-a`` принимает необязательный аргумент, а ``-b`` "
+"является совершенно другим параметром, как мы интерпретируем ``-ab``? Из-за "
+"этой двусмысленности :mod:`optparse` не поддерживает эту функцию."
 
 #: ../../library/optparse.rst:162
 msgid "positional argument"
@@ -268,6 +359,9 @@ msgid ""
 "after options and their arguments have been parsed and removed from the "
 "argument list."
 msgstr ""
+"что-то, что осталось в списке аргументов после анализа опций, т.е. после "
+"того, как опции и их аргументы были проанализированы и удалены из списка "
+"аргументов."
 
 #: ../../library/optparse.rst:167
 msgid "required option"
@@ -280,14 +374,18 @@ msgid ""
 "doesn't prevent you from implementing required options, but doesn't give you "
 "much help at it either."
 msgstr ""
+"опция, которая должна быть указана в командной строке; обратите внимание, "
+"что фраза «обязательный вариант» в английском языке противоречива. :mod:"
+"`optparse` не мешает вам реализовать необходимые опции, но и не сильно вам в "
+"этом помогает."
 
 #: ../../library/optparse.rst:173
 msgid "For example, consider this hypothetical command-line::"
-msgstr ""
+msgstr "Например, рассмотрим эту гипотетическую командную строку:"
 
 #: ../../library/optparse.rst:175
 msgid "prog -v --report report.txt foo bar"
-msgstr ""
+msgstr "prog -v --report report.txt foo bar"
 
 #: ../../library/optparse.rst:177
 msgid ""
@@ -295,10 +393,13 @@ msgid ""
 "one argument, ``report.txt`` is an option argument.  ``foo`` and ``bar`` are "
 "positional arguments."
 msgstr ""
+"``-v`` и ``--report`` являются опциями. Предполагая, что ``--report`` "
+"принимает один аргумент, ``report.txt`` является дополнительным аргументом. "
+"``foo`` и ``bar`` являются позиционными аргументами."
 
 #: ../../library/optparse.rst:185
 msgid "What are options for?"
-msgstr ""
+msgstr "Для чего нужны опции?"
 
 #: ../../library/optparse.rst:187
 msgid ""
@@ -311,6 +412,14 @@ msgid ""
 "have been rightly criticized for their non-standard syntax and confusing "
 "interfaces.)"
 msgstr ""
+"Параметры используются для предоставления дополнительной информации для "
+"настройки или настройки выполнения программы. Если это неясно, параметры "
+"обычно *необязательны*. Программа должна работать нормально, без каких-либо "
+"опций. (Выберите случайную программу из наборов инструментов Unix или GNU. "
+"Может ли она работать вообще без каких-либо опций и при этом иметь смысл? "
+"Основными исключениями являются ``find``, ``tar`` и ``dd``\\ -- - все это "
+"чудаки-мутанты, которых справедливо критиковали за нестандартный синтаксис и "
+"запутанные интерфейсы.)"
 
 #: ../../library/optparse.rst:195
 msgid ""
@@ -319,6 +428,10 @@ msgid ""
 "of information that your program absolutely requires in order to run "
 "successfully, that's what positional arguments are for."
 msgstr ""
+"Многие люди хотят, чтобы их программы имели «обязательные опции». Подумайте "
+"об этом. Если это необходимо, то *необязательно*! Если есть информация, "
+"которая абсолютно необходима вашей программе для успешной работы, то именно "
+"для этого и нужны позиционные аргументы."
 
 #: ../../library/optparse.rst:200
 msgid ""
@@ -328,12 +441,20 @@ msgid ""
 "``cp`` fails if you run it with no arguments.  However, it has a flexible, "
 "useful syntax that does not require any options at all::"
 msgstr ""
+"В качестве примера хорошего дизайна интерфейса командной строки рассмотрим "
+"скромную утилиту cp для копирования файлов. Нет особого смысла пытаться "
+"копировать файлы, не указав место назначения и хотя бы один источник. "
+"Следовательно, ``cp`` завершится неудачно, если вы запустите его без "
+"аргументов. Однако он имеет гибкий и полезный синтаксис, который вообще не "
+"требует каких-либо опций:"
 
 #: ../../library/optparse.rst:206
 msgid ""
 "cp SOURCE DEST\n"
 "cp SOURCE ... DEST-DIR"
 msgstr ""
+"cp SOURCE DEST\n"
+"cp SOURCE ... DEST-DIR"
 
 #: ../../library/optparse.rst:209
 msgid ""
@@ -344,16 +465,25 @@ msgid ""
 "mission of ``cp``, which is to copy either one file to another, or several "
 "files to another directory."
 msgstr ""
+"Вы можете добиться довольно далеко только с этим. Большинство реализаций "
+"``cp`` предоставляют множество опций для точной настройки копирования "
+"файлов: вы можете сохранять режим и время изменения, избегать перехода по "
+"символическим ссылкам, спрашивать перед удалением существующих файлов и т. "
+"д. Но ничто из этого не отвлекает от основной задачи. ``cp``, который "
+"предназначен для копирования одного файла в другой или нескольких файлов в "
+"другой каталог."
 
 #: ../../library/optparse.rst:220
 msgid "What are positional arguments for?"
-msgstr ""
+msgstr "Для чего нужны позиционные аргументы?"
 
 #: ../../library/optparse.rst:222
 msgid ""
 "Positional arguments are for those pieces of information that your program "
 "absolutely, positively requires to run."
 msgstr ""
+"Позиционные аргументы предназначены для тех фрагментов информации, которые "
+"абсолютно необходимы для запуска вашей программы."
 
 #: ../../library/optparse.rst:225
 msgid ""
@@ -365,6 +495,14 @@ msgid ""
 "configuration file, or a GUI: if you make that many demands on your users, "
 "most of them will simply give up."
 msgstr ""
+"Хороший пользовательский интерфейс должен иметь как можно меньше абсолютных "
+"требований. Если вашей программе для успешного запуска требуется 17 "
+"различных фрагментов информации, не имеет большого значения, *как* вы "
+"получаете эту информацию от пользователя — большинство людей сдадутся и "
+"уйдут, прежде чем успешно запустят программу. Это применимо независимо от "
+"того, является ли пользовательский интерфейс командной строкой, файлом "
+"конфигурации или графическим интерфейсом: если вы предъявляете слишком много "
+"требований к своим пользователям, большинство из них просто сдадутся."
 
 #: ../../library/optparse.rst:233
 msgid ""
@@ -378,6 +516,17 @@ msgid ""
 "has drawbacks as well, of course; too many options can overwhelm users and "
 "make your code much harder to maintain."
 msgstr ""
+"Короче говоря, постарайтесь свести к минимуму объем информации, которую "
+"пользователи абсолютно обязаны предоставлять — по возможности используйте "
+"разумные значения по умолчанию. Конечно, вы также хотите сделать свои "
+"программы достаточно гибкими. Для этого и существуют опции. Опять же, не "
+"имеет значения, являются ли они записями в файле конфигурации, виджетами в "
+"диалоговом окне «Настройки» графического пользовательского интерфейса или "
+"параметрами командной строки — чем больше параметров вы реализуете, тем "
+"более гибкой будет ваша программа, и усложняется его реализация. Разумеется, "
+"слишком большая гибкость имеет и недостатки; слишком большое количество "
+"опций может перегрузить пользователей и значительно усложнить поддержку "
+"вашего кода."
 
 #: ../../library/optparse.rst:246
 msgid "Tutorial"
@@ -389,12 +538,17 @@ msgid ""
 "straightforward to use in most cases.  This section covers the code patterns "
 "that are common to any :mod:`optparse`\\ -based program."
 msgstr ""
+"Хотя :mod:`optparse` довольно гибкий и мощный, в большинстве случаев его "
+"также легко использовать. В этом разделе рассматриваются шаблоны кода, общие "
+"для любой программы на основе :mod:`optparse`\\."
 
 #: ../../library/optparse.rst:252
 msgid ""
 "First, you need to import the OptionParser class; then, early in the main "
 "program, create an OptionParser instance::"
 msgstr ""
+"Во-первых, вам нужно импортировать класс OptionParser; затем в начале "
+"основной программы создайте экземпляр OptionParser::"
 
 #: ../../library/optparse.rst:255
 msgid ""
@@ -402,16 +556,21 @@ msgid ""
 "...\n"
 "parser = OptionParser()"
 msgstr ""
+"from optparse import OptionParser\n"
+"...\n"
+"parser = OptionParser()"
 
 #: ../../library/optparse.rst:259
 msgid "Then you can start defining options.  The basic syntax is::"
-msgstr ""
+msgstr "Затем можно приступить к определению вариантов. Основной синтаксис::"
 
 #: ../../library/optparse.rst:261
 msgid ""
 "parser.add_option(opt_str, ...,\n"
 "                  attr=value, ...)"
 msgstr ""
+"parser.add_option(opt_str, ...,\n"
+"                  attr=value, ...)"
 
 #: ../../library/optparse.rst:264
 msgid ""
@@ -419,16 +578,21 @@ msgid ""
 "and several option attributes that tell :mod:`optparse` what to expect and "
 "what to do when it encounters that option on the command line."
 msgstr ""
+"Каждая опция имеет одну или несколько строк опций, таких как ``-f`` или ``--"
+"file``, а также несколько атрибутов опций, которые сообщают :mod:`optparse`, "
+"чего ожидать и что делать, когда он встретит эту опцию. в командной строке."
 
 #: ../../library/optparse.rst:268
 msgid ""
 "Typically, each option will have one short option string and one long option "
 "string, e.g.::"
 msgstr ""
+"Обычно каждый параметр имеет одну короткую и одну длинную строку параметров, "
+"например::"
 
 #: ../../library/optparse.rst:271
 msgid "parser.add_option(\"-f\", \"--file\", ...)"
-msgstr ""
+msgstr "parser.add_option(\"-f\", \"--file\", ...)"
 
 #: ../../library/optparse.rst:273
 msgid ""
@@ -436,6 +600,9 @@ msgid ""
 "strings as you like (including zero), as long as there is at least one "
 "option string overall."
 msgstr ""
+"Вы можете определить столько коротких и длинных строк параметров, сколько "
+"захотите (включая ноль), при условии, что в целом имеется хотя бы одна "
+"строка параметров."
 
 #: ../../library/optparse.rst:277
 msgid ""
@@ -444,16 +611,22 @@ msgid ""
 "refer to *encountering an option* on the command line; in reality, :mod:"
 "`optparse` encounters *option strings* and looks up options from them."
 msgstr ""
+"Строки опций, передаваемые в :meth:`OptionParser.add_option`, фактически "
+"являются метками опции, определенной этим вызовом. Для краткости мы будем "
+"часто ссылаться на *встречу параметра* в командной строке; на самом деле :"
+"mod:`optparse` встречает *строки параметров* и ищет в них параметры."
 
 #: ../../library/optparse.rst:283
 msgid ""
 "Once all of your options are defined, instruct :mod:`optparse` to parse your "
 "program's command line::"
 msgstr ""
+"После того, как все ваши параметры определены, поручите :mod:`optparse` "
+"проанализировать командную строку вашей программы::"
 
 #: ../../library/optparse.rst:286
 msgid "(options, args) = parser.parse_args()"
-msgstr ""
+msgstr "(options, args) = parser.parse_args()"
 
 #: ../../library/optparse.rst:288
 msgid ""
@@ -461,10 +634,13 @@ msgid ""
 "parse_args`, but that's rarely necessary: by default it uses ``sys."
 "argv[1:]``.)"
 msgstr ""
+"(Если хотите, вы можете передать :meth:`~OptionParser.parse_args` "
+"собственный список аргументов, но это редко бывает необходимо: по умолчанию "
+"он использует ``sys.argv[1:]``.)"
 
 #: ../../library/optparse.rst:291
 msgid ":meth:`~OptionParser.parse_args` returns two values:"
-msgstr ""
+msgstr ":meth:`~OptionParser.parse_args` возвращает два значения:"
 
 #: ../../library/optparse.rst:293
 msgid ""
@@ -473,11 +649,16 @@ msgid ""
 "filename supplied by the user, or ``None`` if the user did not supply that "
 "option"
 msgstr ""
+"``options``, объект, содержащий значения для всех ваших параметров. "
+"Например, если ``--file`` принимает один строковый аргумент, то ``options."
+"file`` будет именем файла, предоставленным пользователем, или ``Нет``, если "
+"пользователь не указал эту опцию"
 
 #: ../../library/optparse.rst:298
 msgid ""
 "``args``, the list of positional arguments leftover after parsing options"
 msgstr ""
+"``args``, список позиционных аргументов, оставшихся после анализа параметров."
 
 #: ../../library/optparse.rst:300
 msgid ""
@@ -486,6 +667,10 @@ msgid ""
 "dest` (destination), and :attr:`~Option.help`. Of these, :attr:`~Option."
 "action` is the most fundamental."
 msgstr ""
+"В этом разделе руководства рассматриваются только четыре наиболее важных "
+"атрибута опций: :attr:`~Option.action`, :attr:`~Option.type`, :attr:`~Option."
+"dest` (назначение) и :attr:` ~Option.help`. Из них :attr:`~Option.action` "
+"является наиболее фундаментальным."
 
 #: ../../library/optparse.rst:309
 msgid "Understanding option actions"
@@ -500,15 +685,24 @@ msgid ""
 "value in some variable---for example, take a string from the command line "
 "and store it in an attribute of ``options``."
 msgstr ""
+"Действия сообщают :mod:`optparse`, что делать, когда он встречает опцию в "
+"командной строке. Существует фиксированный набор действий, жестко "
+"закодированный в :mod:`optparse`; добавление новых действий — это сложная "
+"тема, описанная в разделе :ref:`optparse-extending-optparse`. Большинство "
+"действий предписывают :mod:`optparse` сохранить значение в некоторой "
+"переменной — например, взять строку из командной строки и сохранить ее в "
+"атрибуте ``options``."
 
 #: ../../library/optparse.rst:318
 msgid ""
 "If you don't specify an option action, :mod:`optparse` defaults to ``store``."
 msgstr ""
+"Если вы не укажете опцию действия, :mod:`optparse` по умолчанию будет "
+"``store``."
 
 #: ../../library/optparse.rst:324
 msgid "The store action"
-msgstr ""
+msgstr "Акция в магазине"
 
 #: ../../library/optparse.rst:326
 msgid ""
@@ -516,6 +710,10 @@ msgid ""
 "take the next argument (or the remainder of the current argument), ensure "
 "that it is of the correct type, and store it to your chosen destination."
 msgstr ""
+"Наиболее распространенным действием опции является ``store``, которое "
+"сообщает :mod:`optparse` принять следующий аргумент (или остаток текущего "
+"аргумента), убедиться, что он имеет правильный тип, и сохранить его в "
+"выбранном вами месте. место назначения."
 
 #: ../../library/optparse.rst:330
 msgid "For example::"
@@ -526,17 +724,22 @@ msgid ""
 "parser.add_option(\"-f\", \"--file\",\n"
 "                  action=\"store\", type=\"string\", dest=\"filename\")"
 msgstr ""
+"parser.add_option(\"-f\", \"--file\",\n"
+"                  action=\"store\", type=\"string\", dest=\"filename\")"
 
 #: ../../library/optparse.rst:335
 msgid ""
 "Now let's make up a fake command line and ask :mod:`optparse` to parse it::"
 msgstr ""
+"Теперь давайте создадим фальшивую командную строку и попросим :mod:"
+"`optparse` проанализировать ее::"
 
 #: ../../library/optparse.rst:337
 msgid ""
 "args = [\"-f\", \"foo.txt\"]\n"
 "(options, args) = parser.parse_args(args)"
 msgstr ""
+"args = [\"-f\", \"foo.txt\"] (опции, аргументы) = parser.parse_args(args)"
 
 #: ../../library/optparse.rst:340
 msgid ""
@@ -545,22 +748,31 @@ msgid ""
 "this call to :meth:`~OptionParser.parse_args`, ``options.filename`` is "
 "``\"foo.txt\"``."
 msgstr ""
+"Когда :mod:`optparse` видит строку параметра ``-f``, он принимает следующий "
+"аргумент, ``foo.txt``, и сохраняет его в ``options.filename``. Итак, после "
+"этого вызова :meth:`~OptionParser.parse_args` ``options.filename`` будет "
+"``\"foo.txt\"``."
 
 #: ../../library/optparse.rst:344
 msgid ""
 "Some other option types supported by :mod:`optparse` are ``int`` and "
 "``float``. Here's an option that expects an integer argument::"
 msgstr ""
+"Некоторые другие типы опций, поддерживаемые :mod:`optparse`, — это ``int`` и "
+"``float``. Вот вариант, который ожидает целочисленный аргумент::"
 
 #: ../../library/optparse.rst:347
 msgid "parser.add_option(\"-n\", type=\"int\", dest=\"num\")"
-msgstr ""
+msgstr "parser.add_option(\"-n\", type=\"int\", dest=\"num\")"
 
 #: ../../library/optparse.rst:349
 msgid ""
 "Note that this option has no long option string, which is perfectly "
 "acceptable. Also, there's no explicit action, since the default is ``store``."
 msgstr ""
+"Обратите внимание, что эта опция не имеет длинной строки, что вполне "
+"приемлемо. Кроме того, никаких явных действий не требуется, поскольку по "
+"умолчанию используется ``store``."
 
 #: ../../library/optparse.rst:352
 msgid ""
@@ -568,12 +780,15 @@ msgid ""
 "argument right up against the option: since ``-n42`` (one argument) is "
 "equivalent to ``-n 42`` (two arguments), the code ::"
 msgstr ""
+"Давайте разберем еще одну фейковую командную строку. На этот раз мы "
+"прикрепим аргумент опции прямо к опции: поскольку ``-n42`` (один аргумент) "
+"эквивалентен ``-n 42`` (два аргумента), код::"
 
 #: ../../library/optparse.rst:356
 msgid ""
 "(options, args) = parser.parse_args([\"-n42\"])\n"
 "print(options.num)"
-msgstr ""
+msgstr "(опции, аргументы) = parser.parse_args([\"-n42\"]) печать(options.num)"
 
 #: ../../library/optparse.rst:359
 msgid "will print ``42``."
