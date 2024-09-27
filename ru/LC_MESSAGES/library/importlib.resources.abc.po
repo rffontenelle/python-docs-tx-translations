@@ -5,15 +5,16 @@
 #
 # Translators:
 # Илья Панфилов, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 10:59+0000\n"
+"POT-Creation-Date: 2024-09-27 14:17+0000\n"
 "PO-Revision-Date: 2022-11-05 19:49+0000\n"
-"Last-Translator: Илья Панфилов, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -34,12 +35,14 @@ msgstr "**Исходный код:** :source:`Lib/importlib/resources/abc.py`"
 
 #: ../../library/importlib.resources.abc.rst:15
 msgid "*Superseded by TraversableResources*"
-msgstr ""
+msgstr "*Заменено TraversableResources*"
 
 #: ../../library/importlib.resources.abc.rst:17
 msgid ""
 "An :term:`abstract base class` to provide the ability to read *resources*."
 msgstr ""
+":term:`абстрактный базовый класс`, обеспечивающий возможность чтения "
+"*ресурсов*."
 
 #: ../../library/importlib.resources.abc.rst:20
 msgid ""
@@ -50,6 +53,8 @@ msgid ""
 "does not matter if the package and its data file(s) are stored e.g. in a zip "
 "file versus on the file system."
 msgstr ""
+":term:`абстрактный базовый класс`, обеспечивающий возможность чтения "
+"*ресурсов*."
 
 #: ../../library/importlib.resources.abc.rst:28
 msgid ""
@@ -62,6 +67,15 @@ msgid ""
 "class are expected to directly correlate to a specific package (instead of "
 "potentially representing multiple packages or a module)."
 msgstr ""
+"Для любого метода этого класса ожидается, что аргумент *resource* будет "
+"объектом, похожим на путь, который концептуально представляет собой просто "
+"имя файла. Это означает, что в аргумент *resource* не следует включать пути "
+"к подкаталогам. Это связано с тем, что местоположение пакета, для которого "
+"предназначено устройство чтения, действует как «каталог». Следовательно, "
+"метафорой имен каталогов и файлов являются пакеты и ресурсы соответственно. "
+"Именно поэтому ожидается, что экземпляры этого класса будут напрямую "
+"соотноситься с конкретным пакетом (вместо того, чтобы потенциально "
+"представлять несколько пакетов или модуля)."
 
 #: ../../library/importlib.resources.abc.rst:39
 msgid ""
@@ -71,36 +85,50 @@ msgid ""
 "not a package, this method should return :const:`None`. An object compatible "
 "with this ABC should only be returned when the specified module is a package."
 msgstr ""
+"Ожидается, что загрузчики, желающие поддерживать чтение ресурсов, "
+"предоставят метод get_resource_reader(fullname), который возвращает объект, "
+"реализующий этот интерфейс ABC. Если модуль, указанный полным именем, не "
+"является пакетом, этот метод должен вернуть :const:`None`. Объект, "
+"совместимый с этим ABC, должен быть возвращен только в том случае, если "
+"указанный модуль является пакетом."
 
 #: ../../library/importlib.resources.abc.rst:46
 msgid "Use :class:`importlib.resources.abc.TraversableResources` instead."
 msgstr ""
+"Вместо этого используйте :class:`importlib.resources.abc."
+"TraversableResources`."
 
 #: ../../library/importlib.resources.abc.rst:51
 msgid ""
 "Returns an opened, :term:`file-like object` for binary reading of the "
 "*resource*."
 msgstr ""
+"Возвращает открытый :term:`файлоподобный объект` для двоичного чтения "
+"*ресурса*."
 
 #: ../../library/importlib.resources.abc.rst:54
 msgid "If the resource cannot be found, :exc:`FileNotFoundError` is raised."
-msgstr ""
+msgstr "Если ресурс не может быть найден, возникает :exc:`FileNotFoundError`."
 
 #: ../../library/importlib.resources.abc.rst:59
 msgid "Returns the file system path to the *resource*."
-msgstr ""
+msgstr "Возвращает путь файловой системы к *ресурсу*."
 
 #: ../../library/importlib.resources.abc.rst:61
 msgid ""
 "If the resource does not concretely exist on the file system, raise :exc:"
 "`FileNotFoundError`."
 msgstr ""
+"Если ресурс конкретно не существует в файловой системе, поднимите :exc:"
+"`FileNotFoundError`."
 
 #: ../../library/importlib.resources.abc.rst:66
 msgid ""
 "Returns ``True`` if the named *name* is considered a resource. :exc:"
 "`FileNotFoundError` is raised if *name* does not exist."
 msgstr ""
+"Возвращает ``True``, если именованное *имя* считается ресурсом. :exc:"
+"`FileNotFoundError` возникает, если *name* не существует."
 
 #: ../../library/importlib.resources.abc.rst:71
 msgid ""
@@ -109,6 +137,10 @@ msgid ""
 "actual resources, e.g. it is acceptable to return names for which :meth:"
 "`is_resource` would be false."
 msgstr ""
+"Возвращает :term:`iterable` строк по содержимому пакета. Обратите внимание, "
+"что не обязательно, чтобы все имена, возвращаемые итератором, были реальными "
+"ресурсами, например, допустимо возвращать имена, для которых :meth:"
+"`is_resource` будет ложным."
 
 #: ../../library/importlib.resources.abc.rst:77
 msgid ""
@@ -118,26 +150,37 @@ msgid ""
 "is allowed so that when it is known that the package and resources are "
 "stored on the file system then those subdirectory names can be used directly."
 msgstr ""
+"Разрешить возврат имен, не являющихся ресурсами, необходимо для ситуаций, "
+"когда способ хранения пакета и его ресурсов известен априори и имена, не "
+"относящиеся к ресурсам, могут оказаться полезными. Например, разрешен "
+"возврат имен подкаталогов, чтобы, когда известно, что пакет и ресурсы "
+"хранятся в файловой системе, эти имена подкаталогов можно было использовать "
+"напрямую."
 
 #: ../../library/importlib.resources.abc.rst:85
 msgid "The abstract method returns an iterable of no items."
-msgstr ""
+msgstr "Абстрактный метод возвращает итерацию без элементов."
 
 #: ../../library/importlib.resources.abc.rst:90
 msgid ""
 "An object with a subset of :class:`pathlib.Path` methods suitable for "
 "traversing directories and opening files."
 msgstr ""
+"Объект с подмножеством методов :class:`pathlib.Path`, подходящих для "
+"перемещения по каталогам и открытия файлов."
 
 #: ../../library/importlib.resources.abc.rst:93
 msgid ""
 "For a representation of the object on the file-system, use :meth:`importlib."
 "resources.as_file`."
 msgstr ""
+"Для представления объекта в файловой системе используйте :meth:`importlib."
+"resources.as_file`."
 
 #: ../../library/importlib.resources.abc.rst:98
 msgid "Abstract. The base name of this object without any parent references."
 msgstr ""
+"Абстрактный. Базовое имя этого объекта без каких-либо родительских ссылок."
 
 #: ../../library/importlib.resources.abc.rst:102
 msgid "Yield Traversable objects in self."
@@ -198,6 +241,9 @@ msgid ""
 "*mode* may be 'r' or 'rb' to open as text or binary. Return a handle "
 "suitable for reading (same as :attr:`pathlib.Path.open`)."
 msgstr ""
+"*mode* может иметь значение «r» или «rb», чтобы открыть его в текстовом или "
+"двоичном виде. Возвращает дескриптор, подходящий для чтения (аналогично :"
+"attr:`pathlib.Path.open`)."
 
 #: ../../library/importlib.resources.abc.rst:147
 msgid ""
@@ -227,9 +273,13 @@ msgid ""
 "Loaders that wish to support resource reading are expected to implement this "
 "interface."
 msgstr ""
+"Ожидается, что загрузчики, желающие поддерживать чтение ресурсов, реализуют "
+"этот интерфейс."
 
 #: ../../library/importlib.resources.abc.rst:173
 msgid ""
 "Returns a :class:`importlib.resources.abc.Traversable` object for the loaded "
 "package."
 msgstr ""
+"Возвращает объект :class:`importlib.resources.abc.Traversable` для "
+"загруженного пакета."

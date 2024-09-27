@@ -38,7 +38,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-13 14:16+0000\n"
+"POT-Creation-Date: 2024-09-27 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 01:13+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -5599,6 +5599,8 @@ msgid ""
 ">>> b'Hello world'.title()\n"
 "b'Hello World'"
 msgstr ""
+">>> b'Hello world'.title()\n"
+"b'Hello World'"
 
 #: ../../library/stdtypes.rst:3467
 msgid ""
@@ -5616,6 +5618,8 @@ msgid ""
 ">>> b\"they're bill's friends from the UK\".title()\n"
 "b\"They'Re Bill'S Friends From The Uk\""
 msgstr ""
+">>> b\"they're bill's friends from the UK\".title()\n"
+"b\"They'Re Bill'S Friends From The Uk\""
 
 #: ../../library/stdtypes.rst:3480
 msgid ""
@@ -5634,6 +5638,15 @@ msgid ""
 ">>> titlecase(b\"they're bill's friends.\")\n"
 "b\"They're Bill's Friends.\""
 msgstr ""
+">>> import re\n"
+">>> def titlecase(s):\n"
+"...     return re.sub(rb\"[A-Za-z]+('[A-Za-z]+)?\",\n"
+"...                   lambda mo: mo.group(0)[0:1].upper() +\n"
+"...                              mo.group(0)[1:].lower(),\n"
+"...                   s)\n"
+"...\n"
+">>> titlecase(b\"they're bill's friends.\")\n"
+"b\"They're Bill's Friends.\""
 
 #: ../../library/stdtypes.rst:3501
 msgid ""
@@ -5646,6 +5659,8 @@ msgid ""
 ">>> b'Hello World'.upper()\n"
 "b'HELLO WORLD'"
 msgstr ""
+">>> b'Hello World'.upper()\n"
+"b'HELLO WORLD'"
 
 #: ../../library/stdtypes.rst:3522
 msgid ""
@@ -5666,6 +5681,10 @@ msgid ""
 ">>> b\"-42\".zfill(5)\n"
 "b'-0042'"
 msgstr ""
+">>> b\"42\".zfill(5)\n"
+"b'00042'\n"
+">>> b\"-42\".zfill(5)\n"
+"b'-0042'"
 
 #: ../../library/stdtypes.rst:3544
 msgid "``printf``-style Bytes Formatting"
@@ -5846,6 +5865,15 @@ msgid ""
 ">>> bytes(v[1:4])\n"
 "b'bce'"
 msgstr ""
+">>> v = memoryview(b'abcefg')\n"
+">>> v[1]\n"
+"98\n"
+">>> v[-1]\n"
+"103\n"
+">>> v[1:4]\n"
+"<memory at 0x7f3ddc9f4350>\n"
+">>> bytes(v[1:4])\n"
+"b'bce'"
 
 #: ../../library/stdtypes.rst:3791
 msgid ""
@@ -5879,6 +5907,15 @@ msgid ""
 ">>> m[::2].tolist()\n"
 "[-11111111, -33333333]"
 msgstr ""
+">>> import array\n"
+">>> a = array.array('l', [-11111111, 22222222, -33333333, 44444444])\n"
+">>> m = memoryview(a)\n"
+">>> m[0]\n"
+"-11111111\n"
+">>> m[-1]\n"
+"44444444\n"
+">>> m[::2].tolist()\n"
+"[-11111111, -33333333]"
 
 #: ../../library/stdtypes.rst:3812
 msgid ""
@@ -5908,6 +5945,24 @@ msgid ""
 ">>> data\n"
 "bytearray(b'z1spam')"
 msgstr ""
+">>> data = bytearray(b'abcefg')\n"
+">>> v = memoryview(data)\n"
+">>> v.readonly\n"
+"False\n"
+">>> v[0] = ord(b'z')\n"
+">>> data\n"
+"bytearray(b'zbcefg')\n"
+">>> v[1:4] = b'123'\n"
+">>> data\n"
+"bytearray(b'z123fg')\n"
+">>> v[2:3] = b'spam'\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"ValueError: memoryview assignment: lvalue and rvalue have different "
+"structures\n"
+">>> v[2:6] = b'spam'\n"
+">>> data\n"
+"bytearray(b'z1spam')"
 
 #: ../../library/stdtypes.rst:3833
 msgid ""
@@ -5928,6 +5983,13 @@ msgid ""
 ">>> hash(v[::-2]) == hash(b'abcefg'[::-2])\n"
 "True"
 msgstr ""
+">>> v = memoryview(b'abcefg')\n"
+">>> hash(v) == hash(b'abcefg')\n"
+"True\n"
+">>> hash(v[2:4]) == hash(b'ce')\n"
+"True\n"
+">>> hash(v[::-2]) == hash(b'abcefg'[::-2])\n"
+"True"
 
 #: ../../library/stdtypes.rst:3845
 msgid ""
@@ -5986,6 +6048,21 @@ msgid ""
 ">>> z.tolist() == c.tolist()\n"
 "True"
 msgstr ""
+">>> import array\n"
+">>> a = array.array('I', [1, 2, 3, 4, 5])\n"
+">>> b = array.array('d', [1.0, 2.0, 3.0, 4.0, 5.0])\n"
+">>> c = array.array('b', [5, 3, 1])\n"
+">>> x = memoryview(a)\n"
+">>> y = memoryview(b)\n"
+">>> x == a == y == b\n"
+"True\n"
+">>> x.tolist() == a.tolist() == y.tolist() == b.tolist()\n"
+"True\n"
+">>> z = y[::-2]\n"
+">>> z == c\n"
+"True\n"
+">>> z.tolist() == c.tolist()\n"
+"True"
 
 #: ../../library/stdtypes.rst:3883
 msgid ""
@@ -6010,6 +6087,17 @@ msgid ""
 ">>> a == b\n"
 "False"
 msgstr ""
+">>> from ctypes import BigEndianStructure, c_long\n"
+">>> class BEPoint(BigEndianStructure):\n"
+"...     _fields_ = [(\"x\", c_long), (\"y\", c_long)]\n"
+"...\n"
+">>> point = BEPoint(100, 200)\n"
+">>> a = memoryview(point)\n"
+">>> b = memoryview(point)\n"
+">>> a == point\n"
+"False\n"
+">>> a == b\n"
+"False"
 
 #: ../../library/stdtypes.rst:3899
 msgid ""
@@ -6041,6 +6129,11 @@ msgid ""
 ">>> bytes(m)\n"
 "b'abc'"
 msgstr ""
+">>> m = memoryview(b\"abc\")\n"
+">>> m.tobytes()\n"
+"b'abc'\n"
+">>> bytes(m)\n"
+"b'abc'"
 
 #: ../../library/stdtypes.rst:3917
 msgid ""
@@ -6078,6 +6171,9 @@ msgid ""
 ">>> m.hex()\n"
 "'616263'"
 msgstr ""
+">>> m = memoryview(b\"abc\")\n"
+">>> m.hex()\n"
+"'616263'"
 
 #: ../../library/stdtypes.rst:3940
 msgid ""
@@ -6102,6 +6198,13 @@ msgid ""
 ">>> m.tolist()\n"
 "[1.1, 2.2, 3.3]"
 msgstr ""
+">>> memoryview(b'abc').tolist()\n"
+"[97, 98, 99]\n"
+">>> import array\n"
+">>> a = array.array('d', [1.1, 2.2, 3.3])\n"
+">>> m = memoryview(a)\n"
+">>> m.tolist()\n"
+"[1.1, 2.2, 3.3]"
 
 #: ../../library/stdtypes.rst:3957
 msgid ""
@@ -6131,6 +6234,17 @@ msgid ""
 ">>> mm.tolist()\n"
 "[43, 98, 99]"
 msgstr ""
+">>> m = memoryview(bytearray(b'abc'))\n"
+">>> mm = m.toreadonly()\n"
+">>> mm.tolist()\n"
+"[97, 98, 99]\n"
+">>> mm[0] = 42\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"TypeError: cannot modify read-only memory\n"
+">>> m[0] = 43\n"
+">>> mm.tolist()\n"
+"[43, 98, 99]"
 
 #: ../../library/stdtypes.rst:3983
 msgid ""
@@ -6160,6 +6274,12 @@ msgid ""
 "  File \"<stdin>\", line 1, in <module>\n"
 "ValueError: operation forbidden on released memoryview object"
 msgstr ""
+">>> m = memoryview(b'abc')\n"
+">>> m.release()\n"
+">>> m[0]\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"ValueError: operation forbidden on released memoryview object"
 
 #: ../../library/stdtypes.rst:4000
 msgid ""
@@ -6178,6 +6298,14 @@ msgid ""
 "  File \"<stdin>\", line 1, in <module>\n"
 "ValueError: operation forbidden on released memoryview object"
 msgstr ""
+">>> with memoryview(b'abc') as m:\n"
+"...     m[0]\n"
+"...\n"
+"97\n"
+">>> m[0]\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"ValueError: operation forbidden on released memoryview object"
 
 #: ../../library/stdtypes.rst:4016
 msgid ""
@@ -6230,6 +6358,26 @@ msgid ""
 ">>> y.nbytes\n"
 "24"
 msgstr ""
+">>> import array\n"
+">>> a = array.array('l', [1,2,3])\n"
+">>> x = memoryview(a)\n"
+">>> x.format\n"
+"'l'\n"
+">>> x.itemsize\n"
+"8\n"
+">>> len(x)\n"
+"3\n"
+">>> x.nbytes\n"
+"24\n"
+">>> y = x.cast('B')\n"
+">>> y.format\n"
+"'B'\n"
+">>> y.itemsize\n"
+"1\n"
+">>> len(y)\n"
+"24\n"
+">>> y.nbytes\n"
+"24"
 
 #: ../../library/stdtypes.rst:4051
 msgid "Cast 1D/unsigned bytes to 1D/char::"
@@ -6248,6 +6396,16 @@ msgid ""
 ">>> b\n"
 "bytearray(b'ayz')"
 msgstr ""
+">>> b = bytearray(b'zyz')\n"
+">>> x = memoryview(b)\n"
+">>> x[0] = b'a'\n"
+"Traceback (most recent call last):\n"
+"  ...\n"
+"TypeError: memoryview: invalid type for format 'B'\n"
+">>> y = x.cast('c')\n"
+">>> y[0] = b'a'\n"
+">>> b\n"
+"bytearray(b'ayz')"
 
 #: ../../library/stdtypes.rst:4064
 msgid "Cast 1D/bytes to 3D/ints to 1D/signed char::"
@@ -6279,6 +6437,29 @@ msgid ""
 ">>> z.nbytes\n"
 "48"
 msgstr ""
+">>> import struct\n"
+">>> buf = struct.pack(\"i\"*12, *list(range(12)))\n"
+">>> x = memoryview(buf)\n"
+">>> y = x.cast('i', shape=[2,2,3])\n"
+">>> y.tolist()\n"
+"[[[0, 1, 2], [3, 4, 5]], [[6, 7, 8], [9, 10, 11]]]\n"
+">>> y.format\n"
+"'i'\n"
+">>> y.itemsize\n"
+"4\n"
+">>> len(y)\n"
+"2\n"
+">>> y.nbytes\n"
+"48\n"
+">>> z = y.cast('b')\n"
+">>> z.format\n"
+"'b'\n"
+">>> z.itemsize\n"
+"1\n"
+">>> len(z)\n"
+"48\n"
+">>> z.nbytes\n"
+"48"
 
 #: ../../library/stdtypes.rst:4090
 msgid "Cast 1D/unsigned long to 2D/unsigned long::"
@@ -8489,80 +8670,36 @@ msgstr ""
 
 #: ../../library/stdtypes.rst:5491
 msgid ""
-"A dictionary or other mapping object used to store an object's (writable) "
-"attributes."
-msgstr "一个字典或其他类型的映射对象，用于存储对象的（可写）属性。"
-
-#: ../../library/stdtypes.rst:5497
-msgid "The class to which a class instance belongs."
-msgstr "类实例所属的类。"
-
-#: ../../library/stdtypes.rst:5502
-msgid "The tuple of base classes of a class object."
-msgstr "由类对象的基类所组成的元组。"
-
-#: ../../library/stdtypes.rst:5507
-msgid ""
 "The name of the class, function, method, descriptor, or generator instance."
 msgstr "类、函数、方法、描述器或生成器实例的名称。"
 
-#: ../../library/stdtypes.rst:5513
+#: ../../library/stdtypes.rst:5497
 msgid ""
 "The :term:`qualified name` of the class, function, method, descriptor, or "
 "generator instance."
 msgstr "类、函数、方法、描述器或生成器实例的 :term:`qualified name`。"
 
-#: ../../library/stdtypes.rst:5521
+#: ../../library/stdtypes.rst:5505
+msgid "The name of the module in which a class or function was defined."
+msgstr ""
+
+#: ../../library/stdtypes.rst:5510
+msgid ""
+"The documentation string of a class or function, or ``None`` if undefined."
+msgstr ""
+
+#: ../../library/stdtypes.rst:5515
 msgid ""
 "The :ref:`type parameters <type-params>` of generic classes, functions, and :"
-"ref:`type aliases <type-aliases>`."
-msgstr ""
-"以下对象的 :ref:`类型形参 <type-params>`: 泛型类、函数和 :ref:`类型别名 "
-"<type-aliases>`。"
-
-#: ../../library/stdtypes.rst:5529
-msgid ""
-"This attribute is a tuple of classes that are considered when looking for "
-"base classes during method resolution."
-msgstr "此属性是由类组成的元组，在方法解析期间会基于它来查找基类。"
-
-#: ../../library/stdtypes.rst:5535
-msgid ""
-"This method can be overridden by a metaclass to customize the method "
-"resolution order for its instances.  It is called at class instantiation, "
-"and its result is stored in :attr:`~class.__mro__`."
-msgstr ""
-"此方法可被一个元类来重载，以为其实例定制方法解析顺序。 它会在类实例化时被调"
-"用，其结果存储于 :attr:`~class.__mro__` 之中。"
-
-#: ../../library/stdtypes.rst:5542
-msgid ""
-"Each class keeps a list of weak references to its immediate subclasses.  "
-"This method returns a list of all those references still alive.  The list is "
-"in definition order.  Example::"
-msgstr ""
-"每个类都存有对直接子类的弱引用列表。本方法返回所有存活引用的列表。列表的顺序"
-"按照子类定义的排列。例如："
-
-#: ../../library/stdtypes.rst:5546
-msgid ""
-">>> int.__subclasses__()\n"
-"[<class 'bool'>, <enum 'IntEnum'>, <flag 'IntFlag'>, <class 're._constants."
-"_NamedIntConstant'>]"
+"ref:`type aliases <type-aliases>`. For classes and functions that are not "
+"generic, this will be an empty tuple."
 msgstr ""
 
-#: ../../library/stdtypes.rst:5552
-msgid ""
-"A tuple containing names of attributes of this class which are accessed "
-"through ``self.X`` from any function in its body."
-msgstr ""
-"一个包含特定类的属性名称的元组，可从类体内的任何函数通过 ``self.X`` 来访问。"
-
-#: ../../library/stdtypes.rst:5560
+#: ../../library/stdtypes.rst:5525
 msgid "Integer string conversion length limitation"
 msgstr "整数字符串转换长度限制"
 
-#: ../../library/stdtypes.rst:5562
+#: ../../library/stdtypes.rst:5527
 msgid ""
 "CPython has a global limit for converting between :class:`int` and :class:"
 "`str` to mitigate denial of service attacks. This limit *only* applies to "
@@ -8573,7 +8710,7 @@ msgstr ""
 "服务攻击。 此限制 *仅会* 作用于十进制或其他以非二的乘方为基数的数字。 十六进"
 "制、八进制和二进制转换不受限制。 该限制可以被配置。"
 
-#: ../../library/stdtypes.rst:5567
+#: ../../library/stdtypes.rst:5532
 msgid ""
 "The :class:`int` type in CPython is an arbitrary length number stored in "
 "binary form (commonly known as a \"bignum\"). There exists no algorithm that "
@@ -8588,12 +8725,12 @@ msgstr ""
 "也有亚二次方复杂度。 转换一个大数值如 ``int('1' * 500_000)`` 在快速的 CPU 上"
 "也会花费一秒以上的时间。"
 
-#: ../../library/stdtypes.rst:5574
+#: ../../library/stdtypes.rst:5539
 msgid ""
 "Limiting conversion size offers a practical way to avoid :cve:`2020-10735`."
 msgstr "限制转换大小是一项避免 :cve:`2020-10735` 的务实解决方式。"
 
-#: ../../library/stdtypes.rst:5576
+#: ../../library/stdtypes.rst:5541
 msgid ""
 "The limit is applied to the number of digit characters in the input or "
 "output string when a non-linear conversion algorithm would be involved.  "
@@ -8602,12 +8739,12 @@ msgstr ""
 "此限制会在可能涉及非线性转换算法时作用于输入或输出字符串中的数字型字符数量。 "
 "下划线和正负号不计入限制数量。"
 
-#: ../../library/stdtypes.rst:5580
+#: ../../library/stdtypes.rst:5545
 msgid ""
 "When an operation would exceed the limit, a :exc:`ValueError` is raised:"
 msgstr "当一个操作会超出限制时，将引发 :exc:`ValueError`:"
 
-#: ../../library/stdtypes.rst:5582
+#: ../../library/stdtypes.rst:5547
 msgid ""
 ">>> import sys\n"
 ">>> sys.set_int_max_str_digits(4300)  # Illustrative, this is the default.\n"
@@ -8631,7 +8768,7 @@ msgid ""
 ">>> assert int(hex(i_squared), base=16) == i*i  # Hexadecimal is unlimited."
 msgstr ""
 
-#: ../../library/stdtypes.rst:5602
+#: ../../library/stdtypes.rst:5567
 msgid ""
 "The default limit is 4300 digits as provided in :data:`sys.int_info."
 "default_max_str_digits <sys.int_info>`. The lowest limit that can be "
@@ -8642,11 +8779,11 @@ msgstr ""
 "int_info>` 的值。 最低限制可被配置为 640 位即 :data:`sys.int_info."
 "str_digits_check_threshold <sys.int_info>`。"
 
-#: ../../library/stdtypes.rst:5607
+#: ../../library/stdtypes.rst:5572
 msgid "Verification:"
 msgstr "验证:"
 
-#: ../../library/stdtypes.rst:5609
+#: ../../library/stdtypes.rst:5574
 msgid ""
 ">>> import sys\n"
 ">>> assert sys.int_info.default_max_str_digits == 4300, sys.int_info\n"
@@ -8657,11 +8794,11 @@ msgid ""
 "..."
 msgstr ""
 
-#: ../../library/stdtypes.rst:5622
+#: ../../library/stdtypes.rst:5587
 msgid "Affected APIs"
 msgstr "受影响的 API"
 
-#: ../../library/stdtypes.rst:5624
+#: ../../library/stdtypes.rst:5589
 msgid ""
 "The limitation only applies to potentially slow conversions between :class:"
 "`int` and :class:`str` or :class:`bytes`:"
@@ -8669,23 +8806,23 @@ msgstr ""
 "此限制仅会作用于 :class:`int` 和 :class:`str` 和 :class:`bytes` 之间存在速度"
 "变慢可能的转换:"
 
-#: ../../library/stdtypes.rst:5627
+#: ../../library/stdtypes.rst:5592
 msgid "``int(string)`` with default base 10."
 msgstr "``int(string)`` 默认以 10 为基数。"
 
-#: ../../library/stdtypes.rst:5628
+#: ../../library/stdtypes.rst:5593
 msgid "``int(string, base)`` for all bases that are not a power of 2."
 msgstr "``int(string, base)`` 用于所有不为 2 的乘方的基数。"
 
-#: ../../library/stdtypes.rst:5629
+#: ../../library/stdtypes.rst:5594
 msgid "``str(integer)``."
 msgstr "``str(integer)``。"
 
-#: ../../library/stdtypes.rst:5630
+#: ../../library/stdtypes.rst:5595
 msgid "``repr(integer)``."
 msgstr "``repr(integer)``。"
 
-#: ../../library/stdtypes.rst:5631
+#: ../../library/stdtypes.rst:5596
 msgid ""
 "any other string conversion to base 10, for example ``f\"{integer}\"``, "
 "``\"{}\".format(integer)``, or ``b\"%d\" % integer``."
@@ -8693,45 +8830,45 @@ msgstr ""
 "任何其他目标是以 10 为基数的字符串转换，例如 ``f\"{integer}\"``, ``\"{}\"."
 "format(integer)`` 或 ``b\"%d\" % integer``。"
 
-#: ../../library/stdtypes.rst:5634
+#: ../../library/stdtypes.rst:5599
 msgid "The limitations do not apply to functions with a linear algorithm:"
 msgstr "此限制不会作用于使用线性算法的函数:"
 
-#: ../../library/stdtypes.rst:5636
+#: ../../library/stdtypes.rst:5601
 msgid "``int(string, base)`` with base 2, 4, 8, 16, or 32."
 msgstr "``int(string, base)`` 中 base 可以为 2, 4, 8, 16 或 32。"
 
-#: ../../library/stdtypes.rst:5637
+#: ../../library/stdtypes.rst:5602
 msgid ":func:`int.from_bytes` and :func:`int.to_bytes`."
 msgstr ":func:`int.from_bytes` 和 :func:`int.to_bytes`。"
 
-#: ../../library/stdtypes.rst:5638
+#: ../../library/stdtypes.rst:5603
 msgid ":func:`hex`, :func:`oct`, :func:`bin`."
 msgstr ":func:`hex`, :func:`oct`, :func:`bin`。"
 
-#: ../../library/stdtypes.rst:5639
+#: ../../library/stdtypes.rst:5604
 msgid ":ref:`formatspec` for hex, octal, and binary numbers."
 msgstr ":ref:`formatspec` 用于十六进制、八进制和二进制数。"
 
-#: ../../library/stdtypes.rst:5640
+#: ../../library/stdtypes.rst:5605
 msgid ":class:`str` to :class:`float`."
 msgstr ":class:`str` 至 :class:`float`。"
 
-#: ../../library/stdtypes.rst:5641
+#: ../../library/stdtypes.rst:5606
 msgid ":class:`str` to :class:`decimal.Decimal`."
 msgstr ":class:`str` 至 :class:`decimal.Decimal`。"
 
-#: ../../library/stdtypes.rst:5644
+#: ../../library/stdtypes.rst:5609
 msgid "Configuring the limit"
 msgstr "配置限制值"
 
-#: ../../library/stdtypes.rst:5646
+#: ../../library/stdtypes.rst:5611
 msgid ""
 "Before Python starts up you can use an environment variable or an "
 "interpreter command line flag to configure the limit:"
 msgstr "在 Python 启动之前你可以使用环境变量或解释器命令行旗标来配置限制值:"
 
-#: ../../library/stdtypes.rst:5649
+#: ../../library/stdtypes.rst:5614
 msgid ""
 ":envvar:`PYTHONINTMAXSTRDIGITS`, e.g. ``PYTHONINTMAXSTRDIGITS=640 python3`` "
 "to set the limit to 640 or ``PYTHONINTMAXSTRDIGITS=0 python3`` to disable "
@@ -8740,7 +8877,7 @@ msgstr ""
 ":envvar:`PYTHONINTMAXSTRDIGITS`，例如 ``PYTHONINTMAXSTRDIGITS=640 python3`` "
 "是将限制设为 640 而 ``PYTHONINTMAXSTRDIGITS=0 python3`` 是禁用此限制。"
 
-#: ../../library/stdtypes.rst:5652
+#: ../../library/stdtypes.rst:5617
 msgid ""
 ":option:`-X int_max_str_digits <-X>`, e.g. ``python3 -X "
 "int_max_str_digits=640``"
@@ -8748,7 +8885,7 @@ msgstr ""
 ":option:`-X int_max_str_digits <-X>`，例如 ``python3 -X "
 "int_max_str_digits=640``"
 
-#: ../../library/stdtypes.rst:5654
+#: ../../library/stdtypes.rst:5619
 msgid ""
 ":data:`sys.flags.int_max_str_digits` contains the value of :envvar:"
 "`PYTHONINTMAXSTRDIGITS` or :option:`-X int_max_str_digits <-X>`. If both the "
@@ -8761,13 +8898,13 @@ msgstr ""
 "设置，则 ``-X`` 选项优先。 值为 *-1* 表示两者均未设置，因此会在初始化时使用 :"
 "data:`sys.int_info.default_max_str_digits` 的值。"
 
-#: ../../library/stdtypes.rst:5660
+#: ../../library/stdtypes.rst:5625
 msgid ""
 "From code, you can inspect the current limit and set a new one using these :"
 "mod:`sys` APIs:"
 msgstr "从代码中，你可以检查当前的限制并使用这些 :mod:`sys` API 来设置新值:"
 
-#: ../../library/stdtypes.rst:5663
+#: ../../library/stdtypes.rst:5628
 msgid ""
 ":func:`sys.get_int_max_str_digits` and :func:`sys.set_int_max_str_digits` "
 "are a getter and setter for the interpreter-wide limit. Subinterpreters have "
@@ -8776,13 +8913,13 @@ msgstr ""
 ":func:`sys.get_int_max_str_digits` 和 :func:`sys.set_int_max_str_digits` 是解"
 "释器级限制的读取器和设置器。 子解释器具有它们自己的限制。"
 
-#: ../../library/stdtypes.rst:5667
+#: ../../library/stdtypes.rst:5632
 msgid ""
 "Information about the default and minimum can be found in :data:`sys."
 "int_info`:"
 msgstr "有关默认值和最小值的信息可在 :data:`sys.int_info` 中找到:"
 
-#: ../../library/stdtypes.rst:5669
+#: ../../library/stdtypes.rst:5634
 msgid ""
 ":data:`sys.int_info.default_max_str_digits <sys.int_info>` is the compiled-"
 "in default limit."
@@ -8790,7 +8927,7 @@ msgstr ""
 ":data:`sys.int_info.default_max_str_digits <sys.int_info>` 是已编译的默认限"
 "制。"
 
-#: ../../library/stdtypes.rst:5671
+#: ../../library/stdtypes.rst:5636
 msgid ""
 ":data:`sys.int_info.str_digits_check_threshold <sys.int_info>` is the lowest "
 "accepted value for the limit (other than 0 which disables it)."
@@ -8798,7 +8935,7 @@ msgstr ""
 ":data:`sys.int_info.str_digits_check_threshold <sys.int_info>` 是该限制可接受"
 "的最低值（禁用该限制的 0 除外）。"
 
-#: ../../library/stdtypes.rst:5678
+#: ../../library/stdtypes.rst:5643
 msgid ""
 "Setting a low limit *can* lead to problems. While rare, code exists that "
 "contains integer constants in decimal in their source that exceed the "
@@ -8816,7 +8953,7 @@ msgstr ""
 "包含此类大数值常量的源代码中绕过该问题的办法是将它们转换为不受限制的 ``0x`` "
 "十六进制形式。"
 
-#: ../../library/stdtypes.rst:5687
+#: ../../library/stdtypes.rst:5652
 msgid ""
 "Test your application thoroughly if you use a low limit. Ensure your tests "
 "run with the limit set early via the environment or flag so that it applies "
@@ -8827,11 +8964,11 @@ msgstr ""
 "或旗标尽早设置该限制来运行以便在启动期间甚至是在可能发起调用 Python 来将 ``."
 "py`` 源文件预编译为 ``.pyc`` 文件的任何安装步骤其间应用该限制。"
 
-#: ../../library/stdtypes.rst:5693
+#: ../../library/stdtypes.rst:5658
 msgid "Recommended configuration"
 msgstr "推荐配置"
 
-#: ../../library/stdtypes.rst:5695
+#: ../../library/stdtypes.rst:5660
 msgid ""
 "The default :data:`sys.int_info.default_max_str_digits` is expected to be "
 "reasonable for most applications. If your application requires a different "
@@ -8843,11 +8980,11 @@ msgstr ""
 "码从你的主入口点进行设置，因为这些 API 是在 3.12 之前的版本所发布的安全补丁中"
 "添加的。"
 
-#: ../../library/stdtypes.rst:5700
+#: ../../library/stdtypes.rst:5665
 msgid "Example::"
 msgstr "示例："
 
-#: ../../library/stdtypes.rst:5702
+#: ../../library/stdtypes.rst:5667
 msgid ""
 ">>> import sys\n"
 ">>> if hasattr(sys, \"set_int_max_str_digits\"):\n"
@@ -8860,33 +8997,33 @@ msgid ""
 "...         sys.set_int_max_str_digits(lower_bound)"
 msgstr ""
 
-#: ../../library/stdtypes.rst:5712
+#: ../../library/stdtypes.rst:5677
 msgid "If you need to disable it entirely, set it to ``0``."
 msgstr "如果你需要完全禁用它，请将其设为 ``0``。"
 
-#: ../../library/stdtypes.rst:5716
+#: ../../library/stdtypes.rst:5681
 msgid "Footnotes"
 msgstr "备注"
 
-#: ../../library/stdtypes.rst:5717
+#: ../../library/stdtypes.rst:5682
 msgid ""
 "Additional information on these special methods may be found in the Python "
 "Reference Manual (:ref:`customization`)."
 msgstr ""
 "有关这些特殊方法的额外信息可参看 Python 参考指南 (:ref:`customization`)。"
 
-#: ../../library/stdtypes.rst:5720
+#: ../../library/stdtypes.rst:5685
 msgid ""
 "As a consequence, the list ``[1, 2]`` is considered equal to ``[1.0, 2.0]``, "
 "and similarly for tuples."
 msgstr ""
 "作为结果，列表 ``[1, 2]`` 与 ``[1.0, 2.0]`` 是相等的，元组的情况也类似。"
 
-#: ../../library/stdtypes.rst:5723
+#: ../../library/stdtypes.rst:5688
 msgid "They must have since the parser can't tell the type of the operands."
 msgstr "必须如此，因为解析器无法判断操作数的类型。"
 
-#: ../../library/stdtypes.rst:5725
+#: ../../library/stdtypes.rst:5690
 msgid ""
 "Cased characters are those with general category property being one of "
 "\"Lu\" (Letter, uppercase), \"Ll\" (Letter, lowercase), or \"Lt\" (Letter, "
@@ -8895,7 +9032,7 @@ msgstr ""
 "区分大小写的字符是指所属一般类别属性为 \"Lu\" (Letter, uppercase), "
 "\"Ll\" (Letter, lowercase) 或 \"Lt\" (Letter, titlecase) 之一的字符。"
 
-#: ../../library/stdtypes.rst:5728
+#: ../../library/stdtypes.rst:5693
 msgid ""
 "To format only a tuple you should therefore provide a singleton tuple whose "
 "only element is the tuple to be formatted."

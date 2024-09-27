@@ -14,15 +14,16 @@
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 # 稀饭~~ <wangwhai@qq.com>, 2024
 # Freesand Leo <yuqinju@163.com>, 2024
+# Wulian233 <xiguawulian@gmail.com>, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-20 14:17+0000\n"
+"POT-Creation-Date: 2024-09-27 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 00:49+0000\n"
-"Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
+"Last-Translator: Wulian233 <xiguawulian@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -631,6 +632,33 @@ msgid ""
 "// ... use bignum ...\n"
 "free(bignum);"
 msgstr ""
+"// 询问我们需要多少空间。\n"
+"Py_ssize_t expected = PyLong_AsNativeBytes(pylong, NULL, 0, -1);\n"
+"if (expected < 0) {\n"
+"    // 失败。Python 已设置异常，并提供了原因\n"
+"    return NULL;\n"
+"}\n"
+"assert(expected != 0);  // 根据 API 定义，不可能为 0\n"
+"uint8_t *bignum = malloc(expected);\n"
+"if (!bignum) {\n"
+"    PyErr_SetString(PyExc_MemoryError, \"bignum malloc failed.\");\n"
+"    return NULL;\n"
+"}\n"
+"// 安全地获取整个值\n"
+"Py_ssize_t bytes = PyLong_AsNativeBytes(pylong, bignum, expected, -1);\n"
+"if (bytes < 0) {  // 已设置异常\n"
+"    free(bignum);\n"
+"    return NULL;\n"
+"}\n"
+"else if (bytes > expected) {  // 这种情况不应该发生\n"
+"    PyErr_SetString(PyExc_RuntimeError,\n"
+"        \"Unexpected bignum truncation after a size check.\");\n"
+"    free(bignum);\n"
+"    return NULL;\n"
+"}\n"
+"// 上述预检查成功的预期情况\n"
+"// ... 使用 bignum ...\n"
+"free(bignum);"
 
 #: ../../c-api/long.rst:447
 msgid ""
@@ -650,43 +678,43 @@ msgstr ""
 "目前，``-1`` 对应于 ``Py_ASNATIVEBYTES_NATIVE_ENDIAN | "
 "Py_ASNATIVEBYTES_UNSIGNED_BUFFER``。"
 
-#: ../../c-api/long.rst:456
+#: ../../c-api/long.rst:458
 msgid "Flag"
 msgstr "标志位"
 
-#: ../../c-api/long.rst:456
+#: ../../c-api/long.rst:458
 msgid "Value"
 msgstr "值"
 
-#: ../../c-api/long.rst:458
+#: ../../c-api/long.rst:460
 msgid "``-1``"
 msgstr "``-1``"
 
-#: ../../c-api/long.rst:459
+#: ../../c-api/long.rst:461
 msgid "``0``"
 msgstr "``0``"
 
-#: ../../c-api/long.rst:460
+#: ../../c-api/long.rst:462
 msgid "``1``"
 msgstr "``1``"
 
-#: ../../c-api/long.rst:461
+#: ../../c-api/long.rst:463
 msgid "``3``"
 msgstr "``3``"
 
-#: ../../c-api/long.rst:462
+#: ../../c-api/long.rst:464
 msgid "``4``"
 msgstr "``4``"
 
-#: ../../c-api/long.rst:463
+#: ../../c-api/long.rst:465
 msgid "``8``"
 msgstr "``8``"
 
-#: ../../c-api/long.rst:464
+#: ../../c-api/long.rst:466
 msgid "``16``"
 msgstr "``16``"
 
-#: ../../c-api/long.rst:467
+#: ../../c-api/long.rst:469
 msgid ""
 "Specifying ``Py_ASNATIVEBYTES_NATIVE_ENDIAN`` will override any other endian "
 "flags. Passing ``2`` is reserved."
@@ -694,7 +722,7 @@ msgstr ""
 "指定 ``Py_ASNATIVEBYTES_NATIVE_ENDIAN`` 将覆盖任何其他端序旗标。 传入 ``2`` "
 "被保留用于后续版本。"
 
-#: ../../c-api/long.rst:470
+#: ../../c-api/long.rst:472
 msgid ""
 "By default, sufficient buffer will be requested to include a sign bit. For "
 "example, when converting 128 with *n_bytes=1*, the function will return 2 "
@@ -703,7 +731,7 @@ msgstr ""
 "在默认情况下，将会请求足够的缓冲区以包括符号位。 例如在设置 *n_bytes=1* 转换 "
 "128 时，该函数将返回 2 (或更大的值) 以存储一个零值符号位。"
 
-#: ../../c-api/long.rst:474
+#: ../../c-api/long.rst:476
 msgid ""
 "If ``Py_ASNATIVEBYTES_UNSIGNED_BUFFER`` is specified, a zero sign bit will "
 "be omitted from size calculations. This allows, for example, 128 to fit in a "
@@ -717,7 +745,7 @@ msgstr ""
 "带符号位的，则一个正数输入值可能会变成负值。 请注意此旗标不会影响对负值的处"
 "理：对于这种情况，总是会请求用作符号位的空间。"
 
-#: ../../c-api/long.rst:481
+#: ../../c-api/long.rst:483
 msgid ""
 "Specifying ``Py_ASNATIVEBYTES_REJECT_NEGATIVE`` causes an exception to be "
 "set if *pylong* is negative. Without this flag, negative values will be "
@@ -728,7 +756,7 @@ msgstr ""
 "异常。 如果没有此旗标，只要至少有足够容纳一个符号位的空间就将拷贝负值，无论是"
 "否指定了 ``Py_ASNATIVEBYTES_UNSIGNED_BUFFER``。"
 
-#: ../../c-api/long.rst:486
+#: ../../c-api/long.rst:488
 msgid ""
 "If ``Py_ASNATIVEBYTES_ALLOW_INDEX`` is specified and a non-integer value is "
 "passed, its :meth:`~object.__index__` method will be called first. This may "
@@ -742,7 +770,7 @@ msgstr ""
 "线程，在此情况下将会改变其他正在使用的对象或值。 当 *flags* 为 ``-1`` 时，则"
 "不设置此选项，而非整数值将会引发 :exc:`TypeError`。"
 
-#: ../../c-api/long.rst:495
+#: ../../c-api/long.rst:497
 msgid ""
 "With the default *flags* (``-1``, or *UNSIGNED_BUFFER*  without "
 "*REJECT_NEGATIVE*), multiple Python integers can map to a single value "
@@ -753,7 +781,7 @@ msgstr ""
 "则多个 Python 整数可映射为单个值而不会溢出。 例如，``255`` 和 ``-1`` 都可放入"
 "一个单字节缓冲区并设置其全部比特位。 这与典型的 C 强制转换行为相匹配。"
 
-#: ../../c-api/long.rst:506
+#: ../../c-api/long.rst:508
 msgid ""
 "On success, return a read only :term:`named tuple`, that holds information "
 "about Python's internal representation of integers. See :data:`sys.int_info` "
@@ -762,15 +790,15 @@ msgstr ""
 "成功时，返回一个只读的 :term:`named tuple`，它保存着有关 Python 内部整数表示"
 "形式的信息。 请参阅 :data:`sys.int_info` 了解关于单独字段的描述。"
 
-#: ../../c-api/long.rst:510
+#: ../../c-api/long.rst:512
 msgid "On failure, return ``NULL`` with an exception set."
 msgstr "当失败时，将返回 ``NULL`` 并设置一个异常。"
 
-#: ../../c-api/long.rst:517
+#: ../../c-api/long.rst:519
 msgid "Return 1 if *op* is compact, 0 otherwise."
 msgstr "如果 *op* 为紧凑形式则返回 1，否则返回 0。"
 
-#: ../../c-api/long.rst:519
+#: ../../c-api/long.rst:521
 msgid ""
 "This function makes it possible for performance-critical code to implement a "
 "“fast path” for small integers. For compact values use :c:func:"
@@ -781,17 +809,17 @@ msgstr ""
 "func:`PyUnstable_Long_CompactValue`；对于其他值则回退为 :c:func:`PyLong_As* "
 "<PyLong_AsSize_t>` 函数或者 :c:func:`PyLong_AsNativeBytes`。"
 
-#: ../../c-api/long.rst:525
+#: ../../c-api/long.rst:527
 msgid "The speedup is expected to be negligible for most users."
 msgstr "此项加速对于大多数用户来说是可以忽略的。"
 
-#: ../../c-api/long.rst:527
+#: ../../c-api/long.rst:529
 msgid ""
 "Exactly what values are considered compact is an implementation detail and "
 "is subject to change."
 msgstr "具体有哪些值会被视为紧凑形式属于实现细节并可能发生改变。"
 
-#: ../../c-api/long.rst:532
+#: ../../c-api/long.rst:534
 msgid ""
 "If *op* is compact, as determined by :c:func:`PyUnstable_Long_IsCompact`, "
 "return its value."
@@ -799,7 +827,7 @@ msgstr ""
 "如果 *op* 为紧凑形式，如 :c:func:`PyUnstable_Long_IsCompact` 所确定的，则返回"
 "它的值。"
 
-#: ../../c-api/long.rst:535
+#: ../../c-api/long.rst:537
 msgid "Otherwise, the return value is undefined."
 msgstr "在其他情况下，返回值是未定义的。"
 

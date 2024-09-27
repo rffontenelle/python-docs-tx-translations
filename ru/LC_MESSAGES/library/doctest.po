@@ -6,15 +6,16 @@
 # Translators:
 # alex alev <alex.alev@bk.ru>, 2021
 # Илья Панфилов, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 10:59+0000\n"
+"POT-Creation-Date: 2024-09-27 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 01:04+0000\n"
-"Last-Translator: Илья Панфилов, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +28,7 @@ msgstr ""
 
 #: ../../library/doctest.rst:2
 msgid ":mod:`!doctest` --- Test interactive Python examples"
-msgstr ""
+msgstr ":mod:`!doctest` --- Тестирование интерактивных примеров Python"
 
 #: ../../library/doctest.rst:12
 msgid "**Source code:** :source:`Lib/doctest.py`"
@@ -39,18 +40,26 @@ msgid ""
 "interactive Python sessions, and then executes those sessions to verify that "
 "they work exactly as shown.  There are several common ways to use doctest:"
 msgstr ""
+"Модуль :mod:`doctest` ищет фрагменты текста, похожие на интерактивные сеансы "
+"Python, а затем выполняет эти сеансы, чтобы убедиться, что они работают "
+"точно так, как показано. Существует несколько распространенных способов "
+"использования doctest:"
 
 #: ../../library/doctest.rst:20
 msgid ""
 "To check that a module's docstrings are up-to-date by verifying that all "
 "interactive examples still work as documented."
 msgstr ""
+"Проверить актуальность строк документации модуля, проверив, что все "
+"интерактивные примеры по-прежнему работают согласно документации."
 
 #: ../../library/doctest.rst:23
 msgid ""
 "To perform regression testing by verifying that interactive examples from a "
 "test file or a test object work as expected."
 msgstr ""
+"Выполнить регрессионное тестирование, проверив, что интерактивные примеры из "
+"тестового файла или тестового объекта работают должным образом."
 
 #: ../../library/doctest.rst:26
 msgid ""
@@ -59,10 +68,14 @@ msgid ""
 "text are emphasized, this has the flavor of \"literate testing\" or "
 "\"executable documentation\"."
 msgstr ""
+"Написать учебную документацию для пакета, подробно иллюстрированную "
+"примерами ввода-вывода. В зависимости от того, чему уделяется особое "
+"внимание: примерам или поясняющему тексту, это имеет оттенок «грамотного "
+"тестирования» или «исполняемой документации»."
 
 #: ../../library/doctest.rst:31
 msgid "Here's a complete but small example module::"
-msgstr ""
+msgstr "Вот полный, но небольшой пример модуля::"
 
 #: ../../library/doctest.rst:33
 msgid ""
@@ -121,18 +134,76 @@ msgid ""
 "    import doctest\n"
 "    doctest.testmod()"
 msgstr ""
+"\"\"\"\n"
+"This is the \"example\" module.\n"
+"\n"
+"The example module supplies one function, factorial().  For example,\n"
+"\n"
+">>> factorial(5)\n"
+"120\n"
+"\"\"\"\n"
+"\n"
+"def factorial(n):\n"
+"    \"\"\"Return the factorial of n, an exact integer >= 0.\n"
+"\n"
+"    >>> [factorial(n) for n in range(6)]\n"
+"    [1, 1, 2, 6, 24, 120]\n"
+"    >>> factorial(30)\n"
+"    265252859812191058636308480000000\n"
+"    >>> factorial(-1)\n"
+"    Traceback (most recent call last):\n"
+"        ...\n"
+"    ValueError: n must be >= 0\n"
+"\n"
+"    Factorials of floats are OK, but the float must be an exact integer:\n"
+"    >>> factorial(30.1)\n"
+"    Traceback (most recent call last):\n"
+"        ...\n"
+"    ValueError: n must be exact integer\n"
+"    >>> factorial(30.0)\n"
+"    265252859812191058636308480000000\n"
+"\n"
+"    It must also not be ridiculously large:\n"
+"    >>> factorial(1e100)\n"
+"    Traceback (most recent call last):\n"
+"        ...\n"
+"    OverflowError: n too large\n"
+"    \"\"\"\n"
+"\n"
+"    import math\n"
+"    if not n >= 0:\n"
+"        raise ValueError(\"n must be >= 0\")\n"
+"    if math.floor(n) != n:\n"
+"        raise ValueError(\"n must be exact integer\")\n"
+"    if n+1 == n:  # catch a value like 1e300\n"
+"        raise OverflowError(\"n too large\")\n"
+"    result = 1\n"
+"    factor = 2\n"
+"    while factor <= n:\n"
+"        result *= factor\n"
+"        factor += 1\n"
+"    return result\n"
+"\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    import doctest\n"
+"    doctest.testmod()"
 
 #: ../../library/doctest.rst:88
 msgid ""
 "If you run :file:`example.py` directly from the command line, :mod:`doctest` "
 "works its magic:"
 msgstr ""
+"Если вы запустите :file:`example.py` непосредственно из командной строки, :"
+"mod:`doctest` творит чудеса:"
 
 #: ../../library/doctest.rst:91
 msgid ""
 "$ python example.py\n"
 "$"
 msgstr ""
+"$ python example.py\n"
+"$"
 
 #: ../../library/doctest.rst:96
 msgid ""
@@ -140,6 +211,9 @@ msgid ""
 "Pass ``-v`` to the script, and :mod:`doctest` prints a detailed log of what "
 "it's trying, and prints a summary at the end:"
 msgstr ""
+"Выхода нет! Это нормально и означает, что все примеры сработали. Передайте "
+"``-v`` в скрипт, и :mod:`doctest` распечатает подробный журнал того, что он "
+"пытается сделать, и выведет сводку в конце:"
 
 #: ../../library/doctest.rst:100
 msgid ""
@@ -155,10 +229,21 @@ msgid ""
 "    [1, 1, 2, 6, 24, 120]\n"
 "ok"
 msgstr ""
+"$ python example.py -v\n"
+"Trying:\n"
+"    factorial(5)\n"
+"Expecting:\n"
+"    120\n"
+"ok\n"
+"Trying:\n"
+"    [factorial(n) for n in range(6)]\n"
+"Expecting:\n"
+"    [1, 1, 2, 6, 24, 120]\n"
+"ok"
 
 #: ../../library/doctest.rst:114
 msgid "And so on, eventually ending with:"
-msgstr ""
+msgstr "И так далее, в конечном итоге заканчиваясь:"
 
 #: ../../library/doctest.rst:116
 msgid ""
@@ -177,6 +262,20 @@ msgid ""
 "Test passed.\n"
 "$"
 msgstr ""
+"Trying:\n"
+"    factorial(1e100)\n"
+"Expecting:\n"
+"    Traceback (most recent call last):\n"
+"        ...\n"
+"    OverflowError: n too large\n"
+"ok\n"
+"2 items passed all tests:\n"
+"   1 test in __main__\n"
+"   6 tests in __main__.factorial\n"
+"7 tests in 2 items.\n"
+"7 passed.\n"
+"Test passed.\n"
+"$"
 
 #: ../../library/doctest.rst:133
 msgid ""
@@ -186,16 +285,25 @@ msgid ""
 "libraries. Especially useful examples can be found in the standard test "
 "file :file:`Lib/test/test_doctest/test_doctest.py`."
 msgstr ""
+"Это все, что вам нужно знать, чтобы начать продуктивно использовать :mod:"
+"`doctest`! Приступайте. В следующих разделах представлена ​​полная информация. "
+"Обратите внимание, что в стандартном наборе тестов и библиотеках Python "
+"имеется множество примеров документальных тестов. Особенно полезные примеры "
+"можно найти в стандартном тестовом файле:file:`Lib/test/test_doctest/"
+"test_doctest.py`."
 
 #: ../../library/doctest.rst:143
 msgid "Simple Usage: Checking Examples in Docstrings"
-msgstr ""
+msgstr "Простое использование: проверка примеров в строках документации"
 
 #: ../../library/doctest.rst:145
 msgid ""
 "The simplest way to start using doctest (but not necessarily the way you'll "
 "continue to do it) is to end each module :mod:`!M` with::"
 msgstr ""
+"Самый простой способ начать использовать doctest (но не обязательно так, как "
+"вы будете продолжать это делать) — завершить каждый модуль :mod:`!M` с "
+"помощью::"
 
 #: ../../library/doctest.rst:148
 msgid ""
@@ -203,20 +311,26 @@ msgid ""
 "    import doctest\n"
 "    doctest.testmod()"
 msgstr ""
+"if __name__ == \"__main__\":\n"
+"    import doctest\n"
+"    doctest.testmod()"
 
 #: ../../library/doctest.rst:152
 msgid ":mod:`!doctest` then examines docstrings in module :mod:`!M`."
 msgstr ""
+":mod:`!doctest` затем проверяет строки документации в модуле :mod:`!M`."
 
 #: ../../library/doctest.rst:154
 msgid ""
 "Running the module as a script causes the examples in the docstrings to get "
 "executed and verified::"
 msgstr ""
+"Запуск модуля как скрипта приводит к выполнению и проверке примеров в "
+"строках документации:"
 
 #: ../../library/doctest.rst:157
 msgid "python M.py"
-msgstr ""
+msgstr "python M.py"
 
 #: ../../library/doctest.rst:159
 msgid ""
@@ -225,20 +339,26 @@ msgid ""
 "and the final line of output is ``***Test Failed*** N failures.``, where *N* "
 "is the number of examples that failed."
 msgstr ""
+"Это не будет отображать ничего, если пример не завершится неудачно, и в этом "
+"случае неудачные примеры и причины сбоев выводятся на стандартный вывод, а "
+"последняя строка вывода — ``***Test Failed*** N неудач.``, где *N* — "
+"количество неудачных примеров."
 
 #: ../../library/doctest.rst:164
 msgid "Run it with the ``-v`` switch instead::"
-msgstr ""
+msgstr "Вместо этого запустите его с ключом ``-v``::"
 
 #: ../../library/doctest.rst:166
 msgid "python M.py -v"
-msgstr ""
+msgstr "python M.py -v"
 
 #: ../../library/doctest.rst:168
 msgid ""
 "and a detailed report of all examples tried is printed to standard output, "
 "along with assorted summaries at the end."
 msgstr ""
+"и подробный отчет обо всех опробованных примерах выводится на стандартный "
+"вывод вместе с различными сводками в конце."
 
 #: ../../library/doctest.rst:171
 msgid ""
@@ -247,6 +367,10 @@ msgid ""
 "``sys.argv`` is not examined by :func:`testmod` (so passing ``-v`` or not "
 "has no effect)."
 msgstr ""
+"Вы можете принудительно включить подробный режим, передав ``verbose=True`` "
+"в :func:`testmod`, или запретить его, передав ``verbose=False``. В любом из "
+"этих случаев ``sys.argv`` не проверяется :func:`testmod` (поэтому передача "
+"``-v`` или not не имеет никакого эффекта)."
 
 #: ../../library/doctest.rst:176
 msgid ""
@@ -254,10 +378,14 @@ msgid ""
 "instruct the Python interpreter to run the doctest module directly from the "
 "standard library and pass the module name(s) on the command line::"
 msgstr ""
+"Существует также ярлык командной строки для запуска :func:`testmod`. Вы "
+"можете поручить интерпретатору Python запустить модуль doctest "
+"непосредственно из стандартной библиотеки и передать имена модулей в "
+"командной строке:"
 
 #: ../../library/doctest.rst:180
 msgid "python -m doctest -v example.py"
-msgstr ""
+msgstr "python -m doctest -v example.py"
 
 #: ../../library/doctest.rst:182
 msgid ""
@@ -265,28 +393,38 @@ msgid ""
 "`testmod` on it.  Note that this may not work correctly if the file is part "
 "of a package and imports other submodules from that package."
 msgstr ""
+"Это позволит импортировать :file:`example.py` как отдельный модуль и "
+"запустить на нем :func:`testmod`. Обратите внимание, что это может работать "
+"неправильно, если файл является частью пакета и импортирует другие подмодули "
+"из этого пакета."
 
 #: ../../library/doctest.rst:186
 msgid ""
 "For more information on :func:`testmod`, see section :ref:`doctest-basic-"
 "api`."
 msgstr ""
+"Дополнительную информацию о :func:`testmod` смотрите в разделе :ref:`doctest-"
+"basic-api`."
 
 #: ../../library/doctest.rst:192
 msgid "Simple Usage: Checking Examples in a Text File"
-msgstr ""
+msgstr "Простое использование: проверка примеров в текстовом файле"
 
 #: ../../library/doctest.rst:194
 msgid ""
 "Another simple application of doctest is testing interactive examples in a "
 "text file.  This can be done with the :func:`testfile` function::"
 msgstr ""
+"Еще одно простое применение doctest — тестирование интерактивных примеров в "
+"текстовом файле. Это можно сделать с помощью функции :func:`testfile`::"
 
 #: ../../library/doctest.rst:197
 msgid ""
 "import doctest\n"
 "doctest.testfile(\"example.txt\")"
 msgstr ""
+"import doctest\n"
+"doctest.testfile(\"example.txt\")"
 
 #: ../../library/doctest.rst:200
 msgid ""
@@ -295,6 +433,11 @@ msgid ""
 "if it were a single giant docstring; the file doesn't need to contain a "
 "Python program!   For example, perhaps :file:`example.txt` contains this:"
 msgstr ""
+"Этот короткий скрипт выполняет и проверяет все интерактивные примеры Python, "
+"содержащиеся в файле:file:`example.txt`. Содержимое файла рассматривается "
+"как одна гигантская строка документации; файл не обязательно должен "
+"содержать программу Python! Например, возможно, :file:`example.txt` содержит "
+"следующее:"
 
 #: ../../library/doctest.rst:205
 msgid ""
@@ -314,12 +457,29 @@ msgid ""
 "    >>> factorial(6)\n"
 "    120"
 msgstr ""
+"The ``example`` module\n"
+"======================\n"
+"\n"
+"Using ``factorial``\n"
+"-------------------\n"
+"\n"
+"This is an example text file in reStructuredText format.  First import\n"
+"``factorial`` from the ``example`` module:\n"
+"\n"
+"    >>> from example import factorial\n"
+"\n"
+"Now use it:\n"
+"\n"
+"    >>> factorial(6)\n"
+"    120"
 
 #: ../../library/doctest.rst:223
 msgid ""
 "Running ``doctest.testfile(\"example.txt\")`` then finds the error in this "
 "documentation::"
 msgstr ""
+"Запуск doctest.testfile(\"example.txt\") затем обнаруживает ошибку в этой "
+"документации:"
 
 #: ../../library/doctest.rst:226
 msgid ""
@@ -331,6 +491,13 @@ msgid ""
 "Got:\n"
 "    720"
 msgstr ""
+"File \"./example.txt\", line 14, in example.txt\n"
+"Failed example:\n"
+"    factorial(6)\n"
+"Expected:\n"
+"    120\n"
+"Got:\n"
+"    720"
 
 #: ../../library/doctest.rst:234
 msgid ""
@@ -339,6 +506,10 @@ msgid ""
 "cause(s) of the failure(s) are printed to stdout, using the same format as :"
 "func:`testmod`."
 msgstr ""
+"Как и в случае с :func:`testmod`, :func:`testfile` ничего не отобразит, если "
+"пример не завершится неудачно. Если пример не работает, то пример(ы) с "
+"ошибкой и причина(ы) сбоя(ов) выводятся на стандартный вывод в том же "
+"формате, что и :func:`testmod`."
 
 #: ../../library/doctest.rst:239
 msgid ""
@@ -347,12 +518,18 @@ msgid ""
 "optional arguments that can be used to tell it to look for files in other "
 "locations."
 msgstr ""
+"По умолчанию :func:`testfile` ищет файлы в каталоге вызывающего модуля. См. "
+"раздел :ref:`doctest-basic-api` для описания дополнительных аргументов, "
+"которые можно использовать, чтобы указать ему искать файлы в других местах."
 
 #: ../../library/doctest.rst:243
 msgid ""
 "Like :func:`testmod`, :func:`testfile`'s verbosity can be set with the ``-"
 "v`` command-line switch or with the optional keyword argument *verbose*."
 msgstr ""
+"Как и :func:`testmod`, подробность :func:`testfile` может быть установлена ​​с "
+"помощью переключателя командной строки ``-v`` или с помощью необязательного "
+"аргумента ключевого слова *verbose*."
 
 #: ../../library/doctest.rst:247
 msgid ""
@@ -360,22 +537,31 @@ msgid ""
 "instruct the Python interpreter to run the doctest module directly from the "
 "standard library and pass the file name(s) on the command line::"
 msgstr ""
+"Существует также ярлык командной строки для запуска :func:`testfile`. Вы "
+"можете поручить интерпретатору Python запустить модуль doctest "
+"непосредственно из стандартной библиотеки и передать имена файлов в "
+"командной строке:"
 
 #: ../../library/doctest.rst:251
 msgid "python -m doctest -v example.txt"
-msgstr ""
+msgstr "python -m doctest -v example.txt"
 
 #: ../../library/doctest.rst:253
 msgid ""
 "Because the file name does not end with :file:`.py`, :mod:`doctest` infers "
 "that it must be run with :func:`testfile`, not :func:`testmod`."
 msgstr ""
+"Поскольку имя файла не заканчивается на :file:`.py`, :mod:`doctest` "
+"подразумевает, что его нужно запускать с :func:`testfile`, а не :func:"
+"`testmod`."
 
 #: ../../library/doctest.rst:256
 msgid ""
 "For more information on :func:`testfile`, see section :ref:`doctest-basic-"
 "api`."
 msgstr ""
+"Дополнительную информацию о :func:`testfile` смотрите в разделе :ref:"
+"`doctest-basic-api`."
 
 #: ../../library/doctest.rst:262
 msgid "How It Works"
@@ -390,16 +576,26 @@ msgid ""
 "examples; for information about actually running doctest on these examples, "
 "see the following sections."
 msgstr ""
+"В этом разделе подробно рассматривается, как работает doctest: какие строки "
+"документации он просматривает, как находит интерактивные примеры, какой "
+"контекст выполнения использует, как обрабатывает исключения и как можно "
+"использовать флаги опций для управления его поведением. Это информация, "
+"которую вам необходимо знать для написания примеров для доктестов; "
+"информацию о фактическом запуске doctest в этих примерах см. в следующих "
+"разделах."
 
 #: ../../library/doctest.rst:275
 msgid "Which Docstrings Are Examined?"
-msgstr ""
+msgstr "Какие строки документации проверяются?"
 
 #: ../../library/doctest.rst:277
 msgid ""
 "The module docstring, and all function, class and method docstrings are "
 "searched.  Objects imported into the module are not searched."
 msgstr ""
+"Осуществляется поиск по строке документации модуля и всем строкам "
+"документации по функциям, классам и методам. Объекты, импортированные в "
+"модуль, не ищутся."
 
 #: ../../library/doctest.rst:280
 msgid ""
@@ -413,10 +609,20 @@ msgid ""
 "docstrings.  In output, a key ``K`` in ``M.__test__`` appears with name ``M."
 "__test__.K``."
 msgstr ""
+"Кроме того, бывают случаи, когда вы хотите, чтобы тесты были частью модуля, "
+"а не частью текста справки, что требует, чтобы тесты не были включены в "
+"строку документации. Doctest ищет переменную уровня модуля с именем "
+"``__test__`` и использует ее для поиска других тестов. Если ``M.__test__`` "
+"существует, это должен быть словарь, и каждая запись сопоставляет "
+"(строковое) имя с объектом функции, объектом класса или строкой. В строках "
+"документации объектов функций и классов, найденных в ``M.__test__``, "
+"выполняется поиск, и строки обрабатываются так, как если бы они были "
+"строками документации. В выходных данных ключ ``K`` в ``M.__test__`` "
+"появляется с именем ``M.__test__.K``."
 
 #: ../../library/doctest.rst:289
 msgid "For example, place this block of code at the top of :file:`example.py`:"
-msgstr ""
+msgstr "Например, поместите этот блок кода вверху :file:`example.py`:"
 
 #: ../../library/doctest.rst:291
 msgid ""
@@ -430,6 +636,15 @@ msgid ""
 "\"\"\"\n"
 "}"
 msgstr ""
+"__test__ = {\n"
+"    'numbers': \"\"\"\n"
+">>> factorial(6)\n"
+"720\n"
+"\n"
+">>> [factorial(n) for n in range(6)]\n"
+"[1, 1, 2, 6, 24, 120]\n"
+"\"\"\"\n"
+"}"
 
 #: ../../library/doctest.rst:303
 msgid ""
@@ -439,16 +654,23 @@ msgid ""
 "mod:`!doctest` searches them recursively for docstrings, which are then "
 "scanned for tests."
 msgstr ""
+"Значение ``example.__test__[\"numbers\"]`` будет рассматриваться как строка "
+"документации, и все тесты внутри нее будут выполняться. Важно отметить, что "
+"значение может быть сопоставлено с функцией, объектом класса или модулем; "
+"если да, то :mod:`!doctest` рекурсивно ищет в них строки документации, "
+"которые затем сканируются на наличие тестов."
 
 #: ../../library/doctest.rst:309
 msgid ""
 "Any classes found are recursively searched similarly, to test docstrings in "
 "their contained methods and nested classes."
 msgstr ""
+"Аналогичным образом рекурсивно просматриваются все найденные классы для "
+"проверки строк документации в содержащихся в них методах и вложенных классах."
 
 #: ../../library/doctest.rst:316
 msgid "How are Docstring Examples Recognized?"
-msgstr ""
+msgstr "Как распознаются примеры строк документации?"
 
 #: ../../library/doctest.rst:318
 msgid ""
@@ -456,6 +678,9 @@ msgid ""
 "but doctest isn't trying to do an exact emulation of any specific Python "
 "shell."
 msgstr ""
+"В большинстве случаев копирование и вставка сеанса интерактивной консоли "
+"работает нормально, но doctest не пытается выполнить точную эмуляцию какой-"
+"либо конкретной оболочки Python."
 
 #: ../../library/doctest.rst:323
 msgid ""
@@ -475,6 +700,21 @@ msgid ""
 "NO!!!\n"
 ">>>"
 msgstr ""
+">>> # comments are ignored\n"
+">>> x = 12\n"
+">>> x\n"
+"12\n"
+">>> if x == 13:\n"
+"...     print(\"yes\")\n"
+"... else:\n"
+"...     print(\"no\")\n"
+"...     print(\"NO\")\n"
+"...     print(\"NO!!!\")\n"
+"...\n"
+"no\n"
+"NO\n"
+"NO!!!\n"
+">>>"
 
 #: ../../library/doctest.rst:343
 msgid ""
@@ -482,10 +722,14 @@ msgid ""
 "'`` line containing the code, and the expected output (if any) extends to "
 "the next ``'>>> '`` or all-whitespace line."
 msgstr ""
+"Любой ожидаемый результат должен следовать сразу за последней строкой ``'>>> "
+"'`` или ``'... '``, содержащей код, а ожидаемый результат (если таковой "
+"имеется) распространяется на следующую ``'>>> '`` или строка, состоящая "
+"только из пробелов."
 
 #: ../../library/doctest.rst:347
 msgid "The fine print:"
-msgstr ""
+msgstr "Мелкий шрифт:"
 
 #: ../../library/doctest.rst:349
 msgid ""
@@ -494,6 +738,10 @@ msgid ""
 "a blank line, put ``<BLANKLINE>`` in your doctest example each place a blank "
 "line is expected."
 msgstr ""
+"Ожидаемый вывод не может содержать строку, состоящую только из пробелов, "
+"поскольку такая строка используется для обозначения конца ожидаемого вывода. "
+"Если ожидаемый вывод содержит пустую строку, поместите ``<BLANKLINE>`` в "
+"вашем примере доктеста в каждом месте, где ожидается пустая строка."
 
 #: ../../library/doctest.rst:354
 msgid ""
@@ -509,12 +757,26 @@ msgid ""
 "different algorithm for handling tabs by writing a custom :class:"
 "`DocTestParser` class."
 msgstr ""
+"Все символы жесткой табуляции расширяются до пробелов с использованием "
+"позиций табуляции в 8 столбцов. Вкладки в выводе, созданном тестируемым "
+"кодом, не изменяются. Поскольку все жесткие табуляции в примере выходных "
+"данных *расширены*, это означает, что если выходные данные кода включают "
+"жесткие табуляции, единственный способ пройти доктест — это использовать "
+"опцию :const:`NORMALIZE_WHITESPACE` или :ref:`директиву <doctest- "
+"директивы>` действуют. В качестве альтернативы тест можно переписать, чтобы "
+"в рамках теста он фиксировал выходные данные и сравнивал их с ожидаемым "
+"значением. Такая обработка вкладок в исходном коде была достигнута методом "
+"проб и ошибок и оказалась наименее подверженным ошибкам способом их "
+"обработки. Можно использовать другой алгоритм обработки вкладок, написав "
+"собственный класс :class:`DocTestParser`."
 
 #: ../../library/doctest.rst:366
 msgid ""
 "Output to stdout is captured, but not output to stderr (exception tracebacks "
 "are captured via a different means)."
 msgstr ""
+"Вывод на стандартный вывод перехватывается, но не выводится на стандартный "
+"вывод (обратные трассировки исключений фиксируются другими способами)."
 
 #: ../../library/doctest.rst:369
 msgid ""
@@ -522,6 +784,10 @@ msgid ""
 "any other reason use a backslash, you should use a raw docstring, which will "
 "preserve your backslashes exactly as you type them::"
 msgstr ""
+"Если вы продолжаете строку с помощью обратной косой черты в интерактивном "
+"сеансе или по какой-либо другой причине используете обратную косую черту, "
+"вам следует использовать необработанную строку документации, которая "
+"сохранит ваши обратные косые черты точно так, как вы их вводите:"
 
 #: ../../library/doctest.rst:373
 msgid ""
@@ -531,6 +797,11 @@ msgid ""
 ">>> print(f.__doc__)\n"
 "Backslashes in a raw docstring: m\\n"
 msgstr ""
+">>> def f(x):\n"
+"...     r'''Backslashes in a raw docstring: m\\n'''\n"
+"...\n"
+">>> print(f.__doc__)\n"
+"Backslashes in a raw docstring: m\\n"
 
 #: ../../library/doctest.rst:379
 msgid ""
@@ -539,6 +810,11 @@ msgid ""
 "Alternatively, you can double each backslash in the doctest version (and not "
 "use a raw string)::"
 msgstr ""
+"В противном случае обратная косая черта будет интерпретироваться как часть "
+"строки. Например, приведенный выше ``\\n`` будет интерпретироваться как "
+"символ новой строки. В качестве альтернативы вы можете удвоить каждую "
+"обратную косую черту в версии doctest (и не использовать необработанную "
+"строку)::"
 
 #: ../../library/doctest.rst:383
 msgid ""
@@ -548,10 +824,15 @@ msgid ""
 ">>> print(f.__doc__)\n"
 "Backslashes in a raw docstring: m\\n"
 msgstr ""
+">>> def f(x):\n"
+"...     '''Backslashes in a raw docstring: m\\\\n'''\n"
+"...\n"
+">>> print(f.__doc__)\n"
+"Backslashes in a raw docstring: m\\n"
 
 #: ../../library/doctest.rst:389
 msgid "The starting column doesn't matter::"
-msgstr ""
+msgstr "Начальный столбец не имеет значения::"
 
 #: ../../library/doctest.rst:391
 msgid ""
@@ -560,16 +841,22 @@ msgid ""
 "          >>> math.floor(1.9)\n"
 "          1"
 msgstr ""
+">>> assert \"Easy!\"\n"
+"      >>> import math\n"
+"          >>> math.floor(1.9)\n"
+"          1"
 
 #: ../../library/doctest.rst:396
 msgid ""
 "and as many leading whitespace characters are stripped from the expected "
 "output as appeared in the initial ``'>>> '`` line that started the example."
 msgstr ""
+"и из ожидаемого вывода удаляется столько начальных пробельных символов, "
+"сколько указано в начальной строке ``'>>> '``, с которой начинался пример."
 
 #: ../../library/doctest.rst:403
 msgid "What's the Execution Context?"
-msgstr ""
+msgstr "Каков контекст выполнения?"
 
 #: ../../library/doctest.rst:405
 msgid ""
@@ -581,12 +868,24 @@ msgid ""
 "names defined earlier in the docstring being run. Examples cannot see names "
 "defined in other docstrings."
 msgstr ""
+"По умолчанию, каждый раз, когда :mod:`doctest` находит строку документации "
+"для тестирования, он использует *неполную копию* глобальных переменных :mod:"
+"`!M`, так что запуск тестов не меняет реальные глобальные переменные модуля, "
+"и чтобы один тест в :mod:`!M` не мог оставить после себя крошек, которые "
+"случайно позволили бы работать другому тесту. Это означает, что примеры "
+"могут свободно использовать любые имена, определенные на верхнем уровне в :"
+"mod:`!M`, а также имена, определенные ранее в запускаемой строке "
+"документации. Примеры не могут видеть имена, определенные в других строках "
+"документации."
 
 #: ../../library/doctest.rst:413
 msgid ""
 "You can force use of your own dict as the execution context by passing "
 "``globs=your_dict`` to :func:`testmod` or :func:`testfile` instead."
 msgstr ""
+"Вы можете принудительно использовать свой собственный dict в качестве "
+"контекста выполнения, передав вместо него ``globs=your_dict`` в :func:"
+"`testmod` или :func:`testfile`."
 
 #: ../../library/doctest.rst:420
 msgid "What About Exceptions?"
@@ -600,6 +899,11 @@ msgid ""
 "numbers), this is one case where doctest works hard to be flexible in what "
 "it accepts."
 msgstr ""
+"Нет проблем, при условии, что обратная трассировка — единственный вывод, "
+"создаваемый примером: просто вставьте обратную трассировку. [#]_ Поскольку "
+"обратные трассировки содержат детали, которые могут быстро меняться "
+"(например, точные пути к файлам и номера строк), это один из случаев, когда "
+"doctest прилагает все усилия, чтобы быть гибким в том, что он принимает."
 
 #: ../../library/doctest.rst:428
 msgid "Simple example::"
@@ -612,12 +916,19 @@ msgid ""
 "  File \"<stdin>\", line 1, in <module>\n"
 "ValueError: list.remove(x): x not in list"
 msgstr ""
+">>> [1, 2, 3].remove(42)\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"ValueError: list.remove(x): x not in list"
 
 #: ../../library/doctest.rst:435
 msgid ""
 "That doctest succeeds if :exc:`ValueError` is raised, with the ``list."
 "remove(x): x not in list`` detail as shown."
 msgstr ""
+"Этот документальный тест завершается успешно, если возникает :exc:"
+"`ValueError`, а деталь ``list.remove(x): x отсутствует в списке``, как "
+"показано."
 
 #: ../../library/doctest.rst:438
 msgid ""
@@ -625,12 +936,17 @@ msgid ""
 "which may be either of the following two lines, indented the same as the "
 "first line of the example::"
 msgstr ""
+"Ожидаемый вывод исключения должен начинаться с заголовка трассировки, "
+"который может представлять собой любую из следующих двух строк с таким же "
+"отступом, как и в первой строке примера:"
 
 #: ../../library/doctest.rst:442
 msgid ""
 "Traceback (most recent call last):\n"
 "Traceback (innermost last):"
 msgstr ""
+"Traceback (последний вызов последний): Traceback (самый внутренний "
+"последний):"
 
 #: ../../library/doctest.rst:445
 msgid ""
@@ -638,6 +954,9 @@ msgid ""
 "contents are ignored by doctest.  The traceback stack is typically omitted, "
 "or copied verbatim from an interactive session."
 msgstr ""
+"За заголовком трассировки следует необязательный стек трассировки, "
+"содержимое которого игнорируется doctest. Стек обратной трассировки обычно "
+"опускается или дословно копируется из интерактивного сеанса."
 
 #: ../../library/doctest.rst:449
 msgid ""
@@ -646,6 +965,10 @@ msgid ""
 "a traceback, but can extend across multiple lines if the exception has a "
 "multi-line detail::"
 msgstr ""
+"За стеком трассировки следует самая интересная часть: строки, содержащие тип "
+"исключения и подробную информацию. Обычно это последняя строка обратной "
+"трассировки, но она может занимать несколько строк, если исключение имеет "
+"многострочную информацию:"
 
 #: ../../library/doctest.rst:454
 msgid ""
@@ -656,12 +979,20 @@ msgid ""
 "    line\n"
 "detail"
 msgstr ""
+">>> raise ValueError('multi\\n    line\\ndetail')\n"
+"Traceback (most recent call last):\n"
+"  File \"<stdin>\", line 1, in <module>\n"
+"ValueError: multi\n"
+"    line\n"
+"detail"
 
 #: ../../library/doctest.rst:461
 msgid ""
 "The last three lines (starting with :exc:`ValueError`) are compared against "
 "the exception's type and detail, and the rest are ignored."
 msgstr ""
+"Последние три строки (начинающиеся с :exc:`ValueError`) сравниваются с типом "
+"и подробностями исключения, а остальные игнорируются."
 
 #: ../../library/doctest.rst:464
 msgid ""
@@ -669,6 +1000,9 @@ msgid ""
 "documentation value to the example.  So the last example is probably better "
 "as::"
 msgstr ""
+"Лучше всего опускать стек трассировки, если только он не добавляет "
+"существенной ценности документации к примеру. Поэтому последний пример, "
+"вероятно, лучше::"
 
 #: ../../library/doctest.rst:467
 msgid ""
@@ -679,6 +1013,12 @@ msgid ""
 "    line\n"
 "detail"
 msgstr ""
+">>> raise ValueError('multi\\n    line\\ndetail')\n"
+"Traceback (most recent call last):\n"
+"    ...\n"
+"ValueError: multi\n"
+"    line\n"
+"detail"
 
 #: ../../library/doctest.rst:474
 msgid ""
@@ -688,10 +1028,17 @@ msgid ""
 "just as well be three (or three hundred) commas or digits, or an indented "
 "transcript of a Monty Python skit."
 msgstr ""
+"Обратите внимание, что обратные трассировки обрабатываются особым образом. В "
+"частности, в переписанном примере использование ``...`` не зависит от опции :"
+"const:`ELLIPSIS` в doctest. Многоточие в этом примере можно было бы не "
+"использовать, а можно было бы с тем же успехом использовать три (или триста) "
+"запятых или цифр, или расшифровку сценки из Монти Пайтона с отступом."
 
 #: ../../library/doctest.rst:480
 msgid "Some details you should read once, but won't need to remember:"
 msgstr ""
+"Некоторые подробности, которые стоит прочитать один раз, но не нужно "
+"запоминать:"
 
 #: ../../library/doctest.rst:482
 msgid ""
@@ -702,6 +1049,13 @@ msgid ""
 "ordinary output rarely begins with a traceback header line, so this doesn't "
 "create real problems."
 msgstr ""
+"Doctest не может угадать, получен ли ожидаемый результат в результате "
+"трассировки исключений или в результате обычной печати. Так, например, "
+"пример, который ожидает, что ``ValueError: 42 is prime``, будет пройден "
+"независимо от того, действительно ли :exc:`ValueError` вызван, или если "
+"пример просто печатает этот текст трассировки. На практике обычный вывод "
+"редко начинается со строки заголовка трассировки, поэтому реальных проблем "
+"это не создает."
 
 #: ../../library/doctest.rst:489
 msgid ""
@@ -711,6 +1065,12 @@ msgid ""
 "with an alphanumeric is taken to be the start of the exception detail.  Of "
 "course this does the right thing for genuine tracebacks."
 msgstr ""
+"Каждая строка стека обратной трассировки (если она присутствует) должна "
+"иметь отступ дальше, чем первая строка примера, или *или* начинаться с "
+"небуквенно-цифрового символа. Первая строка, следующая за заголовком "
+"трассировки, с таким же отступом и начинающаяся с буквенно-цифровой цифры, "
+"считается началом сведений об исключении. Конечно, это правильно для "
+"настоящих обратных трассировок."
 
 #: ../../library/doctest.rst:495
 msgid ""
@@ -718,6 +1078,9 @@ msgid ""
 "everything following the leftmost colon and any module information in the "
 "exception name is ignored."
 msgstr ""
+"Если указана опция :const:`IGNORE_EXCEPTION_DETAIL`, все, что следует за "
+"крайним левым двоеточием, и любая информация о модуле в имени исключения "
+"игнорируется."
 
 #: ../../library/doctest.rst:499
 msgid ""
@@ -727,12 +1090,20 @@ msgid ""
 "need to test a :exc:`SyntaxError` that omits the traceback header, you will "
 "need to manually add the traceback header line to your test example."
 msgstr ""
+"Интерактивная оболочка опускает строку заголовка трассировки для некоторых :"
+"exc:`SyntaxError`\\ s. Но doctest использует строку заголовка трассировки, "
+"чтобы отличать исключения от неисключений. Поэтому в том редком случае, "
+"когда вам нужно протестировать :exc:`SyntaxError`, в котором отсутствует "
+"заголовок трассировки, вам нужно будет вручную добавить строку заголовка "
+"трассировки в ваш тестовый пример."
 
 #: ../../library/doctest.rst:507
 msgid ""
 "For some exceptions, Python displays the position of the error using ``^`` "
 "markers and tildes::"
 msgstr ""
+"За некоторыми исключениями, Python отображает положение ошибки с помощью "
+"маркеров ``^`` и тильд::"
 
 #: ../../library/doctest.rst:510
 msgid ""
@@ -742,6 +1113,11 @@ msgid ""
 "    ~~^~~~~~\n"
 "TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'"
 msgstr ""
+">>> 1 + None\n"
+"  File \"<stdin>\", line 1\n"
+"    1 + None\n"
+"    ~~^~~~~~\n"
+"TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'"
 
 #: ../../library/doctest.rst:516
 msgid ""
@@ -750,6 +1126,10 @@ msgid ""
 "following test would pass, even though it puts the ``^`` marker in the wrong "
 "location::"
 msgstr ""
+"Поскольку строки, показывающие положение ошибки, идут перед типом и "
+"подробностями исключения, они не проверяются документацией. Например, "
+"следующий тест будет пройден, даже если маркер ``^`` помещен в неправильное "
+"место:"
 
 #: ../../library/doctest.rst:520
 msgid ""
@@ -759,6 +1139,11 @@ msgid ""
 "    ^~~~~~~~\n"
 "TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'"
 msgstr ""
+">>> 1 + None\n"
+"  File \"<stdin>\", line 1\n"
+"    1 + None\n"
+"    ^~~~~~~~\n"
+"TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'"
 
 #: ../../library/doctest.rst:531
 msgid "Option Flags"
@@ -773,16 +1158,25 @@ msgid ""
 "and may be passed to the doctest command line interface via the ``-o`` "
 "option."
 msgstr ""
+"Ряд флагов опций управляют различными аспектами поведения doctest. "
+"Символические имена флагов предоставляются как константы модуля, которые "
+"могут быть объединены побитовым ИЛИ <побитово>` и переданы различным "
+"функциям. Имена также могут использоваться в директивах doctest <doctest-"
+"directives>` и могут быть переданы в интерфейс командной строки doctest с "
+"помощью опции ``-o``."
 
 #: ../../library/doctest.rst:539
 msgid "The ``-o`` command line option."
-msgstr ""
+msgstr "Параметр командной строки ``-o``."
 
 #: ../../library/doctest.rst:542
 msgid ""
 "The first group of options define test semantics, controlling aspects of how "
 "doctest decides whether actual output matches an example's expected output:"
 msgstr ""
+"Первая группа опций определяет семантику теста, контролируя аспекты того, "
+"как doctest решает, соответствует ли фактический результат ожидаемому "
+"результату примера:"
 
 #: ../../library/doctest.rst:548
 msgid ""
@@ -795,6 +1189,14 @@ msgid ""
 "output still work in these cases.  This option will probably go away, but "
 "not for several years."
 msgstr ""
+"По умолчанию, если ожидаемый выходной блок содержит только ``1``, "
+"фактический выходной блок, содержащий только ``1`` или просто ``True``, "
+"считается совпадающим, и аналогично для ``0`` по сравнению с ``Ложь``. Если "
+"указано :const:`DONT_ACCEPT_TRUE_FOR_1`, ни одна замена не допускается. "
+"Поведение по умолчанию соответствует тому, что Python изменил тип "
+"возвращаемого значения многих функций с целочисленного на логический; "
+"доктесты, ожидающие вывода «маленького целого числа», все еще работают в "
+"этих случаях. Эта опция, вероятно, исчезнет, ​​но не в ближайшие несколько лет."
 
 #: ../../library/doctest.rst:560
 msgid ""
@@ -804,6 +1206,12 @@ msgid ""
 "is the only way to communicate that a blank line is expected.  When :const:"
 "`DONT_ACCEPT_BLANKLINE` is specified, this substitution is not allowed."
 msgstr ""
+"По умолчанию, если ожидаемый блок вывода содержит строку, содержащую только "
+"строку ``<BLANKLINE>``, то эта строка будет соответствовать пустой строке "
+"фактического вывода. Поскольку по-настоящему пустая строка ограничивает "
+"ожидаемый вывод, это единственный способ сообщить, что ожидается пустая "
+"строка. Если указан :const:`DONT_ACCEPT_BLANKLINE`, эта замена не "
+"допускается."
 
 #: ../../library/doctest.rst:569
 msgid ""
@@ -814,6 +1222,12 @@ msgid ""
 "useful when a line of expected output is very long, and you want to wrap it "
 "across multiple lines in your source."
 msgstr ""
+"Если указано, все последовательности пробелов (пробелы и новые строки) "
+"считаются равными. Любая последовательность пробелов в ожидаемом выводе "
+"будет соответствовать любой последовательности пробелов в фактическом "
+"выводе. По умолчанию пробелы должны точно совпадать. :const:"
+"`NORMALIZE_WHITESPACE` особенно полезен, когда строка ожидаемого вывода "
+"очень длинная, и вы хотите перенести ее на несколько строк в исходном коде."
 
 #: ../../library/doctest.rst:580
 msgid ""
@@ -823,6 +1237,12 @@ msgid ""
 "this simple. Complicated uses can lead to the same kinds of \"oops, it "
 "matched too much!\" surprises that ``.*`` is prone to in regular expressions."
 msgstr ""
+"Если он указан, маркер многоточия (``...``) в ожидаемом выводе может "
+"соответствовать любой подстроке в фактическом выводе. Сюда входят подстроки, "
+"выходящие за границы строк, и пустые подстроки, поэтому лучше использовать "
+"их просто. Сложное использование может привести к таким же «упс, слишком "
+"много совпадений!» удивляет, что ``.*`` часто встречается в регулярных "
+"выражениях."
 
 #: ../../library/doctest.rst:589
 msgid ""
@@ -830,6 +1250,9 @@ msgid ""
 "of the expected type is raised, even if the details (message and fully "
 "qualified exception name) don't match."
 msgstr ""
+"Если указано, документальные тесты, ожидающие исключения, проходят до тех "
+"пор, пока возникает исключение ожидаемого типа, даже если детали (сообщение "
+"и полное имя исключения) не совпадают."
 
 #: ../../library/doctest.rst:593
 msgid ""
@@ -840,6 +1263,13 @@ msgid ""
 "and versions of Python and the code/libraries in use. Hence, all three of "
 "these variations will work with the flag specified:"
 msgstr ""
+"Например, пример, ожидающий ``ValueError: 42``, будет пройден, если "
+"фактическое возникшее исключение — это ``ValueError: 3*14``, но завершится "
+"ошибкой, если вместо этого будет вызвано, скажем, :exc:`TypeError`. Он также "
+"будет игнорировать любое полное имя, включенное перед классом исключения, "
+"которое может различаться в зависимости от реализации и версии Python, а "
+"также используемого кода/библиотек. Следовательно, все три варианта будут "
+"работать с указанным флагом:"
 
 #: ../../library/doctest.rst:601
 msgid ""
@@ -855,6 +1285,17 @@ msgid ""
 "Traceback (most recent call last):\n"
 "__main__.Exception: message"
 msgstr ""
+">>> raise Exception('message')\n"
+"Traceback (most recent call last):\n"
+"Exception: message\n"
+"\n"
+">>> raise Exception('message')\n"
+"Traceback (most recent call last):\n"
+"builtins.Exception: message\n"
+"\n"
+">>> raise Exception('message')\n"
+"Traceback (most recent call last):\n"
+"__main__.Exception: message"
 
 #: ../../library/doctest.rst:615
 msgid ""
@@ -862,12 +1303,18 @@ msgid ""
 "exception message, but such a test may still fail based on whether the "
 "module name is present or matches exactly."
 msgstr ""
+"Обратите внимание, что :const:`ELLIPSIS` также можно использовать для "
+"игнорирования деталей сообщения об исключении, но такой тест все равно может "
+"завершиться неудачно в зависимости от того, присутствует ли имя модуля или "
+"точно ли оно совпадает."
 
 #: ../../library/doctest.rst:619
 msgid ""
 ":const:`IGNORE_EXCEPTION_DETAIL` now also ignores any information relating "
 "to the module containing the exception under test."
 msgstr ""
+":const:`IGNORE_EXCEPTION_DETAIL` теперь также игнорирует любую информацию, "
+"относящуюся к модулю, содержащему тестируемое исключение."
 
 #: ../../library/doctest.rst:626
 msgid ""
@@ -877,31 +1324,42 @@ msgid ""
 "be checked.  E.g., the example's output might be random; or the example "
 "might depend on resources which would be unavailable to the test driver."
 msgstr ""
+"Если указано, вообще не запускайте пример. Это может быть полезно в "
+"контекстах, где примеры доктестов служат как документацией, так и тестовыми "
+"примерами, и пример должен быть включен в целях документирования, но не "
+"должен проверяться. Например, выходные данные примера могут быть случайными; "
+"или пример может зависеть от ресурсов, которые будут недоступны тест-"
+"драйверу."
 
 #: ../../library/doctest.rst:632
 msgid ""
 "The SKIP flag can also be used for temporarily \"commenting out\" examples."
 msgstr ""
+"Флаг SKIP также можно использовать для временного «комментирования» примеров."
 
 #: ../../library/doctest.rst:637
 msgid "A bitmask or'ing together all the comparison flags above."
-msgstr ""
+msgstr "Битовая маска или объединение всех приведенных выше флагов сравнения."
 
 #: ../../library/doctest.rst:639
 msgid "The second group of options controls how test failures are reported:"
-msgstr ""
+msgstr "Вторая группа опций управляет способом сообщения о неудачных тестах:"
 
 #: ../../library/doctest.rst:644
 msgid ""
 "When specified, failures that involve multi-line expected and actual outputs "
 "are displayed using a unified diff."
 msgstr ""
+"Если указано, сбои, связанные с многострочными ожидаемыми и фактическими "
+"выходными данными, отображаются с использованием унифицированного различия."
 
 #: ../../library/doctest.rst:650
 msgid ""
 "When specified, failures that involve multi-line expected and actual outputs "
 "will be displayed using a context diff."
 msgstr ""
+"Если указано, сбои, связанные с ожидаемыми и фактическими многострочными "
+"выходными данными, будут отображаться с использованием контекстной разницы."
 
 #: ../../library/doctest.rst:656
 msgid ""
@@ -912,6 +1370,12 @@ msgid ""
 "output contains letter ``l``, a line is inserted with a caret marking the "
 "mismatching column positions."
 msgstr ""
+"Если указано, различия вычисляются с помощью ``difflib.Differ``, используя "
+"тот же алгоритм, что и популярная утилита :file:`ndiff.py`. Это единственный "
+"метод, который отмечает различия как внутри линий, так и между строками. "
+"Например, если строка ожидаемого вывода содержит цифру «1», а фактический "
+"вывод содержит букву «l», строка вставляется с курсором, отмечающим "
+"несовпадающие позиции столбцов."
 
 #: ../../library/doctest.rst:665
 msgid ""
@@ -923,6 +1387,14 @@ msgid ""
 "remaining examples are still run, and still count towards the total number "
 "of failures reported; only the output is suppressed."
 msgstr ""
+"Если указано, отображать первый неудачный пример в каждом тесте "
+"документации, но подавлять вывод для всех остальных примеров. Это не "
+"позволит doctest сообщать о правильных примерах, которые не работают из-за "
+"предыдущих ошибок; но это также может скрыть неправильные примеры, которые "
+"терпят неудачу независимо от первой неудачи. Если указано :const:"
+"`REPORT_ONLY_FIRST_FAILURE`, остальные примеры по-прежнему выполняются и "
+"учитываются в общем количестве зарегистрированных сбоев; подавляется только "
+"вывод."
 
 #: ../../library/doctest.rst:676
 msgid ""
@@ -931,22 +1403,32 @@ msgid ""
 "most 1.  This flag may be useful during debugging, since examples after the "
 "first failure won't even produce debugging output."
 msgstr ""
+"Если указано, выйдите после первого неудачного примера и не пытайтесь "
+"запустить оставшиеся примеры. Таким образом, количество зарегистрированных "
+"сбоев будет не более 1. Этот флаг может быть полезен во время отладки, "
+"поскольку примеры после первого сбоя даже не будут выдавать выходные данные "
+"отладки."
 
 #: ../../library/doctest.rst:681
 msgid ""
 "The doctest command line accepts the option ``-f`` as a shorthand for ``-o "
 "FAIL_FAST``."
 msgstr ""
+"Командная строка doctest принимает опцию ``-f`` как сокращение для ``-o "
+"FAIL_FAST``."
 
 #: ../../library/doctest.rst:689
 msgid "A bitmask or'ing together all the reporting flags above."
-msgstr ""
+msgstr "Битовая маска или объединение всех флагов отчетов, указанных выше."
 
 #: ../../library/doctest.rst:692
 msgid ""
 "There is also a way to register new option flag names, though this isn't "
 "useful unless you intend to extend :mod:`doctest` internals via subclassing:"
 msgstr ""
+"Существует также способ зарегистрировать новые имена флагов опций, хотя это "
+"бесполезно, если вы не собираетесь расширять внутренние возможности :mod:"
+"`doctest` посредством подклассов:"
 
 #: ../../library/doctest.rst:698
 msgid ""
@@ -956,10 +1438,16 @@ msgid ""
 "are supported by your subclasses.  :func:`register_optionflag` should always "
 "be called using the following idiom::"
 msgstr ""
+"Создайте новый флаг опции с заданным именем и верните целочисленное значение "
+"нового флага. :func:`register_optionflag` можно использовать при создании "
+"подклассов :class:`OutputChecker` или :class:`DocTestRunner` для создания "
+"новых параметров, поддерживаемых вашими подклассами. :func:"
+"`register_optionflag` всегда следует вызывать с использованием следующей "
+"идиомы::"
 
 #: ../../library/doctest.rst:704
 msgid "MY_FLAG = register_optionflag('MY_FLAG')"
-msgstr ""
+msgstr "MY_FLAG = register_optionflag('MY_FLAG')"
 
 #: ../../library/doctest.rst:714
 msgid "Directives"
@@ -971,6 +1459,9 @@ msgid ""
 "options>` for an individual example.  Doctest directives are special Python "
 "comments following an example's source code:"
 msgstr ""
+"Директивы Doctest могут использоваться для изменения :ref:`option flags "
+"<doctest-options>` для отдельного примера. Директивы Doctest — это "
+"специальные комментарии Python, следующие за исходным кодом примера:"
 
 #: ../../library/doctest.rst:727
 msgid ""
@@ -978,16 +1469,21 @@ msgid ""
 "option name.  The directive option name can be any of the option flag names "
 "explained above."
 msgstr ""
+"Пробелы не допускаются между ``+`` или ``-`` и именем опции директивы. Имя "
+"опции директивы может быть любым из имен флагов опции, описанных выше."
 
 #: ../../library/doctest.rst:731
 msgid ""
 "An example's doctest directives modify doctest's behavior for that single "
 "example.  Use ``+`` to enable the named behavior, or ``-`` to disable it."
 msgstr ""
+"Директивы doctest в примере изменяют поведение doctest для этого отдельного "
+"примера. Используйте ``+``, чтобы включить указанное поведение, или ``-``, "
+"чтобы его отключить."
 
 #: ../../library/doctest.rst:734
 msgid "For example, this test passes:"
-msgstr ""
+msgstr "Например, этот тест проходит:"
 
 #: ../../library/doctest.rst:736
 msgid ""
@@ -995,6 +1491,9 @@ msgid ""
 "[0,   1,  2,  3,  4,  5,  6,  7,  8,  9,\n"
 "10,  11, 12, 13, 14, 15, 16, 17, 18, 19]"
 msgstr ""
+">>> print(list(range(20)))  # doctest: +NORMALIZE_WHITESPACE\n"
+"[0,   1,  2,  3,  4,  5,  6,  7,  8,  9,\n"
+"10,  11, 12, 13, 14, 15, 16, 17, 18, 19]"
 
 #: ../../library/doctest.rst:743
 msgid ""
@@ -1003,30 +1502,42 @@ msgid ""
 "actual output is on a single line.  This test also passes, and also requires "
 "a directive to do so:"
 msgstr ""
+"Без директивы это было бы ошибкой, как потому, что фактический вывод не "
+"имеет двух пробелов перед однозначными элементами списка, так и потому, что "
+"фактический вывод находится в одной строке. Этот тест также проходит, и для "
+"этого также требуется директива:"
 
 #: ../../library/doctest.rst:748
 msgid ""
 ">>> print(list(range(20)))  # doctest: +ELLIPSIS\n"
 "[0, 1, ..., 18, 19]"
 msgstr ""
+">>> print(list(range(20)))  # doctest: +ELLIPSIS\n"
+"[0, 1, ..., 18, 19]"
 
 #: ../../library/doctest.rst:754
 msgid ""
 "Multiple directives can be used on a single physical line, separated by "
 "commas:"
 msgstr ""
+"В одной физической строке можно использовать несколько директив, разделенных "
+"запятыми:"
 
 #: ../../library/doctest.rst:757
 msgid ""
 ">>> print(list(range(20)))  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE\n"
 "[0,    1, ...,   18,    19]"
 msgstr ""
+">>> print(list(range(20)))  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE\n"
+"[0,    1, ...,   18,    19]"
 
 #: ../../library/doctest.rst:763
 msgid ""
 "If multiple directive comments are used for a single example, then they are "
 "combined:"
 msgstr ""
+"Если для одного примера используются несколько комментариев к директивам, то "
+"они объединяются:"
 
 #: ../../library/doctest.rst:766
 msgid ""
@@ -1034,6 +1545,9 @@ msgid ""
 "...                         # doctest: +NORMALIZE_WHITESPACE\n"
 "[0,    1, ...,   18,    19]"
 msgstr ""
+">>> print(list(range(20)))  # doctest: +ELLIPSIS\n"
+"...                         # doctest: +NORMALIZE_WHITESPACE\n"
+"[0,    1, ...,   18,    19]"
 
 #: ../../library/doctest.rst:773
 msgid ""
@@ -1041,6 +1555,9 @@ msgid ""
 "containing only directives.  This can be useful when an example is too long "
 "for a directive to comfortably fit on the same line:"
 msgstr ""
+"Как показано в предыдущем примере, вы можете добавить в пример строки ``..."
+"``, содержащие только директивы. Это может быть полезно, когда пример "
+"слишком длинный, чтобы директива могла удобно разместиться в одной строке:"
 
 #: ../../library/doctest.rst:777
 msgid ""
@@ -1048,6 +1565,9 @@ msgid ""
 "... # doctest: +ELLIPSIS\n"
 "[0, ..., 4, 10, ..., 19, 30, ..., 39]"
 msgstr ""
+">>> print(list(range(5)) + list(range(10, 20)) + list(range(30, 40)))\n"
+"... # doctest: +ELLIPSIS\n"
+"[0, ..., 4, 10, ..., 19, 30, ..., 39]"
 
 #: ../../library/doctest.rst:784
 msgid ""
@@ -1058,6 +1578,13 @@ msgid ""
 "defaults.  In such cases, disabling an option via ``-`` in a directive can "
 "be useful."
 msgstr ""
+"Обратите внимание: поскольку все параметры по умолчанию отключены, а "
+"директивы применяются только к тому примеру, в котором они появляются, "
+"включение параметров (с помощью ``+`` в директиве) обычно является "
+"единственным значимым выбором. Однако флаги опций также можно передавать "
+"функциям, выполняющим документацию, устанавливая другие значения по "
+"умолчанию. В таких случаях может оказаться полезным отключение опции с "
+"помощью ``-`` в директиве."
 
 #: ../../library/doctest.rst:794
 msgid "Warnings"
@@ -1072,26 +1599,36 @@ msgid ""
 "doesn't guarantee that the element is printed in any particular order, so a "
 "test like ::"
 msgstr ""
+":mod:`doctest` серьезно относится к требованию точного совпадения ожидаемого "
+"результата. Если хотя бы один символ не совпадает, тест не пройден. "
+"Вероятно, это вас несколько раз удивит, поскольку вы узнаете, что Python "
+"делает, а что не гарантирует в отношении вывода. Например, при печати набора "
+"Python не гарантирует, что элемент будет напечатан в каком-то определенном "
+"порядке, поэтому тест типа ::"
 
 #: ../../library/doctest.rst:802
 msgid ""
 ">>> foo()\n"
 "{\"spam\", \"eggs\"}"
 msgstr ""
+">>> foo()\n"
+"{\"spam\", \"eggs\"}"
 
 #: ../../library/doctest.rst:805
 msgid "is vulnerable!  One workaround is to do ::"
-msgstr ""
+msgstr "уязвим! Одним из обходных путей является выполнение ::"
 
 #: ../../library/doctest.rst:807
 msgid ""
 ">>> foo() == {\"spam\", \"eggs\"}\n"
 "True"
 msgstr ""
+">>> foo() == {\"spam\", \"eggs\"}\n"
+"True"
 
 #: ../../library/doctest.rst:810
 msgid "instead.  Another is to do ::"
-msgstr ""
+msgstr "instead.  Another is to do ::"
 
 #: ../../library/doctest.rst:812
 msgid ""
@@ -1099,14 +1636,19 @@ msgid ""
 ">>> d\n"
 "['eggs', 'spam']"
 msgstr ""
+">>> d = sorted(foo())\n"
+">>> d\n"
+"['eggs', 'spam']"
 
 #: ../../library/doctest.rst:816
 msgid "There are others, but you get the idea."
-msgstr ""
+msgstr "Есть и другие, но вы поняли."
 
 #: ../../library/doctest.rst:818
 msgid "Another bad idea is to print things that embed an object address, like"
 msgstr ""
+"Еще одна плохая идея — печатать вещи, в которые встроен адрес объекта, "
+"например"
 
 #: ../../library/doctest.rst:820
 msgid ""
@@ -1116,17 +1658,24 @@ msgid ""
 ">>> C()  # the default repr() for instances embeds an address   \n"
 "<C object at 0x00AC18F0>"
 msgstr ""
+">>> id(1.0)  # certain to fail some of the time  \n"
+"7948648\n"
+">>> class C: pass\n"
+">>> C()  # the default repr() for instances embeds an address   \n"
+"<C object at 0x00AC18F0>"
 
 #: ../../library/doctest.rst:828
 msgid ""
 "The :const:`ELLIPSIS` directive gives a nice approach for the last example:"
-msgstr ""
+msgstr "Директива :const:`ELLIPSIS` дает хороший подход к последнему примеру:"
 
 #: ../../library/doctest.rst:830
 msgid ""
 ">>> C()  # doctest: +ELLIPSIS\n"
 "<C object at 0x...>"
 msgstr ""
+">>> C()  # doctest: +ELLIPSIS\n"
+"<C object at 0x...>"
 
 #: ../../library/doctest.rst:836
 msgid ""
@@ -1134,6 +1683,10 @@ msgid ""
 "platforms, because Python defers to the platform C library for float "
 "formatting, and C libraries vary widely in quality here. ::"
 msgstr ""
+"Числа с плавающей запятой также подвержены небольшим различиям в выводе на "
+"разных платформах, поскольку Python использует библиотеку C платформы для "
+"форматирования чисел с плавающей запятой, а библиотеки C здесь сильно "
+"различаются по качеству. ::"
 
 #: ../../library/doctest.rst:840
 msgid ""
@@ -1144,24 +1697,36 @@ msgid ""
 ">>> print(round(1./7, 6)) # much safer\n"
 "0.142857"
 msgstr ""
+">>> 1./7  # risky\n"
+"0.14285714285714285\n"
+">>> print(1./7) # safer\n"
+"0.142857142857\n"
+">>> print(round(1./7, 6)) # much safer\n"
+"0.142857"
 
 #: ../../library/doctest.rst:847
 msgid ""
 "Numbers of the form ``I/2.**J`` are safe across all platforms, and I often "
 "contrive doctest examples to produce numbers of that form::"
 msgstr ""
+"Числа формы ``I/2.**J`` безопасны на всех платформах, и я часто придумываю "
+"примеры доктестов для получения чисел этой формы:"
 
 #: ../../library/doctest.rst:850
 msgid ""
 ">>> 3./4  # utterly safe\n"
 "0.75"
 msgstr ""
+">>> 3./4  # utterly safe\n"
+"0.75"
 
 #: ../../library/doctest.rst:853
 msgid ""
 "Simple fractions are also easier for people to understand, and that makes "
 "for better documentation."
 msgstr ""
+"Простые дроби также легче понять людям, и это способствует лучшей "
+"документации."
 
 #: ../../library/doctest.rst:860
 msgid "Basic API"
@@ -1174,24 +1739,34 @@ msgid ""
 "less formal introduction to these two functions, see sections :ref:`doctest-"
 "simple-testmod` and :ref:`doctest-simple-testfile`."
 msgstr ""
+"Функции :func:`testmod` и :func:`testfile` предоставляют простой интерфейс "
+"для doctest, которого должно быть достаточно для большинства базовых "
+"применений. Менее формальное введение в эти две функции см. в разделах :ref:"
+"`doctest-simple-testmod` и :ref:`doctest-simple-testfile`."
 
 #: ../../library/doctest.rst:870
 msgid ""
 "All arguments except *filename* are optional, and should be specified in "
 "keyword form."
 msgstr ""
+"Все аргументы, кроме *имя_файла*, являются необязательными и должны быть "
+"указаны в виде ключевого слова."
 
 #: ../../library/doctest.rst:873
 msgid ""
 "Test examples in the file named *filename*.  Return ``(failure_count, "
 "test_count)``."
 msgstr ""
+"Тестовые примеры в файле с именем *имя_файла*. Верните ``(failure_count, "
+"test_count)``."
 
 #: ../../library/doctest.rst:876
 msgid ""
 "Optional argument *module_relative* specifies how the filename should be "
 "interpreted:"
 msgstr ""
+"Необязательный аргумент *module_relative* указывает, как следует "
+"интерпретировать имя файла:"
 
 #: ../../library/doctest.rst:879
 msgid ""
@@ -1202,6 +1777,13 @@ msgid ""
 "should use ``/`` characters to separate path segments, and may not be an "
 "absolute path (i.e., it may not begin with ``/``)."
 msgstr ""
+"Если *module_relative* имеет значение True (по умолчанию), то *filename* "
+"указывает независимый от ОС путь относительно модуля. По умолчанию этот путь "
+"указан относительно каталога вызывающего модуля; но если указан аргумент "
+"*package*, то он относится к этому пакету. Чтобы обеспечить независимость от "
+"ОС, *имя_файла* должно использовать символы ``/`` для разделения сегментов "
+"пути и не может быть абсолютным путем (т. е. оно не может начинаться с ``/"
+"``)."
 
 #: ../../library/doctest.rst:886
 msgid ""
@@ -1209,12 +1791,17 @@ msgid ""
 "path.  The path may be absolute or relative; relative paths are resolved "
 "with respect to the current working directory."
 msgstr ""
+"Если *module_relative* имеет значение «False», то *filename* указывает путь, "
+"специфичный для ОС. Путь может быть абсолютным или относительным; "
+"относительные пути разрешаются относительно текущего рабочего каталога."
 
 #: ../../library/doctest.rst:890
 msgid ""
 "Optional argument *name* gives the name of the test; by default, or if "
 "``None``, ``os.path.basename(filename)`` is used."
 msgstr ""
+"Необязательный аргумент *name* задает имя теста; по умолчанию или, если "
+"``None``, используется ``os.path.basename(filename)``."
 
 #: ../../library/doctest.rst:893
 msgid ""
@@ -1224,6 +1811,12 @@ msgid ""
 "directory is used as the base directory for module-relative filenames.  It "
 "is an error to specify *package* if *module_relative* is ``False``."
 msgstr ""
+"Необязательный аргумент *package* — это пакет Python или имя пакета Python, "
+"каталог которого следует использовать в качестве базового каталога для имени "
+"файла, относящегося к модулю. Если пакет не указан, то каталог вызывающего "
+"модуля используется как базовый каталог для имен файлов, относящихся к "
+"модулю. Указание *package* является ошибкой, если *module_relative* имеет "
+"значение ``False``."
 
 #: ../../library/doctest.rst:899
 msgid ""
@@ -1232,6 +1825,11 @@ msgid ""
 "doctest, so its examples start with a clean slate. By default, or if "
 "``None``, a new empty dict is used."
 msgstr ""
+"Необязательный аргумент *globs* дает словарь, который будет использоваться в "
+"качестве глобальных переменных при выполнении примеров. Для доктринистов "
+"создается новая поверхностная копия этого диктата, поэтому его примеры "
+"начинаются с чистого листа. По умолчанию или если «Нет», используется новый "
+"пустой словарь."
 
 #: ../../library/doctest.rst:904
 msgid ""
@@ -1245,6 +1843,16 @@ msgid ""
 "passing an *extraglobs* dict mapping the generic name to the subclass to be "
 "tested."
 msgstr ""
+"Необязательный аргумент *extraglobs* дает словарь, объединенный с "
+"глобальными переменными, используемыми для выполнения примеров. Это работает "
+"как :meth:`dict.update`: если *globs* и *extraglobs* имеют общий ключ, "
+"соответствующее значение в *extraglobs* появляется в объединенном dict. По "
+"умолчанию или при выборе «Нет» дополнительные глобальные переменные не "
+"используются. Это расширенная функция, позволяющая параметризировать тесты "
+"документации. Например, документацию можно написать для базового класса, "
+"используя общее имя класса, а затем повторно использовать для проверки "
+"любого количества подклассов, передав словарь *extraglobs*, сопоставляющий "
+"общее имя тестируемому подклассу."
 
 #: ../../library/doctest.rst:913
 msgid ""
@@ -1252,6 +1860,9 @@ msgid ""
 "failures if false; by default, or if ``None``, it's true if and only if ``'-"
 "v'`` is in ``sys.argv``."
 msgstr ""
+"Необязательный аргумент *verbose* печатает множество данных, если истинно, и "
+"печатает только ошибки, если ложно; по умолчанию или если ``None``, это "
+"истинно тогда и только тогда, когда ``'-v'`` находится в ``sys.argv``."
 
 #: ../../library/doctest.rst:917
 msgid ""
@@ -1259,12 +1870,18 @@ msgid ""
 "prints nothing at the end.  In verbose mode, the summary is detailed, else "
 "the summary is very brief (in fact, empty if all tests passed)."
 msgstr ""
+"Необязательный аргумент *report* печатает сводку в конце, если он равен "
+"true, иначе в конце ничего не печатается. В подробном режиме резюме "
+"подробное, в противном случае оно очень краткое (фактически пустое, если все "
+"тесты пройдены)."
 
 #: ../../library/doctest.rst:921
 msgid ""
 "Optional argument *optionflags* (default value 0) takes the :ref:`bitwise OR "
 "<bitwise>` of option flags. See section :ref:`doctest-options`."
 msgstr ""
+"Необязательный аргумент *optionflags* (значение по умолчанию 0) принимает "
+"побитовое ИЛИ <побитовое>` флагов опций. См. раздел:ref:`doctest-options`."
 
 #: ../../library/doctest.rst:925
 msgid ""
@@ -1273,6 +1890,10 @@ msgid ""
 "This allows failures to be post-mortem debugged. Default behavior is to "
 "continue running examples."
 msgstr ""
+"Необязательный аргумент *raise_on_error* по умолчанию имеет значение false. "
+"Если это правда, исключение возникает при первом сбое или неожиданном "
+"исключении в примере. Это позволяет проводить посмертную отладку сбоев. "
+"Поведение по умолчанию — продолжить выполнение примеров."
 
 #: ../../library/doctest.rst:930 ../../library/doctest.rst:1072
 msgid ""
@@ -1280,18 +1901,25 @@ msgid ""
 "that should be used to extract tests from the files.  It defaults to a "
 "normal parser (i.e., ``DocTestParser()``)."
 msgstr ""
+"Необязательный аргумент *parser* указывает :class:`DocTestParser` (или "
+"подкласс), который следует использовать для извлечения тестов из файлов. По "
+"умолчанию используется обычный парсер (т.е. DocTestParser())."
 
 #: ../../library/doctest.rst:934 ../../library/doctest.rst:1076
 msgid ""
 "Optional argument *encoding* specifies an encoding that should be used to "
 "convert the file to unicode."
 msgstr ""
+"Необязательный аргумент *encoding* указывает кодировку, которую следует "
+"использовать для преобразования файла в Юникод."
 
 #: ../../library/doctest.rst:940
 msgid ""
 "All arguments are optional, and all except for *m* should be specified in "
 "keyword form."
 msgstr ""
+"Все аргументы являются необязательными, и все, кроме *m*, должны быть "
+"указаны в форме ключевого слова."
 
 #: ../../library/doctest.rst:943
 msgid ""
@@ -1299,6 +1927,9 @@ msgid ""
 "*m* (or module :mod:`__main__` if *m* is not supplied or is ``None``), "
 "starting with ``m.__doc__``."
 msgstr ""
+"Тестовые примеры в строках документации в функциях и классах, доступных из "
+"модуля *m* (или модуля :mod:`__main__`, если *m* не указан или имеет "
+"значение ``None``), начиная с ``m.__doc__``."
 
 #: ../../library/doctest.rst:947
 msgid ""
@@ -1307,11 +1938,17 @@ msgid ""
 "and class docstrings are searched for examples; strings are searched "
 "directly, as if they were docstrings."
 msgstr ""
+"Также тестовые примеры доступны из dict ``m.__test__``, если он существует. "
+"``m.__test__`` отображает имена (строки) на функции, классы и строки; в "
+"строках документации функций и классов ведется поиск примеров; строки ищутся "
+"напрямую, как если бы они были строками документации."
 
 #: ../../library/doctest.rst:952
 msgid ""
 "Only docstrings attached to objects belonging to module *m* are searched."
 msgstr ""
+"Поиск осуществляется только в строках документации, прикрепленных к "
+"объектам, принадлежащим модулю *m*."
 
 #: ../../library/doctest.rst:954
 msgid "Return ``(failure_count, test_count)``."
@@ -1322,6 +1959,8 @@ msgid ""
 "Optional argument *name* gives the name of the module; by default, or if "
 "``None``, ``m.__name__`` is used."
 msgstr ""
+"Необязательный аргумент *name* задает имя модуля; по умолчанию или, если "
+"None, используется m.__name__."
 
 #: ../../library/doctest.rst:959
 msgid ""
@@ -1333,6 +1972,13 @@ msgid ""
 "*exclude_empty* argument to the newer :class:`DocTestFinder` constructor "
 "defaults to true."
 msgstr ""
+"Необязательный аргумент *exclude_empty* по умолчанию имеет значение false. "
+"Если true, объекты, для которых не найдены документы, исключаются из "
+"рассмотрения. По умолчанию используется хак обратной совместимости, поэтому "
+"код, все еще использующий :meth:`doctest.master.summarize <DocTestRunner."
+"summarize>` в сочетании с :func:`testmod`, продолжает получать выходные "
+"данные для объектов без тестов. Аргумент *exclude_empty* нового "
+"конструктора :class:`DocTestFinder` по умолчанию имеет значение true."
 
 #: ../../library/doctest.rst:967
 msgid ""
@@ -1340,24 +1986,34 @@ msgid ""
 "*raise_on_error*, and *globs* are the same as for function :func:`testfile` "
 "above, except that *globs* defaults to ``m.__dict__``."
 msgstr ""
+"Необязательные аргументы *extraglobs*, *verbose*, *report*, *optionflags*, "
+"*raise_on_error* и *globs* такие же, как и для функции :func:`testfile` "
+"выше, за исключением того, что *globs* по умолчанию имеет значение ``m ."
+"__dict__``."
 
 #: ../../library/doctest.rst:974
 msgid ""
 "Test examples associated with object *f*; for example, *f* may be a string, "
 "a module, a function, or a class object."
 msgstr ""
+"Тестовые примеры, связанные с объектом *f*; например, *f* может быть "
+"строкой, модулем, функцией или объектом класса."
 
 #: ../../library/doctest.rst:977
 msgid ""
 "A shallow copy of dictionary argument *globs* is used for the execution "
 "context."
 msgstr ""
+"Неглубокая копия аргумента словаря *globs* используется для контекста "
+"выполнения."
 
 #: ../../library/doctest.rst:979
 msgid ""
 "Optional argument *name* is used in failure messages, and defaults to "
 "``\"NoName\"``."
 msgstr ""
+"Необязательный аргумент *name* используется в сообщениях об ошибках и по "
+"умолчанию имеет значение «NoName»."
 
 #: ../../library/doctest.rst:982
 msgid ""
@@ -1365,6 +2021,9 @@ msgid ""
 "are no failures.  By default, output is generated only in case of an example "
 "failure."
 msgstr ""
+"Если необязательный аргумент *verbose* имеет значение true, выходные данные "
+"создаются даже при отсутствии сбоев. По умолчанию вывод генерируется только "
+"в случае сбоя примера."
 
 #: ../../library/doctest.rst:985
 msgid ""
@@ -1373,11 +2032,17 @@ msgid ""
 "``None``, flags are deduced corresponding to the set of future features "
 "found in *globs*."
 msgstr ""
+"Необязательный аргумент *compileflags* задает набор флагов, которые должен "
+"использоваться компилятором Python при запуске примеров. По умолчанию или, "
+"если установлено значение «Нет», выводятся флаги, соответствующие набору "
+"будущих функций, найденных в *globs*."
 
 #: ../../library/doctest.rst:989
 msgid ""
 "Optional argument *optionflags* works as for function :func:`testfile` above."
 msgstr ""
+"Необязательный аргумент *optionflags* работает так же, как и для функции :"
+"func:`testfile` выше."
 
 #: ../../library/doctest.rst:995
 msgid "Unittest API"
@@ -1392,6 +2057,12 @@ msgid ""
 "discovery, include a :ref:`load_tests <load_tests-protocol>` function in "
 "your test module::"
 msgstr ""
+"По мере роста вашей коллекции модулей, прошедших доктестацию, вам "
+"понадобится способ систематически запускать все их доктесты. :mod:`doctest` "
+"предоставляет две функции, которые можно использовать для создания :mod:"
+"`unittest` наборов тестов из модулей и текстовых файлов, содержащих "
+"доктесты. Для интеграции с обнаружением тестов :mod:`unittest` включите "
+"функцию :ref:`load_tests <load_tests-protocol>` в ваш тестовый модуль:"
 
 #: ../../library/doctest.rst:1003
 msgid ""
@@ -1403,18 +2074,29 @@ msgid ""
 "    tests.addTests(doctest.DocTestSuite(my_module_with_doctests))\n"
 "    return tests"
 msgstr ""
+"import unittest\n"
+"import doctest\n"
+"import my_module_with_doctests\n"
+"\n"
+"def load_tests(loader, tests, ignore):\n"
+"    tests.addTests(doctest.DocTestSuite(my_module_with_doctests))\n"
+"    return tests"
 
 #: ../../library/doctest.rst:1011
 msgid ""
 "There are two main functions for creating :class:`unittest.TestSuite` "
 "instances from text files and modules with doctests:"
 msgstr ""
+"Существует две основные функции для создания экземпляров :class:`unittest."
+"TestSuite` из текстовых файлов и модулей с документацией:"
 
 #: ../../library/doctest.rst:1017
 msgid ""
 "Convert doctest tests from one or more text files to a :class:`unittest."
 "TestSuite`."
 msgstr ""
+"Преобразуйте тесты doctest из одного или нескольких текстовых файлов в :"
+"class:`unittest.TestSuite`."
 
 #: ../../library/doctest.rst:1020
 msgid ""
@@ -1426,20 +2108,31 @@ msgid ""
 "examples in a file are skipped, then the synthesized unit test is also "
 "marked as skipped."
 msgstr ""
+"Возвращенный :class:`unittest.TestSuite` должен быть запущен платформой "
+"unittest и запускать интерактивные примеры в каждом файле. Если пример в "
+"каком-либо файле дает сбой, то синтезированный модульный тест завершается "
+"сбоем, и возникает исключение :exc:`failureException`, показывающее имя "
+"файла, содержащего тест, и номер строки (иногда приблизительный). Если все "
+"примеры в файле пропущены, то синтезированный модульный тест также "
+"помечается как пропущенный."
 
 #: ../../library/doctest.rst:1027
 msgid "Pass one or more paths (as strings) to text files to be examined."
 msgstr ""
+"Передайте один или несколько путей (в виде строк) к текстовым файлам для "
+"проверки."
 
 #: ../../library/doctest.rst:1029
 msgid "Options may be provided as keyword arguments:"
-msgstr ""
+msgstr "Опции могут быть предоставлены как аргументы ключевого слова:"
 
 #: ../../library/doctest.rst:1031
 msgid ""
 "Optional argument *module_relative* specifies how the filenames in *paths* "
 "should be interpreted:"
 msgstr ""
+"Необязательный аргумент *module_relative* указывает, как следует "
+"интерпретировать имена файлов в *paths*:"
 
 #: ../../library/doctest.rst:1034
 msgid ""
@@ -1451,6 +2144,13 @@ msgid ""
 "segments, and may not be an absolute path (i.e., it may not begin with ``/"
 "``)."
 msgstr ""
+"Если *module_relative* имеет значение «True» (по умолчанию), то каждое имя "
+"файла в *paths* указывает независимый от ОС путь относительно модуля. По "
+"умолчанию этот путь указан относительно каталога вызывающего модуля; но если "
+"указан аргумент *package*, то он относится к этому пакету. Чтобы "
+"гарантировать независимость от ОС, каждое имя файла должно использовать "
+"символы ``/`` для разделения сегментов пути и не может быть абсолютным путем "
+"(т. е. оно не может начинаться с ``/``)."
 
 #: ../../library/doctest.rst:1042
 msgid ""
@@ -1458,6 +2158,10 @@ msgid ""
 "an OS-specific path.  The path may be absolute or relative; relative paths "
 "are resolved with respect to the current working directory."
 msgstr ""
+"Если *module_relative* имеет значение «False», то каждое имя файла в *paths* "
+"указывает путь, специфичный для ОС. Путь может быть абсолютным или "
+"относительным; относительные пути разрешаются относительно текущего рабочего "
+"каталога."
 
 #: ../../library/doctest.rst:1046
 msgid ""
@@ -1468,6 +2172,12 @@ msgid ""
 "filenames.  It is an error to specify *package* if *module_relative* is "
 "``False``."
 msgstr ""
+"Необязательный аргумент *package* — это пакет Python или имя пакета Python, "
+"каталог которого следует использовать в качестве базового каталога для имен "
+"файлов, относящихся к модулю, в *paths*. Если пакет не указан, то каталог "
+"вызывающего модуля используется как базовый каталог для имен файлов, "
+"относящихся к модулю. Указание *package* является ошибкой, если "
+"*module_relative* имеет значение ``False``."
 
 #: ../../library/doctest.rst:1053
 msgid ""
@@ -1476,6 +2186,10 @@ msgid ""
 "will be passed a :class:`DocTest` object.  The setUp function can access the "
 "test globals as the *globs* attribute of the test passed."
 msgstr ""
+"Необязательный аргумент *setUp* указывает функцию настройки набора тестов. "
+"Это вызывается перед запуском тестов в каждом файле. В функцию *setUp* будет "
+"передан объект :class:`DocTest`. Функция setUp может получить доступ к "
+"глобальным переменным теста как к атрибуту *globs* пройденного теста."
 
 #: ../../library/doctest.rst:1058
 msgid ""
@@ -1484,6 +2198,10 @@ msgid ""
 "function will be passed a :class:`DocTest` object.  The setUp function can "
 "access the test globals as the *globs* attribute of the test passed."
 msgstr ""
+"Необязательный аргумент *tearDown* указывает функцию удаления набора тестов. "
+"Это вызывается после запуска тестов в каждом файле. В функцию *tearDown* "
+"будет передан объект :class:`DocTest`. Функция setUp может получить доступ к "
+"глобальным переменным теста как к атрибуту *globs* пройденного теста."
 
 #: ../../library/doctest.rst:1063 ../../library/doctest.rst:1098
 msgid ""
@@ -1491,6 +2209,9 @@ msgid ""
 "variables for the tests.  A new copy of this dictionary is created for each "
 "test.  By default, *globs* is a new empty dictionary."
 msgstr ""
+"Необязательный аргумент *globs* — это словарь, содержащий исходные "
+"глобальные переменные для тестов. Для каждого теста создается новая копия "
+"этого словаря. По умолчанию *globs* — это новый пустой словарь."
 
 #: ../../library/doctest.rst:1067
 msgid ""
@@ -1499,16 +2220,24 @@ msgid ""
 "ref:`doctest-options`. See function :func:`set_unittest_reportflags` below "
 "for a better way to set reporting options."
 msgstr ""
+"Необязательный аргумент *optionflags* указывает параметры доктеста по "
+"умолчанию для тестов, созданных путем объединения или объединения отдельных "
+"флагов параметров. См. раздел:ref:`doctest-options`. См. функцию :func:"
+"`set_unittest_reportflags` ниже, чтобы узнать, как лучше настроить параметры "
+"отчетов."
 
 #: ../../library/doctest.rst:1079
 msgid ""
 "The global ``__file__`` is added to the globals provided to doctests loaded "
 "from a text file using :func:`DocFileSuite`."
 msgstr ""
+"Глобальный ``__file__`` добавляется к глобальным переменным, предоставляемым "
+"в документацию, загружаемую из текстового файла с помощью :func:"
+"`DocFileSuite`."
 
 #: ../../library/doctest.rst:1085
 msgid "Convert doctest tests for a module to a :class:`unittest.TestSuite`."
-msgstr ""
+msgstr "Преобразуйте тесты doctest для модуля в :class:`unittest.TestSuite`."
 
 #: ../../library/doctest.rst:1087
 msgid ""
@@ -1519,6 +2248,13 @@ msgid ""
 "(sometimes approximate) line number.  If all the examples in a docstring are "
 "skipped, then the synthesized unit test is also marked as skipped."
 msgstr ""
+"Возвращенный :class:`unittest.TestSuite` должен быть запущен платформой "
+"unittest и запускать каждый документальный тест в модуле. Если какой-либо из "
+"доктестов завершается неудачно, то синтезированный модульный тест "
+"завершается неудачно, и возникает исключение :exc:`failureException`, "
+"показывающее имя файла, содержащего тест, и номер строки (иногда "
+"приблизительный). Если все примеры в строке документации пропущены, то "
+"синтезированный модульный тест также помечается как пропущенный."
 
 #: ../../library/doctest.rst:1094
 msgid ""
@@ -1526,34 +2262,46 @@ msgid ""
 "module object or a (possibly dotted) module name.  If not specified, the "
 "module calling this function is used."
 msgstr ""
+"Необязательный аргумент *module* предоставляет тестируемый модуль. Это может "
+"быть объект модуля или имя модуля (возможно, разделенное точками). Если не "
+"указано, используется модуль, вызывающий эту функцию."
 
 #: ../../library/doctest.rst:1102
 msgid ""
 "Optional argument *extraglobs* specifies an extra set of global variables, "
 "which is merged into *globs*.  By default, no extra globals are used."
 msgstr ""
+"Необязательный аргумент *extraglobs* указывает дополнительный набор "
+"глобальных переменных, которые объединяются в *globs*. По умолчанию "
+"дополнительные глобальные переменные не используются."
 
 #: ../../library/doctest.rst:1105
 msgid ""
 "Optional argument *test_finder* is the :class:`DocTestFinder` object (or a "
 "drop-in replacement) that is used to extract doctests from the module."
 msgstr ""
+"Необязательный аргумент *test_finder* — это объект :class:`DocTestFinder` "
+"(или его замена), который используется для извлечения доктестов из модуля."
 
 #: ../../library/doctest.rst:1108
 msgid ""
 "Optional arguments *setUp*, *tearDown*, and *optionflags* are the same as "
 "for function :func:`DocFileSuite` above."
 msgstr ""
+"Необязательные аргументы *setUp*, *tearDown* и *optionflags* такие же, как и "
+"для функции :func:`DocFileSuite` выше."
 
 #: ../../library/doctest.rst:1111
 msgid "This function uses the same search technique as :func:`testmod`."
-msgstr ""
+msgstr "Эта функция использует ту же технику поиска, что и :func:`testmod`."
 
 #: ../../library/doctest.rst:1113
 msgid ""
 ":func:`DocTestSuite` returns an empty :class:`unittest.TestSuite` if "
 "*module* contains no docstrings instead of raising :exc:`ValueError`."
 msgstr ""
+":func:`DocTestSuite` возвращает пустой :class:`unittest.TestSuite`, если "
+"*module* не содержит строк документации, вместо вызова :exc:`ValueError`."
 
 #: ../../library/doctest.rst:1119
 msgid ""
@@ -1562,6 +2310,10 @@ msgid ""
 "showing the name of the file containing the test and a (sometimes "
 "approximate) line number."
 msgstr ""
+"Когда доктесты, преобразованные в модульные тесты с помощью :func:"
+"`DocFileSuite` или :func:`DocTestSuite`, завершаются неудачей, возникает это "
+"исключение, отображающее имя файла, содержащего тест, и номер строки (иногда "
+"приблизительный)."
 
 #: ../../library/doctest.rst:1123
 msgid ""
@@ -1571,6 +2323,11 @@ msgid ""
 "documented here (it's an internal detail), but studying its code can answer "
 "questions about the exact details of :mod:`unittest` integration."
 msgstr ""
+"Под обложкой :func:`DocTestSuite` создаёт :class:`unittest.TestSuite` из "
+"экземпляров :class:`!doctest.DocTestCase`, а :class:`!DocTestCase` является "
+"подклассом :class:`unittest` .ТестКейс`. :class:`!DocTestCase` здесь не "
+"документирован (это внутренняя деталь), но изучение его кода может ответить "
+"на вопросы о точных деталях интеграции :mod:`unittest`."
 
 #: ../../library/doctest.rst:1129
 msgid ""
@@ -1578,6 +2335,9 @@ msgid ""
 "of :class:`!doctest.DocFileCase` instances, and :class:`!DocFileCase` is a "
 "subclass of :class:`!DocTestCase`."
 msgstr ""
+"Аналогично, :func:`DocFileSuite` создает :class:`unittest.TestSuite` из "
+"экземпляров :class:`!doctest.DocFileCase`, а :class:`!DocFileCase` является "
+"подклассом :class:`!DocTestCase` ."
 
 #: ../../library/doctest.rst:1133
 msgid ""
@@ -1591,22 +2351,37 @@ msgid ""
 "specified by command line options), but there's no way to pass options "
 "through :mod:`unittest` to :mod:`doctest` test runners."
 msgstr ""
+"Таким образом, оба способа создания :class:`unittest.TestSuite` запускают "
+"экземпляры :class:`!DocTestCase`. Это важно по одной тонкой причине: когда "
+"вы сами запускаете функции :mod:`doctest`, вы можете управлять используемыми "
+"опциями :mod:`doctest` напрямую, передавая флаги опций функциям :mod:"
+"`doctest`. Однако, если вы пишете фреймворк :mod:`unittest`, :mod:`unittest` "
+"в конечном итоге контролирует, когда и как будут запускаться тесты. Автор "
+"фреймворка обычно хочет контролировать параметры отчетов :mod:`doctest` "
+"(возможно, например, указанные в параметрах командной строки), но нет "
+"способа передать параметры через :mod:`unittest` средствам запуска тестов :"
+"mod:`doctest` ."
 
 #: ../../library/doctest.rst:1143
 msgid ""
 "For this reason, :mod:`doctest` also supports a notion of :mod:`doctest` "
 "reporting flags specific to :mod:`unittest` support, via this function:"
 msgstr ""
+"По этой причине :mod:`doctest` также поддерживает понятие флагов отчетов :"
+"mod:`doctest`, специфичных для поддержки :mod:`unittest`, посредством этой "
+"функции:"
 
 #: ../../library/doctest.rst:1149
 msgid "Set the :mod:`doctest` reporting flags to use."
-msgstr ""
+msgstr "Установите флаги отчетов :mod:`doctest` для использования."
 
 #: ../../library/doctest.rst:1151
 msgid ""
 "Argument *flags* takes the :ref:`bitwise OR <bitwise>` of option flags.  See "
 "section :ref:`doctest-options`.  Only \"reporting flags\" can be used."
 msgstr ""
+"Аргумент *flags* принимает побитовое ИЛИ <побитовое>` флагов опций. См. "
+"раздел:ref:`doctest-options`. Можно использовать только «флаги отчетов»."
 
 #: ../../library/doctest.rst:1154
 msgid ""
@@ -1621,12 +2396,25 @@ msgid ""
 "were specified when the :class:`!DocTestCase` instance was constructed, :mod:"
 "`!doctest`'s :mod:`unittest` reporting flags are ignored."
 msgstr ""
+"Это глобальная настройка модуля, и она влияет на все будущие тесты "
+"документации, выполняемые модулем :mod:`unittest`: метод :meth:`!runTest` :"
+"class:`!DocTestCase` просматривает флаги опций, указанные для тестового "
+"примера. когда экземпляр :class:`!DocTestCase` был создан. Если флаги "
+"отчетов не были указаны (что является типичным и ожидаемым случаем), флаги "
+"отчетов :mod:`!doctest` :mod:`unittest` будут :ref:`побитовым ИЛИ с "
+"<побитовым>` в флаги опций, и расширенные таким образом флаги опций "
+"передаются экземпляру :class:`DocTestRunner`, созданному для запуска "
+"доктеста. Если какие-либо флаги отчетов были указаны при создании "
+"экземпляра :class:`!DocTestCase`, флаги отчетов :mod:`unittest` :mod:`!"
+"doctest` игнорируются."
 
 #: ../../library/doctest.rst:1165
 msgid ""
 "The value of the :mod:`unittest` reporting flags in effect before the "
 "function was called is returned by the function."
 msgstr ""
+"Значение флагов отчетов :mod:`unittest`, действовавших до вызова функции, "
+"возвращается функцией."
 
 #: ../../library/doctest.rst:1172
 msgid "Advanced API"
@@ -1639,30 +2427,43 @@ msgid ""
 "you require more fine-grained control over testing, or wish to extend "
 "doctest's capabilities, then you should use the advanced API."
 msgstr ""
+"Базовый API — это простая оболочка, призванная упростить использование "
+"doctest. Он достаточно гибок и должен удовлетворить потребности большинства "
+"пользователей; однако, если вам требуется более детальный контроль над "
+"тестированием или вы хотите расширить возможности doctest, вам следует "
+"использовать расширенный API."
 
 #: ../../library/doctest.rst:1179
 msgid ""
 "The advanced API revolves around two container classes, which are used to "
 "store the interactive examples extracted from doctest cases:"
 msgstr ""
+"Расширенный API основан на двух классах-контейнерах, которые используются "
+"для хранения интерактивных примеров, извлеченных из кейсов документации:"
 
 #: ../../library/doctest.rst:1182
 msgid ""
 ":class:`Example`: A single Python :term:`statement`, paired with its "
 "expected output."
 msgstr ""
+":class:`Пример`: одиночный :term:`оператор` Python в сочетании с ожидаемым "
+"результатом."
 
 #: ../../library/doctest.rst:1185
 msgid ""
 ":class:`DocTest`: A collection of :class:`Example`\\ s, typically extracted "
 "from a single docstring or text file."
 msgstr ""
+":class:`DocTest`: Коллекция :class:`Example`\\ s, обычно извлекаемая из "
+"одной строки документации или текстового файла."
 
 #: ../../library/doctest.rst:1188
 msgid ""
 "Additional processing classes are defined to find, parse, and run, and check "
 "doctest examples:"
 msgstr ""
+"Определены дополнительные классы обработки для поиска, анализа, запуска и "
+"проверки примеров документации:"
 
 #: ../../library/doctest.rst:1191
 msgid ""
@@ -1670,30 +2471,40 @@ msgid ""
 "class:`DocTestParser` to create a :class:`DocTest` from every docstring that "
 "contains interactive examples."
 msgstr ""
+":class:`DocTestFinder`: Находит все строки документации в данном модуле и "
+"использует :class:`DocTestParser` для создания :class:`DocTest` из каждой "
+"строки документации, содержащей интерактивные примеры."
 
 #: ../../library/doctest.rst:1195
 msgid ""
 ":class:`DocTestParser`: Creates a :class:`DocTest` object from a string "
 "(such as an object's docstring)."
 msgstr ""
+":class:`DocTestParser`: Creates a :class:`DocTest` object from a string "
+"(such as an object's docstring)."
 
 #: ../../library/doctest.rst:1198
 msgid ""
 ":class:`DocTestRunner`: Executes the examples in a :class:`DocTest`, and "
 "uses an :class:`OutputChecker` to verify their output."
 msgstr ""
+":class:`DocTestRunner`: Executes the examples in a :class:`DocTest`, and "
+"uses an :class:`OutputChecker` to verify their output."
 
 #: ../../library/doctest.rst:1201
 msgid ""
 ":class:`OutputChecker`: Compares the actual output from a doctest example "
 "with the expected output, and decides whether they match."
 msgstr ""
+":class:`OutputChecker`: Сравнивает фактические выходные данные примера "
+"доктеста с ожидаемыми выходными данными и решает, совпадают ли они."
 
 #: ../../library/doctest.rst:1204
 msgid ""
 "The relationships among these processing classes are summarized in the "
 "following diagram::"
 msgstr ""
+"Отношения между этими классами обработки обобщены на следующей диаграмме:"
 
 #: ../../library/doctest.rst:1207
 msgid ""
@@ -1706,6 +2517,14 @@ msgid ""
 "           DocTestParser   | Example |   OutputChecker\n"
 "                           +---------+"
 msgstr ""
+"                            list of:\n"
+"+------+                   +---------+\n"
+"|module| --DocTestFinder-> | DocTest | --DocTestRunner-> results\n"
+"+------+    |        ^     +---------+     |       ^    (printed)\n"
+"            |        |     | Example |     |       |\n"
+"            v        |     |   ...   |     v       |\n"
+"           DocTestParser   | Example |   OutputChecker\n"
+"                           +---------+"
 
 #: ../../library/doctest.rst:1220
 msgid "DocTest Objects"
@@ -1717,18 +2536,25 @@ msgid ""
 "The constructor arguments are used to initialize the attributes of the same "
 "names."
 msgstr ""
+"Коллекция примеров документации, которые следует запускать в одном "
+"пространстве имен. Аргументы конструктора используются для инициализации "
+"одноименных атрибутов."
 
 #: ../../library/doctest.rst:1229
 msgid ""
 ":class:`DocTest` defines the following attributes.  They are initialized by "
 "the constructor, and should not be modified directly."
 msgstr ""
+":class:`DocTest` определяет следующие атрибуты. Они инициализируются "
+"конструктором и не должны изменяться напрямую."
 
 #: ../../library/doctest.rst:1235
 msgid ""
 "A list of :class:`Example` objects encoding the individual interactive "
 "Python examples that should be run by this test."
 msgstr ""
+"Список объектов :class:`Example`, кодирующих отдельные интерактивные примеры "
+"Python, которые должны быть запущены в рамках этого теста."
 
 #: ../../library/doctest.rst:1241
 msgid ""
@@ -1737,12 +2563,19 @@ msgid ""
 "the examples (such as binding new variables) will be reflected in :attr:"
 "`globs` after the test is run."
 msgstr ""
+"Пространство имен (также известное как глобальные переменные), в котором "
+"должны выполняться примеры. Это словарь, сопоставляющий имена со значениями. "
+"Любые изменения в пространстве имен, внесенные в примерах (например, "
+"привязка новых переменных), будут отражены в :attr:`globs` после запуска "
+"теста."
 
 #: ../../library/doctest.rst:1249
 msgid ""
 "A string name identifying the :class:`DocTest`.  Typically, this is the name "
 "of the object or file that the test was extracted from."
 msgstr ""
+"Строковое имя, идентифицирующее :class:`DocTest`. Обычно это имя объекта или "
+"файла, из которого был извлечен тест."
 
 #: ../../library/doctest.rst:1255
 msgid ""
@@ -1750,6 +2583,8 @@ msgid ""
 "``None`` if the filename is unknown, or if the :class:`DocTest` was not "
 "extracted from a file."
 msgstr ""
+"Имя файла, из которого был извлечен этот :class:`DocTest`; или ``None``, "
+"если имя файла неизвестно или если :class:`DocTest` не был извлечен из файла."
 
 #: ../../library/doctest.rst:1262
 msgid ""
@@ -1757,12 +2592,17 @@ msgid ""
 "or ``None`` if the line number is unavailable.  This line number is zero-"
 "based with respect to the beginning of the file."
 msgstr ""
+"Номер строки в :attr:`filename`, где начинается этот :class:`DocTest`, или "
+"``None``, если номер строки недоступен. Этот номер строки начинается с нуля "
+"относительно начала файла."
 
 #: ../../library/doctest.rst:1269
 msgid ""
 "The string that the test was extracted from, or ``None`` if the string is "
 "unavailable, or if the test was not extracted from a string."
 msgstr ""
+"Строка, из которой был извлечен тест, или «Нет», если строка недоступна или "
+"если тест не был извлечен из строки."
 
 #: ../../library/doctest.rst:1276
 msgid "Example Objects"
@@ -1774,12 +2614,17 @@ msgid ""
 "expected output.  The constructor arguments are used to initialize the "
 "attributes of the same names."
 msgstr ""
+"Один интерактивный пример, состоящий из оператора Python и его ожидаемого "
+"результата. Аргументы конструктора используются для инициализации "
+"одноименных атрибутов."
 
 #: ../../library/doctest.rst:1286
 msgid ""
 ":class:`Example` defines the following attributes.  They are initialized by "
 "the constructor, and should not be modified directly."
 msgstr ""
+":class:`Example` определяет следующие атрибуты. Они инициализируются "
+"конструктором и не должны изменяться напрямую."
 
 #: ../../library/doctest.rst:1292
 msgid ""
@@ -1787,6 +2632,9 @@ msgid ""
 "a single Python statement, and always ends with a newline; the constructor "
 "adds a newline when necessary."
 msgstr ""
+"Строка, содержащая исходный код примера. Этот исходный код состоит из одного "
+"оператора Python и всегда заканчивается новой строкой; конструктор добавляет "
+"новую строку, когда это необходимо."
 
 #: ../../library/doctest.rst:1299
 msgid ""
@@ -1795,6 +2643,10 @@ msgid ""
 "newline unless no output is expected, in which case it's an empty string.  "
 "The constructor adds a newline when necessary."
 msgstr ""
+"Ожидаемый результат запуска исходного кода примера (либо из стандартного "
+"вывода, либо из трассировки в случае исключения). :attr:`want` заканчивается "
+"новой строкой, если не ожидается вывода, и в этом случае это пустая строка. "
+"Конструктор добавляет новую строку, когда это необходимо."
 
 #: ../../library/doctest.rst:1307
 msgid ""
@@ -1804,6 +2656,12 @@ msgid ""
 "func:`traceback.format_exception_only`.  :attr:`exc_msg` ends with a newline "
 "unless it's ``None``.  The constructor adds a newline if needed."
 msgstr ""
+"Сообщение об исключении, созданное примером, если ожидается, что пример "
+"сгенерирует исключение; или ``None``, если не ожидается генерации "
+"исключения. Это сообщение об исключении сравнивается с возвращаемым "
+"значением :func:`traceback.format_Exception_only`. :attr:`exc_msg` "
+"заканчивается новой строкой, если только она не ``None``. При необходимости "
+"конструктор добавляет новую строку."
 
 #: ../../library/doctest.rst:1316
 msgid ""
@@ -1811,12 +2669,16 @@ msgid ""
 "begins.  This line number is zero-based with respect to the beginning of the "
 "containing string."
 msgstr ""
+"Номер строки в строке, содержащей этот пример, с которой начинается пример. "
+"Этот номер строки начинается с нуля относительно начала содержащейся строки."
 
 #: ../../library/doctest.rst:1323
 msgid ""
 "The example's indentation in the containing string, i.e., the number of "
 "space characters that precede the example's first prompt."
 msgstr ""
+"Отступ примера в содержащей строке, т. е. количество пробельных символов, "
+"предшествующих первому приглашению примера."
 
 #: ../../library/doctest.rst:1329
 msgid ""
@@ -1826,6 +2688,11 @@ msgid ""
 "by the :class:`DocTestRunner`'s :ref:`optionflags <doctest-options>`). By "
 "default, no options are set."
 msgstr ""
+"Сопоставление словаря флагов опций с ``True`` или ``False``, которое "
+"используется для переопределения параметров по умолчанию в этом примере. "
+"Любые флаги опций, не содержащиеся в этом словаре, оставляются со значениями "
+"по умолчанию (как указано в :class:`DocTestRunner` :ref:`optionflags "
+"<doctest-options>`). По умолчанию никакие параметры не установлены."
 
 #: ../../library/doctest.rst:1339
 msgid "DocTestFinder objects"
@@ -1838,40 +2705,59 @@ msgid ""
 "contained objects. :class:`DocTest`\\ s can be extracted from modules, "
 "classes, functions, methods, staticmethods, classmethods, and properties."
 msgstr ""
+"Класс обработки, используемый для извлечения :class:`DocTest`\\ s, которые "
+"относятся к данному объекту, из его строки документации и строк документации "
+"содержащихся в ней объектов. :class:`DocTest`\\ можно извлечь из модулей, "
+"классов, функций, методов, статических методов, методов классов и свойств."
 
 #: ../../library/doctest.rst:1349
 msgid ""
 "The optional argument *verbose* can be used to display the objects searched "
 "by the finder.  It defaults to ``False`` (no output)."
 msgstr ""
+"Необязательный аргумент *verbose* можно использовать для отображения "
+"объектов, которые ищет искатель. По умолчанию установлено значение "
+"«False» (нет вывода)."
 
 #: ../../library/doctest.rst:1352
 msgid ""
 "The optional argument *parser* specifies the :class:`DocTestParser` object "
 "(or a drop-in replacement) that is used to extract doctests from docstrings."
 msgstr ""
+"Необязательный аргумент *parser* указывает объект :class:`DocTestParser` "
+"(или его замену), который используется для извлечения доктестов из строк "
+"документации."
 
 #: ../../library/doctest.rst:1355
 msgid ""
 "If the optional argument *recurse* is false, then :meth:`DocTestFinder.find` "
 "will only examine the given object, and not any contained objects."
 msgstr ""
+"Если необязательный аргумент *recurse* имеет значение false, то :meth:"
+"`DocTestFinder.find` будет проверять только данный объект, а не любые "
+"содержащиеся в нем объекты."
 
 #: ../../library/doctest.rst:1358
 msgid ""
 "If the optional argument *exclude_empty* is false, then :meth:`DocTestFinder."
 "find` will include tests for objects with empty docstrings."
 msgstr ""
+"Если необязательный аргумент *exclude_empty* имеет значение false, то :meth:"
+"`DocTestFinder.find` будет включать тесты для объектов с пустыми строками "
+"документации."
 
 #: ../../library/doctest.rst:1362
 msgid ":class:`DocTestFinder` defines the following method:"
-msgstr ""
+msgstr ":class:`DocTestFinder` определяет следующий метод:"
 
 #: ../../library/doctest.rst:1367
 msgid ""
 "Return a list of the :class:`DocTest`\\ s that are defined by *obj*'s "
 "docstring, or by any of its contained objects' docstrings."
 msgstr ""
+"Возвращает список :class:`DocTest`\\, которые определены строкой "
+"документации *obj* или любой строкой документации содержащихся в нем "
+"объектов."
 
 #: ../../library/doctest.rst:1370
 msgid ""
@@ -1879,6 +2765,9 @@ msgid ""
 "used to construct names for the returned :class:`DocTest`\\ s.  If *name* is "
 "not specified, then ``obj.__name__`` is used."
 msgstr ""
+"Необязательный аргумент *name* указывает имя объекта; это имя будет "
+"использоваться для создания имен возвращаемых :class:`DocTest`\\ s. Если "
+"*имя* не указано, то используется ``obj.__name__``."
 
 #: ../../library/doctest.rst:1374
 msgid ""
@@ -1887,10 +2776,14 @@ msgid ""
 "will attempt to automatically determine the correct module.  The object's "
 "module is used:"
 msgstr ""
+"Необязательный параметр *module* — это модуль, содержащий данный объект. "
+"Если модуль не указан или имеет значение «Нет», то средство поиска тестов "
+"попытается автоматически определить правильный модуль. Модуль объекта "
+"используется:"
 
 #: ../../library/doctest.rst:1378
 msgid "As a default namespace, if *globs* is not specified."
-msgstr ""
+msgstr "В качестве пространства имен по умолчанию, если не указано *globs*."
 
 #: ../../library/doctest.rst:1380
 msgid ""
@@ -1898,14 +2791,17 @@ msgid ""
 "imported from other modules.  (Contained objects with modules other than "
 "*module* are ignored.)"
 msgstr ""
+"Чтобы запретить DocTestFinder извлекать DocTests из объектов, "
+"импортированных из других модулей. (Содержащиеся объекты с модулями, "
+"отличными от *module*, игнорируются.)"
 
 #: ../../library/doctest.rst:1384
 msgid "To find the name of the file containing the object."
-msgstr ""
+msgstr "Чтобы найти имя файла, содержащего объект."
 
 #: ../../library/doctest.rst:1386
 msgid "To help find the line number of the object within its file."
-msgstr ""
+msgstr "Чтобы помочь найти номер строки объекта в его файле."
 
 #: ../../library/doctest.rst:1388
 msgid ""
@@ -1915,6 +2811,12 @@ msgid ""
 "objects are considered to belong to the (non-existent) module, so all "
 "contained objects will (recursively) be searched for doctests."
 msgstr ""
+"Если *module* имеет значение «False», попытки найти модуль предприниматься "
+"не будут. Это неясно и используется в основном при тестировании самого "
+"doctest: если *module* имеет значение False или None, но не может быть "
+"найден автоматически, то все объекты считаются принадлежащими "
+"(несуществующим) модуль, поэтому все содержащиеся в нем объекты будут "
+"(рекурсивно) проверены на наличие документов."
 
 #: ../../library/doctest.rst:1394
 msgid ""
@@ -1925,6 +2827,12 @@ msgid ""
 "specified, or ``{}`` otherwise.  If *extraglobs* is not specified, then it "
 "defaults to ``{}``."
 msgstr ""
+"Глобальные переменные для каждого :class:`DocTest` формируются путем "
+"объединения *globs* и *extraglobs* (привязки в *extraglobs* переопределяют "
+"привязки в *globs*). Для каждого :class:`DocTest` создается новая неглубокая "
+"копия словаря глобальных переменных. Если *globs* не указан, то по умолчанию "
+"используется *__dict__* модуля, если он указан, или ``{}`` в противном "
+"случае. Если *extraglobs* не указан, то по умолчанию используется ``{}``."
 
 #: ../../library/doctest.rst:1405
 msgid "DocTestParser objects"
@@ -1935,16 +2843,20 @@ msgid ""
 "A processing class used to extract interactive examples from a string, and "
 "use them to create a :class:`DocTest` object."
 msgstr ""
+"Класс обработки, используемый для извлечения интерактивных примеров из "
+"строки и использования их для создания объекта :class:`DocTest`."
 
 #: ../../library/doctest.rst:1414
 msgid ":class:`DocTestParser` defines the following methods:"
-msgstr ""
+msgstr ":class:`DocTestParser` определяет следующие методы:"
 
 #: ../../library/doctest.rst:1419
 msgid ""
 "Extract all doctest examples from the given string, and collect them into a :"
 "class:`DocTest` object."
 msgstr ""
+"Извлеките все примеры доктестов из заданной строки и соберите их в объект :"
+"class:`DocTest`."
 
 #: ../../library/doctest.rst:1422
 msgid ""
@@ -1952,6 +2864,9 @@ msgid ""
 "`DocTest` object.  See the documentation for :class:`DocTest` for more "
 "information."
 msgstr ""
+"*globs*, *name*, *filename* и *lineno* являются атрибутами нового объекта :"
+"class:`DocTest`. Дополнительную информацию смотрите в документации к :class:"
+"`DocTest`."
 
 #: ../../library/doctest.rst:1429
 msgid ""
@@ -1960,6 +2875,10 @@ msgid ""
 "argument *name* is a name identifying this string, and is only used for "
 "error messages."
 msgstr ""
+"Извлеките все примеры документации из заданной строки и верните их в виде "
+"списка объектов :class:`Example`. Номера строк начинаются с 0. "
+"Необязательный аргумент *name* — это имя, идентифицирующее эту строку, и "
+"используется только для сообщений об ошибках."
 
 #: ../../library/doctest.rst:1436
 msgid ""
@@ -1968,22 +2887,26 @@ msgid ""
 "the :class:`Example`\\ s are 0-based.  The optional argument *name* is a "
 "name identifying this string, and is only used for error messages."
 msgstr ""
+"Разделите данную строку на примеры и промежуточный текст и верните их в виде "
+"списка чередующихся :class:`Example`\\ и строк. Номера строк для :class:"
+"`Example`\\ начинаются с 0. Необязательный аргумент *name* — это имя, "
+"идентифицирующее эту строку, и используется только для сообщений об ошибках."
 
 #: ../../library/doctest.rst:1443
 msgid "TestResults objects"
-msgstr ""
+msgstr "Объекты TestResults"
 
 #: ../../library/doctest.rst:1450
 msgid "Number of failed tests."
-msgstr ""
+msgstr "Количество неудачных тестов."
 
 #: ../../library/doctest.rst:1454
 msgid "Number of attempted tests."
-msgstr ""
+msgstr "Количество попыток тестирования."
 
 #: ../../library/doctest.rst:1458
 msgid "Number of skipped tests."
-msgstr ""
+msgstr "Количество пропущенных тестов."
 
 #: ../../library/doctest.rst:1466
 msgid "DocTestRunner objects"
@@ -1994,6 +2917,8 @@ msgid ""
 "A processing class used to execute and verify the interactive examples in a :"
 "class:`DocTest`."
 msgstr ""
+"Класс обработки, используемый для выполнения и проверки интерактивных "
+"примеров в :class:`DocTest`."
 
 #: ../../library/doctest.rst:1474
 msgid ""
@@ -2004,6 +2929,11 @@ msgid ""
 "customized by passing a subclass of :class:`OutputChecker` to the "
 "constructor."
 msgstr ""
+"Сравнение ожидаемых и фактических результатов выполняется с помощью :class:"
+"`OutputChecker`. Это сравнение можно настроить с помощью нескольких флажков; "
+"дополнительную информацию см. в разделе :ref:`doctest-options`. Если флагов "
+"опций недостаточно, сравнение также можно настроить, передав в конструктор "
+"подкласс :class:`OutputChecker`."
 
 #: ../../library/doctest.rst:1480
 msgid ""
@@ -2015,6 +2945,13 @@ msgid ""
 "methods :meth:`report_start`, :meth:`report_success`, :meth:"
 "`report_unexpected_exception`, and :meth:`report_failure`."
 msgstr ""
+"Выводом на дисплей тест-раннера можно управлять двумя способами. Во-первых, "
+"функция вывода может быть передана :meth:`run`; эта функция будет вызываться "
+"со строками, которые должны отображаться. По умолчанию используется ``sys."
+"stdout.write``. Если захвата вывода недостаточно, то вывод дисплея можно "
+"также настроить, создав подкласс DocTestRunner и переопределив методы :meth:"
+"`report_start`, :meth:`report_success`, :meth:`report_unexpected_Exception` "
+"и :meth:` report_failure`."
 
 #: ../../library/doctest.rst:1488
 msgid ""
@@ -2022,6 +2959,9 @@ msgid ""
 "object (or drop-in replacement) that should be used to compare the expected "
 "outputs to the actual outputs of doctest examples."
 msgstr ""
+"Необязательный аргумент ключевого слова *checker* указывает объект :class:"
+"`OutputChecker` (или его замену), который следует использовать для сравнения "
+"ожидаемых результатов с фактическими результатами примеров doctest."
 
 #: ../../library/doctest.rst:1492
 msgid ""
@@ -2031,6 +2971,12 @@ msgid ""
 "only failures are printed.  If *verbose* is unspecified, or ``None``, then "
 "verbose output is used iff the command-line switch ``-v`` is used."
 msgstr ""
+"Необязательный аргумент ключевого слова *verbose* управляет подробностью :"
+"class:`DocTestRunner`. Если *verbose* имеет значение True, то информация "
+"печатается о каждом примере по мере его запуска. Если *verbose* имеет "
+"значение «False», то печатаются только ошибки. Если *verbose* не указано или "
+"``None``, то подробный вывод используется, если используется ключ командной "
+"строки ``-v``."
 
 #: ../../library/doctest.rst:1498
 msgid ""
@@ -2038,6 +2984,10 @@ msgid ""
 "test runner compares expected output to actual output, and how it displays "
 "failures. For more information, see section :ref:`doctest-options`."
 msgstr ""
+"Необязательный аргумент ключевого слова *optionflags* можно использовать для "
+"управления тем, как программа запуска тестов сравнивает ожидаемые выходные "
+"данные с фактическими выходными данными и как отображает ошибки. Для "
+"получения дополнительной информации см. раздел :ref:`doctest-options`."
 
 #: ../../library/doctest.rst:1502
 msgid ""
@@ -2046,10 +2996,14 @@ msgid ""
 "`failures` and :attr:`skips` attributes. The :meth:`run` and :meth:"
 "`summarize` methods return a :class:`TestResults` instance."
 msgstr ""
+"Тест-раннер накапливает статистику. Совокупное количество попыток, неудачных "
+"и пропущенных примеров также доступно через атрибуты :attr:`tries`, :attr:"
+"`failures` и :attr:`skips`. Методы :meth:`run` и :meth:`summarize` "
+"возвращают экземпляр :class:`TestResults`."
 
 #: ../../library/doctest.rst:1507
 msgid ":class:`DocTestRunner` defines the following methods:"
-msgstr ""
+msgstr ":class:`DocTestRunner` определяет следующие методы:"
 
 #: ../../library/doctest.rst:1512
 msgid ""
@@ -2057,6 +3011,9 @@ msgid ""
 "method is provided to allow subclasses of :class:`DocTestRunner` to "
 "customize their output; it should not be called directly."
 msgstr ""
+"Сообщите, что программа запуска тестов собирается обработать данный пример. "
+"Этот метод предназначен для того, чтобы позволить подклассам :class:"
+"`DocTestRunner` настраивать свой вывод; его не следует вызывать напрямую."
 
 #: ../../library/doctest.rst:1516
 msgid ""
@@ -2064,6 +3021,9 @@ msgid ""
 "*containing example*.  *out* is the output function that was passed to :meth:"
 "`DocTestRunner.run`."
 msgstr ""
+"*example* — это пример, который будет обработан. *test* — это тест, "
+"*содержащий пример*. *out* — это функция вывода, которая была передана в :"
+"meth:`DocTestRunner.run`."
 
 #: ../../library/doctest.rst:1523
 msgid ""
@@ -2071,6 +3031,9 @@ msgid ""
 "allow subclasses of :class:`DocTestRunner` to customize their output; it "
 "should not be called directly."
 msgstr ""
+"Сообщите, что данный пример выполнен успешно. Этот метод предназначен для "
+"того, чтобы позволить подклассам :class:`DocTestRunner` настраивать свой "
+"вывод; его не следует вызывать напрямую."
 
 #: ../../library/doctest.rst:1527 ../../library/doctest.rst:1538
 msgid ""
@@ -2078,6 +3041,9 @@ msgid ""
 "from the example.  *test* is the test containing *example*.  *out* is the "
 "output function that was passed to :meth:`DocTestRunner.run`."
 msgstr ""
+"*example* — это пример, который будет обработан. *got* — это фактический "
+"результат примера. *test* — тест, содержащий *example*. *out* — это функция "
+"вывода, которая была передана в :meth:`DocTestRunner.run`."
 
 #: ../../library/doctest.rst:1534
 msgid ""
@@ -2085,6 +3051,9 @@ msgid ""
 "subclasses of :class:`DocTestRunner` to customize their output; it should "
 "not be called directly."
 msgstr ""
+"Сообщите, что данный пример не удался. Этот метод предназначен для того, "
+"чтобы позволить подклассам :class:`DocTestRunner` настраивать свой вывод; "
+"его не следует вызывать напрямую."
 
 #: ../../library/doctest.rst:1545
 msgid ""
@@ -2092,6 +3061,9 @@ msgid ""
 "provided to allow subclasses of :class:`DocTestRunner` to customize their "
 "output; it should not be called directly."
 msgstr ""
+"Сообщите, что данный пример вызвал неожиданное исключение. Этот метод "
+"предназначен для того, чтобы позволить подклассам :class:`DocTestRunner` "
+"настраивать свой вывод; его не следует вызывать напрямую."
 
 #: ../../library/doctest.rst:1549
 msgid ""
@@ -2100,6 +3072,10 @@ msgid ""
 "`sys.exc_info`). *test* is the test containing *example*.  *out* is the "
 "output function that was passed to :meth:`DocTestRunner.run`."
 msgstr ""
+"*example* — это пример, который будет обработан. *exc_info* — это кортеж, "
+"содержащий информацию о неожиданном исключении (возвращенную :func:`sys."
+"exc_info`). *test* — тест, содержащий *example*. *out* — это функция вывода, "
+"которая была передана в :meth:`DocTestRunner.run`."
 
 #: ../../library/doctest.rst:1557
 msgid ""
@@ -2107,6 +3083,8 @@ msgid ""
 "results using the writer function *out*. Return a :class:`TestResults` "
 "instance."
 msgstr ""
+"Запустите примеры в *test* (объект :class:`DocTest`) и отобразите результаты "
+"с помощью функции записи *out*. Верните экземпляр :class:`TestResults`."
 
 #: ../../library/doctest.rst:1561
 msgid ""
@@ -2115,6 +3093,10 @@ msgid ""
 "to help with garbage collection. If you would like to examine the namespace "
 "after the test completes, then use *clear_globs=False*."
 msgstr ""
+"Примеры выполняются в пространстве имен test.globs. Если *clear_globs* имеет "
+"значение true (по умолчанию), то это пространство имен будет очищено после "
+"запуска теста, чтобы облегчить сбор мусора. Если вы хотите проверить "
+"пространство имен после завершения теста, используйте *clear_globs=False*."
 
 #: ../../library/doctest.rst:1566
 msgid ""
@@ -2122,6 +3104,10 @@ msgid ""
 "compiler when running the examples.  If not specified, then it will default "
 "to the set of future-import flags that apply to *globs*."
 msgstr ""
+"*compileflags* предоставляет набор флагов, которые должен использовать "
+"компилятор Python при запуске примеров. Если не указано, то по умолчанию "
+"будет использоваться набор флагов будущего импорта, которые применяются к "
+"*globs*."
 
 #: ../../library/doctest.rst:1570
 msgid ""
@@ -2129,12 +3115,17 @@ msgid ""
 "output checker, and the results are formatted by the :meth:`!DocTestRunner."
 "report_\\*` methods."
 msgstr ""
+"Вывод каждого примера проверяется с помощью средства проверки вывода :class:"
+"`DocTestRunner`, а результаты форматируются методами :meth:`!DocTestRunner."
+"report_\\*`."
 
 #: ../../library/doctest.rst:1577
 msgid ""
 "Print a summary of all the test cases that have been run by this "
 "DocTestRunner, and return a :class:`TestResults` instance."
 msgstr ""
+"Распечатайте сводку всех тестовых случаев, выполненных этим DocTestRunner, и "
+"верните экземпляр :class:`TestResults`."
 
 #: ../../library/doctest.rst:1580
 msgid ""
@@ -2142,22 +3133,25 @@ msgid ""
 "the verbosity is not specified, then the :class:`DocTestRunner`'s verbosity "
 "is used."
 msgstr ""
+"Необязательный аргумент *verbose* определяет, насколько подробной будет "
+"сводка. Если подробность не указана, то используется подробность :class:"
+"`DocTestRunner`."
 
 #: ../../library/doctest.rst:1584
 msgid ":class:`DocTestParser` has the following attributes:"
-msgstr ""
+msgstr ":class:`DocTestParser` имеет следующие атрибуты:"
 
 #: ../../library/doctest.rst:1588
 msgid "Number of attempted examples."
-msgstr ""
+msgstr "Количество попыток примеров."
 
 #: ../../library/doctest.rst:1592
 msgid "Number of failed examples."
-msgstr ""
+msgstr "Количество неудачных примеров."
 
 #: ../../library/doctest.rst:1596
 msgid "Number of skipped examples."
-msgstr ""
+msgstr "Количество пропущенных примеров."
 
 #: ../../library/doctest.rst:1604
 msgid "OutputChecker objects"
@@ -2171,10 +3165,16 @@ msgid ""
 "``True`` if they match; and :meth:`output_difference`, which returns a "
 "string describing the differences between two outputs."
 msgstr ""
+"Класс, используемый для проверки того, соответствует ли фактический "
+"результат примера доктеста ожидаемому результату. :class:`OutputChecker` "
+"определяет два метода: :meth:`check_output`, который сравнивает заданную "
+"пару выходных данных и возвращает ``True``, если они совпадают; и :meth:"
+"`output_difference`, который возвращает строку, описывающую различия между "
+"двумя выходными данными."
 
 #: ../../library/doctest.rst:1616
 msgid ":class:`OutputChecker` defines the following methods:"
-msgstr ""
+msgstr ":class:`OutputChecker` определяет следующие методы:"
 
 #: ../../library/doctest.rst:1620
 msgid ""
@@ -2184,6 +3184,12 @@ msgid ""
 "using, several non-exact match types are also possible.  See section :ref:"
 "`doctest-options` for more information about option flags."
 msgstr ""
+"Возвращайте ``True``, если фактический результат примера (*got*) "
+"соответствует ожидаемому результату (*want*). Эти строки всегда считаются "
+"совпадающими, если они идентичны; но в зависимости от того, какие флаги "
+"опций использует тестировщик, также возможны несколько типов неточных "
+"совпадений. Дополнительную информацию о флагах опций смотрите в разделе :ref:"
+"`doctest-options`."
 
 #: ../../library/doctest.rst:1629
 msgid ""
@@ -2191,6 +3197,10 @@ msgid ""
 "given example (*example*) and the actual output (*got*).  *optionflags* is "
 "the set of option flags used to compare *want* and *got*."
 msgstr ""
+"Возвращает строку, описывающую различия между ожидаемым результатом для "
+"данного примера (*пример*) и фактическим результатом (*получено*). "
+"*optionflags* — это набор флагов опций, используемых для сравнения *хочу* и "
+"*получено*."
 
 #: ../../library/doctest.rst:1637
 msgid "Debugging"
@@ -2199,12 +3209,15 @@ msgstr "Отладка"
 #: ../../library/doctest.rst:1639
 msgid "Doctest provides several mechanisms for debugging doctest examples:"
 msgstr ""
+"Doctest предоставляет несколько механизмов для отладки примеров doctest:"
 
 #: ../../library/doctest.rst:1641
 msgid ""
 "Several functions convert doctests to executable Python programs, which can "
 "be run under the Python debugger, :mod:`pdb`."
 msgstr ""
+"Несколько функций преобразуют документацию в исполняемые программы Python, "
+"которые можно запускать под отладчиком Python :mod:`pdb`."
 
 #: ../../library/doctest.rst:1644
 msgid ""
@@ -2213,12 +3226,18 @@ msgid ""
 "about that example. This information can be used to perform post-mortem "
 "debugging on the example."
 msgstr ""
+"Класс :class:`DebugRunner` является подклассом :class:`DocTestRunner`, "
+"который вызывает исключение для первого неудачного примера, содержащее "
+"информацию об этом примере. Эту информацию можно использовать для выполнения "
+"посмертной отладки примера."
 
 #: ../../library/doctest.rst:1649
 msgid ""
 "The :mod:`unittest` cases generated by :func:`DocTestSuite` support the :"
 "meth:`debug` method defined by :class:`unittest.TestCase`."
 msgstr ""
+"Случаи :mod:`unittest`, созданные :func:`DocTestSuite`, поддерживают метод :"
+"meth:`debug`, определенный :class:`unittest.TestCase`."
 
 #: ../../library/doctest.rst:1652
 msgid ""
@@ -2227,6 +3246,11 @@ msgid ""
 "inspect current values of variables, and so on.  For example, suppose :file:"
 "`a.py` contains just this module docstring::"
 msgstr ""
+"Вы можете добавить вызов :func:`pdb.set_trace` в пример доктеста, и вы "
+"попадете в отладчик Python, когда эта строка будет выполнена. Затем вы "
+"можете проверить текущие значения переменных и так далее. Например, "
+"предположим, что :file:`a.py` содержит только эту строку документации "
+"модуля::"
 
 #: ../../library/doctest.rst:1657
 msgid ""
@@ -2240,10 +3264,19 @@ msgid ""
 "9\n"
 "\"\"\""
 msgstr ""
+"\"\"\"\n"
+">>> def f(x):\n"
+"...     g(x*2)\n"
+">>> def g(x):\n"
+"...     print(x+3)\n"
+"...     import pdb; pdb.set_trace()\n"
+">>> f(3)\n"
+"9\n"
+"\"\"\""
 
 #: ../../library/doctest.rst:1667
 msgid "Then an interactive Python session may look like this::"
-msgstr ""
+msgstr "Тогда интерактивный сеанс Python может выглядеть так:"
 
 #: ../../library/doctest.rst:1669
 msgid ""
@@ -2277,16 +3310,47 @@ msgid ""
 "(0, 3)\n"
 ">>>"
 msgstr ""
+">>> import a, doctest\n"
+">>> doctest.testmod(a)\n"
+"--Return--\n"
+"> <doctest a[1]>(3)g()->None\n"
+"-> import pdb; pdb.set_trace()\n"
+"(Pdb) list\n"
+"  1     def g(x):\n"
+"  2         print(x+3)\n"
+"  3  ->     import pdb; pdb.set_trace()\n"
+"[EOF]\n"
+"(Pdb) p x\n"
+"6\n"
+"(Pdb) step\n"
+"--Return--\n"
+"> <doctest a[0]>(2)f()->None\n"
+"-> g(x*2)\n"
+"(Pdb) list\n"
+"  1     def f(x):\n"
+"  2  ->     g(x*2)\n"
+"[EOF]\n"
+"(Pdb) p x\n"
+"3\n"
+"(Pdb) step\n"
+"--Return--\n"
+"> <doctest a[2]>(1)?()->None\n"
+"-> f(3)\n"
+"(Pdb) cont\n"
+"(0, 3)\n"
+">>>"
 
 #: ../../library/doctest.rst:1700
 msgid ""
 "Functions that convert doctests to Python code, and possibly run the "
 "synthesized code under the debugger:"
 msgstr ""
+"Функции, которые преобразуют документацию в код Python и, возможно, "
+"запускают синтезированный код в отладчике:"
 
 #: ../../library/doctest.rst:1706
 msgid "Convert text with examples to a script."
-msgstr ""
+msgstr "Преобразуйте текст с примерами в скрипт."
 
 #: ../../library/doctest.rst:1708
 msgid ""
@@ -2312,10 +3376,19 @@ msgid ""
 "    3\n"
 "\"\"\"))"
 msgstr ""
+"import doctest\n"
+"print(doctest.script_from_examples(r\"\"\"\n"
+"    Set x and y to 1 and 2.\n"
+"    >>> x, y = 1, 2\n"
+"\n"
+"    Print their sum:\n"
+"    >>> print(x+y)\n"
+"    3\n"
+"\"\"\"))"
 
 #: ../../library/doctest.rst:1723
 msgid "displays::"
-msgstr ""
+msgstr "отображает::"
 
 #: ../../library/doctest.rst:1725
 msgid ""
@@ -2327,6 +3400,13 @@ msgid ""
 "# Expected:\n"
 "## 3"
 msgstr ""
+"# Set x and y to 1 and 2.\n"
+"x, y = 1, 2\n"
+"#\n"
+"# Print their sum:\n"
+"print(x+y)\n"
+"# Expected:\n"
+"## 3"
 
 #: ../../library/doctest.rst:1733
 msgid ""
@@ -2340,7 +3420,7 @@ msgstr ""
 
 #: ../../library/doctest.rst:1740
 msgid "Convert the doctest for an object to a script."
-msgstr ""
+msgstr "Преобразуйте документацию объекта в скрипт."
 
 #: ../../library/doctest.rst:1742
 msgid ""
@@ -2351,22 +3431,33 @@ msgid ""
 "as described for :func:`script_from_examples` above.  For example, if "
 "module :file:`a.py` contains a top-level function :func:`!f`, then ::"
 msgstr ""
+"Аргумент *модуль* — это объект модуля или имя модуля, разделенное точками, "
+"содержащее объект, документация которого представляет интерес. Аргумент "
+"*name* — это имя (внутри модуля) объекта с интересующей документацией. "
+"Результатом является строка, содержащая строку документации объекта, "
+"преобразованную в скрипт Python, как описано выше для :func:"
+"`script_from_examples`. Например, если модуль :file:`a.py` содержит функцию "
+"верхнего уровня :func:`!f`, то ::"
 
 #: ../../library/doctest.rst:1749
 msgid ""
 "import a, doctest\n"
 "print(doctest.testsource(a, \"a.f\"))"
 msgstr ""
+"import a, doctest\n"
+"print(doctest.testsource(a, \"a.f\"))"
 
 #: ../../library/doctest.rst:1752
 msgid ""
 "prints a script version of function :func:`!f`'s docstring, with doctests "
 "converted to code, and the rest placed in comments."
 msgstr ""
+"печатает скриптовую версию строки документации функции :func:`!f`, при этом "
+"доктесты преобразуются в код, а остальная часть помещается в комментарии."
 
 #: ../../library/doctest.rst:1758
 msgid "Debug the doctests for an object."
-msgstr ""
+msgstr "Отладка документации для объекта."
 
 #: ../../library/doctest.rst:1760
 msgid ""
@@ -2375,12 +3466,18 @@ msgid ""
 "docstring is written to a temporary file, and then that file is run under "
 "the control of the Python debugger, :mod:`pdb`."
 msgstr ""
+"Аргументы *module* и *name* такие же, как и для функции :func:`testsource` "
+"выше. Синтезированный сценарий Python для строки документации именованного "
+"объекта записывается во временный файл, а затем этот файл запускается под "
+"управлением отладчика Python :mod:`pdb`."
 
 #: ../../library/doctest.rst:1765
 msgid ""
 "A shallow copy of ``module.__dict__`` is used for both local and global "
 "execution context."
 msgstr ""
+"Неполная копия ``module.__dict__`` используется как для локального, так и "
+"для глобального контекста выполнения."
 
 #: ../../library/doctest.rst:1768
 msgid ""
@@ -2393,22 +3490,35 @@ msgid ""
 "the debugger from the start, via passing an appropriate :func:`exec` call "
 "to :func:`pdb.run`."
 msgstr ""
+"Необязательный аргумент *pm* определяет, используется ли посмертная отладка. "
+"Если *pm* имеет истинное значение, файл сценария запускается напрямую, а "
+"отладчик участвует только в том случае, если сценарий завершается из-за "
+"возникновения необработанного исключения. Если да, то запускается посмертная "
+"отладка через :func:`pdb.post_mortem`, передавая объект трассировки из "
+"необработанного исключения. Если *pm* не указано или имеет значение false, "
+"сценарий запускается под отладчиком с самого начала путем передачи "
+"соответствующего вызова :func:`exec` в :func:`pdb.run`."
 
 #: ../../library/doctest.rst:1779
 msgid "Debug the doctests in a string."
-msgstr ""
+msgstr "Отладка документации в строке."
 
 #: ../../library/doctest.rst:1781
 msgid ""
 "This is like function :func:`debug` above, except that a string containing "
 "doctest examples is specified directly, via the *src* argument."
 msgstr ""
+"Это похоже на функцию :func:`debug`, описанную выше, за исключением того, "
+"что строка, содержащая примеры доктестов, указывается напрямую, через "
+"аргумент *src*."
 
 #: ../../library/doctest.rst:1784
 msgid ""
 "Optional argument *pm* has the same meaning as in function :func:`debug` "
 "above."
 msgstr ""
+"Необязательный аргумент *pm* имеет то же значение, что и в функции :func:"
+"`debug` выше."
 
 #: ../../library/doctest.rst:1786
 msgid ""
@@ -2416,6 +3526,10 @@ msgid ""
 "execution context.  If not specified, or ``None``, an empty dictionary is "
 "used. If specified, a shallow copy of the dictionary is used."
 msgstr ""
+"Необязательный аргумент *globs* предоставляет словарь, который можно "
+"использовать как в локальном, так и в глобальном контексте выполнения. Если "
+"не указано или «Нет», используется пустой словарь. Если указано, "
+"используется неполная копия словаря."
 
 #: ../../library/doctest.rst:1791
 msgid ""
@@ -2424,6 +3538,11 @@ msgid ""
 "here.  See the source code, and especially :class:`DebugRunner`'s docstring "
 "(which is a doctest!) for more details:"
 msgstr ""
+"Класс :class:`DebugRunner` и особые исключения, которые он может вызвать, "
+"представляют наибольший интерес для авторов фреймворков тестирования и здесь "
+"будут только показаны в общих чертах. Дополнительную информацию смотрите в "
+"исходном коде и особенно в строке документации :class:`DebugRunner` (которая "
+"является доктестом!):"
 
 #: ../../library/doctest.rst:1799
 msgid ""
@@ -2434,6 +3553,11 @@ msgid ""
 "`DocTestFailure` exception is raised, containing the test, the example, and "
 "the actual output."
 msgstr ""
+"Подкласс :class:`DocTestRunner`, который вызывает исключение при обнаружении "
+"сбоя. Если возникает неожиданное исключение, создается исключение :exc:"
+"`UnexpectedException`, содержащее тест, пример и исходное исключение. Если "
+"выходные данные не совпадают, то создается исключение :exc:`DocTestFailure`, "
+"содержащее тест, пример и фактический результат."
 
 #: ../../library/doctest.rst:1806
 msgid ""
@@ -2441,12 +3565,16 @@ msgid ""
 "documentation for :class:`DocTestRunner` in section :ref:`doctest-advanced-"
 "api`."
 msgstr ""
+"Информацию о параметрах и методах конструктора см. в документации :class:"
+"`DocTestRunner` в разделе :ref:`doctest-advanced-api`."
 
 #: ../../library/doctest.rst:1809
 msgid ""
 "There are two exceptions that may be raised by :class:`DebugRunner` "
 "instances:"
 msgstr ""
+"Есть два исключения, которые могут быть вызваны экземплярами :class:"
+"`DebugRunner`:"
 
 #: ../../library/doctest.rst:1814
 msgid ""
@@ -2454,22 +3582,26 @@ msgid ""
 "example's actual output did not match its expected output. The constructor "
 "arguments are used to initialize the attributes of the same names."
 msgstr ""
+"Исключение, вызываемое :class:`DocTestRunner`, чтобы сигнализировать о том, "
+"что фактический результат примера доктеста не соответствует ожидаемому "
+"результату. Аргументы конструктора используются для инициализации "
+"одноименных атрибутов."
 
 #: ../../library/doctest.rst:1818
 msgid ":exc:`DocTestFailure` defines the following attributes:"
-msgstr ""
+msgstr ":exc:`DocTestFailure` определяет следующие атрибуты:"
 
 #: ../../library/doctest.rst:1823 ../../library/doctest.rst:1847
 msgid "The :class:`DocTest` object that was being run when the example failed."
-msgstr ""
+msgstr "Объект :class:`DocTest`, который запускался, когда пример не удался."
 
 #: ../../library/doctest.rst:1828 ../../library/doctest.rst:1852
 msgid "The :class:`Example` that failed."
-msgstr ""
+msgstr ":class:`Пример`, который не удался."
 
 #: ../../library/doctest.rst:1833
 msgid "The example's actual output."
-msgstr ""
+msgstr "Фактический результат примера."
 
 #: ../../library/doctest.rst:1838
 msgid ""
@@ -2477,16 +3609,21 @@ msgid ""
 "example raised an unexpected exception.  The constructor arguments are used "
 "to initialize the attributes of the same names."
 msgstr ""
+"Исключение, вызываемое :class:`DocTestRunner`, чтобы сигнализировать о том, "
+"что пример доктеста вызвал неожиданное исключение. Аргументы конструктора "
+"используются для инициализации одноименных атрибутов."
 
 #: ../../library/doctest.rst:1842
 msgid ":exc:`UnexpectedException` defines the following attributes:"
-msgstr ""
+msgstr ":exc:`UnexpectedException` определяет следующие атрибуты:"
 
 #: ../../library/doctest.rst:1857
 msgid ""
 "A tuple containing information about the unexpected exception, as returned "
 "by :func:`sys.exc_info`."
 msgstr ""
+"Кортеж, содержащий информацию о неожиданном исключении, возвращаемую :func:"
+"`sys.exc_info`."
 
 #: ../../library/doctest.rst:1864
 msgid "Soapbox"
@@ -2497,10 +3634,11 @@ msgid ""
 "As mentioned in the introduction, :mod:`doctest` has grown to have three "
 "primary uses:"
 msgstr ""
+"Как упоминалось во введении, :mod:`doctest` имеет три основных применения:"
 
 #: ../../library/doctest.rst:1869
 msgid "Checking examples in docstrings."
-msgstr ""
+msgstr "Проверка примеров в строках документации."
 
 #: ../../library/doctest.rst:1871
 msgid "Regression testing."
@@ -2508,7 +3646,7 @@ msgstr "Регрессионное тестирование."
 
 #: ../../library/doctest.rst:1873
 msgid "Executable documentation / literate testing."
-msgstr ""
+msgstr "Исполняемая документация/грамотное тестирование."
 
 #: ../../library/doctest.rst:1875
 msgid ""
@@ -2516,6 +3654,9 @@ msgid ""
 "them. In particular, filling your docstrings with obscure test cases makes "
 "for bad documentation."
 msgstr ""
+"Эти виды использования предъявляют разные требования, и важно их различать. "
+"В частности, заполнение строк документации непонятными тестовыми примерами "
+"приводит к плохой документации."
 
 #: ../../library/doctest.rst:1879
 msgid ""
@@ -2528,6 +3669,15 @@ msgid ""
 "at how often one of my :mod:`doctest` examples stops working after a "
 "\"harmless\" change."
 msgstr ""
+"При написании строки документации внимательно выбирайте примеры строк "
+"документации. В этом есть искусство, которому нужно научиться — поначалу оно "
+"может показаться неестественным. Примеры должны придавать документацию "
+"подлинную ценность. Хороший пример зачастую стоит многих слов. Если все "
+"сделано с осторожностью, примеры окажутся неоценимыми для ваших "
+"пользователей и многократно окупят время, необходимое для их сбора, "
+"поскольку пройдут годы и все изменится. Я до сих пор поражаюсь тому, как "
+"часто один из моих примеров :mod:`doctest` перестает работать после "
+"«безобидного» изменения."
 
 #: ../../library/doctest.rst:1887
 msgid ""
@@ -2549,12 +3699,33 @@ msgid ""
 "functionality seemingly at random.  It's a different attitude, and produces "
 "different results, blurring the distinction between testing and explaining."
 msgstr ""
+"Doctest также является отличным инструментом для регрессионного "
+"тестирования, особенно если вы не экономите на поясняющем тексте. Чередуя "
+"прозу и примеры, становится намного проще отслеживать, что на самом деле "
+"тестируется и почему. Если тест терпит неудачу, хорошая формулировка может "
+"значительно облегчить выяснение, в чем проблема и как ее следует исправить. "
+"Это правда, что вы можете писать обширные комментарии при тестировании на "
+"основе кода, но немногие программисты это делают. Многие обнаружили, что "
+"использование подходов doctest приводит к гораздо более понятным тестам. "
+"Возможно, это просто потому, что doctest делает написание прозы немного "
+"проще, чем написание кода, а написание комментариев в коде немного сложнее. "
+"Я думаю, что дело не только в этом: естественное отношение при написании "
+"теста на основе документации состоит в том, что вы хотите объяснить тонкости "
+"вашего программного обеспечения и проиллюстрировать их примерами. Это, в "
+"свою очередь, естественным образом приводит к созданию тестовых файлов, "
+"которые начинаются с самых простых функций и логически переходят к "
+"усложнениям и крайним случаям. Результатом является связное повествование, а "
+"не набор изолированных функций, которые проверяют изолированные фрагменты "
+"функциональности, казалось бы, случайным образом. Это другой подход, и он "
+"дает другие результаты, стирая разницу между тестированием и объяснением."
 
 #: ../../library/doctest.rst:1905
 msgid ""
 "Regression testing is best confined to dedicated objects or files.  There "
 "are several options for organizing tests:"
 msgstr ""
+"Регрессионное тестирование лучше всего ограничивать выделенными объектами "
+"или файлами. Существует несколько вариантов организации тестов:"
 
 #: ../../library/doctest.rst:1908
 msgid ""
@@ -2563,6 +3734,10 @@ msgid ""
 "although is easiest to do for new projects, designed from the start to use "
 "doctest."
 msgstr ""
+"Создавайте текстовые файлы, содержащие тестовые примеры в качестве "
+"интерактивных примеров, и тестируйте их с помощью :func:`testfile` или :func:"
+"`DocFileSuite`. Это рекомендуется, хотя проще всего это сделать для новых "
+"проектов, изначально разработанных с использованием doctest."
 
 #: ../../library/doctest.rst:1913
 msgid ""
@@ -2571,12 +3746,18 @@ msgid ""
 "be included in the same file as the module, or separated out into a separate "
 "test file."
 msgstr ""
+"Определите функции с именем ``_regrtest_topic``, которые состоят из "
+"отдельных строк документации, содержащих тестовые примеры для названных тем. "
+"Эти функции могут быть включены в тот же файл, что и модуль, или выделены в "
+"отдельный тестовый файл."
 
 #: ../../library/doctest.rst:1917
 msgid ""
 "Define a ``__test__`` dictionary mapping from regression test topics to "
 "docstrings containing test cases."
 msgstr ""
+"Определите сопоставление словаря ``__test__`` из тем регрессионного теста в "
+"строки документации, содержащие тестовые примеры."
 
 #: ../../library/doctest.rst:1920
 msgid ""
@@ -2585,6 +3766,11 @@ msgid ""
 "run only the failing doctest while you debug the problem.  Here is a minimal "
 "example of such a test runner::"
 msgstr ""
+"Когда вы поместили тесты в модуль, модуль сам может выполнять функции "
+"запуска тестов. Если тест не пройден, вы можете организовать так, чтобы "
+"программа запуска тестов повторно запускала только неудавшийся "
+"документальный тест, пока вы отлаживаете проблему. Вот минимальный пример "
+"такого запуска тестов:"
 
 #: ../../library/doctest.rst:1925
 msgid ""
@@ -2603,6 +3789,20 @@ msgid ""
 "        fail, total = doctest.testmod(optionflags=flags)\n"
 "        print(f\"{fail} failures out of {total} tests\")"
 msgstr ""
+"if __name__ == '__main__':\n"
+"    import doctest\n"
+"    flags = doctest.REPORT_NDIFF|doctest.FAIL_FAST\n"
+"    if len(sys.argv) > 1:\n"
+"        name = sys.argv[1]\n"
+"        if name in globals():\n"
+"            obj = globals()[name]\n"
+"        else:\n"
+"            obj = __test__[name]\n"
+"        doctest.run_docstring_examples(obj, globals(), name=name,\n"
+"                                       optionflags=flags)\n"
+"    else:\n"
+"        fail, total = doctest.testmod(optionflags=flags)\n"
+"        print(f\"{fail} failures out of {total} tests\")"
 
 #: ../../library/doctest.rst:1942
 msgid "Footnotes"
@@ -2614,6 +3814,9 @@ msgid ""
 "Trying to guess where one ends and the other begins is too error-prone, and "
 "that also makes for a confusing test."
 msgstr ""
+"Примеры, содержащие как ожидаемый результат, так и исключение, не "
+"поддерживаются. Попытка угадать, где заканчивается одно и начинается другое, "
+"слишком подвержена ошибкам, и это также делает тест запутанным."
 
 #: ../../library/doctest.rst:339
 msgid ">>>"
@@ -2621,7 +3824,7 @@ msgstr ">>>"
 
 #: ../../library/doctest.rst:339
 msgid "interpreter prompt"
-msgstr ""
+msgstr "подсказка переводчика"
 
 #: ../../library/doctest.rst:339 ../../library/doctest.rst:577
 msgid "..."
@@ -2633,7 +3836,7 @@ msgstr "^ (caret)"
 
 #: ../../library/doctest.rst:505
 msgid "marker"
-msgstr ""
+msgstr "маркер"
 
 #: ../../library/doctest.rst:557
 msgid "<BLANKLINE>"
@@ -2641,7 +3844,7 @@ msgstr "<BLANKLINE>"
 
 #: ../../library/doctest.rst:577 ../../library/doctest.rst:707
 msgid "in doctests"
-msgstr ""
+msgstr "in doctests"
 
 #: ../../library/doctest.rst:707
 msgid "# (hash)"
