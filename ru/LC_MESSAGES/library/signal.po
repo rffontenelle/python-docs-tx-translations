@@ -6,15 +6,16 @@
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 # Илья Панфилов, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 23:30+0000\n"
+"POT-Creation-Date: 2024-09-27 17:32+0000\n"
 "PO-Revision-Date: 2020-05-30 12:09+0000\n"
-"Last-Translator: Илья Панфилов, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -32,6 +33,8 @@ msgstr ""
 #: ../../library/signal.rst:9
 msgid "This module provides mechanisms to use signal handlers in Python."
 msgstr ""
+"Этот модуль предоставляет механизмы для использования обработчиков сигналов "
+"в Python."
 
 #: ../../library/signal.rst:13
 msgid "General rules"
@@ -46,6 +49,13 @@ msgid ""
 "translated into a :exc:`KeyboardInterrupt` exception if the parent process "
 "has not changed it."
 msgstr ""
+"Функция :func:`signal.signal` позволяет определить пользовательские "
+"обработчики, которые будут выполняться при получении сигнала. "
+"Устанавливается небольшое количество обработчиков по умолчанию: :const:"
+"`SIGPIPE` игнорируется (поэтому ошибки записи в каналах и сокетах могут "
+"сообщаться как обычные исключения Python), а :const:`SIGINT` преобразуется "
+"в :exc:`KeyboardInterrupt` исключение, если родительский процесс не изменил "
+"его."
 
 #: ../../library/signal.rst:22
 msgid ""
@@ -54,10 +64,14 @@ msgid ""
 "underlying implementation), with the exception of the handler for :const:"
 "`SIGCHLD`, which follows the underlying implementation."
 msgstr ""
+"Обработчик для определенного сигнала, однажды установленный, остается "
+"установленным до тех пор, пока он не будет явно сброшен (Python эмулирует "
+"интерфейс стиля BSD независимо от базовой реализации), за исключением "
+"обработчика :const:`SIGCHLD`, который следует базовой реализации. ."
 
 #: ../../library/signal.rst:29
 msgid "Execution of Python signal handlers"
-msgstr ""
+msgstr "Выполнение обработчиков сигналов Python"
 
 #: ../../library/signal.rst:31
 msgid ""
@@ -67,6 +81,11 @@ msgid ""
 "handler at a later point(for example at the next :term:`bytecode` "
 "instruction). This has consequences:"
 msgstr ""
+"Обработчик сигналов Python не выполняется внутри обработчика сигналов "
+"низкого уровня (C). Вместо этого обработчик сигнала низкого уровня "
+"устанавливает флаг, который указывает виртуальной машине выполнить "
+"соответствующий обработчик сигнала Python на более позднем этапе (например, "
+"при следующей инструкции :term:`bytecode`). Это имеет последствия:"
 
 #: ../../library/signal.rst:37
 msgid ""
@@ -77,6 +96,12 @@ msgid ""
 "onwards, you can use the :mod:`faulthandler` module to report on synchronous "
 "errors."
 msgstr ""
+"Нет смысла ловить синхронные ошибки, такие как :const:`SIGFPE` или :const:"
+"`SIGSEGV`, которые вызваны недопустимой операцией в коде C. Python вернется "
+"из обработчика сигнала в код C, который, скорее всего, снова выдаст тот же "
+"сигнал, что, по-видимому, приведет к зависанию Python. Начиная с Python 3.3, "
+"вы можете использовать модуль :mod:`faulthandler` для сообщения о синхронных "
+"ошибках."
 
 #: ../../library/signal.rst:44
 msgid ""
@@ -85,6 +110,11 @@ msgid ""
 "arbitrary amount of time, regardless of any signals received.  The Python "
 "signal handlers will be called when the calculation finishes."
 msgstr ""
+"Длительные вычисления, реализованные исключительно на C (например, "
+"сопоставление регулярных выражений с большим объемом текста), могут "
+"выполняться непрерывно в течение произвольного периода времени, независимо "
+"от каких-либо полученных сигналов. Обработчики сигналов Python будут вызваны "
+"после завершения расчета."
 
 #: ../../library/signal.rst:54
 msgid "Signals and threads"
@@ -117,7 +147,7 @@ msgstr ""
 
 #: ../../library/signal.rst:77
 msgid "The variables defined in the :mod:`signal` module are:"
-msgstr ""
+msgstr "Переменные, определенные в модуле :mod:`signal`:"
 
 #: ../../library/signal.rst:82
 msgid ""
@@ -126,20 +156,27 @@ msgid ""
 "default action for :const:`SIGQUIT` is to dump core and exit, while the "
 "default action for :const:`SIGCHLD` is to simply ignore it."
 msgstr ""
+"Это один из двух стандартных вариантов обработки сигналов; он просто "
+"выполнит функцию по умолчанию для сигнала. Например, в большинстве систем "
+"действием по умолчанию для :const:`SIGQUIT` является сброс ядра и выход, "
+"тогда как действием по умолчанию для :const:`SIGCHLD` является просто "
+"игнорировать его."
 
 #: ../../library/signal.rst:90
 msgid ""
 "This is another standard signal handler, which will simply ignore the given "
 "signal."
 msgstr ""
+"Это еще один стандартный обработчик сигналов, который просто игнорирует "
+"данный сигнал."
 
 #: ../../library/signal.rst:96
 msgid "Abort signal from :manpage:`abort(3)`."
-msgstr ""
+msgstr "Сигнал прерывания из :manpage:`abort(3)`."
 
 #: ../../library/signal.rst:100
 msgid "Timer signal from :manpage:`alarm(2)`."
-msgstr ""
+msgstr "Сигнал таймера из :manpage:`alarm(2)`."
 
 #: ../../library/signal.rst:102 ../../library/signal.rst:114
 #: ../../library/signal.rst:120 ../../library/signal.rst:130
@@ -152,7 +189,7 @@ msgstr ":ref:`Availability <availability>`: Unix."
 
 #: ../../library/signal.rst:106
 msgid "Interrupt from keyboard (CTRL + BREAK)."
-msgstr ""
+msgstr "Прерывание с клавиатуры (CTRL+BREAK)."
 
 #: ../../library/signal.rst:108 ../../library/signal.rst:215
 #: ../../library/signal.rst:225
@@ -161,66 +198,70 @@ msgstr ":ref:`Availability <availability>`: Windows."
 
 #: ../../library/signal.rst:112
 msgid "Bus error (bad memory access)."
-msgstr ""
+msgstr "Ошибка шины (плохой доступ к памяти)."
 
 #: ../../library/signal.rst:118
 msgid "Child process stopped or terminated."
-msgstr ""
+msgstr "Дочерний процесс остановлен или завершен."
 
 #: ../../library/signal.rst:124
 msgid "Alias to :data:`SIGCHLD`."
-msgstr ""
+msgstr "Псевдоним :data:`SIGCHLD`."
 
 #: ../../library/signal.rst:128
 msgid "Continue the process if it is currently stopped"
-msgstr ""
+msgstr "Продолжить процесс, если он в данный момент остановлен"
 
 #: ../../library/signal.rst:134
 msgid "Floating-point exception. For example, division by zero."
-msgstr ""
+msgstr "Исключение с плавающей запятой. Например, деление на ноль."
 
 #: ../../library/signal.rst:137
 msgid ""
 ":exc:`ZeroDivisionError` is raised when the second argument of a division or "
 "modulo operation is zero."
 msgstr ""
+":exc:`ZeroDivisionError` возникает, когда второй аргумент операции деления "
+"или деления по модулю равен нулю."
 
 #: ../../library/signal.rst:142
 msgid ""
 "Hangup detected on controlling terminal or death of controlling process."
 msgstr ""
+"Обнаружено зависание на управляющем терминале или прекращение процесса "
+"управления."
 
 #: ../../library/signal.rst:148
 msgid "Illegal instruction."
-msgstr ""
+msgstr "Нелегальный инструкция."
 
 #: ../../library/signal.rst:152
 msgid "Interrupt from keyboard (CTRL + C)."
-msgstr ""
+msgstr "Прерывание с клавиатуры (CTRL+C)."
 
 #: ../../library/signal.rst:154
 msgid "Default action is to raise :exc:`KeyboardInterrupt`."
-msgstr ""
+msgstr "Действием по умолчанию является вызов :exc:`KeyboardInterrupt`."
 
 #: ../../library/signal.rst:158
 msgid "Kill signal."
-msgstr ""
+msgstr "Сигнал убийства."
 
 #: ../../library/signal.rst:160
 msgid "It cannot be caught, blocked, or ignored."
-msgstr ""
+msgstr "Его невозможно перехватить, заблокировать или проигнорировать."
 
 #: ../../library/signal.rst:166
 msgid "Broken pipe: write to pipe with no readers."
-msgstr ""
+msgstr "Сломанный канал: запись в канал без читателей."
 
 #: ../../library/signal.rst:168
 msgid "Default action is to ignore the signal."
-msgstr ""
+msgstr "Действие по умолчанию — игнорировать сигнал."
 
 #: ../../library/signal.rst:174
 msgid "Segmentation fault: invalid memory reference."
-msgstr ""
+msgstr "Ошибка сегментации: неверная ссылка на память."
 
 #: ../../library/signal.rst:178
 msgid "Termination signal."
@@ -228,15 +269,15 @@ msgstr "Сигнал завершения."
 
 #: ../../library/signal.rst:182
 msgid "User-defined signal 1."
-msgstr ""
+msgstr "Определяемый пользователем сигнал 1."
 
 #: ../../library/signal.rst:188
 msgid "User-defined signal 2."
-msgstr ""
+msgstr "Определяемый пользователем сигнал 2."
 
 #: ../../library/signal.rst:194
 msgid "Window resize signal."
-msgstr ""
+msgstr "Сигнал изменения размера окна."
 
 #: ../../library/signal.rst:200
 msgid ""
@@ -248,18 +289,30 @@ msgid ""
 "`signal(7)`). Note that not all systems define the same set of signal names; "
 "only those names defined by the system are defined by this module."
 msgstr ""
+"Все номера сигналов определены символически. Например, сигнал зависания "
+"определяется как :const:`signal.SIGHUP`; имена переменных идентичны именам, "
+"используемым в программах на языке C, как показано в ``<signal.h>``. На "
+"странице руководства Unix для ':c:func:`signal`' перечислены существующие "
+"сигналы (в некоторых системах это :manpage:`signal(2)`, в других список "
+"находится в :manpage:`signal(7)` ). Обратите внимание, что не все системы "
+"определяют один и тот же набор имен сигналов; только те имена, которые "
+"определены системой, определяются этим модулем."
 
 #: ../../library/signal.rst:211
 msgid ""
 "The signal corresponding to the :kbd:`Ctrl+C` keystroke event. This signal "
 "can only be used with :func:`os.kill`."
 msgstr ""
+"Сигнал, соответствующий событию нажатия клавиши :kbd:`Ctrl+C`. Этот сигнал "
+"можно использовать только с :func:`os.kill`."
 
 #: ../../library/signal.rst:221
 msgid ""
 "The signal corresponding to the :kbd:`Ctrl+Break` keystroke event. This "
 "signal can only be used with :func:`os.kill`."
 msgstr ""
+"Сигнал, соответствующий событию нажатия клавиши :kbd:`Ctrl+Break`. Этот "
+"сигнал можно использовать только с :func:`os.kill`."
 
 #: ../../library/signal.rst:231
 msgid "One more than the number of the highest signal number."
@@ -270,12 +323,16 @@ msgid ""
 "Decrements interval timer in real time, and delivers :const:`SIGALRM` upon "
 "expiration."
 msgstr ""
+"Уменьшает интервальный таймер в реальном времени и доставляет :const:"
+"`SIGALRM` по истечении срока действия."
 
 #: ../../library/signal.rst:242
 msgid ""
 "Decrements interval timer only when the process is executing, and delivers "
 "SIGVTALRM upon expiration."
 msgstr ""
+"Уменьшает интервальный таймер только во время выполнения процесса и "
+"доставляет SIGVTALRM по истечении срока действия."
 
 #: ../../library/signal.rst:248
 msgid ""
@@ -284,28 +341,39 @@ msgid ""
 "timer is usually used to profile the time spent by the application in user "
 "and kernel space. SIGPROF is delivered upon expiration."
 msgstr ""
+"Уменьшает интервальный таймер как при выполнении процесса, так и при "
+"выполнении системы от имени процесса. В сочетании с ITIMER_VIRTUAL этот "
+"таймер обычно используется для профилирования времени, проведенного "
+"приложением в пространстве пользователя и ядра. SIGPROF поставляется по "
+"истечении срока годности."
 
 #: ../../library/signal.rst:256
 msgid ""
 "A possible value for the *how* parameter to :func:`pthread_sigmask` "
 "indicating that signals are to be blocked."
 msgstr ""
+"Возможное значение параметра *how* для :func:`pthread_sigmask`, указывающее, "
+"что сигналы должны быть заблокированы."
 
 #: ../../library/signal.rst:263
 msgid ""
 "A possible value for the *how* parameter to :func:`pthread_sigmask` "
 "indicating that signals are to be unblocked."
 msgstr ""
+"Возможное значение параметра *how* для :func:`pthread_sigmask`, указывающее, "
+"что сигналы должны быть разблокированы."
 
 #: ../../library/signal.rst:270
 msgid ""
 "A possible value for the *how* parameter to :func:`pthread_sigmask` "
 "indicating that the signal mask is to be replaced."
 msgstr ""
+"Возможное значение параметра *how* для :func:`pthread_sigmask`, указывающее, "
+"что маска сигнала должна быть заменена."
 
 #: ../../library/signal.rst:276
 msgid "The :mod:`signal` module defines one exception:"
-msgstr ""
+msgstr "Модуль :mod:`signal` определяет одно исключение:"
 
 #: ../../library/signal.rst:280
 msgid ""
@@ -314,16 +382,22 @@ msgid ""
 "or a negative time is passed to :func:`setitimer`. This error is a subtype "
 "of :exc:`OSError`."
 msgstr ""
+"Вызывается, чтобы сигнализировать об ошибке базовой реализации :func:"
+"`setitimer` или :func:`getitimer`. Эту ошибку следует ожидать, если в :func:"
+"`setitimer` передан неверный интервальный таймер или отрицательное время. "
+"Эта ошибка является подтипом :exc:`OSError`."
 
 #: ../../library/signal.rst:285
 msgid ""
 "This error used to be a subtype of :exc:`IOError`, which is now an alias of :"
 "exc:`OSError`."
 msgstr ""
+"Раньше эта ошибка была подтипом :exc:`IOError`, который теперь является "
+"псевдонимом :exc:`OSError`."
 
 #: ../../library/signal.rst:290
 msgid "The :mod:`signal` module defines the following functions:"
-msgstr ""
+msgstr "Модуль :mod:`signal` определяет следующие функции:"
 
 #: ../../library/signal.rst:295
 msgid ""
@@ -335,6 +409,14 @@ msgid ""
 "alarm is canceled.  If the return value is zero, no alarm is currently "
 "scheduled."
 msgstr ""
+"Если *time* не равно нулю, эта функция запрашивает отправку сигнала :const:"
+"`SIGALRM` процессу через *time* секунд. Любой ранее запланированный сигнал "
+"тревоги отменяется (в любой момент времени можно запланировать только один "
+"сигнал тревоги). Возвращаемое значение представляет собой количество секунд "
+"до того, как должен был быть доставлен какой-либо ранее установленный сигнал "
+"тревоги. Если *время* равно нулю, будильник не запланирован, и любой "
+"запланированный будильник отменяется. Если возвращаемое значение равно нулю, "
+"в настоящее время тревога не запланирована."
 
 #: ../../library/signal.rst:303
 msgid ""
@@ -352,6 +434,13 @@ msgid ""
 "previously in use, and ``None`` means that the previous signal handler was "
 "not installed from Python."
 msgstr ""
+"Возвращает текущий обработчик сигнала *signalnum*. Возвращаемое значение "
+"может быть вызываемым объектом Python или одним из специальных значений :"
+"const:`signal.SIG_IGN`, :const:`signal.SIG_DFL` или :const:`None`. Здесь :"
+"const:`signal.SIG_IGN` означает, что сигнал ранее игнорировался, :const:"
+"`signal.SIG_DFL` означает, что ранее использовался способ обработки сигнала "
+"по умолчанию, а ``None`` означает, что предыдущий обработчик сигнала не был "
+"установлен из Python."
 
 #: ../../library/signal.rst:319
 msgid ""
@@ -366,12 +455,17 @@ msgid ""
 "than ``range(1, NSIG)`` if some signals are reserved by the system for "
 "internal use."
 msgstr ""
+"Верните набор действительных номеров сигналов на этой платформе. Это может "
+"быть меньше, чем «диапазон(1, NSIG)», если некоторые сигналы зарезервированы "
+"системой для внутреннего использования."
 
 #: ../../library/signal.rst:337
 msgid ""
 "Cause the process to sleep until a signal is received; the appropriate "
 "handler will then be called.  Returns nothing."
 msgstr ""
+"Приостановить процесс до тех пор, пока не будет получен сигнал; затем будет "
+"вызван соответствующий обработчик. Ничего не возвращает."
 
 #: ../../library/signal.rst:342
 msgid ""
@@ -384,10 +478,12 @@ msgid ""
 "See also :func:`sigwait`, :func:`sigwaitinfo`, :func:`sigtimedwait` and :"
 "func:`sigpending`."
 msgstr ""
+"См. также :func:`sigwait`, :func:`sigwaitinfo`, :func:`sigtimedwait` и :func:"
+"`sigpending`."
 
 #: ../../library/signal.rst:349
 msgid "Sends a signal to the calling process. Returns nothing."
-msgstr ""
+msgstr "Отправляет сигнал вызывающему процессу. Ничего не возвращает."
 
 #: ../../library/signal.rst:356
 msgid ""
@@ -412,12 +508,17 @@ msgid ""
 "If *signalnum* is 0, then no signal is sent, but error checking is still "
 "performed; this can be used to check if the target thread is still running."
 msgstr ""
+"Если *signalnum* равен 0, сигнал не отправляется, но проверка ошибок все "
+"равно выполняется; это можно использовать для проверки, работает ли целевой "
+"поток."
 
 #: ../../library/signal.rst:372
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``signal.pthread_kill`` with "
 "arguments ``thread_id``, ``signalnum``."
 msgstr ""
+"Вызывает :ref:`событие аудита <auditing>``signal.pthread_kill`` с "
+"аргументами ``thread_id``, ``signalnum``."
 
 #: ../../library/signal.rst:375
 msgid ""
@@ -435,17 +536,22 @@ msgid ""
 "is the set of signals whose delivery is currently blocked for the caller. "
 "Return the old signal mask as a set of signals."
 msgstr ""
+"Получите и/или измените маску сигнала вызывающего потока. Маска сигнала — "
+"это набор сигналов, доставка которых в данный момент заблокирована для "
+"вызывающего абонента. Верните старую маску сигнала как набор сигналов."
 
 #: ../../library/signal.rst:387
 msgid ""
 "The behavior of the call is dependent on the value of *how*, as follows."
-msgstr ""
+msgstr "Поведение вызова зависит от значения *how* следующим образом."
 
 #: ../../library/signal.rst:389
 msgid ""
 ":data:`SIG_BLOCK`: The set of blocked signals is the union of the current "
 "set and the *mask* argument."
 msgstr ""
+":data:`SIG_BLOCK`: Набор заблокированных сигналов представляет собой "
+"объединение текущего набора и аргумента *маска*."
 
 #: ../../library/signal.rst:391
 msgid ""
@@ -453,12 +559,17 @@ msgid ""
 "of blocked signals.  It is permissible to attempt to unblock a signal which "
 "is not blocked."
 msgstr ""
+":data:`SIG_UNBLOCK`: Сигналы в *маске* удаляются из текущего набора "
+"заблокированных сигналов. Разрешается попытаться разблокировать "
+"незаблокированный сигнал."
 
 #: ../../library/signal.rst:394
 msgid ""
 ":data:`SIG_SETMASK`: The set of blocked signals is set to the *mask* "
 "argument."
 msgstr ""
+":data:`SIG_SETMASK`: Набор заблокированных сигналов устанавливается в "
+"аргумент *mask*."
 
 #: ../../library/signal.rst:397
 msgid ""
@@ -466,16 +577,21 @@ msgid ""
 "`signal.SIGTERM`}). Use :func:`~signal.valid_signals` for a full mask "
 "including all signals."
 msgstr ""
+"*маска* — это набор номеров сигналов (например, {:const:`signal.SIGINT`, :"
+"const:`signal.SIGTERM`}). Используйте :func:`~signal.valid_signals` для "
+"полной маски, включающей все сигналы."
 
 #: ../../library/signal.rst:401
 msgid ""
 "For example, ``signal.pthread_sigmask(signal.SIG_BLOCK, [])`` reads the "
 "signal mask of the calling thread."
 msgstr ""
+"Например, ``signal.pthread_sigmask(signal.SIG_BLOCK, [])`` считывает маску "
+"сигнала вызывающего потока."
 
 #: ../../library/signal.rst:404
 msgid ":data:`SIGKILL` and :data:`SIGSTOP` cannot be blocked."
-msgstr ""
+msgstr ":data:`SIGKILL` и :data:`SIGSTOP` не могут быть заблокированы."
 
 #: ../../library/signal.rst:408
 msgid ""
@@ -485,7 +601,7 @@ msgstr ""
 
 #: ../../library/signal.rst:409
 msgid "See also :func:`pause`, :func:`sigpending` and :func:`sigwait`."
-msgstr ""
+msgstr "См. также :func:`pause`, :func:`sigpending` и :func:`sigwait`."
 
 #: ../../library/signal.rst:416
 msgid ""
@@ -496,6 +612,12 @@ msgid ""
 "interval timer specified by *which* can be cleared by setting *seconds* to "
 "zero."
 msgstr ""
+"Устанавливает заданный интервальный таймер (один из :const:`signal."
+"ITIMER_REAL`, :const:`signal.ITIMER_VIRTUAL` или :const:`signal."
+"ITIMER_PROF`), указанный в параметре *который* срабатывать через *секунды* "
+"(допустимо число с плавающей запятой, отличается от :func:`alarm`) и после "
+"этого каждые *интервал* секунд (если *интервал* не равен нулю). Интервальный "
+"таймер, указанный *который*, можно очистить, установив *секунды* на ноль."
 
 #: ../../library/signal.rst:423
 msgid ""
@@ -504,20 +626,29 @@ msgid ""
 "deliver :const:`SIGALRM`, :const:`signal.ITIMER_VIRTUAL` sends :const:"
 "`SIGVTALRM`, and :const:`signal.ITIMER_PROF` will deliver :const:`SIGPROF`."
 msgstr ""
+"Когда срабатывает интервальный таймер, процессу отправляется сигнал. "
+"Отправляемый сигнал зависит от используемого таймера; :const:`signal."
+"ITIMER_REAL` доставит :const:`SIGALRM`, :const:`signal.ITIMER_VIRTUAL` "
+"отправит :const:`SIGVTALRM`, а :const:`signal.ITIMER_PROF` доставит :const:"
+"`SIGPROF` ."
 
 #: ../../library/signal.rst:429
 msgid "The old values are returned as a tuple: (delay, interval)."
-msgstr ""
+msgstr "Старые значения возвращаются в виде кортежа: (задержка, интервал)."
 
 #: ../../library/signal.rst:431
 msgid ""
 "Attempting to pass an invalid interval timer will cause an :exc:"
 "`ItimerError`."
 msgstr ""
+"Попытка передать неверный интервальный таймер приведет к ошибке :exc:"
+"`ItimerError`."
 
 #: ../../library/signal.rst:439
 msgid "Returns current value of a given interval timer specified by *which*."
 msgstr ""
+"Возвращает текущее значение заданного интервального таймера, указанного "
+"*который*."
 
 #: ../../library/signal.rst:446
 msgid ""
@@ -526,6 +657,10 @@ msgid ""
 "a library to wakeup a poll or select call, allowing the signal to be fully "
 "processed."
 msgstr ""
+"Установите дескриптор файла пробуждения на *fd*. Когда сигнал получен, номер "
+"сигнала записывается в виде одного байта в fd. Это может использоваться "
+"библиотекой для запуска опроса или выбора вызова, что позволяет полностью "
+"обработать сигнал."
 
 #: ../../library/signal.rst:451
 msgid ""
@@ -534,6 +669,11 @@ msgid ""
 "*fd* must be non-blocking.  It is up to the library to remove any bytes from "
 "*fd* before calling poll or select again."
 msgstr ""
+"Возвращается старый файл пробуждения (или -1, если пробуждение файлового "
+"дескриптора не было включено). Если *fd* равно -1, пробуждение файлового "
+"дескриптора отключено. Если не -1, *fd* должен быть неблокирующим. "
+"Библиотека должна удалить все байты из *fd* перед вызовом опроса или "
+"повторным выбором."
 
 #: ../../library/signal.rst:456 ../../library/signal.rst:509
 msgid ""
@@ -548,6 +688,9 @@ msgid ""
 "the fd to wake up when a signal arrives, but then they differ in how they "
 "determine *which* signal or signals have arrived."
 msgstr ""
+"Есть два распространенных способа использования этой функции. В обоих "
+"подходах вы используете fd для пробуждения при поступлении сигнала, но они "
+"различаются тем, как определяют *какой* сигнал или сигналы поступили."
 
 #: ../../library/signal.rst:465
 msgid ""
@@ -559,6 +702,13 @@ msgid ""
 "you should set ``warn_on_full_buffer=True``, which will at least cause a "
 "warning to be printed to stderr when signals are lost."
 msgstr ""
+"В первом подходе мы считываем данные из буфера fd, а значения байтов дают "
+"вам номера сигналов. Это просто, но в редких случаях может возникнуть "
+"проблема: обычно fd будет иметь ограниченный объем буферного пространства, и "
+"если слишком много сигналов поступает слишком быстро, то буфер может "
+"переполниться, и некоторые сигналы могут быть потеряны. Если вы используете "
+"этот подход, вам следует установить ``warn_on_full_buffer=True``, что, по "
+"крайней мере, приведет к выводу предупреждения в stderr при потере сигналов."
 
 #: ../../library/signal.rst:474
 msgid ""
@@ -569,6 +719,12 @@ msgid ""
 "``warn_on_full_buffer=False``, so that your users are not confused by "
 "spurious warning messages."
 msgstr ""
+"Во втором подходе мы используем пробуждение *только* для пробуждения и "
+"игнорируем фактические значения байтов. В этом случае нас волнует только то, "
+"пуст ли буфер fd или непуст; полный буфер вообще не указывает на проблему. "
+"Если вы используете этот подход, вам следует установить "
+"``warn_on_full_buffer=False``, чтобы ваши пользователи не были сбиты с толку "
+"ложными предупреждающими сообщениями."
 
 #: ../../library/signal.rst:481
 msgid "On Windows, the function now also supports socket handles."
@@ -584,6 +740,10 @@ msgid ""
 "calls will be restarted when interrupted by signal *signalnum*, otherwise "
 "system calls will be interrupted.  Returns nothing."
 msgstr ""
+"Изменить поведение перезапуска системного вызова: если *flag* имеет "
+"значение :const:`False`, системные вызовы будут перезапущены при прерывании "
+"сигналом *signalnum*, в противном случае системные вызовы будут прерваны. "
+"Ничего не возвращает."
 
 #: ../../library/signal.rst:495
 msgid ""
@@ -607,6 +767,12 @@ msgid ""
 "`getsignal` above).  (See the Unix man page :manpage:`signal(2)` for further "
 "information.)"
 msgstr ""
+"Установите обработчик сигнала *signalnum* на функцию *handler*. *handler* "
+"может быть вызываемым объектом Python, принимающим два аргумента (см. ниже) "
+"или одно из специальных значений :const:`signal.SIG_IGN` или :const:`signal."
+"SIG_DFL`. Будет возвращен предыдущий обработчик сигнала (см. описание :func:"
+"`getsignal` выше). (Для получения дополнительной информации см. справочную "
+"страницу Unix :manpage:`signal(2)`.)"
 
 #: ../../library/signal.rst:513
 msgid ""
@@ -615,6 +781,10 @@ msgid ""
 "objects, see the :ref:`description in the type hierarchy <frame-objects>` or "
 "see the attribute descriptions in the :mod:`inspect` module)."
 msgstr ""
+"*Обработчик* вызывается с двумя аргументами: номером сигнала и текущим "
+"кадром стека («None» или объектом кадра; описание объектов кадра см. в "
+"описании в иерархии типов <frame- объекты>` или посмотрите описания "
+"атрибутов в модуле :mod:`inspect`)."
 
 #: ../../library/signal.rst:518
 msgid ""
@@ -625,6 +795,12 @@ msgid ""
 "an :exc:`AttributeError` will be raised if a signal name is not defined as "
 "``SIG*`` module level constant."
 msgstr ""
+"В Windows :func:`signal` можно вызвать только с помощью :const:`SIGABRT`, :"
+"const:`SIGFPE`, :const:`SIGILL`, :const:`SIGINT`, :const:`SIGSEGV`, : const:"
+"`SIGTERM` или :const:`SIGBREAK`. В любом другом случае будет выдано :exc:"
+"`ValueError`. Обратите внимание, что не все системы определяют один и тот же "
+"набор имен сигналов; :exc:`AttributeError` будет вызвано, если имя сигнала "
+"не определено как константа уровня модуля ``SIG*``."
 
 #: ../../library/signal.rst:529
 msgid ""
@@ -632,6 +808,9 @@ msgid ""
 "thread (i.e., the signals which have been raised while blocked).  Return the "
 "set of the pending signals."
 msgstr ""
+"Проверьте набор сигналов, ожидающих доставки в вызывающий поток (т. е. "
+"сигналы, которые были созданы во время блокировки). Возвращает набор "
+"ожидающих сигналов."
 
 #: ../../library/signal.rst:535
 msgid ""
@@ -641,7 +820,7 @@ msgstr ""
 
 #: ../../library/signal.rst:536
 msgid "See also :func:`pause`, :func:`pthread_sigmask` and :func:`sigwait`."
-msgstr ""
+msgstr "См. также :func:`pause`, :func:`pthread_sigmask` и :func:`sigwait`."
 
 #: ../../library/signal.rst:543
 msgid ""
@@ -650,6 +829,9 @@ msgid ""
 "signal (removes it from the pending list of signals), and returns the signal "
 "number."
 msgstr ""
+"Приостановить выполнение вызывающего потока до доставки одного из сигналов, "
+"указанных в наборе сигналов *sigset*. Функция принимает сигнал (удаляет его "
+"из списка ожидающих сигналов) и возвращает номер сигнала."
 
 #: ../../library/signal.rst:549
 msgid ""
@@ -662,6 +844,8 @@ msgid ""
 "See also :func:`pause`, :func:`pthread_sigmask`, :func:`sigpending`, :func:"
 "`sigwaitinfo` and :func:`sigtimedwait`."
 msgstr ""
+"См. также :func:`pause`, :func:`pthread_sigmask`, :func:`sigpending`, :func:"
+"`sigwaitinfo` и :func:`sigtimedwait`."
 
 #: ../../library/signal.rst:558
 msgid ""
@@ -673,6 +857,13 @@ msgid ""
 "handler is not called for the delivered signal. The function raises an :exc:"
 "`InterruptedError` if it is interrupted by a signal that is not in *sigset*."
 msgstr ""
+"Приостановить выполнение вызывающего потока до доставки одного из сигналов, "
+"указанных в наборе сигналов *sigset*. Функция принимает сигнал и удаляет его "
+"из списка ожидающих сигналов. Если один из сигналов в *sigset* уже ожидает "
+"вызывающего потока, функция немедленно вернет информацию об этом сигнале. "
+"Обработчик сигнала не вызывается для доставленного сигнала. Функция "
+"вызывает :exc:`InterruptedError`, если она прерывается сигналом, которого "
+"нет в *sigset*."
 
 #: ../../library/signal.rst:567
 msgid ""
@@ -681,6 +872,10 @@ msgid ""
 "`si_errno`, :attr:`si_pid`, :attr:`si_uid`, :attr:`si_status`, :attr:"
 "`si_band`."
 msgstr ""
+"Возвращаемое значение — это объект, представляющий данные, содержащиеся в "
+"структуре :c:type:`siginfo_t`, а именно: :attr:`si_signo`, :attr:`si_code`, :"
+"attr:`si_errno`, :attr:`si_pid `, :attr:`si_uid`, :attr:`si_status`, :attr:"
+"`si_band`."
 
 #: ../../library/signal.rst:574
 msgid ""
@@ -690,7 +885,7 @@ msgstr ""
 
 #: ../../library/signal.rst:575
 msgid "See also :func:`pause`, :func:`sigwait` and :func:`sigtimedwait`."
-msgstr ""
+msgstr "См. также :func:`pause`, :func:`sigwait` и :func:`sigtimedwait`."
 
 #: ../../library/signal.rst:579
 msgid ""
@@ -698,6 +893,9 @@ msgid ""
 "the signal handler does not raise an exception (see :pep:`475` for the "
 "rationale)."
 msgstr ""
+"Функция теперь повторяется, если она прерывается сигналом, которого нет в "
+"*sigset*, и обработчик сигнала не вызывает исключение (обоснование см. в :"
+"pep:`475`)."
 
 #: ../../library/signal.rst:587
 msgid ""
@@ -714,7 +912,7 @@ msgstr ""
 
 #: ../../library/signal.rst:594
 msgid "See also :func:`pause`, :func:`sigwait` and :func:`sigwaitinfo`."
-msgstr ""
+msgstr "См. также :func:`pause`, :func:`sigwait` и :func:`sigwaitinfo`."
 
 #: ../../library/signal.rst:598
 msgid ""
@@ -722,6 +920,9 @@ msgid ""
 "a signal not in *sigset* and the signal handler does not raise an exception "
 "(see :pep:`475` for the rationale)."
 msgstr ""
+"Функция теперь повторяется с пересчитанным *тайм-аутом*, если она "
+"прерывается сигналом, не входящим в *sigset*, и обработчик сигнала не "
+"вызывает исключение (обоснование см. в :pep:`475`)."
 
 #: ../../library/signal.rst:607
 msgid "Example"
@@ -736,6 +937,13 @@ msgid ""
 "alarm before opening the file; if the operation takes too long, the alarm "
 "signal will be sent, and the handler raises an exception. ::"
 msgstr ""
+"Вот минимальный пример программы. Он использует функцию :func:`alarm` для "
+"ограничения времени ожидания открытия файла; это полезно, если файл "
+"предназначен для последовательного устройства, которое может быть не "
+"включено, что обычно приводит к зависанию :func:`os.open` на неопределенный "
+"срок. Решение — установить 5-секундный сигнал перед открытием файла; если "
+"операция занимает слишком много времени, будет отправлен сигнал тревоги, и "
+"обработчик вызовет исключение. ::"
 
 #: ../../library/signal.rst:632
 msgid "Note on SIGPIPE"
@@ -749,6 +957,12 @@ msgid ""
 "`BrokenPipeError: [Errno 32] Broken pipe`.  To handle this case, wrap your "
 "entry point to catch this exception as follows::"
 msgstr ""
+"Передача вывода вашей программы по каналам в такие инструменты, как :manpage:"
+"`head(1)`, приведет к отправке сигнала :const:`SIGPIPE` в ваш процесс, когда "
+"приемник его стандартного вывода закрывается раньше времени. Это приводит к "
+"исключению типа :code:`BrokenPipeError: [Errno 32] Broken Pipe`. Чтобы "
+"обработать этот случай, оберните точку входа, чтобы перехватить это "
+"исключение, следующим образом:"
 
 #: ../../library/signal.rst:661
 msgid ""

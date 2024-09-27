@@ -6,15 +6,16 @@
 # Translators:
 # Илья Панфилов, 2024
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-20 03:35+0000\n"
+"POT-Creation-Date: 2024-09-27 17:32+0000\n"
 "PO-Revision-Date: 2020-05-30 11:56+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -40,6 +41,10 @@ msgid ""
 "with each Python release; this module helps to find out programmatically "
 "what the current grammar looks like."
 msgstr ""
+"Модуль :mod:`ast` помогает приложениям Python обрабатывать деревья "
+"грамматики абстрактного синтаксиса Python. Сам абстрактный синтаксис может "
+"меняться с каждым выпуском Python; этот модуль помогает программно узнать, "
+"как выглядит текущая грамматика."
 
 #: ../../library/ast.rst:19
 msgid ""
@@ -50,6 +55,12 @@ msgid ""
 "syntax tree can be compiled into a Python code object using the built-in :"
 "func:`compile` function."
 msgstr ""
+"Абстрактное синтаксическое дерево можно создать, передав :data:`ast."
+"PyCF_ONLY_AST` в качестве флага встроенной функции :func:`compile` или "
+"используя вспомогательную функцию :func:`parse`, представленную в этом "
+"модуле. Результатом будет дерево объектов, все классы которого наследуются "
+"от :class:`ast.AST`. Абстрактное синтаксическое дерево можно скомпилировать "
+"в объект кода Python с помощью встроенной функции :func:`compile`."
 
 #: ../../library/ast.rst:27
 msgid "Node classes"
@@ -73,6 +84,13 @@ msgid ""
 "rules with alternatives (aka \"sums\"), the left-hand side class is "
 "abstract: only instances of specific constructor nodes are ever created."
 msgstr ""
+"Для каждого левого символа абстрактной грамматики определен один класс "
+"(например, :class:`ast.stmt` или :class:`ast.expr`). Кроме того, для каждого "
+"конструктора в правой части определен один класс; эти классы наследуются от "
+"классов левых деревьев. Например, :class:`ast.BinOp` наследуется от :class:"
+"`ast.expr`. Для производственных правил с альтернативами (также известными "
+"как «суммы») левый класс является абстрактным: всегда создаются только "
+"экземпляры определенных узлов конструктора."
 
 #: ../../library/ast.rst:49
 msgid ""
@@ -86,6 +104,9 @@ msgid ""
 "the type as defined in the grammar.  For example, :class:`ast.BinOp` "
 "instances have an attribute :attr:`left` of type :class:`ast.expr`."
 msgstr ""
+"Каждый экземпляр конкретного класса имеет один атрибут для каждого дочернего "
+"узла типа, определенного в грамматике. Например, экземпляры :class:`ast."
+"BinOp` имеют атрибут :attr:`left` типа :class:`ast.expr`."
 
 #: ../../library/ast.rst:56
 msgid ""
@@ -95,6 +116,11 @@ msgid ""
 "lists.  All possible attributes must be present and have valid values when "
 "compiling an AST with :func:`compile`."
 msgstr ""
+"Если эти атрибуты помечены в грамматике как необязательные (с помощью "
+"вопросительного знака), значение может быть «Нет». Если атрибуты могут иметь "
+"ноль или более значений (отмечены звездочкой), значения представляются в "
+"виде списков Python. Все возможные атрибуты должны присутствовать и иметь "
+"допустимые значения при компиляции AST с помощью :func:`compile`."
 
 #: ../../library/ast.rst:67
 msgid ""
@@ -115,29 +141,41 @@ msgid ""
 "one can get the source segment of a one-line expression node using "
 "``source_line[node.col_offset : node.end_col_offset]``."
 msgstr ""
+"Обратите внимание, что конечные позиции не требуются компилятору и поэтому "
+"являются необязательными. Конечное смещение находится *после* последнего "
+"символа, например, можно получить исходный сегмент узла однострочного "
+"выражения, используя ``source_line[node.col_offset : node.end_col_offset]``."
 
 #: ../../library/ast.rst:80
 msgid ""
 "The constructor of a class :class:`ast.T` parses its arguments as follows:"
 msgstr ""
+"Конструктор класса :class:`ast.T` анализирует его аргументы следующим "
+"образом:"
 
 #: ../../library/ast.rst:82
 msgid ""
 "If there are positional arguments, there must be as many as there are items "
 "in :attr:`T._fields`; they will be assigned as attributes of these names."
 msgstr ""
+"Если есть позиционные аргументы, их должно быть столько, сколько элементов "
+"в :attr:`T._fields`; они будут назначены как атрибуты этих имен."
 
 #: ../../library/ast.rst:84
 msgid ""
 "If there are keyword arguments, they will set the attributes of the same "
 "names to the given values."
 msgstr ""
+"Если есть аргументы-ключевые слова, они будут устанавливать атрибуты с "
+"одинаковыми именами в заданные значения."
 
 #: ../../library/ast.rst:87
 msgid ""
 "For example, to create and populate an :class:`ast.UnaryOp` node, you could "
 "use ::"
 msgstr ""
+"Например, чтобы создать и заполнить узел :class:`ast.UnaryOp`, вы можете "
+"использовать ::"
 
 #: ../../library/ast.rst:99
 msgid "or the more compact ::"
@@ -145,7 +183,7 @@ msgstr ""
 
 #: ../../library/ast.rst:106
 msgid "Class :class:`ast.Constant` is now used for all constants."
-msgstr ""
+msgstr "Класс :class:`ast.Constant` теперь используется для всех констант."
 
 #: ../../library/ast.rst:110
 msgid ""
@@ -173,6 +211,8 @@ msgid ""
 "Apart from the node classes, the :mod:`ast` module defines these utility "
 "functions and classes for traversing abstract syntax trees:"
 msgstr ""
+"Помимо классов узлов, модуль :mod:`ast` определяет следующие служебные "
+"функции и классы для обхода абстрактных синтаксических деревьев:"
 
 #: ../../library/ast.rst:135
 msgid ""
@@ -199,6 +239,9 @@ msgid ""
 "correspond to :pep:`484` \"signature type comments\", e.g. ``(str, int) -> "
 "List[str]``."
 msgstr ""
+"Кроме того, если ``mode`` имеет ``'func_type'``, синтаксис ввода изменяется, "
+"чтобы соответствовать :pep:`484` \"комментариям типа сигнатуры\", например "
+"``(str, int) -> List[ ул]``."
 
 #: ../../library/ast.rst:152
 msgid ""
@@ -214,10 +257,14 @@ msgid ""
 "It is possible to crash the Python interpreter with a sufficiently large/"
 "complex string due to stack depth limitations in Python's AST compiler."
 msgstr ""
+"Интерпретатор Python может привести к сбою при использовании достаточно "
+"большой/сложной строки из-за ограничений глубины стека в компиляторе Python "
+"AST."
 
 #: ../../library/ast.rst:164
 msgid "Added ``type_comments``, ``mode='func_type'`` and ``feature_version``."
 msgstr ""
+"Добавлены ``type_comments``, ``mode='func_type'`` и ``feature_version``."
 
 #: ../../library/ast.rst:170
 msgid ""
@@ -237,7 +284,7 @@ msgstr ""
 
 #: ../../library/ast.rst:185
 msgid "Now allows bytes and set literals."
-msgstr ""
+msgstr "Теперь разрешены байты и заданные литералы."
 
 #: ../../library/ast.rst:191
 msgid ""
@@ -246,6 +293,11 @@ msgid ""
 "`Module` node), or ``None`` if it has no docstring. If *clean* is true, "
 "clean up the docstring's indentation with :func:`inspect.cleandoc`."
 msgstr ""
+"Возвращает строку документации данного *узла* (который должен быть узлом :"
+"class:`FunctionDef`, :class:`AsyncFunctionDef`, :class:`ClassDef` или :class:"
+"`Module`) или ``None` ` если у него нет строки документации. Если *clean* "
+"истинно, очистите отступы строки документации с помощью :func:`inspect."
+"cleandoc`."
 
 #: ../../library/ast.rst:197
 msgid ":class:`AsyncFunctionDef` is now supported."
@@ -263,6 +315,8 @@ msgid ""
 "If *padded* is ``True``, the first line of a multi-line statement will be "
 "padded with spaces to match its original position."
 msgstr ""
+"Если *padded* имеет значение True, первая строка многострочного оператора "
+"будет дополнена пробелами, чтобы соответствовать исходному положению."
 
 #: ../../library/ast.rst:215
 msgid ""
@@ -279,6 +333,9 @@ msgid ""
 "starting at *node* by *n*. This is useful to \"move code\" to a different "
 "location in a file."
 msgstr ""
+"Увеличьте номер строки и номер конечной строки каждого узла в дереве, "
+"начиная с *node*, на *n*. Это полезно для «перемещения кода» в другое место "
+"файла."
 
 #: ../../library/ast.rst:231
 msgid ""
@@ -292,12 +349,16 @@ msgid ""
 "Yield a tuple of ``(fieldname, value)`` for each field in ``node._fields`` "
 "that is present on *node*."
 msgstr ""
+"Выдайте кортеж ``(fieldname, value)`` для каждого поля в ``node._fields``, "
+"которое присутствует на *node*."
 
 #: ../../library/ast.rst:244
 msgid ""
 "Yield all direct child nodes of *node*, that is, all fields that are nodes "
 "and all items of fields that are lists of nodes."
 msgstr ""
+"Выдать все прямые дочерние узлы *node*, то есть все поля, которые являются "
+"узлами, и все элементы полей, которые являются списками узлов."
 
 #: ../../library/ast.rst:250
 msgid ""
@@ -305,6 +366,9 @@ msgid ""
 "(including *node* itself), in no specified order.  This is useful if you "
 "only want to modify nodes in place and don't care about the context."
 msgstr ""
+"Рекурсивно вывести все узлы-потомки в дереве, начиная с *node* (включая сам "
+"*node*), в произвольном порядке. Это полезно, если вы хотите изменять узлы "
+"только на месте и не заботитесь о контексте."
 
 #: ../../library/ast.rst:257
 msgid ""
@@ -312,12 +376,18 @@ msgid ""
 "visitor function for every node found.  This function may return a value "
 "which is forwarded by the :meth:`visit` method."
 msgstr ""
+"Базовый класс посетителей узла, который обходит абстрактное синтаксическое "
+"дерево и вызывает функцию посетителя для каждого найденного узла. Эта "
+"функция может возвращать значение, которое пересылается методом :meth:"
+"`visit`."
 
 #: ../../library/ast.rst:261
 msgid ""
 "This class is meant to be subclassed, with the subclass adding visitor "
 "methods."
 msgstr ""
+"Предполагается, что этот класс будет подклассом, при этом подкласс добавит "
+"методы посетителя."
 
 #: ../../library/ast.rst:266
 msgid ""
@@ -325,16 +395,22 @@ msgid ""
 "`self.visit_{classname}` where *classname* is the name of the node class, "
 "or :meth:`generic_visit` if that method doesn't exist."
 msgstr ""
+"Посетите узел. Реализация по умолчанию вызывает метод :samp:`self."
+"visit_{classname}`, где *classname* — имя класса узла, или :meth:"
+"`generic_visit`, если этот метод не существует."
 
 #: ../../library/ast.rst:272
 msgid "This visitor calls :meth:`visit` on all children of the node."
-msgstr ""
+msgstr "Этот посетитель вызывает :meth:`visit` для всех дочерних узлов узла."
 
 #: ../../library/ast.rst:274
 msgid ""
 "Note that child nodes of nodes that have a custom visitor method won't be "
 "visited unless the visitor calls :meth:`generic_visit` or visits them itself."
 msgstr ""
+"Обратите внимание, что дочерние узлы узлов, имеющих собственный метод "
+"посетителя, не будут посещены, если посетитель не вызовет :meth:"
+"`generic_visit` или не посетит их сам."
 
 #: ../../library/ast.rst:278
 msgid ""
@@ -342,6 +418,9 @@ msgid ""
 "during traversal.  For this a special visitor exists (:class:"
 "`NodeTransformer`) that allows modifications."
 msgstr ""
+"Не используйте :class:`NodeVisitor`, если вы хотите применить изменения к "
+"узлам во время обхода. Для этого существует специальный посетитель (:class:"
+"`NodeTransformer`), который позволяет вносить изменения."
 
 #: ../../library/ast.rst:284
 msgid ""
@@ -356,6 +435,8 @@ msgid ""
 "A :class:`NodeVisitor` subclass that walks the abstract syntax tree and "
 "allows modification of nodes."
 msgstr ""
+"Подкласс :class:`NodeVisitor`, который обходит абстрактное синтаксическое "
+"дерево и позволяет изменять узлы."
 
 #: ../../library/ast.rst:295
 msgid ""
@@ -365,12 +446,20 @@ msgid ""
 "location, otherwise it is replaced with the return value.  The return value "
 "may be the original node in which case no replacement takes place."
 msgstr ""
+":class:`NodeTransformer` будет проходить AST и использовать возвращаемое "
+"значение методов посетителя для замены или удаления старого узла. Если "
+"возвращаемое значение метода посетителя равно None, узел будет удален из "
+"своего местоположения, в противном случае он заменяется возвращаемым "
+"значением. Возвращаемое значение может быть исходным узлом, и в этом случае "
+"замена не происходит."
 
 #: ../../library/ast.rst:301
 msgid ""
 "Here is an example transformer that rewrites all occurrences of name lookups "
 "(``foo``) to ``data['foo']``::"
 msgstr ""
+"Вот пример преобразователя, который перезаписывает все вхождения поиска "
+"имени (``foo``) в ``data['foo']``::"
 
 #: ../../library/ast.rst:313
 msgid ""
@@ -385,6 +474,9 @@ msgid ""
 "statement nodes), the visitor may also return a list of nodes rather than "
 "just a single node."
 msgstr ""
+"Для узлов, которые были частью набора операторов (это относится ко всем "
+"узлам операторов), посетитель также может вернуть список узлов, а не только "
+"один узел."
 
 #: ../../library/ast.rst:321
 msgid ""
@@ -396,7 +488,7 @@ msgstr ""
 
 #: ../../library/ast.rst:329
 msgid "Usually you use the transformer like this::"
-msgstr ""
+msgstr "Обычно вы используете трансформатор следующим образом:"
 
 #: ../../library/ast.rst:336
 msgid ""
@@ -408,12 +500,21 @@ msgid ""
 "dumped by default.  If this is wanted, *include_attributes* can be set to "
 "true."
 msgstr ""
+"Вернуть отформатированный дамп дерева в *node*. В основном это полезно для "
+"целей отладки. Если *annotate_fields* имеет значение true (по умолчанию), в "
+"возвращаемой строке будут показаны имена и значения полей. Если "
+"*annotate_fields* имеет значение false, результирующая строка будет более "
+"компактной за счет исключения однозначных имен полей. Атрибуты, такие как "
+"номера строк и смещения столбцов, по умолчанию не выгружаются. Если это "
+"необходимо, для *include_attributes* можно установить значение true."
 
 #: ../../library/ast.rst:346
 msgid ""
 "`Green Tree Snakes <https://greentreesnakes.readthedocs.io/>`_, an external "
 "documentation resource, has good details on working with Python ASTs."
 msgstr ""
+"`Green Tree Snakes <https://greentreesnakes.readthedocs.io/>`_, внешний "
+"ресурс документации, содержит подробные сведения о работе с Python AST."
 
 #: ../../library/ast.rst:349
 msgid ""
@@ -422,6 +523,10 @@ msgid ""
 "code that generated them. This is helpful for tools that make source code "
 "transformations."
 msgstr ""
+"`ASTTokens <https://asttokens.readthedocs.io/en/latest/user-guide.html>`_ "
+"аннотирует AST Python положениями токенов и текстом в исходном коде, который "
+"их сгенерировал. Это полезно для инструментов, которые выполняют "
+"преобразования исходного кода."
 
 #: ../../library/ast.rst:354
 msgid ""
@@ -436,6 +541,10 @@ msgid ""
 "Tree that looks like an ast tree and keeps all formatting details. It's "
 "useful for building automated refactoring (codemod) applications and linters."
 msgstr ""
+"`LibCST <https://libcst.readthedocs.io/>`_ анализирует код как конкретное "
+"синтаксическое дерево, которое выглядит как дерево ast и сохраняет все "
+"детали форматирования. Это полезно для создания приложений и линтеров "
+"автоматического рефакторинга (codemod)."
 
 #: ../../library/ast.rst:363
 msgid ""
