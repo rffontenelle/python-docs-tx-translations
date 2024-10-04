@@ -5,20 +5,20 @@
 #
 # Translators:
 # Inada Naoki <songofacandy@gmail.com>, 2023
-# Takeshi Nakazato, 2023
 # 石井明久, 2024
 # Takanori Suzuki <takanori@takanory.net>, 2024
 # tomo, 2024
 # Arihiro TAKASE, 2024
+# Takeshi Nakazato, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-06 14:16+0000\n"
+"POT-Creation-Date: 2024-09-27 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 01:06+0000\n"
-"Last-Translator: Arihiro TAKASE, 2024\n"
+"Last-Translator: Takeshi Nakazato, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
 "ja/)\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,7 @@ msgstr ""
 
 #: ../../library/glob.rst:37
 msgid "The :mod:`glob` module defines the following functions:"
-msgstr ""
+msgstr ":mod:`glob` モジュールは以下の関数を定義しています:"
 
 #: ../../library/glob.rst:43
 msgid ""
@@ -166,6 +166,8 @@ msgid ""
 "This function may return duplicate path names if *pathname* contains "
 "multiple \"``**``\" patterns and *recursive* is true."
 msgstr ""
+"*pathname* が複数の \"``**``\" パターンを含み、かつ *recursive* が真の場合、"
+"この関数は同じパスを重複して返す可能性があります。"
 
 #: ../../library/glob.rst:82 ../../library/glob.rst:105
 msgid "Support for recursive globs using \"``**``\"."
@@ -206,6 +208,8 @@ msgid ""
 "Convert the given path specification to a regular expression for use with :"
 "func:`re.match`. The path specification can contain shell-style wildcards."
 msgstr ""
+"与えられたパスの仕様を :func:`re.match` で利用するための正規表現に変換しま"
+"す。シェル形式のワイルドカードを含めることもできます。"
 
 #: ../../library/glob.rst:131
 msgid "For example:"
@@ -217,30 +221,44 @@ msgid ""
 "`fnmatch.translate`. By default wildcards do not match path separators, and "
 "``*`` pattern segments match precisely one path segment."
 msgstr ""
+":func:`fnmatch.translate` と違って、この関数ではパスの要素を区切るセパレータ"
+"とセグメントには意味があります。デフォルトでは、ワイルドカードはパスのセパ"
+"レータにはマッチしません。また ``*`` パターンのセグメントは厳密に単一のパスの"
+"セグメントにマッチします。"
 
 #: ../../library/glob.rst:146
 msgid ""
 "If *recursive* is true, the pattern segment \"``**``\" will match any number "
 "of path segments."
 msgstr ""
+"*recursive* が真の場合、パターンセグメント \"``**``\" は任意の数のパスセグメ"
+"ントにマッチします。"
 
 #: ../../library/glob.rst:149
 msgid ""
 "If *include_hidden* is true, wildcards can match path segments that start "
 "with a dot (``.``)."
 msgstr ""
+"*include_hidden* が真の場合、ワイルドカードはドット (``.``) で始まるパスセグ"
+"メントにもマッチします。"
 
 #: ../../library/glob.rst:152
 msgid ""
 "A sequence of path separators may be supplied to the *seps* argument. If not "
 "given, :data:`os.sep` and :data:`~os.altsep` (if available) are used."
 msgstr ""
+"パスの要素を区切るセパレータのシーケンスを *seps* 引数に渡すことができます。"
+"渡さない場合は :data:`os.sep` と (もしあれば) :data:`~os.altsep` が使われま"
+"す。"
 
 #: ../../library/glob.rst:157
 msgid ""
 ":meth:`pathlib.PurePath.full_match` and :meth:`pathlib.Path.glob` methods, "
 "which call this function to implement pattern matching and globbing."
 msgstr ""
+":meth:`pathlib.PurePath.full_match` と :meth:`pathlib.Path.glob` の2つのメ"
+"ソッドは、それぞれパターンマッチと glob 相当の操作を実装するためにこの関数を"
+"呼んでいます。"
 
 #: ../../library/glob.rst:165
 msgid "Examples"
@@ -253,6 +271,10 @@ msgid ""
 "the file :file:`3.txt`.  :func:`glob` will produce the following results.  "
 "Notice how any leading components of the path are preserved. ::"
 msgstr ""
+"次のファイルを含むディレクトリを考えます: :file:`1.gif`, :file:`2.txt`, :"
+"file:`card.gif` および:file:`3.txt` だけを含む :file:`sub` サブディレクトリ。"
+"このとき、  :func:`glob` は以下の結果を返します。パスにおける先頭の要素がどの"
+"ように保持されるかに注意してください::"
 
 #: ../../library/glob.rst:173
 msgid ""
@@ -268,6 +290,17 @@ msgid ""
 ">>> glob.glob('./**/', recursive=True)\n"
 "['./', './sub/']"
 msgstr ""
+">>> import glob\n"
+">>> glob.glob('./[0-9].*')\n"
+"['./1.gif', './2.txt']\n"
+">>> glob.glob('*.gif')\n"
+"['1.gif', 'card.gif']\n"
+">>> glob.glob('?.gif')\n"
+"['1.gif']\n"
+">>> glob.glob('**/*.txt', recursive=True)\n"
+"['2.txt', 'sub/3.txt']\n"
+">>> glob.glob('./**/', recursive=True)\n"
+"['./', './sub/']"
 
 #: ../../library/glob.rst:185
 msgid ""
@@ -287,11 +320,18 @@ msgid ""
 ">>> glob.glob('.c*')\n"
 "['.card.gif']"
 msgstr ""
+">>> import glob\n"
+">>> glob.glob('*.gif')\n"
+"['card.gif']\n"
+">>> glob.glob('.c*')\n"
+"['.card.gif']"
 
 #: ../../library/glob.rst:196
 msgid ""
 "The :mod:`fnmatch` module offers shell-style filename (not path) expansion."
 msgstr ""
+":mod:`fnmatch` モジュールは、シェル形式の (パスではなく) ファイル名の展開機能"
+"を提供します。"
 
 #: ../../library/glob.rst:199
 msgid "The :mod:`pathlib` module offers high-level path objects."

@@ -15,6 +15,7 @@
 # LeeWendao <LeeWendao@outlook.com>, 2023
 # Qinyu Chen, 2023
 # Kade For, 2024
+# Wulian233 <xiguawulian@gmail.com>, 2024
 # Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
@@ -407,6 +408,17 @@ msgid ""
 "released in 1975\n"
 ">>> new_con.close()"
 msgstr ""
+">>> con.close()\n"
+">>> new_con = sqlite3.connect(\"tutorial.db\")\n"
+">>> new_cur = new_con.cursor()\n"
+">>> res = new_cur.execute(\"SELECT title, year FROM movie ORDER BY score "
+"DESC\")\n"
+">>> title, year = res.fetchone()\n"
+">>> print(f'The highest scoring Monty Python movie is {title!r}, released in "
+"{year}')\n"
+"The highest scoring Monty Python movie is 'Monty Python and the Holy Grail', "
+"released in 1975\n"
+">>> new_con.close()"
 
 #: ../../library/sqlite3.rst:227
 msgid ""
@@ -643,6 +655,10 @@ msgid ""
 ">>> sqlite3.complete_statement(\"SELECT foo\")\n"
 "False"
 msgstr ""
+">>> sqlite3.complete_statement(\"SELECT foo FROM bar;\")\n"
+"True\n"
+">>> sqlite3.complete_statement(\"SELECT foo\")\n"
+"False"
 
 #: ../../library/sqlite3.rst:384
 msgid ""
@@ -746,6 +762,7 @@ msgstr ""
 msgid ""
 "SELECT p as \"p [point]\" FROM test;  ! will look up converter \"point\""
 msgstr ""
+"SELECT p as \"p [point]\" FROM test;  ! will look up converter \"point\""
 
 #: ../../library/sqlite3.rst:451
 msgid ""
@@ -882,7 +899,7 @@ msgstr "SQLite 线程模式"
 
 #: ../../library/sqlite3.rst:529
 msgid ":pep:`threadsafety <0249#threadsafety>`"
-msgstr ""
+msgstr ":pep:`threadsafety <0249#threadsafety>`"
 
 #: ../../library/sqlite3.rst:529
 msgid "`SQLITE_THREADSAFE`_"
@@ -1183,6 +1200,15 @@ msgid ""
 "('acbd18db4cc2f85cedef654fccc4a4d8',)\n"
 ">>> con.close()"
 msgstr ""
+">>> import hashlib\n"
+">>> def md5sum(t):\n"
+"...     return hashlib.md5(t).hexdigest()\n"
+">>> con = sqlite3.connect(\":memory:\")\n"
+">>> con.create_function(\"md5\", 1, md5sum)\n"
+">>> for row in con.execute(\"SELECT md5(?)\", (b\"foo\",)):\n"
+"...     print(row)\n"
+"('acbd18db4cc2f85cedef654fccc4a4d8',)\n"
+">>> con.close()"
 
 #: ../../library/sqlite3.rst:753
 msgid ""
@@ -1791,6 +1817,15 @@ msgid ""
 "dst.close()\n"
 "src.close()"
 msgstr ""
+"def progress(status, remaining, total):\n"
+"    print(f'已复制 {total-remaining} 到 {total} 页……')\n"
+"\n"
+"src = sqlite3.connect('example.db')\n"
+"dst = sqlite3.connect('backup.db')\n"
+"with dst:\n"
+"    src.backup(dst, pages=1, progress=progress)\n"
+"dst.close()\n"
+"src.close()"
 
 #: ../../library/sqlite3.rst:1201
 msgid "Example 2, copy an existing database into a transient copy:"
@@ -1804,6 +1839,11 @@ msgid ""
 "dst.close()\n"
 "src.close()"
 msgstr ""
+"src = sqlite3.connect('example.db')\n"
+"dst = sqlite3.connect(':memory:')\n"
+"src.backup(dst)\n"
+"dst.close()\n"
+"src.close()"
 
 #: ../../library/sqlite3.rst:1219
 msgid "Get a connection runtime limit."
@@ -1830,6 +1870,8 @@ msgid ""
 ">>> con.getlimit(sqlite3.SQLITE_LIMIT_SQL_LENGTH)\n"
 "1000000000"
 msgstr ""
+">>> con.getlimit(sqlite3.SQLITE_LIMIT_SQL_LENGTH)\n"
+"1000000000"
 
 #: ../../library/sqlite3.rst:1249
 msgid ""
@@ -1865,6 +1907,10 @@ msgid ""
 ">>> con.getlimit(sqlite3.SQLITE_LIMIT_ATTACHED)\n"
 "1"
 msgstr ""
+">>> con.setlimit(sqlite3.SQLITE_LIMIT_ATTACHED, 1)\n"
+"10\n"
+">>> con.getlimit(sqlite3.SQLITE_LIMIT_ATTACHED)\n"
+"1"
 
 #: ../../library/sqlite3.rst:1287
 msgid "Query a boolean connection configuration option."
@@ -2120,6 +2166,8 @@ msgid ""
 "for row in cur.execute(\"SELECT t FROM data\"):\n"
 "    print(row)"
 msgstr ""
+"for row in cur.execute(\"SELECT t FROM data\"):\n"
+"    print(row)"
 
 #: ../../library/sqlite3.rst:1488
 msgid "A :class:`Cursor` instance has the following attributes and methods."
@@ -2357,6 +2405,11 @@ msgid ""
 "True\n"
 ">>> con.close()"
 msgstr ""
+">>> con = sqlite3.connect(\":memory:\")\n"
+">>> cur = con.cursor()\n"
+">>> cur.connection == con\n"
+"True\n"
+">>> con.close()"
 
 #: ../../library/sqlite3.rst:1674
 msgid ""
@@ -2858,7 +2911,7 @@ msgstr ""
 
 #: ../../library/sqlite3.rst:2030
 msgid "python -m sqlite3 [-h] [-v] [filename] [sql]"
-msgstr ""
+msgstr "python -m sqlite3 [-h] [-v] [filename] [sql]"
 
 #: ../../library/sqlite3.rst:2032
 msgid "Type ``.quit`` or CTRL-D to exit the shell."
@@ -3021,6 +3074,20 @@ msgid ""
 "print(cur.fetchone()[0])\n"
 "con.close()"
 msgstr ""
+"class Point:\n"
+"    def __init__(self, x, y):\n"
+"        self.x, self.y = x, y\n"
+"\n"
+"    def __conform__(self, protocol):\n"
+"        if protocol is sqlite3.PrepareProtocol:\n"
+"            return f\"{self.x};{self.y}\"\n"
+"\n"
+"con = sqlite3.connect(\":memory:\")\n"
+"cur = con.cursor()\n"
+"\n"
+"cur.execute(\"SELECT ?\", (Point(4.0, -3.2),))\n"
+"print(cur.fetchone()[0])\n"
+"con.close()"
 
 #: ../../library/sqlite3.rst:2172
 msgid "How to register adapter callables"
@@ -3097,6 +3164,9 @@ msgid ""
 "    x, y = map(float, s.split(b\";\"))\n"
 "    return Point(x, y)"
 msgstr ""
+"def convert_point(s):\n"
+"    x, y = map(float, s.split(b\";\"))\n"
+"    return Point(x, y)"
 
 #: ../../library/sqlite3.rst:2229
 msgid ""
@@ -3344,6 +3414,10 @@ msgid ""
 "Traceback (most recent call last):\n"
 "OperationalError: attempt to write a readonly database"
 msgstr ""
+">>> con = sqlite3.connect(\"file:tutorial.db?mode=ro\", uri=True)\n"
+">>> con.execute(\"CREATE TABLE readonly(data)\")\n"
+"Traceback (most recent call last):\n"
+"OperationalError: attempt to write a readonly database"
 
 #: ../../library/sqlite3.rst:2464
 msgid ""
@@ -3359,6 +3433,9 @@ msgid ""
 "Traceback (most recent call last):\n"
 "OperationalError: unable to open database file"
 msgstr ""
+">>> con = sqlite3.connect(\"file:nosuchdb.db?mode=rw\", uri=True)\n"
+"Traceback (most recent call last):\n"
+"OperationalError: unable to open database file"
 
 #: ../../library/sqlite3.rst:2474
 msgid "Create a shared named in-memory database:"
@@ -3378,6 +3455,17 @@ msgid ""
 "con1.close()\n"
 "con2.close()"
 msgstr ""
+"db = \"file:mem1?mode=memory&cache=shared\"\n"
+"con1 = sqlite3.connect(db, uri=True)\n"
+"con2 = sqlite3.connect(db, uri=True)\n"
+"with con1:\n"
+"    con1.execute(\"CREATE TABLE shared(data)\")\n"
+"    con1.execute(\"INSERT INTO shared VALUES(28)\")\n"
+"res = con2.execute(\"SELECT data FROM shared\")\n"
+"assert res.fetchone() == (28,)\n"
+"\n"
+"con1.close()\n"
+"con2.close()"
 
 #: ../../library/sqlite3.rst:2490
 msgid ""
@@ -3428,6 +3516,8 @@ msgid ""
 ">>> con = sqlite3.connect(\":memory:\")\n"
 ">>> con.row_factory = sqlite3.Row"
 msgstr ""
+">>> con = sqlite3.connect(\":memory:\")\n"
+">>> con.row_factory = sqlite3.Row"
 
 #: ../../library/sqlite3.rst:2521
 msgid "Queries now return :class:`!Row` objects:"
@@ -3473,6 +3563,9 @@ msgid ""
 "    fields = [column[0] for column in cursor.description]\n"
 "    return {key: value for key, value in zip(fields, row)}"
 msgstr ""
+"def dict_factory(cursor, row):\n"
+"    fields = [column[0] for column in cursor.description]\n"
+"    return {key: value for key, value in zip(fields, row)}"
 
 #: ../../library/sqlite3.rst:2553
 msgid ""
@@ -3566,7 +3659,7 @@ msgstr ""
 
 #: ../../library/sqlite3.rst:2616
 msgid "con.text_factory = lambda data: str(data, encoding=\"latin2\")"
-msgstr ""
+msgstr "con.text_factory = lambda data: str(data, encoding=\"latin2\")"
 
 #: ../../library/sqlite3.rst:2620
 msgid ""
@@ -3578,7 +3671,7 @@ msgstr ""
 
 #: ../../library/sqlite3.rst:2623
 msgid "con.text_factory = lambda data: str(data, errors=\"surrogateescape\")"
-msgstr ""
+msgstr "con.text_factory = lambda data: str(data, errors=\"surrogateescape\")"
 
 #: ../../library/sqlite3.rst:2629
 msgid ""

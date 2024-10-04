@@ -9,15 +9,16 @@
 # Daniil Kolesnikov, 2024
 # Илья Панфилов, 2024
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 14:17+0000\n"
+"POT-Creation-Date: 2024-10-04 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 01:08+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +31,7 @@ msgstr ""
 
 #: ../../library/json.rst:2
 msgid ":mod:`!json` --- JSON encoder and decoder"
-msgstr ""
+msgstr ":mod:`!json` --- Кодер и декодер JSON"
 
 #: ../../library/json.rst:10
 msgid "**Source code:** :source:`Lib/json/__init__.py`"
@@ -45,6 +46,12 @@ msgid ""
 "wikipedia.org/wiki/JavaScript>`_ object literal syntax (although it is not a "
 "strict subset of JavaScript [#rfc-errata]_ )."
 msgstr ""
+"`JSON (нотация объектов JavaScript) <https://json.org>`_, указанный :rfc:"
+"`7159` (который устарел :rfc:`4627`) и `ECMA-404 <https://ecma- "
+"International.org/publications-and-standards/standards/ecma-404/>`_ — это "
+"облегченный формат обмена данными, созданный на основе `JavaScript <https://"
+"en.wikipedia.org/wiki/JavaScript>`_ синтаксиса объектных литералов. (хотя "
+"это не строгое подмножество JavaScript [#rfc-ошибка]_ )."
 
 #: ../../library/json.rst:22
 msgid ""
@@ -52,16 +59,22 @@ msgid ""
 "string may cause the decoder to consume considerable CPU and memory "
 "resources. Limiting the size of data to be parsed is recommended."
 msgstr ""
+"Будьте осторожны при анализе данных JSON из ненадежных источников. "
+"Вредоносная строка JSON может привести к тому, что декодер будет потреблять "
+"значительные ресурсы ЦП и памяти. Рекомендуется ограничить размер "
+"анализируемых данных."
 
 #: ../../library/json.rst:26
 msgid ""
 ":mod:`json` exposes an API familiar to users of the standard library :mod:"
 "`marshal` and :mod:`pickle` modules."
 msgstr ""
+":mod:`json` предоставляет API, знакомый пользователям модулей стандартной "
+"библиотеки :mod:`marshal` и :mod:`pickle`."
 
 #: ../../library/json.rst:29
 msgid "Encoding basic Python object hierarchies::"
-msgstr ""
+msgstr "Кодирование основных иерархий объектов Python:"
 
 #: ../../library/json.rst:31
 msgid ""
@@ -82,6 +95,22 @@ msgid ""
 ">>> io.getvalue()\n"
 "'[\"streaming API\"]'"
 msgstr ""
+">>> import json\n"
+">>> json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])\n"
+"'[\"foo\", {\"bar\": [\"baz\", null, 1.0, 2]}]'\n"
+">>> print(json.dumps(\"\\\"foo\\bar\"))\n"
+"\"\\\"foo\\bar\"\n"
+">>> print(json.dumps('\\u1234'))\n"
+"\"\\u1234\"\n"
+">>> print(json.dumps('\\\\'))\n"
+"\"\\\\\"\n"
+">>> print(json.dumps({\"c\": 0, \"b\": 0, \"a\": 0}, sort_keys=True))\n"
+"{\"a\": 0, \"b\": 0, \"c\": 0}\n"
+">>> from io import StringIO\n"
+">>> io = StringIO()\n"
+">>> json.dump(['streaming API'], io)\n"
+">>> io.getvalue()\n"
+"'[\"streaming API\"]'"
 
 #: ../../library/json.rst:48
 msgid "Compact encoding::"
@@ -93,6 +122,9 @@ msgid ""
 ">>> json.dumps([1, 2, 3, {'4': 5, '6': 7}], separators=(',', ':'))\n"
 "'[1,2,3,{\"4\":5,\"6\":7}]'"
 msgstr ""
+">>> import json\n"
+">>> json.dumps([1, 2, 3, {'4': 5, '6': 7}], separators=(',', ':'))\n"
+"'[1,2,3,{\"4\":5,\"6\":7}]'"
 
 #: ../../library/json.rst:54
 msgid "Pretty printing::"
@@ -110,7 +142,7 @@ msgstr ""
 
 #: ../../library/json.rst:63
 msgid "Specializing JSON object encoding::"
-msgstr ""
+msgstr "Специализация кодирования объектов JSON::"
 
 #: ../../library/json.rst:65
 msgid ""
@@ -124,6 +156,15 @@ msgid ""
 ">>> json.dumps(1 + 2j, default=custom_json)\n"
 "'{\"__complex__\": true, \"real\": 1.0, \"imag\": 2.0}'"
 msgstr ""
+">>> import json\n"
+">>> def custom_json(obj):\n"
+"...     if isinstance(obj, complex):\n"
+"...         return {'__complex__': True, 'real': obj.real, 'imag': obj."
+"imag}\n"
+"...     raise TypeError(f'Cannot serialize object of {type(obj)}')\n"
+"...\n"
+">>> json.dumps(1 + 2j, default=custom_json)\n"
+"'{\"__complex__\": true, \"real\": 1.0, \"imag\": 2.0}'"
 
 #: ../../library/json.rst:74
 msgid "Decoding JSON::"
@@ -141,10 +182,19 @@ msgid ""
 ">>> json.load(io)\n"
 "['streaming API']"
 msgstr ""
+">>> import json\n"
+">>> json.loads('[\"foo\", {\"bar\":[\"baz\", null, 1.0, 2]}]')\n"
+"['foo', {'bar': ['baz', None, 1.0, 2]}]\n"
+">>> json.loads('\"\\\\\"foo\\\\bar\"')\n"
+"'\"foo\\x08ar'\n"
+">>> from io import StringIO\n"
+">>> io = StringIO('[\"streaming API\"]')\n"
+">>> json.load(io)\n"
+"['streaming API']"
 
 #: ../../library/json.rst:86
 msgid "Specializing JSON object decoding::"
-msgstr ""
+msgstr "Специализируемое декодирование объектов JSON::"
 
 #: ../../library/json.rst:88
 msgid ""
@@ -161,6 +211,18 @@ msgid ""
 ">>> json.loads('1.1', parse_float=decimal.Decimal)\n"
 "Decimal('1.1')"
 msgstr ""
+">>> import json\n"
+">>> def as_complex(dct):\n"
+"...     if '__complex__' in dct:\n"
+"...         return complex(dct['real'], dct['imag'])\n"
+"...     return dct\n"
+"...\n"
+">>> json.loads('{\"__complex__\": true, \"real\": 1, \"imag\": 2}',\n"
+"...     object_hook=as_complex)\n"
+"(1+2j)\n"
+">>> import decimal\n"
+">>> json.loads('1.1', parse_float=decimal.Decimal)\n"
+"Decimal('1.1')"
 
 #: ../../library/json.rst:101
 msgid "Extending :class:`JSONEncoder`::"
@@ -183,10 +245,25 @@ msgid ""
 ">>> list(ComplexEncoder().iterencode(2 + 1j))\n"
 "['[2.0', ', 1.0', ']']"
 msgstr ""
+">>> import json\n"
+">>> class ComplexEncoder(json.JSONEncoder):\n"
+"...     def default(self, obj):\n"
+"...         if isinstance(obj, complex):\n"
+"...             return [obj.real, obj.imag]\n"
+"...         # Let the base class default method raise the TypeError\n"
+"...         return super().default(obj)\n"
+"...\n"
+">>> json.dumps(2 + 1j, cls=ComplexEncoder)\n"
+"'[2.0, 1.0]'\n"
+">>> ComplexEncoder().encode(2 + 1j)\n"
+"'[2.0, 1.0]'\n"
+">>> list(ComplexEncoder().iterencode(2 + 1j))\n"
+"['[2.0', ', 1.0', ']']"
 
 #: ../../library/json.rst:119
 msgid "Using :mod:`json.tool` from the shell to validate and pretty-print:"
 msgstr ""
+"Использование :mod:`json.tool` из оболочки для проверки и красивой печати:"
 
 #: ../../library/json.rst:121
 msgid ""
@@ -197,10 +274,16 @@ msgid ""
 "$ echo '{1.2:3.4}' | python -m json.tool\n"
 "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
 msgstr ""
+"$ echo '{\"json\":\"obj\"}' | python -m json.tool\n"
+"{\n"
+"    \"json\": \"obj\"\n"
+"}\n"
+"$ echo '{1.2:3.4}' | python -m json.tool\n"
+"Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
 
 #: ../../library/json.rst:130
 msgid "See :ref:`json-commandline` for detailed documentation."
-msgstr ""
+msgstr "Подробную документацию смотрите в :ref:`json-commandline`."
 
 #: ../../library/json.rst:134
 msgid ""
@@ -209,12 +292,19 @@ msgid ""
 "value) is also a subset of YAML 1.0 and 1.1.  This module can thus also be "
 "used as a YAML serializer."
 msgstr ""
+"JSON — это подмножество `YAML <https://yaml.org/>`_ 1.2. JSON, создаваемый "
+"настройками по умолчанию этого модуля (в частности, значением *разделителей* "
+"по умолчанию), также является подмножеством YAML 1.0 и 1.1. Таким образом, "
+"этот модуль также можно использовать в качестве сериализатора YAML."
 
 #: ../../library/json.rst:141
 msgid ""
 "This module's encoders and decoders preserve input and output order by "
 "default.  Order is only lost if the underlying containers are unordered."
 msgstr ""
+"Кодеры и декодеры этого модуля по умолчанию сохраняют порядок ввода и "
+"вывода. Порядок теряется только в том случае, если базовые контейнеры "
+"неупорядочены."
 
 #: ../../library/json.rst:146
 msgid "Basic Usage"
@@ -226,6 +316,9 @@ msgid ""
 "supporting :term:`file-like object`) using this :ref:`conversion table <py-"
 "to-json-table>`."
 msgstr ""
+"Сериализуйте *obj* как поток в формате JSON в *fp* (файловый объект с "
+"поддержкой ``.write()``), используя эту :ref:`таблицу преобразования <py-to-"
+"json- таблица>`."
 
 #: ../../library/json.rst:157
 msgid ""
@@ -233,12 +326,18 @@ msgid ""
 "basic type (:class:`str`, :class:`int`, :class:`float`, :class:`bool`, "
 "``None``) will be skipped instead of raising a :exc:`TypeError`."
 msgstr ""
+"Если *skipkeys* имеет значение true (по умолчанию: ``False``), тогда "
+"диктуются ключи, которые не относятся к базовому типу (:class:`str`, :class:"
+"`int`, :class:`float`, :class :`bool`, ``None``) будут пропущены вместо "
+"возникновения :exc:`TypeError`."
 
 #: ../../library/json.rst:161
 msgid ""
 "The :mod:`json` module always produces :class:`str` objects, not :class:"
 "`bytes` objects. Therefore, ``fp.write()`` must support :class:`str` input."
 msgstr ""
+"Модуль :mod:`json` всегда создает объекты :class:`str`, а не объекты :class:"
+"`bytes`. Следовательно, ``fp.write()`` должен поддерживать ввод :class:`str`."
 
 #: ../../library/json.rst:165 ../../library/json.rst:442
 msgid ""
@@ -246,6 +345,10 @@ msgid ""
 "all incoming non-ASCII characters escaped.  If *ensure_ascii* is false, "
 "these characters will be output as-is."
 msgstr ""
+"Если *ensure_ascii* имеет значение true (по умолчанию), в выводе "
+"гарантированно будут экранированы все входящие символы, отличные от ASCII. "
+"Если *ensure_ascii* имеет значение false, эти символы будут выводиться как "
+"есть."
 
 #: ../../library/json.rst:169
 msgid ""
@@ -253,6 +356,9 @@ msgid ""
 "reference check for container types will be skipped and a circular reference "
 "will result in a :exc:`RecursionError` (or worse)."
 msgstr ""
+"Если *check_circular* имеет значение false (по умолчанию: ``True``), то "
+"циклическая проверка ссылок для типов контейнеров будет пропущена, а "
+"циклическая ссылка приведет к ошибке :exc:`RecursionError` (или еще хуже)."
 
 #: ../../library/json.rst:173
 msgid ""
@@ -262,6 +368,12 @@ msgid ""
 "*allow_nan* is true, their JavaScript equivalents (``NaN``, ``Infinity``, ``-"
 "Infinity``) will be used."
 msgstr ""
+"Если *allow_nan* имеет значение false (по умолчанию: ``True``), то это "
+"будет :exc:`ValueError` для сериализации вне диапазона значений :class:"
+"`float` (``nan``, ``inf` `, ``-inf``) в строгом соответствии со "
+"спецификацией JSON. Если *allow_nan* имеет значение true, будут "
+"использоваться их эквиваленты в JavaScript (``NaN``, ``Infinity``, ``-"
+"Infinity``)."
 
 #: ../../library/json.rst:179 ../../library/json.rst:461
 msgid ""
@@ -272,6 +384,14 @@ msgid ""
 "indent indents that many spaces per level.  If *indent* is a string (such as "
 "``\"\\t\"``), that string is used to indent each level."
 msgstr ""
+"Если *indent* является неотрицательным целым числом или строкой, то элементы "
+"массива JSON и члены объекта будут красиво напечатаны с этим уровнем "
+"отступа. Уровень отступа 0, отрицательный или ``\"\"`` будет вставлять "
+"только новые строки. ``Нет`` (по умолчанию) выбирает наиболее компактное "
+"представление. Использование положительного целочисленного отступа приводит "
+"к отступу на такое количество пробелов на уровень. Если *indent* — это "
+"строка (например, ``\"\\t\"``), эта строка используется для отступа каждого "
+"уровня."
 
 #: ../../library/json.rst:186 ../../library/json.rst:468
 msgid "Allow strings for *indent* in addition to integers."
@@ -284,6 +404,11 @@ msgid ""
 "': ')`` otherwise.  To get the most compact JSON representation, you should "
 "specify ``(',', ':')`` to eliminate whitespace."
 msgstr ""
+"Если указано, *разделители* должны быть кортежем ``(item_separator, "
+"key_separator)``. По умолчанию используется ``(', ', ': ')``, если *indent* "
+"равен ``None``, и ``(',', ': ')`` в противном случае. Чтобы получить "
+"наиболее компактное представление JSON, вам следует указать ``(',', ':')`` "
+"для устранения пробелов."
 
 #: ../../library/json.rst:194 ../../library/json.rst:476
 msgid "Use ``(',', ': ')`` as default if *indent* is not ``None``."
@@ -708,7 +833,7 @@ msgstr ""
 
 #: ../../library/json.rst:535
 msgid "The unformatted error message."
-msgstr ""
+msgstr "Неформатированное сообщение об ошибке."
 
 #: ../../library/json.rst:539
 msgid "The JSON document being parsed."
