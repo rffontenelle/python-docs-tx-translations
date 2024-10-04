@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 11:30+0000\n"
+"POT-Creation-Date: 2024-10-04 14:53+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -733,7 +733,7 @@ msgid ""
 "raised in this case."
 msgstr ""
 
-#: ../../c-api/module.rst:500 ../../c-api/module.rst:549
+#: ../../c-api/module.rst:500 ../../c-api/module.rst:557
 msgid "Example usage::"
 msgstr "使用例::"
 
@@ -752,7 +752,7 @@ msgid ""
 " }"
 msgstr ""
 
-#: ../../c-api/module.rst:514 ../../c-api/module.rst:567
+#: ../../c-api/module.rst:514 ../../c-api/module.rst:575
 msgid ""
 "The example can also be written without checking explicitly if *obj* is "
 "``NULL``::"
@@ -772,7 +772,7 @@ msgid ""
 " }"
 msgstr ""
 
-#: ../../c-api/module.rst:526 ../../c-api/module.rst:583
+#: ../../c-api/module.rst:526 ../../c-api/module.rst:591
 msgid ""
 "Note that ``Py_XDECREF()`` should be used instead of ``Py_DECREF()`` in this "
 "case, since *obj* can be ``NULL``."
@@ -780,32 +780,42 @@ msgstr ""
 "この場合は、 *obj* が ``NULL`` でありうるため、 ``Py_DECREF()`` の代わりに "
 "``Py_XDECREF()`` を呼び出す必要があることに注意してください。"
 
-#: ../../c-api/module.rst:534
+#: ../../c-api/module.rst:529
+msgid ""
+"The number of different *name* strings passed to this function should be "
+"kept small, usually by only using statically allocated strings as *name*. "
+"For names that aren't known at compile time, prefer calling :c:func:"
+"`PyUnicode_FromString` and :c:func:`PyObject_SetAttr` directly. For more "
+"details, see :c:func:`PyUnicode_InternFromString`, which may be used "
+"internally to create a key object."
+msgstr ""
+
+#: ../../c-api/module.rst:542
 msgid ""
 "Similar to :c:func:`PyModule_AddObjectRef`, but steals a reference to "
 "*value* on success (if it returns ``0``)."
 msgstr ""
 
-#: ../../c-api/module.rst:537
+#: ../../c-api/module.rst:545
 msgid ""
 "The new :c:func:`PyModule_AddObjectRef` function is recommended, since it is "
 "easy to introduce reference leaks by misusing the :c:func:"
 "`PyModule_AddObject` function."
 msgstr ""
 
-#: ../../c-api/module.rst:543
+#: ../../c-api/module.rst:551
 msgid ""
 "Unlike other functions that steal references, ``PyModule_AddObject()`` only "
 "releases the reference to *value* **on success**."
 msgstr ""
 
-#: ../../c-api/module.rst:546
+#: ../../c-api/module.rst:554
 msgid ""
 "This means that its return value must be checked, and calling code must :c:"
 "func:`Py_DECREF` *value* manually on error."
 msgstr ""
 
-#: ../../c-api/module.rst:551
+#: ../../c-api/module.rst:559
 msgid ""
 "static int\n"
 "add_spam(PyObject *module, int value)\n"
@@ -824,7 +834,7 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../c-api/module.rst:570
+#: ../../c-api/module.rst:578
 msgid ""
 "static int\n"
 "add_spam(PyObject *module, int value)\n"
@@ -840,14 +850,20 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../c-api/module.rst:589
+#: ../../c-api/module.rst:597
 msgid ""
 "Add an integer constant to *module* as *name*.  This convenience function "
 "can be used from the module's initialization function. Return ``-1`` with an "
 "exception set on error, ``0`` on success."
 msgstr ""
 
-#: ../../c-api/module.rst:596
+#: ../../c-api/module.rst:601
+msgid ""
+"This is a convenience function that calls :c:func:`PyLong_FromLong` and :c:"
+"func:`PyModule_AddObjectRef`; see their documentation for details."
+msgstr ""
+
+#: ../../c-api/module.rst:607
 msgid ""
 "Add a string constant to *module* as *name*.  This convenience function can "
 "be used from the module's initialization function.  The string *value* must "
@@ -855,7 +871,14 @@ msgid ""
 "on success."
 msgstr ""
 
-#: ../../c-api/module.rst:604
+#: ../../c-api/module.rst:612
+msgid ""
+"This is a convenience function that calls :c:func:"
+"`PyUnicode_InternFromString` and :c:func:`PyModule_AddObjectRef`; see their "
+"documentation for details."
+msgstr ""
+
+#: ../../c-api/module.rst:619
 msgid ""
 "Add an int constant to *module*. The name and the value are taken from "
 "*macro*. For example ``PyModule_AddIntMacro(module, AF_INET)`` adds the int "
@@ -863,11 +886,11 @@ msgid ""
 "with an exception set on error, ``0`` on success."
 msgstr ""
 
-#: ../../c-api/module.rst:612
+#: ../../c-api/module.rst:627
 msgid "Add a string constant to *module*."
 msgstr "文字列定数を *module* に追加します。"
 
-#: ../../c-api/module.rst:616
+#: ../../c-api/module.rst:631
 msgid ""
 "Add a type object to *module*. The type object is finalized by calling "
 "internally :c:func:`PyType_Ready`. The name of the type object is taken from "
@@ -875,11 +898,11 @@ msgid ""
 "``-1`` with an exception set on error, ``0`` on success."
 msgstr ""
 
-#: ../../c-api/module.rst:626
+#: ../../c-api/module.rst:641
 msgid "Module lookup"
 msgstr "モジュール検索"
 
-#: ../../c-api/module.rst:628
+#: ../../c-api/module.rst:643
 msgid ""
 "Single-phase initialization creates singleton modules that can be looked up "
 "in the context of the current interpreter. This allows the module object to "
@@ -890,7 +913,7 @@ msgstr ""
 "これによって、後からモジュール定義への参照だけでモジュールオブジェクトが取得"
 "できます。"
 
-#: ../../c-api/module.rst:632
+#: ../../c-api/module.rst:647
 msgid ""
 "These functions will not work on modules created using multi-phase "
 "initialization, since multiple such modules can be created from a single "
@@ -899,7 +922,7 @@ msgstr ""
 "多段階初期化を使うと単一の定義から複数のモジュールが作成できるので、これらの"
 "関数は多段階初期化を使って作成されたモジュールには使えません。"
 
-#: ../../c-api/module.rst:637
+#: ../../c-api/module.rst:652
 msgid ""
 "Returns the module object that was created from *def* for the current "
 "interpreter. This method requires that the module object has been attached "
@@ -913,7 +936,7 @@ msgstr ""
 "ジュールオブジェクトが見付からない、もしくは事前にインタプリタの state に連結"
 "されていない場合は、 ``NULL`` を返します。"
 
-#: ../../c-api/module.rst:644
+#: ../../c-api/module.rst:659
 msgid ""
 "Attaches the module object passed to the function to the interpreter state. "
 "This allows the module object to be accessible via :c:func:"
@@ -923,11 +946,11 @@ msgstr ""
 "の関数を使うことで :c:func:`PyState_FindModule` からモジュールオブジェクトに"
 "アクセスできるようになります。"
 
-#: ../../c-api/module.rst:647
+#: ../../c-api/module.rst:662
 msgid "Only effective on modules created using single-phase initialization."
 msgstr "一段階初期化を使って作成されたモジュールにのみ有効です。"
 
-#: ../../c-api/module.rst:649
+#: ../../c-api/module.rst:664
 msgid ""
 "Python calls ``PyState_AddModule`` automatically after importing a module, "
 "so it is unnecessary (but harmless) to call it from module initialization "
@@ -938,15 +961,15 @@ msgid ""
 "state updates)."
 msgstr ""
 
-#: ../../c-api/module.rst:657 ../../c-api/module.rst:668
+#: ../../c-api/module.rst:672 ../../c-api/module.rst:683
 msgid "The caller must hold the GIL."
 msgstr "呼び出し側はGILを獲得しなければなりません。"
 
-#: ../../c-api/module.rst:659
+#: ../../c-api/module.rst:674
 msgid "Return ``-1`` with an exception set on error, ``0`` on success."
 msgstr ""
 
-#: ../../c-api/module.rst:665
+#: ../../c-api/module.rst:680
 msgid ""
 "Removes the module object created from *def* from the interpreter state. "
 "Return ``-1`` with an exception set on error, ``0`` on success."

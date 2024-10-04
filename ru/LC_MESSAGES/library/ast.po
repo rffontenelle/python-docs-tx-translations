@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-20 14:57+0000\n"
+"POT-Creation-Date: 2024-10-04 14:53+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: ../../library/ast.rst:2
 msgid ":mod:`!ast` --- Abstract Syntax Trees"
-msgstr ""
+msgstr "поддержка чтения/записи формата POSIX.1-2001 (pax)."
 
 #: ../../library/ast.rst:14
 msgid "**Source code:** :source:`Lib/ast.py`"
@@ -39,6 +39,10 @@ msgid ""
 "with each Python release; this module helps to find out programmatically "
 "what the current grammar looks like."
 msgstr ""
+"Модуль :mod:`ast` помогает приложениям Python обрабатывать деревья "
+"грамматики абстрактного синтаксиса Python. Сам абстрактный синтаксис может "
+"меняться с каждым выпуском Python; этот модуль помогает программно узнать, "
+"как выглядит текущая грамматика."
 
 #: ../../library/ast.rst:23
 msgid ""
@@ -49,6 +53,12 @@ msgid ""
 "syntax tree can be compiled into a Python code object using the built-in :"
 "func:`compile` function."
 msgstr ""
+"Абстрактное синтаксическое дерево можно создать, передав :data:`ast."
+"PyCF_ONLY_AST` в качестве флага встроенной функции :func:`compile` или "
+"используя вспомогательную функцию :func:`parse`, представленную в этом "
+"модуле. Результатом будет дерево объектов, все классы которого наследуются "
+"от :class:`ast.AST`. Абстрактное синтаксическое дерево можно скомпилировать "
+"в объект кода Python с помощью встроенной функции :func:`compile`."
 
 #: ../../library/ast.rst:33
 msgid "Abstract Grammar"
@@ -244,6 +254,10 @@ msgid ""
 "`above <abstract-grammar>`.  They are defined in the :mod:`!_ast` C module "
 "and re-exported in :mod:`ast`."
 msgstr ""
+"Это основа всех классов узлов AST. Фактические классы узлов получены из "
+"файла :file:`Parser/Python.asdl`, который воспроизведен :ref:`above "
+"<abstract-grammar>`. Они определены в модуле C :mod:`!_ast` и "
+"реэкспортируются в :mod:`ast`."
 
 #: ../../library/ast.rst:51
 msgid ""
@@ -255,6 +269,13 @@ msgid ""
 "rules with alternatives (aka \"sums\"), the left-hand side class is "
 "abstract: only instances of specific constructor nodes are ever created."
 msgstr ""
+"Для каждого левого символа абстрактной грамматики определен один класс "
+"(например, :class:`ast.stmt` или :class:`ast.expr`). Кроме того, для каждого "
+"конструктора в правой части определен один класс; эти классы наследуются от "
+"классов левых деревьев. Например, :class:`ast.BinOp` наследуется от :class:"
+"`ast.expr`. Для производственных правил с альтернативами (также известными "
+"как «суммы») левый класс является абстрактным: всегда создаются только "
+"экземпляры определенных узлов конструктора."
 
 #: ../../library/ast.rst:64
 msgid ""
@@ -268,6 +289,9 @@ msgid ""
 "the type as defined in the grammar.  For example, :class:`ast.BinOp` "
 "instances have an attribute :attr:`left` of type :class:`ast.expr`."
 msgstr ""
+"Каждый экземпляр конкретного класса имеет один атрибут для каждого дочернего "
+"узла типа, определенного в грамматике. Например, экземпляры :class:`ast."
+"BinOp` имеют атрибут :attr:`left` типа :class:`ast.expr`."
 
 #: ../../library/ast.rst:71
 msgid ""
@@ -277,6 +301,11 @@ msgid ""
 "lists.  All possible attributes must be present and have valid values when "
 "compiling an AST with :func:`compile`."
 msgstr ""
+"Если эти атрибуты помечены в грамматике как необязательные (с помощью "
+"вопросительного знака), значение может быть «Нет». Если атрибуты могут иметь "
+"ноль или более значений (отмечены звездочкой), значения представляются в "
+"виде списков Python. Все возможные атрибуты должны присутствовать и иметь "
+"допустимые значения при компиляции AST с помощью :func:`compile`."
 
 #: ../../library/ast.rst:82
 msgid ""
@@ -289,6 +318,14 @@ msgid ""
 "the node. The UTF-8 offset is recorded because the parser uses UTF-8 "
 "internally."
 msgstr ""
+"Экземпляры подклассов :class:`ast.expr` и :class:`ast.stmt` имеют атрибуты :"
+"attr:`lineno`, :attr:`col_offset`, :attr:`end_lineno` и :attr:"
+"`end_col_offset` . :attr:`lineno` и :attr:`end_lineno` — это номера первой и "
+"последней строк исходного текстового диапазона (с индексом 1, поэтому первая "
+"строка является строкой 1), а :attr:`col_offset` и :attr:` end_col_offset` — "
+"это соответствующие смещения байтов UTF-8 первого и последнего токенов, "
+"сгенерировавших узел. Смещение UTF-8 записывается, поскольку синтаксический "
+"анализатор внутренне использует UTF-8."
 
 #: ../../library/ast.rst:91
 msgid ""
@@ -297,11 +334,17 @@ msgid ""
 "one can get the source segment of a one-line expression node using "
 "``source_line[node.col_offset : node.end_col_offset]``."
 msgstr ""
+"Обратите внимание, что конечные позиции не требуются компилятору и поэтому "
+"являются необязательными. Конечное смещение находится *после* последнего "
+"символа, например, можно получить исходный сегмент узла однострочного "
+"выражения, используя ``source_line[node.col_offset : node.end_col_offset]``."
 
 #: ../../library/ast.rst:96
 msgid ""
 "The constructor of a class :class:`ast.T` parses its arguments as follows:"
 msgstr ""
+"Конструктор класса :class:`ast.T` анализирует его аргументы следующим "
+"образом:"
 
 #: ../../library/ast.rst:98
 msgid ""
@@ -386,13 +429,13 @@ msgid ""
 msgstr ""
 
 #: ../../library/ast.rst:160
-msgid "*body* is a :class:`list` of the module's :ref:`ast-statements`."
+msgid "``body`` is a :class:`list` of the module's :ref:`ast-statements`."
 msgstr ""
 
 #: ../../library/ast.rst:162
 msgid ""
-"*type_ignores* is a :class:`list` of the module's type ignore comments; see :"
-"func:`ast.parse` for more details."
+"``type_ignores`` is a :class:`list` of the module's type ignore comments; "
+"see :func:`ast.parse` for more details."
 msgstr ""
 
 #: ../../library/ast.rst:165
@@ -415,7 +458,7 @@ msgstr ""
 
 #: ../../library/ast.rst:182
 msgid ""
-"*body* is a single node, one of the :ref:`expression types <ast-"
+"``body`` is a single node, one of the :ref:`expression types <ast-"
 "expressions>`."
 msgstr ""
 
@@ -433,7 +476,7 @@ msgid ""
 msgstr ""
 
 #: ../../library/ast.rst:197
-msgid "*body* is a :class:`list` of :ref:`statement nodes <ast-statements>`."
+msgid "``body`` is a :class:`list` of :ref:`statement nodes <ast-statements>`."
 msgstr ""
 
 #: ../../library/ast.rst:199
@@ -471,11 +514,11 @@ msgstr ""
 
 #: ../../library/ast.rst:226
 msgid ""
-"*argtypes* is a :class:`list` of :ref:`expression nodes <ast-expressions>`."
+"``argtypes`` is a :class:`list` of :ref:`expression nodes <ast-expressions>`."
 msgstr ""
 
 #: ../../library/ast.rst:228
-msgid "*returns* is a single :ref:`expression node <ast-expressions>`."
+msgid "``returns`` is a single :ref:`expression node <ast-expressions>`."
 msgstr ""
 
 #: ../../library/ast.rst:230
@@ -2944,11 +2987,11 @@ msgstr ""
 
 #: ../../library/ast.rst:2485
 msgid "The following options are accepted:"
-msgstr ""
+msgstr "Принимаются следующие варианты:"
 
 #: ../../library/ast.rst:2491
 msgid "Show the help message and exit."
-msgstr ""
+msgstr "Покажите справочное сообщение и выйдите."
 
 #: ../../library/ast.rst:2496
 msgid ""
@@ -3012,7 +3055,7 @@ msgstr ""
 
 #: ../../library/ast.rst:59
 msgid "? (question mark)"
-msgstr ""
+msgstr "? (знак вопроса)"
 
 #: ../../library/ast.rst:59 ../../library/ast.rst:60
 msgid "in AST grammar"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 14:50+0000\n"
+"POT-Creation-Date: 2024-10-04 14:53+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
 "Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -996,7 +996,7 @@ msgstr "Devuelve la longitud del objeto Unicode, en puntos de código."
 
 #: ../../c-api/unicode.rst:603
 msgid "On error, set an exception and return ``-1``."
-msgstr ""
+msgstr "En caso de error, lanza una excepción y devuelve ``-1``."
 
 #: ../../c-api/unicode.rst:614
 msgid ""
@@ -1057,6 +1057,8 @@ msgstr ""
 #: ../../c-api/unicode.rst:648
 msgid "Return ``0`` on success, ``-1`` on error with an exception set."
 msgstr ""
+"Devuelve ``0`` en caso de éxito, ``-1`` en caso de error con una excepción "
+"establecida."
 
 #: ../../c-api/unicode.rst:655
 msgid ""
@@ -1072,6 +1074,8 @@ msgstr ""
 #: ../../c-api/unicode.rst:659
 msgid "Return character on success, ``-1`` on error with an exception set."
 msgstr ""
+"Devuelve un carácter en caso de éxito, ``-1`` en caso de error con un "
+"conjunto de excepciones."
 
 #: ../../c-api/unicode.rst:667
 msgid ""
@@ -1079,6 +1083,10 @@ msgid ""
 "character index *end* (excluded).  Negative indices are not supported. On "
 "error, set an exception and return ``NULL``."
 msgstr ""
+"Devuelve una subcadena de *unicode*, desde el índice de caracteres *start* "
+"(incluido) hasta el índice de caracteres *end* (excluido).  No se admiten "
+"índices negativos. En caso de error, establece una excepción y devuelve "
+"``NULL``."
 
 #: ../../c-api/unicode.rst:677
 msgid ""
@@ -2297,30 +2305,53 @@ msgid ""
 "`*p_unicode`, it sets :c:expr:`*p_unicode` to it (releasing the reference to "
 "the old string object and creating a new :term:`strong reference` to the "
 "interned string object), otherwise it leaves :c:expr:`*p_unicode` alone and "
-"interns it (creating a new :term:`strong reference`). (Clarification: even "
-"though there is a lot of talk about references, think of this function as "
-"reference-neutral; you own the object after the call if and only if you "
-"owned it before the call.)"
+"interns it."
 msgstr ""
-"Interna el argumento :c:expr:`*p_unicode` en su lugar.  El argumento debe "
-"ser la dirección de una variable puntero que apunte a un objeto cadena "
-"Unicode de Python.  Si hay una cadena internada existente que es la misma "
-"que :c:expr:`*p_unicode`, establece :c:expr:`*p_unicode` a ella (liberando "
-"la referencia al objeto de cadena antiguo y creando una nueva :term:`strong "
-"reference` al objeto de cadena internado), de lo contrario deja :c:expr:"
-"`*p_unicode` solo y lo interna (creando una nueva :term:`strong reference`). "
-"(Aclaración: aunque se habla mucho de referencias, piense en esta función "
-"como neutra en cuanto a referencias; usted posee el objeto después de la "
-"llamada si y sólo si lo poseía antes de la llamada)."
 
-#: ../../c-api/unicode.rst:1472
+#: ../../c-api/unicode.rst:1466
+msgid ""
+"(Clarification: even though there is a lot of talk about references, think "
+"of this function as reference-neutral. You must own the object you pass in; "
+"after the call you no longer own the passed-in reference, but you newly own "
+"the result.)"
+msgstr ""
+
+#: ../../c-api/unicode.rst:1471
+msgid ""
+"This function never raises an exception. On error, it leaves its argument "
+"unchanged without interning it."
+msgstr ""
+
+#: ../../c-api/unicode.rst:1474
+msgid ""
+"Instances of subclasses of :py:class:`str` may not be interned, that is, :c:"
+"expr:`PyUnicode_CheckExact(*p_unicode)` must be true. If it is not, then -- "
+"as with any other error -- the argument is left unchanged."
+msgstr ""
+
+#: ../../c-api/unicode.rst:1478
+msgid ""
+"Note that interned strings are not “immortal”. You must keep a reference to "
+"the result to benefit from interning."
+msgstr ""
+
+#: ../../c-api/unicode.rst:1484
 msgid ""
 "A combination of :c:func:`PyUnicode_FromString` and :c:func:"
-"`PyUnicode_InternInPlace`, returning either a new Unicode string object that "
-"has been interned, or a new (\"owned\") reference to an earlier interned "
-"string object with the same value."
+"`PyUnicode_InternInPlace`, meant for statically allocated strings."
 msgstr ""
-"Una combinación de :c:func:`PyUnicode_FromString` y :c:func:"
-"`PyUnicode_InternInPlace`, devolviendo ya sea un nuevo objeto de cadena "
-"Unicode que ha sido internado, o una nueva referencia (\"owned\") a un "
-"objeto de cadena internado anterior con el mismo valor."
+
+#: ../../c-api/unicode.rst:1487
+msgid ""
+"Return a new (\"owned\") reference to either a new Unicode string object "
+"that has been interned, or an earlier interned string object with the same "
+"value."
+msgstr ""
+
+#: ../../c-api/unicode.rst:1491
+msgid ""
+"Python may keep a reference to the result, or prevent it from being garbage-"
+"collected promptly. For interning an unbounded number of different strings, "
+"such as ones coming from user input, prefer calling :c:func:"
+"`PyUnicode_FromString` and :c:func:`PyUnicode_InternInPlace` directly."
+msgstr ""
