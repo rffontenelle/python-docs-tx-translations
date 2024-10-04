@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-12 15:17+0000\n"
+"POT-Creation-Date: 2024-10-04 15:24+0000\n"
 "PO-Revision-Date: 2023-05-24 02:19+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
@@ -66,29 +66,27 @@ msgstr "Этот документ включает в себя четыре ос
 
 #: ../../library/sqlite3.rst:36
 msgid ":ref:`sqlite3-tutorial` teaches how to use the :mod:`!sqlite3` module."
-msgstr ""
-":ref:`sqlite3-tutorial` рассказывает как использовать модуль:mod:`!sqlite3`."
+msgstr ":ref:`sqlite3-tutorial` учит, как использовать модуль :mod:`!sqlite3`."
 
 #: ../../library/sqlite3.rst:37
 msgid ""
 ":ref:`sqlite3-reference` describes the classes and functions this module "
 "defines."
 msgstr ""
-":ref:`sqlite3-reference` описывает классы и функции, определяемые этим "
-"модулем."
+":ref:`sqlite3-reference` описывает классы и функции, которые определяет этот "
+"модуль."
 
 #: ../../library/sqlite3.rst:39
 msgid ":ref:`sqlite3-howtos` details how to handle specific tasks."
 msgstr ""
-":ref:`sqlite3-howtos` подробно описывает как справиться с конкретными "
-"задачами."
+":ref:`sqlite3-howtos` подробно описывает, как решать конкретные задачи."
 
 #: ../../library/sqlite3.rst:40
 msgid ""
 ":ref:`sqlite3-explanation` provides in-depth background on transaction "
 "control."
 msgstr ""
-":ref:`sqlite3-explanation` содержит подробную информацию об управлении "
+":ref:`sqlite3-explanation` предоставляет подробную информацию об управлении "
 "транзакциями."
 
 #: ../../library/sqlite3.rst:47
@@ -129,9 +127,9 @@ msgid ""
 "basic :mod:`!sqlite3` functionality. It assumes a fundamental understanding "
 "of database concepts, including `cursors`_ and `transactions`_."
 msgstr ""
-"В этом уроке вы создадите базу данных фильмов о Монти Пайтоне, используя "
-"базовую функциональность :mod:`!sqlite3` . Он предполагает фундаментальное "
-"понимание концепций баз данных, включая `маркеры`_ и `транзакции`_."
+"В этом уроке вы создадите базу данных фильмов Монти Пайтона, используя "
+"базовую функциональность :mod:`!sqlite3`. Он предполагает фундаментальное "
+"понимание концепций баз данных, включая «курсоры» и «транзакции»."
 
 #: ../../library/sqlite3.rst:73
 msgid ""
@@ -140,12 +138,18 @@ msgid ""
 "create a connection to the database :file:`tutorial.db` in the current "
 "working directory, implicitly creating it if it does not exist:"
 msgstr ""
+"Во-первых, нам нужно создать новую базу данных и открыть соединение с ней, "
+"чтобы позволить :mod:`!sqlite3` работать с ней. Вызовите :func:`sqlite3."
+"connect`, чтобы создать соединение с базой данных :file:`tutorial.db` в "
+"текущем рабочем каталоге, неявно создав его, если он не существует:"
 
 #: ../../library/sqlite3.rst:84
 msgid ""
 "The returned :class:`Connection` object ``con`` represents the connection to "
 "the on-disk database."
 msgstr ""
+"Возвращенный объект :class:`Connection``con`` представляет соединение с "
+"базой данных на диске."
 
 #: ../../library/sqlite3.rst:87
 msgid ""
@@ -153,6 +157,9 @@ msgid ""
 "will need to use a database cursor. Call :meth:`con.cursor() <Connection."
 "cursor>` to create the :class:`Cursor`:"
 msgstr ""
+"Чтобы выполнять операторы SQL и получать результаты SQL-запросов, нам "
+"понадобится курсор базы данных. Вызовите :meth:`con.cursor() <Connection."
+"cursor>`, чтобы создать :class:`Cursor`:"
 
 #: ../../library/sqlite3.rst:95
 msgid ""
@@ -163,6 +170,12 @@ msgid ""
 "types is optional. Execute the ``CREATE TABLE`` statement by calling :meth:"
 "`cur.execute(...) <Cursor.execute>`:"
 msgstr ""
+"Теперь, когда у нас есть соединение с базой данных и курсор, мы можем "
+"создать таблицу базы данных «фильм» со столбцами для названия, года выпуска "
+"и оценки по отзывам. Для простоты мы можем просто использовать имена "
+"столбцов в объявлении таблицы — благодаря функции «гибкой типизации» SQLite "
+"указание типов данных не является обязательным. Выполните оператор CREATE "
+"TABLE, вызвав :meth:`cur.execute(...) <Cursor.execute>`:"
 
 #: ../../library/sqlite3.rst:111
 msgid ""
@@ -187,6 +200,9 @@ msgid ""
 "``INSERT`` statement, once again by calling :meth:`cur.execute(...) <Cursor."
 "execute>`:"
 msgstr ""
+"Теперь добавьте две строки данных, предоставленных в виде литералов SQL, "
+"выполнив оператор INSERT и еще раз вызвав :meth:`cur.execute(...) <Cursor."
+"execute>`:"
 
 #: ../../library/sqlite3.rst:148
 msgid ""
@@ -195,6 +211,11 @@ msgid ""
 "controlling-transactions` for details). Call :meth:`con.commit() <Connection."
 "commit>` on the connection object to commit the transaction:"
 msgstr ""
+"Оператор INSERT неявно открывает транзакцию, которую необходимо "
+"зафиксировать до того, как изменения будут сохранены в базе данных "
+"(подробности см. в :ref:`sqlite3-controlling-transactions`). Вызовите :meth:"
+"`con.commit() <Connection.commit>` на объекте соединения, чтобы "
+"зафиксировать транзакцию:"
 
 #: ../../library/sqlite3.rst:158
 msgid ""
@@ -203,18 +224,26 @@ msgid ""
 "assign the result to ``res``, and call :meth:`res.fetchall() <Cursor."
 "fetchall>` to return all resulting rows:"
 msgstr ""
+"Мы можем убедиться, что данные были вставлены правильно, выполнив запрос "
+"SELECT. Используйте теперь уже знакомый :meth:`cur.execute(...) <Cursor."
+"execute>`, чтобы присвоить результат ``res``, и вызовите :meth:`res."
+"fetchall() <Cursor.fetchall> ` чтобы вернуть все полученные строки:"
 
 #: ../../library/sqlite3.rst:170
 msgid ""
 "The result is a :class:`list` of two :class:`!tuple`\\s, one per row, each "
 "containing that row's ``score`` value."
 msgstr ""
+"Результатом является :class:`list` из двух :class:`!tuple`\\s, по одному на "
+"строку, каждый из которых содержит значение ``score`` этой строки."
 
 #: ../../library/sqlite3.rst:173
 msgid ""
 "Now, insert three more rows by calling :meth:`cur.executemany(...) <Cursor."
 "executemany>`:"
 msgstr ""
+"Теперь вставьте еще три строки, вызвав :meth:`cur.executemany(...) <Cursor."
+"executemany>`:"
 
 #: ../../library/sqlite3.rst:186
 msgid ""
@@ -223,18 +252,27 @@ msgid ""
 "to bind Python values to SQL statements, to avoid `SQL injection attacks`_ "
 "(see :ref:`sqlite3-placeholders` for more details)."
 msgstr ""
+"Обратите внимание, что заполнители ``?`` используются для привязки "
+"``данных`` к запросу. Всегда используйте заполнители вместо :ref:`string "
+"formatting <tut-formatting>` для привязки значений Python к операторам SQL, "
+"чтобы избежать `атак SQL-инъекцией`_ (более подробную информацию см. в :ref:"
+"`sqlite3-placeholders`)."
 
 #: ../../library/sqlite3.rst:192
 msgid ""
 "We can verify that the new rows were inserted by executing a ``SELECT`` "
 "query, this time iterating over the results of the query:"
 msgstr ""
+"Мы можем убедиться, что новые строки были вставлены, выполнив запрос SELECT, "
+"на этот раз перебирая результаты запроса:"
 
 #: ../../library/sqlite3.rst:206
 msgid ""
 "Each row is a two-item :class:`tuple` of ``(year, title)``, matching the "
 "columns selected in the query."
 msgstr ""
+"Каждая строка представляет собой кортеж из двух элементов типа «(год, "
+"заголовок)», соответствующий столбцам, выбранным в запросе."
 
 #: ../../library/sqlite3.rst:209
 msgid ""
@@ -242,12 +280,17 @@ msgid ""
 "`con.close() <Connection.close>` to close the existing connection, opening a "
 "new one, creating a new cursor, then querying the database:"
 msgstr ""
+"Наконец, убедитесь, что база данных записана на диск, вызвав :meth:`con."
+"close() <Connection.close>`, чтобы закрыть существующее соединение, открыть "
+"новое, создать новый курсор, а затем запросить базу данных:"
 
 #: ../../library/sqlite3.rst:224
 msgid ""
 "You've now created an SQLite database using the :mod:`!sqlite3` module, "
 "inserted data and retrieved values from it in multiple ways."
 msgstr ""
+"Теперь вы создали базу данных SQLite, используя модуль :mod:`!sqlite3`, "
+"вставили в нее данные и получили из нее значения несколькими способами."
 
 #: ../../library/sqlite3.rst:236
 msgid ":ref:`sqlite3-howtos` for further reading:"
@@ -691,7 +734,7 @@ msgstr ""
 
 #: ../../library/sqlite3.rst:0
 msgid "Raises"
-msgstr ""
+msgstr "Поднимает"
 
 #: ../../library/sqlite3.rst:592
 msgid "When trying to open a blob in a ``WITHOUT ROWID`` table."
