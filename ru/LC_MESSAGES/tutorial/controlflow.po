@@ -10,15 +10,16 @@
 # decorator_factory <decorator-factory+transifex@yandex.ru>, 2020
 # Илья Панфилов, 2024
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-20 00:12+0000\n"
+"POT-Creation-Date: 2024-10-04 17:06+0000\n"
 "PO-Revision-Date: 2020-05-30 12:16+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -162,6 +163,11 @@ msgid ""
 "keyword:`for` statement is such a construct, while an example of a function "
 "that takes an iterable is :func:`sum`::"
 msgstr ""
+"Мы говорим, что такой объект является :term:`iterable`, то есть подходит в "
+"качестве цели для функций и конструкций, которые ожидают чего-то, из чего "
+"они могут получать последовательные элементы, пока запас не будет исчерпан. "
+"Мы видели, что такой конструкцией является оператор :keyword:`for`, а "
+"примером функции, принимающей итерацию, является :func:`sum`::"
 
 #: ../../tutorial/controlflow.rst:151
 msgid ""
@@ -269,13 +275,15 @@ msgstr ""
 
 #: ../../tutorial/controlflow.rst:249
 msgid "Defining Functions"
-msgstr ""
+msgstr "Определение функций"
 
 #: ../../tutorial/controlflow.rst:251
 msgid ""
 "We can create a function that writes the Fibonacci series to an arbitrary "
 "boundary::"
 msgstr ""
+"Мы можем создать функцию, которая записывает ряд Фибоначчи в произвольную "
+"границу:"
 
 #: ../../tutorial/controlflow.rst:271
 msgid ""
@@ -284,6 +292,10 @@ msgid ""
 "parameters. The statements that form the body of the function start at the "
 "next line, and must be indented."
 msgstr ""
+"Ключевое слово :keyword:`def` представляет функцию *определение*. За ним "
+"должно следовать имя функции и список формальных параметров в скобках. "
+"Операторы, составляющие тело функции, начинаются со следующей строки и "
+"должны иметь отступ."
 
 #: ../../tutorial/controlflow.rst:276
 msgid ""
@@ -295,6 +307,14 @@ msgid ""
 "through code; it's good practice to include docstrings in code that you "
 "write, so make a habit of it."
 msgstr ""
+"Первый оператор тела функции опционально может быть строковым литералом; "
+"этот строковый литерал является строкой документации функции или :dfn:"
+"`docstring`. (Более подробную информацию о строках документации можно найти "
+"в разделе :ref:`tut-docstrings`.) Существуют инструменты, которые используют "
+"строки документации для автоматического создания онлайновой или печатной "
+"документации или для того, чтобы позволить пользователю интерактивно "
+"просматривать код; хорошей практикой является включение строк документации в "
+"код, который вы пишете, так что возьмите это за привычку."
 
 #: ../../tutorial/controlflow.rst:283
 msgid ""
@@ -309,6 +329,16 @@ msgid ""
 "for variables of enclosing functions, named in a :keyword:`nonlocal` "
 "statement), although they may be referenced."
 msgstr ""
+"*Выполнение* функции вводит новую таблицу символов, используемую для "
+"локальных переменных функции. Точнее, все назначения переменных в функции "
+"сохраняют значение в локальной таблице символов; тогда как ссылки на "
+"переменные сначала просматриваются в локальной таблице символов, затем в "
+"локальных таблицах символов включающих функций, затем в глобальной таблице "
+"символов и, наконец, в таблице встроенных имен. Таким образом, глобальным "
+"переменным и переменным включающих функций не может быть напрямую присвоено "
+"значение внутри функции (за исключением случаев, когда глобальные переменные "
+"названы в операторе :keyword:`global` или переменные включающих функций "
+"названы в :keyword: `nonlocal`), хотя на них можно ссылаться."
 
 #: ../../tutorial/controlflow.rst:294
 msgid ""
@@ -319,6 +349,12 @@ msgid ""
 "another function, or calls itself recursively, a new local symbol table is "
 "created for that call."
 msgstr ""
+"Фактические параметры (аргументы) вызова функции вводятся в локальную "
+"таблицу символов вызываемой функции при ее вызове; таким образом, аргументы "
+"передаются с использованием *вызова по значению* (где *значение* всегда "
+"является *ссылкой* объекта, а не значением объекта). [#]_ Когда функция "
+"вызывает другую функцию или рекурсивно вызывает саму себя, для этого вызова "
+"создается новая локальная таблица символов."
 
 #: ../../tutorial/controlflow.rst:301
 msgid ""
@@ -327,6 +363,11 @@ msgid ""
 "to by that name as a user-defined function.  Other names can also point to "
 "that same function object and can also be used to access the function::"
 msgstr ""
+"Определение функции связывает имя функции с объектом функции в текущей "
+"таблице символов. Интерпретатор распознает объект, на который указывает это "
+"имя, как определяемую пользователем функцию. Другие имена также могут "
+"указывать на тот же объект функции и также могут использоваться для доступа "
+"к функции::"
 
 #: ../../tutorial/controlflow.rst:312
 msgid ""
@@ -338,16 +379,26 @@ msgid ""
 "the only value written. You can see it if you really want to using :func:"
 "`print`::"
 msgstr ""
+"Из других языков вы можете возразить, что fib — это не функция, а процедура, "
+"поскольку она не возвращает значения. Фактически, даже функции без "
+"оператора :keyword:`return` возвращают значение, хотя и довольно скучное. "
+"Это значение называется None (это встроенное имя). Запись значения None "
+"обычно подавляется интерпретатором, если это единственное записываемое "
+"значение. Вы можете увидеть это, если действительно хотите использовать :"
+"func:`print`::"
 
 #: ../../tutorial/controlflow.rst:323
 msgid ""
 "It is simple to write a function that returns a list of the numbers of the "
 "Fibonacci series, instead of printing it::"
 msgstr ""
+"Написать функцию, которая возвращает список чисел ряда Фибоначчи, вместо "
+"того, чтобы печатать его, просто:"
 
 #: ../../tutorial/controlflow.rst:339
 msgid "This example, as usual, demonstrates some new Python features:"
 msgstr ""
+"Этот пример, как обычно, демонстрирует некоторые новые возможности Python:"
 
 #: ../../tutorial/controlflow.rst:341
 msgid ""
@@ -355,6 +406,9 @@ msgid ""
 "keyword:`!return` without an expression argument returns ``None``. Falling "
 "off the end of a function also returns ``None``."
 msgstr ""
+"Оператор :keyword:`return` возвращает значение из функции. :keyword:`!"
+"return` без аргумента-выражения возвращает ``None``. Выход за конец функции "
+"также возвращает None."
 
 #: ../../tutorial/controlflow.rst:345
 msgid ""
@@ -372,17 +426,19 @@ msgstr ""
 
 #: ../../tutorial/controlflow.rst:360
 msgid "More on Defining Functions"
-msgstr ""
+msgstr "Подробнее об определении функций"
 
 #: ../../tutorial/controlflow.rst:362
 msgid ""
 "It is also possible to define functions with a variable number of arguments. "
 "There are three forms, which can be combined."
 msgstr ""
+"Также возможно определять функции с переменным количеством аргументов. Есть "
+"три формы, которые можно комбинировать."
 
 #: ../../tutorial/controlflow.rst:369
 msgid "Default Argument Values"
-msgstr ""
+msgstr "Значения аргументов по умолчанию"
 
 #: ../../tutorial/controlflow.rst:371
 msgid ""
@@ -390,43 +446,56 @@ msgid ""
 "arguments. This creates a function that can be called with fewer arguments "
 "than it is defined to allow.  For example::"
 msgstr ""
+"Наиболее полезная форма — указать значение по умолчанию для одного или "
+"нескольких аргументов. Это создает функцию, которую можно вызвать с меньшим "
+"количеством аргументов, чем разрешено. Например::"
 
 #: ../../tutorial/controlflow.rst:387
 msgid "This function can be called in several ways:"
-msgstr ""
+msgstr "Эту функцию можно вызвать несколькими способами:"
 
 #: ../../tutorial/controlflow.rst:389
 msgid ""
 "giving only the mandatory argument: ``ask_ok('Do you really want to quit?')``"
 msgstr ""
+"давая только обязательный аргумент: ``ask_ok('Вы действительно хотите "
+"выйти?')``"
 
 #: ../../tutorial/controlflow.rst:391
 msgid ""
 "giving one of the optional arguments: ``ask_ok('OK to overwrite the file?', "
 "2)``"
 msgstr ""
+"передавая один из необязательных аргументов: ``ask_ok('ОК, чтобы "
+"перезаписать файл?', 2)``"
 
 #: ../../tutorial/controlflow.rst:393
 msgid ""
 "or even giving all arguments: ``ask_ok('OK to overwrite the file?', 2, 'Come "
 "on, only yes or no!')``"
 msgstr ""
+"или даже приведя все аргументы: ``ask_ok('ОК перезаписать файл?', 2, 'Давай, "
+"только да или нет!')``"
 
 #: ../../tutorial/controlflow.rst:396
 msgid ""
 "This example also introduces the :keyword:`in` keyword. This tests whether "
 "or not a sequence contains a certain value."
 msgstr ""
+"В этом примере также представлено ключевое слово :keyword:`in`. Это "
+"проверяет, содержит ли последовательность определенное значение."
 
 #: ../../tutorial/controlflow.rst:399
 msgid ""
 "The default values are evaluated at the point of function definition in the "
 "*defining* scope, so that ::"
 msgstr ""
+"Значения по умолчанию оцениваются в момент определения функции в "
+"*определяющей* области, так что::"
 
 #: ../../tutorial/controlflow.rst:410
 msgid "will print ``5``."
-msgstr ""
+msgstr "напечатает ``5``."
 
 #: ../../tutorial/controlflow.rst:412
 msgid ""
@@ -435,16 +504,24 @@ msgid ""
 "dictionary, or instances of most classes.  For example, the following "
 "function accumulates the arguments passed to it on subsequent calls::"
 msgstr ""
+"**Важное предупреждение:** Значение по умолчанию оценивается только один "
+"раз. Это имеет значение, когда значением по умолчанию является изменяемый "
+"объект, такой как список, словарь или экземпляры большинства классов. "
+"Например, следующая функция аккумулирует аргументы, передаваемые ей при "
+"последующих вызовах:"
 
 #: ../../tutorial/controlflow.rst:425
 msgid "This will print ::"
-msgstr ""
+msgstr "будет напечатано ::"
 
 #: ../../tutorial/controlflow.rst:431
 msgid ""
 "If you don't want the default to be shared between subsequent calls, you can "
 "write the function like this instead::"
 msgstr ""
+"Если вы не хотите, чтобы значение по умолчанию использовалось при "
+"последующих вызовах, вы можете вместо этого написать функцию следующим "
+"образом:"
 
 #: ../../tutorial/controlflow.rst:444
 msgid "Keyword Arguments"
@@ -456,6 +533,9 @@ msgid ""
 "argument>` of the form ``kwarg=value``.  For instance, the following "
 "function::"
 msgstr ""
+"Функции также можно вызывать с использованием :term:`аргументов ключевого "
+"слова <аргумент ключевого слова>` в форме ``kwarg=value``. Например, "
+"следующая функция::"
 
 #: ../../tutorial/controlflow.rst:455
 msgid ""
@@ -463,10 +543,13 @@ msgid ""
 "(``state``, ``action``, and ``type``).  This function can be called in any "
 "of the following ways::"
 msgstr ""
+"принимает один обязательный аргумент («напряжение») и три дополнительных "
+"аргумента («состояние», «действие» и «тип»). Эту функцию можно вызвать любым "
+"из следующих способов:"
 
 #: ../../tutorial/controlflow.rst:466
 msgid "but all the following calls would be invalid::"
-msgstr ""
+msgstr "но все следующие вызовы будут недействительны::"
 
 #: ../../tutorial/controlflow.rst:473
 msgid ""
@@ -478,6 +561,14 @@ msgid ""
 "may receive a value more than once. Here's an example that fails due to this "
 "restriction::"
 msgstr ""
+"При вызове функции аргументы ключевого слова должны следовать за "
+"позиционными аргументами. Все передаваемые аргументы ключевого слова должны "
+"соответствовать одному из аргументов, принимаемых функцией (например, "
+"«актёр» не является допустимым аргументом для функции «попугай»), и их "
+"порядок не важен. Сюда также входят необязательные аргументы (например, "
+"``parrot(напряжение=1000)`` тоже допустимо). Ни один аргумент не может "
+"принимать значение более одного раза. Вот пример, который не работает из-за "
+"этого ограничения:"
 
 #: ../../tutorial/controlflow.rst:489
 msgid ""
@@ -489,20 +580,31 @@ msgid ""
 "positional arguments beyond the formal parameter list.  (``*name`` must "
 "occur before ``**name``.) For example, if we define a function like this::"
 msgstr ""
+"Когда присутствует последний формальный параметр формы ``**name``, он "
+"получает словарь (см. :ref:`typesmapping`), содержащий все аргументы "
+"ключевых слов, за исключением тех, которые соответствуют формальному "
+"параметру. Его можно комбинировать с формальным параметром формы ``*name`` "
+"(описанным в следующем подразделе), который получает :ref:`tuple <tut-"
+"tuples>`, содержащий позиционные аргументы за пределами списка формальных "
+"параметров. (``*name`` должно стоять перед ``**name``.) Например, если мы "
+"определим функцию следующим образом:"
 
 #: ../../tutorial/controlflow.rst:506
 msgid "It could be called like this::"
-msgstr ""
+msgstr "Это можно было бы назвать так::"
 
 #: ../../tutorial/controlflow.rst:514
 msgid "and of course it would print:"
-msgstr ""
+msgstr "и, конечно же, он напечатает:"
 
 #: ../../tutorial/controlflow.rst:527
 msgid ""
 "Note that the order in which the keyword arguments are printed is guaranteed "
 "to match the order in which they were provided in the function call."
 msgstr ""
+"Обратите внимание, что порядок вывода аргументов ключевого слова "
+"гарантированно соответствует порядку, в котором они были указаны при вызове "
+"функции."
 
 #: ../../tutorial/controlflow.rst:531
 msgid "Special parameters"
@@ -516,10 +618,15 @@ msgid ""
 "at the function definition to determine if items are passed by position, by "
 "position or keyword, or by keyword."
 msgstr ""
+"По умолчанию аргументы могут передаваться в функцию Python либо по позиции, "
+"либо явно по ключевому слову. Для удобства чтения и производительности имеет "
+"смысл ограничить способ передачи аргументов, чтобы разработчику нужно было "
+"только просматривать определение функции, чтобы определить, передаются ли "
+"элементы по позиции, по позиции или ключевому слову или по ключевому слову."
 
 #: ../../tutorial/controlflow.rst:539
 msgid "A function definition may look like:"
-msgstr ""
+msgstr "Определение функции может выглядеть так:"
 
 #: ../../tutorial/controlflow.rst:550
 msgid ""
@@ -528,20 +635,26 @@ msgid ""
 "only, positional-or-keyword, and keyword-only. Keyword parameters are also "
 "referred to as named parameters."
 msgstr ""
+"где ``/`` и ``*`` являются необязательными. Если эти символы используются, "
+"они указывают тип параметра и способ передачи аргументов в функцию: только "
+"позиционно, позиционно или по ключевому слову и только по ключевому слову. "
+"Параметры ключевого слова также называются именованными параметрами."
 
 #: ../../tutorial/controlflow.rst:557
 msgid "Positional-or-Keyword Arguments"
-msgstr ""
+msgstr "Позиционные или ключевые аргументы"
 
 #: ../../tutorial/controlflow.rst:559
 msgid ""
 "If ``/`` and ``*`` are not present in the function definition, arguments may "
 "be passed to a function by position or by keyword."
 msgstr ""
+"Если ``/`` и ``*`` отсутствуют в определении функции, аргументы могут быть "
+"переданы функции по позиции или по ключевому слову."
 
 #: ../../tutorial/controlflow.rst:564
 msgid "Positional-Only Parameters"
-msgstr ""
+msgstr "Только позиционные параметры"
 
 #: ../../tutorial/controlflow.rst:566
 msgid ""
@@ -553,16 +666,25 @@ msgid ""
 "parameters. If there is no ``/`` in the function definition, there are no "
 "positional-only parameters."
 msgstr ""
+"Если посмотреть на это немного подробнее, можно пометить определенные "
+"параметры как *только позиционные*. Если *только позиционно*, порядок "
+"параметров имеет значение, и параметры не могут передаваться по ключевому "
+"слову. Параметры, предназначенные только для позиции, помещаются перед ``/`` "
+"(косой чертой). ``/`` используется для логического отделения позиционных "
+"параметров от остальных параметров. Если в определении функции нет ``/``, то "
+"нет и позиционных параметров."
 
 #: ../../tutorial/controlflow.rst:574
 msgid ""
 "Parameters following the ``/`` may be *positional-or-keyword* or *keyword-"
 "only*."
 msgstr ""
+"Параметры, следующие за ``/``, могут быть *позиционными или ключевыми "
+"словами* или *только ключевыми словами*."
 
 #: ../../tutorial/controlflow.rst:578
 msgid "Keyword-Only Arguments"
-msgstr ""
+msgstr "Аргументы, содержащие только ключевые слова"
 
 #: ../../tutorial/controlflow.rst:580
 msgid ""
@@ -570,6 +692,10 @@ msgid ""
 "passed by keyword argument, place an ``*`` in the arguments list just before "
 "the first *keyword-only* parameter."
 msgstr ""
+"Чтобы пометить параметры как *только ключевое слово*, указывая, что "
+"параметры должны передаваться с помощью аргумента ключевого слова, поместите "
+"``*`` в список аргументов непосредственно перед первым параметром *ключевое "
+"слово*."
 
 #: ../../tutorial/controlflow.rst:586
 msgid "Function Examples"
@@ -580,6 +706,8 @@ msgid ""
 "Consider the following example function definitions paying close attention "
 "to the markers ``/`` and ``*``::"
 msgstr ""
+"Рассмотрим следующие примеры определений функций, обращая пристальное "
+"внимание на маркеры ``/`` и ``*``:"
 
 #: ../../tutorial/controlflow.rst:604
 msgid ""
@@ -587,24 +715,33 @@ msgid ""
 "places no restrictions on the calling convention and arguments may be passed "
 "by position or keyword::"
 msgstr ""
+"Первое определение функции, «standard_arg», наиболее знакомая форма, не "
+"накладывает никаких ограничений на соглашение о вызовах, а аргументы могут "
+"передаваться по позиции или ключевому слову::"
 
 #: ../../tutorial/controlflow.rst:614
 msgid ""
 "The second function ``pos_only_arg`` is restricted to only use positional "
 "parameters as there is a ``/`` in the function definition::"
 msgstr ""
+"Вторая функция ``pos_only_arg`` ограничена использованием только позиционных "
+"параметров, поскольку в определении функции есть ``/``:"
 
 #: ../../tutorial/controlflow.rst:625
 msgid ""
 "The third function ``kwd_only_args`` only allows keyword arguments as "
 "indicated by a ``*`` in the function definition::"
 msgstr ""
+"Третья функция ``kwd_only_args`` допускает только ключевые аргументы, "
+"указанные символом ``*`` в определении функции::"
 
 #: ../../tutorial/controlflow.rst:636
 msgid ""
 "And the last uses all three calling conventions in the same function "
 "definition::"
 msgstr ""
+"И последний использует все три соглашения о вызовах в одном определении "
+"функции:"
 
 #: ../../tutorial/controlflow.rst:656
 msgid ""
@@ -612,12 +749,18 @@ msgid ""
 "between the positional argument ``name``  and ``**kwds`` which has ``name`` "
 "as a key::"
 msgstr ""
+"Наконец, рассмотрим это определение функции, которое потенциально может "
+"конфликтовать между позиционным аргументом ``name`` и ``**kwds``, имеющим "
+"``name`` в качестве ключа:"
 
 #: ../../tutorial/controlflow.rst:661
 msgid ""
 "There is no possible call that will make it return ``True`` as the keyword "
 "``'name'`` will always bind to the first parameter. For example::"
 msgstr ""
+"Невозможно выполнить вызов, который заставил бы его вернуть ``True``, "
+"поскольку ключевое слово ``'name'`` всегда будет привязано к первому "
+"параметру. Например::"
 
 #: ../../tutorial/controlflow.rst:670
 msgid ""
@@ -625,22 +768,29 @@ msgid ""
 "``name`` as a positional argument and ``'name'`` as a key in the keyword "
 "arguments::"
 msgstr ""
+"Но используя ``/`` (только позиционные аргументы), это возможно, поскольку "
+"оно позволяет использовать ``name`` в качестве позиционного аргумента и "
+"``'name'`` в качестве ключа в аргументах ключевого слова::"
 
 #: ../../tutorial/controlflow.rst:677
 msgid ""
 "In other words, the names of positional-only parameters can be used in "
 "``**kwds`` without ambiguity."
 msgstr ""
+"Другими словами, имена позиционных параметров могут использоваться в "
+"``**kwds`` без двусмысленности."
 
 #: ../../tutorial/controlflow.rst:682
 msgid "Recap"
-msgstr ""
+msgstr "Резюме"
 
 #: ../../tutorial/controlflow.rst:684
 msgid ""
 "The use case will determine which parameters to use in the function "
 "definition::"
 msgstr ""
+"Вариант использования будет определять, какие параметры использовать в "
+"определении функции:"
 
 #: ../../tutorial/controlflow.rst:688
 msgid "As guidance:"
@@ -654,6 +804,11 @@ msgid ""
 "is called or if you need to take some positional parameters and arbitrary "
 "keywords."
 msgstr ""
+"Используйте позиционный-only, если вы хотите, чтобы имена параметров были "
+"недоступны пользователю. Это полезно, когда имена параметров не имеют "
+"реального значения, если вы хотите обеспечить соблюдение порядка аргументов "
+"при вызове функции или если вам нужно взять некоторые позиционные параметры "
+"и произвольные ключевые слова."
 
 #: ../../tutorial/controlflow.rst:695
 msgid ""
@@ -661,16 +816,21 @@ msgid ""
 "understandable by being explicit with names or you want to prevent users "
 "relying on the position of the argument being passed."
 msgstr ""
+"Используйте только ключевые слова, когда имена имеют значение, а определение "
+"функции более понятно, если имена указаны явно, или вы хотите, чтобы "
+"пользователи не полагались на позицию передаваемого аргумента."
 
 #: ../../tutorial/controlflow.rst:698
 msgid ""
 "For an API, use positional-only to prevent breaking API changes if the "
 "parameter's name is modified in the future."
 msgstr ""
+"Для API используйте только позиционирование, чтобы предотвратить нарушение "
+"изменений API, если имя параметра будет изменено в будущем."
 
 #: ../../tutorial/controlflow.rst:704
 msgid "Arbitrary Argument Lists"
-msgstr ""
+msgstr "Произвольные списки аргументов"
 
 #: ../../tutorial/controlflow.rst:709
 msgid ""
@@ -679,6 +839,10 @@ msgid ""
 "wrapped up in a tuple (see :ref:`tut-tuples`).  Before the variable number "
 "of arguments, zero or more normal arguments may occur. ::"
 msgstr ""
+"Наконец, наименее часто используемый вариант — указать, что функцию можно "
+"вызывать с произвольным количеством аргументов. Эти аргументы будут "
+"заключены в кортеж (см. :ref:`tut-tuples`). Перед переменным числом "
+"аргументов может встречаться ноль или более нормальных аргументов. ::"
 
 #: ../../tutorial/controlflow.rst:718
 msgid ""
@@ -691,7 +855,7 @@ msgstr ""
 
 #: ../../tutorial/controlflow.rst:735
 msgid "Unpacking Argument Lists"
-msgstr ""
+msgstr "Распаковка списков аргументов"
 
 #: ../../tutorial/controlflow.rst:737
 msgid ""
@@ -702,12 +866,20 @@ msgid ""
 "separately, write the function call with the  ``*``\\ -operator to unpack "
 "the arguments out of a list or tuple::"
 msgstr ""
+"Обратная ситуация возникает, когда аргументы уже находятся в списке или "
+"кортеже, но их необходимо распаковать для вызова функции, требующей "
+"отдельных позиционных аргументов. Например, встроенная функция :func:`range` "
+"ожидает отдельные аргументы *start* и *stop*. Если они недоступны отдельно, "
+"напишите вызов функции с оператором ``*``\\, чтобы распаковать аргументы из "
+"списка или кортежа::"
 
 #: ../../tutorial/controlflow.rst:753
 msgid ""
 "In the same fashion, dictionaries can deliver keyword arguments with the "
 "``**``\\ -operator::"
 msgstr ""
+"Таким же образом словари могут доставлять аргументы ключевых слов с помощью "
+"оператора ``**``\\::"
 
 #: ../../tutorial/controlflow.rst:769
 msgid "Lambda Expressions"
@@ -723,12 +895,22 @@ msgid ""
 "definitions, lambda functions can reference variables from the containing "
 "scope::"
 msgstr ""
+"Небольшие анонимные функции можно создавать с помощью ключевого слова :"
+"keyword:`lambda`. Эта функция возвращает сумму двух своих аргументов: "
+"``лямбда a, b: a+b``. Лямбда-функции можно использовать везде, где требуются "
+"функциональные объекты. Они синтаксически ограничены одним выражением. "
+"Семантически они являются просто синтаксическим сахаром для обычного "
+"определения функции. Как и определения вложенных функций, лямбда-функции "
+"могут ссылаться на переменные из содержащей их области::"
 
 #: ../../tutorial/controlflow.rst:788
 msgid ""
 "The above example uses a lambda expression to return a function.  Another "
 "use is to pass a small function as an argument::"
 msgstr ""
+"В приведенном выше примере используется лямбда-выражение для возврата "
+"функции. Другое использование — передать небольшую функцию в качестве "
+"аргумента:"
 
 #: ../../tutorial/controlflow.rst:800
 msgid "Documentation Strings"
@@ -739,6 +921,7 @@ msgid ""
 "Here are some conventions about the content and formatting of documentation "
 "strings."
 msgstr ""
+"Вот некоторые соглашения о содержании и форматировании строк документации."
 
 #: ../../tutorial/controlflow.rst:810
 msgid ""
@@ -748,6 +931,11 @@ msgid ""
 "to be a verb describing a function's operation).  This line should begin "
 "with a capital letter and end with a period."
 msgstr ""
+"Первая строка всегда должна представлять собой краткое и лаконичное "
+"изложение назначения объекта. Для краткости не следует явно указывать имя "
+"или тип объекта, поскольку они доступны другими способами (за исключением "
+"случаев, когда имя является глаголом, описывающим работу функции). Эта "
+"строка должна начинаться с заглавной буквы и заканчиваться точкой."
 
 #: ../../tutorial/controlflow.rst:816
 msgid ""
@@ -756,6 +944,10 @@ msgid ""
 "The following lines should be one or more paragraphs describing the object's "
 "calling conventions, its side effects, etc."
 msgstr ""
+"Если в строке документации больше строк, вторая строка должна быть пустой, "
+"визуально отделяя краткое изложение от остального описания. Следующие строки "
+"должны представлять собой один или несколько абзацев, описывающих соглашения "
+"о вызовах объекта, его побочные эффекты и т. д."
 
 #: ../../tutorial/controlflow.rst:821
 msgid ""
@@ -771,14 +963,25 @@ msgid ""
 "they occur all their leading whitespace should be stripped.  Equivalence of "
 "whitespace should be tested after expansion of tabs (to 8 spaces, normally)."
 msgstr ""
+"Анализатор Python не удаляет отступы из многострочных строковых литералов в "
+"Python, поэтому инструменты, обрабатывающие документацию, при необходимости "
+"должны удалять отступы. Это делается с использованием следующего соглашения. "
+"Первая непустая строка *после* первой строки строки определяет величину "
+"отступа для всей строки документации. (Мы не можем использовать первую "
+"строку, поскольку она обычно примыкает к открывающим кавычкам строки, "
+"поэтому ее отступ не виден в строковом литерале.) Пробелы, «эквивалентные» "
+"этому отступу, затем удаляются из начала всех строк строки. . Строки с "
+"меньшим отступом не должны встречаться, но если они встречаются, все ведущие "
+"пробелы должны быть удалены. Эквивалентность пробелов следует проверять "
+"после расширения табуляции (обычно до 8 пробелов)."
 
 #: ../../tutorial/controlflow.rst:833
 msgid "Here is an example of a multi-line docstring::"
-msgstr ""
+msgstr "Вот пример многострочной строки документации:"
 
 #: ../../tutorial/controlflow.rst:851
 msgid "Function Annotations"
-msgstr ""
+msgstr "Аннотации функций"
 
 #: ../../tutorial/controlflow.rst:859
 msgid ""
@@ -786,6 +989,9 @@ msgid ""
 "information about the types used by user-defined functions (see :pep:`3107` "
 "and :pep:`484` for more information)."
 msgstr ""
+":ref:`Аннотации функций <function>` — это совершенно необязательная "
+"информация метаданных о типах, используемых пользовательскими функциями "
+"(дополнительную информацию см. в :pep:`3107` и :pep:`484`)."
 
 #: ../../tutorial/controlflow.rst:863
 msgid ""
@@ -801,7 +1007,7 @@ msgstr ""
 
 #: ../../tutorial/controlflow.rst:885
 msgid "Intermezzo: Coding Style"
-msgstr ""
+msgstr "Intermezzo: Coding Style"
 
 #: ../../tutorial/controlflow.rst:890
 msgid ""
@@ -811,6 +1017,12 @@ msgid ""
 "others. Making it easy for others to read your code is always a good idea, "
 "and adopting a nice coding style helps tremendously for that."
 msgstr ""
+"Теперь, когда вы собираетесь писать более длинные и сложные фрагменты "
+"Python, самое время поговорить о *стиле кодирования*. Большинство языков "
+"могут быть написаны (или, более кратко, *отформатированы*) в разных стилях; "
+"некоторые более читабельны, чем другие. Всегда полезно облегчить другим "
+"чтение вашего кода, и принятие хорошего стиля кодирования очень помогает в "
+"этом."
 
 #: ../../tutorial/controlflow.rst:896
 msgid ""
@@ -819,10 +1031,14 @@ msgid ""
 "Python developer should read it at some point; here are the most important "
 "points extracted for you:"
 msgstr ""
+"Для Python :pep:`8` стал руководством по стилю, которого придерживается "
+"большинство проектов; он способствует очень читабельному и приятному для "
+"глаз стилю кодирования. Каждый разработчик Python должен когда-нибудь "
+"прочитать его; вот наиболее важные моменты, извлеченные для вас:"
 
 #: ../../tutorial/controlflow.rst:901
 msgid "Use 4-space indentation, and no tabs."
-msgstr ""
+msgstr "Используйте отступы в 4 пробела и не используйте табуляцию."
 
 #: ../../tutorial/controlflow.rst:903
 msgid ""
@@ -830,36 +1046,45 @@ msgid ""
 "nesting depth) and large indentation (easier to read).  Tabs introduce "
 "confusion, and are best left out."
 msgstr ""
+"4 пробела — хороший компромисс между небольшим отступом (позволяет увеличить "
+"глубину вложенности) и большим отступом (облегчает чтение). Вкладки вносят "
+"путаницу, поэтому их лучше не использовать."
 
 #: ../../tutorial/controlflow.rst:907
 msgid "Wrap lines so that they don't exceed 79 characters."
-msgstr ""
+msgstr "Переносите строки так, чтобы они не превышали 79 символов."
 
 #: ../../tutorial/controlflow.rst:909
 msgid ""
 "This helps users with small displays and makes it possible to have several "
 "code files side-by-side on larger displays."
 msgstr ""
+"Это помогает пользователям с небольшими дисплеями и позволяет размещать "
+"несколько файлов кода рядом на больших дисплеях."
 
 #: ../../tutorial/controlflow.rst:912
 msgid ""
 "Use blank lines to separate functions and classes, and larger blocks of code "
 "inside functions."
 msgstr ""
+"Используйте пустые строки для разделения функций и классов, а также более "
+"крупных блоков кода внутри функций."
 
 #: ../../tutorial/controlflow.rst:915
 msgid "When possible, put comments on a line of their own."
-msgstr ""
+msgstr "По возможности помещайте комментарии в отдельную строку."
 
 #: ../../tutorial/controlflow.rst:917
 msgid "Use docstrings."
-msgstr ""
+msgstr "Use docstrings."
 
 #: ../../tutorial/controlflow.rst:919
 msgid ""
 "Use spaces around operators and after commas, but not directly inside "
 "bracketing constructs: ``a = f(1, 2) + g(3, 4)``."
 msgstr ""
+"Используйте пробелы вокруг операторов и после запятых, но не непосредственно "
+"внутри конструкций скобок: ``a = f(1, 2) + g(3, 4)``."
 
 #: ../../tutorial/controlflow.rst:922
 msgid ""
@@ -868,6 +1093,11 @@ msgid ""
 "functions and methods.  Always use ``self`` as the name for the first method "
 "argument (see :ref:`tut-firstclasses` for more on classes and methods)."
 msgstr ""
+"Называйте свои классы и функции последовательно; соглашение заключается в "
+"использовании ``UpperCamelCase`` для классов и "
+"``lowercase_with_underscores`` для функций и методов. Всегда используйте "
+"self в качестве имени первого аргумента метода (подробнее о классах и "
+"методах см. :ref:`tut-firstclasses`)."
 
 #: ../../tutorial/controlflow.rst:927
 msgid ""
@@ -875,6 +1105,9 @@ msgid ""
 "environments.  Python's default, UTF-8, or even plain ASCII work best in any "
 "case."
 msgstr ""
+"Не используйте сложные кодировки, если ваш код предназначен для "
+"использования в международных средах. В любом случае лучше всего работают "
+"значения по умолчанию Python, UTF-8 или даже простой ASCII."
 
 #: ../../tutorial/controlflow.rst:931
 msgid ""
@@ -882,6 +1115,9 @@ msgid ""
 "slightest chance people speaking a different language will read or maintain "
 "the code."
 msgstr ""
+"Аналогично, не используйте в идентификаторах символы, отличные от ASCII, "
+"если есть лишь малейшая вероятность того, что люди, говорящие на другом "
+"языке, будут читать или поддерживать код."
 
 #: ../../tutorial/controlflow.rst:937
 msgid "Footnotes"
@@ -893,3 +1129,7 @@ msgid ""
 "a mutable object is passed, the caller will see any changes the callee makes "
 "to it (items inserted into a list)."
 msgstr ""
+"На самом деле, *вызов по ссылке на объект* было бы лучшим описанием, "
+"поскольку, если передается изменяемый объект, вызывающий объект увидит любые "
+"изменения, которые вызываемый объект вносит в него (элементы, вставленные в "
+"список)."
