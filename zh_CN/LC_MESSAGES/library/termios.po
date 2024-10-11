@@ -7,7 +7,6 @@
 # Menghua Xiao <arieshout@gmail.com>, 2021
 # nick <2330458484@qq.com>, 2021
 # Arisaka97 <solitaire2312@gmail.com>, 2023
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
 # Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
@@ -15,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 10:59+0000\n"
+"POT-Creation-Date: 2024-10-11 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 01:14+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -42,8 +41,8 @@ msgstr ""
 "*termios* 风格的 tty I/O 控制的 Unix 版本上可用。"
 
 #: ../../library/termios.rst:19
-msgid ":ref:`Availability <availability>`: Unix."
-msgstr ":ref:`可用性 <availability>`: Unix。"
+msgid "Availability"
+msgstr ""
 
 #: ../../library/termios.rst:21
 msgid ""
@@ -202,6 +201,18 @@ msgid ""
 "        termios.tcsetattr(fd, termios.TCSADRAIN, old)\n"
 "    return passwd"
 msgstr ""
+"def getpass(prompt=\"Password: \"):\n"
+"    import termios, sys\n"
+"    fd = sys.stdin.fileno()\n"
+"    old = termios.tcgetattr(fd)\n"
+"    new = termios.tcgetattr(fd)\n"
+"    new[3] = new[3] & ~termios.ECHO          # lflags\n"
+"    try:\n"
+"        termios.tcsetattr(fd, termios.TCSADRAIN, new)\n"
+"        passwd = input(prompt)\n"
+"    finally:\n"
+"        termios.tcsetattr(fd, termios.TCSADRAIN, old)\n"
+"    return passwd"
 
 #: ../../library/termios.rst:8
 msgid "POSIX"

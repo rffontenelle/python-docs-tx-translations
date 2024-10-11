@@ -4,17 +4,18 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Freesand Leo <yuqinju@163.com>, 2024
 # nick <2330458484@qq.com>, 2024
+# Jiuh.star <jiuh.star@gmail.com>, 2024
+# Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-04 14:17+0000\n"
+"POT-Creation-Date: 2024-10-11 14:17+0000\n"
 "PO-Revision-Date: 2024-10-04 14:19+0000\n"
-"Last-Translator: nick <2330458484@qq.com>, 2024\n"
+"Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +26,7 @@ msgstr ""
 
 #: ../../howto/free-threading-python.rst:5
 msgid "Python experimental support for free threading"
-msgstr ""
+msgstr "Python 对自由线程的实验性支持"
 
 #: ../../howto/free-threading-python.rst:7
 msgid ""
@@ -37,12 +38,18 @@ msgid ""
 "automatically, programs designed with threading in mind will run faster on "
 "multi-core hardware."
 msgstr ""
+"从 3.13 版开始，CPython 实验性地支持 :term:`free threading` (自由线程) 的 "
+"Python 构建，其禁用 :term:`global interpreter lock` (GIL)。自由线程化的执行允"
+"许在可用的 CPU 上并行运行线程，充分利用可用的处理能力。尽管并非所有软件都能自"
+"动地从中受益，但是考虑到线程设计的程序在多核硬件上运行速度会更快。"
 
 #: ../../howto/free-threading-python.rst:14
 msgid ""
 "**The free-threaded mode is experimental** and work is ongoing to improve "
 "it: expect some bugs and a substantial single-threaded performance hit."
 msgstr ""
+"**自由线程模式是实验性的**，改进工作正在进行中：预计会出现一些错误，单线程性"
+"能也会受到很大影响。"
 
 #: ../../howto/free-threading-python.rst:17
 msgid ""
@@ -50,16 +57,20 @@ msgid ""
 "See :ref:`freethreading-extensions-howto` for information on how to write C "
 "extensions that support the free-threaded build."
 msgstr ""
+"本文档描述了自由线程对 Python 代码的影响。 请参阅 :ref:`freethreading-"
+"extensions-howto` 了解如何编写支持自由线程构建的 C 扩展。"
 
 #: ../../howto/free-threading-python.rst:23
 msgid ""
 ":pep:`703` – Making the Global Interpreter Lock Optional in CPython for an "
 "overall description of free-threaded Python."
 msgstr ""
+":pep:`703` —— 查阅《在 CPython 中使全局解释器锁成为可选项》以了解对自由线程 "
+"Python 的整体描述。"
 
 #: ../../howto/free-threading-python.rst:28
 msgid "Installation"
-msgstr ""
+msgstr "安装"
 
 #: ../../howto/free-threading-python.rst:30
 msgid ""
@@ -67,6 +78,8 @@ msgid ""
 "optionally support installing free-threaded Python binaries.  The installers "
 "are available at https://www.python.org/downloads/."
 msgstr ""
+"从 Python 3.13 开始，官方 macOS 和 Windows 安装器提供了对可选安装自由线程 "
+"Python 二进制文件的支持。 安装器可在 https://www.python.org/downloads/ 获取。"
 
 #: ../../howto/free-threading-python.rst:34
 msgid ""
@@ -74,16 +87,21 @@ msgid ""
 "Python <https://py-free-threading.github.io/installing_cpython/>`_, a "
 "community-maintained installation guide for installing free-threaded Python."
 msgstr ""
+"有关其他平台的描述，请参阅 `安装自由线程 Python <https://py-free-threading."
+"github.io/installing_cpython/>`_，这是一份由社区维护的，用于安装自由线程 "
+"Python 的安装指南。"
 
 #: ../../howto/free-threading-python.rst:38
 msgid ""
 "When building CPython from source, the :option:`--disable-gil` configure "
 "option should be used to build a free-threaded Python interpreter."
 msgstr ""
+"当从源码构建 CPython 时，应使用 :option:`--disable-gil` 配置选项以构建自由线"
+"程 Python 解释器"
 
 #: ../../howto/free-threading-python.rst:43
 msgid "Identifying free-threaded Python"
-msgstr ""
+msgstr "识别自由线程 Python"
 
 #: ../../howto/free-threading-python.rst:45
 msgid ""
@@ -92,6 +110,9 @@ msgid ""
 "build\". The new :func:`sys._is_gil_enabled` function can be used to check "
 "whether the GIL is actually disabled in the running process."
 msgstr ""
+"要检查当前解释器是否支持自由线程，查看 :option:`python -VV <-V>` 和 :attr:"
+"`sys.version` 是否包含 \"experimental free-threading build\"。新的 :func:"
+"`sys._is_gil_enabled` 函数可用于检查在运行进程中全局解释器锁是否确实被关闭。"
 
 #: ../../howto/free-threading-python.rst:50
 msgid ""
@@ -103,7 +124,7 @@ msgstr ""
 
 #: ../../howto/free-threading-python.rst:57
 msgid "The global interpreter lock in free-threaded Python"
-msgstr ""
+msgstr "自由线程版 Python 中的全局解释器锁"
 
 #: ../../howto/free-threading-python.rst:59
 msgid ""
@@ -111,6 +132,8 @@ msgid ""
 "enabled at runtime using the environment variable :envvar:`PYTHON_GIL` or "
 "the command-line option :option:`-X gil`."
 msgstr ""
+"CPython 的自由线程构建版支持在运行时使用环境变量 :envvar:`PYTHON_GIL` 或命令"
+"行选项 :option:`-X gil` 选择性地启用 GIL。"
 
 #: ../../howto/free-threading-python.rst:63
 msgid ""
@@ -118,24 +141,28 @@ msgid ""
 "module that is not explicitly marked as supporting free threading.  A "
 "warning will be printed in this case."
 msgstr ""
+"GIL 也可能在导入未显式标记为支持自由线程模式的 C-API 扩展模块时被自动启用。 "
+"在这种情况下将会打印一条警告。"
 
 #: ../../howto/free-threading-python.rst:67
 msgid ""
 "In addition to individual package documentation, the following websites "
 "track the status of popular packages support for free threading:"
 msgstr ""
+"在单独软件包的文档以外，还有下列网站在追踪热门软件包对自由线程模式的支持状"
+"态："
 
 #: ../../howto/free-threading-python.rst:70
 msgid "https://py-free-threading.github.io/tracking/"
-msgstr ""
+msgstr "https://py-free-threading.github.io/tracking/"
 
 #: ../../howto/free-threading-python.rst:71
 msgid "https://hugovk.github.io/free-threaded-wheels/"
-msgstr ""
+msgstr "https://hugovk.github.io/free-threaded-wheels/"
 
 #: ../../howto/free-threading-python.rst:75
 msgid "Thread safety"
-msgstr ""
+msgstr "线程安全"
 
 #: ../../howto/free-threading-python.rst:77
 msgid ""
@@ -158,16 +185,16 @@ msgstr ""
 
 #: ../../howto/free-threading-python.rst:94
 msgid "Known limitations"
-msgstr ""
+msgstr "已知的限制"
 
 #: ../../howto/free-threading-python.rst:96
 msgid ""
 "This section describes known limitations of the free-threaded CPython build."
-msgstr ""
+msgstr "本节介绍自由线程 CPython 构建的已知限制。"
 
 #: ../../howto/free-threading-python.rst:99
 msgid "Immortalization"
-msgstr ""
+msgstr "永生化"
 
 #: ../../howto/free-threading-python.rst:101
 msgid ""
@@ -187,23 +214,23 @@ msgstr ""
 #: ../../howto/free-threading-python.rst:109
 msgid ""
 ":ref:`function <user-defined-funcs>` objects declared at the module level"
-msgstr ""
+msgstr "在模块中声明的 :ref:`函数 <user-defined-funcs>` 对象"
 
 #: ../../howto/free-threading-python.rst:110
 msgid ":ref:`method <instance-methods>` descriptors"
-msgstr ""
+msgstr ":ref:`方法 <instance-methods>` 描述器"
 
 #: ../../howto/free-threading-python.rst:111
 msgid ":ref:`code <code-objects>` objects"
-msgstr ""
+msgstr ":ref:`代码对象 <code-objects>`"
 
 #: ../../howto/free-threading-python.rst:112
 msgid ":term:`module` objects and their dictionaries"
-msgstr ""
+msgstr ":term:`module` 对象及其字典"
 
 #: ../../howto/free-threading-python.rst:113
 msgid ":ref:`classes <classes>` (type objects)"
-msgstr ""
+msgstr ":ref:`类 <classes>` (类型对象)"
 
 #: ../../howto/free-threading-python.rst:115
 msgid ""
@@ -246,7 +273,7 @@ msgstr ""
 
 #: ../../howto/free-threading-python.rst:143
 msgid "Single-threaded performance"
-msgstr ""
+msgstr "单线程性能"
 
 #: ../../howto/free-threading-python.rst:145
 msgid ""

@@ -4,8 +4,8 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 # Raphael Mendonça, 2024
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 #
 #, fuzzy
 msgid ""
@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-04 14:17+0000\n"
 "PO-Revision-Date: 2024-10-04 14:19+0000\n"
-"Last-Translator: Raphael Mendonça, 2024\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
 "teams/5390/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: ../../howto/free-threading-python.rst:5
 msgid "Python experimental support for free threading"
-msgstr ""
+msgstr "Suporte experimental do Python para threads livres"
 
 #: ../../howto/free-threading-python.rst:7
 msgid ""
@@ -38,12 +38,23 @@ msgid ""
 "automatically, programs designed with threading in mind will run faster on "
 "multi-core hardware."
 msgstr ""
+"A partir da versão 3.13, o CPython tem suporte experimental para uma "
+"compilação do Python chamada :term:`threads livres` (em inglês, free "
+"threading), onde a :term:`trava global do interpretador` (GIL) está "
+"desabilitada. A execução com threads livres permite a utilização total do "
+"poder de processamento disponível, executando threads em paralelo nos "
+"núcleos de CPU disponíveis. Embora nem todos os softwares se beneficiem "
+"disso automaticamente, os programas projetados com uso de threads em mente "
+"serão executados mais rapidamente em hardware com vários núcleos."
 
 #: ../../howto/free-threading-python.rst:14
 msgid ""
 "**The free-threaded mode is experimental** and work is ongoing to improve "
 "it: expect some bugs and a substantial single-threaded performance hit."
 msgstr ""
+"**O modo de threads livres é experimental** e há um trabalho contínuo para "
+"melhorá-lo: espere alguns bugs e uma perda substancial no desempenho da "
+"thread única."
 
 #: ../../howto/free-threading-python.rst:17
 msgid ""
@@ -51,16 +62,22 @@ msgid ""
 "See :ref:`freethreading-extensions-howto` for information on how to write C "
 "extensions that support the free-threaded build."
 msgstr ""
+"Este documento descreve as implicações de threads livres para o código "
+"Python. Veja :ref:`freethreading-extensions-howto` para informações sobre "
+"como escrever extensões C que oferecem suporte à construção com threads "
+"livres."
 
 #: ../../howto/free-threading-python.rst:23
 msgid ""
 ":pep:`703` – Making the Global Interpreter Lock Optional in CPython for an "
 "overall description of free-threaded Python."
 msgstr ""
+":pep:`703` – Tornando a trava global do interpretador opcional no CPython "
+"para uma descrição geral do Python com threads livres."
 
 #: ../../howto/free-threading-python.rst:28
 msgid "Installation"
-msgstr ""
+msgstr "Instalação"
 
 #: ../../howto/free-threading-python.rst:30
 msgid ""
@@ -68,6 +85,10 @@ msgid ""
 "optionally support installing free-threaded Python binaries.  The installers "
 "are available at https://www.python.org/downloads/."
 msgstr ""
+"A partir do Python 3.13, os instaladores oficiais do macOS e do Windows "
+"oferecem suporte opcional à instalação de binários Python com threads "
+"livres. Os instaladores estão disponíveis em https://www.python.org/"
+"downloads/."
 
 #: ../../howto/free-threading-python.rst:34
 msgid ""
@@ -75,16 +96,23 @@ msgid ""
 "Python <https://py-free-threading.github.io/installing_cpython/>`_, a "
 "community-maintained installation guide for installing free-threaded Python."
 msgstr ""
+"Para obter informações sobre outras plataformas, consulte `Instalando um "
+"Python com threads livres <https://py-free-threading.github.io/"
+"installing_cpython/>`_, um guia de instalação mantido pela comunidade para "
+"instalar o Python com threads livres"
 
 #: ../../howto/free-threading-python.rst:38
 msgid ""
 "When building CPython from source, the :option:`--disable-gil` configure "
 "option should be used to build a free-threaded Python interpreter."
 msgstr ""
+"Ao construir o CPython a partir do código-fonte, a opção de configuração :"
+"option:`--disable-gil` deve ser usada para construir um interpretador Python "
+"com threads livres."
 
 #: ../../howto/free-threading-python.rst:43
 msgid "Identifying free-threaded Python"
-msgstr ""
+msgstr "Identificando um Python com threads livres"
 
 #: ../../howto/free-threading-python.rst:45
 msgid ""
@@ -93,6 +121,10 @@ msgid ""
 "build\". The new :func:`sys._is_gil_enabled` function can be used to check "
 "whether the GIL is actually disabled in the running process."
 msgstr ""
+"Para verificar se o interpretador atual oferece suporte a threads livres, :"
+"option:`python -VV <-V>` e :attr:`sys.version` contêm \"experimental free-"
+"threading build\". A nova função :func:`sys._is_gil_enabled` pode ser usada "
+"para verificar se a GIL está realmente desabilitada no processo em execução."
 
 #: ../../howto/free-threading-python.rst:50
 msgid ""
@@ -101,10 +133,15 @@ msgid ""
 "variable is set to ``1``, then the build supports free threading.  This is "
 "the recommended mechanism for decisions related to the build configuration."
 msgstr ""
+"A variável de configuração ``sysconfig.get_config_var(\"Py_GIL_DISABLED\")`` "
+"pode ser usada para determinar se a compilação tem suporte a threads livres. "
+"Se a variável for definida como ``1``, a compilação tem suporte a threads "
+"livres. Este é o mecanismo recomendado para decisões relacionadas à "
+"configuração da construção."
 
 #: ../../howto/free-threading-python.rst:57
 msgid "The global interpreter lock in free-threaded Python"
-msgstr ""
+msgstr "A trava global do interpretador no Python com threads livres"
 
 #: ../../howto/free-threading-python.rst:59
 msgid ""
@@ -112,6 +149,10 @@ msgid ""
 "enabled at runtime using the environment variable :envvar:`PYTHON_GIL` or "
 "the command-line option :option:`-X gil`."
 msgstr ""
+"Construções com threads livres do CPython oferecem suporte a opcionalmente "
+"executar com a GIL habilitada em tempo de execução usando a variável de "
+"ambiente :envvar:`PYTHON_GIL` ou a opção de linha de comando :option:`-X "
+"gil`."
 
 #: ../../howto/free-threading-python.rst:63
 msgid ""
@@ -119,24 +160,29 @@ msgid ""
 "module that is not explicitly marked as supporting free threading.  A "
 "warning will be printed in this case."
 msgstr ""
+"A GIL também pode ser habilitada automaticamente ao importar um módulo de "
+"extensão da API C que não esteja explicitamente marcado como oferecendo "
+"suporte a threads livres. Um aviso será impresso neste caso."
 
 #: ../../howto/free-threading-python.rst:67
 msgid ""
 "In addition to individual package documentation, the following websites "
 "track the status of popular packages support for free threading:"
 msgstr ""
+"Além da documentação de pacotes individuais, os seguintes sites rastreiam o "
+"status do suporte de pacotes populares para threads livres:"
 
 #: ../../howto/free-threading-python.rst:70
 msgid "https://py-free-threading.github.io/tracking/"
-msgstr ""
+msgstr "https://py-free-threading.github.io/tracking/"
 
 #: ../../howto/free-threading-python.rst:71
 msgid "https://hugovk.github.io/free-threaded-wheels/"
-msgstr ""
+msgstr "https://hugovk.github.io/free-threaded-wheels/"
 
 #: ../../howto/free-threading-python.rst:75
 msgid "Thread safety"
-msgstr ""
+msgstr "Segurança nas threads"
 
 #: ../../howto/free-threading-python.rst:77
 msgid ""
@@ -149,6 +195,15 @@ msgid ""
 "treated as a description of the current implementation, not a guarantee of "
 "current or future behavior."
 msgstr ""
+"A construção com threads livres do CPython visa fornecer comportamento de "
+"segurança às threads semelhante no nível do Python à construção padrão com "
+"GIL habilitada. Tipos embutidos como :class:`dict`, :class:`list` e :class:"
+"`set` usam travas internas para proteger contra modificações simultâneas de "
+"maneiras que se comportam de forma semelhante à GIL. No entanto, o Python "
+"não garantiu historicamente um comportamento específico para modificações "
+"simultâneas a esses tipos embutidos, portanto, isso deve ser tratado como "
+"uma descrição da implementação atual, não uma garantia de comportamento "
+"atual ou futuro."
 
 #: ../../howto/free-threading-python.rst:88
 msgid ""
@@ -156,19 +211,24 @@ msgid ""
 "primitives instead of relying on the internal locks of built-in types, when "
 "possible."
 msgstr ""
+"É recomendável usar :class:`threading.Lock` ou outras primitivas de "
+"sincronização em vez de depender de travas internas de tipos embutidos, "
+"quando possível."
 
 #: ../../howto/free-threading-python.rst:94
 msgid "Known limitations"
-msgstr ""
+msgstr "Limitações conhecidas"
 
 #: ../../howto/free-threading-python.rst:96
 msgid ""
 "This section describes known limitations of the free-threaded CPython build."
 msgstr ""
+"Esta seção descreve as limitações conhecidas da construção do Python com "
+"threads livres."
 
 #: ../../howto/free-threading-python.rst:99
 msgid "Immortalization"
-msgstr ""
+msgstr "Imortalização"
 
 #: ../../howto/free-threading-python.rst:101
 msgid ""
@@ -177,6 +237,11 @@ msgid ""
 "that are never modified.  This is done to avoid reference count contention "
 "that would prevent efficient multi-threaded scaling."
 msgstr ""
+"A construção com threads livres da versão 3.13 torna alguns objetos :term:"
+"`imortais <imortal>`. Objetos imortais não são desalocados e têm contagens "
+"de referência que nunca são modificadas. Isso é feito para evitar contenção "
+"de contagem de referências que impediria o dimensionamento multithread "
+"eficiente."
 
 #: ../../howto/free-threading-python.rst:106
 msgid ""
@@ -184,27 +249,31 @@ msgid ""
 "time after the main thread is running.  The following objects are "
 "immortalized:"
 msgstr ""
+"Um objeto será tornado imortal quando um novo thread for iniciado pela "
+"primeira vez após o thread principal estar em execução. Os seguintes objetos "
+"são imortalizados:"
 
 #: ../../howto/free-threading-python.rst:109
 msgid ""
 ":ref:`function <user-defined-funcs>` objects declared at the module level"
 msgstr ""
+"objetos :ref:`função <user-defined-funcs>` declarados no nível de módulo"
 
 #: ../../howto/free-threading-python.rst:110
 msgid ":ref:`method <instance-methods>` descriptors"
-msgstr ""
+msgstr "descritores de :ref:`métodos <instance-methods>`"
 
 #: ../../howto/free-threading-python.rst:111
 msgid ":ref:`code <code-objects>` objects"
-msgstr ""
+msgstr "objetos :ref:`código <code-objects>`"
 
 #: ../../howto/free-threading-python.rst:112
 msgid ":term:`module` objects and their dictionaries"
-msgstr ""
+msgstr "objetos :term:`módulo` e seus dicionários"
 
 #: ../../howto/free-threading-python.rst:113
 msgid ":ref:`classes <classes>` (type objects)"
-msgstr ""
+msgstr ":ref:`classes <classes>` (objetos de tipo)"
 
 #: ../../howto/free-threading-python.rst:115
 msgid ""
@@ -212,6 +281,9 @@ msgid ""
 "many objects of these types may see increased memory usage.  This is "
 "expected to be addressed in the 3.14 release."
 msgstr ""
+"Como objetos imortais nunca são desalocados, aplicações que criam muitos "
+"objetos desses tipos podem ver aumento no uso de memória. Espera-se que isso "
+"seja resolvido na versão 3.14."
 
 #: ../../howto/free-threading-python.rst:119
 msgid ""
@@ -219,6 +291,9 @@ msgid ""
 "returned by :func:`sys.intern` are also immortalized.  This behavior is "
 "expected to remain in the 3.14 free-threaded build."
 msgstr ""
+"Além disso, literais numéricos e de string no código, bem como strings "
+"retornadas por :func:`sys.intern` também são imortalizados. Espera-se que "
+"esse comportamento permaneça na construção com threads livres do 3.14."
 
 #: ../../howto/free-threading-python.rst:125
 msgid "Frame objects"
@@ -233,6 +308,12 @@ msgid ""
 "_getframe` are generally safe as long as the resulting frame object is not "
 "passed to another thread."
 msgstr ""
+"Não é seguro acessar objetos :ref:`quadro <frame-objects>` de outros threads "
+"e fazer isso pode fazer com que seu programa trave. Isso significa que :func:"
+"`sys._current_frames` geralmente não é seguro para uso em uma construção com "
+"threads livres. Funções como :func:`inspect.currentframe` e :func:`sys."
+"_getframe` são geralmente seguras, desde que o objeto quadro resultante não "
+"seja passado para outro thread."
 
 #: ../../howto/free-threading-python.rst:135
 msgid "Iterators"
@@ -244,10 +325,13 @@ msgid ""
 "safe and threads may see duplicate or missing elements when iterating or "
 "crash the interpreter."
 msgstr ""
+"Compartilhar o mesmo objeto iterador entre vários threads geralmente não é "
+"seguro e os threads podem ver elementos duplicados ou ausentes ao iterar ou "
+"travar o interpretador."
 
 #: ../../howto/free-threading-python.rst:143
 msgid "Single-threaded performance"
-msgstr ""
+msgstr "Desempenho com thread única"
 
 #: ../../howto/free-threading-python.rst:145
 msgid ""
@@ -262,3 +346,14 @@ msgid ""
 "overhead of 10% or less on the pyperformance suite compared to the default "
 "GIL-enabled build."
 msgstr ""
+"A construção com threads livres tem sobrecarga adicional ao executar código "
+"Python em comparação com a construção padrão com GIL habilitada. Na versão "
+"3.13, essa sobrecarga é de cerca de 40% no conjunto de ferramentas "
+"`pyperformance <https://pyperformance.readthedocs.io/>`_. Programas que "
+"passam a maior parte do tempo em extensões C ou E/S verão menos impacto. O "
+"maior impacto é porque o interpretador adaptativo especializado (:pep:`659`) "
+"está desabilitado na construção com threads livres. Esperamos reabilitá-lo "
+"de forma segura para threads na versão 3.14. Espera-se que essa sobrecarga "
+"seja reduzida na próxima versão do Python. Estamos buscando uma sobrecarga "
+"de 10% ou menos no conjunto de ferramentas pyperformance em comparação com a "
+"construção padrão com GIL habilitada."
