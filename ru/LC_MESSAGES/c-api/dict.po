@@ -7,15 +7,16 @@
 # decorator_factory <decorator-factory+transifex@yandex.ru>, 2020
 # Илья Панфилов, 2024
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-04 16:32+0000\n"
+"POT-Creation-Date: 2024-10-11 16:34+0000\n"
 "PO-Revision-Date: 2017-02-16 17:35+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -33,13 +34,15 @@ msgstr "Объекты словаря"
 #: ../../c-api/dict.rst:13
 msgid ""
 "This subtype of :c:type:`PyObject` represents a Python dictionary object."
-msgstr ""
+msgstr "Этот подтип :c:type:`PyObject` представляет объект словаря Python."
 
 #: ../../c-api/dict.rst:18
 msgid ""
 "This instance of :c:type:`PyTypeObject` represents the Python dictionary "
 "type.  This is the same object as :class:`dict` in the Python layer."
 msgstr ""
+"Этот экземпляр :c:type:`PyTypeObject` представляет тип словаря Python. Это "
+"тот же объект, что и :class:`dict` на уровне Python."
 
 #: ../../c-api/dict.rst:24
 msgid ""
@@ -59,7 +62,7 @@ msgstr ""
 
 #: ../../c-api/dict.rst:36
 msgid "Return a new empty dictionary, or ``NULL`` on failure."
-msgstr ""
+msgstr "Вернуть новый пустой словарь или ``NULL`` в случае ошибки."
 
 #: ../../c-api/dict.rst:41
 msgid ""
@@ -67,6 +70,10 @@ msgid ""
 "read-only behavior.  This is normally used to create a view to prevent "
 "modification of the dictionary for non-dynamic class types."
 msgstr ""
+"Возвращает объект :class:`types.MappingProxyType` для сопоставления, которое "
+"обеспечивает поведение только для чтения. Обычно это используется для "
+"создания представления, предотвращающего изменение словаря для "
+"нединамических типов классов."
 
 #: ../../c-api/dict.rst:48
 msgid "Empty an existing dictionary of all key-value pairs."
@@ -78,6 +85,9 @@ msgid ""
 "*key*, return ``1``, otherwise return ``0``.  On error, return ``-1``. This "
 "is equivalent to the Python expression ``key in p``."
 msgstr ""
+"Определите, содержит ли словарь *p* *key*. Если элемент в *p* соответствует "
+"*key*, верните ``1``, в противном случае верните ``0``. В случае ошибки "
+"верните ``-1``. Это эквивалентно выражению Python ``key in p``."
 
 #: ../../c-api/dict.rst:60
 msgid "Return a new dictionary that contains the same key-value pairs as *p*."
@@ -90,6 +100,10 @@ msgid ""
 "on success or ``-1`` on failure.  This function *does not* steal a reference "
 "to *val*."
 msgstr ""
+"Вставьте *val* в словарь *p* с ключом *key*. *ключ* должен быть :term:"
+"`hashable`; если это не так, будет выдано :exc:`TypeError`. Возвращайте "
+"``0`` в случае успеха или ``-1`` в случае неудачи. Эта функция *не* крадет "
+"ссылку на *val*."
 
 #: ../../c-api/dict.rst:75
 msgid ""
@@ -132,6 +146,10 @@ msgid ""
 "Return ``NULL`` **with** an exception set if an exception occurred.  Return "
 "``NULL`` **without** an exception set if the key wasn't present."
 msgstr ""
+"Вариант :c:func:`PyDict_GetItem`, который не подавляет исключения. "
+"Возвращает ``NULL`` **с** установленным исключением, если исключение "
+"произошло. Верните ``NULL`` **без** установленного исключения, если ключ "
+"отсутствовал."
 
 #: ../../c-api/dict.rst:116
 msgid ""
@@ -155,28 +173,36 @@ msgid ""
 "*key* only once, instead of evaluating it independently for the lookup and "
 "the insertion."
 msgstr ""
+"Это то же самое, что и :meth:`dict.setdefault` уровня Python. Если он "
+"присутствует, он возвращает значение, соответствующее *key* из словаря *p*. "
+"Если ключа нет в словаре, он вставляется со значением *defaultobj* и "
+"возвращается *defaultobj*. Эта функция оценивает хэш-функцию *key* только "
+"один раз, вместо того, чтобы оценивать ее независимо для поиска и вставки."
 
 #: ../../c-api/dict.rst:137
 msgid ""
 "Return a :c:type:`PyListObject` containing all the items from the dictionary."
-msgstr ""
+msgstr "Верните :c:type:`PyListObject`, содержащий все элементы из словаря."
 
 #: ../../c-api/dict.rst:142
 msgid ""
 "Return a :c:type:`PyListObject` containing all the keys from the dictionary."
-msgstr ""
+msgstr "Верните :c:type:`PyListObject`, содержащий все ключи из словаря."
 
 #: ../../c-api/dict.rst:147
 msgid ""
 "Return a :c:type:`PyListObject` containing all the values from the "
 "dictionary *p*."
 msgstr ""
+"Возвращает :c:type:`PyListObject`, содержащий все значения из словаря *p*."
 
 #: ../../c-api/dict.rst:155
 msgid ""
 "Return the number of items in the dictionary.  This is equivalent to "
 "``len(p)`` on a dictionary."
 msgstr ""
+"Возвращает количество элементов в словаре. Это эквивалентно ``len(p)`` в "
+"словаре."
 
 #: ../../c-api/dict.rst:161
 msgid ""
@@ -215,6 +241,13 @@ msgid ""
 "only be added if there is not a matching key in *a*. Return ``0`` on success "
 "or ``-1`` if an exception was raised."
 msgstr ""
+"Перебрать объект сопоставления *b*, добавив пары ключ-значение в словарь "
+"*a*. *b* может быть словарем или любым объектом, поддерживающим :c:func:"
+"`PyMapping_Keys` и :c:func:`PyObject_GetItem`. Если *override* имеет "
+"значение true, существующие пары в *a* будут заменены, если соответствующий "
+"ключ найден в *b*, в противном случае пары будут добавлены только в том "
+"случае, если в *a* нет соответствующего ключа. Возвращайте ``0`` в случае "
+"успеха или ``-1``, если возникло исключение."
 
 #: ../../c-api/dict.rst:217
 msgid ""
@@ -224,6 +257,11 @@ msgid ""
 "has no \"keys\" attribute.  Return ``0`` on success or ``-1`` if an "
 "exception was raised."
 msgstr ""
+"Это то же самое, что ``PyDict_Merge(a, b, 1)`` в C и аналогично ``a."
+"update(b)`` в Python, за исключением того, что :c:func:`PyDict_Update` не "
+"падает. вернемся к итерации по последовательности пар ключ-значение, если "
+"второй аргумент не имеет атрибута «ключи». Возвращайте ``0`` в случае успеха "
+"или ``-1``, если возникло исключение."
 
 #: ../../c-api/dict.rst:226
 msgid ""
@@ -233,3 +271,9 @@ msgid ""
 "*override* is true, else the first wins. Return ``0`` on success or ``-1`` "
 "if an exception was raised. Equivalent Python (except for the return value)::"
 msgstr ""
+"Обновите или объедините словарь *a* из пар ключ-значение в *seq2*. *seq2* "
+"должен быть итерируемым объектом, создающим итерируемые объекты длиной 2, "
+"рассматриваемые как пары ключ-значение. В случае дубликатов ключей "
+"выигрывает последний, если *override* истинно, в противном случае выигрывает "
+"первый. Возвращайте ``0`` в случае успеха или ``-1``, если возникло "
+"исключение. Эквивалент Python (за исключением возвращаемого значения)::"
