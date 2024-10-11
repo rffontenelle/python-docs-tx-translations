@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 14:50+0000\n"
+"POT-Creation-Date: 2024-10-11 14:48+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
@@ -483,7 +483,7 @@ msgstr ""
 #: ../../library/itertools.rst:236 ../../library/itertools.rst:279
 #: ../../library/itertools.rst:476 ../../library/itertools.rst:507
 #: ../../library/itertools.rst:542 ../../library/itertools.rst:615
-#: ../../library/itertools.rst:676 ../../library/itertools.rst:718
+#: ../../library/itertools.rst:676 ../../library/itertools.rst:731
 msgid "Roughly equivalent to::"
 msgstr "Примерно эквивалентно::"
 
@@ -1574,48 +1574,40 @@ msgstr "Возвращает *n* независимых итераторов и�
 #: ../../library/itertools.rst:678
 msgid ""
 "def tee(iterable, n=2):\n"
-"    iterator = iter(iterable)\n"
-"    shared_link = [None, None]\n"
-"    return tuple(_tee(iterator, shared_link) for _ in range(n))\n"
+"    if n < 0:\n"
+"        raise ValueError\n"
+"    if n == 0:\n"
+"        return ()\n"
+"    iterator = _tee(iterable)\n"
+"    result = [iterator]\n"
+"    for _ in range(n - 1):\n"
+"        result.append(_tee(iterator))\n"
+"    return tuple(result)\n"
 "\n"
-"def _tee(iterator, link):\n"
-"    try:\n"
-"        while True:\n"
-"            if link[1] is None:\n"
-"                link[0] = next(iterator)\n"
-"                link[1] = [None, None]\n"
-"            value, link = link\n"
-"            yield value\n"
-"    except StopIteration:\n"
-"        return"
-msgstr ""
-"def tee(iterable, n=2):\n"
-"    iterator = iter(iterable)\n"
-"    shared_link = [None, None]\n"
-"    return tuple(_tee(iterator, shared_link) for _ in range(n))\n"
+"class _tee:\n"
 "\n"
-"def _tee(iterator, link):\n"
-"    try:\n"
-"        while True:\n"
-"            if link[1] is None:\n"
-"                link[0] = next(iterator)\n"
-"                link[1] = [None, None]\n"
-"            value, link = link\n"
-"            yield value\n"
-"    except StopIteration:\n"
-"        return"
-
-#: ../../library/itertools.rst:694
-msgid ""
-"Once a :func:`tee` has been created, the original *iterable* should not be "
-"used anywhere else; otherwise, the *iterable* could get advanced without the "
-"tee objects being informed."
+"    def __init__(self, iterable):\n"
+"        it = iter(iterable)\n"
+"        if isinstance(it, _tee):\n"
+"            self.iterator = it.iterator\n"
+"            self.link = it.link\n"
+"        else:\n"
+"            self.iterator = it\n"
+"            self.link = [None, None]\n"
+"\n"
+"    def __iter__(self):\n"
+"        return self\n"
+"\n"
+"    def __next__(self):\n"
+"        link = self.link\n"
+"        if link[1] is None:\n"
+"            link[0] = next(self.iterator)\n"
+"            link[1] = [None, None]\n"
+"        value, self.link = link\n"
+"        return value"
 msgstr ""
-"После создания :func:`tee` исходный *iterable* больше нигде не должен "
-"использоваться; в противном случае *iterable* может продвинуться вперед без "
-"уведомления tee-объектов."
 
-#: ../../library/itertools.rst:698
+#: ../../library/itertools.rst:711
 msgid ""
 "``tee`` iterators are not threadsafe. A :exc:`RuntimeError` may be raised "
 "when simultaneously using iterators returned by the same :func:`tee` call, "
@@ -1626,7 +1618,7 @@ msgstr ""
 "одним и тем же вызовом :func:`tee`, даже если исходный *iterable* является "
 "потокобезопасным."
 
-#: ../../library/itertools.rst:702
+#: ../../library/itertools.rst:715
 msgid ""
 "This itertool may require significant auxiliary storage (depending on how "
 "much temporary data needs to be stored). In general, if one iterator uses "
@@ -1639,12 +1631,12 @@ msgstr ""
 "данные до запуска другого итератора, быстрее использовать :func:`list` "
 "вместо :func:`tee`."
 
-#: ../../library/itertools.rst:710
+#: ../../library/itertools.rst:723
 msgid "Make an iterator that aggregates elements from each of the *iterables*."
 msgstr ""
 "Создайте итератор, который объединяет элементы из каждого из *итераторов*."
 
-#: ../../library/itertools.rst:713
+#: ../../library/itertools.rst:726
 msgid ""
 "If the iterables are of uneven length, missing values are filled-in with "
 "*fillvalue*.  If not specified, *fillvalue* defaults to ``None``."
@@ -1652,13 +1644,13 @@ msgstr ""
 "Если итерации имеют нечетную длину, недостающие значения заполняются с "
 "помощью *fillvalue*. Если не указано, *fillvalue* по умолчанию равно None."
 
-#: ../../library/itertools.rst:716
+#: ../../library/itertools.rst:729
 msgid "Iteration continues until the longest iterable is exhausted."
 msgstr ""
 "Итерация продолжается до тех пор, пока не будет исчерпана самая длинная "
 "итерация."
 
-#: ../../library/itertools.rst:720
+#: ../../library/itertools.rst:733
 msgid ""
 "def zip_longest(*iterables, fillvalue=None):\n"
 "    # zip_longest('ABCD', 'xy', fillvalue='-') → Ax By C- D-\n"
@@ -1704,7 +1696,7 @@ msgstr ""
 "            values.append(value)\n"
 "        yield tuple(values)"
 
-#: ../../library/itertools.rst:742
+#: ../../library/itertools.rst:755
 msgid ""
 "If one of the iterables is potentially infinite, then the :func:"
 "`zip_longest` function should be wrapped with something that limits the "
@@ -1714,11 +1706,11 @@ msgstr ""
 "`zip_longest` должна быть обернута чем-то, что ограничивает количество "
 "вызовов (например, :func:`islice` или :func:`take while`)."
 
-#: ../../library/itertools.rst:750
+#: ../../library/itertools.rst:763
 msgid "Itertools Recipes"
 msgstr "Рецепты Itertools"
 
-#: ../../library/itertools.rst:752
+#: ../../library/itertools.rst:765
 msgid ""
 "This section shows recipes for creating an extended toolset using the "
 "existing itertools as building blocks."
@@ -1727,7 +1719,7 @@ msgstr ""
 "использованием существующих инструментов itertools в качестве строительных "
 "блоков."
 
-#: ../../library/itertools.rst:755
+#: ../../library/itertools.rst:768
 msgid ""
 "The primary purpose of the itertools recipes is educational.  The recipes "
 "show various ways of thinking about individual tools — for example, that "
@@ -1747,7 +1739,7 @@ msgstr ""
 "встроенными itertools, такими как ``map()``, ``filter()`` , ``reversed()`` и "
 "``enumerate()``."
 
-#: ../../library/itertools.rst:764
+#: ../../library/itertools.rst:777
 msgid ""
 "A secondary purpose of the recipes is to serve as an incubator.  The "
 "``accumulate()``, ``compress()``, and ``pairwise()`` itertools started out "
@@ -1759,7 +1751,7 @@ msgstr ""
 "рецепты ``sliding_window()``, ``iter_index()`` и ``sieve()`` тестируются, "
 "чтобы увидеть, докажут ли они свою ценность."
 
-#: ../../library/itertools.rst:769
+#: ../../library/itertools.rst:782
 msgid ""
 "Substantially all of these recipes and many, many others can be installed "
 "from the :pypi:`more-itertools` project found on the Python Package Index::"
@@ -1768,11 +1760,11 @@ msgstr ""
 "проекта :pypi:`more-itertools`, который можно найти в индексе пакетов "
 "Python::"
 
-#: ../../library/itertools.rst:773
+#: ../../library/itertools.rst:786
 msgid "python -m pip install more-itertools"
 msgstr "python -m pip install more-itertools"
 
-#: ../../library/itertools.rst:775
+#: ../../library/itertools.rst:788
 msgid ""
 "Many of the recipes offer the same high performance as the underlying "
 "toolset. Superior memory performance is kept by processing elements one at a "
@@ -1793,7 +1785,7 @@ msgstr ""
 "и :term:`генераторов <generator>`, которые влекут за собой накладные расходы "
 "интерпретатора."
 
-#: ../../library/itertools.rst:783
+#: ../../library/itertools.rst:796
 msgid ""
 "import collections\n"
 "import contextlib\n"
@@ -2147,11 +2139,11 @@ msgstr ""
 "        while True:\n"
 "            yield func()"
 
-#: ../../library/itertools.rst:956
+#: ../../library/itertools.rst:969
 msgid "The following recipes have a more mathematical flavor:"
 msgstr "Следующие рецепты имеют более математический оттенок:"
 
-#: ../../library/itertools.rst:958
+#: ../../library/itertools.rst:971
 msgid ""
 "def powerset(iterable):\n"
 "    \"powerset([1,2,3]) → () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)\"\n"

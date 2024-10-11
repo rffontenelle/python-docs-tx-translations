@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-20 14:57+0000\n"
+"POT-Creation-Date: 2024-10-11 14:48+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -60,9 +60,13 @@ msgstr ""
 msgid ":pep:`324` -- PEP proposing the subprocess module"
 msgstr ":pep:`324` -- 提出 subprocess 模块的 PEP"
 
+#: ../../library/subprocess.rst:598 ../../library/subprocess.rst:605
+#: ../../library/subprocess.rst:615 ../../library/subprocess.rst:624
+#: ../../library/subprocess.rst:633 ../../library/subprocess.rst:639
+#: ../../library/subprocess.rst:1544 ../../library/subprocess.rst:1566
 #: ../../includes/wasm-notavail.rst:3
-msgid ":ref:`Availability <availability>`: not Emscripten, not WASI."
-msgstr ":ref:`可用性 <availability>`: 非 Emscripten，非 WASI。"
+msgid "Availability"
+msgstr ""
 
 #: ../../includes/wasm-notavail.rst:5
 msgid ""
@@ -986,12 +990,6 @@ msgid ""
 msgstr ""
 "如果 *start_new_session* 为真值则 ``setsid()`` 系统调用将在执行子进程之前在子"
 "进程中执行。"
-
-#: ../../library/subprocess.rst:598 ../../library/subprocess.rst:605
-#: ../../library/subprocess.rst:615 ../../library/subprocess.rst:624
-#: ../../library/subprocess.rst:633 ../../library/subprocess.rst:639
-msgid ":ref:`Availability <availability>`: POSIX"
-msgstr ":ref:`可用性 <availability>`: POSIX"
 
 #: ../../library/subprocess.rst:599
 msgid "*start_new_session* was added."
@@ -2088,6 +2086,10 @@ msgid ""
 "p1.stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.\n"
 "output = p2.communicate()[0]"
 msgstr ""
+"p1 = Popen([\"dmesg\"], stdout=PIPE)\n"
+"p2 = Popen([\"grep\", \"hda\"], stdin=p1.stdout, stdout=PIPE)\n"
+"p1.stdout.close()  # 允许 p1 在 p2 退出时接收 SIGPIPE。\n"
+"output = p2.communicate()[0]"
 
 #: ../../library/subprocess.rst:1355
 msgid ""
@@ -2117,6 +2119,9 @@ msgid ""
 "# becomes\n"
 "retcode = call(\"mycmd\" + \" myarg\", shell=True)"
 msgstr ""
+"sts = os.system(\"mycmd\" + \" myarg\")\n"
+"# 变为\n"
+"retcode = call(\"mycmd\" + \" myarg\", shell=True)"
 
 #: ../../library/subprocess.rst:1379
 msgid "Notes:"
@@ -2157,6 +2162,15 @@ msgid ""
 "except OSError as e:\n"
 "    print(\"Execution failed:\", e, file=sys.stderr)"
 msgstr ""
+"try:\n"
+"    retcode = call(\"mycmd\" + \" myarg\", shell=True)\n"
+"    if retcode < 0:\n"
+"        print(\"Child was terminated by signal\", -retcode, file=sys."
+"stderr)\n"
+"    else:\n"
+"        print(\"Child returned\", retcode, file=sys.stderr)\n"
+"except OSError as e:\n"
+"    print(\"Execution failed:\", e, file=sys.stderr)"
 
 #: ../../library/subprocess.rst:1402
 msgid "Replacing the :func:`os.spawn <os.spawnl>` family"
@@ -2172,6 +2186,9 @@ msgid ""
 "==>\n"
 "pid = Popen([\"/bin/mycmd\", \"myarg\"]).pid"
 msgstr ""
+"pid = os.spawnlp(os.P_NOWAIT, \"/bin/mycmd\", \"mycmd\", \"myarg\")\n"
+"==>\n"
+"pid = Popen([\"/bin/mycmd\", \"myarg\"]).pid"
 
 #: ../../library/subprocess.rst:1410
 msgid "P_WAIT example::"
@@ -2183,6 +2200,9 @@ msgid ""
 "==>\n"
 "retcode = call([\"/bin/mycmd\", \"myarg\"])"
 msgstr ""
+"retcode = os.spawnlp(os.P_WAIT, \"/bin/mycmd\", \"mycmd\", \"myarg\")\n"
+"==>\n"
+"retcode = call([\"/bin/mycmd\", \"myarg\"])"
 
 #: ../../library/subprocess.rst:1416
 msgid "Vector example::"
@@ -2194,6 +2214,9 @@ msgid ""
 "==>\n"
 "Popen([path] + args[1:])"
 msgstr ""
+"os.spawnvp(os.P_NOWAIT, path, args)\n"
+"==>\n"
+"Popen([path] + args[1:])"
 
 #: ../../library/subprocess.rst:1422
 msgid "Environment example::"
@@ -2205,6 +2228,9 @@ msgid ""
 "==>\n"
 "Popen([\"/bin/mycmd\", \"myarg\"], env={\"PATH\": \"/usr/bin\"})"
 msgstr ""
+"os.spawnlpe(os.P_NOWAIT, \"/bin/mycmd\", \"mycmd\", \"myarg\", env)\n"
+"==>\n"
+"Popen([\"/bin/mycmd\", \"myarg\"], env={\"PATH\": \"/usr/bin\"})"
 
 #: ../../library/subprocess.rst:1431
 msgid "Replacing :func:`os.popen`, :func:`os.popen2`, :func:`os.popen3`"
@@ -2218,6 +2244,11 @@ msgid ""
 "          stdin=PIPE, stdout=PIPE, close_fds=True)\n"
 "(child_stdin, child_stdout) = (p.stdin, p.stdout)"
 msgstr ""
+"(child_stdin, child_stdout) = os.popen2(cmd, mode, bufsize)\n"
+"==>\n"
+"p = Popen(cmd, shell=True, bufsize=bufsize,\n"
+"          stdin=PIPE, stdout=PIPE, close_fds=True)\n"
+"(child_stdin, child_stdout) = (p.stdin, p.stdout)"
 
 #: ../../library/subprocess.rst:1443
 msgid ""
@@ -2231,6 +2262,15 @@ msgid ""
 " child_stdout,\n"
 " child_stderr) = (p.stdin, p.stdout, p.stderr)"
 msgstr ""
+"(child_stdin,\n"
+" child_stdout,\n"
+" child_stderr) = os.popen3(cmd, mode, bufsize)\n"
+"==>\n"
+"p = Popen(cmd, shell=True, bufsize=bufsize,\n"
+"          stdin=PIPE, stdout=PIPE, stderr=PIPE, close_fds=True)\n"
+"(child_stdin,\n"
+" child_stdout,\n"
+" child_stderr) = (p.stdin, p.stdout, p.stderr)"
 
 #: ../../library/subprocess.rst:1455
 msgid ""
@@ -2240,6 +2280,11 @@ msgid ""
 "          stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)\n"
 "(child_stdin, child_stdout_and_stderr) = (p.stdin, p.stdout)"
 msgstr ""
+"(child_stdin, child_stdout_and_stderr) = os.popen4(cmd, mode, bufsize)\n"
+"==>\n"
+"p = Popen(cmd, shell=True, bufsize=bufsize,\n"
+"          stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)\n"
+"(child_stdin, child_stdout_and_stderr) = (p.stdin, p.stdout)"
 
 #: ../../library/subprocess.rst:1461
 msgid "Return code handling translates as follows::"
@@ -2369,10 +2414,6 @@ msgid ""
 ">>> subprocess.getstatusoutput('/bin/kill $$')\n"
 "(-15, '')"
 msgstr ""
-
-#: ../../library/subprocess.rst:1544 ../../library/subprocess.rst:1566
-msgid ":ref:`Availability <availability>`: Unix, Windows."
-msgstr ":ref:`可用性 <availability>`: Unix, Windows。"
 
 #: ../../library/subprocess.rst:1546
 msgid "Windows support was added."
