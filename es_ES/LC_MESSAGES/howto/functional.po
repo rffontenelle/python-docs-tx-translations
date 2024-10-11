@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-03 16:27+0000\n"
+"POT-Creation-Date: 2024-10-11 15:25+0000\n"
 "PO-Revision-Date: 2023-05-24 02:11+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -25,7 +25,7 @@ msgstr ""
 
 #: ../../howto/functional.rst:3
 msgid "Functional Programming HOWTO"
-msgstr ""
+msgstr "Programación funcional CÓMO"
 
 #: ../../howto/functional.rst:0
 msgid "Author"
@@ -33,7 +33,7 @@ msgstr "Autor"
 
 #: ../../howto/functional.rst:5
 msgid "A. M. Kuchling"
-msgstr ""
+msgstr "A. M. Kuchling"
 
 #: ../../howto/functional.rst:0
 msgid "Release"
@@ -41,7 +41,7 @@ msgstr "Publique"
 
 #: ../../howto/functional.rst:6
 msgid "0.32"
-msgstr ""
+msgstr "0.32"
 
 #: ../../howto/functional.rst:8
 msgid ""
@@ -51,6 +51,11 @@ msgid ""
 "term:`iterator`\\s and :term:`generator`\\s and relevant library modules "
 "such as :mod:`itertools` and :mod:`functools`."
 msgstr ""
+"En este documento, haremos un recorrido por las características de Python "
+"adecuadas para implementar programas en un estilo funcional.  Después de una "
+"introducción a los conceptos de programación funcional, veremos "
+"características del lenguaje como :term:`iterator`s y :term:`generator`s y "
+"módulos de librerías relevantes como :mod:`itertools` y :mod:`functools`."
 
 #: ../../howto/functional.rst:16
 msgid "Introduction"
@@ -62,11 +67,16 @@ msgid ""
 "just interested in learning about Python language features, skip to the next "
 "section on :ref:`functional-howto-iterators`."
 msgstr ""
+"Esta sección explica el concepto básico de programación funcional; si sólo "
+"estás interesado en conocer las características del lenguaje Python, pasa a "
+"la siguiente sección en :ref:`functional-howto-iterators`."
 
 #: ../../howto/functional.rst:22
 msgid ""
 "Programming languages support decomposing problems in several different ways:"
 msgstr ""
+"Los lenguajes de programación permiten descomponer los problemas de "
+"distintas maneras:"
 
 #: ../../howto/functional.rst:24
 msgid ""
@@ -74,6 +84,10 @@ msgid ""
 "instructions that tell the computer what to do with the program's input.  C, "
 "Pascal, and even Unix shells are procedural languages."
 msgstr ""
+"La mayoría de los lenguajes de programación son **procedimentales**: los "
+"programas son listas de instrucciones que indican al ordenador qué hacer con "
+"la entrada del programa.  C, Pascal e incluso los shells de Unix son "
+"lenguajes procedimentales."
 
 #: ../../howto/functional.rst:28
 msgid ""
@@ -84,6 +98,13 @@ msgid ""
 "to retrieve, and the SQL engine decides whether to scan tables or use "
 "indexes, which subclauses should be performed first, etc."
 msgstr ""
+"En los lenguajes **declarativos**, se escribe una especificación que "
+"describe el problema que hay que resolver y la implementación del lenguaje "
+"determina cómo realizar el cálculo de forma eficiente.  SQL es el lenguaje "
+"declarativo con el que probablemente estés más familiarizado; una consulta "
+"SQL describe el conjunto de datos que quieres recuperar, y el motor SQL "
+"decide si escanear tablas o utilizar índices, qué subcláusulas deben "
+"ejecutarse primero, etc."
 
 #: ../../howto/functional.rst:35
 msgid ""
@@ -93,6 +114,12 @@ msgid ""
 "and Python are languages that support object-oriented programming, but don't "
 "force the use of object-oriented features."
 msgstr ""
+"**Los programas orientados a objetos** manipulan colecciones de objetos.  "
+"Los objetos tienen un estado interno y admiten métodos que consultan o "
+"modifican este estado interno de alguna manera. Smalltalk y Java son "
+"lenguajes orientados a objetos.  C++ y Python son lenguajes que soportan la "
+"programación orientada a objetos, pero no fuerzan el uso de características "
+"orientadas a objetos."
 
 #: ../../howto/functional.rst:41
 msgid ""
@@ -102,6 +129,11 @@ msgid ""
 "known functional languages include the ML family (Standard ML, OCaml, and "
 "other variants) and Haskell."
 msgstr ""
+"**La programación funcional** descompone un problema en un conjunto de "
+"funciones. Idealmente, las funciones sólo reciben entradas y producen "
+"salidas, y no tienen ningún estado interno que afecte a la salida producida "
+"para una entrada dada.  Los lenguajes funcionales más conocidos son la "
+"familia ML (Standard ML, OCaml y otras variantes) y Haskell."
 
 #: ../../howto/functional.rst:47
 msgid ""
@@ -115,6 +147,16 @@ msgid ""
 "GUI might be object-oriented while the processing logic is procedural or "
 "functional, for example."
 msgstr ""
+"Los diseñadores de algunos lenguajes informáticos optan por hacer hincapié "
+"en un enfoque concreto de la programación.  Esto suele dificultar la "
+"escritura de programas que utilicen un enfoque diferente.  Otros lenguajes "
+"son multiparadigma y admiten varios enfoques diferentes. Lisp, C++ y Python "
+"son multiparadigma; puede escribir programas o bibliotecas que sean en gran "
+"medida procedimentales, orientados a objetos o funcionales en todos estos "
+"lenguajes.  En un programa grande, las diferentes secciones pueden estar "
+"escritas con diferentes enfoques; la interfaz gráfica de usuario puede estar "
+"orientada a objetos, mientras que la lógica de procesamiento es "
+"procedimental o funcional, por ejemplo."
 
 #: ../../howto/functional.rst:58
 msgid ""
@@ -126,6 +168,15 @@ msgid ""
 "side effects means not using data structures that get updated as a program "
 "runs; every function's output must only depend on its input."
 msgstr ""
+"En un programa funcional, la entrada fluye a través de un conjunto de "
+"funciones. Cada función opera sobre su entrada y produce una salida.  El "
+"estilo funcional desaconseja las funciones con efectos secundarios que "
+"modifican el estado interno o realizan otros cambios que no son visibles en "
+"el valor de retorno de la función.  Las funciones que no tienen ningún "
+"efecto secundario se denominan **puramente funcionales**.  Evitar los "
+"efectos secundarios significa no utilizar estructuras de datos que se "
+"actualizan a medida que se ejecuta un programa; la salida de cada función "
+"sólo debe depender de su entrada."
 
 #: ../../howto/functional.rst:66
 msgid ""
@@ -137,6 +188,13 @@ msgid ""
 "their side effects of sending some text to the screen or pausing execution "
 "for a second."
 msgstr ""
+"Algunos lenguajes son muy estrictos con la pureza y ni siquiera tienen "
+"sentencias de asignación como ``a=3`` o ``c = a + b``, pero es difícil "
+"evitar todos los efectos secundarios, como imprimir en la pantalla o "
+"escribir en un archivo de disco. Otro ejemplo es una llamada a la función :"
+"func:`print` o :func:`time.sleep`, ninguna de las cuales devuelve un valor "
+"útil. Ambas son llamadas sólo por sus efectos secundarios de enviar algún "
+"texto a la pantalla o pausar la ejecución por un segundo."
 
 #: ../../howto/functional.rst:73
 msgid ""
@@ -147,6 +205,12 @@ msgid ""
 "assignments to local variables, but won't modify global variables or have "
 "other side effects."
 msgstr ""
+"Los programas Python escritos en estilo funcional normalmente no irán al "
+"extremo de evitar todas las E/S o todas las asignaciones; en su lugar, "
+"proporcionarán una interfaz de apariencia funcional pero usarán "
+"características no funcionales internamente. Por ejemplo, la implementación "
+"de una función seguirá usando asignaciones a variables locales, pero no "
+"modificará variables globales ni tendrá otros efectos secundarios."
 
 #: ../../howto/functional.rst:79
 msgid ""
@@ -159,6 +223,15 @@ msgid ""
 "approaches by writing functions that take and return instances representing "
 "objects in your application (e-mail messages, transactions, etc.)."
 msgstr ""
+"La programación funcional puede considerarse lo contrario de la programación "
+"orientada a objetos.  Los objetos son pequeñas cápsulas que contienen cierto "
+"estado interno junto con una colección de llamadas a métodos que permiten "
+"modificar este estado, y los programas consisten en realizar el conjunto "
+"adecuado de cambios de estado.  La programación funcional quiere evitar los "
+"cambios de estado tanto como sea posible y trabaja con datos que fluyen "
+"entre funciones.  En Python puedes combinar los dos enfoques escribiendo "
+"funciones que toman y devuelven instancias que representan objetos en tu "
+"aplicación (mensajes de correo electrónico, transacciones, etc.)."
 
 #: ../../howto/functional.rst:88
 msgid ""
@@ -166,32 +239,37 @@ msgid ""
 "you avoid objects and side effects?  There are theoretical and practical "
 "advantages to the functional style:"
 msgstr ""
+"El diseño funcional puede parecer una restricción extraña con la que "
+"trabajar.  ¿Por qué evitar los objetos y los efectos secundarios?  El estilo "
+"funcional tiene ventajas teóricas y prácticas:"
 
 #: ../../howto/functional.rst:92
 msgid "Formal provability."
-msgstr ""
+msgstr "Probabilidad formal."
 
 #: ../../howto/functional.rst:93
 msgid "Modularity."
-msgstr ""
+msgstr "Modularidad."
 
 #: ../../howto/functional.rst:94
 msgid "Composability."
-msgstr ""
+msgstr "Composibilidad."
 
 #: ../../howto/functional.rst:95
 msgid "Ease of debugging and testing."
-msgstr ""
+msgstr "Facilidad de depuración y comprobación."
 
 #: ../../howto/functional.rst:99
 msgid "Formal provability"
-msgstr ""
+msgstr "Probabilidad formal"
 
 #: ../../howto/functional.rst:101
 msgid ""
 "A theoretical benefit is that it's easier to construct a mathematical proof "
 "that a functional program is correct."
 msgstr ""
+"Una ventaja teórica es que es más fácil construir una prueba matemática de "
+"que un programa funcional es correcto."
 
 #: ../../howto/functional.rst:104
 msgid ""
@@ -202,6 +280,12 @@ msgid ""
 "looks right; the goal is instead a rigorous proof that a program produces "
 "the right result for all possible inputs."
 msgstr ""
+"Desde hace mucho tiempo, los investigadores se interesan por demostrar "
+"matemáticamente que los programas son correctos.  No se trata de probar un "
+"programa con numerosas entradas y concluir que su salida suele ser correcta, "
+"o de leer el código fuente de un programa y concluir que el código parece "
+"correcto; el objetivo es una prueba rigurosa de que un programa produce el "
+"resultado correcto para todas las entradas posibles."
 
 #: ../../howto/functional.rst:111
 msgid ""
@@ -213,6 +297,14 @@ msgid ""
 "This continues until you reach the end of the program, at which point the "
 "invariants should match the desired conditions on the program's output."
 msgstr ""
+"La técnica utilizada para demostrar que los programas son correctos consiste "
+"en escribir **invariantes**, propiedades de los datos de entrada y de las "
+"variables del programa que siempre son ciertas.  Para cada línea de código, "
+"se demuestra que si las invariantes X e Y son verdaderas **antes** de que se "
+"ejecute la línea, las invariantes X' e Y', ligeramente diferentes, son "
+"verdaderas **después** de que se ejecute la línea.  Esto continúa hasta "
+"llegar al final del programa, momento en el que los invariantes deben "
+"coincidir con las condiciones deseadas en la salida del programa."
 
 #: ../../howto/functional.rst:119
 msgid ""
@@ -221,6 +313,10 @@ msgid ""
 "invariants that were true before the assignment without producing any new "
 "invariants that can be propagated onward."
 msgstr ""
+"La programación funcional evita las asignaciones porque son difíciles de "
+"manejar con esta técnica; las asignaciones pueden romper invariantes que "
+"eran verdaderas antes de la asignación sin producir nuevas invariantes que "
+"puedan propagarse."
 
 #: ../../howto/functional.rst:124
 msgid ""
@@ -233,10 +329,19 @@ msgid ""
 "the question of verifying the proof; maybe there's an error in it, and you "
 "wrongly believe you've proved the program correct."
 msgstr ""
+"Desafortunadamente, probar la corrección de los programas es poco práctico y "
+"no es relevante para el software Python. Incluso los programas triviales "
+"requieren demostraciones de varias páginas; la demostración de la corrección "
+"de un programa medianamente complicado sería enorme, y pocos o ninguno de "
+"los programas que usas a diario (el intérprete de Python, tu analizador XML, "
+"tu navegador web) podrían demostrarse correctos.  Incluso si escribiera o "
+"generara una prueba, luego estaría la cuestión de verificar la prueba; tal "
+"vez haya un error en ella, y usted crea erróneamente que ha demostrado que "
+"el programa es correcto."
 
 #: ../../howto/functional.rst:135
 msgid "Modularity"
-msgstr ""
+msgstr "Modularidad"
 
 #: ../../howto/functional.rst:137
 msgid ""
@@ -246,14 +351,20 @@ msgid ""
 "thing than a large function that performs a complicated transformation.  "
 "Small functions are also easier to read and to check for errors."
 msgstr ""
+"Una ventaja más práctica de la programación funcional es que obliga a "
+"dividir el problema en pequeños fragmentos.  Como resultado, los programas "
+"son más modulares.  Es más fácil especificar y escribir una función pequeña "
+"que haga una cosa que una función grande que realice una transformación "
+"complicada.  Las funciones pequeñas también son más fáciles de leer y de "
+"comprobar en busca de errores."
 
 #: ../../howto/functional.rst:145
 msgid "Ease of debugging and testing"
-msgstr ""
+msgstr "Facilidad de depuración y pruebas"
 
 #: ../../howto/functional.rst:147
 msgid "Testing and debugging a functional-style program is easier."
-msgstr ""
+msgstr "Probar y depurar un programa de estilo funcional es más fácil."
 
 #: ../../howto/functional.rst:149
 msgid ""
@@ -263,6 +374,11 @@ msgid ""
 "intermediate inputs and outputs to quickly isolate the function that's "
 "responsible for a bug."
 msgstr ""
+"La depuración se simplifica porque las funciones suelen ser pequeñas y estar "
+"claramente especificadas.  Cuando un programa no funciona, cada función es "
+"un punto de interfaz en el que puedes comprobar que los datos son "
+"correctos.  Puedes mirar las entradas y salidas intermedias para aislar "
+"rápidamente la función responsable de un fallo."
 
 #: ../../howto/functional.rst:154
 msgid ""
@@ -271,10 +387,14 @@ msgid ""
 "before running a test; instead you only have to synthesize the right input "
 "and then check that the output matches expectations."
 msgstr ""
+"Probar es más fácil porque cada función es un tema potencial para una prueba "
+"unitaria. Las funciones no dependen de un estado del sistema que haya que "
+"replicar antes de ejecutar una prueba, sino que basta con sintetizar la "
+"entrada correcta y comprobar que la salida coincide con las expectativas."
 
 #: ../../howto/functional.rst:161
 msgid "Composability"
-msgstr ""
+msgstr "Composibilidad"
 
 #: ../../howto/functional.rst:163
 msgid ""
@@ -286,6 +406,13 @@ msgid ""
 "that takes a filename and returns its contents, can be applied to many "
 "different situations."
 msgstr ""
+"A medida que trabaje en un programa de estilo funcional, escribirá una serie "
+"de funciones con entradas y salidas variables.  Algunas de estas funciones "
+"serán inevitablemente especializadas para una aplicación particular, pero "
+"otras serán útiles en una amplia variedad de programas.  Por ejemplo, una "
+"función que toma una ruta de directorio y devuelve todos los archivos XML "
+"del directorio, o una función que toma un nombre de archivo y devuelve su "
+"contenido, pueden aplicarse a muchas situaciones diferentes."
 
 #: ../../howto/functional.rst:170
 msgid ""
@@ -293,16 +420,22 @@ msgid ""
 "assemble new programs by arranging existing functions in a new configuration "
 "and writing a few functions specialized for the current task."
 msgstr ""
+"Con el tiempo formarás una biblioteca personal de utilidades.  A menudo "
+"montarás nuevos programas organizando las funciones existentes en una nueva "
+"configuración y escribiendo unas cuantas funciones especializadas para la "
+"tarea actual."
 
 #: ../../howto/functional.rst:178
 msgid "Iterators"
-msgstr ""
+msgstr "Iteradores"
 
 #: ../../howto/functional.rst:180
 msgid ""
 "I'll start by looking at a Python language feature that's an important "
 "foundation for writing functional-style programs: iterators."
 msgstr ""
+"Empezaré analizando una característica del lenguaje Python que es una base "
+"importante para escribir programas de estilo funcional: los iteradores."
 
 #: ../../howto/functional.rst:183
 msgid ""
@@ -314,6 +447,14 @@ msgid ""
 "exception. Iterators don't have to be finite, though; it's perfectly "
 "reasonable to write an iterator that produces an infinite stream of data."
 msgstr ""
+"Un iterador es un objeto que representa un flujo de datos; este objeto "
+"devuelve los datos de uno en uno.  Un iterador de Python debe soportar un "
+"método llamado :meth:`~iterator.__next__` que no toma argumentos y siempre "
+"devuelve el siguiente elemento del flujo.  Si no hay más elementos en el "
+"flujo, :meth:`~iterator.__next__` debe lanzar la excepción :exc:"
+"`StopIteration`. Sin embargo, los iteradores no tienen que ser finitos; es "
+"perfectamente razonable escribir un iterador que produzca un flujo infinito "
+"de datos."
 
 #: ../../howto/functional.rst:191
 msgid ""
@@ -324,10 +465,16 @@ msgid ""
 "lists and dictionaries.  An object is called :term:`iterable` if you can get "
 "an iterator for it."
 msgstr ""
+"La función incorporada :func:`iter` toma un objeto arbitrario e intenta "
+"devolver un iterador que devolverá los contenidos o elementos del objeto, "
+"mostrando :exc:`TypeError` si el objeto no soporta iteración.  Varios de los "
+"tipos de datos incorporados en Python soportan la iteración, siendo los más "
+"comunes las listas y los diccionarios.  Un objeto se llama :term:`iterable` "
+"si puedes obtener un iterador para él."
 
 #: ../../howto/functional.rst:198
 msgid "You can experiment with the iteration interface manually:"
-msgstr ""
+msgstr "Puede experimentar con la interfaz de iteración manualmente:"
 
 #: ../../howto/functional.rst:216
 msgid ""
@@ -336,18 +483,26 @@ msgid ""
 "Y``, Y must be an iterator or some object for which :func:`iter` can create "
 "an iterator.  These two statements are equivalent::"
 msgstr ""
+"Python espera objetos iterables en varios contextos diferentes, siendo el "
+"más importante la sentencia :keyword:`for`.  En la sentencia ``for X in Y``, "
+"Y debe ser un iterador o algún objeto para el que :func:`iter` pueda crear "
+"un iterador.  Estas dos sentencias son equivalentes::"
 
 #: ../../howto/functional.rst:228
 msgid ""
 "Iterators can be materialized as lists or tuples by using the :func:`list` "
 "or :func:`tuple` constructor functions:"
 msgstr ""
+"Los iteradores pueden materializarse como listas o tuplas utilizando las "
+"funciones constructoras :func:`list` o :func:`tuple`:"
 
 #: ../../howto/functional.rst:237
 msgid ""
 "Sequence unpacking also supports iterators: if you know an iterator will "
 "return N elements, you can unpack them into an N-tuple:"
 msgstr ""
+"El desempaquetado de secuencias también admite iteradores: si sabe que un "
+"iterador devolverá N elementos, puede desempaquetarlos en una N-tupla:"
 
 #: ../../howto/functional.rst:246
 msgid ""
@@ -359,6 +514,13 @@ msgid ""
 "func:`min` will never return, and if the element X never appears in the "
 "stream, the ``\"in\"`` and ``\"not in\"`` operators won't return either."
 msgstr ""
+"Las funciones incorporadas como :func:`max` y :func:`min` pueden tomar un "
+"único argumento iterador y devolverán el elemento mayor o menor.  Los "
+"operadores ``\"in\"`` y ``\"not in\"`` también admiten iteradores: ``X in "
+"iterator`` es verdadero si X se encuentra en el flujo devuelto por el "
+"iterador.  Se encontrará con problemas obvios si el iterador es infinito; :"
+"func:`max`, :func:`min` nunca devolverán, y si el elemento X nunca aparece "
+"en el flujo, los operadores ``\"in\"`` y ``\"not in\"`` tampoco devolverán."
 
 #: ../../howto/functional.rst:254
 msgid ""
@@ -370,10 +532,17 @@ msgid ""
 "need to do something different with the same stream, you'll have to create a "
 "new iterator."
 msgstr ""
+"Ten en cuenta que sólo puedes avanzar en un iterador; no hay forma de "
+"obtener el elemento anterior, reiniciar el iterador o hacer una copia de "
+"él.  Los objetos iteradores pueden proporcionar opcionalmente estas "
+"capacidades adicionales, pero el protocolo de iteradores sólo especifica el "
+"método :meth:`~iterator.__next__`.  Por lo tanto, las funciones pueden "
+"consumir toda la salida del iterador, y si necesitas hacer algo diferente "
+"con el mismo flujo, tendrás que crear un nuevo iterador."
 
 #: ../../howto/functional.rst:264
 msgid "Data Types That Support Iterators"
-msgstr ""
+msgstr "Tipos de datos que admiten iteradores"
 
 #: ../../howto/functional.rst:266
 msgid ""
@@ -381,12 +550,17 @@ msgid ""
 "Python sequence type, such as strings, will automatically support creation "
 "of an iterator."
 msgstr ""
+"Ya hemos visto cómo las listas y las tuplas soportan iteradores.  De hecho, "
+"cualquier tipo de secuencia de Python, como las cadenas, soportará "
+"automáticamente la creación de un iterador."
 
 #: ../../howto/functional.rst:270
 msgid ""
 "Calling :func:`iter` on a dictionary returns an iterator that will loop over "
 "the dictionary's keys::"
 msgstr ""
+"Al llamar a :func:`iter` sobre un diccionario se obtiene un iterador que "
+"recorrerá las claves del diccionario::"
 
 #: ../../howto/functional.rst:290
 msgid ""
@@ -394,6 +568,10 @@ msgid ""
 "to be the same as the insertion order. In earlier versions, the behaviour "
 "was unspecified and could vary between implementations."
 msgstr ""
+"Ten en cuenta que a partir de Python 3.7, se garantiza que el orden de "
+"iteración del diccionario es el mismo que el orden de inserción. En "
+"versiones anteriores, el comportamiento no estaba especificado y podía "
+"variar entre implementaciones."
 
 #: ../../howto/functional.rst:294
 msgid ""
@@ -402,12 +580,19 @@ msgid ""
 "iterate over values or key/value pairs, you can explicitly call the :meth:"
 "`~dict.values` or :meth:`~dict.items` methods to get an appropriate iterator."
 msgstr ""
+"La aplicación de :func:`iter` a un diccionario siempre itera sobre las "
+"claves, pero los diccionarios tienen métodos que devuelven otros "
+"iteradores.  Si desea iterar sobre valores o pares clave/valor, puede llamar "
+"explícitamente a los métodos :meth:`~dict.values` o :meth:`~dict.items` para "
+"obtener un iterador apropiado."
 
 #: ../../howto/functional.rst:300
 msgid ""
 "The :func:`dict` constructor can accept an iterator that returns a finite "
 "stream of ``(key, value)`` tuples:"
 msgstr ""
+"El constructor :func:`dict` puede aceptar un iterador que devuelva un flujo "
+"finito de tuplas ``(key, value)``:"
 
 #: ../../howto/functional.rst:307
 msgid ""
@@ -415,16 +600,21 @@ msgid ""
 "method until there are no more lines in the file.  This means you can read "
 "each line of a file like this::"
 msgstr ""
+"Los archivos también admiten la iteración llamando al método :meth:`~io."
+"TextIOBase.readline` hasta que no haya más líneas en el archivo.  Esto "
+"significa que puede leer cada línea de un archivo de la siguiente manera::"
 
 #: ../../howto/functional.rst:315
 msgid ""
 "Sets can take their contents from an iterable and let you iterate over the "
 "set's elements::"
 msgstr ""
+"Los conjuntos pueden tomar su contenido de un iterable y te permiten iterar "
+"sobre los elementos del conjunto::"
 
 #: ../../howto/functional.rst:331
 msgid "Generator expressions and list comprehensions"
-msgstr ""
+msgstr "Expresiones generadoras y comprensión de listas"
 
 #: ../../howto/functional.rst:333
 msgid ""
@@ -434,6 +624,11 @@ msgid ""
 "strip off trailing whitespace from each line or extract all the strings "
 "containing a given substring."
 msgstr ""
+"Dos operaciones comunes en la salida de un iterador son 1) realizar alguna "
+"operación para cada elemento, 2) seleccionar un subconjunto de elementos que "
+"cumplan alguna condición. Por ejemplo, dada una lista de cadenas, es posible "
+"que desee eliminar los espacios en blanco al final de cada línea o extraer "
+"todas las cadenas que contengan una subcadena determinada."
 
 #: ../../howto/functional.rst:339
 msgid ""
@@ -442,11 +637,18 @@ msgid ""
 "functional programming language Haskell (https://www.haskell.org/).  You can "
 "strip all the whitespace from a stream of strings with the following code::"
 msgstr ""
+"Las comprensiones de listas y las expresiones generadoras (abreviadas: "
+"\"listcomps\" y \"genexps\") son una notación concisa para este tipo de "
+"operaciones, tomada del lenguaje de programación funcional Haskell (https://"
+"www.haskell.org/).  Puede eliminar todos los espacios en blanco de un flujo "
+"de cadenas con el siguiente código::"
 
 #: ../../howto/functional.rst:352
 msgid ""
 "You can select only certain elements by adding an ``\"if\"`` condition::"
 msgstr ""
+"Puede seleccionar sólo determinados elementos añadiendo una condición "
+"``\"if\"``::"
 
 #: ../../howto/functional.rst:357
 msgid ""
@@ -458,6 +660,14 @@ msgid ""
 "infinite stream or a very large amount of data.  Generator expressions are "
 "preferable in these situations."
 msgstr ""
+"Con una comprensión de lista, se devuelve una lista de Python; "
+"``stripped_list`` es una lista que contiene las líneas resultantes, no un "
+"iterador.  Las expresiones generadoras devuelven un iterador que computa los "
+"valores según sea necesario, sin necesidad de materializar todos los valores "
+"a la vez.  Esto significa que las comprensiones de lista no son útiles si se "
+"trabaja con iteradores que devuelven un flujo infinito o una cantidad muy "
+"grande de datos.  En estas situaciones son preferibles las expresiones "
+"generadoras."
 
 #: ../../howto/functional.rst:364
 msgid ""
@@ -465,12 +675,17 @@ msgid ""
 "comprehensions are surrounded by square brackets (\"[]\").  Generator "
 "expressions have the form::"
 msgstr ""
+"Las expresiones generadoras van entre paréntesis (\"()\") y las "
+"comprensiones de listas van entre corchetes (\"[]\").  Las expresiones "
+"generadas tienen la forma::"
 
 #: ../../howto/functional.rst:378
 msgid ""
 "Again, for a list comprehension only the outside brackets are different "
 "(square brackets instead of parentheses)."
 msgstr ""
+"De nuevo, para una comprensión de lista sólo los paréntesis exteriores son "
+"diferentes (corchetes en lugar de paréntesis)."
 
 #: ../../howto/functional.rst:381
 msgid ""
@@ -479,6 +694,10 @@ msgid ""
 "``expression`` is only evaluated and added to the result when ``condition`` "
 "is true."
 msgstr ""
+"Los elementos de la salida generada serán los valores sucesivos de "
+"``expression``. Las cláusulas de ``if`` son todas opcionales; si están "
+"presentes, ``expression`` sólo se evalúa y se añade al resultado cuando "
+"``condition`` es verdadero."
 
 #: ../../howto/functional.rst:385
 msgid ""
@@ -486,6 +705,10 @@ msgid ""
 "parentheses signalling a function call also count.  If you want to create an "
 "iterator that will be immediately passed to a function you can write::"
 msgstr ""
+"Las expresiones del generador siempre deben escribirse dentro de paréntesis, "
+"pero los paréntesis que indican una llamada a función también cuentan.  Si "
+"quieres crear un iterador que será pasado inmediatamente a una función "
+"puedes escribir::"
 
 #: ../../howto/functional.rst:391
 msgid ""
@@ -496,12 +719,20 @@ msgid ""
 "looped over for each resulting pair of elements from ``sequence1`` and "
 "``sequence2``."
 msgstr ""
+"Las cláusulas ``for...in`` contienen las secuencias sobre las que se va a "
+"iterar.  No es necesario que las secuencias tengan la misma longitud, ya que "
+"se itera sobre ellas de izquierda a derecha, **no** en paralelo.  Para cada "
+"elemento de ``sequence1``, se repite ``sequence2`` desde el principio. A "
+"continuación, se repite ``sequence3`` para cada par de elementos resultantes "
+"de ``sequence1`` y ``sequence2``."
 
 #: ../../howto/functional.rst:397
 msgid ""
 "To put it another way, a list comprehension or generator expression is "
 "equivalent to the following Python code::"
 msgstr ""
+"Dicho de otro modo, una expresión de comprensión de lista o generador "
+"equivale al siguiente código Python::"
 
 #: ../../howto/functional.rst:414
 msgid ""
@@ -510,6 +741,10 @@ msgid ""
 "the lengths of all the sequences.  If you have two lists of length 3, the "
 "output list is 9 elements long:"
 msgstr ""
+"Esto significa que cuando hay varias cláusulas ``for...in`` pero ninguna "
+"``if``, la longitud de la salida resultante será igual al producto de las "
+"longitudes de todas las secuencias.  Si tiene dos listas de longitud 3, la "
+"lista de salida tendrá 9 elementos:"
 
 #: ../../howto/functional.rst:426
 msgid ""
@@ -517,10 +752,14 @@ msgid ""
 "is creating a tuple, it must be surrounded with parentheses.  The first list "
 "comprehension below is a syntax error, while the second one is correct::"
 msgstr ""
+"Para evitar introducir una ambigüedad en la gramática de Python, si "
+"``expression`` está creando una tupla, debe ir rodeada de paréntesis.  La "
+"primera comprensión de lista a continuación es un error de sintaxis, "
+"mientras que la segunda es correcta::"
 
 #: ../../howto/functional.rst:437
 msgid "Generators"
-msgstr ""
+msgstr "Generadores"
 
 #: ../../howto/functional.rst:439
 msgid ""
@@ -528,6 +767,10 @@ msgid ""
 "writing iterators.  Regular functions compute a value and return it, but "
 "generators return an iterator that returns a stream of values."
 msgstr ""
+"Los generadores son una clase especial de funciones que simplifican la tarea "
+"de escribir iteradores.  Las funciones normales calculan un valor y lo "
+"devuelven, pero los generadores devuelven un iterador que retorna un flujo "
+"de valores."
 
 #: ../../howto/functional.rst:443
 msgid ""
@@ -541,10 +784,20 @@ msgid ""
 "function where it left off?  This is what generators provide; they can be "
 "thought of as resumable functions."
 msgstr ""
+"Sin duda estás familiarizado con cómo funcionan las llamadas a funciones "
+"normales en Python o C. Cuando llamas a una función, ésta obtiene un espacio "
+"de nombres privado donde se crean sus variables locales.  Cuando la función "
+"llega a una sentencia ``return``, las variables locales se destruyen y el "
+"valor se devuelve a quien la llamó.  Una llamada posterior a la misma "
+"función crea un nuevo espacio de nombres privado y un nuevo conjunto de "
+"variables locales. Pero, ¿qué pasaría si las variables locales no se "
+"eliminaran al salir de una función?  ¿Qué pasaría si pudieras reanudar la "
+"función donde la dejaste?  Esto es lo que proporcionan los generadores; se "
+"puede pensar en ellos como funciones reanudables."
 
 #: ../../howto/functional.rst:452
 msgid "Here's the simplest example of a generator function:"
-msgstr ""
+msgstr "He aquí el ejemplo más sencillo de una función generadora:"
 
 #: ../../howto/functional.rst:458
 msgid ""
@@ -552,6 +805,9 @@ msgid ""
 "this is detected by Python's :term:`bytecode` compiler which compiles the "
 "function specially as a result."
 msgstr ""
+"Cualquier función que contenga una palabra clave :keyword:`yield` es una "
+"función generadora; esto es detectado por el compilador :term:`bytecode` de "
+"Python que compila la función especialmente como resultado."
 
 #: ../../howto/functional.rst:462
 msgid ""
@@ -564,16 +820,26 @@ msgid ""
 "preserved.  On the next call to the generator's :meth:`~generator.__next__` "
 "method, the function will resume executing."
 msgstr ""
+"Cuando se llama a una función generadora, ésta no devuelve un único valor, "
+"sino un objeto generador compatible con el protocolo iterador.  Al ejecutar "
+"la expresión ``yield``, el generador devuelve el valor de ``i``, de forma "
+"similar a una sentencia ``return``.  La gran diferencia entre ``yield`` y "
+"una sentencia ``return`` es que al llegar a ``yield`` se suspende el estado "
+"de ejecución del generador y se conservan las variables locales.  En la "
+"siguiente llamada al método :meth:`~generator.__next__` del generador, la "
+"función reanudará su ejecución."
 
 #: ../../howto/functional.rst:471
 msgid "Here's a sample usage of the ``generate_ints()`` generator:"
-msgstr ""
+msgstr "He aquí un ejemplo de utilización del generador ``generate_ints()``:"
 
 #: ../../howto/functional.rst:488
 msgid ""
 "You could equally write ``for i in generate_ints(5)``, or ``a, b, c = "
 "generate_ints(3)``."
 msgstr ""
+"También podría escribir ``for i in generate_ints(5)``, o ``a, b, c = "
+"generate_ints(3)``."
 
 #: ../../howto/functional.rst:491
 msgid ""
@@ -582,6 +848,10 @@ msgid ""
 "method.  Once this happens, or the bottom of the function is reached, the "
 "procession of values ends and the generator cannot yield any further values."
 msgstr ""
+"Dentro de una función generadora, ``return value`` hace que "
+"``StopIteration(value)`` se eleve desde el método :meth:`~generator."
+"__next__`.  Una vez que esto sucede, o se alcanza el fondo de la función, la "
+"procesión de valores termina y el generador no puede producir más valores."
 
 #: ../../howto/functional.rst:496
 msgid ""
@@ -592,6 +862,13 @@ msgid ""
 "method increment ``self.count`` and return it. However, for a moderately "
 "complicated generator, writing a corresponding class can be much messier."
 msgstr ""
+"Puedes conseguir el efecto de los generadores manualmente escribiendo tu "
+"propia clase y almacenando todas las variables locales del generador como "
+"variables de instancia.  Por ejemplo, devolver una lista de enteros podría "
+"hacerse estableciendo ``self.count`` a 0, y haciendo que el método :meth:"
+"`~iterator.__next__` incremente ``self.count`` y lo devuelva. Sin embargo, "
+"para un generador moderadamente complicado, escribir la clase "
+"correspondiente puede ser mucho más complicado."
 
 #: ../../howto/functional.rst:504
 msgid ""
@@ -600,6 +877,10 @@ msgid ""
 "one generator that implements an in-order traversal of a tree using "
 "generators recursively. ::"
 msgstr ""
+"El conjunto de pruebas incluido con la biblioteca de Python, :source:`Lib/"
+"test/test_generators.py`, contiene varios ejemplos más interesantes.  Aquí "
+"hay un generador que implementa un recorrido en-orden de un árbol usando "
+"generadores recursivamente. ::"
 
 #: ../../howto/functional.rst:520
 msgid ""
@@ -609,10 +890,15 @@ msgid ""
 "knight to every square of an NxN chessboard without visiting any square "
 "twice)."
 msgstr ""
+"Otros dos ejemplos en ``test_generators.py`` producen soluciones para el "
+"problema de las N reinas (colocar N reinas en un tablero de ajedrez NxN de "
+"forma que ninguna reina amenace a otra) y el recorrido del caballo "
+"(encontrar una ruta que lleve a un caballo a cada casilla de un tablero de "
+"ajedrez NxN sin visitar ninguna casilla dos veces)."
 
 #: ../../howto/functional.rst:528
 msgid "Passing values into a generator"
-msgstr ""
+msgstr "Pasar valores a un generador"
 
 #: ../../howto/functional.rst:530
 msgid ""
@@ -623,6 +909,12 @@ msgid ""
 "variable or by passing in some mutable object that callers then modify, but "
 "these approaches are messy."
 msgstr ""
+"En Python 2.4 y anteriores, los generadores sólo producían salida.  Una vez "
+"que el código de un generador era invocado para crear un iterador, no había "
+"forma de pasar nueva información a la función cuando se reanudaba su "
+"ejecución.  Se podía piratear esta capacidad haciendo que el generador "
+"mirara una variable global o pasando algún objeto mutable que los "
+"invocadores modificaran, pero estos enfoques son complicados."
 
 #: ../../howto/functional.rst:537
 msgid ""
@@ -630,6 +922,9 @@ msgid ""
 "`yield` became an expression, returning a value that can be assigned to a "
 "variable or otherwise operated on::"
 msgstr ""
+"En Python 2.5 hay una forma sencilla de pasar valores a un generador. :"
+"keyword:`yield` se convirtió en una expresión, devolviendo un valor que se "
+"puede asignar a una variable u operar de otra forma::"
 
 #: ../../howto/functional.rst:543
 msgid ""
@@ -638,6 +933,10 @@ msgid ""
 "above example. The parentheses aren't always necessary, but it's easier to "
 "always add them instead of having to remember when they're needed."
 msgstr ""
+"Te recomiendo que **siempre** pongas paréntesis alrededor de una expresión "
+"``yield`` cuando estés haciendo algo con el valor devuelto, como en el "
+"ejemplo anterior. Los paréntesis no siempre son necesarios, pero es más "
+"fácil añadirlos siempre en lugar de tener que recordar cuándo son necesarios."
 
 #: ../../howto/functional.rst:548
 msgid ""
@@ -647,6 +946,11 @@ msgid ""
 "write ``val = yield i`` but have to use parentheses when there's an "
 "operation, as in ``val = (yield i) + 12``.)"
 msgstr ""
+"(:pep:`342` explica las reglas exactas, que son que un ``yield``-expression "
+"must always be parenthesized except when it occurs at the top-level "
+"expression on the right-hand side of an assignment.  This means you can "
+"write ``val = yield i`` pero tiene que usar paréntesis cuando hay una "
+"operación, como en ``val = (yield i) + 12``.)"
 
 #: ../../howto/functional.rst:554
 msgid ""
@@ -655,16 +959,22 @@ msgid ""
 "``yield`` expression returns the specified value.  If the regular :meth:"
 "`~generator.__next__` method is called, the ``yield`` returns ``None``."
 msgstr ""
+"Los valores se envían a un generador llamando a su método :meth:`send(value) "
+"<generator.send>`.  Este método reanuda el código del generador y la "
+"expresión ``yield`` devuelve el valor especificado.  Si se llama al método :"
+"meth:`~generator.__next__` regular, el ``yield`` devuelve ``None``."
 
 #: ../../howto/functional.rst:559
 msgid ""
 "Here's a simple counter that increments by 1 and allows changing the value "
 "of the internal counter."
 msgstr ""
+"Aquí hay un contador simple que se incrementa en 1 y permite cambiar el "
+"valor del contador interno."
 
 #: ../../howto/functional.rst:574
 msgid "And here's an example of changing the counter:"
-msgstr ""
+msgstr "Y aquí tienes un ejemplo de cambio de contador:"
 
 #: ../../howto/functional.rst:591
 msgid ""
@@ -673,12 +983,18 @@ msgid ""
 "that the :meth:`~generator.send` method will be the only method used to "
 "resume your generator function."
 msgstr ""
+"Debido a que ``yield`` a menudo devolverá ``None``, siempre debes comprobar "
+"este caso.  No utilices su valor sin más en expresiones a menos que estés "
+"seguro de que el método :meth:`~generator.send` será el único utilizado para "
+"reanudar tu función generadora."
 
 #: ../../howto/functional.rst:596
 msgid ""
 "In addition to :meth:`~generator.send`, there are two other methods on "
 "generators:"
 msgstr ""
+"Además de :meth:`~generator.send`, existen otros dos métodos sobre "
+"generadores:"
 
 #: ../../howto/functional.rst:599
 msgid ""
@@ -686,6 +1002,9 @@ msgid ""
 "the generator; the exception is raised by the ``yield`` expression where the "
 "generator's execution is paused."
 msgstr ""
+":meth:`throw(value) <generator.throw>` se utiliza para lanzar una excepción "
+"dentro del generador; la excepción es lanzada por la expresión ``yield`` "
+"donde se pausa la ejecución del generador."
 
 #: ../../howto/functional.rst:603
 msgid ""
@@ -697,6 +1016,12 @@ msgid ""
 "be called by Python's garbage collector when the generator is garbage-"
 "collected."
 msgstr ""
+":meth:`~generator.close` lanza una excepción :exc:`GeneratorExit` dentro del "
+"generador para terminar la iteración.  Al recibir esta excepción, el código "
+"del generador debe lanzar :exc:`GeneratorExit` o :exc:`StopIteration`; "
+"capturar la excepción y hacer cualquier otra cosa es ilegal y provocará una :"
+"exc:`RuntimeError`. :meth:`~generator.close` también será llamada por el "
+"recolector de basura de Python cuando el generador sea recolectado."
 
 #: ../../howto/functional.rst:611
 msgid ""
@@ -704,12 +1029,18 @@ msgid ""
 "suggest using a ``try: ... finally:`` suite instead of catching :exc:"
 "`GeneratorExit`."
 msgstr ""
+"Si necesita ejecutar código de limpieza cuando se produce un :exc:"
+"`GeneratorExit`, le sugiero que utilice un conjunto ``try: ... finally:`` en "
+"lugar de capturar :exc:`GeneratorExit`."
 
 #: ../../howto/functional.rst:614
 msgid ""
 "The cumulative effect of these changes is to turn generators from one-way "
 "producers of information into both producers and consumers."
 msgstr ""
+"El efecto acumulativo de estos cambios es que los generadores pasan de ser "
+"productores unidireccionales de información a ser a la vez productores y "
+"consumidores."
 
 #: ../../howto/functional.rst:617
 msgid ""
@@ -719,35 +1050,49 @@ msgid ""
 "can be entered, exited, and resumed at many different points (the ``yield`` "
 "statements)."
 msgstr ""
+"Los generadores también se convierten en **corrutinas**, una forma más "
+"generalizada de subrutinas. Las subrutinas se introducen en un punto y se "
+"salen en otro (la parte superior de la función y una sentencia ``return`` ), "
+"pero las corrutinas pueden introducirse, salirse y reanudarse en muchos "
+"puntos diferentes (las sentencias ``yield`` )."
 
 #: ../../howto/functional.rst:624
 msgid "Built-in functions"
-msgstr ""
+msgstr "Funciones integradas"
 
 #: ../../howto/functional.rst:626
 msgid ""
 "Let's look in more detail at built-in functions often used with iterators."
 msgstr ""
+"Veamos con más detalle las funciones incorporadas que se utilizan a menudo "
+"con los iteradores."
 
 #: ../../howto/functional.rst:628
 msgid ""
 "Two of Python's built-in functions, :func:`map` and :func:`filter` duplicate "
 "the features of generator expressions:"
 msgstr ""
+"Dos de las funciones incorporadas de Python, :func:`map` y :func:`filter` "
+"duplican las características de las expresiones generadoras:"
 
 #: ../../howto/functional.rst:640
 msgid ""
 ":func:`map(f, iterA, iterB, ...) <map>` returns an iterator over the sequence"
 msgstr ""
+":func:`map(f, iterA, iterB, ...) <map>` devuelve un iterador sobre la "
+"secuencia"
 
 #: ../../howto/functional.rst:632
 msgid ""
 "``f(iterA[0], iterB[0]), f(iterA[1], iterB[1]), f(iterA[2], iterB[2]), ...``."
 msgstr ""
+"``f(iterA[0], iterB[0]), f(iterA[1], iterB[1]), f(iterA[2], iterB[2]), ...``."
 
 #: ../../howto/functional.rst:642
 msgid "You can of course achieve the same effect with a list comprehension."
 msgstr ""
+"Por supuesto, puede conseguir el mismo efecto con la comprensión de una "
+"lista."
 
 #: ../../howto/functional.rst:644
 msgid ""
@@ -757,10 +1102,16 @@ msgid ""
 "truth value of some condition; for use with :func:`filter`, the predicate "
 "must take a single value."
 msgstr ""
+":func:`filter(predicate, iter) <filter>` devuelve un iterador sobre todos "
+"los elementos de la secuencia que cumplen una determinada condición, y es "
+"duplicado de forma similar por las comprensiones de listas.  Un "
+"**predicado** es una función que devuelve el valor de verdad de alguna "
+"condición; para su uso con :func:`filter`, el predicado debe tomar un único "
+"valor."
 
 #: ../../howto/functional.rst:657
 msgid "This can also be written as a list comprehension:"
-msgstr ""
+msgstr "También se puede escribir como comprensión de una lista:"
 
 #: ../../howto/functional.rst:663
 msgid ""
@@ -768,12 +1119,17 @@ msgid ""
 "iterable returning 2-tuples containing the count (from *start*) and each "
 "element. ::"
 msgstr ""
+":func:`enumerate(iter, start=0) <enumerate>` cuenta los elementos del "
+"iterable devolviendo 2-tuplas que contienen la cuenta (desde *start*) y cada "
+"elemento. ::"
 
 #: ../../howto/functional.rst:673
 msgid ""
 ":func:`enumerate` is often used when looping through a list and recording "
 "the indexes at which certain conditions are met::"
 msgstr ""
+":func:`enumerate` se utiliza a menudo para recorrer una lista y registrar "
+"los índices en los que se cumplen determinadas condiciones::"
 
 #: ../../howto/functional.rst:681
 msgid ""

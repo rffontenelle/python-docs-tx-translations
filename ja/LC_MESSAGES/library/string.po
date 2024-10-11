@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-04 15:24+0000\n"
+"POT-Creation-Date: 2024-10-11 15:25+0000\n"
 "PO-Revision-Date: 2023-05-24 02:20+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -876,6 +876,12 @@ msgid ""
 "Decimal`. If no digits follow the decimal point, the decimal point is also "
 "removed unless the ``#`` option is used."
 msgstr ""
+"科学的表記です。与えられた精度 ``p`` に対して、科学的表記では係数と指数を区切"
+"り文字 'e' で分けて表します。係数部分は小数点の前に1桁、小数点の後に ``p`` "
+"桁、合計 ``p + 1`` 桁の有効桁数を持ちます。 精度が指定されない場合、 :class:"
+"`float` では小数点以下 ``6`` 桁の精度が使われ、いっぽう :class:`~decimal."
+"Decimal` では係数部全てが表示されます。小数点以下の桁がない場合、 ``#`` オプ"
+"ションが使われた場合をのぞき、小数点は除去されます。"
 
 #: ../../library/string.rst:516
 msgid "``'E'``"
@@ -901,6 +907,11 @@ msgid ""
 "decimal point, the decimal point is also removed unless the ``#`` option is "
 "used."
 msgstr ""
+"固定小数点表記です。与えられた精度 ``p`` に対して、小数点以下 ``p`` 桁で数値"
+"を表します。精度が指定されない場合、 :class:`float` では ``6`` 桁の精度が使わ"
+"れ、いっぽう :class:`~decimal.Decimal` では数値全体を表示するのに十分な精度が"
+"使われます。小数点以下の桁がない場合、 ``#`` オプションが使われた場合をのぞ"
+"き、小数点は除去されます。"
 
 #: ../../library/string.rst:529
 msgid "``'F'``"
@@ -925,6 +936,9 @@ msgid ""
 "format or in scientific notation, depending on its magnitude. A precision of "
 "``0`` is treated as equivalent to a precision of ``1``."
 msgstr ""
+"汎用表記です。与えられた精度 ``p >= 1`` に対して、この表記では数値を有効桁数 "
+"``p`` に丸めた上で、数値の大きさに応じて固定小数点表記または科学的表記で表し"
+"ます。精度 ``0`` は精度 ``1`` と同じものと取り扱われます。"
 
 #: ../../library/string.rst:539
 msgid ""
@@ -938,6 +952,14 @@ msgid ""
 "decimal point is also removed if there are no remaining digits following it, "
 "unless the ``'#'`` option is used."
 msgstr ""
+"正確なルールは次の通りです: 書式 ``'e'`` 型および精度 ``p-1`` 桁で数値を"
+"フォーマットした結果、指数部が ``exp`` になったと仮定します。このとき ``m <= "
+"exp < p`` ならば、数値は書式 ``'f'`` 型および精度 ``p-1-exp`` 桁でフォーマッ"
+"トされます。ただし ``m`` は浮動小数点数では -4 であり、  :class:`Decimals "
+"<decimal.Decimal>` に対しては -6 です。それ以外の場合、数値は書式 ``'e'`` 型"
+"および精度 ``p-1`` 桁でフォーマットされます。どちらの場合でも、仮数部の有効で"
+"ない末尾のゼロは取り除かれます。また小数点以下に表示する桁が無い場合、 "
+"``'#'`` オプションが使われた場合をのぞき、小数点は除去されます。"
 
 #: ../../library/string.rst:552
 msgid ""
@@ -948,6 +970,11 @@ msgid ""
 "place value of the least significant digit is larger than 1, and fixed-point "
 "notation is used otherwise."
 msgstr ""
+"精度が指定されない場合、 :class:`float` に対しては有効桁数として ``6`` 桁を適"
+"用します。  :class:`~decimal.Decimal` では、フォーマット結果の係数部は実際の"
+"値の桁数によって決まります; 絶対値が ``1e-6`` より小さい値や、最下位桁の値が1"
+"より大きい値では科学的表記が使われます。それ以外の場合は固定小数点表記が使わ"
+"れます。"
 
 #: ../../library/string.rst:561
 msgid ""
@@ -1004,12 +1031,17 @@ msgid ""
 "depending on the value of ``context.capitals`` for the current decimal "
 "context."
 msgstr ""
+":class:`~decimal.Decimal` に対しては、現在の decimal コンテキストにおける "
+"``context.capitals`` の値に応じて、 ``'g'`` か ``'G'`` のどちらかと同じになり"
+"ます。"
 
 #: ../../library/string.rst:587
 msgid ""
 "The overall effect is to match the output of :func:`str` as altered by the "
 "other format modifiers."
 msgstr ""
+"全体として、他の書式修正指定によって変更された :func:`str` の出力に一致するよ"
+"うな結果になります。"
 
 #: ../../library/string.rst:595
 msgid "Format examples"
@@ -1218,12 +1250,16 @@ msgid ""
 "Returns false if the template has invalid placeholders that will cause :meth:"
 "`substitute` to raise :exc:`ValueError`."
 msgstr ""
+":meth:`substitute` が :exc:`ValueError` を送出する原因となるような、不正なプ"
+"レースホルダーをテンプレートが含む場合、偽を返します。"
 
 #: ../../library/string.rst:810
 msgid ""
 "Returns a list of the valid identifiers in the template, in the order they "
 "first appear, ignoring any invalid identifiers."
 msgstr ""
+"テンプレート内の有効な識別子のリストを、その識別子が最初に現れる順番で返しま"
+"す。不正な識別子は無視されます。"
 
 #: ../../library/string.rst:815
 msgid ":class:`Template` instances also provide one public data attribute:"
@@ -1278,6 +1314,10 @@ msgid ""
 "z][_a-z0-9]*)``.  If this is given and *braceidpattern* is ``None`` this "
 "pattern will also apply to braced placeholders."
 msgstr ""
+"*idpattern* -- これは波括弧なしのプレースホルダーを記述する正規表現です。デ"
+"フォルト値は正規表現 ``(?a:[_a-z][_a-z0-9]*)`` です。 *idpattern* が与えられ"
+"ており、かつ *braceidpattern* が ``None`` の場合、このパターンは波括弧付きの"
+"プレースホルダーにも適用されます。"
 
 #: ../../library/string.rst:859
 msgid ""
@@ -1304,6 +1344,11 @@ msgid ""
 "If given, this allows you to define different patterns for braced and "
 "unbraced placeholders."
 msgstr ""
+"*braceidpattern* -- これは *idpattern* に似ていますが、波括弧付きプレースホル"
+"ダーのパターンを記述します。デフォルトは ``None`` で、 *idpattern* が適用され"
+"ます (すなわち、波括弧の内側と外側の両方に同じパターンが使われます) 。 "
+"*braceidpattern* を使うと、波括弧付きと波括弧なしのプレースホルダーにそれぞれ"
+"異なるパターンを定義することができます。"
 
 #: ../../library/string.rst:875
 msgid ""
@@ -1369,6 +1414,8 @@ msgid ""
 "The methods on this class will raise :exc:`ValueError` if the pattern "
 "matches the template without one of these named groups matching."
 msgstr ""
+"このクラスのメソッドは、これらの名前付きグループに1つもマッチすることなくパ"
+"ターンがテンプレートにマッチした場合、 :exc:`ValueError` を送出します。"
 
 #: ../../library/string.rst:906
 msgid "Helper functions"
@@ -1391,14 +1438,14 @@ msgstr ""
 
 #: ../../library/string.rst:195
 msgid "{} (curly brackets)"
-msgstr ""
+msgstr "{} (波括弧)"
 
 #: ../../library/string.rst:195 ../../library/string.rst:335
 #: ../../library/string.rst:367 ../../library/string.rst:386
 #: ../../library/string.rst:395 ../../library/string.rst:409
 #: ../../library/string.rst:418
 msgid "in string formatting"
-msgstr ""
+msgstr "文字列のフォーマットで"
 
 #: ../../library/string.rst:195
 msgid ". (dot)"
@@ -1426,7 +1473,7 @@ msgstr "> (大きい)"
 
 #: ../../library/string.rst:335
 msgid "= (equals)"
-msgstr ""
+msgstr "= (等号)"
 
 #: ../../library/string.rst:335
 msgid "^ (caret)"
@@ -1442,7 +1489,7 @@ msgstr "- (負符号)"
 
 #: ../../library/string.rst:386
 msgid "z"
-msgstr ""
+msgstr "z"
 
 #: ../../library/string.rst:395
 msgid "# (hash)"
@@ -1450,16 +1497,16 @@ msgstr "# (hash)"
 
 #: ../../library/string.rst:409
 msgid ", (comma)"
-msgstr ""
+msgstr ", (comma)"
 
 #: ../../library/string.rst:418
 msgid "_ (underscore)"
-msgstr ""
+msgstr "_ (下線)"
 
 #: ../../library/string.rst:746
 msgid "$ (dollar)"
-msgstr ""
+msgstr "$ (ダラー)"
 
 #: ../../library/string.rst:746
 msgid "in template strings"
-msgstr ""
+msgstr "テンプレート文字列の中で"
