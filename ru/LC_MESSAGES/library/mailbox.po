@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-12 15:17+0000\n"
+"POT-Creation-Date: 2024-10-18 15:23+0000\n"
 "PO-Revision-Date: 2023-05-24 02:17+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
@@ -41,6 +41,13 @@ msgid ""
 "message.Message` class with format-specific state and behavior. Supported "
 "mailbox formats are Maildir, mbox, MH, Babyl, and MMDF."
 msgstr ""
+"Этот модуль определяет два класса: :class:`Mailbox` и :class:`Message`, для "
+"доступа и управления почтовыми ящиками на диске и сообщениями, которые они "
+"содержат. :class:`!Mailbox` предлагает сопоставление ключей с сообщениями, "
+"подобное словарю. :class:`!Message` расширяет класс :class:`~email.message."
+"Message` модуля :mod:`email.message` с состоянием и поведением, зависящим от "
+"формата. Поддерживаемые форматы почтовых ящиков: Maildir, mbox, MH, Babyl и "
+"MMDF."
 
 #: ../../library/mailbox.rst:24
 msgid "Module :mod:`email`"
@@ -64,6 +71,10 @@ msgid ""
 "instantiated.  Instead, format-specific subclasses should inherit from :"
 "class:`!Mailbox` and your code should instantiate a particular subclass."
 msgstr ""
+"Класс :class:`!Mailbox` определяет интерфейс и не предназначен для создания "
+"экземпляров. Вместо этого подклассы, специфичные для формата, должны "
+"наследовать от :class:`!Mailbox`, а ваш код должен создавать экземпляр "
+"определенного подкласса."
 
 #: ../../library/mailbox.rst:41
 msgid ""
@@ -74,6 +85,12 @@ msgid ""
 "corresponding message is modified, such as by replacing it with another "
 "message."
 msgstr ""
+"Интерфейс :class:`!Mailbox` похож на словарь, с маленькими клавишами, "
+"соответствующими сообщениям. Ключи выдаются экземпляром :class:`!Mailbox`, с "
+"которым они будут использоваться, и имеют смысл только для этого экземпляра :"
+"class:`!Mailbox`. Ключ продолжает идентифицировать сообщение, даже если "
+"соответствующее сообщение изменено, например, путем замены его другим "
+"сообщением."
 
 #: ../../library/mailbox.rst:47
 msgid ""
@@ -81,6 +98,9 @@ msgid ""
 "method :meth:`add` and removed using a ``del`` statement or the set-like "
 "methods :meth:`remove` and :meth:`discard`."
 msgstr ""
+"Сообщения могут быть добавлены в экземпляр :class:`!Mailbox` с помощью "
+"метода set-подобного :meth:`add` и удалены с помощью оператора ``del`` или "
+"методов set-подобных :meth:`remove` и : мет:`отбросить`."
 
 #: ../../library/mailbox.rst:51
 msgid ""
@@ -92,6 +112,13 @@ msgid ""
 "copied. In neither case is a reference to the message representation kept by "
 "the :class:`!Mailbox` instance."
 msgstr ""
+"Семантика интерфейса :class:`!Mailbox` отличается от семантики словаря "
+"некоторыми примечательными моментами. Каждый раз, когда запрашивается "
+"сообщение, создается новое представление (обычно экземпляр :class:`Message`) "
+"на основе текущего состояния почтового ящика. Аналогично, когда сообщение "
+"добавляется в экземпляр :class:`!Mailbox`, содержимое предоставленного "
+"представления сообщения копируется. Ни в одном случае ссылка на "
+"представление сообщения не сохраняется в экземпляре :class:`!Mailbox`."
 
 #: ../../library/mailbox.rst:59
 msgid ""
@@ -104,6 +131,14 @@ msgid ""
 "iterator may result in a :exc:`KeyError` exception if the corresponding "
 "message is subsequently removed."
 msgstr ""
+"По умолчанию :class:`!Mailbox` :term:`iterator` перебирает представления "
+"сообщений, а не ключи, как это делает итератор :class:`dictionary <dict>` по "
+"умолчанию. Более того, модификация почтового ящика во время итерации "
+"безопасна и четко определена. Сообщения, добавленные в почтовый ящик после "
+"создания итератора, не будут видны ему. Сообщения, удаленные из почтового "
+"ящика до того, как итератор выдаст их, будут автоматически пропущены, хотя "
+"использование ключа из итератора может привести к исключению :exc:"
+"`KeyError`, если соответствующее сообщение впоследствии будет удалено."
 
 #: ../../library/mailbox.rst:71
 msgid ""
@@ -116,15 +151,24 @@ msgid ""
 "deleting a message.  Failing to lock the mailbox runs the risk of losing "
 "messages or corrupting the entire mailbox."
 msgstr ""
+"Будьте очень осторожны при изменении почтовых ящиков, которые могут быть "
+"одновременно изменены каким-либо другим процессом. Самый безопасный формат "
+"почтового ящика для таких задач — :class:`Maildir`; старайтесь избегать "
+"использования однофайловых форматов, таких как :class:`mbox`, для "
+"одновременной записи. Если вы изменяете почтовый ящик, вы *должны* "
+"заблокировать его, вызвав методы :meth:`lock` и :meth:`unlock` *перед* "
+"чтением любых сообщений в файле или внесением каких-либо изменений путем "
+"добавления или удаления сообщения. . Если не заблокировать почтовый ящик, "
+"существует риск потери сообщений или повреждения всего почтового ящика."
 
 #: ../../library/mailbox.rst:81
 msgid ":class:`!Mailbox` instances have the following methods:"
-msgstr ""
+msgstr "Экземпляры :class:`!Mailbox` имеют следующие методы:"
 
 #: ../../library/mailbox.rst:86
 msgid ""
 "Add *message* to the mailbox and return the key that has been assigned to it."
-msgstr ""
+msgstr "Добавьте *сообщение* в почтовый ящик и верните назначенный ему ключ."
 
 #: ../../library/mailbox.rst:89
 msgid ""
@@ -136,14 +180,22 @@ msgid ""
 "format-specific information is used. Otherwise, reasonable defaults for "
 "format-specific information are used."
 msgstr ""
+"Параметр *message* может быть экземпляром :class:`Message`, экземпляром :"
+"class:`email.message.Message`, строкой, байтовой строкой или файлоподобным "
+"объектом (который должен быть открыт в двоичном режиме). . Если *message* "
+"является экземпляром соответствующего подкласса :class:`Message`, "
+"специфичного для формата (например, если это экземпляр :class:`mboxMessage`, "
+"а это экземпляр :class:`mbox`), его специфичный для формата используется "
+"информация. В противном случае используются разумные значения по умолчанию "
+"для информации, специфичной для формата."
 
 #: ../../library/mailbox.rst:98
 msgid "Support for binary input was added."
-msgstr ""
+msgstr "Добавлена ​​поддержка двоичного ввода."
 
 #: ../../library/mailbox.rst:106
 msgid "Delete the message corresponding to *key* from the mailbox."
-msgstr ""
+msgstr "Удалите сообщение, соответствующее *key*, из почтового ящика."
 
 #: ../../library/mailbox.rst:108
 msgid ""
@@ -153,12 +205,20 @@ msgid ""
 "`discard` may be preferred if the underlying mailbox format supports "
 "concurrent modification by other processes."
 msgstr ""
+"Если такого сообщения не существует, возникает исключение :exc:`KeyError`, "
+"если метод был вызван как :meth:`remove` или :meth:`__delitem__`, но "
+"исключение не создается, если метод был вызван как :meth:` отбросить`. "
+"Поведение :meth:`discard` может быть предпочтительным, если базовый формат "
+"почтового ящика поддерживает одновременную модификацию другими процессами."
 
 #: ../../library/mailbox.rst:117
 msgid ""
 "Replace the message corresponding to *key* with *message*. Raise a :exc:"
 "`KeyError` exception if no message already corresponds to *key*."
 msgstr ""
+"Замените сообщение, соответствующее *key*, на *message*. Вызовите "
+"исключение :exc:`KeyError`, если ни одно сообщение уже не соответствует "
+"*key*."
 
 #: ../../library/mailbox.rst:120
 msgid ""
@@ -171,16 +231,27 @@ msgid ""
 "specific information of the message that currently corresponds to *key* is "
 "left unchanged."
 msgstr ""
+"Как и в случае с :meth:`add`, параметр *message* может быть экземпляром :"
+"class:`Message`, экземпляром :class:`email.message.Message`, строкой, "
+"байтовой строкой или файловым объектом. (который должен быть открыт в "
+"двоичном режиме). Если *message* является экземпляром соответствующего "
+"подкласса :class:`Message`, специфичного для формата (например, если это "
+"экземпляр :class:`mboxMessage`, а это экземпляр :class:`mbox`), его "
+"специфичный для формата используется информация. В противном случае "
+"информация о формате сообщения, которая в данный момент соответствует *key*, "
+"остается неизменной."
 
 #: ../../library/mailbox.rst:133
 msgid "Return an :term:`iterator` over all keys"
-msgstr ""
+msgstr "Вернуть :term:`итератор` по всем ключам"
 
 #: ../../library/mailbox.rst:138
 msgid ""
 "The same as :meth:`iterkeys`, except that a :class:`list` is returned rather "
 "than an :term:`iterator`"
 msgstr ""
+"То же, что и :meth:`iterkeys`, за исключением того, что возвращается :class:"
+"`list`, а не :term:`iterator`"
 
 #: ../../library/mailbox.rst:145
 msgid ""
@@ -189,18 +260,26 @@ msgid ""
 "class:`Message` subclass unless a custom message factory was specified when "
 "the :class:`!Mailbox` instance was initialized."
 msgstr ""
+"Возвращает :term:`итератор` для представлений всех сообщений. Сообщения "
+"представлены как экземпляры соответствующего подкласса :class:`Message`, "
+"специфичного для формата, если при инициализации экземпляра :class:`!"
+"Mailbox` не была указана пользовательская фабрика сообщений."
 
 #: ../../library/mailbox.rst:153
 msgid ""
 "The behavior of :meth:`__iter__` is unlike that of dictionaries, which "
 "iterate over keys."
 msgstr ""
+"Поведение :meth:`__iter__` отличается от поведения словарей, которые "
+"перебирают ключи."
 
 #: ../../library/mailbox.rst:159
 msgid ""
 "The same as :meth:`itervalues`, except that a :class:`list` is returned "
 "rather than an :term:`iterator`"
 msgstr ""
+"То же, что :meth:`itervalues`, за исключением того, что возвращается :class:"
+"`list`, а не :term:`iterator`"
 
 #: ../../library/mailbox.rst:165
 msgid ""
@@ -210,12 +289,19 @@ msgid ""
 "unless a custom message factory was specified when the :class:`!Mailbox` "
 "instance was initialized."
 msgstr ""
+"Возвращает :term:`iterator` для пар (*key*, *message*), где *key* — это "
+"ключ, а *message* — представление сообщения. Сообщения представлены как "
+"экземпляры соответствующего подкласса :class:`Message`, специфичного для "
+"формата, если при инициализации экземпляра :class:`!Mailbox` не была указана "
+"пользовательская фабрика сообщений."
 
 #: ../../library/mailbox.rst:174
 msgid ""
 "The same as :meth:`iteritems`, except that a :class:`list` of pairs is "
 "returned rather than an :term:`iterator` of pairs."
 msgstr ""
+"То же, что и :meth:`iteritems`, за исключением того, что возвращается :class:"
+"`list` пар, а не :term:`iterator` пар."
 
 #: ../../library/mailbox.rst:181
 msgid ""
@@ -227,6 +313,13 @@ msgid ""
 "message factory was specified when the :class:`!Mailbox` instance was "
 "initialized."
 msgstr ""
+"Возвращает представление сообщения, соответствующее *key*. Если такого "
+"сообщения не существует, возвращается *default*, если метод был вызван как :"
+"meth:`get`, и возникает исключение :exc:`KeyError`, если метод был вызван "
+"как :meth:`!__getitem__`. Сообщение представляется как экземпляр "
+"соответствующего подкласса :class:`Message`, специфичного для формата, если "
+"при инициализации экземпляра :class:`!Mailbox` не была указана "
+"пользовательская фабрика сообщений."
 
 #: ../../library/mailbox.rst:192
 msgid ""
@@ -234,12 +327,17 @@ msgid ""
 "of the appropriate format-specific :class:`Message` subclass, or raise a :"
 "exc:`KeyError` exception if no such message exists."
 msgstr ""
+"Возвращает представление сообщения, соответствующего *key*, как экземпляр "
+"соответствующего подкласса :class:`Message`, специфичного для формата, или "
+"вызывает исключение :exc:`KeyError`, если такого сообщения не существует."
 
 #: ../../library/mailbox.rst:199
 msgid ""
 "Return a byte representation of the message corresponding to *key*, or raise "
 "a :exc:`KeyError` exception if no such message exists."
 msgstr ""
+"Возвращает байтовое представление сообщения, соответствующее *key*, или "
+"вызывает исключение :exc:`KeyError`, если такого сообщения не существует."
 
 #: ../../library/mailbox.rst:207
 msgid ""
@@ -248,6 +346,10 @@ msgid ""
 "processed through :class:`email.message.Message` to convert it to a 7bit "
 "clean representation."
 msgstr ""
+"Возвращает строковое представление сообщения, соответствующего *key*, или "
+"вызывает исключение :exc:`KeyError`, если такого сообщения не существует. "
+"Сообщение обрабатывается через :class:`email.message.Message` для "
+"преобразования его в 7-битное чистое представление."
 
 #: ../../library/mailbox.rst:215
 msgid ""
@@ -256,6 +358,11 @@ msgid ""
 "message exists.  The file-like object behaves as if open in binary mode.  "
 "This file should be closed once it is no longer needed."
 msgstr ""
+"Возвращает :term:`file-like <файлоподобный объект>` представление сообщения, "
+"соответствующего *key*, или вызывает исключение :exc:`KeyError`, если такого "
+"сообщения не существует. Файлоподобный объект ведет себя так, как если бы он "
+"был открыт в двоичном режиме. Этот файл следует закрыть, как только он "
+"больше не понадобится."
 
 #: ../../library/mailbox.rst:221
 msgid ""
@@ -264,6 +371,11 @@ msgid ""
 "supports the :term:`context manager` protocol: you can use a :keyword:`with` "
 "statement to automatically close it."
 msgstr ""
+"Файловый объект на самом деле является :term:`двоичным файлом`; ранее он "
+"неправильно возвращался в текстовом режиме. Кроме того, объект :term:"
+"`файлоподобный` теперь поддерживает протокол :term:`контекстного менеджера`: "
+"вы можете использовать оператор :keyword:`with` для его автоматического "
+"закрытия."
 
 #: ../../library/mailbox.rst:229
 msgid ""
@@ -272,18 +384,24 @@ msgid ""
 "Mailbox` instance that created them or of the underlying mailbox.  More "
 "specific documentation is provided by each subclass."
 msgstr ""
+"В отличие от других представлений сообщений, представления :term:`file-like "
+"<файлоподобный объект>` не обязательно независимы от экземпляра :class:`!"
+"Mailbox`, который их создал, или от базового почтового ящика. Более "
+"конкретная документация предоставляется каждым подклассом."
 
 #: ../../library/mailbox.rst:238
 msgid "Return ``True`` if *key* corresponds to a message, ``False`` otherwise."
 msgstr ""
+"Возвращайте ``True``, если *key* соответствует сообщению, ``False`` в "
+"противном случае."
 
 #: ../../library/mailbox.rst:243
 msgid "Return a count of messages in the mailbox."
-msgstr ""
+msgstr "Возвращает количество сообщений в почтовом ящике."
 
 #: ../../library/mailbox.rst:248
 msgid "Delete all messages from the mailbox."
-msgstr ""
+msgstr "Удалить все сообщения из почтового ящика."
 
 #: ../../library/mailbox.rst:253
 msgid ""
@@ -293,6 +411,11 @@ msgid ""
 "`Message` subclass unless a custom message factory was specified when the :"
 "class:`!Mailbox` instance was initialized."
 msgstr ""
+"Верните представление сообщения, соответствующее *key*, и удалите сообщение. "
+"Если такого сообщения не существует, верните *default*. Сообщение "
+"представляется как экземпляр соответствующего подкласса :class:`Message`, "
+"специфичного для формата, если при инициализации экземпляра :class:`!"
+"Mailbox` не была указана пользовательская фабрика сообщений."
 
 #: ../../library/mailbox.rst:262
 msgid ""
@@ -303,6 +426,12 @@ msgid ""
 "`Message` subclass unless a custom message factory was specified when the :"
 "class:`!Mailbox` instance was initialized."
 msgstr ""
+"Верните произвольную пару (*key*, *message*), где *key* — это ключ, а "
+"*message* — представление сообщения, и удалите соответствующее сообщение. "
+"Если почтовый ящик пуст, вызовите исключение :exc:`KeyError`. Сообщение "
+"представляется как экземпляр соответствующего подкласса :class:`Message`, "
+"специфичного для формата, если при инициализации экземпляра :class:`!"
+"Mailbox` не была указана пользовательская фабрика сообщений."
 
 #: ../../library/mailbox.rst:272
 msgid ""
@@ -314,10 +443,18 @@ msgid ""
 "exception will be raised, so in general it is incorrect for *arg* to be a :"
 "class:`!Mailbox` instance."
 msgstr ""
+"Параметр *arg* должен быть сопоставлением *ключ* с *сообщением* или "
+"итерацией пар (*ключ*, *сообщение*). Обновляет почтовый ящик так, что для "
+"каждого данного *ключа* и *сообщения* сообщение, соответствующее *ключу*, "
+"устанавливается в *message*, как если бы с помощью :meth:`__setitem__`. Как "
+"и в случае с :meth:`__setitem__`, каждый *key* уже должен соответствовать "
+"сообщению в почтовом ящике, иначе будет возбуждено исключение :exc:"
+"`KeyError`, поэтому в целом неправильно, чтобы *arg* был : class:`!Mailbox` "
+"экземпляр."
 
 #: ../../library/mailbox.rst:282
 msgid "Unlike with dictionaries, keyword arguments are not supported."
-msgstr ""
+msgstr "В отличие от словарей, аргументы ключевых слов не поддерживаются."
 
 #: ../../library/mailbox.rst:287
 msgid ""
@@ -325,6 +462,10 @@ msgid ""
 "subclasses, changes are always written immediately and :meth:`!flush` does "
 "nothing, but you should still make a habit of calling this method."
 msgstr ""
+"Запишите все ожидающие изменения в файловую систему. Для некоторых "
+"подклассов :class:`Mailbox` изменения всегда записываются немедленно, а :"
+"meth:`!flush` ничего не делает, но вам все равно следует выработать привычку "
+"вызывать этот метод."
 
 #: ../../library/mailbox.rst:294
 msgid ""
@@ -334,16 +475,25 @@ msgid ""
 "mailbox format.  You should *always* lock the mailbox before making any "
 "modifications to its contents."
 msgstr ""
+"Получите эксклюзивную рекомендательную блокировку почтового ящика, чтобы "
+"другие процессы не могли его изменить. Если блокировка недоступна, выдается "
+"сообщение :exc:`ExternalClashError`. Конкретные используемые механизмы "
+"блокировки зависят от формата почтового ящика. Вам следует *всегда* "
+"блокировать почтовый ящик перед внесением каких-либо изменений в его "
+"содержимое."
 
 #: ../../library/mailbox.rst:303
 msgid "Release the lock on the mailbox, if any."
-msgstr ""
+msgstr "Снимите блокировку почтового ящика, если таковая имеется."
 
 #: ../../library/mailbox.rst:308
 msgid ""
 "Flush the mailbox, unlock it if necessary, and close any open files. For "
 "some :class:`!Mailbox` subclasses, this method does nothing."
 msgstr ""
+"Очистите почтовый ящик, при необходимости разблокируйте его и закройте все "
+"открытые файлы. Для некоторых подклассов :class:`!Mailbox` этот метод ничего "
+"не делает."
 
 #: ../../library/mailbox.rst:315
 msgid ":class:`!Maildir` objects"
@@ -358,18 +508,28 @@ msgid ""
 "used as the default message representation. If *create* is ``True``, the "
 "mailbox is created if it does not exist."
 msgstr ""
+"Подкласс :class:`Mailbox` для почтовых ящиков в формате Maildir. Параметр "
+"*factory* — это вызываемый объект, который принимает файловое представление "
+"сообщения (которое ведет себя так, как если бы оно было открыто в двоичном "
+"режиме) и возвращает пользовательское представление. Если *factory* имеет "
+"значение None, :class:`MaildirMessage` используется как представление "
+"сообщения по умолчанию. Если *create* имеет значение True, почтовый ящик "
+"создается, если он не существует."
 
 #: ../../library/mailbox.rst:327
 msgid ""
 "If *create* is ``True`` and the *dirname* path exists, it will be treated as "
 "an existing maildir without attempting to verify its directory layout."
 msgstr ""
+"Если *create* имеет значение True и путь *dirname* существует, он будет "
+"рассматриваться как существующий почтовый каталог без попытки проверить "
+"структуру его каталога."
 
 #: ../../library/mailbox.rst:330
 msgid ""
 "It is for historical reasons that *dirname* is named as such rather than "
 "*path*."
-msgstr ""
+msgstr "По историческим причинам *dirname* назван так, а не *path*."
 
 #: ../../library/mailbox.rst:332
 msgid ""
@@ -380,6 +540,12 @@ msgid ""
 "by multiple unrelated programs without data corruption, so file locking is "
 "unnecessary."
 msgstr ""
+"Maildir — это формат почтовых ящиков на основе каталогов, изобретенный для "
+"агента передачи почты qmail и теперь широко поддерживаемый другими "
+"программами. Сообщения в почтовом ящике Maildir хранятся в отдельных файлах "
+"в общей структуре каталогов. Такая конструкция позволяет нескольким "
+"несвязанным программам получать доступ к почтовым ящикам Maildir и изменять "
+"их без повреждения данных, поэтому блокировка файлов не требуется."
 
 #: ../../library/mailbox.rst:339
 msgid ""
@@ -390,6 +556,12 @@ msgid ""
 "`cur` subdirectory and store information about the state of the message in a "
 "special \"info\" section appended to its file name."
 msgstr ""
+"Почтовые ящики Maildir содержат три подкаталога, а именно: :file:`tmp`, :"
+"file:`new` и :file:`cur`. Сообщения на мгновение создаются в подкаталоге :"
+"file:`tmp`, а затем перемещаются в подкаталог :file:`new` для завершения "
+"доставки. Почтовый агент пользователя может впоследствии переместить "
+"сообщение в подкаталог :file:`cur` и сохранить информацию о состоянии "
+"сообщения в специальном разделе «info», добавленном к его имени файла."
 
 #: ../../library/mailbox.rst:346
 msgid ""
@@ -401,6 +573,13 @@ msgid ""
 "nesting is indicated using ``'.'`` to delimit levels, e.g., "
 "\"Archived.2005.07\"."
 msgstr ""
+"Также поддерживаются папки в стиле, представленном агентом передачи почты "
+"Courier. Любой подкаталог основного почтового ящика считается папкой, если "
+"``'.'`` является первым символом в его имени. Имена папок представлены :"
+"class:`!Maildir` без начального ``'.'``. Каждая папка сама по себе является "
+"почтовым ящиком Maildir, но не должна содержать других папок. Вместо этого "
+"логическая вложенность обозначается с помощью ``'.'`` для разделения "
+"уровней, например, \"Архив.2005.07\"."
 
 #: ../../library/mailbox.rst:355
 msgid ""
@@ -410,20 +589,29 @@ msgid ""
 "operating system, you should specify another character to use instead. The "
 "exclamation point (``'!'``) is a popular choice. For example::"
 msgstr ""
+"Спецификация Maildir требует использования двоеточия (``':'``) в некоторых "
+"именах файлов сообщений. Однако некоторые операционные системы не допускают "
+"использования этого символа в именах файлов. Если вы хотите использовать в "
+"такой операционной системе формат, подобный Maildir, вам следует указать "
+"вместо него другой символ. Восклицательный знак (``'!'``) является "
+"популярным выбором. Например::"
 
 #: ../../library/mailbox.rst:365
 msgid "The :attr:`!colon` attribute may also be set on a per-instance basis."
 msgstr ""
+"Атрибут :attr:`!colon` также может быть установлен для каждого экземпляра."
 
 #: ../../library/mailbox.rst:367
 msgid ""
 ":class:`!Maildir` instances have all of the methods of :class:`Mailbox` in "
 "addition to the following:"
 msgstr ""
+"Экземпляры :class:`!Maildir` имеют все методы :class:`Mailbox` в дополнение "
+"к следующим:"
 
 #: ../../library/mailbox.rst:373 ../../library/mailbox.rst:545
 msgid "Return a list of the names of all folders."
-msgstr ""
+msgstr "Вернуть список названий всех папок."
 
 #: ../../library/mailbox.rst:378
 msgid ""
@@ -431,12 +619,17 @@ msgid ""
 "*folder*. A :exc:`NoSuchMailboxError` exception is raised if the folder does "
 "not exist."
 msgstr ""
+"Возвращает экземпляр :class:`!Maildir`, представляющий папку с именем "
+"*folder*. Исключение :exc:`NoSuchMailboxError` возникает, если папка не "
+"существует."
 
 #: ../../library/mailbox.rst:385
 msgid ""
 "Create a folder whose name is *folder* and return a :class:`!Maildir` "
 "instance representing it."
 msgstr ""
+"Создайте папку с именем *folder* и верните представляющий ее экземпляр :"
+"class:`!Maildir`."
 
 #: ../../library/mailbox.rst:391 ../../library/mailbox.rst:563
 msgid ""
@@ -444,6 +637,8 @@ msgid ""
 "messages, a :exc:`NotEmptyError` exception will be raised and the folder "
 "will not be deleted."
 msgstr ""
+"Удалите папку с именем *folder*. Если папка содержит какие-либо сообщения, "
+"будет выдано исключение :exc:`NotEmptyError` и папка не будет удалена."
 
 #: ../../library/mailbox.rst:398
 msgid ""
@@ -451,12 +646,17 @@ msgid ""
 "last 36 hours. The Maildir specification says that mail-reading programs "
 "should do this occasionally."
 msgstr ""
+"Удалите из почтового ящика временные файлы, к которым не было доступа в "
+"течение последних 36 часов. В спецификации Maildir говорится, что программы "
+"чтения почты должны делать это время от времени."
 
 #: ../../library/mailbox.rst:402
 msgid ""
 "Some :class:`Mailbox` methods implemented by :class:`!Maildir` deserve "
 "special remarks:"
 msgstr ""
+"Некоторые методы :class:`Mailbox`, реализованные :class:`!Maildir`, "
+"заслуживают особого внимания:"
 
 #: ../../library/mailbox.rst:412
 msgid ""
@@ -465,51 +665,70 @@ msgid ""
 "corruption of the mailbox unless threads are coordinated to avoid using "
 "these methods to manipulate the same mailbox simultaneously."
 msgstr ""
+"Эти методы генерируют уникальные имена файлов на основе текущего "
+"идентификатора процесса. При использовании нескольких потоков могут "
+"возникнуть необнаруженные конфликты имен, которые могут привести к "
+"повреждению почтового ящика, если только потоки не скоординированы, чтобы "
+"избежать использования этих методов для одновременного управления одним и "
+"тем же почтовым ящиком."
 
 #: ../../library/mailbox.rst:420
 msgid ""
 "All changes to Maildir mailboxes are immediately applied, so this method "
 "does nothing."
 msgstr ""
+"Все изменения в почтовых ящиках Maildir применяются немедленно, поэтому этот "
+"метод ничего не делает."
 
 #: ../../library/mailbox.rst:427
 msgid ""
 "Maildir mailboxes do not support (or require) locking, so these methods do "
 "nothing."
 msgstr ""
+"Почтовые ящики Maildir не поддерживают (или не требуют) блокировку, поэтому "
+"эти методы ничего не делают."
 
 #: ../../library/mailbox.rst:433
 msgid ""
 ":class:`!Maildir` instances do not keep any open files and the underlying "
 "mailboxes do not support locking, so this method does nothing."
 msgstr ""
+"Экземпляры :class:`!Maildir` не сохраняют открытых файлов, а базовые "
+"почтовые ящики не поддерживают блокировку, поэтому этот метод ничего не "
+"делает."
 
 #: ../../library/mailbox.rst:439
 msgid ""
 "Depending upon the host platform, it may not be possible to modify or remove "
 "the underlying message while the returned file remains open."
 msgstr ""
+"В зависимости от хост-платформы может оказаться невозможным изменить или "
+"удалить основное сообщение, пока возвращенный файл остается открытым."
 
 #: ../../library/mailbox.rst:447
 msgid ""
 "`maildir man page from Courier <https://www.courier-mta.org/maildir.html>`_"
 msgstr ""
+"`Справочная страница maildir от Courier <https://www.courier-mta.org/maildir."
+"html>`_"
 
 #: ../../library/mailbox.rst:446
 msgid ""
 "A specification of the format. Describes a common extension for supporting "
 "folders."
-msgstr ""
+msgstr "Спецификация формата. Описывает общее расширение для поддержки папок."
 
 #: ../../library/mailbox.rst:450
 msgid "`Using maildir format <https://cr.yp.to/proto/maildir.html>`_"
-msgstr ""
+msgstr "`Использование формата maildir <https://cr.yp.to/proto/maildir.html>`_"
 
 #: ../../library/mailbox.rst:450
 msgid ""
 "Notes on Maildir by its inventor. Includes an updated name-creation scheme "
 "and details on \"info\" semantics."
 msgstr ""
+"Заметки о Maildir от его изобретателя. Включает обновленную схему создания "
+"имен и подробную информацию о семантике слова «информация»."
 
 #: ../../library/mailbox.rst:457
 msgid ":class:`!mbox` objects"
@@ -524,6 +743,13 @@ msgid ""
 "used as the default message representation. If *create* is ``True``, the "
 "mailbox is created if it does not exist."
 msgstr ""
+"Подкласс :class:`Mailbox` для почтовых ящиков в формате mbox. Параметр "
+"*factory* — это вызываемый объект, который принимает файловое представление "
+"сообщения (которое ведет себя так, как если бы оно было открыто в двоичном "
+"режиме) и возвращает пользовательское представление. Если *factory* имеет "
+"значение None, :class:`mboxMessage` используется как представление сообщения "
+"по умолчанию. Если *create* имеет значение True, почтовый ящик создается, "
+"если он не существует."
 
 #: ../../library/mailbox.rst:469
 msgid ""
@@ -532,6 +758,9 @@ msgid ""
 "of each message indicated by a line whose first five characters are \"From "
 "\"."
 msgstr ""
+"Формат mbox — это классический формат хранения почты в системах Unix. Все "
+"сообщения в почтовом ящике mbox хранятся в одном файле, причем начало "
+"каждого сообщения обозначается строкой, первые пять символов которой — «От»."
 
 #: ../../library/mailbox.rst:473
 msgid ""
@@ -544,12 +773,21 @@ msgid ""
 "message, although occurrences of \">From \" are not transformed to \"From \" "
 "when reading the message."
 msgstr ""
+"Существует несколько вариантов формата mbox для устранения очевидных "
+"недостатков оригинала. В целях совместимости :class:`!mbox` реализует "
+"исходный формат, который иногда называют :dfn:`mboxo`. Это означает, что "
+"заголовок :mailheader:`Content-Length`, если он присутствует, игнорируется и "
+"что любые вхождения «From» в начале строки в теле сообщения преобразуются в "
+"«>From» при сохранении сообщения, хотя вхождения «>От» не преобразуются в "
+"«От» при чтении сообщения."
 
 #: ../../library/mailbox.rst:481
 msgid ""
 "Some :class:`Mailbox` methods implemented by :class:`!mbox` deserve special "
 "remarks:"
 msgstr ""
+"Некоторые методы :class:`Mailbox`, реализованные :class:`!mbox`, заслуживают "
+"особого внимания:"
 
 #: ../../library/mailbox.rst:487
 msgid ""
@@ -557,6 +795,9 @@ msgid ""
 "close` on the :class:`!mbox` instance may yield unpredictable results or "
 "raise an exception."
 msgstr ""
+"Использование файла после вызова :meth:`~Mailbox.flush` или :meth:`~Mailbox."
+"close` в экземпляре :class:`!mbox` может привести к непредсказуемым "
+"результатам или вызвать исключение."
 
 #: ../../library/mailbox.rst:495 ../../library/mailbox.rst:704
 #: ../../library/mailbox.rst:755
@@ -564,36 +805,46 @@ msgid ""
 "Three locking mechanisms are used---dot locking and, if available, the :c:"
 "func:`!flock` and :c:func:`!lockf` system calls."
 msgstr ""
+"Используются три механизма блокировки — точечная блокировка и, если "
+"доступно, системные вызовы :c:func:`!flock` и :c:func:`!lockf`."
 
 #: ../../library/mailbox.rst:502
 msgid ""
 "`mbox man page from tin <http://www.tin.org/bin/man.cgi?"
 "section=5&topic=mbox>`_"
 msgstr ""
+"`Справочная страница mbox из Tin <http://www.tin.org/bin/man.cgi?"
+"section=5&topic=mbox>`_"
 
 #: ../../library/mailbox.rst:502
 msgid "A specification of the format, with details on locking."
-msgstr ""
+msgstr "Спецификация формата с подробностями о блокировке."
 
 #: ../../library/mailbox.rst:505
 msgid ""
 "`Configuring Netscape Mail on Unix: Why The Content-Length Format is Bad "
 "<https://www.jwz.org/doc/content-length.html>`_"
 msgstr ""
+"`Настройка Netscape Mail в Unix: почему формат Content-Length плох <https://"
+"www.jwz.org/doc/content-length.html>`_"
 
 #: ../../library/mailbox.rst:505
 msgid "An argument for using the original mbox format rather than a variation."
 msgstr ""
+"Аргумент в пользу использования исходного формата mbox, а не его вариации."
 
 #: ../../library/mailbox.rst:507
 msgid ""
 "`\"mbox\" is a family of several mutually incompatible mailbox formats "
 "<https://www.loc.gov/preservation/digital/formats/fdd/fdd000383.shtml>`_"
 msgstr ""
+"`\"mbox\" — это семейство нескольких взаимно несовместимых форматов почтовых "
+"ящиков <https://www.loc.gov/preservation/digital/formats/fdd/fdd000383."
+"shtml>`_"
 
 #: ../../library/mailbox.rst:508
 msgid "A history of mbox variations."
-msgstr ""
+msgstr "История вариаций mbox."
 
 #: ../../library/mailbox.rst:514
 msgid ":class:`!MH` objects"
@@ -608,6 +859,13 @@ msgid ""
 "as the default message representation. If *create* is ``True``, the mailbox "
 "is created if it does not exist."
 msgstr ""
+"Подкласс :class:`Mailbox` для почтовых ящиков в формате MH. Параметр "
+"*factory* — это вызываемый объект, который принимает файловое представление "
+"сообщения (которое ведет себя так, как если бы оно было открыто в двоичном "
+"режиме) и возвращает пользовательское представление. Если *factory* имеет "
+"значение None, :class:`MHMessage` используется в качестве представления "
+"сообщения по умолчанию. Если *create* имеет значение True, почтовый ящик "
+"создается, если он не существует."
 
 #: ../../library/mailbox.rst:526
 msgid ""
@@ -619,6 +877,15 @@ msgid ""
 "messages without moving them to sub-folders. Sequences are defined in a file "
 "called :file:`.mh_sequences` in each folder."
 msgstr ""
+"MH — это формат почтовых ящиков на основе каталогов, разработанный для "
+"системы обработки сообщений MH, почтового пользовательского агента. Каждое "
+"сообщение в почтовом ящике MH хранится в отдельном файле. Почтовый ящик MH "
+"может содержать другие почтовые ящики MH (называемые :dfn:`folders`) в "
+"дополнение к сообщениям. Папки могут быть вложены бесконечно. Почтовые ящики "
+"MH также поддерживают :dfn:`sequences`, именованные списки, используемые для "
+"логической группировки сообщений без перемещения их в подпапки. "
+"Последовательности определяются в файле с именем :file:`.mh_sequences` в "
+"каждой папке."
 
 #: ../../library/mailbox.rst:534
 msgid ""
@@ -627,12 +894,18 @@ msgid ""
 "and is not affected by the :file:`context` or :file:`.mh_profile` files that "
 "are used by :program:`mh` to store its state and configuration."
 msgstr ""
+"Класс :class:`!MH` управляет почтовыми ящиками MH, но не пытается "
+"эмулировать все поведение :program:`mh`. В частности, он не модифицируется и "
+"не подвергается воздействию файлов :file:`context` или :file:`.mh_profile`, "
+"которые используются :program:`mh` для хранения его состояния и конфигурации."
 
 #: ../../library/mailbox.rst:539
 msgid ""
 ":class:`!MH` instances have all of the methods of :class:`Mailbox` in "
 "addition to the following:"
 msgstr ""
+"Экземпляры :class:`!MH` имеют все методы :class:`Mailbox` в дополнение к "
+"следующим:"
 
 #: ../../library/mailbox.rst:550
 msgid ""
@@ -640,18 +913,24 @@ msgid ""
 "*folder*. A :exc:`NoSuchMailboxError` exception is raised if the folder does "
 "not exist."
 msgstr ""
+"Возвращает экземпляр :class:`!MH`, представляющий папку с именем *folder*. "
+"Исключение :exc:`NoSuchMailboxError` возникает, если папка не существует."
 
 #: ../../library/mailbox.rst:557
 msgid ""
 "Create a folder whose name is *folder* and return an :class:`!MH` instance "
 "representing it."
 msgstr ""
+"Создайте папку с именем *folder* и верните представляющий ее экземпляр :"
+"class:`!MH`."
 
 #: ../../library/mailbox.rst:570
 msgid ""
 "Return a dictionary of sequence names mapped to key lists. If there are no "
 "sequences, the empty dictionary is returned."
 msgstr ""
+"Возвращает словарь имен последовательностей, сопоставленных со списками "
+"ключей. Если последовательностей нет, возвращается пустой словарь."
 
 #: ../../library/mailbox.rst:576
 msgid ""
@@ -659,30 +938,42 @@ msgid ""
 "dictionary of names mapped to key lists, like returned by :meth:"
 "`get_sequences`."
 msgstr ""
+"Переопределите последовательности, существующие в почтовом ящике, на основе "
+"*sequences*, словаря имен, сопоставленных со списками ключей, например, "
+"возвращаемых :meth:`get_sequences`."
 
 #: ../../library/mailbox.rst:583
 msgid ""
 "Rename messages in the mailbox as necessary to eliminate gaps in numbering.  "
 "Entries in the sequences list are updated correspondingly."
 msgstr ""
+"Переименовывайте сообщения в почтовом ящике по мере необходимости, чтобы "
+"устранить пробелы в нумерации. Записи в списке последовательностей "
+"обновляются соответствующим образом."
 
 #: ../../library/mailbox.rst:588
 msgid ""
 "Already-issued keys are invalidated by this operation and should not be "
 "subsequently used."
 msgstr ""
+"Уже выданные ключи в результате этой операции становятся недействительными и "
+"не должны использоваться в дальнейшем."
 
 #: ../../library/mailbox.rst:591
 msgid ""
 "Some :class:`Mailbox` methods implemented by :class:`!MH` deserve special "
 "remarks:"
 msgstr ""
+"Некоторые методы :class:`Mailbox`, реализованные :class:`!MH`, заслуживают "
+"особого внимания:"
 
 #: ../../library/mailbox.rst:599
 msgid ""
 "These methods immediately delete the message. The MH convention of marking a "
 "message for deletion by prepending a comma to its name is not used."
 msgstr ""
+"Эти методы немедленно удаляют сообщение. Соглашение MH о пометке сообщения "
+"для удаления путем добавления запятой к его имени не используется."
 
 #: ../../library/mailbox.rst:606
 msgid ""
@@ -692,46 +983,63 @@ msgid ""
 "duration of any operations that affect them, locking individual message "
 "files."
 msgstr ""
+"Используются три механизма блокировки — точечная блокировка и, если "
+"доступно, системные вызовы :c:func:`!flock` и :c:func:`!lockf`. Для почтовых "
+"ящиков MH блокировка почтового ящика означает блокировку файла :file:`."
+"mh_sequences` и, только на время любых влияющих на них операций, блокировку "
+"отдельных файлов сообщений."
 
 #: ../../library/mailbox.rst:615
 msgid ""
 "Depending upon the host platform, it may not be possible to remove the "
 "underlying message while the returned file remains open."
 msgstr ""
+"В зависимости от хост-платформы удаление основного сообщения может оказаться "
+"невозможным, пока возвращенный файл остается открытым."
 
 #: ../../library/mailbox.rst:621
 msgid ""
 "All changes to MH mailboxes are immediately applied, so this method does "
 "nothing."
 msgstr ""
+"Все изменения в почтовых ящиках MH применяются немедленно, поэтому этот "
+"метод ничего не делает."
 
 #: ../../library/mailbox.rst:627
 msgid ""
 ":class:`!MH` instances do not keep any open files, so this method is "
 "equivalent to :meth:`unlock`."
 msgstr ""
+"Экземпляры :class:`!MH` не сохраняют открытых файлов, поэтому этот метод "
+"эквивалентен :meth:`unlock`."
 
 #: ../../library/mailbox.rst:634
 msgid "`nmh - Message Handling System <https://www.nongnu.org/nmh/>`_"
-msgstr ""
+msgstr "`nmh — система обработки сообщений <https://www.nongnu.org/nmh/>`_"
 
 #: ../../library/mailbox.rst:634
 msgid ""
 "Home page of :program:`nmh`, an updated version of the original :program:"
 "`mh`."
 msgstr ""
+"Домашняя страница :program:`nmh`, обновленной версии оригинальной :program:"
+"`mh`."
 
 #: ../../library/mailbox.rst:637
 msgid ""
 "`MH & nmh: Email for Users & Programmers <https://rand-mh.sourceforge.io/"
 "book/>`_"
 msgstr ""
+"`MH & nmh: электронная почта для пользователей и программистов <https://rand-"
+"mh.sourceforge.io/book/>`_"
 
 #: ../../library/mailbox.rst:637
 msgid ""
 "A GPL-licensed book on :program:`mh` and :program:`nmh`, with some "
 "information on the mailbox format."
 msgstr ""
+"Книга под лицензией GPL по :program:`mh` и :program:`nmh`, с некоторой "
+"информацией о формате почтового ящика."
 
 #: ../../library/mailbox.rst:644
 msgid ":class:`!Babyl` objects"
@@ -746,6 +1054,13 @@ msgid ""
 "used as the default message representation. If *create* is ``True``, the "
 "mailbox is created if it does not exist."
 msgstr ""
+"Подкласс :class:`Mailbox` для почтовых ящиков в формате Babyl. Параметр "
+"*factory* — это вызываемый объект, который принимает файловое представление "
+"сообщения (которое ведет себя так, как если бы оно было открыто в двоичном "
+"режиме) и возвращает пользовательское представление. Если *factory* имеет "
+"значение None, :class:`BabylMessage` используется в качестве представления "
+"сообщения по умолчанию. Если *create* имеет значение True, почтовый ящик "
+"создается, если он не существует."
 
 #: ../../library/mailbox.rst:656
 msgid ""
@@ -756,6 +1071,12 @@ msgid ""
 "message or, in the case of the last message, a line containing a Control-"
 "Underscore (``'\\037'``) character."
 msgstr ""
+"Babyl — это формат однофайлового почтового ящика, используемый почтовым "
+"пользовательским агентом Rmail, включенным в Emacs. Начало сообщения "
+"обозначается строкой, содержащей два символа Control-Underscore "
+"(``'\\037'``) и Control-L (``'\\014'``). Конец сообщения обозначается "
+"началом следующего сообщения или, в случае последнего сообщения, строкой, "
+"содержащей символ Control-Underscore (``'\\037'``)."
 
 #: ../../library/mailbox.rst:663
 msgid ""
@@ -767,17 +1088,29 @@ msgid ""
 "message, and a list of all user-defined labels found in the mailbox is kept "
 "in the Babyl options section."
 msgstr ""
+"Сообщения в почтовом ящике Babyl имеют два набора заголовков: оригинальные "
+"заголовки и так называемые видимые заголовки. Видимые заголовки обычно "
+"представляют собой подмножество исходных заголовков, которые были "
+"переформатированы или сокращены, чтобы сделать их более привлекательными. "
+"Каждое сообщение в почтовом ящике Babyl также имеет сопроводительный список :"
+"dfn:`labels` или коротких строк, которые записывают дополнительную "
+"информацию о сообщении, а список всех пользовательских меток, найденных в "
+"почтовом ящике, хранится в разделе параметров Babyl. ."
 
 #: ../../library/mailbox.rst:671
 msgid ""
 ":class:`!Babyl` instances have all of the methods of :class:`Mailbox` in "
 "addition to the following:"
 msgstr ""
+"Экземпляры :class:`!Babyl` имеют все методы :class:`Mailbox` в дополнение к "
+"следующим:"
 
 #: ../../library/mailbox.rst:677
 msgid ""
 "Return a list of the names of all user-defined labels used in the mailbox."
 msgstr ""
+"Возвращает список имен всех определяемых пользователем меток, используемых в "
+"почтовом ящике."
 
 #: ../../library/mailbox.rst:681
 msgid ""
@@ -785,12 +1118,17 @@ msgid ""
 "mailbox rather than consulting the list of labels in the Babyl options "
 "section, but the Babyl section is updated whenever the mailbox is modified."
 msgstr ""
+"Фактические сообщения проверяются, чтобы определить, какие метки существуют "
+"в почтовом ящике, а не сверяются со списком меток в разделе параметров "
+"Babyl, но раздел Babyl обновляется при каждом изменении почтового ящика."
 
 #: ../../library/mailbox.rst:686
 msgid ""
 "Some :class:`Mailbox` methods implemented by :class:`!Babyl` deserve special "
 "remarks:"
 msgstr ""
+"Некоторые методы :class:`Mailbox`, реализованные :class:`!Babyl`, "
+"заслуживают особого внимания:"
 
 #: ../../library/mailbox.rst:692
 msgid ""
@@ -801,25 +1139,33 @@ msgid ""
 "object is truly independent of the underlying mailbox but does not save "
 "memory compared to a string representation."
 msgstr ""
+"В почтовых ящиках Babyl заголовки сообщения не хранятся рядом с телом "
+"сообщения. Чтобы создать файловое представление, заголовки и тело копируются "
+"вместе в экземпляр :class:`io.BytesIO`, который имеет API, идентичный API-"
+"интерфейсу файла. В результате объект, подобный файлу, действительно "
+"независим от базового почтового ящика, но не экономит память по сравнению со "
+"строковым представлением."
 
 #: ../../library/mailbox.rst:711
 msgid ""
 "`Format of Version 5 Babyl Files <https://quimby.gnus.org/notes/BABYL>`_"
-msgstr ""
+msgstr "`Формат файлов Babyl версии 5 <https://quimby.gnus.org/notes/BABYL>`_"
 
 #: ../../library/mailbox.rst:711
 msgid "A specification of the Babyl format."
-msgstr ""
+msgstr "Спецификация формата Babyl."
 
 #: ../../library/mailbox.rst:713
 msgid ""
 "`Reading Mail with Rmail <https://www.gnu.org/software/emacs/manual/"
 "html_node/emacs/Rmail.html>`_"
 msgstr ""
+"`Чтение почты с помощью Rmail <https://www.gnu.org/software/emacs/manual/"
+"html_node/emacs/Rmail.html>`_"
 
 #: ../../library/mailbox.rst:714
 msgid "The Rmail manual, with some information on Babyl semantics."
-msgstr ""
+msgstr "Руководство по Rmail с некоторой информацией о семантике Babyl."
 
 #: ../../library/mailbox.rst:720
 msgid ":class:`!MMDF` objects"
@@ -834,6 +1180,13 @@ msgid ""
 "used as the default message representation. If *create* is ``True``, the "
 "mailbox is created if it does not exist."
 msgstr ""
+"Подкласс :class:`Mailbox` для почтовых ящиков в формате MMDF. Параметр "
+"*factory* — это вызываемый объект, который принимает файловое представление "
+"сообщения (которое ведет себя так, как если бы оно было открыто в двоичном "
+"режиме) и возвращает пользовательское представление. Если *factory* имеет "
+"значение None, в качестве представления сообщения по умолчанию используется :"
+"class:`MMDFMessage`. Если *create* имеет значение True, почтовый ящик "
+"создается, если он не существует."
 
 #: ../../library/mailbox.rst:732
 msgid ""
@@ -847,12 +1200,23 @@ msgid ""
 "separator lines prevent mistaking such occurrences for the starts of "
 "subsequent messages."
 msgstr ""
+"MMDF — это формат однофайлового почтового ящика, изобретенный для "
+"Multichannel Memorandum Distribution Facility, агента передачи почты. Каждое "
+"сообщение имеет ту же форму, что и сообщение mbox, но до и после него "
+"заключено в квадратные скобки строками, содержащими четыре символа Control-A "
+"(``'\\001'``). Как и в формате mbox, начало каждого сообщения обозначается "
+"строкой, первые пять символов которой — «От», но дополнительные вхождения "
+"«От» не преобразуются в «>От» при сохранении сообщений, поскольку "
+"дополнительные строки-разделители сообщений не позволяют ошибочно принимают "
+"такие события за начало последующих сообщений."
 
 #: ../../library/mailbox.rst:741
 msgid ""
 "Some :class:`Mailbox` methods implemented by :class:`!MMDF` deserve special "
 "remarks:"
 msgstr ""
+"Некоторые методы :class:`Mailbox`, реализованные :class:`!MMDF`, заслуживают "
+"особого внимания:"
 
 #: ../../library/mailbox.rst:747
 msgid ""
@@ -860,17 +1224,22 @@ msgid ""
 "close` on the :class:`!MMDF` instance may yield unpredictable results or "
 "raise an exception."
 msgstr ""
+"Использование файла после вызова :meth:`~Mailbox.flush` или :meth:`~Mailbox."
+"close` в экземпляре :class:`!MMDF` может привести к непредсказуемым "
+"результатам или вызвать исключение."
 
 #: ../../library/mailbox.rst:762
 msgid ""
 "`mmdf man page from tin <http://www.tin.org/bin/man.cgi?"
 "section=5&topic=mmdf>`_"
 msgstr ""
+"`Справочная страница mmdf из Tin <http://www.tin.org/bin/man.cgi?"
+"section=5&topic=mmdf>`_"
 
 #: ../../library/mailbox.rst:762
 msgid ""
 "A specification of MMDF format from the documentation of tin, a newsreader."
-msgstr ""
+msgstr "Спецификация формата MMDF из документации жести, читалки."
 
 #: ../../library/mailbox.rst:765
 msgid "`MMDF <https://en.wikipedia.org/wiki/MMDF>`_"
@@ -881,6 +1250,8 @@ msgid ""
 "A Wikipedia article describing the Multichannel Memorandum Distribution "
 "Facility."
 msgstr ""
+"Статья в Википедии, описывающая механизм многоканального распространения "
+"меморандумов."
 
 #: ../../library/mailbox.rst:772
 msgid ":class:`!Message` objects"
@@ -892,6 +1263,9 @@ msgid ""
 "Message`. Subclasses of :class:`!mailbox.Message` add mailbox-format-"
 "specific state and behavior."
 msgstr ""
+"Подкласс модуля :mod:`email.message` :class:`~email.message.Message`. "
+"Подклассы :class:`!mailbox.Message` добавляют состояние и поведение, "
+"зависящие от формата почтового ящика."
 
 #: ../../library/mailbox.rst:781
 msgid ""
@@ -904,6 +1278,15 @@ msgid ""
 "open in binary mode, but text mode files are accepted for backward "
 "compatibility."
 msgstr ""
+"Если *message* опущено, новый экземпляр создается в пустом состоянии по "
+"умолчанию. Если *message* является экземпляром :class:`email.message."
+"Message`, его содержимое копируется; кроме того, любая информация, "
+"специфичная для формата, преобразуется, насколько это возможно, если "
+"*message* является экземпляром :class:`!Message`. Если *message* "
+"представляет собой строку, байтовую строку или файл, оно должно содержать "
+"сообщение, совместимое с :rfc:`2822`\\, которое читается и анализируется. "
+"Файлы должны открываться в двоичном режиме, но файлы в текстовом режиме "
+"принимаются для обратной совместимости."
 
 #: ../../library/mailbox.rst:790
 msgid ""
@@ -916,6 +1299,15 @@ msgid ""
 "state such as whether a message has been read by the user or marked as "
 "important is retained, because it applies to the message itself."
 msgstr ""
+"Состояние и поведение, зависящие от формата, предлагаемые подклассами, "
+"различаются, но в целом поддерживаются только свойства, не специфичные для "
+"конкретного почтового ящика (хотя предположительно свойства специфичны для "
+"конкретного формата почтового ящика). Например, смещения файлов для "
+"однофайловых форматов почтовых ящиков и имена файлов для форматов почтовых "
+"ящиков на основе каталога не сохраняются, поскольку они применимы только к "
+"исходному почтовому ящику. Но состояние, например, было ли сообщение "
+"прочитано пользователем или отмечено как важное, сохраняется, поскольку оно "
+"применяется к самому сообщению."
 
 #: ../../library/mailbox.rst:799
 msgid ""
@@ -927,6 +1319,13 @@ msgid ""
 "custom message factory may be specified when a :class:`!Mailbox` instance is "
 "initialized."
 msgstr ""
+"Нет требования, чтобы экземпляры :class:`!Message` использовались для "
+"представления сообщений, полученных с помощью экземпляров :class:`Mailbox`. "
+"В некоторых ситуациях время и память, необходимые для создания "
+"представлений :class:`!Message`, могут оказаться неприемлемыми. Для таких "
+"ситуаций экземпляры :class:`!Mailbox` также предлагают строковые и файловые "
+"представления, а при инициализации экземпляра :class:`!Mailbox` можно "
+"указать собственную фабрику сообщений."
 
 #: ../../library/mailbox.rst:810
 msgid ":class:`!MaildirMessage` objects"
@@ -937,6 +1336,8 @@ msgid ""
 "A message with Maildir-specific behaviors. Parameter *message* has the same "
 "meaning as with the :class:`Message` constructor."
 msgstr ""
+"Сообщение с поведением, специфичным для Maildir. Параметр *message* имеет то "
+"же значение, что и конструктор :class:`Message`."
 
 #: ../../library/mailbox.rst:818
 msgid ""
@@ -951,6 +1352,19 @@ msgid ""
 "contain \"1,\" followed by so-called experimental information. Standard "
 "flags for Maildir messages are as follows:"
 msgstr ""
+"Обычно приложение почтового пользовательского агента перемещает все "
+"сообщения из подкаталога :file:`new` в подкаталог :file:`cur` после того, "
+"как пользователь впервые открывает и закрывает почтовый ящик, фиксируя, что "
+"сообщения старые, вне зависимости от того, являются ли сообщения "
+"устаревшими. нет, они на самом деле были прочитаны. К каждому сообщению в :"
+"file:`cur` к имени файла добавляется раздел «информация» для хранения "
+"информации о его состоянии. (Некоторые программы чтения почты могут также "
+"добавлять раздел «информация» к сообщениям в :file:`new`.) Раздел "
+"«информация» может принимать одну из двух форм: он может содержать цифру "
+"«2», за которой следует список стандартизированных флагов ( например, «2,"
+"FR») или может содержать «1», за которой следует так называемая "
+"экспериментальная информация. Стандартные флаги для сообщений Maildir "
+"следующие:"
 
 #: ../../library/mailbox.rst:830 ../../library/mailbox.rst:997
 #: ../../library/mailbox.rst:1368
@@ -989,7 +1403,7 @@ msgstr "F"
 #: ../../library/mailbox.rst:834 ../../library/mailbox.rst:1005
 #: ../../library/mailbox.rst:1376
 msgid "Flagged"
-msgstr ""
+msgstr "Помечено"
 
 #: ../../library/mailbox.rst:834 ../../library/mailbox.rst:1005
 #: ../../library/mailbox.rst:1154 ../../library/mailbox.rst:1376
@@ -1002,11 +1416,11 @@ msgstr "P"
 
 #: ../../library/mailbox.rst:836
 msgid "Passed"
-msgstr ""
+msgstr "Прошедший"
 
 #: ../../library/mailbox.rst:836
 msgid "Forwarded, resent, or bounced"
-msgstr ""
+msgstr "Переадресовано, повторно отправлено или отклонено"
 
 #: ../../library/mailbox.rst:838 ../../library/mailbox.rst:999
 #: ../../library/mailbox.rst:1370
@@ -1015,7 +1429,7 @@ msgstr "R"
 
 #: ../../library/mailbox.rst:838
 msgid "Replied"
-msgstr ""
+msgstr "Ответил"
 
 #: ../../library/mailbox.rst:838 ../../library/mailbox.rst:1007
 #: ../../library/mailbox.rst:1152 ../../library/mailbox.rst:1243
@@ -1029,7 +1443,7 @@ msgstr "S"
 
 #: ../../library/mailbox.rst:840
 msgid "Seen"
-msgstr ""
+msgstr "Видимый"
 
 #: ../../library/mailbox.rst:840 ../../library/mailbox.rst:999
 #: ../../library/mailbox.rst:1370
@@ -1042,16 +1456,16 @@ msgstr "T"
 
 #: ../../library/mailbox.rst:842
 msgid "Trashed"
-msgstr ""
+msgstr "Выброшен"
 
 #: ../../library/mailbox.rst:842 ../../library/mailbox.rst:1003
 #: ../../library/mailbox.rst:1239 ../../library/mailbox.rst:1374
 msgid "Marked for subsequent deletion"
-msgstr ""
+msgstr "Отмечено для последующего удаления"
 
 #: ../../library/mailbox.rst:845
 msgid ":class:`!MaildirMessage` instances offer the following methods:"
-msgstr ""
+msgstr "Экземпляры :class:`!MaildirMessage` предлагают следующие методы:"
 
 #: ../../library/mailbox.rst:850
 msgid ""
@@ -1059,6 +1473,9 @@ msgid ""
 "subdirectory) or \"cur\" (if the message should be stored in the :file:`cur` "
 "subdirectory)."
 msgstr ""
+"Возвращает либо «new» (если сообщение должно храниться в подкаталоге :file:"
+"`new`), либо «cur» (если сообщение должно храниться в подкаталоге :file:"
+"`cur`)."
 
 #: ../../library/mailbox.rst:856
 msgid ""
@@ -1072,6 +1489,8 @@ msgid ""
 "Set the subdirectory the message should be stored in. Parameter *subdir* "
 "must be either \"new\" or \"cur\"."
 msgstr ""
+"Установите подкаталог, в котором должно храниться сообщение. Параметр "
+"*subdir* должен быть либо «new», либо «cur»."
 
 #: ../../library/mailbox.rst:870
 msgid ""
@@ -1081,10 +1500,16 @@ msgid ""
 "``'P'``, ``'R'``, ``'S'``, and ``'T'``. The empty string is returned if no "
 "flags are set or if \"info\" contains experimental semantics."
 msgstr ""
+"Возвращает строку, определяющую флаги, которые установлены в данный момент. "
+"Если сообщение соответствует стандартному формату Maildir, результатом "
+"является объединение в алфавитном порядке нуля или одного вхождения каждого "
+"из ``'D'``, ``'F'``, ``'P'``, ``'R'``, ``'S'`` и ``'T'``. Пустая строка "
+"возвращается, если флаги не установлены или если «информация» содержит "
+"экспериментальную семантику."
 
 #: ../../library/mailbox.rst:880
 msgid "Set the flags specified by *flags* and unset all others."
-msgstr ""
+msgstr "Установите флаги, указанные *flags*, и отключите все остальные."
 
 #: ../../library/mailbox.rst:885
 msgid ""
@@ -1093,6 +1518,10 @@ msgid ""
 "character. The current \"info\" is overwritten whether or not it contains "
 "experimental information rather than flags."
 msgstr ""
+"Установите флаг(и), указанные в *flag*, не меняя другие флаги. Чтобы "
+"добавить более одного флага одновременно, *flag* может быть строкой, "
+"состоящей из более чем одного символа. Текущая «информация» перезаписывается "
+"независимо от того, содержит ли она экспериментальную информацию, а не флаги."
 
 #: ../../library/mailbox.rst:893
 msgid ""
@@ -1101,18 +1530,26 @@ msgid ""
 "character.  If \"info\" contains experimental information rather than flags, "
 "the current \"info\" is not modified."
 msgstr ""
+"Снимите флаг(и), указанные в *flag*, не меняя другие флаги. Чтобы удалить "
+"более одного флага одновременно, *flag* может быть строкой, состоящей из "
+"более чем одного символа. Если «информация» содержит экспериментальную "
+"информацию, а не флаги, текущая «информация» не изменяется."
 
 #: ../../library/mailbox.rst:901
 msgid ""
 "Return the delivery date of the message as a floating-point number "
 "representing seconds since the epoch."
 msgstr ""
+"Возвращает дату доставки сообщения в виде числа с плавающей запятой, "
+"представляющего секунды с начала эпохи."
 
 #: ../../library/mailbox.rst:907
 msgid ""
 "Set the delivery date of the message to *date*, a floating-point number "
 "representing seconds since the epoch."
 msgstr ""
+"Установите дату доставки сообщения в *date* — число с плавающей запятой, "
+"представляющее секунды с начала эпохи."
 
 #: ../../library/mailbox.rst:913
 msgid ""
@@ -1120,10 +1557,13 @@ msgid ""
 "accessing and modifying \"info\" that is experimental (i.e., not a list of "
 "flags)."
 msgstr ""
+"Возвращает строку, содержащую информацию о сообщении. Это полезно для "
+"доступа и изменения экспериментальной «информации» (т. е. не списка флагов)."
 
 #: ../../library/mailbox.rst:920
 msgid "Set \"info\" to *info*, which should be a string."
 msgstr ""
+"Установите для параметра «info» значение *info*, которое должно быть строкой."
 
 #: ../../library/mailbox.rst:922
 msgid ""
@@ -1132,6 +1572,9 @@ msgid ""
 "and :mailheader:`X-Status` headers are omitted and the following conversions "
 "take place:"
 msgstr ""
+"Когда экземпляр :class:`!MaildirMessage` создается на основе экземпляра :"
+"class:`mboxMessage` или :class:`MMDFMessage`, заголовки :mailheader:`Status` "
+"и :mailheader:`X-Status` опускаются и происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:928 ../../library/mailbox.rst:946
 #: ../../library/mailbox.rst:961 ../../library/mailbox.rst:1068
@@ -1148,7 +1591,7 @@ msgstr "Результирующий статус"
 #: ../../library/mailbox.rst:928 ../../library/mailbox.rst:1198
 #: ../../library/mailbox.rst:1326
 msgid ":class:`mboxMessage` or :class:`MMDFMessage` state"
-msgstr ""
+msgstr "Состояние :class:`mboxMessage` или :class:`MMDFMessage`"
 
 #: ../../library/mailbox.rst:931 ../../library/mailbox.rst:948
 #: ../../library/mailbox.rst:963 ../../library/mailbox.rst:1072
@@ -1213,6 +1656,8 @@ msgid ""
 "When a :class:`!MaildirMessage` instance is created based upon an :class:"
 "`MHMessage` instance, the following conversions take place:"
 msgstr ""
+"Когда экземпляр :class:`!MaildirMessage` создается на основе экземпляра :"
+"class:`MHMessage`, происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:946 ../../library/mailbox.rst:1085
 #: ../../library/mailbox.rst:1340 ../../library/mailbox.rst:1457
@@ -1224,11 +1669,11 @@ msgstr "Статус :class:`MHMessage`"
 #: ../../library/mailbox.rst:1214 ../../library/mailbox.rst:1342
 #: ../../library/mailbox.rst:1461
 msgid "\"unseen\" sequence"
-msgstr ""
+msgstr "«невидимая» последовательность"
 
 #: ../../library/mailbox.rst:950 ../../library/mailbox.rst:965
 msgid "\"cur\" subdirectory and S flag"
-msgstr ""
+msgstr "Подкаталог «cur» и флаг S"
 
 #: ../../library/mailbox.rst:950 ../../library/mailbox.rst:1087
 #: ../../library/mailbox.rst:1459
@@ -1239,20 +1684,22 @@ msgstr "никакой \"невидимой\" последовательност
 #: ../../library/mailbox.rst:1189 ../../library/mailbox.rst:1205
 #: ../../library/mailbox.rst:1463
 msgid "\"flagged\" sequence"
-msgstr ""
+msgstr "\"отмеченная\" последовательность"
 
 #: ../../library/mailbox.rst:954 ../../library/mailbox.rst:1093
 #: ../../library/mailbox.rst:1187 ../../library/mailbox.rst:1203
 #: ../../library/mailbox.rst:1216 ../../library/mailbox.rst:1344
 #: ../../library/mailbox.rst:1465
 msgid "\"replied\" sequence"
-msgstr ""
+msgstr "последовательность \"ответов\""
 
 #: ../../library/mailbox.rst:957
 msgid ""
 "When a :class:`!MaildirMessage` instance is created based upon a :class:"
 "`BabylMessage` instance, the following conversions take place:"
 msgstr ""
+"Когда экземпляр :class:`!MaildirMessage` создается на основе экземпляра :"
+"class:`BabylMessage`, происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:961 ../../library/mailbox.rst:1100
 #: ../../library/mailbox.rst:1212 ../../library/mailbox.rst:1472
@@ -1264,7 +1711,7 @@ msgstr "Статус :class:`BabylMessage`"
 #: ../../library/mailbox.rst:1329 ../../library/mailbox.rst:1342
 #: ../../library/mailbox.rst:1476
 msgid "\"unseen\" label"
-msgstr ""
+msgstr "«невидимая» этикетка"
 
 #: ../../library/mailbox.rst:965 ../../library/mailbox.rst:1102
 #: ../../library/mailbox.rst:1474
@@ -1277,7 +1724,7 @@ msgstr "Флаг P"
 
 #: ../../library/mailbox.rst:967
 msgid "\"forwarded\" or \"resent\" label"
-msgstr ""
+msgstr "Метка «переадресовано» или «повторно отправлено»"
 
 #: ../../library/mailbox.rst:969 ../../library/mailbox.rst:1108
 #: ../../library/mailbox.rst:1216 ../../library/mailbox.rst:1315
@@ -1290,7 +1737,7 @@ msgstr "метка \"ответил\""
 #: ../../library/mailbox.rst:1313 ../../library/mailbox.rst:1331
 #: ../../library/mailbox.rst:1478
 msgid "\"deleted\" label"
-msgstr ""
+msgstr "\"удаленный\" ярлык"
 
 #: ../../library/mailbox.rst:978
 msgid ":class:`!mboxMessage` objects"
@@ -1301,6 +1748,8 @@ msgid ""
 "A message with mbox-specific behaviors. Parameter *message* has the same "
 "meaning as with the :class:`Message` constructor."
 msgstr ""
+"Сообщение с поведением, специфичным для mbox. Параметр *message* имеет то же "
+"значение, что и конструктор :class:`Message`."
 
 #: ../../library/mailbox.rst:986
 msgid ""
@@ -1312,10 +1761,17 @@ msgid ""
 "message, such as whether it has been read or marked as important, are "
 "typically stored in :mailheader:`Status` and :mailheader:`X-Status` headers."
 msgstr ""
+"Сообщения в почтовом ящике mbox хранятся вместе в одном файле. Адрес "
+"конверта отправителя и время доставки обычно хранятся в строке, начинающейся "
+"с «От», которая используется для обозначения начала сообщения, хотя в разных "
+"реализациях mbox существуют значительные различия в точном формате этих "
+"данных. Флаги, указывающие состояние сообщения, например, было ли оно "
+"прочитано или отмечено как важное, обычно хранятся в заголовках :mailheader:"
+"`Status` и :mailheader:`X-Status`."
 
 #: ../../library/mailbox.rst:994
 msgid "Conventional flags for mbox messages are as follows:"
-msgstr ""
+msgstr "Обычные флаги для сообщений mbox следующие:"
 
 #: ../../library/mailbox.rst:1001 ../../library/mailbox.rst:1372
 msgid "O"
@@ -1327,7 +1783,7 @@ msgstr "Старый"
 
 #: ../../library/mailbox.rst:1001 ../../library/mailbox.rst:1372
 msgid "Previously detected by MUA"
-msgstr ""
+msgstr "Ранее обнаружено MUA"
 
 #: ../../library/mailbox.rst:1003 ../../library/mailbox.rst:1374
 msgid "Deleted"
@@ -1339,7 +1795,7 @@ msgstr "A"
 
 #: ../../library/mailbox.rst:1007 ../../library/mailbox.rst:1378
 msgid "Answered"
-msgstr ""
+msgstr "Ответил"
 
 #: ../../library/mailbox.rst:1010 ../../library/mailbox.rst:1381
 msgid ""
@@ -1347,10 +1803,13 @@ msgid ""
 "the \"D\", \"F\", and \"A\" flags are stored in the :mailheader:`X-Status` "
 "header. The flags and headers typically appear in the order mentioned."
 msgstr ""
+"Флаги «R» и «O» хранятся в заголовке :mailheader:`Status`, а флаги «D», «F» "
+"и «A» хранятся в заголовке :mailheader:`X-Status`. Флаги и заголовки обычно "
+"появляются в указанном порядке."
 
 #: ../../library/mailbox.rst:1014
 msgid ":class:`!mboxMessage` instances offer the following methods:"
-msgstr ""
+msgstr "Экземпляры :class:`!mboxMessage` предлагают следующие методы:"
 
 #: ../../library/mailbox.rst:1019 ../../library/mailbox.rst:1391
 msgid ""
@@ -1358,6 +1817,9 @@ msgid ""
 "message in an mbox mailbox. The leading \"From \" and the trailing newline "
 "are excluded."
 msgstr ""
+"Возвращает строку, представляющую строку «От», которая отмечает начало "
+"сообщения в почтовом ящике mbox. Ведущий «От» и завершающий символ новой "
+"строки исключаются."
 
 #: ../../library/mailbox.rst:1026 ../../library/mailbox.rst:1398
 msgid ""
@@ -1368,6 +1830,12 @@ msgid ""
 "tuple suitable for passing to :func:`time.strftime`, or ``True`` (to use :"
 "func:`time.gmtime`)."
 msgstr ""
+"Установите для строки «От» значение *from_*, которое должно быть указано без "
+"начального «От» или завершающего символа новой строки. Для удобства можно "
+"указать *time_*, которое будет отформатировано соответствующим образом и "
+"добавлено к *from_*. Если указано *time_*, это должен быть экземпляр :class:"
+"`time.struct_time`, кортеж, подходящий для передачи в :func:`time.strftime`, "
+"или ``True`` (для использования :func:`time .gmtime`)."
 
 #: ../../library/mailbox.rst:1036 ../../library/mailbox.rst:1408
 msgid ""
@@ -1376,6 +1844,10 @@ msgid ""
 "the following order of zero or one occurrence of each of ``'R'``, ``'O'``, "
 "``'D'``, ``'F'``, and ``'A'``."
 msgstr ""
+"Возвращает строку, определяющую флаги, которые установлены в данный момент. "
+"Если сообщение соответствует обычному формату, результатом является "
+"объединение в следующем порядке нуля или одного вхождения каждого из "
+"``'R'``, ``'O'``, ``'D'``, ``'F'`` и ``'A'``."
 
 #: ../../library/mailbox.rst:1044 ../../library/mailbox.rst:1416
 msgid ""
@@ -1383,6 +1855,9 @@ msgid ""
 "should be the concatenation in any order of zero or more occurrences of each "
 "of ``'R'``, ``'O'``, ``'D'``, ``'F'``, and ``'A'``."
 msgstr ""
+"Установите флаги, указанные *flags*, и отключите все остальные. Параметр "
+"*flags* должен быть конкатенацией в любом порядке нуля или более вхождений "
+"каждого из ``'R'``, ``'O'``, ``'D'``, ``'F'`` и ``'А'``."
 
 #: ../../library/mailbox.rst:1051 ../../library/mailbox.rst:1423
 msgid ""
@@ -1390,6 +1865,9 @@ msgid ""
 "more than one flag at a time, *flag* may be a string of more than one "
 "character."
 msgstr ""
+"Установите флаг(и), указанные в *flag*, не меняя другие флаги. Чтобы "
+"добавить более одного флага одновременно, *flag* может быть строкой, "
+"состоящей из более чем одного символа."
 
 #: ../../library/mailbox.rst:1058 ../../library/mailbox.rst:1430
 msgid ""
@@ -1397,6 +1875,9 @@ msgid ""
 "remove more than one flag at a time, *flag* maybe a string of more than one "
 "character."
 msgstr ""
+"Снимите флаг(и), указанные в *flag*, не меняя другие флаги. Чтобы удалить "
+"более одного флага одновременно, *flag* может быть строкой, состоящей из "
+"более чем одного символа."
 
 #: ../../library/mailbox.rst:1062
 msgid ""
@@ -1405,6 +1886,9 @@ msgid ""
 "class:`MaildirMessage` instance's delivery date, and the following "
 "conversions take place:"
 msgstr ""
+"Когда экземпляр :class:`!mboxMessage` создается на основе экземпляра :class:"
+"`MaildirMessage`, строка «От» генерируется на основе даты доставки "
+"экземпляра :class:`MaildirMessage`, и происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:1068 ../../library/mailbox.rst:1183
 #: ../../library/mailbox.rst:1309 ../../library/mailbox.rst:1440
@@ -1416,17 +1900,21 @@ msgid ""
 "When an :class:`!mboxMessage` instance is created based upon an :class:"
 "`MHMessage` instance, the following conversions take place:"
 msgstr ""
+"Когда экземпляр :class:`!mboxMessage` создается на основе экземпляра :class:"
+"`MHMessage`, происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:1087 ../../library/mailbox.rst:1102
 #: ../../library/mailbox.rst:1459 ../../library/mailbox.rst:1474
 msgid "R flag and O flag"
-msgstr ""
+msgstr "Флаг R и флаг O"
 
 #: ../../library/mailbox.rst:1096
 msgid ""
 "When an :class:`!mboxMessage` instance is created based upon a :class:"
 "`BabylMessage` instance, the following conversions take place:"
 msgstr ""
+"Когда экземпляр :class:`!mboxMessage` создается на основе экземпляра :class:"
+"`BabylMessage`, происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:1111
 msgid ""
@@ -1434,6 +1922,8 @@ msgid ""
 "`MMDFMessage` instance, the \"From \" line is copied and all flags directly "
 "correspond:"
 msgstr ""
+"Когда экземпляр :class:`!mboxMessage` создается на основе экземпляра :class:"
+"`MMDFMessage`, строка «От» копируется, и все флаги напрямую соответствуют:"
 
 #: ../../library/mailbox.rst:1116
 msgid ":class:`MMDFMessage` state"
@@ -1448,6 +1938,8 @@ msgid ""
 "A message with MH-specific behaviors. Parameter *message* has the same "
 "meaning as with the :class:`Message` constructor."
 msgstr ""
+"Сообщение с поведением, специфичным для MH. Параметр *message* имеет то же "
+"значение, что и конструктор :class:`Message`."
 
 #: ../../library/mailbox.rst:1141
 msgid ""
@@ -1457,6 +1949,11 @@ msgid ""
 "program:`nmh`) use sequences in much the same way flags are used with other "
 "formats, as follows:"
 msgstr ""
+"Сообщения MH не поддерживают метки или флаги в традиционном смысле, но "
+"поддерживают последовательности, которые представляют собой логические "
+"группы произвольных сообщений. Некоторые программы чтения почты (кроме "
+"стандартных :program:`mh` и :program:`nmh`) используют последовательности "
+"почти так же, как флаги используются в других форматах, а именно:"
 
 #: ../../library/mailbox.rst:1148
 msgid "Sequence"
@@ -1468,41 +1965,47 @@ msgstr "невидимый"
 
 #: ../../library/mailbox.rst:1150 ../../library/mailbox.rst:1237
 msgid "Not read, but previously detected by MUA"
-msgstr ""
+msgstr "Не прочитано, но ранее обнаружено MUA"
 
 #: ../../library/mailbox.rst:1152
 msgid "replied"
-msgstr ""
+msgstr "ответил"
 
 #: ../../library/mailbox.rst:1154
 msgid "flagged"
-msgstr ""
+msgstr "помеченный"
 
 #: ../../library/mailbox.rst:1157
 msgid ":class:`!MHMessage` instances offer the following methods:"
-msgstr ""
+msgstr "Экземпляры :class:`!MHMessage` предлагают следующие методы:"
 
 #: ../../library/mailbox.rst:1162
 msgid "Return a list of the names of sequences that include this message."
 msgstr ""
+"Верните список имен последовательностей, которые включают это сообщение."
 
 #: ../../library/mailbox.rst:1167
 msgid "Set the list of sequences that include this message."
-msgstr ""
+msgstr "Установите список последовательностей, включающих это сообщение."
 
 #: ../../library/mailbox.rst:1172
 msgid "Add *sequence* to the list of sequences that include this message."
 msgstr ""
+"Добавьте *последовательность* в список последовательностей, содержащих это "
+"сообщение."
 
 #: ../../library/mailbox.rst:1177
 msgid "Remove *sequence* from the list of sequences that include this message."
 msgstr ""
+"Удалите *sequence* из списка последовательностей, содержащих это сообщение."
 
 #: ../../library/mailbox.rst:1179
 msgid ""
 "When an :class:`!MHMessage` instance is created based upon a :class:"
 "`MaildirMessage` instance, the following conversions take place:"
 msgstr ""
+"Когда экземпляр :class:`!MHMessage` создается на основе экземпляра :class:"
+"`MaildirMessage`, происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:1185 ../../library/mailbox.rst:1311
 msgid "no S flag"
@@ -1515,6 +2018,9 @@ msgid ""
 "and :mailheader:`X-Status` headers are omitted and the following conversions "
 "take place:"
 msgstr ""
+"Когда экземпляр :class:`!MHMessage` создается на основе экземпляра :class:"
+"`mboxMessage` или :class:`MMDFMessage`, заголовки :mailheader:`Status` и :"
+"mailheader:`X-Status` опускаются и происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:1201 ../../library/mailbox.rst:1329
 msgid "no R flag"
@@ -1525,6 +2031,8 @@ msgid ""
 "When an :class:`!MHMessage` instance is created based upon a :class:"
 "`BabylMessage` instance, the following conversions take place:"
 msgstr ""
+"Когда экземпляр :class:`!MHMessage` создается на основе экземпляра :class:"
+"`BabylMessage`, происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:1223
 msgid ":class:`!BabylMessage` objects"
@@ -1535,16 +2043,20 @@ msgid ""
 "A message with Babyl-specific behaviors. Parameter *message* has the same "
 "meaning as with the :class:`Message` constructor."
 msgstr ""
+"Сообщение со специфичным для Babyl поведением. Параметр *message* имеет то "
+"же значение, что и конструктор :class:`Message`."
 
 #: ../../library/mailbox.rst:1231
 msgid ""
 "Certain message labels, called :dfn:`attributes`, are defined by convention "
 "to have special meanings. The attributes are as follows:"
 msgstr ""
+"Определенные метки сообщений, называемые :dfn:`attributes`, по соглашению "
+"имеют особое значение. Атрибуты следующие:"
 
 #: ../../library/mailbox.rst:1235
 msgid "Label"
-msgstr ""
+msgstr "Этикетка"
 
 #: ../../library/mailbox.rst:1239
 msgid "deleted"
@@ -1552,35 +2064,35 @@ msgstr "удалено"
 
 #: ../../library/mailbox.rst:1241
 msgid "filed"
-msgstr ""
+msgstr "поданный"
 
 #: ../../library/mailbox.rst:1241
 msgid "Copied to another file or mailbox"
-msgstr ""
+msgstr "Скопировано в другой файл или почтовый ящик."
 
 #: ../../library/mailbox.rst:1243
 msgid "answered"
-msgstr ""
+msgstr "ответил"
 
 #: ../../library/mailbox.rst:1245
 msgid "forwarded"
-msgstr ""
+msgstr "перенаправлено"
 
 #: ../../library/mailbox.rst:1245
 msgid "Forwarded"
-msgstr ""
+msgstr "Переадресовано"
 
 #: ../../library/mailbox.rst:1247
 msgid "edited"
-msgstr ""
+msgstr "отредактировано"
 
 #: ../../library/mailbox.rst:1247
 msgid "Modified by the user"
-msgstr ""
+msgstr "Изменено пользователем"
 
 #: ../../library/mailbox.rst:1249
 msgid "resent"
-msgstr ""
+msgstr "отправить"
 
 #: ../../library/mailbox.rst:1249
 msgid "Resent"
@@ -1592,26 +2104,29 @@ msgid ""
 "class, though, uses the original headers because they are more complete. "
 "Visible headers may be accessed explicitly if desired."
 msgstr ""
+"По умолчанию Rmail отображает только видимые заголовки. Однако класс :class:"
+"`!BabylMessage` использует исходные заголовки, поскольку они более полны. "
+"При желании к видимым заголовкам можно получить доступ явным образом."
 
 #: ../../library/mailbox.rst:1256
 msgid ":class:`!BabylMessage` instances offer the following methods:"
-msgstr ""
+msgstr "Экземпляры :class:`!BabylMessage` предлагают следующие методы:"
 
 #: ../../library/mailbox.rst:1261
 msgid "Return a list of labels on the message."
-msgstr ""
+msgstr "Возвращает список меток сообщения."
 
 #: ../../library/mailbox.rst:1266
 msgid "Set the list of labels on the message to *labels*."
-msgstr ""
+msgstr "Установите для списка меток сообщения значение *labels*."
 
 #: ../../library/mailbox.rst:1271
 msgid "Add *label* to the list of labels on the message."
-msgstr ""
+msgstr "Добавьте *label* в список ярлыков сообщения."
 
 #: ../../library/mailbox.rst:1276
 msgid "Remove *label* from the list of labels on the message."
-msgstr ""
+msgstr "Удалите *label* из списка ярлыков сообщения."
 
 #: ../../library/mailbox.rst:1281
 msgid ""
@@ -1626,6 +2141,10 @@ msgid ""
 "class:`email.message.Message` instance, a string, or a file-like object "
 "(which should be open in text mode)."
 msgstr ""
+"Установите видимые заголовки сообщения такими же, как заголовки в *message*. "
+"Параметр *visible* должен быть экземпляром :class:`Message`, экземпляром :"
+"class:`email.message.Message`, строкой или файлоподобным объектом (который "
+"должен быть открыт в текстовом режиме)."
 
 #: ../../library/mailbox.rst:1295
 msgid ""
@@ -1639,12 +2158,23 @@ msgid ""
 "present in the original headers but not the visible headers are added to the "
 "visible headers."
 msgstr ""
+"Когда исходные заголовки экземпляра :class:`!BabylMessage` изменяются, "
+"видимые заголовки не изменяются автоматически для соответствия. Этот метод "
+"обновляет видимые заголовки следующим образом: каждому видимому заголовку с "
+"соответствующим исходным заголовком присваивается значение исходного "
+"заголовка, каждый видимый заголовок без соответствующего исходного заголовка "
+"удаляется, и любой из :mailheader:`Date`, :mailheader :`From`, :mailheader:"
+"`Reply-To`, :mailheader:`To`, :mailheader:`CC` и :mailheader:`Subject`, "
+"которые присутствуют в исходных заголовках, но не добавляются видимые "
+"заголовки. видимые заголовки."
 
 #: ../../library/mailbox.rst:1305
 msgid ""
 "When a :class:`!BabylMessage` instance is created based upon a :class:"
 "`MaildirMessage` instance, the following conversions take place:"
 msgstr ""
+"Когда экземпляр :class:`!BabylMessage` создается на основе экземпляра :class:"
+"`MaildirMessage`, происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:1317
 msgid "\"forwarded\" label"
@@ -1657,12 +2187,17 @@ msgid ""
 "and :mailheader:`X-Status` headers are omitted and the following conversions "
 "take place:"
 msgstr ""
+"Когда экземпляр :class:`!BabylMessage` создается на основе экземпляра :class:"
+"`mboxMessage` или :class:`MMDFMessage`, заголовки :mailheader:`Status` и :"
+"mailheader:`X-Status` опускаются и происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:1336
 msgid ""
 "When a :class:`!BabylMessage` instance is created based upon an :class:"
 "`MHMessage` instance, the following conversions take place:"
 msgstr ""
+"Когда экземпляр :class:`!BabylMessage` создается на основе экземпляра :class:"
+"`MHMessage`, происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:1351
 msgid ":class:`!MMDFMessage` objects"
@@ -1673,6 +2208,8 @@ msgid ""
 "A message with MMDF-specific behaviors. Parameter *message* has the same "
 "meaning as with the :class:`Message` constructor."
 msgstr ""
+"Сообщение с поведением, специфичным для MMDF. Параметр *message* имеет то же "
+"значение, что и конструктор :class:`Message`."
 
 #: ../../library/mailbox.rst:1359
 msgid ""
@@ -1681,18 +2218,26 @@ msgid ""
 "\"From \".  Likewise, flags that indicate the state of the message are "
 "typically stored in :mailheader:`Status` and :mailheader:`X-Status` headers."
 msgstr ""
+"Как и сообщение в почтовом ящике mbox, сообщения MMDF хранятся с адресом "
+"отправителя и датой доставки в начальной строке, начинающейся с «От». "
+"Аналогично, флаги, указывающие состояние сообщения, обычно хранятся в "
+"заголовках :mailheader:`Status` и :mailheader:`X-Status`."
 
 #: ../../library/mailbox.rst:1364
 msgid ""
 "Conventional flags for MMDF messages are identical to those of mbox message "
 "and are as follows:"
 msgstr ""
+"Обычные флаги для сообщений MMDF идентичны флагам сообщения mbox и имеют "
+"следующий вид:"
 
 #: ../../library/mailbox.rst:1385
 msgid ""
 ":class:`!MMDFMessage` instances offer the following methods, which are "
 "identical to those offered by :class:`mboxMessage`:"
 msgstr ""
+"Экземпляры :class:`!MMDFMessage` предлагают следующие методы, идентичные "
+"тем, которые предлагает :class:`mboxMessage`:"
 
 #: ../../library/mailbox.rst:1434
 msgid ""
@@ -1701,18 +2246,25 @@ msgid ""
 "class:`MaildirMessage` instance's delivery date, and the following "
 "conversions take place:"
 msgstr ""
+"Когда экземпляр :class:`!MMDFMessage` создается на основе экземпляра :class:"
+"`MaildirMessage`, строка «От» генерируется на основе даты доставки "
+"экземпляра :class:`MaildirMessage`, и происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:1453
 msgid ""
 "When an :class:`!MMDFMessage` instance is created based upon an :class:"
 "`MHMessage` instance, the following conversions take place:"
 msgstr ""
+"Когда экземпляр :class:`!MMDFMessage` создается на основе экземпляра :class:"
+"`MHMessage`, происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:1468
 msgid ""
 "When an :class:`!MMDFMessage` instance is created based upon a :class:"
 "`BabylMessage` instance, the following conversions take place:"
 msgstr ""
+"Когда экземпляр :class:`!MMDFMessage` создается на основе экземпляра :class:"
+"`BabylMessage`, происходят следующие преобразования:"
 
 #: ../../library/mailbox.rst:1483
 msgid ""
@@ -1720,6 +2272,8 @@ msgid ""
 "`mboxMessage` instance, the \"From \" line is copied and all flags directly "
 "correspond:"
 msgstr ""
+"Когда экземпляр :class:`!MMDFMessage` создается на основе экземпляра :class:"
+"`mboxMessage`, копируется строка \"From\" и все флаги напрямую соответствуют:"
 
 #: ../../library/mailbox.rst:1488
 msgid ":class:`mboxMessage` state"
@@ -1732,11 +2286,11 @@ msgstr "Исключения"
 #: ../../library/mailbox.rst:1505
 msgid ""
 "The following exception classes are defined in the :mod:`!mailbox` module:"
-msgstr ""
+msgstr "Следующие классы исключений определены в модуле :mod:`!mailbox`:"
 
 #: ../../library/mailbox.rst:1510
 msgid "The based class for all other module-specific exceptions."
-msgstr ""
+msgstr "Базовый класс для всех других исключений, специфичных для модуля."
 
 #: ../../library/mailbox.rst:1515
 msgid ""
@@ -1745,12 +2299,18 @@ msgid ""
 "(and with the *create* parameter set to ``False``), or when opening a folder "
 "that does not exist."
 msgstr ""
+"Возникает, когда почтовый ящик ожидается, но не найден, например, при "
+"создании экземпляра подкласса :class:`Mailbox` с несуществующим путем (и с "
+"параметром *create*, установленным в ``False``), или при открытии папка, "
+"которой нет."
 
 #: ../../library/mailbox.rst:1522
 msgid ""
 "Raised when a mailbox is not empty but is expected to be, such as when "
 "deleting a folder that contains messages."
 msgstr ""
+"Возникает, когда почтовый ящик не пуст, но ожидается, что он будет пустым, "
+"например, при удалении папки, содержащей сообщения."
 
 #: ../../library/mailbox.rst:1528
 msgid ""
@@ -1759,12 +2319,20 @@ msgid ""
 "that another program already holds a lock, or when a uniquely generated file "
 "name already exists."
 msgstr ""
+"Возникает, когда какое-либо состояние, связанное с почтовым ящиком, не "
+"зависящее от программы, приводит к невозможности продолжения работы, "
+"например, когда не удается получить блокировку, которую уже удерживает "
+"другая программа, или когда уже существует уникально сгенерированное имя "
+"файла."
 
 #: ../../library/mailbox.rst:1536
 msgid ""
 "Raised when the data in a file cannot be parsed, such as when an :class:`MH` "
 "instance attempts to read a corrupted :file:`.mh_sequences` file."
 msgstr ""
+"Возникает, когда данные в файле не могут быть проанализированы, например, "
+"когда экземпляр :class:`MH` пытается прочитать поврежденный файл :file:`."
+"mh_sequences`."
 
 #: ../../library/mailbox.rst:1543
 msgid "Examples"
@@ -1775,12 +2343,17 @@ msgid ""
 "A simple example of printing the subjects of all messages in a mailbox that "
 "seem interesting::"
 msgstr ""
+"Простой пример печати тем всех сообщений в почтовом ящике, которые кажутся "
+"интересными:"
 
 #: ../../library/mailbox.rst:1554
 msgid ""
 "To copy all mail from a Babyl mailbox to an MH mailbox, converting all of "
 "the format-specific information that can be converted::"
 msgstr ""
+"Чтобы скопировать всю почту из почтового ящика Babyl в почтовый ящик MH, "
+"преобразуя всю информацию, специфичную для формата, которую можно "
+"преобразовать:"
 
 #: ../../library/mailbox.rst:1565
 msgid ""
@@ -1789,3 +2362,8 @@ msgid ""
 "other programs, mail loss due to interruption of the program, or premature "
 "termination due to malformed messages in the mailbox::"
 msgstr ""
+"В этом примере почта из нескольких списков рассылки сортируется по разным "
+"почтовым ящикам, стараясь избежать повреждения почты из-за одновременного "
+"изменения другими программами, потери почты из-за прерывания работы "
+"программы или преждевременного завершения из-за неверных сообщений в "
+"почтовом ящике:"
