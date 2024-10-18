@@ -6,17 +6,17 @@
 # Translators:
 # Daniil Kolesnikov, 2024
 # Илья Панфилов, 2024
-# Roustam Khamidoulline, 2024
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-11 14:17+0000\n"
+"POT-Creation-Date: 2024-10-18 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 00:49+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -36,6 +36,8 @@ msgid ""
 "See :ref:`Python Initialization Configuration <init-config>` for details on "
 "how to configure the interpreter prior to initialization."
 msgstr ""
+"См. :ref:`Конфигурация инициализации Python <init-config>` для получения "
+"подробной информации о том, как настроить интерпретатор перед инициализацией."
 
 #: ../../c-api/init.rst:16
 msgid "Before Python Initialization"
@@ -60,15 +62,15 @@ msgstr "Следующие функции можно безопасно вызв
 
 #: ../../c-api/init.rst:25
 msgid "Functions that initialize the interpreter:"
-msgstr ""
+msgstr "Функции, инициализирующие интерпретатор:"
 
 #: ../../c-api/init.rst:27
 msgid ":c:func:`Py_Initialize`"
-msgstr ""
+msgstr ":c:func:`Py_Initialize`"
 
 #: ../../c-api/init.rst:28
 msgid ":c:func:`Py_InitializeEx`"
-msgstr ""
+msgstr ":c:func:`Py_InitializeEx`"
 
 #: ../../c-api/init.rst:29
 msgid ":c:func:`Py_InitializeFromConfig`"
@@ -80,11 +82,13 @@ msgstr ":c:func:`Py_BytesMain`"
 
 #: ../../c-api/init.rst:31
 msgid ":c:func:`Py_Main`"
-msgstr ""
+msgstr ":c:func:`Py_Main`"
 
 #: ../../c-api/init.rst:32
 msgid "the runtime pre-initialization functions covered in :ref:`init-config`"
 msgstr ""
+"функции предварительной инициализации во время выполнения, описанные в :ref:"
+"`init-config`"
 
 #: ../../c-api/init.rst:34
 msgid "Configuration functions:"
@@ -128,7 +132,7 @@ msgstr ":c:func:`PySys_ResetWarnOptions`"
 
 #: ../../c-api/init.rst:45
 msgid "the configuration functions covered in :ref:`init-config`"
-msgstr ""
+msgstr "функции конфигурации, описанные в :ref:`init-config`"
 
 #: ../../c-api/init.rst:47
 msgid "Informative functions:"
@@ -177,7 +181,7 @@ msgstr ":c:func:`Py_DecodeLocale`"
 #: ../../c-api/init.rst:62
 msgid ""
 "the status reporting and utility functions covered in :ref:`init-config`"
-msgstr ""
+msgstr "отчеты о состоянии и служебные функции, описанные в :ref:`init-config`"
 
 #: ../../c-api/init.rst:64
 msgid "Memory allocators:"
@@ -220,6 +224,12 @@ msgid ""
 "`Py_GetProgramFullPath`, :c:func:`Py_GetPythonHome`, :c:func:"
 "`Py_GetProgramName`, :c:func:`PyEval_InitThreads`, and :c:func:`Py_RunMain`."
 msgstr ""
+"Несмотря на их очевидное сходство с некоторыми функциями, перечисленными "
+"выше, следующие функции **не следует вызывать** до инициализации "
+"интерпретатора: :c:func:`Py_EncodeLocale`, :c:func:`Py_GetPath`, :c :func:"
+"`Py_GetPrefix`, :c:func:`Py_GetExecPrefix`, :c:func:"
+"`Py_GetProgramFullPath`, :c:func:`Py_GetPythonHome`, :c:func:"
+"`Py_GetProgramName`, :c:func:`PyEval_InitThreads ` и :c:func:`Py_RunMain`."
 
 #: ../../c-api/init.rst:90
 msgid "Global configuration variables"
@@ -492,7 +502,7 @@ msgstr "См. :pep:`529` для более подробной информаци
 
 #: ../../c-api/init.rst:238 ../../c-api/init.rst:256
 msgid "Availability"
-msgstr ""
+msgstr "Доступность"
 
 #: ../../c-api/init.rst:244
 msgid ""
@@ -692,12 +702,21 @@ msgid ""
 "(without calling :c:func:`Py_FinalizeEx` first).  There is no return value; "
 "it is a fatal error if the initialization fails."
 msgstr ""
+"Это инициализирует таблицу загруженных модулей (``sys.modules``) и создает "
+"основные модули :mod:`builtins`, :mod:`__main__` и :mod:`sys`. Он также "
+"инициализирует путь поиска модуля (``sys.path``). Он не устанавливает ``sys."
+"argv``; для этого используйте API конфигурации инициализации Python <init-"
+"config>`. Это пустая операция при втором вызове (без первого вызова :c:func:"
+"`Py_FinalizeEx`). Возвращаемого значения нет; это фатальная ошибка, если "
+"инициализация не удалась."
 
 #: ../../c-api/init.rst:372 ../../c-api/init.rst:386
 msgid ""
 "Use :c:func:`Py_InitializeFromConfig` to customize the :ref:`Python "
 "Initialization Configuration <init-config>`."
 msgstr ""
+"Используйте :c:func:`Py_InitializeFromConfig` для настройки :ref:"
+"`Конфигурации инициализации Python <init-config>`."
 
 #: ../../c-api/init.rst:376
 msgid ""
@@ -715,12 +734,18 @@ msgid ""
 "handlers, which may be useful when CPython is embedded as part of a larger "
 "application."
 msgstr ""
+"Эта функция работает как :c:func:`Py_Initialize`, если *initsigs* равен "
+"``1``. Если *initsigs* равен ``0``, он пропускает регистрацию инициализации "
+"обработчиков сигналов, что может быть полезно, когда CPython встроен как "
+"часть более крупного приложения."
 
 #: ../../c-api/init.rst:392
 msgid ""
 "Initialize Python from *config* configuration, as described in :ref:`init-"
 "from-config`."
 msgstr ""
+"Инициализируйте Python из конфигурации *config*, как описано в :ref:`init-"
+"from-config`."
 
 #: ../../c-api/init.rst:395
 msgid ""
@@ -728,6 +753,9 @@ msgid ""
 "interpreter, populating the runtime configuration structure, and querying "
 "the returned status structure."
 msgstr ""
+"См. раздел :ref:`init-config` для получения подробной информации о "
+"предварительной инициализации интерпретатора, заполнении структуры "
+"конфигурации времени выполнения и запросе возвращаемой структуры состояния."
 
 #: ../../c-api/init.rst:402
 msgid ""
@@ -852,6 +880,9 @@ msgid ""
 "allowing the calling application to delegate the text decoding step to the "
 "CPython runtime."
 msgstr ""
+"Аналогично :c:func:`Py_Main`, но *argv* представляет собой массив строк "
+"байтов, позволяющий вызывающему приложению делегировать этап декодирования "
+"текста среде выполнения CPython."
 
 #: ../../c-api/init.rst:474
 msgid ""
@@ -861,6 +892,10 @@ msgid ""
 "line, and then executing ``__main__`` in accordance with :ref:`using-on-"
 "cmdline`."
 msgstr ""
+"Основная программа для стандартного интерпретатора, инкапсулирующая полный "
+"цикл инициализации/финализации, а также дополнительное поведение для "
+"реализации чтения настроек конфигурации из окружения и командной строки, а "
+"затем выполнения ``__main__`` в соответствии с :ref:`using- on-cmdline`."
 
 #: ../../c-api/init.rst:480
 msgid ""
@@ -868,6 +903,9 @@ msgid ""
 "command line interface, rather than just embedding a Python runtime in a "
 "larger application."
 msgstr ""
+"Это доступно для программ, которые хотят поддерживать полный интерфейс "
+"командной строки CPython, а не просто встраивать среду выполнения Python в "
+"более крупное приложение."
 
 #: ../../c-api/init.rst:484
 msgid ""
@@ -878,6 +916,12 @@ msgid ""
 "strings other than those passed in (however, the contents of the strings "
 "pointed to by the argument list are not modified)."
 msgstr ""
+"Параметры *argc* и *argv* аналогичны тем, которые передаются в функцию :c:"
+"func:`main` программы C, за исключением того, что записи *argv* сначала "
+"преобразуются в ``wchar_t`` с помощью :c: func:`Py_DecodeLocale`. Также "
+"важно отметить, что записи списка аргументов могут быть изменены, чтобы "
+"указывать на строки, отличные от переданных (однако содержимое строк, на "
+"которые указывает список аргументов, не изменяется)."
 
 #: ../../c-api/init.rst:491
 msgid ""
@@ -885,6 +929,10 @@ msgid ""
 "without an exception), ``1`` if the interpreter exits due to an exception, "
 "or ``2`` if the argument list does not represent a valid Python command line."
 msgstr ""
+"Возвращаемое значение будет ``0``, если интерпретатор завершает работу "
+"нормально (т.е. без исключения), ``1``, если интерпретатор завершает работу "
+"из-за исключения, или ``2``, если список аргументов не представляет "
+"допустимая командная строка Python."
 
 #: ../../c-api/init.rst:496
 msgid ""
@@ -895,6 +943,13 @@ msgid ""
 "unhandled :exc:`SystemExit` will still exit the process, while any other "
 "means of exiting will set the return value as described above."
 msgstr ""
+"Обратите внимание: если возникает необработанный в противном случае :exc:"
+"`SystemExit`, эта функция не вернет ``1``, а выйдет из процесса, пока "
+"``Py_InspectFlag`` не установлен. Если установлен ``Py_InspectFlag``, "
+"выполнение перейдет в интерактивное приглашение Python, после чего второй "
+"необработанный в противном случае :exc:`SystemExit` все равно выйдет из "
+"процесса, в то время как любой другой способ выхода установит возвращаемое "
+"значение, как описано. выше."
 
 #: ../../c-api/init.rst:503
 msgid ""
@@ -902,6 +957,9 @@ msgid ""
 "`runtime configuration <init-config>` section (and without accounting for "
 "error handling), ``Py_Main`` is approximately equivalent to::"
 msgstr ""
+"С точки зрения API-интерфейсов конфигурации среды выполнения CPython, "
+"описанных в разделе конфигурации среды выполнения <init-config> (и без учета "
+"обработки ошибок), Py_Main примерно эквивалентен:"
 
 #: ../../c-api/init.rst:507
 msgid ""
@@ -913,6 +971,13 @@ msgid ""
 "\n"
 "Py_RunMain();"
 msgstr ""
+"PyConfig config;\n"
+"PyConfig_InitPythonConfig(&config);\n"
+"PyConfig_SetArgv(&config, argc, argv);\n"
+"Py_InitializeFromConfig(&config);\n"
+"PyConfig_Clear(&config);\n"
+"\n"
+"Py_RunMain();"
 
 #: ../../c-api/init.rst:515
 msgid ""
@@ -926,10 +991,21 @@ msgid ""
 "being modified after they have already been set once when the runtime was "
 "first initialized)."
 msgstr ""
+"При обычном использовании приложение для внедрения будет вызывать эту "
+"функцию *вместо* прямого вызова :c:func:`Py_Initialize`, :c:func:"
+"`Py_InitializeEx` или :c:func:`Py_InitializeFromConfig`, и все настройки "
+"будут применены. как описано в других разделах этой документации. Если "
+"вместо этого эта функция вызывается *после* предыдущего вызова API "
+"инициализации среды выполнения, то какие именно параметры конфигурации среды "
+"и командной строки будут обновлены, зависит от версии (так как это зависит "
+"от того, какие параметры правильно поддерживают изменение после того, как "
+"они уже были установлены один раз, когда среда выполнения была впервые "
+"инициализирована)."
 
 #: ../../c-api/init.rst:528
 msgid "Executes the main module in a fully configured CPython runtime."
 msgstr ""
+"Выполняет основной модуль в полностью настроенной среде выполнения CPython."
 
 #: ../../c-api/init.rst:530
 msgid ""
@@ -939,6 +1015,11 @@ msgid ""
 "of these values are set, runs the interactive Python prompt (REPL) using the "
 "``__main__`` module's global namespace."
 msgstr ""
+"Выполняет команду (:c:member:`PyConfig.run_command`), сценарий (:c:member:"
+"`PyConfig.run_filename`) или модуль (:c:member:`PyConfig.run_module`), "
+"указанный в командной строке. или в конфигурации. Если ни одно из этих "
+"значений не установлено, запускается интерактивная подсказка Python (REPL), "
+"используя глобальное пространство имен модуля ``__main__``."
 
 #: ../../c-api/init.rst:536
 msgid ""
@@ -948,6 +1029,12 @@ msgid ""
 "otherwise unhandled :exc:`SystemExit` is raised, the function will "
 "immediately exit the process instead of returning ``1``."
 msgstr ""
+"Если :c:member:`PyConfig.inspect` не установлен (по умолчанию), возвращаемое "
+"значение будет ``0``, если интерпретатор завершает работу нормально (то "
+"есть, без возникновения исключения), или ``1`` если интерпретатор завершает "
+"работу из-за исключения. Если в противном случае возникает необработанный :"
+"exc:`SystemExit`, функция немедленно выйдет из процесса вместо возврата "
+"``1``."
 
 #: ../../c-api/init.rst:542
 msgid ""
@@ -961,6 +1048,15 @@ msgid ""
 "immediately for an unhandled :exc:`SystemExit`, and returning ``1`` for any "
 "other unhandled exception."
 msgstr ""
+"Если установлен :c:member:`PyConfig.inspect` (например, когда используется "
+"опция :option:`-i`), вместо возврата при выходе интерпретатора выполнение "
+"возобновится в интерактивной командной строке Python (REPL). используя "
+"глобальное пространство имен модуля ``__main__``. Если интерпретатор "
+"завершил работу с исключением, оно немедленно возникает в сеансе REPL. "
+"Возвращаемое значение функции затем определяется способом завершения сеанса "
+"*REPL*: возврат ``0``, если сеанс завершается без возникновения "
+"необработанного исключения, немедленный выход для необработанного :exc:"
+"`SystemExit` и возврат ``1 `` для любого другого необработанного исключения."
 
 #: ../../c-api/init.rst:552
 msgid ""
@@ -968,6 +1064,9 @@ msgid ""
 "it returns a value or immediately exits the process due to an unhandled :exc:"
 "`SystemExit` exception."
 msgstr ""
+"Эта функция всегда завершает интерпретатор Python независимо от того, "
+"возвращает ли он значение или немедленно завершает процесс из-за "
+"необработанного исключения :exc:`SystemExit`."
 
 #: ../../c-api/init.rst:556
 msgid ""
@@ -975,6 +1074,9 @@ msgid ""
 "customized Python that always runs in isolated mode using :c:func:"
 "`Py_RunMain`."
 msgstr ""
+"См. :ref:`Конфигурация Python <init-python-config>` для примера настроенного "
+"Python, который всегда работает в изолированном режиме с использованием :c:"
+"func:`Py_RunMain`."
 
 #: ../../c-api/init.rst:562
 msgid "Process-wide parameters"

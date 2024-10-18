@@ -7,15 +7,16 @@
 # decorator_factory <decorator-factory+transifex@yandex.ru>, 2023
 # Daniil Kolesnikov, 2024
 # Илья Панфилов, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-11 14:17+0000\n"
+"POT-Creation-Date: 2024-10-18 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 00:48+0000\n"
-"Last-Translator: Илья Панфилов, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -97,6 +98,10 @@ msgid ""
 "still propagating), while the latter returns an exception after it is caught "
 "(and has therefore stopped propagating)."
 msgstr ""
+"Индикатор ошибки **не** является результатом :func:`sys.exc_info`. Первое "
+"соответствует исключению, которое еще не перехвачено (и, следовательно, все "
+"еще распространяется), тогда как второе возвращает исключение после того, "
+"как оно было перехвачено (и, следовательно, прекратило распространение)."
 
 #: ../../c-api/exceptions.rst:44
 msgid "Printing and clearing"
@@ -206,6 +211,12 @@ msgid ""
 "is roughly equivalent to ``PyErr_FormatUnraisable(\"Exception ignored in: "
 "%R\", obj)``. If *format* is ``NULL``, only the traceback is printed."
 msgstr ""
+"Аналогично :c:func:`PyErr_WriteUnraisable`, но *format* и последующие "
+"параметры помогают форматировать предупреждающее сообщение; они имеют то же "
+"значение и значения, что и в :c:func:`PyUnicode_FromFormat`. "
+"``PyErr_WriteUnraisable(obj)`` примерно эквивалентен "
+"``PyErr_FormatUnraisable(\"Исключение игнорируется в: %R\", obj)``. Если "
+"*format* равен ``NULL``, печатается только обратная трассировка."
 
 #: ../../c-api/exceptions.rst:116
 msgid ""
@@ -368,12 +379,21 @@ msgid ""
 "``PyErr_SetObject(PyExc_OSError, object)``. This function always returns "
 "``NULL``."
 msgstr ""
+"Это удобная функция для вызова :exc:`OSError`. Если вызывается с *ierr* из "
+"``0``, вместо этого используется код ошибки, возвращаемый вызовом :c:func:`!"
+"GetLastError`. Он вызывает функцию Win32 :c:func:`!FormatMessage` для "
+"получения описания кода ошибки Windows, заданного *ierr* или :c:func:`!"
+"GetLastError`, затем он создает объект :exc:`OSError` с атрибуту :attr:"
+"`~OSError.winerror` присвоен код ошибки, атрибуту :attr:`~OSError.strerror` "
+"присвоено соответствующее сообщение об ошибке (полученное из :c:func:`!"
+"FormatMessage`), а затем вызывает ``PyErr_SetObject(PyExc_OSError, "
+"object)``. Эта функция всегда возвращает NULL."
 
 #: ../../c-api/exceptions.rst:234 ../../c-api/exceptions.rst:242
 #: ../../c-api/exceptions.rst:253 ../../c-api/exceptions.rst:263
 #: ../../c-api/exceptions.rst:271 ../../c-api/exceptions.rst:281
 msgid "Availability"
-msgstr ""
+msgstr "Доступность"
 
 #: ../../c-api/exceptions.rst:239
 msgid ""
@@ -690,6 +710,13 @@ msgid ""
 "   PyErr_SetRaisedException(exc);\n"
 "}"
 msgstr ""
+"{\n"
+"   PyObject *exc = PyErr_GetRaisedException();\n"
+"\n"
+"   /* ... code that might produce other errors ... */\n"
+"\n"
+"   PyErr_SetRaisedException(exc);\n"
+"}"
 
 #: ../../c-api/exceptions.rst:459
 msgid ""
@@ -751,6 +778,14 @@ msgid ""
 "   PyErr_Restore(type, value, traceback);\n"
 "}"
 msgstr ""
+"{\n"
+"   PyObject *type, *value, *traceback;\n"
+"   PyErr_Fetch(&type, &value, &traceback);\n"
+"\n"
+"   /* ... code that might produce other errors ... */\n"
+"\n"
+"   PyErr_Restore(type, value, traceback);\n"
+"}"
 
 #: ../../c-api/exceptions.rst:509
 msgid "Use :c:func:`PyErr_SetRaisedException` instead."
@@ -830,6 +865,9 @@ msgid ""
 "  PyException_SetTraceback(val, tb);\n"
 "}"
 msgstr ""
+"if (tb != NULL) {\n"
+"  PyException_SetTraceback(val, tb);\n"
+"}"
 
 #: ../../c-api/exceptions.rst:557
 msgid ""
@@ -1118,6 +1156,12 @@ msgid ""
 "of classes. The *dict* argument can be used to specify a dictionary of class "
 "variables and methods."
 msgstr ""
+"Атрибут :attr:`~type.__module__` нового класса устанавливается в первую "
+"часть (до последней точки) аргумента *name*, а имя класса устанавливается в "
+"последнюю часть (после последней точки). ). Аргумент *base* можно "
+"использовать для указания альтернативных базовых классов; это может быть "
+"либо только один класс, либо кортеж классов. Аргумент *dict* можно "
+"использовать для указания словаря переменных и методов класса."
 
 #: ../../c-api/exceptions.rst:745
 msgid ""
@@ -1763,11 +1807,11 @@ msgstr ":exc:`ProcessLookupError`"
 
 #: ../../c-api/exceptions.rst:1100
 msgid ":c:data:`PyExc_PythonFinalizationError`"
-msgstr ""
+msgstr ":c:data:`PyExc_PythonFinalizationError`"
 
 #: ../../c-api/exceptions.rst:1100
 msgid ":exc:`PythonFinalizationError`"
-msgstr ""
+msgstr ":exc:`PythonFinalizationError`"
 
 #: ../../c-api/exceptions.rst:1102
 msgid ":c:data:`PyExc_RecursionError`"
@@ -2262,7 +2306,7 @@ msgstr "PyExc_ProcessLookupError (C var)"
 
 #: ../../c-api/exceptions.rst:971
 msgid "PyExc_PythonFinalizationError (C var)"
-msgstr ""
+msgstr "PyExc_PythonFinalizationError (C var)"
 
 #: ../../c-api/exceptions.rst:971
 msgid "PyExc_RecursionError (C var)"

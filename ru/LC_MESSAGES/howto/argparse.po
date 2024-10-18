@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 14:17+0000\n"
+"POT-Creation-Date: 2024-10-18 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 00:52+0000\n"
 "Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
@@ -915,6 +915,20 @@ msgid ""
 "  -v, --verbosity {0,1,2}\n"
 "                        increase output verbosity"
 msgstr ""
+"$ python prog.py 4 -v 3\n"
+"usage: prog.py [-h] [-v {0,1,2}] square\n"
+"prog.py: error: argument -v/--verbosity: invalid choice: 3 (choose from 0, "
+"1, 2)\n"
+"$ python prog.py 4 -h\n"
+"usage: prog.py [-h] [-v {0,1,2}] square\n"
+"\n"
+"positional arguments:\n"
+"  square                display a square of a given number\n"
+"\n"
+"options:\n"
+"  -h, --help            show this help message and exit\n"
+"  -v, --verbosity {0,1,2}\n"
+"                        increase output verbosity"
 
 #: ../../howto/argparse.rst:450
 msgid ""
@@ -1268,6 +1282,7 @@ msgstr ""
 "    print(answer)"
 
 #: ../../howto/argparse.rst:618 ../../howto/argparse.rst:656
+#: ../../howto/argparse.rst:872
 msgid "Output:"
 msgstr "Вывод:"
 
@@ -1697,10 +1712,82 @@ msgstr ""
 "используйте :mod:`gettext`."
 
 #: ../../howto/argparse.rst:845
+msgid "Custom type converters"
+msgstr ""
+
+#: ../../howto/argparse.rst:847
+msgid ""
+"The :mod:`argparse` module allows you to specify custom type converters for "
+"your command-line arguments. This allows you to modify user input before "
+"it's stored in the :class:`argparse.Namespace`. This can be useful when you "
+"need to pre-process the input before it is used in your program."
+msgstr ""
+
+#: ../../howto/argparse.rst:852
+msgid ""
+"When using a custom type converter, you can use any callable that takes a "
+"single string argument (the argument value) and returns the converted value. "
+"However, if you need to handle more complex scenarios, you can use a custom "
+"action class with the **action** parameter instead."
+msgstr ""
+
+#: ../../howto/argparse.rst:857
+msgid ""
+"For example, let's say you want to handle arguments with different prefixes "
+"and process them accordingly::"
+msgstr ""
+
+#: ../../howto/argparse.rst:860
+msgid ""
+"import argparse\n"
+"\n"
+"parser = argparse.ArgumentParser(prefix_chars='-+')\n"
+"\n"
+"parser.add_argument('-a', metavar='<value>', action='append',\n"
+"                    type=lambda x: ('-', x))\n"
+"parser.add_argument('+a', metavar='<value>', action='append',\n"
+"                    type=lambda x: ('+', x))\n"
+"\n"
+"args = parser.parse_args()\n"
+"print(args)"
+msgstr ""
+
+#: ../../howto/argparse.rst:874
+msgid ""
+"$ python prog.py -a value1 +a value2\n"
+"Namespace(a=[('-', 'value1'), ('+', 'value2')])"
+msgstr ""
+
+#: ../../howto/argparse.rst:879
+msgid "In this example, we:"
+msgstr ""
+
+#: ../../howto/argparse.rst:881
+msgid ""
+"Created a parser with custom prefix characters using the ``prefix_chars`` "
+"parameter."
+msgstr ""
+
+#: ../../howto/argparse.rst:884
+msgid ""
+"Defined two arguments, ``-a`` and ``+a``, which used the ``type`` parameter "
+"to create custom type converters to store the value in a tuple with the "
+"prefix."
+msgstr ""
+
+#: ../../howto/argparse.rst:887
+msgid ""
+"Without the custom type converters, the arguments would have treated the ``-"
+"a`` and ``+a`` as the same argument, which would have been undesirable. By "
+"using custom type converters, we were able to differentiate between the two "
+"arguments."
+msgstr ""
+
+#: ../../howto/argparse.rst:892
 msgid "Conclusion"
 msgstr "Заключение"
 
-#: ../../howto/argparse.rst:847
+#: ../../howto/argparse.rst:894
 msgid ""
 "The :mod:`argparse` module offers a lot more than shown here. Its docs are "
 "quite detailed and thorough, and full of examples. Having gone through this "

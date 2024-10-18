@@ -11,18 +11,18 @@
 # Vinicius Gubiani Ferreira <vini.g.fer@gmail.com>, 2021
 # yyyyyyyan <contact@yyyyyyyan.tech>, 2021
 # David Macedo, 2022
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 # Adorilson Bezerra <adorilson@gmail.com>, 2024
 # Marco Rougeth <marco@rougeth.com>, 2024
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-11 14:17+0000\n"
+"POT-Creation-Date: 2024-10-18 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 00:47+0000\n"
-"Last-Translator: Marco Rougeth <marco@rougeth.com>, 2024\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
 "teams/5390/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -574,7 +574,7 @@ msgstr ""
 
 #: ../../glossary.rst:228
 msgid "closure variable"
-msgstr ""
+msgstr "variável de clausura"
 
 #: ../../glossary.rst:230
 msgid ""
@@ -584,6 +584,12 @@ msgid ""
 "`nonlocal` keyword to allow write access, or implicitly defined if the "
 "variable is only being read."
 msgstr ""
+"Uma :term:`variável livre` referenciada de um :term:`escopo aninhado` que é "
+"definida em um escopo externo em vez de ser resolvida em tempo de execução a "
+"partir dos espaços de nomes embutido ou globais. Pode ser explicitamente "
+"definida com a palavra reservada :keyword:`nonlocal` para permitir acesso de "
+"gravação, ou implicitamente definida se a variável estiver sendo somente "
+"lida."
 
 #: ../../glossary.rst:235
 msgid ""
@@ -591,6 +597,9 @@ msgid ""
 "``print`` are :term:`free variables <free variable>`, but only ``x`` is a "
 "*closure variable*::"
 msgstr ""
+"Por exemplo, na função ``interna`` no código a seguir, tanto ``x`` quanto "
+"``print`` são :term:`variáveis ​​livres <free variable>`, mas somente ``x`` é "
+"uma *variável de clausura*::"
 
 #: ../../glossary.rst:238
 msgid ""
@@ -602,6 +611,13 @@ msgid ""
 "        print(x)\n"
 "    return inner"
 msgstr ""
+"def externa():\n"
+"    x = 0\n"
+"    def interna():\n"
+"        nonlocal x\n"
+"        x += 1\n"
+"        print(x)\n"
+"    return interna"
 
 #: ../../glossary.rst:246
 msgid ""
@@ -611,6 +627,11 @@ msgid ""
 "sometimes used even when the intended meaning is to refer specifically to "
 "closure variables."
 msgstr ""
+"Devido ao atributo :attr:`codeobject.co_freevars` (que, apesar do nome, "
+"inclui apenas os nomes das variáveis ​​de clausura em vez de listar todas as "
+"variáveis ​​livres referenciadas), o termo mais geral :term:`variável livre` "
+"às vezes é usado mesmo quando o significado pretendido é se referir "
+"especificamente às variáveis ​​de clausura."
 
 #: ../../glossary.rst:250
 msgid "complex number"
@@ -1113,6 +1134,7 @@ msgstr ""
 msgid ""
 "See :ref:`finders-and-loaders` and :mod:`importlib` for much more detail."
 msgstr ""
+"Veja :ref:`finders-and-loaders` e :mod:`importlib` para muito mais detalhes."
 
 #: ../../glossary.rst:455
 msgid "floor division"
@@ -1150,7 +1172,7 @@ msgstr ""
 
 #: ../../glossary.rst:468
 msgid "free variable"
-msgstr ""
+msgstr "variável livre"
 
 #: ../../glossary.rst:470
 msgid ""
@@ -1161,6 +1183,12 @@ msgid ""
 "attribute, the term is also sometimes used as a synonym for :term:`closure "
 "variable`."
 msgstr ""
+"Formalmente, conforme definido no :ref:`modelo de execução de linguagem "
+"<bind_names>`, uma variável livre é qualquer variável usada em um espaço de "
+"nomes que não seja uma variável local naquele espaço de nomes. Veja :term:"
+"`variável de clausura` para um exemplo. Pragmaticamente, devido ao nome do "
+"atributo :attr:`codeobject.co_freevars`, o termo também é usado algumas "
+"vezes como sinônimo de :term:`variável de clausura`."
 
 #: ../../glossary.rst:475
 msgid "function"
@@ -1429,18 +1457,11 @@ msgstr ""
 msgid ""
 "As of Python 3.13, the GIL can be disabled using the :option:`--disable-gil` "
 "build configuration. After building Python with this option, code must be "
-"run with :option:`-X gil 0 <-X>` or after setting the :envvar:`PYTHON_GIL=0 "
+"run with :option:`-X gil=0 <-X>` or after setting the :envvar:`PYTHON_GIL=0 "
 "<PYTHON_GIL>` environment variable. This feature enables improved "
 "performance for multi-threaded applications and makes it easier to use multi-"
 "core CPUs efficiently. For more details, see :pep:`703`."
 msgstr ""
-"A partir de Python 3.13, o GIL pode ser desabilitado usando a configuração "
-"de construção :option:`--disable-gil`. Depois de construir Python com essa "
-"opção, o código deve ser executado com a opção :option:`-X gil 0 <-X>` ou a "
-"variável de ambiente :envvar:`PYTHON_GIL=0 <PYTHON_GIL>` deve estar "
-"definida. Esse recurso provê um desempenho melhor para aplicações com "
-"múltiplas threads e torna mais fácil o uso eficiente de CPUs com múltiplos "
-"núcleos. Para mais detalhes, veja :pep:`703`."
 
 #: ../../glossary.rst:592
 msgid "hash-based pyc"
@@ -1906,14 +1927,17 @@ msgid ""
 "An object that loads a module. It must define a method named :meth:"
 "`load_module`. A loader is typically returned by a :term:`finder`. See also:"
 msgstr ""
+"Um objeto que carrega um módulo. Deve definir um método chamado :meth:"
+"`load_module`. Um carregador é normalmente devolvido por um :term:"
+"`localizador`. Veja também:"
 
 #: ../../glossary.rst:786
 msgid ":ref:`finders-and-loaders`"
-msgstr ""
+msgstr ":ref:`finders-and-loaders`"
 
 #: ../../glossary.rst:787
 msgid ":class:`importlib.abc.Loader`"
-msgstr ""
+msgstr ":class:`importlib.abc.Loader`"
 
 #: ../../glossary.rst:788
 msgid ":pep:`302`"
@@ -2098,7 +2122,7 @@ msgstr ""
 
 #: ../../glossary.rst:858
 msgid "See also :ref:`module-specs`."
-msgstr ""
+msgstr "Veja também :ref:`module-specs`."
 
 #: ../../glossary.rst:859
 msgid "MRO"
@@ -2900,12 +2924,17 @@ msgid ""
 "already existing code to use it. The API remains documented and tested, but "
 "will not be enhanced further."
 msgstr ""
+"Uma API suavemente descontinuada não deve ser usada em código novo, mas é "
+"seguro para código já existente usá-la. A API continua documentada e "
+"testada, mas não será aprimorada mais."
 
 #: ../../glossary.rst:1191
 msgid ""
 "Soft deprecation, unlike normal deprecation, does not plan on removing the "
 "API and will not emit warnings."
 msgstr ""
+"A descontinuação suave, diferentemente da descontinuação normal, não planeja "
+"remover a API e não emitirá avisos."
 
 #: ../../glossary.rst:1194
 msgid ""

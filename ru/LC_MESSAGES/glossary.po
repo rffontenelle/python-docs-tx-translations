@@ -8,17 +8,17 @@
 # Boris Verkhovskiy <boris.verk@gmail.com>, 2021
 # Daniil Kolesnikov, 2024
 # Илья Панфилов, 2024
-# Roustam Khamidoulline, 2024
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-11 14:17+0000\n"
+"POT-Creation-Date: 2024-10-18 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 00:47+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -566,7 +566,7 @@ msgstr ""
 
 #: ../../glossary.rst:228
 msgid "closure variable"
-msgstr ""
+msgstr "переменная закрытия"
 
 #: ../../glossary.rst:230
 msgid ""
@@ -576,6 +576,12 @@ msgid ""
 "`nonlocal` keyword to allow write access, or implicitly defined if the "
 "variable is only being read."
 msgstr ""
+":term:`свободная переменная`, на которую ссылается :term:`вложенная область "
+"видимости`, которая определена во внешней области, а не разрешается во время "
+"выполнения из глобальных переменных или встроенных пространств имен. Может "
+"быть явно определено с помощью ключевого слова :keyword:`nonlocal`, чтобы "
+"разрешить доступ для записи, или неявно определено, если переменная только "
+"читается."
 
 #: ../../glossary.rst:235
 msgid ""
@@ -583,6 +589,9 @@ msgid ""
 "``print`` are :term:`free variables <free variable>`, but only ``x`` is a "
 "*closure variable*::"
 msgstr ""
+"Например, в функции ``inner`` в следующем коде и ``x``, и ``print`` "
+"являются :term:`свободными переменными <свободная переменная>`, но только "
+"``x`` является *переменная закрытия*::"
 
 #: ../../glossary.rst:238
 msgid ""
@@ -594,6 +603,13 @@ msgid ""
 "        print(x)\n"
 "    return inner"
 msgstr ""
+"def outer():\n"
+"    x = 0\n"
+"    def inner():\n"
+"        nonlocal x\n"
+"        x += 1\n"
+"        print(x)\n"
+"    return inner"
 
 #: ../../glossary.rst:246
 msgid ""
@@ -603,6 +619,11 @@ msgid ""
 "sometimes used even when the intended meaning is to refer specifically to "
 "closure variables."
 msgstr ""
+"Из-за атрибута :attr:`codeobject.co_freevars` (который, несмотря на свое "
+"название, включает только имена замыкающих переменных, а не список всех "
+"свободных переменных, на которые ссылаются), иногда даже используется более "
+"общий термин :term:`свободная переменная` когда предполагаемое значение "
+"состоит в том, чтобы относиться конкретно к переменным замыкания."
 
 #: ../../glossary.rst:250
 msgid "complex number"
@@ -1098,6 +1119,8 @@ msgstr ""
 msgid ""
 "See :ref:`finders-and-loaders` and :mod:`importlib` for much more detail."
 msgstr ""
+"Более подробную информацию смотрите в :ref:`finders-and-loaders` и :mod:"
+"`importlib`."
 
 #: ../../glossary.rst:455
 msgid "floor division"
@@ -1135,7 +1158,7 @@ msgstr ""
 
 #: ../../glossary.rst:468
 msgid "free variable"
-msgstr ""
+msgstr "свободная переменная"
 
 #: ../../glossary.rst:470
 msgid ""
@@ -1146,6 +1169,12 @@ msgid ""
 "attribute, the term is also sometimes used as a synonym for :term:`closure "
 "variable`."
 msgstr ""
+"Формально, как определено в :ref:`модели выполнения языка <bind_names>`, "
+"свободная переменная — это любая переменная, используемая в пространстве "
+"имен, которая не является локальной переменной в этом пространстве имен. "
+"Пример см. в разделе :term:`замыкающая переменная`. С прагматической точки "
+"зрения, из-за названия атрибута :attr:`codeobject.co_freevars`, этот термин "
+"также иногда используется как синоним :term:`закрывающей переменной`."
 
 #: ../../glossary.rst:475
 msgid "function"
@@ -1415,18 +1444,11 @@ msgstr ""
 msgid ""
 "As of Python 3.13, the GIL can be disabled using the :option:`--disable-gil` "
 "build configuration. After building Python with this option, code must be "
-"run with :option:`-X gil 0 <-X>` or after setting the :envvar:`PYTHON_GIL=0 "
+"run with :option:`-X gil=0 <-X>` or after setting the :envvar:`PYTHON_GIL=0 "
 "<PYTHON_GIL>` environment variable. This feature enables improved "
 "performance for multi-threaded applications and makes it easier to use multi-"
 "core CPUs efficiently. For more details, see :pep:`703`."
 msgstr ""
-"Начиная с Python 3.13, GIL можно отключить с помощью конфигурации сборки :"
-"option:`--disable-gil`. После сборки Python с этой опцией код необходимо "
-"запустить с :option:`-X gil 0 <-X>` или после установки переменной среды :"
-"envvar:`PYTHON_GIL=0 <PYTHON_GIL>`. Эта функция позволяет повысить "
-"производительность многопоточных приложений и упрощает эффективное "
-"использование многоядерных процессоров. Для получения более подробной "
-"информации см. :pep:`703`."
 
 #: ../../glossary.rst:592
 msgid "hash-based pyc"
@@ -1891,14 +1913,17 @@ msgid ""
 "An object that loads a module. It must define a method named :meth:"
 "`load_module`. A loader is typically returned by a :term:`finder`. See also:"
 msgstr ""
+"Объект, загружающий модуль. Он должен определить метод с именем :meth:"
+"`load_module`. Загрузчик обычно возвращается с помощью :term:`finder`. См. "
+"также:"
 
 #: ../../glossary.rst:786
 msgid ":ref:`finders-and-loaders`"
-msgstr ""
+msgstr ":ref:`finders-and-loaders`"
 
 #: ../../glossary.rst:787
 msgid ":class:`importlib.abc.Loader`"
-msgstr ""
+msgstr ":class:`importlib.abc.Loader`"
 
 #: ../../glossary.rst:788
 msgid ":pep:`302`"
@@ -2079,7 +2104,7 @@ msgstr ""
 
 #: ../../glossary.rst:858
 msgid "See also :ref:`module-specs`."
-msgstr ""
+msgstr "См. также :ref:`module-specs`."
 
 #: ../../glossary.rst:859
 msgid "MRO"
@@ -2877,12 +2902,17 @@ msgid ""
 "already existing code to use it. The API remains documented and tested, but "
 "will not be enhanced further."
 msgstr ""
+"Мягко устаревший API не следует использовать в новом коде, но его можно "
+"безопасно использовать в уже существующем коде. API остается "
+"документированным и протестированным, но не будет улучшаться дальше."
 
 #: ../../glossary.rst:1191
 msgid ""
 "Soft deprecation, unlike normal deprecation, does not plan on removing the "
 "API and will not emit warnings."
 msgstr ""
+"Мягкое устаревание, в отличие от обычного устаревания, не предполагает "
+"удаление API и не выдает предупреждений."
 
 #: ../../glossary.rst:1194
 msgid ""

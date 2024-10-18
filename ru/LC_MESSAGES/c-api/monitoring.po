@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Roustam Khamidoulline, 2024
 # Илья Панфилов, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-27 14:17+0000\n"
+"POT-Creation-Date: 2024-10-18 14:17+0000\n"
 "PO-Revision-Date: 2024-05-11 01:07+0000\n"
-"Last-Translator: Илья Панфилов, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -224,6 +224,15 @@ msgid ""
 "state of the event. The size of ``event_types`` (and hence also of "
 "``state_array``) is given in ``length``."
 msgstr ""
+"Введите контролируемую область. ``event_types`` — это массив идентификаторов "
+"событий, которые могут быть запущены из области действия. Например, "
+"идентификатором события ``PY_START`` является значение "
+"``PY_MONITORING_EVENT_PY_START``, которое численно равно логарифму по "
+"основанию 2 ``sys.monitoring.events.PY_START``. ``state_array`` — это массив "
+"с записью состояния мониторинга для каждого события в ``event_types``, он "
+"выделяется пользователем, но заполняется :c:func:`!PyMonitoring_EnterScope` "
+"информацией о состоянии активации события. . Размер ``event_types`` (и, "
+"следовательно, ``state_array``) задается в ``длине``."
 
 #: ../../c-api/monitoring.rst:148
 msgid ""
@@ -233,6 +242,11 @@ msgid ""
 "determine whether event states have changed since the previous call, and to "
 "return quickly if they have not."
 msgstr ""
+"Аргумент ``version`` является указателем на значение, которое должно быть "
+"выделено пользователем вместе с ``state_array`` и инициализировано значением "
+"0, а затем установлено только с помощью :c:func:`!PyMonitoring_EnterScope`. "
+"Это позволяет этой функции определить, изменились ли состояния событий с "
+"момента предыдущего вызова, и быстро вернуться, если они не изменились."
 
 #: ../../c-api/monitoring.rst:154
 msgid ""
@@ -243,6 +257,13 @@ msgid ""
 "Python function. When a code-like's execution is paused, such as when "
 "emulating a generator, the scope needs to be exited and re-entered."
 msgstr ""
+"Упомянутые здесь области видимости являются лексическими областями: функция, "
+"класс или метод. :c:func:`!PyMonitoring_EnterScope` следует вызывать при "
+"каждом входе в лексическую область видимости. Области можно ввести повторно, "
+"повторно используя одни и те же *state_array* и *version*, например, при "
+"эмуляции рекурсивной функции Python. Когда выполнение подобного кода "
+"приостанавливается, например, при эмуляции генератора, необходимо выйти из "
+"области действия и войти в нее заново."
 
 #: ../../c-api/monitoring.rst:161
 msgid "The macros for *event_types* are:"

@@ -5,8 +5,9 @@
 #
 # Translators:
 # nick <2330458484@qq.com>, 2024
-# Jiuh.star <jiuh.star@gmail.com>, 2024
+# Alpha Du <alphanow@gmail.com>, 2024
 # Freesand Leo <yuqinju@163.com>, 2024
+# Jiuh.star <jiuh.star@gmail.com>, 2024
 #
 #, fuzzy
 msgid ""
@@ -15,7 +16,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-10-11 14:17+0000\n"
 "PO-Revision-Date: 2024-10-04 14:19+0000\n"
-"Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
+"Last-Translator: Jiuh.star <jiuh.star@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -121,6 +122,9 @@ msgid ""
 "variable is set to ``1``, then the build supports free threading.  This is "
 "the recommended mechanism for decisions related to the build configuration."
 msgstr ""
+"``sysconfig.get_config_var(\"Py_GIL_DISABLED\")`` 配置变量可用于确定构建是否"
+"支持自由线程 。 如果该变量设置为``1`` ，则构建支持自由线程。这是与构建配置相"
+"关的决策的推荐机制。"
 
 #: ../../howto/free-threading-python.rst:57
 msgid "The global interpreter lock in free-threaded Python"
@@ -175,6 +179,11 @@ msgid ""
 "treated as a description of the current implementation, not a guarantee of "
 "current or future behavior."
 msgstr ""
+"自由线程构建的 CPython 旨在 Python 层级提供与默认全局解释器锁启用构建相似的线"
+"程安全行为。内置类型（如 :class:`dict` 、 :class:`list` 和 :class:`set` 等）"
+"使用内部上锁来防止并发修改，其行为方式与全局解释器锁相似。 但是，Python 历来"
+"不对这些内置类型的并发修改提供特定的行为提供保证，因此这应被视为对当前实现的"
+"描述，而不是对当前或未来行为的保证。"
 
 #: ../../howto/free-threading-python.rst:88
 msgid ""
@@ -182,6 +191,8 @@ msgid ""
 "primitives instead of relying on the internal locks of built-in types, when "
 "possible."
 msgstr ""
+"建议尽可能使用 :class:`threading.Lock` 或其他同步的原语，而不是依赖内置类型的"
+"内部上锁 。"
 
 #: ../../howto/free-threading-python.rst:94
 msgid "Known limitations"
@@ -203,6 +214,9 @@ msgid ""
 "that are never modified.  This is done to avoid reference count contention "
 "that would prevent efficient multi-threaded scaling."
 msgstr ""
+"3.13 版本的自由线程构建使某些对象 :term:`immortal`。 永生对象不会被重新分配，"
+"其引用计数永远不会被修改。 这样做是为了避免引用计数发生争夺，以免妨碍高效的多"
+"线程扩展。"
 
 #: ../../howto/free-threading-python.rst:106
 msgid ""
@@ -210,6 +224,7 @@ msgid ""
 "time after the main thread is running.  The following objects are "
 "immortalized:"
 msgstr ""
+"当主线程运行后首次启动新的线程时，对象将被永生化。 以下对象将被永生化："
 
 #: ../../howto/free-threading-python.rst:109
 msgid ""
@@ -238,6 +253,8 @@ msgid ""
 "many objects of these types may see increased memory usage.  This is "
 "expected to be addressed in the 3.14 release."
 msgstr ""
+"由于永生对象永远不会被重新分配，因此应用如果创建了许多此类对象，可能会增加内"
+"存使用。预计 3.14 版将解决这个问题。"
 
 #: ../../howto/free-threading-python.rst:119
 msgid ""
@@ -245,6 +262,8 @@ msgid ""
 "returned by :func:`sys.intern` are also immortalized.  This behavior is "
 "expected to remain in the 3.14 free-threaded build."
 msgstr ""
+"此外，代码中的数字和字符串字面值以及 :func:`sys.intern` 返回的字符串也将永久"
+"化。 预计在 3.14 自由线程构建中将保留这一行为 。"
 
 #: ../../howto/free-threading-python.rst:125
 msgid "Frame objects"
@@ -259,6 +278,10 @@ msgid ""
 "_getframe` are generally safe as long as the resulting frame object is not "
 "passed to another thread."
 msgstr ""
+"从其他线程访问 :ref:`帧 <frame-objects>` 对象是不安全的，这样做可能会导致程序"
+"崩溃。 这意味着，在自由线程构建中使用 :func:`sys._current_frames` 一般是不安"
+"全的。 函数（如 :func:`inspect.currentframe` 和 :func:`sys._getframe` 等）只"
+"要不将生成的帧对象传递给另一个线程，一般都是安全的。"
 
 #: ../../howto/free-threading-python.rst:135
 msgid "Iterators"
@@ -270,6 +293,8 @@ msgid ""
 "safe and threads may see duplicate or missing elements when iterating or "
 "crash the interpreter."
 msgstr ""
+"在多个线程之间共享同一个迭代器对象通常是不安全的，线程在迭代时可能会出现元素"
+"重复或缺失的情况，或使解释器崩溃。"
 
 #: ../../howto/free-threading-python.rst:143
 msgid "Single-threaded performance"
@@ -288,3 +313,10 @@ msgid ""
 "overhead of 10% or less on the pyperformance suite compared to the default "
 "GIL-enabled build."
 msgstr ""
+"与启用默认全局解释器锁的构建相比，自由线程构建在执行 Python 代码时有额外的开"
+"销。 在 3.13 中，`pyperformance <https://pyperformance.readthedocs.io/>`_ 套"
+"件的开销约为 40%。大部分时间花在 C 扩展或 I/O 上的程序受到的影响较小。影响最"
+"大的原因是在自由线程构建中禁用了特化自适应解释器 (:pep:`659`) 。 我们希望在 "
+"3.14 中以线程安全的方式重新启用它。在即将发布的 Python 版本中，这一开销有望减"
+"少。 我们的目标是，与启用默认全局解释器锁的构建相比，pyperformance 套件的开销"
+"不超过 10%。"

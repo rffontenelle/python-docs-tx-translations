@@ -7,15 +7,16 @@
 # Kristina Mironova, 2021
 # Илья Панфилов, 2024
 # Daniil Kolesnikov, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-31 10:59+0000\n"
+"POT-Creation-Date: 2024-10-18 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 00:47+0000\n"
-"Last-Translator: Daniil Kolesnikov, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -90,6 +91,10 @@ msgid ""
 "formats (``s#``, ``y#``, etc.) explained below. This is not necessary on "
 "Python 3.13 and later."
 msgstr ""
+"В Python 3.12 и более ранних версиях макрос :c:macro:`!PY_SSIZE_T_CLEAN` "
+"должен быть определен перед включением :file:`Python.h`, чтобы использовать "
+"все варианты форматов ``#`` (``s#``, `` `y#`` и т. д.), объясненные ниже. В "
+"Python 3.13 и более поздних версиях этого нет необходимости."
 
 #: ../../c-api/arg.rst:42
 msgid ""
@@ -728,7 +733,7 @@ msgstr "``f`` (:class:`float`) [float]"
 
 #: ../../c-api/arg.rst:283
 msgid "Convert a Python floating-point number to a C :c:expr:`float`."
-msgstr ""
+msgstr "Преобразуйте число Python с плавающей запятой в C :c:expr:`float`."
 
 #: ../../c-api/arg.rst:285 ../../c-api/arg.rst:644
 msgid "``d`` (:class:`float`) [double]"
@@ -736,7 +741,7 @@ msgstr "``d`` (:class:`float`) [double]"
 
 #: ../../c-api/arg.rst:286
 msgid "Convert a Python floating-point number to a C :c:expr:`double`."
-msgstr ""
+msgstr "Преобразуйте число Python с плавающей запятой в C :c:expr:`double`."
 
 #: ../../c-api/arg.rst:288
 msgid "``D`` (:class:`complex`) [Py_complex]"
@@ -804,7 +809,7 @@ msgstr ""
 
 #: ../../c-api/arg.rst:316
 msgid "status = converter(object, address);"
-msgstr ""
+msgstr "status = converter(object, address);"
 
 #: ../../c-api/arg.rst:318
 msgid ""
@@ -1035,6 +1040,13 @@ msgid ""
 "parameters <positional-only_parameter>`. Returns true on success; on "
 "failure, it returns false and raises the appropriate exception."
 msgstr ""
+"Разберите параметры функции, которая принимает как позиционные, так и "
+"ключевые параметры, в локальные переменные. Аргумент *keywords* представляет "
+"собой массив имен параметров ключевых слов, завершающихся нулевым символом, "
+"заданных в виде строк C в кодировке ASCII или UTF-8 с завершающим нулем. "
+"Пустые имена обозначают :ref:`только позиционные параметры "
+"<позиционный_параметр>`. Возвращает true в случае успеха; в случае неудачи "
+"он возвращает false и вызывает соответствующее исключение."
 
 #: ../../c-api/arg.rst:429
 msgid ""
@@ -1042,6 +1054,9 @@ msgid ""
 "expr:`const char * const *` in C++. This can be overridden with the :c:macro:"
 "`PY_CXX_CONST` macro."
 msgstr ""
+"Объявление параметра *keywords* имеет вид :c:expr:`char * const *` в C и :c:"
+"expr:`const char * const *` в C++. Это можно переопределить с помощью "
+"макроса :c:macro:`PY_CXX_CONST`."
 
 #: ../../c-api/arg.rst:433
 msgid ""
@@ -1057,6 +1072,9 @@ msgid ""
 "expr:`const char * const *` in C++, instead of :c:expr:`char **`. Added "
 "support for non-ASCII keyword parameter names."
 msgstr ""
+"Параметр *keywords* теперь имеет тип :c:expr:`char * const *` в C и :c:expr:"
+"`const char * const *` в C++ вместо :c:expr:`char **`. Добавлена ​​поддержка "
+"имен параметров ключевых слов, отличных от ASCII."
 
 #: ../../c-api/arg.rst:446
 msgid ""
@@ -1082,6 +1100,9 @@ msgid ""
 "into a local variable.  Returns true on success; on failure, it returns "
 "false and raises the appropriate exception."
 msgstr ""
+"Разберите параметр функции, которая принимает один позиционный параметр в "
+"локальную переменную. Возвращает true в случае успеха; в случае неудачи он "
+"возвращает false и вызывает соответствующее исключение."
 
 #: ../../c-api/arg.rst:465
 msgid "Example::"
@@ -1100,6 +1121,16 @@ msgid ""
 "    // ... use value ...\n"
 "}"
 msgstr ""
+"// Function using METH_O calling convention\n"
+"static PyObject*\n"
+"my_function(PyObject *module, PyObject *arg)\n"
+"{\n"
+"    int value;\n"
+"    if (!PyArg_Parse(arg, \"i:my_function\", &value)) {\n"
+"        return NULL;\n"
+"    }\n"
+"    // ... use value ...\n"
+"}"
 
 #: ../../c-api/arg.rst:481
 msgid ""
@@ -1157,6 +1188,18 @@ msgid ""
 "    return result;\n"
 "}"
 msgstr ""
+"static PyObject *\n"
+"weakref_ref(PyObject *self, PyObject *args)\n"
+"{\n"
+"    PyObject *object;\n"
+"    PyObject *callback = NULL;\n"
+"    PyObject *result = NULL;\n"
+"\n"
+"    if (PyArg_UnpackTuple(args, \"ref\", 1, 2, &object, &callback)) {\n"
+"        result = PyWeakref_NewRef(object, callback);\n"
+"    }\n"
+"    return result;\n"
+"}"
 
 #: ../../c-api/arg.rst:512
 msgid ""
@@ -1168,7 +1211,7 @@ msgstr ""
 
 #: ../../c-api/arg.rst:515
 msgid "PyArg_ParseTuple(args, \"O|O:ref\", &object, &callback)"
-msgstr ""
+msgstr "PyArg_ParseTuple(args, \"O|O:ref\", &object, &callback)"
 
 #: ../../c-api/arg.rst:519
 msgid ""
@@ -1178,6 +1221,12 @@ msgid ""
 "``const`` for C++ (:c:expr:`const char * const *`). To override, define it "
 "to the desired value before including :file:`Python.h`."
 msgstr ""
+"Значение, которое должно быть вставлено, если таковое имеется, перед :c:expr:"
+"`char * const *` в объявлении параметра *keywords* :c:func:"
+"`PyArg_ParseTupleAndKeywords` и :c:func:`PyArg_VaParseTupleAndKeywords`. По "
+"умолчанию пусто для C и const для C++ (:c:expr:`const char * const *`). "
+"Чтобы переопределить его, определите желаемое значение перед включением :"
+"file:`Python.h`."
 
 #: ../../c-api/arg.rst:533
 msgid "Building values"
@@ -1428,11 +1477,11 @@ msgstr ""
 
 #: ../../c-api/arg.rst:645
 msgid "Convert a C :c:expr:`double` to a Python floating-point number."
-msgstr ""
+msgstr "Преобразуйте C :c:expr:`double` в число Python с плавающей запятой."
 
 #: ../../c-api/arg.rst:648
 msgid "Convert a C :c:expr:`float` to a Python floating-point number."
-msgstr ""
+msgstr "Преобразуйте C :c:expr:`float` в число Python с плавающей запятой."
 
 #: ../../c-api/arg.rst:650
 msgid "``D`` (:class:`complex`) [Py_complex \\*]"

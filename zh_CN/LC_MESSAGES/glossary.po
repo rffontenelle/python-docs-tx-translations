@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-11 14:17+0000\n"
+"POT-Creation-Date: 2024-10-18 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 00:47+0000\n"
 "Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -523,7 +523,7 @@ msgstr "在类中定义的变量，并且仅限在类的层级上修改 (而不�
 
 #: ../../glossary.rst:228
 msgid "closure variable"
-msgstr ""
+msgstr "closure variable -- 闭包变量"
 
 #: ../../glossary.rst:230
 msgid ""
@@ -533,6 +533,9 @@ msgid ""
 "`nonlocal` keyword to allow write access, or implicitly defined if the "
 "variable is only being read."
 msgstr ""
+"引用自 :term:`nested scope` 的 :term:`free variable`，它是在外层作用域中定义"
+"而不是在运行时自全局或内置命名空间中取得。 可能使用 :keyword:`nonlocal` 关键"
+"字显式地定义以允许写入访问，或者如果变量仅供读取则只需隐式地定义。"
 
 #: ../../glossary.rst:235
 msgid ""
@@ -540,6 +543,8 @@ msgid ""
 "``print`` are :term:`free variables <free variable>`, but only ``x`` is a "
 "*closure variable*::"
 msgstr ""
+"例如，在以下代码的 ``inner`` 函数中，``x`` 和 ``print`` 均为 :term:`自由变量 "
+"<free variable>`，但只有 ``x`` 属于 *闭包变量*::"
 
 #: ../../glossary.rst:238
 msgid ""
@@ -551,6 +556,13 @@ msgid ""
 "        print(x)\n"
 "    return inner"
 msgstr ""
+"def outer():\n"
+"    x = 0\n"
+"    def inner():\n"
+"        nonlocal x\n"
+"        x += 1\n"
+"        print(x)\n"
+"    return inner"
 
 #: ../../glossary.rst:246
 msgid ""
@@ -560,6 +572,9 @@ msgid ""
 "sometimes used even when the intended meaning is to refer specifically to "
 "closure variables."
 msgstr ""
+"由于 :attr:`codeobject.co_freevars` 属性的存在（虽然名称如此，但其仅包括闭包"
+"变量名称而非列出所有被引用的自由变量），更一般化的术语 :term:`free variable` "
+"有时在即便本意是专指闭包变量时也会被使用。"
 
 #: ../../glossary.rst:250
 msgid "complex number"
@@ -1009,7 +1024,7 @@ msgstr ""
 #: ../../glossary.rst:454
 msgid ""
 "See :ref:`finders-and-loaders` and :mod:`importlib` for much more detail."
-msgstr ""
+msgstr "请参阅 :ref:`finders-and-loaders` 和 :mod:`importlib` 以了解更多细节。"
 
 #: ../../glossary.rst:455
 msgid "floor division"
@@ -1045,7 +1060,7 @@ msgstr ""
 
 #: ../../glossary.rst:468
 msgid "free variable"
-msgstr ""
+msgstr "free variable -- 自由变量"
 
 #: ../../glossary.rst:470
 msgid ""
@@ -1056,6 +1071,11 @@ msgid ""
 "attribute, the term is also sometimes used as a synonym for :term:`closure "
 "variable`."
 msgstr ""
+"在正式场合下，如 :ref:`语言执行模型 <bind_names>` 所定义的，自由变量是指在某"
+"个命名空间中被使用的不属于该命名空间中的局部变量的任何变量。 参见 :term:"
+"`closure variable` 中的样例。 在实际应用中，由于 :attr:`codeobject."
+"co_freevars` 属性被如此命名，该术语有时也被用作 :term:`closure variable` 的同"
+"义词。"
 
 #: ../../glossary.rst:475
 msgid "function"
@@ -1305,15 +1325,11 @@ msgstr ""
 msgid ""
 "As of Python 3.13, the GIL can be disabled using the :option:`--disable-gil` "
 "build configuration. After building Python with this option, code must be "
-"run with :option:`-X gil 0 <-X>` or after setting the :envvar:`PYTHON_GIL=0 "
+"run with :option:`-X gil=0 <-X>` or after setting the :envvar:`PYTHON_GIL=0 "
 "<PYTHON_GIL>` environment variable. This feature enables improved "
 "performance for multi-threaded applications and makes it easier to use multi-"
 "core CPUs efficiently. For more details, see :pep:`703`."
 msgstr ""
-"在 Python 3.13 中，GIL 可以使用 :option:`--disable-gil` 编译配置来禁用。 在使"
-"用此选项编译 Python 之后，代码必须附带 :option:`-X gil 0 <-X>` 参数或在设置 :"
-"envvar:`PYTHON_GIL=0 <PYTHON_GIL>` 环境变量后运行。 此特性将为多线程应用程序"
-"启用性能提升并让高效率地使用多核 CPU 更为容易。 更多细节请参阅 :pep:`703`。"
 
 #: ../../glossary.rst:592
 msgid "hash-based pyc"
@@ -1727,14 +1743,16 @@ msgid ""
 "An object that loads a module. It must define a method named :meth:"
 "`load_module`. A loader is typically returned by a :term:`finder`. See also:"
 msgstr ""
+"负责加载模块的对象。 它必须定义名为 :meth:`load_module` 的方法。 加载器通常由"
+"一个 :term:`finder` 返回。 另请参阅："
 
 #: ../../glossary.rst:786
 msgid ":ref:`finders-and-loaders`"
-msgstr ""
+msgstr ":ref:`finders-and-loaders`"
 
 #: ../../glossary.rst:787
 msgid ":class:`importlib.abc.Loader`"
-msgstr ""
+msgstr ":class:`importlib.abc.Loader`"
 
 #: ../../glossary.rst:788
 msgid ":pep:`302`"
@@ -1902,7 +1920,7 @@ msgstr ""
 
 #: ../../glossary.rst:858
 msgid "See also :ref:`module-specs`."
-msgstr ""
+msgstr "另请参阅 :ref:`module-specs`。"
 
 #: ../../glossary.rst:859
 msgid "MRO"
@@ -2631,7 +2649,7 @@ msgstr ""
 
 #: ../../glossary.rst:1185
 msgid "soft deprecated"
-msgstr "软弃用"
+msgstr "soft deprecated -- 软弃用"
 
 #: ../../glossary.rst:1187
 msgid ""
@@ -2639,12 +2657,14 @@ msgid ""
 "already existing code to use it. The API remains documented and tested, but "
 "will not be enhanced further."
 msgstr ""
+"被软弃用的 API 不应在新编写的代码中使用，但在已有代码中使用仍是安全的。 这样"
+"的 API 将保留在文档中并被测试，但不会再获得进一步的功能增强。"
 
 #: ../../glossary.rst:1191
 msgid ""
 "Soft deprecation, unlike normal deprecation, does not plan on removing the "
 "API and will not emit warnings."
-msgstr ""
+msgstr "与普通的弃用不同，软弃用没有 API 移除计划也不会发出弃用警告。"
 
 #: ../../glossary.rst:1194
 msgid ""

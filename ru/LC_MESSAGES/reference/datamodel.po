@@ -10,17 +10,17 @@
 # Kristina Mironova, 2021
 # Daniil Kolesnikov, 2024
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
-# Roustam Khamidoulline, 2024
 # Илья Панфилов, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-11 14:17+0000\n"
+"POT-Creation-Date: 2024-10-18 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 01:19+0000\n"
-"Last-Translator: Илья Панфилов, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -903,6 +903,9 @@ msgid ""
 "specified in the :attr:`~codeobject.co_freevars` attribute of the "
 "function's :attr:`code object <function.__code__>`."
 msgstr ""
+"``None`` или :class:`tuple` ячеек, содержащих привязки для имен, указанных в "
+"атрибуте :attr:`~codeobject.co_freevars` объекта :attr:`code <function."
+"__code__>` функции."
 
 #: ../../reference/datamodel.rst:568
 msgid ""
@@ -922,7 +925,7 @@ msgstr "Большинство этих атрибутов проверяют т
 
 #: ../../reference/datamodel.rst:594
 msgid "The function's documentation string, or ``None`` if unavailable."
-msgstr ""
+msgstr "Строка документации функции или «Нет», если она недоступна."
 
 #: ../../reference/datamodel.rst:597
 msgid ""
@@ -1377,7 +1380,7 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:894
 msgid "Import-related attributes on module objects"
-msgstr ""
+msgstr "Атрибуты, связанные с импортом, в объектах модуля"
 
 #: ../../reference/datamodel.rst:896
 msgid ""
@@ -1387,6 +1390,11 @@ msgid ""
 "the module's :term:`spec <module spec>`, before the :term:`loader` executes "
 "and loads the module."
 msgstr ""
+"Объекты модуля имеют следующие атрибуты, относящиеся к :ref:`системе импорта "
+"<importsystem>`. Когда модуль создается с использованием механизма, "
+"связанного с системой импорта, эти атрибуты заполняются на основе :term:"
+"`spec <module spec>` перед тем, как :term:`loader` выполнит и загрузит "
+"модуль."
 
 #: ../../reference/datamodel.rst:902
 msgid ""
@@ -1398,6 +1406,13 @@ msgid ""
 "manually set on the module object after it has been created when using this "
 "approach."
 msgstr ""
+"Чтобы создать модуль динамически, а не использовать систему импорта, "
+"рекомендуется использовать :func:`importlib.util.module_from_spec`, который "
+"установит соответствующие значения для различных атрибутов, управляемых "
+"импортом. Также возможно использовать конструктор :class:`types.ModuleType` "
+"для непосредственного создания модулей, но этот метод более подвержен "
+"ошибкам, поскольку при использовании этого подхода большинство атрибутов "
+"необходимо устанавливать вручную для объекта модуля после его создания."
 
 #: ../../reference/datamodel.rst:912
 msgid ""
@@ -1407,6 +1422,11 @@ msgid ""
 "Note that updating an attribute on :attr:`!__spec__` will not update the "
 "corresponding attribute on the module itself:"
 msgstr ""
+"За исключением :attr:`~module.__name__`, **настоятельно** рекомендуется "
+"полагаться на :attr:`~module.__spec__` и его атрибуты вместо любых других "
+"отдельных атрибутов, перечисленных в этом подразделе. . Обратите внимание, "
+"что обновление атрибута в :attr:`!__spec__` не приведет к обновлению "
+"соответствующего атрибута в самом модуле:"
 
 #: ../../reference/datamodel.rst:918
 msgid ""
@@ -1420,12 +1440,24 @@ msgid ""
 ">>> typing.__name__, typing.__spec__.name\n"
 "('keyboard_smashing', 'spelling')"
 msgstr ""
+">>> import typing\n"
+">>> typing.__name__, typing.__spec__.name\n"
+"('typing', 'typing')\n"
+">>> typing.__spec__.name = 'spelling'\n"
+">>> typing.__name__, typing.__spec__.name\n"
+"('typing', 'spelling')\n"
+">>> typing.__name__ = 'keyboard_smashing'\n"
+">>> typing.__name__, typing.__spec__.name\n"
+"('keyboard_smashing', 'spelling')"
 
 #: ../../reference/datamodel.rst:932
 msgid ""
 "The name used to uniquely identify the module in the import system. For a "
 "directly executed module, this will be set to ``\"__main__\"``."
 msgstr ""
+"Имя, используемое для уникальной идентификации модуля в системе импорта. Для "
+"непосредственно выполняемого модуля будет установлено значение "
+"``\"__main__\"``."
 
 #: ../../reference/datamodel.rst:935
 msgid ""
@@ -1433,20 +1465,26 @@ msgid ""
 "expected to match the value of :attr:`module.__spec__.name <importlib."
 "machinery.ModuleSpec.name>`."
 msgstr ""
+"В этом атрибуте должно быть установлено полное имя модуля. Ожидается, что "
+"оно будет соответствовать значению :attr:`module.__spec__.name <importlib."
+"machinery.ModuleSpec.name>`."
 
 #: ../../reference/datamodel.rst:941
 msgid "A record of the module's import-system-related state."
-msgstr ""
+msgstr "Запись состояния модуля, связанного с системой импорта."
 
 #: ../../reference/datamodel.rst:943
 msgid ""
 "Set to the :class:`module spec <importlib.machinery.ModuleSpec>` that was "
 "used when importing the module. See :ref:`module-specs` for more details."
 msgstr ""
+"Установите :class:`спецификацию модуля <importlib.machinery.ModuleSpec>`, "
+"которая использовалась при импорте модуля. Дополнительную информацию см. в :"
+"ref:`module-specs`."
 
 #: ../../reference/datamodel.rst:950
 msgid "The :term:`package` a module belongs to."
-msgstr ""
+msgstr ":term:`package`, которому принадлежит модуль."
 
 #: ../../reference/datamodel.rst:952
 msgid ""
@@ -1456,6 +1494,12 @@ msgid ""
 "attr:`module.__name__` if the module itself is a package). See :pep:`366` "
 "for further details."
 msgstr ""
+"Если модуль является модулем верхнего уровня (то есть не является частью "
+"какого-либо конкретного пакета), тогда для атрибута должно быть установлено "
+"значение ``''`` (пустая строка). В противном случае ему должно быть "
+"присвоено имя пакета модуля (которое может быть равно :attr:`module."
+"__name__`, если сам модуль является пакетом). Дополнительную информацию "
+"смотрите в :pep:`366`."
 
 #: ../../reference/datamodel.rst:958
 msgid ""
@@ -1465,6 +1509,12 @@ msgid ""
 "use :func:`importlib.util.module_from_spec` instead to ensure the attribute "
 "is set to a :class:`str`."
 msgstr ""
+"Этот атрибут используется вместо :attr:`~module.__name__` для расчета явного "
+"относительного импорта для основных модулей. По умолчанию для модулей, "
+"созданных динамически с использованием конструктора :class:`types."
+"ModuleType`, установлено значение ``None``; вместо этого используйте :func:"
+"`importlib.util.module_from_spec`, чтобы убедиться, что для атрибута "
+"установлено значение :class:`str`."
 
 #: ../../reference/datamodel.rst:964
 msgid ""
@@ -1473,6 +1523,11 @@ msgid ""
 "__package__`. :attr:`__package__` is now only used as a fallback if :attr:`!"
 "__spec__.parent` is not set, and this fallback path is deprecated."
 msgstr ""
+"**настоятельно** рекомендуется использовать :attr:`module.__spec__.parent "
+"<importlib.machinery.ModuleSpec.parent>` вместо :attr:`!module."
+"__package__`. :attr:`__package__` теперь используется как резервный вариант "
+"только в том случае, если :attr:`!__spec__.parent` не установлен, и этот "
+"резервный путь устарел."
 
 #: ../../reference/datamodel.rst:970 ../../reference/datamodel.rst:1011
 msgid ""
@@ -1480,6 +1535,9 @@ msgid ""
 "using the :class:`types.ModuleType` constructor. Previously the attribute "
 "was optional."
 msgstr ""
+"По умолчанию этот атрибут теперь имеет значение None для модулей, созданных "
+"динамически с использованием конструктора :class:`types.ModuleType`. Раньше "
+"атрибут был необязательным."
 
 #: ../../reference/datamodel.rst:975
 msgid ""
@@ -1488,6 +1546,10 @@ msgid ""
 "`__package__` is now only used as a fallback during import resolution if :"
 "attr:`!__spec__.parent` is not defined."
 msgstr ""
+"Ожидается, что значение :attr:`!__package__` будет таким же, как и :attr:"
+"`__spec__.parent <importlib.machinery.ModuleSpec.parent>`. :attr:"
+"`__package__` теперь используется как запасной вариант при разрешении "
+"импорта, только если :attr:`!__spec__.parent` не определен."
 
 #: ../../reference/datamodel.rst:981
 msgid ""
@@ -1495,23 +1557,32 @@ msgid ""
 "__package__` instead of :attr:`__spec__.parent <importlib.machinery."
 "ModuleSpec.parent>`."
 msgstr ""
+":exc:`ImportWarning` возникает, если разрешение импорта возвращается к :attr:"
+"`!__package__` вместо :attr:`__spec__.parent <importlib.machinery.ModuleSpec."
+"parent>`."
 
 #: ../../reference/datamodel.rst:986
 msgid ""
 "Raise :exc:`DeprecationWarning` instead of :exc:`ImportWarning` when falling "
 "back to :attr:`!__package__` during import resolution."
 msgstr ""
+"Поднимите :exc:`DeprecationWarning` вместо :exc:`ImportWarning` при возврате "
+"к :attr:`!__package__` во время разрешения импорта."
 
 #: ../../reference/datamodel.rst:990
 msgid ""
 ":attr:`!__package__` will cease to be set or taken into consideration by the "
 "import system or standard library."
 msgstr ""
+":attr:`!__package__` перестанет устанавливаться или учитываться системой "
+"импорта или стандартной библиотекой."
 
 #: ../../reference/datamodel.rst:996
 msgid ""
 "The :term:`loader` object that the import machinery used to load the module."
 msgstr ""
+"Объект :term:`loader`, который механизм импорта использовал для загрузки "
+"модуля."
 
 #: ../../reference/datamodel.rst:998
 msgid ""
@@ -1519,6 +1590,9 @@ msgid ""
 "additional loader-specific functionality, for example getting data "
 "associated with a loader."
 msgstr ""
+"Этот атрибут в основном полезен для самоанализа, но может использоваться для "
+"дополнительных функций, специфичных для загрузчика, например для получения "
+"данных, связанных с загрузчиком."
 
 #: ../../reference/datamodel.rst:1002
 msgid ""
@@ -1527,6 +1601,11 @@ msgid ""
 "module_from_spec` instead to ensure the attribute is set to a :term:`loader` "
 "object."
 msgstr ""
+":attr:`!__loader__` по умолчанию имеет значение ``None`` для модулей, "
+"созданных динамически с использованием конструктора :class:`types."
+"ModuleType`; вместо этого используйте :func:`importlib.util."
+"module_from_spec`, чтобы гарантировать, что атрибут установлен на объект :"
+"term:`loader`."
 
 #: ../../reference/datamodel.rst:1007
 msgid ""
@@ -1534,6 +1613,8 @@ msgid ""
 "<importlib.machinery.ModuleSpec.loader>` instead of :attr:`!module."
 "__loader__`."
 msgstr ""
+"**настоятельно** рекомендуется использовать :attr:`module.__spec__.loader "
+"<importlib.machinery.ModuleSpec.loader>` вместо :attr:`!module.__loader__`."
 
 #: ../../reference/datamodel.rst:1016
 msgid ""
@@ -1542,6 +1623,9 @@ msgid ""
 "cease to be set or taken into consideration by the import system or the "
 "standard library."
 msgstr ""
+"Установка :attr:`!__loader__` в модуле без установки :attr:`!__spec__."
+"loader` считается устаревшей. В Python 3.14 :attr:`!__loader__` перестанет "
+"устанавливаться или учитываться системой импорта или стандартной библиотекой."
 
 #: ../../reference/datamodel.rst:1024
 msgid ""
@@ -1550,6 +1634,10 @@ msgid ""
 "have a :attr:`!__path__` attribute. See :ref:`package-path-rules` for more "
 "details."
 msgstr ""
+"(Возможно, пустая) :term:`последовательность` строк, перечисляющих места, "
+"где будут найдены подмодули пакета. Модули, не являющиеся пакетами, не "
+"должны иметь атрибута :attr:`!__path__`. Дополнительную информацию см. в "
+"разделе :ref:`package-path-rules`."
 
 #: ../../reference/datamodel.rst:1029
 msgid ""
@@ -1557,6 +1645,9 @@ msgid ""
 "submodule_search_locations <importlib.machinery.ModuleSpec."
 "submodule_search_locations>` instead of :attr:`!module.__path__`."
 msgstr ""
+"**настоятельно** рекомендуется использовать :attr:`module.__spec__."
+"submodule_search_locations <importlib.machinery.ModuleSpec."
+"submodule_search_locations>` вместо :attr:`!module.__path__`."
 
 #: ../../reference/datamodel.rst:1036
 msgid ""
@@ -1564,6 +1655,9 @@ msgid ""
 "may or may not be set. Both attributes should be a :class:`str` when they "
 "are available."
 msgstr ""
+":attr:`!__file__` и :attr:`!__cached__` являются необязательными атрибутами, "
+"которые могут быть установлены или не установлены. Оба атрибута должны быть :"
+"class:`str`, если они доступны."
 
 #: ../../reference/datamodel.rst:1040
 msgid ""
@@ -1575,6 +1669,13 @@ msgid ""
 "<importsystem>` may opt to leave it unset if it has no semantic meaning (for "
 "example, a module loaded from a database)."
 msgstr ""
+":attr:`!__file__` указывает путь к файлу, из которого был загружен модуль "
+"(если загружен из файла), или путь к файлу общей библиотеки для модулей "
+"расширения, загружаемых динамически из общей библиотеки. Он может "
+"отсутствовать для определенных типов модулей, таких как модули C, которые "
+"статически связаны с интерпретатором, и :ref:`система импорта "
+"<importsystem>` может оставить его неустановленным, если он не имеет "
+"семантического значения (например, модуль, загруженный из базы данных)."
 
 #: ../../reference/datamodel.rst:1048
 msgid ""
@@ -1584,6 +1685,12 @@ msgid ""
 "attribute; the path can simply point to where the compiled file *would* "
 "exist (see :pep:`3147`)."
 msgstr ""
+"Если установлен :attr:`!__file__`, то также может быть установлен атрибут :"
+"attr:`!__cached__`, который является путем к любой скомпилированной версии "
+"кода (например, скомпилированному побайтно файлу). Для установки этого "
+"атрибута файл не обязательно должен существовать; путь может просто "
+"указывать на то место, где *будет* существовать скомпилированный файл (см. :"
+"pep:`3147`)."
 
 #: ../../reference/datamodel.rst:1054
 msgid ""
@@ -1594,6 +1701,13 @@ msgid ""
 "loader can load from a cached module but otherwise does not load from a "
 "file, that atypical scenario may be appropriate."
 msgstr ""
+"Обратите внимание, что :attr:`!__cached__` может быть установлен, даже если :"
+"attr:`!__file__` не установлен. Однако этот сценарий весьма нетипичен. В "
+"конечном счете, :term:`loader` — это то, что использует спецификацию модуля, "
+"предоставленную :term:`finder` (из которого получены :attr:`!__file__` и :"
+"attr:`!__cached__`). Поэтому, если загрузчик может загружаться из "
+"кэшированного модуля, но не загружается из файла, этот нетипичный сценарий "
+"может быть подходящим."
 
 #: ../../reference/datamodel.rst:1061
 msgid ""
@@ -1601,6 +1715,8 @@ msgid ""
 "<importlib.machinery.ModuleSpec.cached>` instead of :attr:`!module."
 "__cached__`."
 msgstr ""
+"**настоятельно** рекомендуется использовать :attr:`module.__spec__.cached "
+"<importlib.machinery.ModuleSpec.cached>` вместо :attr:`!module.__cached__`."
 
 #: ../../reference/datamodel.rst:1065
 msgid ""
@@ -1609,22 +1725,29 @@ msgid ""
 "cease to be set or taken into consideration by the import system or standard "
 "library."
 msgstr ""
+"Установка :attr:`!__cached__` в модуле без установки :attr:`!__spec__."
+"cached` считается устаревшей. В Python 3.15 :attr:`!__cached__` перестанет "
+"устанавливаться или учитываться системой импорта или стандартной библиотекой."
 
 #: ../../reference/datamodel.rst:1072
 msgid "Other writable attributes on module objects"
-msgstr ""
+msgstr "Другие записываемые атрибуты объектов модуля."
 
 #: ../../reference/datamodel.rst:1074
 msgid ""
 "As well as the import-related attributes listed above, module objects also "
 "have the following writable attributes:"
 msgstr ""
+"Помимо перечисленных выше атрибутов, связанных с импортом, объекты модулей "
+"также имеют следующие записываемые атрибуты:"
 
 #: ../../reference/datamodel.rst:1079
 msgid ""
 "The module's documentation string, or ``None`` if unavailable. See also: :"
 "attr:`__doc__ attributes <definition.__doc__>`."
 msgstr ""
+"Строка документации модуля или «Нет», если она недоступна. См. также: :attr:"
+"`__doc__ атрибуты <definition.__doc__>`."
 
 #: ../../reference/datamodel.rst:1084
 msgid ""
@@ -1638,11 +1761,12 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1090
 msgid "Module dictionaries"
-msgstr ""
+msgstr "Словари модулей"
 
 #: ../../reference/datamodel.rst:1092
 msgid "Module objects also have the following special read-only attribute:"
 msgstr ""
+"Объекты модуля также имеют следующий специальный атрибут только для чтения:"
 
 #: ../../reference/datamodel.rst:1097
 msgid ""
@@ -1650,6 +1774,10 @@ msgid ""
 "listed here, :attr:`!__dict__` cannot be accessed as a global variable from "
 "within a module; it can only be accessed as an attribute on module objects."
 msgstr ""
+"Пространство имен модуля как объект словаря. Единственным среди "
+"перечисленных здесь атрибутов является то, что :attr:`!__dict__` не может "
+"быть доступен как глобальная переменная изнутри модуля; доступ к нему "
+"возможен только как атрибут объектов модуля."
 
 #: ../../reference/datamodel.rst:1103
 msgid ""
@@ -1729,19 +1857,22 @@ msgstr ""
 
 #: ../../reference/datamodel.rst:1154 ../../reference/datamodel.rst:1301
 msgid "Special attributes"
-msgstr ""
+msgstr "Специальные атрибуты"
 
 #: ../../reference/datamodel.rst:1174
 msgid ""
 "The class's name. See also: :attr:`__name__ attributes <definition."
 "__name__>`."
 msgstr ""
+"Имя класса. См. также: :attr:`__name__ атрибуты <definition.__name__>`."
 
 #: ../../reference/datamodel.rst:1178
 msgid ""
 "The class's :term:`qualified name`. See also: :attr:`__qualname__ attributes "
 "<definition.__qualname__>`."
 msgstr ""
+":term:`полное имя` класса. См. также: :attr:`__qualname__ атрибуты "
+"<definition.__qualname__>`."
 
 #: ../../reference/datamodel.rst:1182
 msgid "The name of the module in which the class was defined."
@@ -1753,6 +1884,9 @@ msgid ""
 "of the class's namespace. See also: :attr:`__dict__ attributes <object."
 "__dict__>`."
 msgstr ""
+":class:`прокси-сервер <types.MappingProxyType>`, обеспечивающий доступное "
+"только для чтения представление пространства имен класса. См. также: :attr:"
+"`__dict__ атрибуты <object.__dict__>`."
 
 #: ../../reference/datamodel.rst:1190
 msgid ""
@@ -1760,12 +1894,17 @@ msgid ""
 "defined as ``class X(A, B, C)``, ``X.__bases__`` will be exactly equal to "
 "``(A, B, C)``."
 msgstr ""
+":class:`tuple`, содержащий основы класса. В большинстве случаев для класса, "
+"определенного как ``class X(A, B, C)``, ``X.__bases__`` будет точно равен "
+"``(A, B, C)``."
 
 #: ../../reference/datamodel.rst:1195
 msgid ""
 "The class's documentation string, or ``None`` if undefined. Not inherited by "
 "subclasses."
 msgstr ""
+"Строка документации класса или None, если не определено. Не наследуется "
+"подклассами."
 
 #: ../../reference/datamodel.rst:1199
 msgid ""
@@ -1773,6 +1912,9 @@ msgid ""
 "collected during class body execution. For best practices on working with :"
 "attr:`!__annotations__`, please see :ref:`annotations-howto`."
 msgstr ""
+"Словарь, содержащий :term:`аннотации переменных <аннотации переменных>`, "
+"собранные во время выполнения тела класса. Рекомендации по работе с :attr:`!"
+"__annotations__` см. в :ref:`annotations-howto`."
 
 #: ../../reference/datamodel.rst:1206
 msgid ""
@@ -1781,18 +1923,26 @@ msgid ""
 "attribute may not exist for some classes. Use :func:`inspect."
 "get_annotations` to retrieve class annotations safely."
 msgstr ""
+"Прямой доступ к атрибуту :attr:`!__annotations__` объекта класса может "
+"привести к неверным результатам при наличии метаклассов. Кроме того, для "
+"некоторых классов атрибут может отсутствовать. Используйте :func:`inspect."
+"get_annotations` для безопасного получения аннотаций классов."
 
 #: ../../reference/datamodel.rst:1213
 msgid ""
 "A :class:`tuple` containing the :ref:`type parameters <type-params>` of a :"
 "ref:`generic class <generic-classes>`."
 msgstr ""
+":class:`tuple`, содержащий :ref:`параметры типа <type-params>` :ref:`generic "
+"class <generic-classes>`."
 
 #: ../../reference/datamodel.rst:1219
 msgid ""
 "A :class:`tuple` containing names of attributes of this class which are "
 "assigned through ``self.X`` from any function in its body."
 msgstr ""
+":class:`tuple`, содержащий имена атрибутов этого класса, которые назначаются "
+"через ``self.X`` из любой функции в его теле."
 
 #: ../../reference/datamodel.rst:1225
 msgid ""
@@ -1800,22 +1950,29 @@ msgid ""
 "decorators. Setting the :attr:`__module__` attribute removes the :attr:`!"
 "__firstlineno__` item from the type's dictionary."
 msgstr ""
+"Номер первой строки определения класса, включая декораторы. Установка "
+"атрибута :attr:`__module__` удаляет элемент :attr:`!__firstlineno__` из "
+"словаря типа."
 
 #: ../../reference/datamodel.rst:1233
 msgid ""
 "The :class:`tuple` of classes that are considered when looking for base "
 "classes during method resolution."
 msgstr ""
+":class:`tuple` классов, которые учитываются при поиске базовых классов во "
+"время разрешения метода."
 
 #: ../../reference/datamodel.rst:1238
 msgid "Special methods"
-msgstr ""
+msgstr "Специальные методы"
 
 #: ../../reference/datamodel.rst:1240
 msgid ""
 "In addition to the special attributes described above, all Python classes "
 "also have the following two methods available:"
 msgstr ""
+"В дополнение к специальным атрибутам, описанным выше, все классы Python "
+"также имеют следующие два метода:"
 
 #: ../../reference/datamodel.rst:1245
 msgid ""
@@ -1823,6 +1980,9 @@ msgid ""
 "resolution order for its instances.  It is called at class instantiation, "
 "and its result is stored in :attr:`~type.__mro__`."
 msgstr ""
+"Этот метод может быть переопределен метаклассом, чтобы настроить порядок "
+"разрешения методов для его экземпляров. Он вызывается при создании "
+"экземпляра класса, а его результат сохраняется в :attr:`~type.__mro__`."
 
 #: ../../reference/datamodel.rst:1251
 msgid ""
@@ -1830,6 +1990,9 @@ msgid ""
 "method returns a list of all those references still alive. The list is in "
 "definition order. Example:"
 msgstr ""
+"Каждый класс хранит список слабых ссылок на свои непосредственные подклассы. "
+"Этот метод возвращает список всех живых ссылок. Список приведен в порядке "
+"определения. Пример:"
 
 #: ../../reference/datamodel.rst:1255
 msgid ""
@@ -1838,6 +2001,10 @@ msgid ""
 ">>> A.__subclasses__()\n"
 "[<class 'B'>]"
 msgstr ""
+">>> class A: pass\n"
+">>> class B(A): pass\n"
+">>> A.__subclasses__()\n"
+"[<class 'B'>]"
 
 #: ../../reference/datamodel.rst:1263
 msgid "Class instances"
@@ -1905,6 +2072,9 @@ msgid ""
 "attributes. Not all instances have a :attr:`!__dict__` attribute; see the "
 "section on :ref:`slots` for more details."
 msgstr ""
+"Словарь или другой объект сопоставления, используемый для хранения атрибутов "
+"объекта (доступных для записи). Не все экземпляры имеют атрибут :attr:`!"
+"__dict__`; более подробную информацию см. в разделе «слоты»."
 
 #: ../../reference/datamodel.rst:1319
 msgid "I/O objects (also known as file objects)"
@@ -2031,6 +2201,8 @@ msgid ""
 "that are referenced from at least one :term:`nested scope` inside the "
 "function"
 msgstr ""
+":class:`tuple`, содержащий имена :ref:`локальных переменных <naming>`, на "
+"которые ссылаются хотя бы из одной :term:`вложенной области` внутри функции."
 
 #: ../../reference/datamodel.rst:1433
 msgid ""
@@ -2038,10 +2210,13 @@ msgid ""
 "<closure variable>` that a :term:`nested scope` references in an outer "
 "scope. See also :attr:`function.__closure__`."
 msgstr ""
+":class:`tuple`, содержащий имена :term:`свободных (замыкающих) переменных "
+"<замыкающей переменной>`, на которые :term:`вложенная область` ссылается во "
+"внешней области видимости. См. также :attr:`function.__closure__`."
 
 #: ../../reference/datamodel.rst:1437
 msgid "Note: references to global and builtin names are *not* included."
-msgstr ""
+msgstr "Примечание. Ссылки на глобальные и встроенные имена *не* включены."
 
 #: ../../reference/datamodel.rst:1440
 msgid ""
@@ -3916,6 +4091,12 @@ msgid ""
 "and *__weakref__* unless the subclass also defines *__slots__* (which should "
 "only contain names of any *additional* slots)."
 msgstr ""
+"Действие объявления *__slots__* не ограничивается классом, в котором оно "
+"определено. *__slots__*, объявленные в родителях, доступны в дочерних "
+"классах. Однако экземпляры дочернего подкласса получат :attr:`~object."
+"__dict__` и *__weakref__*, если только подкласс также не определяет "
+"*__slots__* (который должен содержать только имена любых *дополнительных* "
+"слотов)."
 
 #: ../../reference/datamodel.rst:2553
 msgid ""
@@ -3965,6 +4146,8 @@ msgid ""
 ":attr:`~object.__class__` assignment works only if both classes have the "
 "same *__slots__*."
 msgstr ""
+":attr:`~object.__class__` назначение работает, только если оба класса имеют "
+"одинаковые *__slots__*."
 
 #: ../../reference/datamodel.rst:2573
 msgid ""
@@ -4472,6 +4655,11 @@ msgid ""
 "object is discarded. The new copy is wrapped in a read-only proxy, which "
 "becomes the :attr:`~type.__dict__` attribute of the class object."
 msgstr ""
+"Когда новый класс создается с помощью ``type.__new__``, объект, указанный в "
+"качестве параметра пространства имен, копируется в новое упорядоченное "
+"отображение, а исходный объект удаляется. Новая копия помещается в прокси-"
+"сервер, доступный только для чтения, который становится атрибутом :attr:"
+"`~type.__dict__` объекта класса."
 
 #: ../../reference/datamodel.rst:2840
 msgid ":pep:`3135` - New super"
@@ -4566,6 +4754,10 @@ msgid ""
 "context of adding Abstract Base Classes (see the :mod:`abc` module) to the "
 "language."
 msgstr ""
+"Включает спецификацию для настройки поведения :func:`isinstance` и :func:"
+"`issubclass` посредством :meth:`~type.__instancecheck__` и :meth:`~type."
+"__subclasscheck__`, с мотивацией для этой функциональности в контексте "
+"добавления Абстрактные базовые классы (см. модуль :mod:`abc`) для языка."
 
 #: ../../reference/datamodel.rst:2894
 msgid "Emulating generic types"
@@ -6545,7 +6737,7 @@ msgstr "__name__ (атрибут модуля)"
 
 #: ../../reference/datamodel.rst:879
 msgid "__spec__ (module attribute)"
-msgstr ""
+msgstr "__spec__ (атрибут модуля)"
 
 #: ../../reference/datamodel.rst:879
 msgid "__package__ (module attribute)"
@@ -6557,7 +6749,7 @@ msgstr "__loader__ (атрибут модуля)"
 
 #: ../../reference/datamodel.rst:879
 msgid "__path__ (module attribute)"
-msgstr ""
+msgstr "__path__ (атрибут модуля)"
 
 #: ../../reference/datamodel.rst:879
 msgid "__file__ (module attribute)"
@@ -6565,7 +6757,7 @@ msgstr "__file__ (атрибут модуля)"
 
 #: ../../reference/datamodel.rst:879
 msgid "__cached__ (module attribute)"
-msgstr ""
+msgstr "__cached__ (атрибут модуля)"
 
 #: ../../reference/datamodel.rst:879
 msgid "__doc__ (module attribute)"
