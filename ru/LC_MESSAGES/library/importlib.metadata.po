@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-11 14:48+0000\n"
+"POT-Creation-Date: 2024-10-18 14:51+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
@@ -26,15 +26,15 @@ msgstr ""
 
 #: ../../library/importlib.metadata.rst:5
 msgid ":mod:`!importlib.metadata` -- Accessing package metadata"
-msgstr ""
+msgstr ":mod:`!importlib.metadata` -- Доступ к метаданным пакета"
 
 #: ../../library/importlib.metadata.rst:11
 msgid "``importlib.metadata`` is no longer provisional."
-msgstr ""
+msgstr "``importlib.metadata`` больше не является временным."
 
 #: ../../library/importlib.metadata.rst:14
 msgid "**Source code:** :source:`Lib/importlib/metadata/__init__.py`"
-msgstr ""
+msgstr "**Исходный код:** :source:`Lib/importlib/metadata/__init__.py`"
 
 #: ../../library/importlib.metadata.rst:16
 msgid ""
@@ -49,6 +49,16 @@ msgid ""
 "eliminate the need to use the older and less efficient ``pkg_resources`` "
 "package."
 msgstr ""
+"``importlib.metadata`` — это библиотека, которая обеспечивает доступ к "
+"метаданным установленного ``Distribution Package <https://packaging.python."
+"org/en/latest/glossary/#term-Distribution-Package>`_, например в качестве "
+"точек входа или имен верхнего уровня (`Import Package <https://packaging."
+"python.org/en/latest/glossary/#term-Import-Package>`_\\s, модули, если "
+"таковые имеются). Эта библиотека, частично созданная на основе системы "
+"импорта Python, призвана заменить аналогичную функциональность в `` API "
+"точки входа`_ и `API метаданных`_ ``pkg_resources``. Вместе с :mod:"
+"`importlib.resources` этот пакет может устранить необходимость использования "
+"более старого и менее эффективного пакета ``pkg_resources``."
 
 #: ../../library/importlib.metadata.rst:27
 msgid ""
@@ -59,6 +69,13 @@ msgid ""
 "metadata specifications <https://packaging.python.org/en/latest/"
 "specifications/core-metadata/#core-metadata>`_."
 msgstr ""
+"``importlib.metadata`` работает со сторонними *дистрибутивами*, "
+"установленными в каталог ``site-packages`` Python с помощью таких "
+"инструментов, как :pypi:`pip`. В частности, он работает с дистрибутивами с "
+"обнаруживаемыми каталогами ``dist-info`` или ``egg-info``, а также "
+"метаданными, определенными ``Основными спецификациями метаданных'' <https://"
+"packaging.python.org/en/latest/specifications. /core-metadata/#core-"
+"metadata>`_."
 
 #: ../../library/importlib.metadata.rst:36
 msgid ""
@@ -77,6 +94,9 @@ msgid ""
 "archives on :data:`sys.path`.  Through an extension mechanism, the metadata "
 "can live almost anywhere."
 msgstr ""
+"По умолчанию метаданные дистрибутива могут находиться в файловой системе или "
+"в zip-архивах по адресу :data:`sys.path`. Благодаря механизму расширения "
+"метаданные могут находиться практически где угодно."
 
 #: ../../library/importlib.metadata.rst:55
 msgid "https://importlib-metadata.readthedocs.io/"
@@ -91,6 +111,12 @@ msgid ""
 "readthedocs.io/en/latest/migration.html>`__ for existing users of "
 "``pkg_resources``."
 msgstr ""
+"Документация для importlib_metadata, которая предоставляет резервную копию "
+"importlib.metadata. Сюда входит `ссылка на API <https://importlib-metadata."
+"readthedocs.io/en/latest/api.html>`__ для классов и функций этого модуля, а "
+"также `руководство по миграции <https://importlib- Metadata.readthedocs.io/"
+"en/latest/migration.html>`__ для существующих пользователей "
+"``pkg_resources``."
 
 #: ../../library/importlib.metadata.rst:67
 msgid "Overview"
@@ -103,6 +129,10 @@ msgid ""
 "Package>`_ you've installed using ``pip``.  We start by creating a virtual "
 "environment and installing something into it:"
 msgstr ""
+"Допустим, вы хотите получить строку версии для `Distribution Package "
+"<https://packaging.python.org/en/latest/glossary/#term-Distribution-"
+"Package>`_, который вы установили с помощью ``pip`` . Начнем с создания "
+"виртуальной среды и установки в нее чего-нибудь:"
 
 #: ../../library/importlib.metadata.rst:74
 msgid ""
@@ -110,10 +140,14 @@ msgid ""
 "$ source example/bin/activate\n"
 "(example) $ python -m pip install wheel"
 msgstr ""
+"$ python -m venv example\n"
+"$ source example/bin/activate\n"
+"(example) $ python -m pip install wheel"
 
 #: ../../library/importlib.metadata.rst:80
 msgid "You can get the version string for ``wheel`` by running the following:"
 msgstr ""
+"Вы можете получить строку версии для ``wheel``, выполнив следующую команду:"
 
 #: ../../library/importlib.metadata.rst:82
 msgid ""
@@ -122,6 +156,10 @@ msgid ""
 ">>> version('wheel')  \n"
 "'0.32.3'"
 msgstr ""
+"(example) $ python\n"
+">>> from importlib.metadata import version  \n"
+">>> version('wheel')  \n"
+"'0.32.3'"
 
 #: ../../library/importlib.metadata.rst:89
 msgid ""
@@ -130,10 +168,14 @@ msgid ""
 "``distutils.commands`` and others.  Each group contains a collection of :ref:"
 "`EntryPoint <entry-points>` objects."
 msgstr ""
+"Вы также можете получить коллекцию точек входа, выбираемых по свойствам "
+"EntryPoint (обычно «группа» или «имя»), таким как «console_scripts», "
+"«distutils.commands» и другие. Каждая группа содержит коллекцию объектов :"
+"ref:`EntryPoint <entry-points>`."
 
 #: ../../library/importlib.metadata.rst:93
 msgid "You can get the :ref:`metadata for a distribution <metadata>`::"
-msgstr ""
+msgstr "Вы можете получить :ref:`метаданные для дистрибутива <metadata>`::"
 
 #: ../../library/importlib.metadata.rst:95
 msgid ""
@@ -146,6 +188,14 @@ msgid ""
 "'Classifier', 'Requires-Python', 'Provides-Extra', 'Requires-Dist', "
 "'Requires-Dist']"
 msgstr ""
+">>> list(metadata('wheel'))  \n"
+"['Metadata-Version', 'Name', 'Version', 'Summary', 'Home-page', 'Author', "
+"'Author-email', 'Maintainer', 'Maintainer-email', 'License', 'Project-URL', "
+"'Project-URL', 'Project-URL', 'Keywords', 'Platform', 'Classifier', "
+"'Classifier', 'Classifier', 'Classifier', 'Classifier', 'Classifier', "
+"'Classifier', 'Classifier', 'Classifier', 'Classifier', 'Classifier', "
+"'Classifier', 'Requires-Python', 'Provides-Extra', 'Requires-Dist', "
+"'Requires-Dist']"
 
 #: ../../library/importlib.metadata.rst:98
 msgid ""
@@ -153,6 +203,9 @@ msgid ""
 "ref:`constituent files <files>`, and get a list of the distribution's :ref:"
 "`requirements`."
 msgstr ""
+"Вы также можете получить :ref:`номер версии дистрибутива <version>`, "
+"перечислить его :ref:`составляющие файлы <files>` и получить список :ref:"
+"`требований` дистрибутива."
 
 #: ../../library/importlib.metadata.rst:105
 msgid ""
@@ -168,6 +221,7 @@ msgstr "функциональный API"
 #: ../../library/importlib.metadata.rst:113
 msgid "This package provides the following functionality via its public API."
 msgstr ""
+"Этот пакет предоставляет следующие функции через свой общедоступный API."
 
 #: ../../library/importlib.metadata.rst:119
 msgid "Entry points"
@@ -215,11 +269,11 @@ msgstr ""
 
 #: ../../library/importlib.metadata.rst:150
 msgid "Query all entry points::"
-msgstr ""
+msgstr "Запросить все точки входа::"
 
 #: ../../library/importlib.metadata.rst:152
 msgid ">>> eps = entry_points()  "
-msgstr ""
+msgstr ">>> eps = entry_points()  "
 
 #: ../../library/importlib.metadata.rst:154
 msgid ""
@@ -234,6 +288,9 @@ msgid ""
 "['console_scripts', 'distutils.commands', 'distutils.setup_keywords', "
 "'egg_info.writers', 'setuptools.installation']"
 msgstr ""
+">>> sorted(eps.groups)  \n"
+"['console_scripts', 'distutils.commands', 'distutils.setup_keywords', "
+"'egg_info.writers', 'setuptools.installation']"
 
 #: ../../library/importlib.metadata.rst:161
 msgid ""
@@ -244,7 +301,7 @@ msgstr ""
 
 #: ../../library/importlib.metadata.rst:165
 msgid ">>> scripts = eps.select(group='console_scripts')  "
-msgstr ""
+msgstr ">>> scripts = eps.select(group='console_scripts')  "
 
 #: ../../library/importlib.metadata.rst:167
 msgid ""
@@ -254,12 +311,13 @@ msgstr ""
 
 #: ../../library/importlib.metadata.rst:170
 msgid ">>> scripts = entry_points(group='console_scripts')  "
-msgstr ""
+msgstr ">>> scripts = entry_points(group='console_scripts')  "
 
 #: ../../library/importlib.metadata.rst:172
 msgid ""
 "Pick out a specific script named \"wheel\" (found in the wheel project)::"
 msgstr ""
+"Выберите конкретный скрипт с именем «колесо» (находится в проекте колеса)::"
 
 #: ../../library/importlib.metadata.rst:174
 msgid ""
@@ -267,20 +325,25 @@ msgid ""
 "True\n"
 ">>> wheel = scripts['wheel']  "
 msgstr ""
+">>> 'wheel' in scripts.names  \n"
+"True\n"
+">>> wheel = scripts['wheel']  "
 
 #: ../../library/importlib.metadata.rst:178
 msgid "Equivalently, query for that entry point during selection::"
-msgstr ""
+msgstr "Аналогично, запросите эту точку входа во время выбора::"
 
 #: ../../library/importlib.metadata.rst:180
 msgid ""
 ">>> (wheel,) = entry_points(group='console_scripts', name='wheel')  \n"
 ">>> (wheel,) = entry_points().select(group='console_scripts', name='wheel')  "
 msgstr ""
+">>> (wheel,) = entry_points(group='console_scripts', name='wheel')  \n"
+">>> (wheel,) = entry_points().select(group='console_scripts', name='wheel')  "
 
 #: ../../library/importlib.metadata.rst:183
 msgid "Inspect the resolved entry point::"
-msgstr ""
+msgstr "Проверьте решенную точку входа::"
 
 #: ../../library/importlib.metadata.rst:185
 msgid ""
@@ -296,6 +359,17 @@ msgid ""
 ">>> main  \n"
 "<function main at 0x103528488>"
 msgstr ""
+">>> wheel  \n"
+"EntryPoint(name='wheel', value='wheel.cli:main', group='console_scripts')\n"
+">>> wheel.module  \n"
+"'wheel.cli'\n"
+">>> wheel.attr  \n"
+"'main'\n"
+">>> wheel.extras  \n"
+"[]\n"
+">>> main = wheel.load()  \n"
+">>> main  \n"
+"<function main at 0x103528488>"
 
 #: ../../library/importlib.metadata.rst:197
 msgid ""
@@ -305,6 +379,11 @@ msgid ""
 "latest/userguide/entry_point.html>`_ for more information on entry points, "
 "their definition, and usage."
 msgstr ""
+"«Группа» и «имя» — это произвольные значения, определенные автором пакета, и "
+"обычно клиент желает разрешить все точки входа для определенной группы. "
+"Прочтите документацию по setuptools <https://setuptools.pypa.io/en/latest/"
+"userguide/entry_point.html>`_ для получения дополнительной информации о "
+"точках входа, их определении и использовании."
 
 #: ../../library/importlib.metadata.rst:203
 msgid "*Compatibility Note*"
@@ -319,10 +398,16 @@ msgid ""
 "returns an ``EntryPoints`` object. See :pypi:`backports."
 "entry_points_selectable` for compatibility options."
 msgstr ""
+"«Выбираемые» точки входа были представлены в importlib_metadata 3.6 и Python "
+"3.10. До этих изменений ``entry_points`` не принимал никаких параметров и "
+"всегда возвращал словарь точек входа, объединенных по группам. В "
+"``importlib_metadata`` 5.0 и Python 3.12 ``entry_points`` всегда возвращает "
+"объект ``EntryPoints``. См. :pypi:`backports.entry_points_selectable` для "
+"опций совместимости."
 
 #: ../../library/importlib.metadata.rst:217
 msgid "Distribution metadata"
-msgstr ""
+msgstr "Метаданные распространения"
 
 #: ../../library/importlib.metadata.rst:221
 msgid ""
@@ -365,7 +450,7 @@ msgstr ""
 
 #: ../../library/importlib.metadata.rst:238
 msgid ">>> wheel_metadata = metadata('wheel')  "
-msgstr ""
+msgstr ">>> wheel_metadata = metadata('wheel')  "
 
 #: ../../library/importlib.metadata.rst:240
 msgid ""
@@ -378,6 +463,8 @@ msgid ""
 ">>> wheel_metadata['Requires-Python']  \n"
 "'>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*'"
 msgstr ""
+">>> wheel_metadata['Requires-Python']  \n"
+"'>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*'"
 
 #: ../../library/importlib.metadata.rst:246
 msgid ""
@@ -390,6 +477,8 @@ msgid ""
 ">>> wheel_metadata.json['requires_python']\n"
 "'>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*'"
 msgstr ""
+">>> wheel_metadata.json['requires_python']\n"
+"'>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*'"
 
 #: ../../library/importlib.metadata.rst:252
 #: ../../library/importlib.metadata.rst:444
@@ -404,14 +493,16 @@ msgid ""
 "The ``Description`` is now included in the metadata when presented through "
 "the payload. Line continuation characters have been removed."
 msgstr ""
+"«Описание» теперь включается в метаданные при представлении через полезную "
+"нагрузку. Символы продолжения строки были удалены."
 
 #: ../../library/importlib.metadata.rst:259
 msgid "The ``json`` attribute was added."
-msgstr ""
+msgstr "Был добавлен атрибут ``json``."
 
 #: ../../library/importlib.metadata.rst:265
 msgid "Distribution versions"
-msgstr ""
+msgstr "Версии распространения"
 
 #: ../../library/importlib.metadata.rst:269
 msgid ""
@@ -431,10 +522,12 @@ msgid ""
 ">>> version('wheel')  \n"
 "'0.32.3'"
 msgstr ""
+">>> version('wheel')  \n"
+"'0.32.3'"
 
 #: ../../library/importlib.metadata.rst:286
 msgid "Distribution files"
-msgstr ""
+msgstr "Файлы дистрибутива"
 
 #: ../../library/importlib.metadata.rst:290
 msgid ""
@@ -475,10 +568,19 @@ msgid ""
 ">>> util.hash  \n"
 "<FileHash mode: sha256 value: bYkw5oMccfazVCoYQwKkkemoVyMAFoR34mmKBx8R1NI>"
 msgstr ""
+">>> util = [p for p in files('wheel') if 'util.py' in str(p)][0]  \n"
+">>> util  \n"
+"PackagePath('wheel/util.py')\n"
+">>> util.size  \n"
+"859\n"
+">>> util.dist  \n"
+"<importlib.metadata._hooks.PathDistribution object at 0x101e0cef0>\n"
+">>> util.hash  \n"
+"<FileHash mode: sha256 value: bYkw5oMccfazVCoYQwKkkemoVyMAFoR34mmKBx8R1NI>"
 
 #: ../../library/importlib.metadata.rst:321
 msgid "Once you have the file, you can also read its contents::"
-msgstr ""
+msgstr "Получив файл, вы также можете прочитать его содержимое:"
 
 #: ../../library/importlib.metadata.rst:323
 msgid ""
@@ -491,6 +593,14 @@ msgid ""
 "        return s.encode('utf-8')\n"
 "    return s"
 msgstr ""
+">>> print(util.read_text())  \n"
+"import base64\n"
+"import sys\n"
+"...\n"
+"def as_bytes(s):\n"
+"    if isinstance(s, text_type):\n"
+"        return s.encode('utf-8')\n"
+"    return s"
 
 #: ../../library/importlib.metadata.rst:332
 msgid ""
@@ -503,6 +613,8 @@ msgid ""
 ">>> util.locate()  \n"
 "PosixPath('/home/gustav/example/lib/site-packages/wheel/util.py')"
 msgstr ""
+">>> util.locate()  \n"
+"PosixPath('/home/gustav/example/lib/site-packages/wheel/util.py')"
 
 #: ../../library/importlib.metadata.rst:338
 msgid ""
@@ -516,7 +628,7 @@ msgstr ""
 
 #: ../../library/importlib.metadata.rst:349
 msgid "Distribution requirements"
-msgstr ""
+msgstr "Требования к распространению"
 
 #: ../../library/importlib.metadata.rst:353
 msgid ""
@@ -535,10 +647,12 @@ msgid ""
 ">>> requires('wheel')  \n"
 "[\"pytest (>=3.0.0) ; extra == 'test'\", \"pytest-cov ; extra == 'test'\"]"
 msgstr ""
+">>> requires('wheel')  \n"
+"[\"pytest (>=3.0.0) ; extra == 'test'\", \"pytest-cov ; extra == 'test'\"]"
 
 #: ../../library/importlib.metadata.rst:371
 msgid "Mapping import to distribution packages"
-msgstr ""
+msgstr "Сопоставление импорта с дистрибутивными пакетами"
 
 #: ../../library/importlib.metadata.rst:375
 msgid ""
@@ -562,6 +676,11 @@ msgid ""
 "Python module or `Import Package <https://packaging.python.org/en/latest/"
 "glossary/#term-Import-Package>`_::"
 msgstr ""
+"Удобный метод разрешения имени `Distribution Package <https://packaging."
+"python.org/en/latest/glossary/#term-Distribution-Package>`_ ​​(или имен, в "
+"случае пакета пространства имен), которые предоставляют каждый импортируемый "
+"модуль Python верхнего уровня или `Import Package <https://packaging.python."
+"org/en/latest/glossary/#term-Import-Package>`_::"
 
 #: ../../library/importlib.metadata.rst:388
 msgid ""
@@ -569,6 +688,9 @@ msgid ""
 "{'importlib_metadata': ['importlib-metadata'], 'yaml': ['PyYAML'], 'jaraco': "
 "['jaraco.classes', 'jaraco.functools'], ...}"
 msgstr ""
+">>> packages_distributions()\n"
+"{'importlib_metadata': ['importlib-metadata'], 'yaml': ['PyYAML'], 'jaraco': "
+"['jaraco.classes', 'jaraco.functools'], ...}"
 
 #: ../../library/importlib.metadata.rst:391
 msgid ""
@@ -576,10 +698,13 @@ msgid ""
 "pypa/packaging-problems/issues/609>`_, and thus this function is not "
 "reliable with such installs."
 msgstr ""
+"Некоторые редактируемые установки `_ не предоставляют имена верхнего уровня "
+"<https://github.com/pypa/packaging-problems/issues/609>`_, поэтому эта "
+"функция ненадежна при таких установках."
 
 #: ../../library/importlib.metadata.rst:400
 msgid "Distributions"
-msgstr ""
+msgstr "Распределения"
 
 #: ../../library/importlib.metadata.rst:404
 msgid ""
@@ -628,6 +753,8 @@ msgid ""
 ">>> dist.version  \n"
 "'0.32.3'"
 msgstr ""
+">>> dist.version  \n"
+"'0.32.3'"
 
 #: ../../library/importlib.metadata.rst:436
 msgid ""
@@ -642,10 +769,14 @@ msgid ""
 ">>> dist.metadata['License']  \n"
 "'MIT'"
 msgstr ""
+">>> dist.metadata['Requires-Python']  \n"
+"'>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*'\n"
+">>> dist.metadata['License']  \n"
+"'MIT'"
 
 #: ../../library/importlib.metadata.rst:449
 msgid "Distribution Discovery"
-msgstr ""
+msgstr "Открытие распространения"
 
 #: ../../library/importlib.metadata.rst:451
 msgid ""
@@ -655,21 +786,30 @@ msgid ""
 "finder search defaults to ``sys.path``, but varies slightly in how it "
 "interprets those values from how other import machinery does. In particular:"
 msgstr ""
+"По умолчанию этот пакет предоставляет встроенную поддержку обнаружения "
+"метаданных для файловой системы и zip-файла `Distribution Package <https://"
+"packaging.python.org/en/latest/glossary/#term-Distribution-Package>`_\\ с. "
+"Этот поиск метаданных по умолчанию использует ``sys.path``, но интерпретация "
+"этих значений немного отличается от того, как это делают другие механизмы "
+"импорта. В частности:"
 
 #: ../../library/importlib.metadata.rst:455
 msgid ""
 "``importlib.metadata`` does not honor :class:`bytes` objects on ``sys.path``."
 msgstr ""
+"``importlib.metadata`` не учитывает объекты :class:`bytes` в ``sys.path``."
 
 #: ../../library/importlib.metadata.rst:456
 msgid ""
 "``importlib.metadata`` will incidentally honor :py:class:`pathlib.Path` "
 "objects on ``sys.path`` even though such values will be ignored for imports."
 msgstr ""
+"``importlib.metadata`` будет случайно учитывать объекты :py:class:`pathlib."
+"Path` в ``sys.path``, хотя такие значения будут игнорироваться при импорте."
 
 #: ../../library/importlib.metadata.rst:460
 msgid "Extending the search algorithm"
-msgstr ""
+msgstr "Расширение алгоритма поиска"
 
 #: ../../library/importlib.metadata.rst:462
 msgid ""
@@ -681,6 +821,13 @@ msgid ""
 "metadata`` queries the list of :term:`meta path finders <meta path finder>` "
 "on :data:`sys.meta_path`."
 msgstr ""
+"Поскольку метаданные `Distribution Package <https://packaging.python.org/en/"
+"latest/glossary/#term-Distribution-Package>`_ ​​недоступны через поиск :data:"
+"`sys.path` или напрямую через загрузчики пакетов, метаданные для "
+"дистрибутива можно найти через систему импорта :ref:`finders <finders-and-"
+"loaders>`. Чтобы найти метаданные пакета распространения, ``importlib."
+"metadata`` запрашивает список :term:`мета-поисковиков <мета-пути искателя>` "
+"на :data:`sys.meta_path`."
 
 #: ../../library/importlib.metadata.rst:470
 msgid ""
@@ -688,6 +835,9 @@ msgid ""
 "packages found on the file system. This finder doesn't actually find any "
 "*distributions*, but it can find their metadata."
 msgstr ""
+"По умолчанию importlib.metadata устанавливает средство поиска дистрибутивных "
+"пакетов, найденных в файловой системе. Этот поисковик на самом деле не "
+"находит никаких *дистрибутивов*, ​​но может найти их метаданные."
 
 #: ../../library/importlib.metadata.rst:475
 msgid ""
@@ -698,6 +848,13 @@ msgid ""
 "and presents this extended interface as the ``DistributionFinder`` abstract "
 "base class, which defines this abstract method::"
 msgstr ""
+"Абстрактный класс :py:class:`importlib.abc.MetaPathFinder` определяет "
+"интерфейс, ожидаемый от средств поиска системой импорта Python. ``importlib."
+"metadata`` расширяет этот протокол, ища дополнительный "
+"``find_distributions``, вызываемый в средствах поиска из :data:`sys."
+"meta_path`, и представляет этот расширенный интерфейс как абстрактный "
+"базовый класс ``DistributionFinder``, который определяет этот абстрактный "
+"метод::"
 
 #: ../../library/importlib.metadata.rst:483
 msgid ""
@@ -707,6 +864,11 @@ msgid ""
 "    loading the metadata for packages for the indicated ``context``.\n"
 "    \"\"\""
 msgstr ""
+"@abc.abstractmethod\n"
+"def find_distributions(context=DistributionFinder.Context()):\n"
+"    \"\"\"Return an iterable of all Distribution instances capable of\n"
+"    loading the metadata for packages for the indicated ``context``.\n"
+"    \"\"\""
 
 #: ../../library/importlib.metadata.rst:489
 msgid ""
@@ -714,6 +876,9 @@ msgid ""
 "properties indicating the path to search and name to match and may supply "
 "other relevant context."
 msgstr ""
+"Объект DistributionFinder.Context предоставляет свойства .path и .name, "
+"указывающие путь для поиска и имя для сопоставления, а также может "
+"предоставлять другой соответствующий контекст."
 
 #: ../../library/importlib.metadata.rst:493
 msgid ""
@@ -723,3 +888,8 @@ msgid ""
 "instances of this derived ``Distribution`` in the ``find_distributions()`` "
 "method."
 msgstr ""
+"На практике это означает, что для поддержки поиска метаданных пакета "
+"распространения в местах, отличных от файловой системы, необходимо создать "
+"подкласс Distribution и реализовать абстрактные методы. Затем из "
+"пользовательского средства поиска верните экземпляры этого производного "
+"``Distribution`` в методе ``find_distributions()``."
