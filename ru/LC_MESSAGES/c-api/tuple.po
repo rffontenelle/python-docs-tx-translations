@@ -6,15 +6,16 @@
 # Translators:
 # Kristina Mironova, 2019
 # Илья Панфилов, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 21:32+0000\n"
+"POT-Creation-Date: 2024-10-18 16:38+0000\n"
 "PO-Revision-Date: 2017-02-16 17:39+0000\n"
-"Last-Translator: Илья Панфилов, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -32,24 +33,31 @@ msgstr "Объекты кортежа"
 #: ../../c-api/tuple.rst:13
 msgid "This subtype of :c:type:`PyObject` represents a Python tuple object."
 msgstr ""
+"Этот подтип :c:type:` PyObject` представляет собой объект-кортеж Python."
 
 #: ../../c-api/tuple.rst:18
 msgid ""
 "This instance of :c:type:`PyTypeObject` represents the Python tuple type; it "
 "is the same object as :class:`tuple` in the Python layer."
 msgstr ""
+"Этот экземпляр :c:type:`PyTypeObject` представляет тип кортежа Python; это "
+"тот же объект, что и :class:`tuple` на уровне Python."
 
 #: ../../c-api/tuple.rst:24
 msgid ""
 "Return true if *p* is a tuple object or an instance of a subtype of the "
 "tuple type.  This function always succeeds."
 msgstr ""
+"Возвращайте true, если *p* является объектом кортежа или экземпляром подтипа "
+"типа кортеж. Эта функция всегда завершается успешно."
 
 #: ../../c-api/tuple.rst:30
 msgid ""
 "Return true if *p* is a tuple object, but not an instance of a subtype of "
 "the tuple type.  This function always succeeds."
 msgstr ""
+"Возвращайте true, если *p* является объектом кортежа, но не экземпляром "
+"подтипа типа кортеж. Эта функция всегда завершается успешно."
 
 #: ../../c-api/tuple.rst:36
 msgid "Return a new tuple object of size *len*, or ``NULL`` on failure."
@@ -82,7 +90,7 @@ msgstr ""
 
 #: ../../c-api/tuple.rst:65
 msgid "Like :c:func:`PyTuple_GetItem`, but does no checking of its arguments."
-msgstr ""
+msgstr "Подобно :c:func:`PyTuple_GetItem`, но не проверяет свои аргументы."
 
 #: ../../c-api/tuple.rst:70
 msgid ""
@@ -97,18 +105,25 @@ msgid ""
 "by *p*.  Return ``0`` on success.  If *pos* is out of bounds, return ``-1`` "
 "and set an :exc:`IndexError` exception."
 msgstr ""
+"Вставьте ссылку на объект *o* в позицию *pos* кортежа, на который указывает "
+"*p*. Верните ``0`` в случае успеха. Если *pos* выходит за пределы, верните "
+"``-1`` и установите исключение :exc:`IndexError`."
 
 #: ../../c-api/tuple.rst:83
 msgid ""
 "This function \"steals\" a reference to *o* and discards a reference to an "
 "item already in the tuple at the affected position."
 msgstr ""
+"Эта функция «крадет» ссылку на *o* и отбрасывает ссылку на элемент, уже "
+"находящийся в кортеже в затронутой позиции."
 
 #: ../../c-api/tuple.rst:89
 msgid ""
 "Like :c:func:`PyTuple_SetItem`, but does no error checking, and should "
 "*only* be used to fill in brand new tuples."
 msgstr ""
+"Подобно :c:func:`PyTuple_SetItem`, но не выполняет проверку ошибок и должен "
+"использоваться *только* для заполнения новых кортежей."
 
 #: ../../c-api/tuple.rst:94
 msgid ""
@@ -131,10 +146,22 @@ msgid ""
 "and sets ``*p`` to ``NULL``, and raises :exc:`MemoryError` or :exc:"
 "`SystemError`."
 msgstr ""
+"Может использоваться для изменения размера кортежа. *newsize* будет новой "
+"длиной кортежа. Поскольку кортежи *предполагаются* неизменяемыми, это "
+"следует использовать только в том случае, если на объект существует только "
+"одна ссылка. *Не* используйте это, если кортеж уже известен какой-то другой "
+"части кода. В конце кортеж всегда будет увеличиваться или уменьшаться. "
+"Думайте об этом как об уничтожении старого кортежа и создании нового, только "
+"более эффективного. Возвращает ``0`` в случае успеха. Клиентский код никогда "
+"не должен предполагать, что результирующее значение ``*p`` будет таким же, "
+"как и до вызова этой функции. Если объект, на который ссылается ``*p``, "
+"заменяется, исходный ``*p`` уничтожается. В случае ошибки возвращает ``-1``, "
+"устанавливает ``*p`` в ``NULL`` и вызывает :exc:`MemoryError` или :exc:"
+"`SystemError`."
 
 #: ../../c-api/tuple.rst:115
 msgid "Struct Sequence Objects"
-msgstr ""
+msgstr "Структурировать объекты последовательности"
 
 #: ../../c-api/tuple.rst:117
 msgid ""
@@ -143,6 +170,11 @@ msgid ""
 "through attributes. To create a struct sequence, you first have to create a "
 "specific struct sequence type."
 msgstr ""
+"Объекты последовательности структур являются эквивалентом C объектов :func:"
+"`~collections.namedtuple`, т.е. последовательности, к элементам которой "
+"также можно получить доступ через атрибуты. Чтобы создать последовательность "
+"структур, сначала необходимо создать определенный тип последовательности "
+"структур."
 
 #: ../../c-api/tuple.rst:124
 msgid ""
@@ -150,10 +182,14 @@ msgid ""
 "Instances of the resulting type can be created with :c:func:"
 "`PyStructSequence_New`."
 msgstr ""
+"Создайте новый тип последовательности структур из данных в *desc*, как "
+"описано ниже. Экземпляры результирующего типа могут быть созданы с помощью :"
+"c:func:`PyStructSequence_New`."
 
 #: ../../c-api/tuple.rst:130
 msgid "Initializes a struct sequence type *type* from *desc* in place."
 msgstr ""
+"Инициализирует тип последовательности структур *type* из *desc* на месте."
 
 #: ../../c-api/tuple.rst:135
 msgid ""
@@ -164,6 +200,8 @@ msgstr ""
 #: ../../c-api/tuple.rst:143
 msgid "Contains the meta information of a struct sequence type to create."
 msgstr ""
+"Содержит метаинформацию о типе последовательности структуры, которую "
+"необходимо создать."
 
 #: ../../c-api/tuple.rst:146 ../../c-api/tuple.rst:169
 msgid "Field"
@@ -245,17 +283,19 @@ msgstr ""
 
 #: ../../c-api/tuple.rst:182
 msgid "Special value for a field name to leave it unnamed."
-msgstr ""
+msgstr "Специальное значение для имени поля, чтобы оставить его без имени."
 
 #: ../../c-api/tuple.rst:184
 msgid "The type was changed from ``char *``."
-msgstr ""
+msgstr "Тип был изменен с ``char *``."
 
 #: ../../c-api/tuple.rst:190
 msgid ""
 "Creates an instance of *type*, which must have been created with :c:func:"
 "`PyStructSequence_NewType`."
 msgstr ""
+"Создает экземпляр *type*, который должен быть создан с помощью :c:func:"
+"`PyStructSequence_NewType`."
 
 #: ../../c-api/tuple.rst:196
 msgid ""
@@ -273,10 +313,13 @@ msgid ""
 "Like :c:func:`PyTuple_SET_ITEM`, this should only be used to fill in brand "
 "new instances."
 msgstr ""
+"Устанавливает поле с индексом *pos* последовательности структур *p* в "
+"значение *o*. Как и :c:func:`PyTuple_SET_ITEM`, его следует использовать "
+"только для заполнения совершенно новых экземпляров."
 
 #: ../../c-api/tuple.rst:213 ../../c-api/tuple.rst:222
 msgid "This function \"steals\" a reference to *o*."
-msgstr ""
+msgstr "Эта функция «крадет» ссылку на *o*."
 
 #: ../../c-api/tuple.rst:218
 msgid "Macro equivalent of :c:func:`PyStructSequence_SetItem`."

@@ -6,15 +6,16 @@
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 # Илья Панфилов, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 21:32+0000\n"
+"POT-Creation-Date: 2024-10-18 16:38+0000\n"
 "PO-Revision-Date: 2017-02-16 23:10+0000\n"
-"Last-Translator: Илья Панфилов, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -55,6 +56,10 @@ msgid ""
 "of this limitation traceback dumping is minimal compared to normal Python "
 "tracebacks:"
 msgstr ""
+"Обработчик ошибок вызывается в катастрофических случаях и поэтому может "
+"использовать только функции, безопасные для сигналов (например, он не может "
+"выделять память в куче). Из-за этого ограничения дамп обратной трассировки "
+"минимален по сравнению с обычными обратными трассировками Python:"
 
 #: ../../library/faulthandler.rst:28
 msgid ""
@@ -71,6 +76,8 @@ msgid ""
 "Only the filename, the function name and the line number are displayed. (no "
 "source code)"
 msgstr ""
+"Отображаются только имя файла, имя функции и номер строки. (без исходного "
+"кода)"
 
 #: ../../library/faulthandler.rst:33
 msgid "It is limited to 100 frames and 100 threads."
@@ -86,12 +93,18 @@ msgid ""
 "tracebacks, applications must be run in the terminal. A log file can "
 "alternatively be passed to :func:`faulthandler.enable`."
 msgstr ""
+"По умолчанию обратная трассировка Python записывается в :data:`sys.stderr`. "
+"Чтобы увидеть обратные трассировки, приложения должны быть запущены в "
+"терминале. Альтернативно файл журнала можно передать в :func:`faulthandler."
+"enable`."
 
 #: ../../library/faulthandler.rst:40
 msgid ""
 "The module is implemented in C, so tracebacks can be dumped on a crash or "
 "when Python is deadlocked."
 msgstr ""
+"Модуль реализован на C, поэтому обратные трассировки могут быть сброшены при "
+"сбое или когда Python зашел в тупик."
 
 #: ../../library/faulthandler.rst:43
 msgid ""
@@ -108,6 +121,8 @@ msgid ""
 "Dump the tracebacks of all threads into *file*. If *all_threads* is "
 "``False``, dump only the current thread."
 msgstr ""
+"Сохраните обратные трассировки всех потоков в *файл*. Если *all_threads* "
+"имеет значение «False», выгрузить только текущий поток."
 
 #: ../../library/faulthandler.rst:55 ../../library/faulthandler.rst:73
 #: ../../library/faulthandler.rst:111 ../../library/faulthandler.rst:133
@@ -131,6 +146,9 @@ msgid ""
 "The *file* must be kept open until the fault handler is disabled: see :ref:"
 "`issue with file descriptors <faulthandler-fd>`."
 msgstr ""
+"*Файл* должен оставаться открытым до тех пор, пока обработчик ошибок не "
+"будет отключен: см. :ref:`проблема с файловыми дескрипторами <faulthandler-"
+"fd>`."
 
 #: ../../library/faulthandler.rst:76
 msgid "On Windows, a handler for Windows exception is also installed."
@@ -167,6 +185,9 @@ msgid ""
 "`cancel_dump_traceback_later` is called: see :ref:`issue with file "
 "descriptors <faulthandler-fd>`."
 msgstr ""
+"*Файл* должен оставаться открытым до тех пор, пока не будет выполнен дамп "
+"трассировки или не будет вызвана :func:`cancel_dump_traceback_later`: см. :"
+"ref:`проблема с файловыми дескрипторами <faulthandler-fd>`."
 
 #: ../../library/faulthandler.rst:106
 msgid "This function is implemented using a watchdog thread."
@@ -190,12 +211,19 @@ msgid ""
 "the traceback of all threads, or of the current thread if *all_threads* is "
 "``False``, into *file*. Call the previous handler if chain is ``True``."
 msgstr ""
+"Зарегистрируйте пользовательский сигнал: установите обработчик для сигнала "
+"*signum*, чтобы сбрасывать обратную трассировку всех потоков или текущего "
+"потока, если *all_threads* имеет значение ``False``, в *file*. Вызовите "
+"предыдущий обработчик, если цепочка имеет значение «True»."
 
 #: ../../library/faulthandler.rst:128
 msgid ""
 "The *file* must be kept open until the signal is unregistered by :func:"
 "`unregister`: see :ref:`issue with file descriptors <faulthandler-fd>`."
 msgstr ""
+"*Файл* должен оставаться открытым до тех пор, пока сигнал не будет отменен с "
+"помощью :func:`unregister`: см. :ref:`проблема с файловыми дескрипторами "
+"<faulthandler-fd>`."
 
 #: ../../library/faulthandler.rst:131 ../../library/faulthandler.rst:142
 msgid "Not available on Windows."
@@ -207,6 +235,9 @@ msgid ""
 "installed by :func:`register`. Return ``True`` if the signal was registered, "
 "``False`` otherwise."
 msgstr ""
+"Отмените регистрацию пользовательского сигнала: удалите обработчик сигнала "
+"*signum*, установленный :func:`register`. Верните True, если сигнал был "
+"зарегистрирован, и False в противном случае."
 
 #: ../../library/faulthandler.rst:148
 msgid "Issue with file descriptors"
@@ -220,6 +251,12 @@ msgid ""
 "the file descriptor, the traceback will be written into a different file. "
 "Call these functions again each time that the file is replaced."
 msgstr ""
+":func:`enable`, :func:`dump_traceback_later` и :func:`register` сохраняют "
+"файловый дескриптор своего аргумента *file*. Если файл закрыт и его файловый "
+"дескриптор повторно используется новым файлом или если для замены файлового "
+"дескриптора используется :func:`os.dup2`, обратная трассировка будет "
+"записана в другой файл. Вызовите эти функции снова каждый раз при замене "
+"файла."
 
 #: ../../library/faulthandler.rst:158
 msgid "Example"

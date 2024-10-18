@@ -6,15 +6,16 @@
 # Translators:
 # Daniil Kolesnikov, 2024
 # Илья Панфилов, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 21:23+0000\n"
+"POT-Creation-Date: 2024-10-18 16:38+0000\n"
 "PO-Revision-Date: 2017-02-16 23:36+0000\n"
-"Last-Translator: Илья Панфилов, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -44,6 +45,14 @@ msgid ""
 "over those events until either processing is finished or an error condition "
 "occurs."
 msgstr ""
+"Модуль :mod:`xml.dom.pulldom` предоставляет «анализатор извлечения», который "
+"также может быть запрошен для создания доступных для DOM фрагментов "
+"документа, где это необходимо. Основная концепция предполагает извлечение "
+"«событий» из потока входящего XML и их обработку. В отличие от SAX, который "
+"также использует модель обработки, управляемую событиями, вместе с обратными "
+"вызовами, пользователь анализатора pull несет ответственность за явное "
+"извлечение событий из потока, циклически обрабатывая эти события до тех пор, "
+"пока обработка не завершится или не возникнет ошибка."
 
 #: ../../library/xml.dom.pulldom.rst:24
 msgid ""
@@ -51,6 +60,9 @@ msgid ""
 "constructed data.  If you need to parse untrusted or unauthenticated data "
 "see :ref:`xml-vulnerabilities`."
 msgstr ""
+"Модуль :mod:`xml.dom.pulldom` не защищен от вредоносно созданных данных. "
+"Если вам нужно проанализировать ненадежные или неаутентифицированные данные, "
+"см. :ref:`xml-vulnerabilities`."
 
 #: ../../library/xml.dom.pulldom.rst:30
 msgid ""
@@ -58,6 +70,9 @@ msgid ""
 "increase security by default. To enable processing of external entities, "
 "pass a custom parser instance in::"
 msgstr ""
+"Парсер SAX больше не обрабатывает общие внешние объекты по умолчанию для "
+"повышения безопасности по умолчанию. Чтобы включить обработку внешних "
+"объектов, передайте собственный экземпляр синтаксического анализатора в::"
 
 #: ../../library/xml.dom.pulldom.rst:43
 msgid "Example::"
@@ -116,6 +131,14 @@ msgid ""
 "in the document at any given point) or to make use of the :func:"
 "`DOMEventStream.expandNode` method and switch to DOM-related processing."
 msgstr ""
+"Поскольку документ рассматривается как «плоский» поток событий, «дерево» "
+"документа просматривается неявно и нужные элементы находятся независимо от "
+"их глубины в дереве. Другими словами, не нужно учитывать иерархические "
+"проблемы, такие как рекурсивный поиск узлов документа, хотя, если бы "
+"контекст элементов был важен, нужно было бы либо поддерживать некоторое "
+"состояние, связанное с контекстом (т. е. помнить, где вы находитесь в "
+"документе). в любой момент) или использовать метод :func:`DOMEventStream."
+"expandNode` и переключиться на обработку, связанную с DOM."
 
 #: ../../library/xml.dom.pulldom.rst:80 ../../library/xml.dom.pulldom.rst:85
 msgid "Subclass of :class:`xml.sax.handler.ContentHandler`."
@@ -130,12 +153,21 @@ msgid ""
 "other parser configuration (like setting an entity resolver) must have been "
 "done in advance."
 msgstr ""
+"Верните :class:`DOMEventStream` из заданного ввода. *stream_or_string* может "
+"быть либо именем файла, либо объектом, подобным файлу. *parser*, если он "
+"указан, должен быть объектом :class:`~xml.sax.xmlreader.XMLReader`. Эта "
+"функция изменит обработчик документа парсера и активирует поддержку "
+"пространства имен; другая конфигурация синтаксического анализатора "
+"(например, установка преобразователя сущностей) должна быть выполнена "
+"заранее."
 
 #: ../../library/xml.dom.pulldom.rst:97
 msgid ""
 "If you have XML in a string, you can use the :func:`parseString` function "
 "instead:"
 msgstr ""
+"Если у вас есть XML в строке, вы можете вместо этого использовать функцию :"
+"func:`parseString`:"
 
 #: ../../library/xml.dom.pulldom.rst:101
 msgid ""
@@ -151,6 +183,8 @@ msgid ""
 "The value of this variable can be changed before calling :func:`parse` and "
 "the new value will take effect."
 msgstr ""
+"Значение этой переменной можно изменить перед вызовом :func:`parse`, и новое "
+"значение вступит в силу."
 
 #: ../../library/xml.dom.pulldom.rst:113
 msgid "DOMEventStream Objects"
@@ -169,6 +203,12 @@ msgid ""
 "`CHARACTERS`. The current node does not contain information about its "
 "children, unless :func:`expandNode` is called."
 msgstr ""
+"Возвращает кортеж, содержащий *event* и текущий *node* как :class:`xml.dom."
+"minidom.Document`, если событие равно :data:`START_DOCUMENT`, :class:`xml."
+"dom.minidom.Element`, если событие равно :data:`START_ELEMENT` или :data:"
+"`END_ELEMENT` или :class:`xml.dom.minidom.Text`, если событие равно :data:"
+"`CHARACTERS`. Текущий узел не содержит информации о своих дочерних "
+"элементах, если не вызывается :func:`expandNode`."
 
 #: ../../library/xml.dom.pulldom.rst:132
 msgid "Expands all children of *node* into *node*. Example::"

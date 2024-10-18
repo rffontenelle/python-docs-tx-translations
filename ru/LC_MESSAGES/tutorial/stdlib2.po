@@ -6,15 +6,16 @@
 # Translators:
 # Daniil Kolesnikov, 2024
 # Илья Панфилов, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-05 21:32+0000\n"
+"POT-Creation-Date: 2024-10-18 16:38+0000\n"
 "PO-Revision-Date: 2017-02-16 23:41+0000\n"
-"Last-Translator: Илья Панфилов, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -184,12 +185,20 @@ msgid ""
 "background.  A related use case is running I/O in parallel with computations "
 "in another thread."
 msgstr ""
+"Поточность — это метод разделения задач, которые не являются последовательно "
+"зависимыми. Потоки можно использовать для повышения скорости реагирования "
+"приложений, которые принимают ввод пользователя, в то время как другие "
+"задачи выполняются в фоновом режиме. Связанный вариант использования — "
+"выполнение ввода-вывода параллельно с вычислениями в другом потоке."
 
 #: ../../tutorial/stdlib2.rst:173
 msgid ""
 "The following code shows how the high level :mod:`threading` module can run "
 "tasks in background while the main program continues to run::"
 msgstr ""
+"Следующий код показывает, как модуль высокого уровня :mod:`threading` может "
+"запускать задачи в фоновом режиме, в то время как основная программа "
+"продолжает работать:"
 
 #: ../../tutorial/stdlib2.rst:197
 msgid ""
@@ -198,6 +207,10 @@ msgid ""
 "module provides a number of synchronization primitives including locks, "
 "events, condition variables, and semaphores."
 msgstr ""
+"Основная проблема многопоточных приложений — координация потоков, которые "
+"совместно используют данные или другие ресурсы. С этой целью модуль потоков "
+"предоставляет ряд примитивов синхронизации, включая блокировки, события, "
+"переменные условия и семафоры."
 
 #: ../../tutorial/stdlib2.rst:202
 msgid ""
@@ -209,6 +222,13 @@ msgid ""
 "thread communication and coordination are easier to design, more readable, "
 "and more reliable."
 msgstr ""
+"Хотя эти инструменты эффективны, незначительные ошибки проектирования могут "
+"привести к проблемам, которые трудно воспроизвести. Таким образом, "
+"предпочтительный подход к координации задач — сконцентрировать весь доступ к "
+"ресурсу в одном потоке, а затем использовать модуль :mod:`queue` для подачи "
+"в этот поток запросов от других потоков. Приложения, использующие объекты :"
+"class:`~queue.Queue` для межпоточного взаимодействия и координации, легче "
+"проектируются, более читабельны и более надежны."
 
 #: ../../tutorial/stdlib2.rst:213
 msgid "Logging"
@@ -220,10 +240,13 @@ msgid ""
 "system. At its simplest, log messages are sent to a file or to ``sys."
 "stderr``::"
 msgstr ""
+"Модуль :mod:`logging` предлагает полнофункциональную и гибкую систему "
+"журналирования. В самом простом случае сообщения журнала отправляются в файл "
+"или в ``sys.stderr``::"
 
 #: ../../tutorial/stdlib2.rst:225
 msgid "This produces the following output:"
-msgstr ""
+msgstr "Это дает следующий результат:"
 
 #: ../../tutorial/stdlib2.rst:233
 msgid ""
@@ -234,6 +257,13 @@ msgid ""
 "`~logging.DEBUG`, :const:`~logging.INFO`, :const:`~logging.WARNING`, :const:"
 "`~logging.ERROR`, and :const:`~logging.CRITICAL`."
 msgstr ""
+"По умолчанию информационные и отладочные сообщения подавляются, а выходные "
+"данные отправляются в стандартную ошибку. Другие варианты вывода включают "
+"маршрутизацию сообщений по электронной почте, датаграммам, сокетам или на "
+"HTTP-сервер. Новые фильтры могут выбирать другую маршрутизацию в зависимости "
+"от приоритета сообщения: :const:`~logging.DEBUG`, :const:`~logging.INFO`, :"
+"const:`~logging.WARNING`, :const:`~logging.ERROR` и :const:`~logging."
+"CRITICAL`."
 
 #: ../../tutorial/stdlib2.rst:240
 msgid ""
@@ -241,10 +271,13 @@ msgid ""
 "from a user editable configuration file for customized logging without "
 "altering the application."
 msgstr ""
+"Систему журналирования можно настроить непосредственно из Python или "
+"загрузить из редактируемого пользователем файла конфигурации для "
+"индивидуального ведения журналов без изменения приложения."
 
 #: ../../tutorial/stdlib2.rst:248
 msgid "Weak References"
-msgstr ""
+msgstr "Слабые ссылки"
 
 #: ../../tutorial/stdlib2.rst:250
 msgid ""
@@ -252,6 +285,9 @@ msgid ""
 "and :term:`garbage collection` to eliminate cycles).  The memory is freed "
 "shortly after the last reference to it has been eliminated."
 msgstr ""
+"Python осуществляет автоматическое управление памятью (подсчет ссылок для "
+"большинства объектов и сбор мусора для устранения циклов). Память "
+"освобождается вскоре после удаления последней ссылки на нее."
 
 #: ../../tutorial/stdlib2.rst:254
 msgid ""
@@ -264,10 +300,18 @@ msgid ""
 "weakref objects.  Typical applications include caching objects that are "
 "expensive to create::"
 msgstr ""
+"Этот подход отлично работает для большинства приложений, но иногда возникает "
+"необходимость отслеживать объекты только до тех пор, пока они используются "
+"чем-то другим. К сожалению, простое их отслеживание создает ссылку, которая "
+"делает их постоянными. Модуль :mod:`weakref` предоставляет инструменты для "
+"отслеживания объектов без создания ссылки. Когда объект больше не нужен, он "
+"автоматически удаляется из таблицы слабых ссылок, и для объектов слабых "
+"ссылок запускается обратный вызов. Типичные приложения включают объекты "
+"кэширования, создание которых требует больших затрат:"
 
 #: ../../tutorial/stdlib2.rst:289
 msgid "Tools for Working with Lists"
-msgstr ""
+msgstr "Инструменты для работы со списками"
 
 #: ../../tutorial/stdlib2.rst:291
 msgid ""
@@ -275,6 +319,9 @@ msgid ""
 "sometimes there is a need for alternative implementations with different "
 "performance trade-offs."
 msgstr ""
+"Многие потребности в структуре данных можно удовлетворить с помощью "
+"встроенного типа списка. Однако иногда возникает необходимость в "
+"альтернативных реализациях с другим компромиссом в производительности."
 
 #: ../../tutorial/stdlib2.rst:295
 msgid ""
@@ -299,6 +346,9 @@ msgid ""
 "other tools such as the :mod:`bisect` module with functions for manipulating "
 "sorted lists::"
 msgstr ""
+"Помимо альтернативных реализаций списков, библиотека также предлагает другие "
+"инструменты, такие как модуль :mod:`bisect` с функциями для управления "
+"отсортированными списками::"
 
 #: ../../tutorial/stdlib2.rst:339
 msgid ""
@@ -307,6 +357,10 @@ msgid ""
 "This is useful for applications which repeatedly access the smallest element "
 "but do not want to run a full list sort::"
 msgstr ""
+"Модуль :mod:`heapq` предоставляет функции для реализации кучи на основе "
+"обычных списков. Запись с наименьшим значением всегда сохраняется в нулевой "
+"позиции. Это полезно для приложений, которые неоднократно обращаются к "
+"наименьшему элементу, но не хотят выполнять полную сортировку списка::"
 
 #: ../../tutorial/stdlib2.rst:355
 msgid "Decimal Floating Point Arithmetic"
@@ -324,24 +378,30 @@ msgid ""
 "financial applications and other uses which require exact decimal "
 "representation,"
 msgstr ""
+"финансовые приложения и другие виды использования, требующие точного "
+"десятичного представления,"
 
 #: ../../tutorial/stdlib2.rst:363
 msgid "control over precision,"
-msgstr ""
+msgstr "контроль точности,"
 
 #: ../../tutorial/stdlib2.rst:364
 msgid "control over rounding to meet legal or regulatory requirements,"
 msgstr ""
+"контроль округления для соответствия законодательным или нормативным "
+"требованиям,"
 
 #: ../../tutorial/stdlib2.rst:365
 msgid "tracking of significant decimal places, or"
-msgstr ""
+msgstr "отслеживание значащих десятичных знаков или"
 
 #: ../../tutorial/stdlib2.rst:366
 msgid ""
 "applications where the user expects the results to match calculations done "
 "by hand."
 msgstr ""
+"приложения, в которых пользователь ожидает, что результаты будут "
+"соответствовать расчетам, выполненным вручную."
 
 #: ../../tutorial/stdlib2.rst:369
 msgid ""
@@ -349,6 +409,9 @@ msgid ""
 "results in decimal floating point and binary floating point. The difference "
 "becomes significant if the results are rounded to the nearest cent::"
 msgstr ""
+"Например, расчет налога в размере 5% на телефонную плату в размере 70 центов "
+"дает разные результаты в десятичной и двоичной плавающей запятой. Разница "
+"становится значимой, если результаты округлить до цента:"
 
 #: ../../tutorial/stdlib2.rst:379
 msgid ""
@@ -358,6 +421,11 @@ msgid ""
 "issues that can arise when binary floating point cannot exactly represent "
 "decimal quantities."
 msgstr ""
+"Результат :class:`~decimal.Decimal` сохраняет конечный ноль, автоматически "
+"выводя четырехзначное значение из множимого с двухзначным значением. Decimal "
+"воспроизводит математические операции, выполненные вручную, и позволяет "
+"избежать проблем, которые могут возникнуть, когда двоичная плавающая запятая "
+"не может точно представлять десятичные величины."
 
 #: ../../tutorial/stdlib2.rst:385
 msgid ""
@@ -365,9 +433,14 @@ msgid ""
 "modulo calculations and equality tests that are unsuitable for binary "
 "floating point::"
 msgstr ""
+"Точное представление позволяет классу :class:`~decimal.Decimal` выполнять "
+"вычисления по модулю и проверки равенства, которые непригодны для двоичных "
+"чисел с плавающей запятой::"
 
 #: ../../tutorial/stdlib2.rst:399
 msgid ""
 "The :mod:`decimal` module provides arithmetic with as much precision as "
 "needed::"
 msgstr ""
+"Модуль :mod:`decimal` обеспечивает арифметические операции с необходимой "
+"точностью::"
