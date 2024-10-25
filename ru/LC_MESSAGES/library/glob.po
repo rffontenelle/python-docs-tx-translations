@@ -5,15 +5,16 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-18 14:51+0000\n"
+"POT-Creation-Date: 2024-10-25 14:54+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +27,7 @@ msgstr ""
 
 #: ../../library/glob.rst:2
 msgid ":mod:`!glob` --- Unix style pathname pattern expansion"
-msgstr ""
+msgstr ":mod:`!glob` --- Расширение шаблона пути в стиле Unix"
 
 #: ../../library/glob.rst:7
 msgid "**Source code:** :source:`Lib/glob.py`"
@@ -41,6 +42,13 @@ msgid ""
 "done by using the :func:`os.scandir` and :func:`fnmatch.fnmatch` functions "
 "in concert, and not by actually invoking a subshell."
 msgstr ""
+"Модуль :mod:`glob` находит все пути, соответствующие указанному шаблону, в "
+"соответствии с правилами, используемыми оболочкой Unix, хотя результаты "
+"возвращаются в произвольном порядке. Расширение тильды не выполняется, но "
+"``*``, ``?`` и диапазоны символов, выраженные с помощью ``[]``, будут "
+"правильно сопоставлены. Это делается путем совместного использования "
+"функций :func:`os.scandir` и :func:`fnmatch.fnmatch`, а не путем "
+"фактического вызова подоболочки."
 
 #: ../../library/glob.rst:28
 msgid ""
@@ -49,12 +57,19 @@ msgid ""
 "Path.glob`. (For tilde and shell variable expansion, use :func:`os.path."
 "expanduser` and :func:`os.path.expandvars`.)"
 msgstr ""
+"Обратите внимание, что файлы, начинающиеся с точки (``.``), могут "
+"сопоставляться только с шаблонами, которые также начинаются с точки, в "
+"отличие от :func:`fnmatch.fnmatch` или :func:`pathlib.Path.glob`. (Для "
+"расширения переменных оболочки и тильды используйте :func:`os.path."
+"expanduser` и :func:`os.path.expandvars`.)"
 
 #: ../../library/glob.rst:34
 msgid ""
 "For a literal match, wrap the meta-characters in brackets. For example, "
 "``'[?]'`` matches the character ``'?'``."
 msgstr ""
+"Для буквального совпадения заключите метасимволы в скобки. Например, "
+"``'[?]'`` соответствует символу ``'?'``."
 
 #: ../../library/glob.rst:39
 msgid "The :mod:`pathlib` module offers high-level path objects."
@@ -71,6 +86,15 @@ msgid ""
 "conditions is removed or added during the call of this function, whether a "
 "path name for that file will be included is unspecified."
 msgstr ""
+"Возвращает возможно пустой список имен путей, соответствующих *pathname*, "
+"который должен быть строкой, содержащей спецификацию пути. *pathname* может "
+"быть абсолютным (например, :file:`/usr/src/Python-1.5/Makefile`) или "
+"относительным (например, :file:`../../Tools/\\*/\\*.gif`) и может содержать "
+"подстановочные знаки в стиле оболочки. Неработающие символические ссылки "
+"включаются в результаты (как и в оболочке). Сортировка результатов зависит "
+"от файловой системы. Если файл, удовлетворяющий условиям, удаляется или "
+"добавляется во время вызова этой функции, будет ли включен путь для этого "
+"файла, не указано."
 
 #: ../../library/glob.rst:54
 msgid ""
@@ -79,6 +103,11 @@ msgid ""
 "func:`glob` as changing the current directory before calling it.  If "
 "*pathname* is relative, the result will contain paths relative to *root_dir*."
 msgstr ""
+"Если *root_dir* не ``None``, это должен быть :term:`path-подобный объект`, "
+"определяющий корневой каталог для поиска. Это имеет тот же эффект на :func:"
+"`glob`, что и изменение текущего каталога перед его вызовом. Если *pathname* "
+"является относительным, результат будет содержать пути относительно "
+"*root_dir*."
 
 #: ../../library/glob.rst:60
 msgid ""
@@ -95,54 +124,70 @@ msgid ""
 "the pattern is followed by an :data:`os.sep` or :data:`os.altsep` then files "
 "will not match."
 msgstr ""
+"Если значение *recursive* истинно, шаблон «``**``» будет соответствовать "
+"любым файлам и нулю или более каталогам, подкаталогам и символическим "
+"ссылкам на каталоги. Если за шаблоном следует :data:`os.sep` или :data:`os."
+"altsep`, файлы не будут совпадать."
 
 #: ../../library/glob.rst:71
 msgid ""
 "If *include_hidden* is true, \"``**``\" pattern will match hidden "
 "directories."
 msgstr ""
+"Если *include_hidden* имеет значение true, шаблон «``**``» будет "
+"соответствовать скрытым каталогам."
 
 #: ../../library/glob.rst:73 ../../library/glob.rst:100
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``glob.glob`` with arguments "
 "``pathname``, ``recursive``."
 msgstr ""
+"Вызывает :ref:`событие аудита <auditing>``glob.glob`` с аргументами "
+"``pathname``, ``recursive``."
 
 #: ../../library/glob.rst:74 ../../library/glob.rst:101
 msgid ""
 "Raises an :ref:`auditing event <auditing>` ``glob.glob/2`` with arguments "
 "``pathname``, ``recursive``, ``root_dir``, ``dir_fd``."
 msgstr ""
+"Вызывает событие аудита <auditing>` ``glob.glob/2`` с аргументами "
+"``pathname``, ``recursive``, ``root_dir``, ``dir_fd``."
 
 #: ../../library/glob.rst:77
 msgid ""
 "Using the \"``**``\" pattern in large directory trees may consume an "
 "inordinate amount of time."
 msgstr ""
+"Использование шаблона «``**``» в больших деревьях каталогов может занять "
+"слишком много времени."
 
 #: ../../library/glob.rst:81 ../../library/glob.rst:104
 msgid ""
 "This function may return duplicate path names if *pathname* contains "
 "multiple \"``**``\" patterns and *recursive* is true."
 msgstr ""
+"Эта функция может возвращать повторяющиеся имена путей, если *pathname* "
+"содержит несколько шаблонов «``**``» и *recursive* имеет значение true."
 
 #: ../../library/glob.rst:84 ../../library/glob.rst:107
 msgid "Support for recursive globs using \"``**``\"."
-msgstr ""
+msgstr "Поддержка рекурсивных glob с использованием «``**``»."
 
 #: ../../library/glob.rst:87 ../../library/glob.rst:110
 msgid "Added the *root_dir* and *dir_fd* parameters."
-msgstr ""
+msgstr "Добавлены параметры *root_dir* и *dir_fd*."
 
 #: ../../library/glob.rst:90 ../../library/glob.rst:113
 msgid "Added the *include_hidden* parameter."
-msgstr ""
+msgstr "Добавлен параметр *include_hidden*."
 
 #: ../../library/glob.rst:97
 msgid ""
 "Return an :term:`iterator` which yields the same values as :func:`glob` "
 "without actually storing them all simultaneously."
 msgstr ""
+"Возвращает :term:`iterator`, который возвращает те же значения, что и :func:"
+"`glob`, но не сохраняет их все одновременно."
 
 #: ../../library/glob.rst:119
 msgid ""
@@ -152,6 +197,11 @@ msgid ""
 "escaped, e.g. on Windows ``escape('//?/c:/Quo vadis?.txt')`` returns ``'//?/"
 "c:/Quo vadis[?].txt'``."
 msgstr ""
+"Экранируйте все специальные символы (``'?'``, ``'*'`` и ``'['``). Это "
+"полезно, если вы хотите сопоставить произвольную литеральную строку, которая "
+"может содержать специальные символы. Специальные символы в общих точках "
+"диска/UNC не экранируются, например, в Windows ``escape('//?/c:/Quo vadis?."
+"txt')`` возвращает ``'//?/c:/Quo vadis[? ].txt'``."
 
 #: ../../library/glob.rst:128
 msgid ""
@@ -161,6 +211,10 @@ msgid ""
 "following results.  Notice how any leading components of the path are "
 "preserved. ::"
 msgstr ""
+"Например, рассмотрим каталог, содержащий следующие файлы: :file:`1.gif`, :"
+"file:`2.txt`, :file:`card.gif` и подкаталог :file:`sub`, который содержит "
+"только файл :file:`3.txt`. :func:`glob` даст следующие результаты. Обратите "
+"внимание, как сохраняются все ведущие компоненты пути. ::"
 
 #: ../../library/glob.rst:134
 msgid ""
@@ -176,6 +230,17 @@ msgid ""
 ">>> glob.glob('./**/', recursive=True)\n"
 "['./', './sub/']"
 msgstr ""
+">>> import glob\n"
+">>> glob.glob('./[0-9].*')\n"
+"['./1.gif', './2.txt']\n"
+">>> glob.glob('*.gif')\n"
+"['1.gif', 'card.gif']\n"
+">>> glob.glob('?.gif')\n"
+"['1.gif']\n"
+">>> glob.glob('**/*.txt', recursive=True)\n"
+"['2.txt', 'sub/3.txt']\n"
+">>> glob.glob('./**/', recursive=True)\n"
+"['./', './sub/']"
 
 #: ../../library/glob.rst:146
 msgid ""
@@ -183,6 +248,9 @@ msgid ""
 "default. For example, consider a directory containing :file:`card.gif` and :"
 "file:`.card.gif`::"
 msgstr ""
+"If the directory contains files starting with ``.`` they won't be matched by "
+"default. For example, consider a directory containing :file:`card.gif` and :"
+"file:`.card.gif`::"
 
 #: ../../library/glob.rst:150
 msgid ""
@@ -192,6 +260,11 @@ msgid ""
 ">>> glob.glob('.c*')\n"
 "['.card.gif']"
 msgstr ""
+">>> import glob\n"
+">>> glob.glob('*.gif')\n"
+"['card.gif']\n"
+">>> glob.glob('.c*')\n"
+"['.card.gif']"
 
 #: ../../library/glob.rst:158
 msgid "Module :mod:`fnmatch`"
@@ -199,15 +272,15 @@ msgstr "Модуль :mod:`fnmatch`"
 
 #: ../../library/glob.rst:159
 msgid "Shell-style filename (not path) expansion"
-msgstr ""
+msgstr "Расширение имени файла (не пути) в стиле оболочки"
 
 #: ../../library/glob.rst:9
 msgid "filenames"
-msgstr ""
+msgstr "filenames"
 
 #: ../../library/glob.rst:9
 msgid "pathname expansion"
-msgstr ""
+msgstr "расширение пути"
 
 #: ../../library/glob.rst:13
 msgid "* (asterisk)"
@@ -215,7 +288,7 @@ msgstr "* (звёздочка)"
 
 #: ../../library/glob.rst:13 ../../library/glob.rst:63
 msgid "in glob-style wildcards"
-msgstr ""
+msgstr "в подстановочных знаках в стиле glob"
 
 #: ../../library/glob.rst:13
 msgid "? (question mark)"

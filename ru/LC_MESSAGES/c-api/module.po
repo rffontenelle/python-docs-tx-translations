@@ -5,15 +5,16 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-18 14:51+0000\n"
+"POT-Creation-Date: 2024-10-25 14:54+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -60,6 +61,11 @@ msgid ""
 "but :attr:`!__name__` are set to ``None``). The caller is responsible for "
 "setting a :attr:`~module.__file__` attribute."
 msgstr ""
+"Верните новый объект модуля с :attr:`module.__name__`, установленным в "
+"*name*. Атрибуты модуля :attr:`!__name__`, :attr:`~module.__doc__`, :attr:"
+"`~module.__package__` и :attr:`~module.__loader__` заполняются (все, кроме :"
+"attr:` !__name__` установлены на ``None``). Вызывающая сторона отвечает за "
+"установку атрибута :attr:`~module.__file__`."
 
 #: ../../c-api/module.rst:46 ../../c-api/module.rst:272
 #: ../../c-api/module.rst:447
@@ -71,6 +77,8 @@ msgid ""
 ":attr:`~module.__package__` and :attr:`~module.__loader__` are now set to "
 "``None``."
 msgstr ""
+":attr:`~module.__package__` и :attr:`~module.__loader__` теперь установлены "
+"на ``None``."
 
 #: ../../c-api/module.rst:57
 msgid ""
@@ -107,6 +115,9 @@ msgid ""
 "provide one, or if it is not a string, :exc:`SystemError` is raised and "
 "``NULL`` is returned."
 msgstr ""
+"Возвращает значение :attr:`~module.__name__` *module*. Если модуль его не "
+"предоставляет или если это не строка, возникает :exc:`SystemError` и "
+"возвращается ``NULL``."
 
 #: ../../c-api/module.rst:90
 msgid ""
@@ -140,6 +151,10 @@ msgid ""
 "a string, raise :exc:`SystemError` and return ``NULL``; otherwise return a "
 "reference to a Unicode object."
 msgstr ""
+"Верните имя файла, из которого был загружен *module*, используя атрибут :"
+"attr:`~module.__file__` *module*. Если это не определено или это не строка, "
+"вызовите :exc:`SystemError` и верните ``NULL``; в противном случае верните "
+"ссылку на объект Unicode."
 
 #: ../../c-api/module.rst:122
 msgid ""
@@ -854,6 +869,9 @@ msgid ""
 "easy to introduce reference leaks by misusing the :c:func:"
 "`PyModule_AddObject` function."
 msgstr ""
+"Рекомендуется использовать новую функцию :c:func:`PyModule_AddObjectRef`, "
+"поскольку при неправильном использовании функции :c:func:"
+"`PyModule_AddObject` легко вызвать утечку ссылок."
 
 #: ../../c-api/module.rst:553
 msgid ""
@@ -868,6 +886,8 @@ msgid ""
 "This means that its return value must be checked, and calling code must :c:"
 "func:`Py_DECREF` *value* manually on error."
 msgstr ""
+"Это означает, что его возвращаемое значение должно быть проверено, а "
+"вызывающий код должен :c:func:`Py_DECREF` *value* вручную в случае ошибки."
 
 #: ../../c-api/module.rst:561
 msgid ""
@@ -887,6 +907,21 @@ msgid ""
 "    return 0;\n"
 "}"
 msgstr ""
+"static int\n"
+"add_spam(PyObject *module, int value)\n"
+"{\n"
+"    PyObject *obj = PyLong_FromLong(value);\n"
+"    if (obj == NULL) {\n"
+"        return -1;\n"
+"    }\n"
+"    if (PyModule_AddObject(module, \"spam\", obj) < 0) {\n"
+"        Py_DECREF(obj);\n"
+"        return -1;\n"
+"    }\n"
+"    // PyModule_AddObject() stole a reference to obj:\n"
+"    // Py_DECREF(obj) is not needed here\n"
+"    return 0;\n"
+"}"
 
 #: ../../c-api/module.rst:580
 msgid ""
@@ -903,6 +938,18 @@ msgid ""
 "    return 0;\n"
 "}"
 msgstr ""
+"static int\n"
+"add_spam(PyObject *module, int value)\n"
+"{\n"
+"    PyObject *obj = PyLong_FromLong(value);\n"
+"    if (PyModule_AddObject(module, \"spam\", obj) < 0) {\n"
+"        Py_XDECREF(obj);\n"
+"        return -1;\n"
+"    }\n"
+"    // PyModule_AddObject() stole a reference to obj:\n"
+"    // Py_DECREF(obj) is not needed here\n"
+"    return 0;\n"
+"}"
 
 #: ../../c-api/module.rst:599
 msgid ""

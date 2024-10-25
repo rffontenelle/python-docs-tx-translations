@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 # Freesand Leo <yuqinju@163.com>, 2024
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-11 14:48+0000\n"
+"POT-Creation-Date: 2024-10-18 14:51+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
-"Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -282,6 +282,9 @@ msgid ""
 "default so that attempting to open a binary file in text mode is likely to "
 "raise an exception rather than producing nonsense data."
 msgstr ""
+":func:`open`, :func:`io.open` 和 :func:`codecs.open` 默认会使用 UTF-8 编码格"
+"式。 但是，它们默认仍将使用 strict 错误处理器因此试图在文本模式下打开二进制文"
+"件可能会引发异常而不是产生无意义的数据。"
 
 #: ../../library/os.rst:142
 msgid ""
@@ -3686,6 +3689,9 @@ msgid ""
 "nor explicitly closed a :exc:`ResourceWarning` will be emitted in its "
 "destructor."
 msgstr ""
+"增加了对 :term:`context manager` 协议和 :func:`~scandir.close` 方法的支持。 "
+"如果 :func:`scandir` 迭代器没有耗尽也没有被显式地关闭则将在其析构器中发出 :"
+"exc:`ResourceWarning`。"
 
 #: ../../library/os.rst:2763
 msgid "The function accepts a :term:`path-like object`."
@@ -4941,6 +4947,16 @@ msgid ""
 "    for name in dirs:\n"
 "        os.rmdir(os.path.join(root, name))"
 msgstr ""
+"# 删除可从 \"top\" 指定的目录进入的所有东西，\n"
+"# 假定其中没有符号链接。\n"
+"# 注意：这很危险！举例来说，如果 top == '/'，\n"
+"# 它会删除你所有的磁盘文件。\n"
+"import os\n"
+"for root, dirs, files in os.walk(top, topdown=False):\n"
+"    for name in files:\n"
+"        os.remove(os.path.join(root, name))\n"
+"    for name in dirs:\n"
+"        os.rmdir(os.path.join(root, name))"
 
 #: ../../library/os.rst:3575
 msgid ""
@@ -5035,6 +5051,16 @@ msgid ""
 "    for name in dirs:\n"
 "        os.rmdir(name, dir_fd=rootfd)"
 msgstr ""
+"# 删除可从 \"top\" 指定的目录进入的所有东西，\n"
+"# 假定其中没有符号链接。\n"
+"# 注意：这很危险！举例来说，如果 top == '/'，\n"
+"# 它会删除你所有的磁盘文件。\n"
+"import os\n"
+"for root, dirs, files, rootfd in os.fwalk(top, topdown=False):\n"
+"    for name in files:\n"
+"        os.unlink(name, dir_fd=rootfd)\n"
+"    for name in dirs:\n"
+"        os.rmdir(name, dir_fd=rootfd)"
 
 #: ../../library/os.rst:3636
 msgid ""
@@ -5163,6 +5189,20 @@ msgid ""
 "finally:\n"
 "    os.close(fd)"
 msgstr ""
+"import os\n"
+"\n"
+"# 取值从 '1' 开始的信号量\n"
+"fd = os.eventfd(1, os.EFD_SEMAPHORE | os.EFC_CLOEXEC)\n"
+"try:\n"
+"    # 获取信号量\n"
+"    v = os.eventfd_read(fd)\n"
+"    try:\n"
+"        do_work()\n"
+"    finally:\n"
+"        # 释放信号量\n"
+"        os.eventfd_write(fd, v)\n"
+"finally:\n"
+"    os.close(fd)"
 
 #: ../../library/os.rst:3748
 msgid ""
@@ -6239,6 +6279,11 @@ msgid ""
 "L = ['cp', 'index.html', '/dev/null']\n"
 "os.spawnvpe(os.P_WAIT, 'cp', L, os.environ)"
 msgstr ""
+"import os\n"
+"os.spawnlp(os.P_WAIT, 'cp', 'cp', 'index.html', '/dev/null')\n"
+"\n"
+"L = ['cp', 'index.html', '/dev/null']\n"
+"os.spawnvpe(os.P_WAIT, 'cp', L, os.environ)"
 
 #: ../../library/os.rst:4550
 msgid ""

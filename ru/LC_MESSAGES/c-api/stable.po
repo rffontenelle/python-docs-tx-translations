@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-18 14:51+0000\n"
+"POT-Creation-Date: 2024-10-25 14:54+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: ../../c-api/stable.rst:7
 msgid "C API Stability"
-msgstr ""
+msgstr "Стабильность C API"
 
 #: ../../c-api/stable.rst:9
 msgid ""
@@ -35,6 +35,11 @@ msgid ""
 "(typically by only adding new API). Changing existing API or removing API is "
 "only done after a deprecation period or to fix serious issues."
 msgstr ""
+"Если не указано иное, API Python C подпадает под действие Политики обратной "
+"совместимости, :pep:`387`. Большинство изменений в нем совместимы с исходным "
+"кодом (обычно путем добавления только нового API). Изменение существующего "
+"API или удаление API производится только по истечении периода устаревания "
+"или для устранения серьезных проблем."
 
 #: ../../c-api/stable.rst:15
 msgid ""
@@ -44,16 +49,23 @@ msgid ""
 "work on 3.10.8 and vice versa, but will need to be compiled separately for "
 "3.9.x and 3.11.x."
 msgstr ""
+"Двоичный интерфейс приложения (ABI) CPython совместим как вперед, так и "
+"назад во всех второстепенных выпусках (если они скомпилированы одинаково; "
+"см. :ref:`stable-abi-platform` ниже). Итак, код, скомпилированный для Python "
+"3.10.0, будет работать на 3.10.8 и наоборот, но для 3.9.x и 3.11.x его нужно "
+"будет компилировать отдельно."
 
 #: ../../c-api/stable.rst:21
 msgid "There are two tiers of C API with different stability expectations:"
-msgstr ""
+msgstr "Существует два уровня C API с разными ожиданиями стабильности:"
 
 #: ../../c-api/stable.rst:23
 msgid ""
 ":ref:`Unstable API <unstable-c-api>`, may change in minor versions without a "
 "deprecation period. It is marked by the ``PyUnstable`` prefix in names."
 msgstr ""
+":ref:`Нестабильный API <unstable-c-api>`, может меняться в второстепенных "
+"версиях без периода устаревания. Он отмечен префиксом PyUnstable в именах."
 
 #: ../../c-api/stable.rst:25
 msgid ""
@@ -61,10 +73,13 @@ msgid ""
 "releases. When :c:macro:`Py_LIMITED_API` is defined, only this subset is "
 "exposed from ``Python.h``."
 msgstr ""
+":ref:`Limited API <limited-c-api>` совместим с несколькими второстепенными "
+"выпусками. Когда :c:macro:`Py_LIMITED_API` определен, из ``Python.h`` "
+"предоставляется только это подмножество."
 
 #: ../../c-api/stable.rst:29
 msgid "These are discussed in more detail below."
-msgstr ""
+msgstr "Более подробно они обсуждаются ниже."
 
 #: ../../c-api/stable.rst:31
 msgid ""
@@ -74,10 +89,16 @@ msgid ""
 "python.org/c/core-dev/c-api/30>`_ to discuss adding public API for your use "
 "case."
 msgstr ""
+"Имена с префиксом подчеркивания, такие как ``_Py_InternalState``, "
+"представляют собой частный API, который может быть изменен без "
+"предварительного уведомления даже в выпусках исправлений. Если вам нужно "
+"использовать этот API, рассмотрите возможность обращения к `разработчикам "
+"CPython <https://discuss.python.org/c/core-dev/c-api/30>`_, чтобы обсудить "
+"добавление общедоступного API для вашего варианта использования."
 
 #: ../../c-api/stable.rst:40
 msgid "Unstable C API"
-msgstr ""
+msgstr "Нестабильный C API"
 
 #: ../../c-api/stable.rst:44
 msgid ""
@@ -86,21 +107,29 @@ msgid ""
 "without any deprecation warnings. However, it will not change in a bugfix "
 "release (e.g. from 3.10.0 to 3.10.1)."
 msgstr ""
+"Любой API с префиксом ``PyUnstable`` раскрывает детали реализации CPython и "
+"может меняться в каждой второстепенной версии (например, с 3.9 на 3.10) без "
+"каких-либо предупреждений об устаревании. Однако это не изменится в версии с "
+"исправлением ошибок (например, с 3.10.0 на 3.10.1)."
 
 #: ../../c-api/stable.rst:49
 msgid ""
 "It is generally intended for specialized, low-level tools like debuggers."
 msgstr ""
+"Обычно он предназначен для специализированных инструментов низкого уровня, "
+"таких как отладчики."
 
 #: ../../c-api/stable.rst:51
 msgid ""
 "Projects that use this API are expected to follow CPython development and "
 "spend extra effort adjusting to changes."
 msgstr ""
+"Ожидается, что проекты, использующие этот API, будут следовать за развитием "
+"CPython и прилагать дополнительные усилия для адаптации к изменениям."
 
 #: ../../c-api/stable.rst:56
 msgid "Stable Application Binary Interface"
-msgstr ""
+msgstr "Стабильный двоичный интерфейс приложения"
 
 #: ../../c-api/stable.rst:58
 msgid ""
@@ -108,10 +137,13 @@ msgid ""
 "and Stable ABI work the same way for all uses of the API – for example, "
 "embedding Python."
 msgstr ""
+"Для простоты в этом документе говорится о *расширениях*, но ограниченный API "
+"и стабильный ABI работают одинаково для всех случаев использования API — "
+"например, при внедрении Python."
 
 #: ../../c-api/stable.rst:65
 msgid "Limited C API"
-msgstr ""
+msgstr "Ограниченный API C"
 
 #: ../../c-api/stable.rst:67
 msgid ""
@@ -120,12 +152,18 @@ msgid ""
 "multiple versions of Python. Contents of the Limited API are :ref:`listed "
 "below <limited-api-list>`."
 msgstr ""
+"В Python 3.2 появился *Limited API*, подмножество Python C API. Расширения, "
+"использующие только ограниченный API, могут быть скомпилированы один раз и "
+"работать с несколькими версиями Python. Содержимое Limited API :ref:"
+"`перечислено ниже <limited-api-list>`."
 
 #: ../../c-api/stable.rst:74
 msgid ""
 "Define this macro before including ``Python.h`` to opt in to only use the "
 "Limited API, and to select the Limited API version."
 msgstr ""
+"Определите этот макрос перед включением Python.h, чтобы разрешить "
+"использование только ограниченного API и выбрать версию ограниченного API."
 
 #: ../../c-api/stable.rst:77
 msgid ""
@@ -135,6 +173,11 @@ msgid ""
 "the specified one onward, and can use Limited API introduced up to that "
 "version."
 msgstr ""
+"Определите для ``Py_LIMITED_API`` значение :c:macro:`PY_VERSION_HEX`, "
+"соответствующее самой низкой версии Python, которую поддерживает ваше "
+"расширение. Расширение будет работать без перекомпиляции со всеми выпусками "
+"Python 3, начиная с указанного, и может использовать ограниченный API, "
+"представленный до этой версии."
 
 #: ../../c-api/stable.rst:83
 msgid ""
@@ -142,12 +185,18 @@ msgid ""
 "minor version (e.g. ``0x030A0000`` for Python 3.10) for stability when "
 "compiling with future Python versions."
 msgstr ""
+"Вместо того, чтобы использовать макрос PY_VERSION_HEX напрямую, жестко "
+"закодируйте минимальную младшую версию (например, 0x030A0000 для Python "
+"3.10) для стабильности при компиляции с будущими версиями Python."
 
 #: ../../c-api/stable.rst:87
 msgid ""
 "You can also define ``Py_LIMITED_API`` to ``3``. This works the same as "
 "``0x03020000`` (Python 3.2, the version that introduced Limited API)."
 msgstr ""
+"Вы также можете определить для ``Py_LIMITED_API`` значение ``3``. Это "
+"работает так же, как 0x03020000 (Python 3.2, версия, в которой представлен "
+"ограниченный API)."
 
 #: ../../c-api/stable.rst:94
 msgid "Stable ABI"
@@ -158,6 +207,8 @@ msgid ""
 "To enable this, Python provides a *Stable ABI*: a set of symbols that will "
 "remain compatible across Python 3.x versions."
 msgstr ""
+"Для этого Python предоставляет *Стабильный ABI*: набор символов, который "
+"останется совместимым во всех версиях Python 3.x."
 
 #: ../../c-api/stable.rst:99
 msgid ""
@@ -165,6 +216,9 @@ msgid ""
 "api>`, but also other ones – for example, functions necessary to support "
 "older versions of the Limited API."
 msgstr ""
+"Стабильный ABI содержит символы, представленные в :ref:`Limited API <limited-"
+"c-api>`, а также другие символы — например, функции, необходимые для "
+"поддержки старых версий Limited API."
 
 #: ../../c-api/stable.rst:103
 msgid ""
@@ -172,6 +226,8 @@ msgid ""
 "``python3.dll`` rather than a version-specific library such as ``python39."
 "dll``."
 msgstr ""
+"В Windows расширения, использующие Stable ABI, должны быть связаны с Python3."
+"dll, а не с библиотекой конкретной версии, такой как Python39.dll."
 
 #: ../../c-api/stable.rst:107
 msgid ""
@@ -181,6 +237,12 @@ msgid ""
 "to ensure that, for example, extensions built with the 3.10+ Limited API are "
 "not installed for lower versions of Python."
 msgstr ""
+"На некоторых платформах Python будет искать и загружать файлы общей "
+"библиотеки, названные тегом abi3 (например, mymodule.abi3.so). Он не "
+"проверяет, соответствуют ли такие расширения стабильному ABI. Пользователь "
+"(или его инструменты упаковки) должны гарантировать, что, например, "
+"расширения, созданные с помощью API 3.10+ Limited, не установлены для более "
+"низких версий Python."
 
 #: ../../c-api/stable.rst:114
 msgid ""
@@ -188,16 +250,21 @@ msgid ""
 "library, not solely as macros. This makes them usable from languages that "
 "don't use the C preprocessor."
 msgstr ""
+"Все функции в Stable ABI представлены как функции общей библиотеки Python, а "
+"не только как макросы. Это делает их пригодными для использования в языках, "
+"не использующих препроцессор C."
 
 #: ../../c-api/stable.rst:120
 msgid "Limited API Scope and Performance"
-msgstr ""
+msgstr "Ограниченный объем и производительность API"
 
 #: ../../c-api/stable.rst:122
 msgid ""
 "The goal for the Limited API is to allow everything that is possible with "
 "the full C API, but possibly with a performance penalty."
 msgstr ""
+"Цель ограниченного API — обеспечить все, что возможно с полным API C, но, "
+"возможно, с потерей производительности."
 
 #: ../../c-api/stable.rst:125
 msgid ""
@@ -205,6 +272,10 @@ msgid ""
 "variant :c:func:`PyList_GET_ITEM` is not. The macro can be faster because it "
 "can rely on version-specific implementation details of the list object."
 msgstr ""
+"Например, хотя :c:func:`PyList_GetItem` доступен, его «небезопасный» вариант "
+"макроса :c:func:`PyList_GET_ITEM` — нет. Макрос может работать быстрее, "
+"поскольку он может полагаться на детали реализации объекта списка, зависящие "
+"от версии."
 
 #: ../../c-api/stable.rst:130
 msgid ""
@@ -213,6 +284,10 @@ msgid ""
 "allowing stability as Python's data structures are improved, but possibly "
 "reducing performance."
 msgstr ""
+"Без определения ``Py_LIMITED_API`` некоторые функции C API встраиваются или "
+"заменяются макросами. Определение Py_LIMITED_API отключает эту встраивание, "
+"обеспечивая стабильность при улучшении структур данных Python, но, возможно, "
+"снижая производительность."
 
 #: ../../c-api/stable.rst:135
 msgid ""
@@ -223,10 +298,16 @@ msgid ""
 "where a version-specific one is not available – for example, for prereleases "
 "of an upcoming Python version."
 msgstr ""
+"Опустив определение Py_LIMITED_API, можно скомпилировать расширение Limited "
+"API с ABI для конкретной версии. Это может улучшить производительность этой "
+"версии Python, но ограничит совместимость. Компиляция с использованием "
+"Py_LIMITED_API даст расширение, которое можно будет распространять там, где "
+"недоступно расширение для конкретной версии — например, для предварительных "
+"выпусков будущей версии Python."
 
 #: ../../c-api/stable.rst:144
 msgid "Limited API Caveats"
-msgstr ""
+msgstr "Ограниченные предостережения по API"
 
 #: ../../c-api/stable.rst:146
 msgid ""
@@ -235,6 +316,11 @@ msgid ""
 "`Stable ABI <stable-abi>`. ``Py_LIMITED_API`` only covers definitions, but "
 "an API also includes other issues, such as expected semantics."
 msgstr ""
+"Обратите внимание, что компиляция с использованием ``Py_LIMITED_API`` *не* "
+"является полной гарантией того, что код соответствует :ref:`Limited API "
+"<limited-c-api>` или :ref:`Stable ABI <stable-abi>`. ``Py_LIMITED_API`` "
+"охватывает только определения, но API также включает в себя и другие "
+"вопросы, такие как ожидаемая семантика."
 
 #: ../../c-api/stable.rst:151
 msgid ""
@@ -245,18 +331,31 @@ msgid ""
 "the argument will be used directly, causing a ``NULL`` dereference and "
 "crash. A similar argument works for fields of structs."
 msgstr ""
+"Одна из проблем, от которой Py_LIMITED_API не защищает, — это вызов функции "
+"с аргументами, которые недопустимы в более ранней версии Python. Например, "
+"рассмотрим функцию, которая начинает принимать в качестве аргумента значение "
+"NULL. В Python 3.9 ``NULL`` теперь выбирает поведение по умолчанию, но в "
+"Python 3.8 аргумент будет использоваться напрямую, что приведет к "
+"разыменованию ``NULL`` и сбою. Аналогичный аргумент работает для полей "
+"структур."
 
 #: ../../c-api/stable.rst:158
 msgid ""
 "Another issue is that some struct fields are currently not hidden when "
 "``Py_LIMITED_API`` is defined, even though they're part of the Limited API."
 msgstr ""
+"Другая проблема заключается в том, что некоторые поля структуры в настоящее "
+"время не скрыты, когда определен Py_LIMITED_API, хотя они являются частью "
+"Limited API."
 
 #: ../../c-api/stable.rst:161
 msgid ""
 "For these reasons, we recommend testing an extension with *all* minor Python "
 "versions it supports, and preferably to build with the *lowest* such version."
 msgstr ""
+"По этим причинам мы рекомендуем тестировать расширение со *всеми* "
+"второстепенными версиями Python, которые оно поддерживает, и желательно "
+"собирать с *самой младшей* такой версией."
 
 #: ../../c-api/stable.rst:164
 msgid ""
@@ -265,6 +364,10 @@ msgid ""
 "few private declarations are exposed for technical reasons (or even "
 "unintentionally, as bugs)."
 msgstr ""
+"Мы также рекомендуем просмотреть документацию по всем используемым API, "
+"чтобы убедиться, что они явно не являются частью ограниченного API. Даже "
+"если Py_LIMITED_API определен, некоторые частные объявления отображаются по "
+"техническим причинам (или даже непреднамеренно, как ошибки)."
 
 #: ../../c-api/stable.rst:169
 msgid ""
@@ -274,10 +377,15 @@ msgid ""
 "particular, parts of the Limited API may be deprecated and removed, provided "
 "that the Stable ABI stays stable."
 msgstr ""
+"Также обратите внимание, что ограниченный API не обязательно стабилен: "
+"компиляция с помощью ``Py_LIMITED_API`` с Python 3.8 означает, что "
+"расширение будет работать с Python 3.12, но не обязательно *компилируется* с "
+"Python 3.12. В частности, части ограниченного API могут быть признаны "
+"устаревшими и удалены при условии, что стабильный ABI останется стабильным."
 
 #: ../../c-api/stable.rst:179
 msgid "Platform Considerations"
-msgstr ""
+msgstr "Особенности платформы"
 
 #: ../../c-api/stable.rst:181
 msgid ""
@@ -286,6 +394,10 @@ msgid ""
 "`Stable ABI <stable-abi>`, these details define a “platform”. They usually "
 "depend on the OS type and processor architecture"
 msgstr ""
+"Стабильность ABI зависит не только от Python, но и от используемого "
+"компилятора, библиотек нижнего уровня и опций компилятора. Для целей :ref:"
+"`Stable ABI <stable-abi>` эти детали определяют «платформу». Обычно они "
+"зависят от типа ОС и архитектуры процессора."
 
 #: ../../c-api/stable.rst:186
 msgid ""
@@ -294,16 +406,22 @@ msgid ""
 "does not break the Stable ABI. This is the case with Windows and macOS "
 "releases from ``python.org`` and many third-party distributors."
 msgstr ""
+"Каждый конкретный дистрибьютор Python несет ответственность за то, чтобы все "
+"версии Python на конкретной платформе были построены таким образом, чтобы не "
+"нарушать стабильный ABI. Так обстоит дело с выпусками Windows и macOS от "
+"``python.org`` и многих сторонних дистрибьюторов."
 
 #: ../../c-api/stable.rst:196
 msgid "Contents of Limited API"
-msgstr ""
+msgstr "Содержание ограниченного API"
 
 #: ../../c-api/stable.rst:199
 msgid ""
 "Currently, the :ref:`Limited API <limited-c-api>` includes the following "
 "items:"
 msgstr ""
+"В настоящее время :ref:`Limited API <limited-c-api>` включает в себя "
+"следующие элементы:"
 
 #: ../../c-api/stable.rst:42
 msgid "PyUnstable"

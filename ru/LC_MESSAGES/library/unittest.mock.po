@@ -5,15 +5,16 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-11 14:48+0000\n"
+"POT-Creation-Date: 2024-10-25 14:54+0000\n"
 "PO-Revision-Date: 2024-05-11 00:34+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -115,6 +116,8 @@ msgid ""
 ":attr:`~Mock.side_effect` allows you to perform side effects, including "
 "raising an exception when a mock is called:"
 msgstr ""
+":attr:`~Mock.side_effect` позволяет вам выполнять побочные эффекты, включая "
+"создание исключения при вызове макета:"
 
 #: ../../library/unittest.mock.rst:92
 msgid ""
@@ -348,6 +351,9 @@ msgid ""
 "__class__` returns the class of the spec object. This allows mocks to pass :"
 "func:`isinstance` tests."
 msgstr ""
+"Если *spec* — это объект (а не список строк), то :attr:`~object.__class__` "
+"возвращает класс объекта спецификации. Это позволяет макетам проходить "
+"тесты :func:`isinstance`."
 
 #: ../../library/unittest.mock.rst:243
 msgid ""
@@ -540,12 +546,21 @@ msgid ""
 ">>> mock.called\n"
 "False"
 msgstr ""
+">>> mock = Mock(return_value=None)\n"
+">>> mock('hello')\n"
+">>> mock.called\n"
+"True\n"
+">>> mock.reset_mock()\n"
+">>> mock.called\n"
+"False"
 
 #: ../../library/unittest.mock.rst:410
 msgid ""
 "This can be useful where you want to make a series of assertions that reuse "
 "the same object."
 msgstr ""
+"Это может быть полезно, если вы хотите создать серию утверждений, повторно "
+"использующих один и тот же объект."
 
 #: ../../library/unittest.mock.rst:413
 msgid ""
@@ -561,6 +576,12 @@ msgid ""
 ">>> mock('hello')  \n"
 "<Mock name='mock()' id='...'>"
 msgstr ""
+">>> mock = Mock(return_value=5)\n"
+">>> mock('hello')\n"
+"5\n"
+">>> mock.reset_mock(return_value=True)\n"
+">>> mock('hello')  \n"
+"<Mock name='mock()' id='...'>"
 
 #: ../../library/unittest.mock.rst:424
 msgid ""
@@ -578,6 +599,14 @@ msgid ""
 ">>> mock('hello')  \n"
 "<Mock name='mock()' id='...'>"
 msgstr ""
+">>> mock = Mock(side_effect=ValueError)\n"
+">>> mock('hello')\n"
+"Traceback (most recent call last):\n"
+"  ...\n"
+"ValueError\n"
+">>> mock.reset_mock(side_effect=True)\n"
+">>> mock('hello')  \n"
+"<Mock name='mock()' id='...'>"
 
 #: ../../library/unittest.mock.rst:437
 msgid ""
@@ -585,10 +614,13 @@ msgid ""
 "`side_effect` or any child attributes you have set using normal assignment "
 "by default."
 msgstr ""
+"Обратите внимание, что :meth:`reset_mock` *не* очищает :attr:"
+"`return_value`, :attr:`side_effect` или любые дочерние атрибуты, которые вы "
+"установили с использованием обычного присваивания по умолчанию."
 
 #: ../../library/unittest.mock.rst:441
 msgid "Child mocks are reset as well."
-msgstr ""
+msgstr "Child mocks также сбрасываются. "
 
 #: ../../library/unittest.mock.rst:443
 msgid "Added two keyword-only arguments to the reset_mock function."
@@ -879,12 +911,18 @@ msgid ""
 "class instead. This allows mock objects to pass :func:`isinstance` tests for "
 "the object they are replacing / masquerading as:"
 msgstr ""
+"Обычно атрибут :attr:`!__class__` объекта возвращает его тип. Для макетного "
+"объекта с :attr:`!spec` :attr:`!__class__` вместо этого возвращает класс "
+"спецификации. Это позволяет макетным объектам проходить тесты :func:"
+"`isinstance` для объекта, который они заменяют/маскируют под:"
 
 #: ../../library/unittest.mock.rst:768
 msgid ""
 ":attr:`!__class__` is assignable to, this allows a mock to pass an :func:"
 "`isinstance` check without forcing you to use a spec:"
 msgstr ""
+":attr:`!__class__` можно назначить, это позволяет макету пройти проверку :"
+"func:`isinstance`, не заставляя вас использовать спецификацию:"
 
 #: ../../library/unittest.mock.rst:778
 msgid ""
@@ -901,6 +939,8 @@ msgid ""
 "Mock objects that use a class or an instance as a :attr:`!spec` or :attr:`!"
 "spec_set` are able to pass :func:`isinstance` tests:"
 msgstr ""
+"Мок-объекты, использующие класс или экземпляр в качестве :attr:`!spec` или :"
+"attr:`!spec_set`, могут проходить тесты :func:`isinstance`:"
 
 #: ../../library/unittest.mock.rst:792
 msgid ""
@@ -1294,6 +1334,9 @@ msgid ""
 "has been recorded, so if :attr:`!side_effect` raises an exception the call "
 "is still recorded."
 msgstr ""
+"Если :attr:`~Mock.side_effect` установлен, то он будет вызываться после "
+"записи вызова, поэтому, если :attr:`!side_effect` вызывает исключение, вызов "
+"все равно записывается."
 
 #: ../../library/unittest.mock.rst:1155
 msgid ""
@@ -1310,6 +1353,11 @@ msgid ""
 "is called with the same arguments as the mock. This allows you to vary the "
 "return value of the call dynamically, based on the input:"
 msgstr ""
+"Если :attr:`~Mock.side_effect` — это функция, то все, что возвращает эта "
+"функция, является тем, что вызывает возврат макета. Функция :attr:`!"
+"side_effect` вызывается с теми же аргументами, что и макет. Это позволяет "
+"вам динамически изменять возвращаемое значение вызова в зависимости от "
+"входных данных:"
 
 #: ../../library/unittest.mock.rst:1189
 msgid ""
@@ -1318,12 +1366,18 @@ msgid ""
 "return :attr:`~Mock.return_value` from inside :attr:`~Mock.side_effect`, or "
 "return :data:`DEFAULT`:"
 msgstr ""
+"Если вы хотите, чтобы макет по-прежнему возвращал возвращаемое значение по "
+"умолчанию (новый макет) или любое установленное возвращаемое значение, есть "
+"два способа сделать это. Либо верните :attr:`~Mock.return_value` изнутри :"
+"attr:`~Mock.side_effect`, либо верните :data:`DEFAULT`:"
 
 #: ../../library/unittest.mock.rst:1208
 msgid ""
 "To remove a :attr:`~Mock.side_effect`, and return to the default behaviour, "
 "set the :attr:`!side_effect` to ``None``:"
 msgstr ""
+"Чтобы удалить :attr:`~Mock.side_effect` и вернуться к поведению по "
+"умолчанию, установите для :attr:`!side_effect` значение ``None``:"
 
 #: ../../library/unittest.mock.rst:1222
 msgid ""
@@ -1331,6 +1385,9 @@ msgid ""
 "calls to the mock will return values from the iterable (until the iterable "
 "is exhausted and a :exc:`StopIteration` is raised):"
 msgstr ""
+":attr:`~Mock.side_effect` также может быть любым итерируемым объектом. "
+"Повторные вызовы макета будут возвращать значения из итерации (пока итерация "
+"не будет исчерпана и не будет вызвано :exc:`StopIteration`):"
 
 #: ../../library/unittest.mock.rst:1238
 msgid ""
@@ -1383,6 +1440,10 @@ msgid ""
 "by providing an object as a :attr:`!spec` for a mock, but that isn't always "
 "convenient."
 msgstr ""
+"Вы можете захотеть, чтобы фиктивный объект возвращал ``False`` при вызове :"
+"func:`hasattr` или вызывал :exc:`AttributeError` при извлечении атрибута. Вы "
+"можете сделать это, предоставив объект в виде :attr:`!spec` для макета, но "
+"это не всегда удобно."
 
 #: ../../library/unittest.mock.rst:1265
 msgid ""
@@ -1685,6 +1746,13 @@ msgid ""
 "`unittest` finds tests. You can specify an alternative prefix by setting "
 "``patch.TEST_PREFIX``."
 msgstr ""
+"Патч можно использовать как декоратор класса :class:`~unittest.TestCase`. Он "
+"работает путем украшения каждого тестового метода в классе. Это уменьшает "
+"количество шаблонного кода, когда ваши методы тестирования используют общий "
+"набор исправлений. :func:`patch` находит тесты по именам методов, "
+"начинающимся с ``patch.TEST_PREFIX``. По умолчанию это ``'test'``, который "
+"соответствует тому, как :mod:`unittest` находит тесты. Вы можете указать "
+"альтернативный префикс, установив ``patch.TEST_PREFIX``."
 
 #: ../../library/unittest.mock.rst:1439
 msgid ""
@@ -1767,6 +1835,9 @@ msgid ""
 "To configure return values on methods of *instances* on the patched class "
 "you must do this on the :attr:`~Mock.return_value`. For example::"
 msgstr ""
+"Чтобы настроить возвращаемые значения для методов *экземпляров* "
+"исправленного класса, вы должны сделать это в :attr:`~Mock.return_value`. "
+"Например::"
 
 #: ../../library/unittest.mock.rst:1472
 msgid ""
@@ -2348,6 +2419,9 @@ msgid ""
 "it simpler to do patching in ``setUp`` methods or where you want to do "
 "multiple patches without nesting decorators or with statements."
 msgstr ""
+"Все патчеры имеют методы :meth:`!start` и :meth:`!stop`. Это упрощает "
+"выполнение исправлений в методах ``setUp`` или там, где вы хотите выполнить "
+"несколько исправлений без вложенных декораторов или с помощью операторов."
 
 #: ../../library/unittest.mock.rst:1795
 msgid ""
@@ -2356,6 +2430,10 @@ msgid ""
 "then call :meth:`!start` to put the patch in place and :meth:`!stop` to undo "
 "it."
 msgstr ""
+"Чтобы использовать их, вызовите :func:`patch`, :func:`patch.object` или :"
+"func:`patch.dict` как обычно и сохраните ссылку на возвращаемый объект "
+"``patcher``. Затем вы можете вызвать :meth:`!start`, чтобы установить патч, "
+"и :meth:`!stop`, чтобы отменить его."
 
 #: ../../library/unittest.mock.rst:1799
 msgid ""
@@ -2392,6 +2470,8 @@ msgid ""
 "A typical use case for this might be for doing multiple patches in the "
 "``setUp`` method of a :class:`~unittest.TestCase`::"
 msgstr ""
+"Типичным примером использования этого может быть выполнение нескольких "
+"исправлений в методе ``setUp`` :class:`~unittest.TestCase`::"
 
 #: ../../library/unittest.mock.rst:1816
 msgid ""
@@ -3575,6 +3655,9 @@ msgid ""
 "``dir(type(my_mock))`` (type members) to bypass the filtering irrespective "
 "of :const:`FILTER_DIR`."
 msgstr ""
+"В качестве альтернативы вы можете просто использовать ``vars(my_mock)`` "
+"(члены экземпляра) и ``dir(type(my_mock))`` (члены типа), чтобы обойти "
+"фильтрацию независимо от :const:`FILTER_DIR`."
 
 #: ../../library/unittest.mock.rst:2491
 msgid "mock_open"
@@ -3611,6 +3694,15 @@ msgid ""
 "one of the in-memory filesystem packages on `PyPI <https://pypi.org>`_ can "
 "offer a realistic filesystem for testing."
 msgstr ""
+"*read_data* — это строка для методов :meth:`~io.RawIOBase.read`, :meth:`~io."
+"IOBase.readline` и :meth:`~io.IOBase.readlines` дескриптора файла. "
+"возвращаться. Вызовы этих методов будут брать данные из *read_data*, пока "
+"они не будут исчерпаны. Имитация этих методов довольно упрощена: каждый раз, "
+"когда вызывается *mock*, *read_data* перематывается на начало. Если вам "
+"нужен больший контроль над данными, которые вы передаете в тестируемый код, "
+"вам нужно будет настроить этот макет под себя. Если этого недостаточно, один "
+"из пакетов файловой системы в памяти PyPI <https://pypi.org>_ может "
+"предложить реалистичную файловую систему для тестирования."
 
 #: ../../library/unittest.mock.rst:2512
 msgid ""
@@ -3618,6 +3710,9 @@ msgid ""
 "The mock of :meth:`~io.RawIOBase.read` changed to consume *read_data* rather "
 "than returning it on each call."
 msgstr ""
+"Добавлена ​​поддержка :meth:`~io.IOBase.readline` и :meth:`~io.IOBase."
+"readlines`. Макет :meth:`~io.RawIOBase.read` изменен на использование "
+"*read_data* вместо того, чтобы возвращать его при каждом вызове."
 
 #: ../../library/unittest.mock.rst:2517
 msgid "*read_data* is now reset on each call to the *mock*."
@@ -3731,6 +3826,12 @@ msgid ""
 "methods have the same call signature as the original so they raise a :exc:"
 "`TypeError` if they are called incorrectly."
 msgstr ""
+"Автоспецификация основана на существующей функции макета :attr:`!spec`. Он "
+"ограничивает API-интерфейсы макетов API исходного объекта (спецификации), но "
+"он рекурсивен (реализуется лениво), так что атрибуты макетов имеют только "
+"тот же API, что и атрибуты спецификации. Кроме того, имитируемые функции/"
+"методы имеют ту же сигнатуру вызова, что и исходные, поэтому они вызывают "
+"ошибку :exc:`TypeError`, если они вызваны неправильно."
 
 #: ../../library/unittest.mock.rst:2573
 msgid "Before I explain how auto-speccing works, here's why it is needed."
@@ -3782,6 +3883,10 @@ msgid ""
 "speccing. If you use a class or instance as the :attr:`!spec` for a mock "
 "then you can only access attributes on the mock that exist on the real class:"
 msgstr ""
+":mod:`unittest.mock` уже предоставляет функцию, которая поможет в этом, "
+"называемую спецификацией. Если вы используете класс или экземпляр в "
+"качестве :attr:`!spec` для макета, вы можете получить доступ только к "
+"атрибутам макета, которые существуют в реальном классе:"
 
 #: ../../library/unittest.mock.rst:2602
 msgid ""
@@ -3850,6 +3955,9 @@ msgid ""
 "Request` takes two arguments in the constructor (one of which is *self*). "
 "Here's what happens if we try to call it incorrectly::"
 msgstr ""
+"Вы можете видеть, что :class:`!request.Request` имеет спецификацию. :class:`!"
+"request.Request` принимает в конструкторе два аргумента (один из которых "
+"*self*). Вот что произойдет, если мы попытаемся вызвать его неправильно:"
 
 #: ../../library/unittest.mock.rst:2634
 msgid ""
@@ -3888,6 +3996,10 @@ msgid ""
 "mock. With the spec in place any typos in our asserts will raise the correct "
 "error::"
 msgstr ""
+"Объекты :class:`!Request` не являются вызываемыми, поэтому возвращаемое "
+"значение создания нашего макета :class:`!request.Request` является "
+"невызываемым макетом. При наличии спецификации любые опечатки в наших "
+"утверждениях вызовут правильную ошибку::"
 
 #: ../../library/unittest.mock.rst:2650
 msgid ""

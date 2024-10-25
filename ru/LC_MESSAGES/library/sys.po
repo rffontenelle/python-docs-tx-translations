@@ -5,15 +5,16 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-11 14:48+0000\n"
+"POT-Creation-Date: 2024-10-25 14:54+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -60,7 +61,7 @@ msgstr ""
 #: ../../library/sys.rst:1730 ../../library/sys.rst:1746
 #: ../../library/sys.rst:1982
 msgid "Availability"
-msgstr ""
+msgstr "Доступность"
 
 #: ../../library/sys.rst:30
 msgid ""
@@ -1306,6 +1307,12 @@ msgid ""
 "result can vary from call to call; you may have to call :func:"
 "`_clear_type_cache` and :func:`gc.collect` to get more predictable results."
 msgstr ""
+"Возвращает количество блоков памяти, выделенных интерпретатором в данный "
+"момент, независимо от их размера. Эта функция в основном полезна для "
+"отслеживания и устранения утечек памяти. Из-за внутреннего кэша "
+"интерпретатора результат может меняться от вызова к вызову; вам, возможно, "
+"придется вызвать :func:`_clear_type_cache` и :func:`gc.collect`, чтобы "
+"получить более предсказуемые результаты."
 
 #: ../../library/sys.rst:730
 msgid ""
@@ -1321,7 +1328,7 @@ msgstr "Возвращает количество интернированных
 
 #: ../../library/sys.rst:745
 msgid "Return the build time API version of Android as an integer."
-msgstr ""
+msgstr "Возвращает версию API времени сборки Android в виде целого числа."
 
 #: ../../library/sys.rst:754
 msgid ""
@@ -1446,6 +1453,11 @@ msgid ""
 "references.  Consequently, do not rely on the returned value to be accurate, "
 "other than a value of 0 or 1."
 msgstr ""
+"Обратите внимание, что возвращаемое значение может не отражать фактическое "
+"количество ссылок на объект. Например, некоторые объекты «бессмертны» и "
+"имеют очень высокий счетчик ссылок, который не отражает фактическое "
+"количество ссылок. Следовательно, не полагайтесь на то, что возвращаемое "
+"значение будет точным, кроме значения 0 или 1."
 
 #: ../../library/sys.rst:838
 msgid ""
@@ -2012,12 +2024,16 @@ msgid ""
 "Interned strings are not immortal; you must keep a reference to the return "
 "value of :func:`intern` around to benefit from it."
 msgstr ""
+"Интернированные строки не бессмертны; вы должны хранить ссылку на "
+"возвращаемое значение :func:`intern`, чтобы извлечь из этого пользу."
 
 #: ../../library/sys.rst:1191
 msgid ""
 "Return :const:`True` if the Python interpreter is :term:`shutting down "
 "<interpreter shutdown>`, :const:`False` otherwise."
 msgstr ""
+"Верните :const:`True`, если интерпретатор Python :term:`выключается "
+"<интерпретатор завершение работы>`, :const:`False` в противном случае."
 
 #: ../../library/sys.rst:1198
 msgid ""
@@ -2088,6 +2104,15 @@ msgid ""
 "passed in as a second argument. The method returns a :term:`module spec`, or "
 "``None`` if the module cannot be found."
 msgstr ""
+"Список объектов :term:`meta path finder`, у которых есть методы :meth:"
+"`~importlib.abc.MetaPathFinder.find_spec`, вызываемые для проверки, может ли "
+"один из объектов найти импортируемый модуль. По умолчанию он содержит "
+"записи, реализующие семантику импорта Python по умолчанию. Метод :meth:"
+"`~importlib.abc.MetaPathFinder.find_spec` вызывается как минимум с "
+"абсолютным именем импортируемого модуля. Если импортируемый модуль "
+"содержится в пакете, то атрибут :attr:`~module.__path__` родительского "
+"пакета передается в качестве второго аргумента. Метод возвращает "
+"спецификацию модуля или None, если модуль не найден."
 
 #: ../../library/sys.rst:1249
 msgid ":class:`importlib.abc.MetaPathFinder`"
@@ -2271,6 +2296,9 @@ msgid ""
 "This string contains a platform identifier that can be used to append "
 "platform-specific components to :data:`sys.path`, for instance."
 msgstr ""
+"Эта строка содержит идентификатор платформы, который можно использовать, "
+"например, для добавления компонентов, специфичных для платформы, в :data:"
+"`sys.path`."
 
 #: ../../library/sys.rst:1349
 msgid ""
@@ -2280,6 +2308,11 @@ msgid ""
 "when Python was built*.  Unless you want to test for a specific system "
 "version, it is therefore recommended to use the following idiom::"
 msgstr ""
+"Для систем Unix, за исключением Linux и AIX, это имя операционной системы в "
+"нижнем регистре, возвращаемое командой ``uname -s``, с добавленной первой "
+"частью версии, возвращаемой ``uname -r``, например ``'sunos5. '`` или "
+"``'freebsd8'``, *во время создания Python*. Если вы не хотите протестировать "
+"конкретную версию системы, рекомендуется использовать следующую идиому:"
 
 #: ../../library/sys.rst:1355
 msgid ""
@@ -2290,10 +2323,16 @@ msgid ""
 "elif sys.platform.startswith('aix'):\n"
 "    # AIX-specific code here..."
 msgstr ""
+"if sys.platform.startswith('freebsd'):\n"
+"    # FreeBSD-specific code here...\n"
+"elif sys.platform.startswith('linux'):\n"
+"    # Linux-specific code here...\n"
+"elif sys.platform.startswith('aix'):\n"
+"    # AIX-specific code here..."
 
 #: ../../library/sys.rst:1362
 msgid "For other systems, the values are:"
-msgstr ""
+msgstr "Для других систем значения следующие:"
 
 #: ../../library/sys.rst:1365
 msgid "System"
@@ -2366,6 +2405,10 @@ msgid ""
 "Python versions include the version number, it is recommended to always use "
 "the ``startswith`` idiom presented above."
 msgstr ""
+"В Linux :data:`sys.platform` больше не содержит основную версию. Это всегда "
+"``'linux'`` вместо ``'linux2'`` или ``'linux3'``. Поскольку более старые "
+"версии Python включают номер версии, рекомендуется всегда использовать "
+"идиому «startswith», представленную выше."
 
 #: ../../library/sys.rst:1382
 msgid ""
@@ -2374,6 +2417,10 @@ msgid ""
 "Python versions include the version number, it is recommended to always use "
 "the ``startswith`` idiom presented above."
 msgstr ""
+"В AIX :data:`sys.platform` больше не содержит основную версию. Это всегда "
+"``'aix'`` вместо ``'aix5'`` или ``'aix7'``. Поскольку более старые версии "
+"Python включают номер версии, рекомендуется всегда использовать идиому "
+"«startswith», представленную выше."
 
 #: ../../library/sys.rst:1390
 msgid ""
@@ -2898,6 +2945,10 @@ msgid ""
 "called. This behavior will be changed back in 3.13 to be consistent with "
 "previous versions."
 msgstr ""
+"Событие ``'opcode'`` будет генерироваться только в том случае, если :attr:"
+"`~frame.f_trace_opcodes` хотя бы одного кадра было установлено в :const:"
+"`True` перед вызовом :func:`settrace`. Это поведение будет изменено еще в "
+"версии 3.13, чтобы соответствовать предыдущим версиям."
 
 #: ../../library/sys.rst:1658
 msgid ""

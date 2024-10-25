@@ -5,15 +5,16 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-18 14:51+0000\n"
+"POT-Creation-Date: 2024-10-25 14:54+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -1712,7 +1713,7 @@ msgstr ""
 
 #: ../../howto/argparse.rst:845
 msgid "Custom type converters"
-msgstr ""
+msgstr "Конвертеры нестандартных типов"
 
 #: ../../howto/argparse.rst:847
 msgid ""
@@ -1721,6 +1722,11 @@ msgid ""
 "it's stored in the :class:`argparse.Namespace`. This can be useful when you "
 "need to pre-process the input before it is used in your program."
 msgstr ""
+"Модуль :mod:`argparse` позволяет вам указать собственные преобразователи "
+"типов для аргументов командной строки. Это позволяет вам изменять вводимые "
+"пользователем данные до того, как они будут сохранены в :class:`argparse."
+"Namespace`. Это может быть полезно, когда вам нужно предварительно "
+"обработать входные данные перед их использованием в вашей программе."
 
 #: ../../howto/argparse.rst:852
 msgid ""
@@ -1729,12 +1735,19 @@ msgid ""
 "However, if you need to handle more complex scenarios, you can use a custom "
 "action class with the **action** parameter instead."
 msgstr ""
+"При использовании пользовательского преобразователя типов вы можете "
+"использовать любой вызываемый объект, который принимает один строковый "
+"аргумент (значение аргумента) и возвращает преобразованное значение. Однако "
+"если вам нужно обрабатывать более сложные сценарии, вместо этого вы можете "
+"использовать собственный класс действий с параметром **action**."
 
 #: ../../howto/argparse.rst:857
 msgid ""
 "For example, let's say you want to handle arguments with different prefixes "
 "and process them accordingly::"
 msgstr ""
+"Например, предположим, что вы хотите обрабатывать аргументы с разными "
+"префиксами и обрабатывать их соответствующим образом:"
 
 #: ../../howto/argparse.rst:860
 msgid ""
@@ -1750,22 +1763,37 @@ msgid ""
 "args = parser.parse_args()\n"
 "print(args)"
 msgstr ""
+"import argparse\n"
+"\n"
+"parser = argparse.ArgumentParser(prefix_chars='-+')\n"
+"\n"
+"parser.add_argument('-a', metavar='<value>', action='append',\n"
+"                    type=lambda x: ('-', x))\n"
+"parser.add_argument('+a', metavar='<value>', action='append',\n"
+"                    type=lambda x: ('+', x))\n"
+"\n"
+"args = parser.parse_args()\n"
+"print(args)"
 
 #: ../../howto/argparse.rst:874
 msgid ""
 "$ python prog.py -a value1 +a value2\n"
 "Namespace(a=[('-', 'value1'), ('+', 'value2')])"
 msgstr ""
+"$ python prog.py -a value1 +a value2\n"
+"Namespace(a=[('-', 'value1'), ('+', 'value2')])"
 
 #: ../../howto/argparse.rst:879
 msgid "In this example, we:"
-msgstr ""
+msgstr "В этом примере мы:"
 
 #: ../../howto/argparse.rst:881
 msgid ""
 "Created a parser with custom prefix characters using the ``prefix_chars`` "
 "parameter."
 msgstr ""
+"Создал парсер с пользовательскими символами префикса, используя параметр "
+"prefix_chars."
 
 #: ../../howto/argparse.rst:884
 msgid ""
@@ -1773,6 +1801,9 @@ msgid ""
 "to create custom type converters to store the value in a tuple with the "
 "prefix."
 msgstr ""
+"Определены два аргумента, ``-a`` и ``+a``, которые используют параметр "
+"``type`` для создания пользовательских преобразователей типов для хранения "
+"значения в кортеже с префиксом."
 
 #: ../../howto/argparse.rst:887
 msgid ""
@@ -1781,6 +1812,9 @@ msgid ""
 "using custom type converters, we were able to differentiate between the two "
 "arguments."
 msgstr ""
+"Без пользовательских преобразователей типов аргументы воспринимали бы ``-a`` "
+"и ``+a`` как один и тот же аргумент, что было бы нежелательно. Используя "
+"специальные преобразователи типов, мы смогли различать два аргумента."
 
 #: ../../howto/argparse.rst:892
 msgid "Conclusion"

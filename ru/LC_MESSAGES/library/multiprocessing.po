@@ -5,15 +5,16 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-11 14:48+0000\n"
+"POT-Creation-Date: 2024-10-25 14:54+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +35,7 @@ msgstr "**Исходный код:** :source:`Lib/multiprocessing/`"
 
 #: ../../includes/wasm-notavail.rst:3
 msgid "Availability"
-msgstr ""
+msgstr "Доступность"
 
 #: ../../includes/wasm-notavail.rst:5
 msgid ""
@@ -42,6 +43,9 @@ msgid ""
 "``wasm32-emscripten`` and ``wasm32-wasi``. See :ref:`wasm-availability` for "
 "more information."
 msgstr ""
+"Этот модуль не работает или недоступен на платформах WebAssembly «wasm32-"
+"emscripten» и «wasm32-wasi». См. :ref:`wasm-availability` для получения "
+"дополнительной информации."
 
 #: ../../library/multiprocessing.rst:14
 msgid "Introduction"
@@ -2043,6 +2047,9 @@ msgid ""
 "use.  The number of usable CPUs can be obtained with ``len(os."
 "sched_getaffinity(0))``"
 msgstr ""
+"Это число не эквивалентно количеству процессоров, которые может использовать "
+"текущий процесс. Количество доступных процессоров можно получить с помощью "
+"``len(os.sched_getaffinity(0))``"
 
 #: ../../library/multiprocessing.rst:1015
 msgid ""
@@ -4304,6 +4311,9 @@ msgid ""
 "*processes* is the number of worker processes to use.  If *processes* is "
 "``None`` then the number returned by :func:`os.cpu_count` is used."
 msgstr ""
+"*processes* — количество используемых рабочих процессов. Если *processes* "
+"имеет значение None, то используется число, возвращаемое :func:`os."
+"cpu_count`."
 
 #: ../../library/multiprocessing.rst:2221
 #: ../../library/multiprocessing.rst:2782
@@ -5094,6 +5104,37 @@ msgid ""
 "            else:\n"
 "                print(msg)"
 msgstr ""
+"import time, random\n"
+"from multiprocessing import Process, Pipe, current_process\n"
+"from multiprocessing.connection import wait\n"
+"\n"
+"def foo(w):\n"
+"    for i in range(10):\n"
+"        w.send((i, current_process().name))\n"
+"    w.close()\n"
+"\n"
+"if __name__ == '__main__':\n"
+"    readers = []\n"
+"\n"
+"    for i in range(4):\n"
+"        r, w = Pipe(duplex=False)\n"
+"        readers.append(r)\n"
+"        p = Process(target=foo, args=(w,))\n"
+"        p.start()\n"
+"        # We close the writable end of the pipe now to be sure that\n"
+"        # p is the only process which owns a handle for it.  This\n"
+"        # ensures that when p closes its handle for the writable end,\n"
+"        # wait() will promptly report the readable end as being ready.\n"
+"        w.close()\n"
+"\n"
+"    while readers:\n"
+"        for r in wait(readers):\n"
+"            try:\n"
+"                msg = r.recv()\n"
+"            except EOFError:\n"
+"                readers.remove(r)\n"
+"            else:\n"
+"                print(msg)"
 
 #: ../../library/multiprocessing.rst:2660
 msgid "Address Formats"
@@ -5333,6 +5374,8 @@ msgid ""
 "*processes* is the number of worker threads to use.  If *processes* is "
 "``None`` then the number returned by :func:`os.cpu_count` is used."
 msgstr ""
+"*процессы* — количество используемых рабочих потоков. Если *processes* имеет "
+"значение None, то используется число, возвращаемое :func:`os.cpu_count`."
 
 #: ../../library/multiprocessing.rst:2785
 msgid ""

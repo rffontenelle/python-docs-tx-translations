@@ -5,15 +5,16 @@
 #
 # Translators:
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-18 14:51+0000\n"
+"POT-Creation-Date: 2024-10-25 14:54+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -1000,6 +1001,8 @@ msgid ""
 "If your generator will only yield values, set the ``SendType`` and "
 "``ReturnType`` to ``None``::"
 msgstr ""
+"Если ваш генератор будет выдавать только значения, установите для SendType и "
+"ReturnType значение None::"
 
 #: ../../library/typing.rst:467
 msgid ""
@@ -1018,6 +1021,8 @@ msgid ""
 "Alternatively, annotate your generator as having a return type of either "
 "``Iterable[YieldType]`` or ``Iterator[YieldType]``::"
 msgstr ""
+"Альтернативно, аннотируйте свой генератор как имеющий тип возвращаемого "
+"значения либо ``Iterable[YieldType]``, либо ``Iterator[YieldType]``::"
 
 #: ../../library/typing.rst:475
 msgid ""
@@ -1037,6 +1042,9 @@ msgid ""
 "``ReturnType`` type argument (:class:`AsyncGenerator[YieldType, SendType] "
 "<collections.abc.AsyncGenerator>`)::"
 msgstr ""
+"Асинхронные генераторы обрабатываются аналогичным образом, но не ожидайте "
+"аргумента типа ``ReturnType`` (:class:`AsyncGenerator[YieldType, SendType] "
+"<collections.abc.AsyncGenerator>`)::"
 
 #: ../../library/typing.rst:484
 msgid ""
@@ -1045,6 +1053,10 @@ msgid ""
 "        yield start\n"
 "        start = await increment(start)"
 msgstr ""
+"async def infinite_stream(start: int) -> AsyncGenerator[int, None]:\n"
+"    while True:\n"
+"        yield start\n"
+"        start = await increment(start)"
 
 #: ../../library/typing.rst:489
 msgid ""
@@ -2999,6 +3011,8 @@ msgid ""
 ">>> get_origin(Password)\n"
 "<class 'typing.Annotated'>"
 msgstr ""
+">>> get_origin(Password)\n"
+"<class 'typing.Annotated'>"
 
 #: ../../library/typing.rst:1427
 msgid ":pep:`593` - Flexible function and variable annotations"
@@ -3018,6 +3032,10 @@ msgid ""
 "guard function.  ``TypeGuard`` only accepts a single type argument. At "
 "runtime, functions marked this way should return a boolean."
 msgstr ""
+"TypeGuard можно использовать для аннотации типа возвращаемого значения "
+"определяемой пользователем функции защиты типа. ``TypeGuard`` принимает "
+"только один аргумент типа. Во время выполнения функции, помеченные таким "
+"образом, должны возвращать логическое значение."
 
 #: ../../library/typing.rst:1441
 msgid ""
@@ -3027,6 +3045,11 @@ msgid ""
 "conditional code flow and applying the narrowing to a block of code.  The "
 "conditional expression here is sometimes referred to as a \"type guard\"::"
 msgstr ""
+"Целью TypeGuard является улучшение *сужения типов* — метода, используемого "
+"средствами проверки статических типов для определения более точного типа "
+"выражения в потоке кода программы. Обычно сужение типа выполняется путем "
+"анализа потока условного кода и применения сужения к блоку кода. Условное "
+"выражение здесь иногда называют «защитой типа»::"
 
 #: ../../library/typing.rst:1447
 msgid ""
@@ -3039,6 +3062,14 @@ msgid ""
 "        # Else, type of ``val`` is narrowed to ``float``.\n"
 "        ..."
 msgstr ""
+"def is_str(val: str | float):\n"
+"    # \"isinstance\" type guard\n"
+"    if isinstance(val, str):\n"
+"        # Type of ``val`` is narrowed to ``str``\n"
+"        ...\n"
+"    else:\n"
+"        # Else, type of ``val`` is narrowed to ``float``.\n"
+"        ..."
 
 #: ../../library/typing.rst:1456
 msgid ""
@@ -3046,6 +3077,10 @@ msgid ""
 "type guard.  Such a function should use ``TypeGuard[...]`` as its return "
 "type to alert static type checkers to this intention."
 msgstr ""
+"Иногда было бы удобно использовать определяемую пользователем логическую "
+"функцию в качестве защиты типа. Такая функция должна использовать "
+"TypeGuard[...]`` в качестве возвращаемого типа, чтобы предупредить об этом "
+"средства проверки статических типов."
 
 #: ../../library/typing.rst:1460
 msgid ""
@@ -3099,6 +3134,8 @@ msgid ""
 "``TypeGuard`` maps to the type of the second parameter (after ``cls`` or "
 "``self``)."
 msgstr ""
+"Если is_str_list — это метод класса или экземпляра, то тип в TypeGuard "
+"сопоставляется с типом второго параметра (после cls или self)."
 
 #: ../../library/typing.rst:1485
 msgid ""
@@ -3106,6 +3143,9 @@ msgid ""
 "that if ``foo(arg)`` returns ``True``, then ``arg`` narrows from ``TypeA`` "
 "to ``TypeB``."
 msgstr ""
+"Короче говоря, форма ``def foo(arg: TypeA) -> TypeGuard[TypeB]: ...`` "
+"означает, что если ``foo(arg)`` возвращает ``True``, то ``arg` ` сужается от "
+"``TypeA`` до ``TypeB``."
 
 #: ../../library/typing.rst:1491
 msgid ""
@@ -3115,6 +3155,12 @@ msgid ""
 "since ``list`` is invariant. The responsibility of writing type-safe type "
 "guards is left to the user."
 msgstr ""
+"``TypeB`` не обязательно должен быть более узкой формой ``TypeA`` — это "
+"может быть даже более широкая форма. Основная причина заключается в том, "
+"чтобы разрешить такие вещи, как сужение ``list[object]`` до ``list[str]``, "
+"хотя последний не является подтипом первого, поскольку ``list`` является "
+"инвариантным. Ответственность за написание типобезопасных защитных элементов "
+"возлагается на пользователя."
 
 #: ../../library/typing.rst:1497
 msgid ""
@@ -4662,6 +4708,9 @@ msgid ""
 "support :pep:`526`, ``TypedDict`` supports two additional equivalent "
 "syntactic forms:"
 msgstr ""
+"Чтобы использовать эту функцию со старыми версиями Python, которые не "
+"поддерживают :pep:`526`, ``TypedDict`` поддерживает две дополнительные "
+"эквивалентные синтаксические формы:"
 
 #: ../../library/typing.rst:2285
 msgid "Using a literal :class:`dict` as the second argument::"
@@ -4673,17 +4722,20 @@ msgstr "Point2D = TypedDict('Point2D', {'x': int, 'y': int, 'label': str})"
 
 #: ../../library/typing.rst:2289
 msgid "Using keyword arguments::"
-msgstr ""
+msgstr "Использование аргументов ключевого слова::"
 
 #: ../../library/typing.rst:2291
 msgid "Point2D = TypedDict('Point2D', x=int, y=int, label=str)"
-msgstr ""
+msgstr "Point2D = TypedDict('Point2D', x=int, y=int, label=str)"
 
 #: ../../library/typing.rst:2293
 msgid ""
 "The keyword-argument syntax is deprecated in 3.11 and will be removed in "
 "3.13. It may also be unsupported by static type checkers."
 msgstr ""
+"Синтаксис ключевого слова-аргумента устарел в версии 3.11 и будет удален в "
+"версии 3.13. Он также может не поддерживаться средствами проверки "
+"статических типов."
 
 #: ../../library/typing.rst:2297
 msgid ""
@@ -4691,6 +4743,9 @@ msgid ""
 "valid :ref:`identifiers <identifiers>`, for example because they are "
 "keywords or contain hyphens. Example::"
 msgstr ""
+"Функциональный синтаксис также следует использовать, когда какой-либо из "
+"ключей недействителен :ref:`identifiers <identifiers>`, например, потому что "
+"они являются ключевыми словами или содержат дефисы. Пример::"
 
 #: ../../library/typing.rst:2301
 msgid ""
@@ -6522,6 +6577,8 @@ msgid ""
 "The ``typing.io`` namespace is deprecated and will be removed. These types "
 "should be directly imported from ``typing`` instead."
 msgstr ""
+"Пространство имен ``typing.io`` устарело и будет удалено. Вместо этого эти "
+"типы следует импортировать напрямую из ``typing``."
 
 #: ../../library/typing.rst:3295
 msgid ""
@@ -6548,6 +6605,8 @@ msgid ""
 "The ``typing.re`` namespace is deprecated and will be removed. These types "
 "should be directly imported from ``typing`` instead."
 msgstr ""
+"Пространство имен ``typing.re`` устарело и будет удалено. Вместо этого эти "
+"типы следует импортировать напрямую из ``typing``."
 
 #: ../../library/typing.rst:3307
 msgid ""
@@ -7002,11 +7061,11 @@ msgstr "PEP/issue"
 
 #: ../../library/typing.rst:3622
 msgid "``typing.io`` and ``typing.re`` submodules"
-msgstr ""
+msgstr "Подмодули ``typing.io`` и ``typing.re``"
 
 #: ../../library/typing.rst:3623
 msgid "3.8"
-msgstr ""
+msgstr "3.8"
 
 #: ../../library/typing.rst:3624
 msgid "3.13"
@@ -7014,7 +7073,7 @@ msgstr "3.13"
 
 #: ../../library/typing.rst:3625
 msgid ":issue:`38291`"
-msgstr ""
+msgstr ":issue:`38291`"
 
 #: ../../library/typing.rst:3626
 msgid "``typing`` versions of standard collections"

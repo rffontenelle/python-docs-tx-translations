@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-18 14:51+0000\n"
+"POT-Creation-Date: 2024-10-25 14:54+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
 "Last-Translator: eulalio barbero espinosa <eulalio@disroot.org>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -1708,7 +1708,7 @@ msgstr ""
 
 #: ../../howto/argparse.rst:845
 msgid "Custom type converters"
-msgstr ""
+msgstr "Conversores de tipo personalizados"
 
 #: ../../howto/argparse.rst:847
 msgid ""
@@ -1717,6 +1717,11 @@ msgid ""
 "it's stored in the :class:`argparse.Namespace`. This can be useful when you "
 "need to pre-process the input before it is used in your program."
 msgstr ""
+"El módulo :mod:`argparse` permite especificar conversores de tipo "
+"personalizados para los argumentos de la línea de comandos. Esto le permite "
+"modificar la entrada del usuario antes de que se almacene en :class:"
+"`argparse.Namespace`. Esto puede ser útil cuando necesite preprocesar la "
+"entrada antes de que se utilice en su programa."
 
 #: ../../howto/argparse.rst:852
 msgid ""
@@ -1725,12 +1730,19 @@ msgid ""
 "However, if you need to handle more complex scenarios, you can use a custom "
 "action class with the **action** parameter instead."
 msgstr ""
+"Cuando se utiliza un conversor de tipos personalizado, se puede utilizar "
+"cualquier callable que tome un único argumento de cadena (el valor del "
+"argumento) y devuelva el valor convertido. Sin embargo, si necesitas manejar "
+"escenarios más complejos, puedes utilizar una clase de acción personalizada "
+"con el parámetro **acción** en su lugar."
 
 #: ../../howto/argparse.rst:857
 msgid ""
 "For example, let's say you want to handle arguments with different prefixes "
 "and process them accordingly::"
 msgstr ""
+"Por ejemplo, digamos que desea manejar argumentos con diferentes prefijos y "
+"procesarlos en consecuencia::"
 
 #: ../../howto/argparse.rst:860
 msgid ""
@@ -1746,22 +1758,37 @@ msgid ""
 "args = parser.parse_args()\n"
 "print(args)"
 msgstr ""
+"import argparse\n"
+"\n"
+"parser = argparse.ArgumentParser(prefix_chars='-+')\n"
+"\n"
+"parser.add_argument('-a', metavar='<value>', action='append',\n"
+"                    type=lambda x: ('-', x))\n"
+"parser.add_argument('+a', metavar='<value>', action='append',\n"
+"                    type=lambda x: ('+', x))\n"
+"\n"
+"args = parser.parse_args()\n"
+"print(args)"
 
 #: ../../howto/argparse.rst:874
 msgid ""
 "$ python prog.py -a value1 +a value2\n"
 "Namespace(a=[('-', 'value1'), ('+', 'value2')])"
 msgstr ""
+"$ python prog.py -a value1 +a value2\n"
+"Namespace(a=[('-', 'value1'), ('+', 'value2')])"
 
 #: ../../howto/argparse.rst:879
 msgid "In this example, we:"
-msgstr ""
+msgstr "En este ejemplo:"
 
 #: ../../howto/argparse.rst:881
 msgid ""
 "Created a parser with custom prefix characters using the ``prefix_chars`` "
 "parameter."
 msgstr ""
+"Creamos un analizador sintáctico con caracteres de prefijo personalizados "
+"utilizando el parámetro ``prefix_chars``."
 
 #: ../../howto/argparse.rst:884
 msgid ""
@@ -1769,6 +1796,9 @@ msgid ""
 "to create custom type converters to store the value in a tuple with the "
 "prefix."
 msgstr ""
+"Definimos dos argumentos, ``-a`` y ``+a``, que utilizan el parámetro "
+"``type`` para crear conversores de tipo personalizados para almacenar el "
+"valor en una tupla con el prefijo."
 
 #: ../../howto/argparse.rst:887
 msgid ""
@@ -1777,6 +1807,10 @@ msgid ""
 "using custom type converters, we were able to differentiate between the two "
 "arguments."
 msgstr ""
+"Sin los conversores de tipo personalizados, los argumentos habrían tratado a "
+"``-a`` y ``+a`` como el mismo argumento, lo que no sería deseable. Al "
+"utilizar conversores de tipo personalizados, hemos podido diferenciar entre "
+"los dos argumentos."
 
 #: ../../howto/argparse.rst:892
 msgid "Conclusion"
