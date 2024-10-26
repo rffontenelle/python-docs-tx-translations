@@ -1793,6 +1793,12 @@ msgid ""
 "taken to ensure that destroying those objects on the thread which called :c:"
 "member:`!tp_dealloc` will not violate any assumptions of the library."
 msgstr ""
+"在应用垃圾回收机制的 Python 中，:c:member:`!tp_dealloc` 可以从任意 Python 线"
+"程被调用，而不仅是创建该对象的线程（如果该对象成为引用计数循环的一部分，则该"
+"循环可能会被任何线程上的垃圾回收操作所回收） 。这对 Python API 调用来说不是问"
+"题，因为 :c:member:`!tp_dealloc` 调用所在的线程将持有全局解释器锁（GIL）。 但"
+"是，如果被销毁的对象又销毁了来自其他 C 或 C++ 库的对象，则应当小心地确保在调"
+"用 :c:member:`!tp_dealloc` 的线程上销毁这些对象不会破坏这个库的任何资源。"
 
 #: ../../c-api/typeobj.rst:706
 msgid ""
