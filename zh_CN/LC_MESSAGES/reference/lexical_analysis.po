@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-18 14:51+0000\n"
+"POT-Creation-Date: 2024-10-25 14:54+0000\n"
 "PO-Revision-Date: 2024-05-11 00:34+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -140,7 +140,7 @@ msgstr "这也是 GNU Emacs 认可的形式，此外，还支持如下形式："
 
 #: ../../reference/lexical_analysis.rst:95
 msgid "# vim:fileencoding=<encoding-name>"
-msgstr ""
+msgstr "# vim:fileencoding=<encoding-name>"
 
 #: ../../reference/lexical_analysis.rst:97
 msgid "which is recognized by Bram Moolenaar's VIM."
@@ -189,6 +189,10 @@ msgid ""
 "   and 0 <= minute < 60 and 0 <= second < 60:   # Looks like a valid date\n"
 "        return 1"
 msgstr ""
+"if 1900 < year < 2100 and 1 <= month <= 12 \\\n"
+"   and 1 <= day <= 31 and 0 <= hour < 24 \\\n"
+"   and 0 <= minute < 60 and 0 <= second < 60:   # 看来是个有效的日期\n"
+"        return 1"
 
 #: ../../reference/lexical_analysis.rst:127
 msgid ""
@@ -220,6 +224,10 @@ msgid ""
 "               'Juli',    'Augustus', 'September',  # for the months\n"
 "               'Oktober', 'November', 'December']   # of the year"
 msgstr ""
+"month_names = ['Januari', 'Februari', 'Maart',      # 这些是\n"
+"               'April',   'Mei',      'Juni',       # 一年之中\n"
+"               'Juli',    'Augustus', 'September',  # 各个月份的\n"
+"               'Oktober', 'November', 'December']   # 荷兰语名称"
 
 #: ../../reference/lexical_analysis.rst:147
 msgid ""
@@ -352,6 +360,17 @@ msgid ""
 "              r.append(l[i:i+1] + x)\n"
 "    return r"
 msgstr ""
+"def perm(l):\n"
+"        # 计算由 l 的所有排列组成的列表\n"
+"    if len(l) <= 1:\n"
+"                  return [l]\n"
+"    r = []\n"
+"    for i in range(len(l)):\n"
+"             s = l[:i] + l[i+1:]\n"
+"             p = perm(s)\n"
+"             for x in p:\n"
+"              r.append(l[i:i+1] + x)\n"
+"    return r"
 
 #: ../../reference/lexical_analysis.rst:233
 msgid "The following example shows various indentation errors::"
@@ -367,6 +386,13 @@ msgid ""
 "                r.append(l[i:i+1] + x)\n"
 "            return r                # error: inconsistent dedent"
 msgstr ""
+" def perm(l):                       # 错误：第一行有缩进\n"
+"for i in range(len(l)):             # 错误：没有缩进\n"
+"    s = l[:i] + l[i+1:]\n"
+"        p = perm(l[:i] + l[i+1:])   # 错误：非预期的缩进\n"
+"        for x in p:\n"
+"                r.append(l[i:i+1] + x)\n"
+"            return r                # 错误：不一致的缩进"
 
 #: ../../reference/lexical_analysis.rst:243
 msgid ""
@@ -439,6 +465,11 @@ msgid ""
 "uses the version of the Unicode Character Database as included in the :mod:"
 "`unicodedata` module."
 msgstr ""
+"在 ASCII 范围内 (U+0001..U+007F)，可用作为标识符的字符包括大小写形式的字母 "
+"``A`` 到 ``Z``，下划线 ``_`` ，以及数字 ``0`` 到 ``9``，但数字不能为第一个字"
+"符。 Python 3.0 引入了 ASCII 范围以外的额外字符 (参见 :pep:`3131`)。 对于这些"
+"字符，将使用包括在 :mod:`unicodedata` 模块中的 Unicode 字符数据库版本进行分"
+"类。"
 
 #: ../../reference/lexical_analysis.rst:294
 msgid "Identifiers are unlimited in length.  Case is significant."
@@ -540,6 +571,13 @@ msgid ""
 "assert     del        global     not        with\n"
 "async      elif       if         or         yield"
 msgstr ""
+"False      await      else       import     pass\n"
+"None       break      except     in         raise\n"
+"True       class      finally    is         return\n"
+"and        continue   for        lambda     try\n"
+"as         def        from       nonlocal   while\n"
+"assert     del        global     not        with\n"
+"async      elif       if         or         yield"
 
 #: ../../reference/lexical_analysis.rst:355
 msgid "Soft Keywords"
@@ -979,6 +1017,9 @@ msgid ""
 "... backslashes or newline characters.'\n"
 "'This string will not include backslashes or newline characters.'"
 msgstr ""
+">>> 'This string will not include \\\n"
+"... backslashes or newline characters.'\n"
+"'This string will not include backslashes or newline characters.'"
 
 #: ../../reference/lexical_analysis.rst:611
 msgid ""
@@ -1102,6 +1143,9 @@ msgid ""
 "           \"[A-Za-z0-9_]*\"   # letter, digit or underscore\n"
 "          )"
 msgstr ""
+"re.compile(\"[A-Za-z_]\"       # 字母或下划线\n"
+"           \"[A-Za-z0-9_]*\"   # 字母、数字或下划线\n"
+"          )"
 
 #: ../../reference/lexical_analysis.rst:689
 msgid ""
@@ -1185,6 +1229,9 @@ msgid ""
 "... + 3}\"\n"
 "'abc5'"
 msgstr ""
+">>> f\"abc{a # This is a comment }\"\n"
+"... + 3}\"\n"
+"'abc5'"
 
 #: ../../reference/lexical_analysis.rst:763
 msgid ""
@@ -1296,6 +1343,34 @@ msgid ""
 ">>> f\"{line = !r:20}\"\n"
 "'line = \"The mill\\'s closed\" '"
 msgstr ""
+">>> name = \"Fred\"\n"
+">>> f\"He said his name is {name!r}.\"\n"
+"\"He said his name is 'Fred'.\"\n"
+">>> f\"He said his name is {repr(name)}.\"  # repr() is equivalent to !r\n"
+"\"He said his name is 'Fred'.\"\n"
+">>> width = 10\n"
+">>> precision = 4\n"
+">>> value = decimal.Decimal(\"12.34567\")\n"
+">>> f\"result: {value:{width}.{precision}}\"  # nested fields\n"
+"'result:      12.35'\n"
+">>> today = datetime(year=2017, month=1, day=27)\n"
+">>> f\"{today:%B %d, %Y}\"  # using date format specifier\n"
+"'January 27, 2017'\n"
+">>> f\"{today=:%B %d, %Y}\" # using date format specifier and debugging\n"
+"'today=January 27, 2017'\n"
+">>> number = 1024\n"
+">>> f\"{number:#0x}\"  # using integer format specifier\n"
+"'0x400'\n"
+">>> foo = \"bar\"\n"
+">>> f\"{ foo = }\" # preserves whitespace\n"
+"\" foo = 'bar'\"\n"
+">>> line = \"The mill's closed\"\n"
+">>> f\"{line = }\"\n"
+"'line = \"The mill\\'s closed\"'\n"
+">>> f\"{line = :20}\"\n"
+"\"line = The mill's closed   \"\n"
+">>> f\"{line = !r:20}\"\n"
+"'line = \"The mill\\'s closed\" '"
 
 #: ../../reference/lexical_analysis.rst:834
 msgid ""
@@ -1309,6 +1384,9 @@ msgid ""
 ">>> f\"abc {a[\"x\"]} def\"\n"
 "'abc 2 def'"
 msgstr ""
+">>> a = dict(x=2)\n"
+">>> f\"abc {a[\"x\"]} def\"\n"
+"'abc 2 def'"
 
 #: ../../reference/lexical_analysis.rst:841
 msgid ""
@@ -1332,6 +1410,12 @@ msgid ""
 "b\n"
 "c"
 msgstr ""
+">>> a = [\"a\", \"b\", \"c\"]\n"
+">>> print(f\"List a contains:\\n{\"\\n\".join(a)}\")\n"
+"List a contains:\n"
+"a\n"
+"b\n"
+"c"
 
 #: ../../reference/lexical_analysis.rst:855
 msgid ""
@@ -1353,6 +1437,11 @@ msgid ""
 ">>> foo.__doc__ is None\n"
 "True"
 msgstr ""
+">>> def foo():\n"
+"...     f\"Not a docstring\"\n"
+"...\n"
+">>> foo.__doc__ is None\n"
+"True"
 
 #: ../../reference/lexical_analysis.rst:870
 msgid ""
@@ -1426,6 +1515,9 @@ msgid ""
 "3     79228162514264337593543950336     0o377    0xdeadbeef\n"
 "      100_000_000_000                   0b_1110_0101"
 msgstr ""
+"7     2147483647                        0o177    0b100110111\n"
+"3     79228162514264337593543950336     0o377    0xdeadbeef\n"
+"      100_000_000_000                   0b_1110_0101"
 
 #: ../../reference/lexical_analysis.rst:934
 #: ../../reference/lexical_analysis.rst:966
@@ -1459,7 +1551,7 @@ msgstr "一些浮点数字面值的示例如下::"
 
 #: ../../reference/lexical_analysis.rst:964
 msgid "3.14    10.    .001    1e100    3.14e-10    0e0    3.14_15_93"
-msgstr ""
+msgstr "3.14    10.    .001    1e100    3.14e-10    0e0    3.14_15_93"
 
 #: ../../reference/lexical_analysis.rst:975
 msgid "Imaginary literals"
@@ -1482,7 +1574,7 @@ msgstr ""
 
 #: ../../reference/lexical_analysis.rst:988
 msgid "3.14j   10.j    10j     .001j   1e100j   3.14e-10j   3.14_15_93j"
-msgstr ""
+msgstr "3.14j   10.j    10j     .001j   1e100j   3.14e-10j   3.14_15_93j"
 
 #: ../../reference/lexical_analysis.rst:994
 msgid "Operators"
@@ -1498,6 +1590,9 @@ msgid ""
 "<<      >>      &       |       ^       ~       :=\n"
 "<       >       <=      >=      ==      !="
 msgstr ""
+"+       -       *       **      /       //      %      @\n"
+"<<      >>      &       |       ^       ~       :=\n"
+"<       >       <=      >=      ==      !="
 
 #: ../../reference/lexical_analysis.rst:1011
 msgid "Delimiters"
@@ -1514,6 +1609,10 @@ msgid ""
 "->      +=      -=      *=      /=      //=     %=\n"
 "@=      &=      |=      ^=      >>=     <<=     **="
 msgstr ""
+"(       )       [       ]       {       }\n"
+",       :       !       .       ;       @       =\n"
+"->      +=      -=      *=      /=      //=     %=\n"
+"@=      &=      |=      ^=      >>=     <<=     **="
 
 #: ../../reference/lexical_analysis.rst:1024
 msgid ""
@@ -1533,7 +1632,7 @@ msgstr "以下 ASCII 字符具有特殊含义，对词法分析器有重要意�
 
 #: ../../reference/lexical_analysis.rst:1032
 msgid "'       \"       #       \\"
-msgstr ""
+msgstr "'       \"       #       \\"
 
 #: ../../reference/lexical_analysis.rst:1036
 msgid ""
@@ -1544,7 +1643,7 @@ msgstr ""
 
 #: ../../reference/lexical_analysis.rst:1039
 msgid "$       ?       `"
-msgstr ""
+msgstr "$       ?       `"
 
 #: ../../reference/lexical_analysis.rst:1045
 msgid "Footnotes"
