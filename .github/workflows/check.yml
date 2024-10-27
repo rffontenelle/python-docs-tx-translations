@@ -1,0 +1,60 @@
+name: Check
+
+on:
+  workflow_dispatch:
+    inputs:
+      cpython_version:
+        description: "Python version to build docs"
+        required: true
+        type: string
+      languages:
+        description: "List of language codes to build. e.g. '[pt_BR, de, zh_CN]'"
+        required: true
+        type: string
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      max-parallel: 4
+      fail-fast: false
+      matrix:
+        cpython_version: ${{fromJson(inputs.cpython_version)}}
+        language: ${{fromJson(needs.trigger.outputs.languages)}}
+    steps:
+      - name: Check out ${{ github.repository }}
+        uses: actions/checkout@v4.2.1
+
+      - name: Check out ${{ matrix.cpython_version }} branch of CPython
+        uses: actions/checkout@v4.2.1
+        with:
+          repository: python/cpython
+          persist-credentials: false
+          ref: ${{ matrix.cpython_version }}
+          path: cpython
+
+      - name: Check out ${{ matrix.cpython_version }} branch of ${{ github.repository }}
+        uses: actions/checkout@v4.2.1
+        with:
+          ref: ${{ matrix.cpython_version }}
+          path: cpython/Doc/locales
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v5.2.0
+        with:
+          python-version: '3'
+          cache: 'pip'
+          cache-dependency-path: cpython/Doc/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          pip3 install --upgrade pip
+          pip3 install sphinx-lint
+
+      - name: Set up problem-matcher for sphinx-build
+        uses: sphinx-doc/github-problem-matcher@1.0
+
+      - name: Build ${{ matrix.language }} translation for Python ${{ matrix.cpython_version }}
+        run: make -C cpython/Doc venv html SPHINXOPTS='-Dlanguage=${{ matrix.language }} --keep-going -W'
