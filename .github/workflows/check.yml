@@ -27,8 +27,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    env:
-      python_version: ${{ inputs.cpython_version }}
     strategy:
       max-parallel: 4
       fail-fast: false
@@ -38,18 +36,18 @@ jobs:
       - name: Check out ${{ github.repository }}
         uses: actions/checkout@v4.2.1
 
-      - name: Check out ${{ env.cpython_version }} branch of CPython
+      - name: Check out ${{ inputs.cpython_version }} branch of CPython
         uses: actions/checkout@v4.2.1
         with:
           repository: python/cpython
           persist-credentials: false
-          ref: ${{ env.cpython_version }}
+          ref: ${{ inputs.cpython_version }}
           path: cpython
 
-      - name: Check out ${{ env.cpython_version }} branch of ${{ github.repository }}
+      - name: Check out ${{ inputs.cpython_version }} branch of ${{ github.repository }}
         uses: actions/checkout@v4.2.1
         with:
-          ref: ${{ env.cpython_version }}
+          ref: ${{ inputs.cpython_version }}
           path: cpython/Doc/locales
 
       - name: Set up Python 3
@@ -67,5 +65,5 @@ jobs:
       - name: Set up problem-matcher for sphinx-build
         uses: sphinx-doc/github-problem-matcher@v1
 
-      - name: Build ${{ matrix.language }} translation for Python ${{ env.cpython_version }}
+      - name: Build ${{ matrix.language }} translation for Python ${{ inputs.cpython_version }}
         run: make -C cpython/Doc venv html SPHINXOPTS='-Dlanguage=${{ matrix.language }} --keep-going -W'
