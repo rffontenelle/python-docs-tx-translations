@@ -7,17 +7,17 @@
 # Dmitriy Q, 2022
 # Daniil Kolesnikov, 2024
 # Илья Панфилов, 2024
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 # Roustam Khamidoulline, 2024
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-25 16:48+0000\n"
+"POT-Creation-Date: 2024-11-08 16:35+0000\n"
 "PO-Revision-Date: 2020-05-31 09:32+0000\n"
-"Last-Translator: Roustam Khamidoulline, 2024\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -84,7 +84,7 @@ msgstr ":pep:`584`, в ``dict`` добавлены операторы объед
 
 #: ../../whatsnew/3.9.rst:66
 msgid ":pep:`585`, type hinting generics in standard collections;"
-msgstr ":pep:`585`, генерики хинтинга типов в стандартных коллекциях;"
+msgstr ":pep:`585`, дженерики хинтинга типов в стандартных коллекциях;"
 
 #: ../../whatsnew/3.9.rst:67
 msgid ":pep:`614`, relaxed grammar restrictions on decorators."
@@ -546,7 +546,7 @@ msgstr ""
 
 #: ../../whatsnew/3.9.rst:315
 msgid "PEP written and implemented by Paul Ganssle"
-msgstr "PEP написан и реализован Полом Гансслом"
+msgstr "PEP написан и реализован Полом Ганссле"
 
 #: ../../whatsnew/3.9.rst:319
 msgid "graphlib"
@@ -1740,6 +1740,12 @@ msgid ""
 "Python version. Consider third-party alternatives such as `LibCST`_ or "
 "`parso`_. (Contributed by Carl Meyer in :issue:`40360`.)"
 msgstr ""
+"Модуль :mod:`lib2to3` теперь выдает :exc:`PendingDeprecationWarning`. Python "
+"3.9 переключился на парсер PEG (см. :pep:`617`), а Python 3.10 может "
+"включать новый синтаксис языка, который не анализируется парсером LL(1) из "
+"lib2to3. Модуль ``lib2to3`` может быть удален из стандартной библиотеки в "
+"будущей версии Python. Рассмотрите сторонние альтернативы, такие как "
+"`LibCST`_ или `parso`_. (Предоставлено Карлом Мейером в :issue:`40360`.)"
 
 #: ../../whatsnew/3.9.rst:963
 msgid ""
@@ -2181,7 +2187,7 @@ msgstr ""
 
 #: ../../whatsnew/3.9.rst:1196
 msgid "For example, if your ``tp_traverse`` function includes:"
-msgstr "Например, если ваша функция tp_traverse включает в себя:"
+msgstr "Например, если ваша функция tp_traverse включает:"
 
 #: ../../whatsnew/3.9.rst:1202
 msgid "then add:"
@@ -2958,6 +2964,15 @@ msgid ""
 "For more details, please see their respective documentation. (Contributed by "
 "Adam Goldschmidt, Senthil Kumaran and Ken Jin in :issue:`42967`.)"
 msgstr ""
+"Более ранние версии Python позволяли использовать как ``;``, так и ``&`` в "
+"качестве разделителей параметров запроса в :func:`urllib.parse.parse_qs` и :"
+"func:`urllib.parse.parse_qsl`. Из соображений безопасности и в соответствии "
+"с новыми рекомендациями W3C это было изменено, чтобы разрешить только один "
+"ключ-разделитель с ``&`` по умолчанию. Это изменение также затрагивает :func:"
+"`cgi.parse` и :func:`cgi.parse_multipart`, поскольку они используют "
+"затронутые функции внутри себя. Более подробную информацию можно найти в "
+"соответствующей документации. (Предоставлено Адамом Гольдшмидтом, Сентилом "
+"Кумараном и Кеном Джином в :issue:`42967`.)"
 
 #: ../../whatsnew/3.9.rst:1584
 msgid "Notable changes in Python 3.9.3"
@@ -3046,6 +3061,8 @@ msgid ""
 "Fixed ``is_global`` and ``is_private`` behavior in ``IPv4Address``, "
 "``IPv6Address``, ``IPv4Network`` and ``IPv6Network``."
 msgstr ""
+"Исправлено поведение is_global и is_private в IPv4Address, IPv6Address, "
+"IPv4Network и IPv6Network."
 
 #: ../../whatsnew/3.9.rst:1645
 msgid "email"
@@ -3064,6 +3081,12 @@ msgid ""
 "verify_generated_headers`. (Contributed by Bas Bloemsaat and Petr Viktorin "
 "in :gh:`121650`.)"
 msgstr ""
+":mod:`~email.generator` теперь будет отказываться сериализовать (записывать) "
+"заголовки, которые неправильно свернуты или разделены, так что они будут "
+"анализироваться как несколько заголовков или объединяться со смежными "
+"данными. Если вам нужно отключить эту функцию безопасности, установите :attr:"
+"`~email.policy.Policy.verify_generated_headers`. (Предоставлено Басом "
+"Блумсаатом и Петром Викторином в :gh:`121650`.)"
 
 #: ../../whatsnew/3.9.rst:1656
 msgid ""
@@ -3076,3 +3099,12 @@ msgid ""
 "check if the *strict* paramater is available. (Contributed by Thomas Dwyer "
 "and Victor Stinner for :gh:`102988` to improve the CVE-2023-27043 fix.)"
 msgstr ""
+":func:`email.utils.getaddresses` и :func:`email.utils.parseaddr` теперь "
+"возвращают ``('', '')`` 2-кортежи в большем количестве ситуаций, когда "
+"встречаются недействительные адреса электронной почты, а не потенциально "
+"неточные значения. К этим двум функциям был добавлен необязательный параметр "
+"*strict*: используйте ``strict=False``, чтобы получить старое поведение, "
+"принимая неверные входные данные. ``getattr(email.utils, "
+"'supports_strict_parsing', False)`` можно использовать для проверки "
+"доступности параметра *strict*. (Предоставлено Томасом Дуайером и Виктором "
+"Стиннером для :gh:`102988` для улучшения исправления CVE-2023-27043.)"
