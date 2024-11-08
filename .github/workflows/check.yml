@@ -62,6 +62,15 @@ jobs:
           pip3 install --upgrade pip
           pip3 install sphinx-lint
 
+      - name: Put translation files in correct place
+        run: |
+          cd cpython/Doc/locales/${{ matrix.language }}
+          mkdir LC_MESSAGES
+          for pofile in $(find -name '*.po')
+          do
+            install -Dm644 -t LC_MESSAGES $pofile
+          done
+    
       - name: Set up problem-matcher for sphinx-build
         uses: sphinx-doc/github-problem-matcher@v1
 
