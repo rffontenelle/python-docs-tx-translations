@@ -7,8 +7,8 @@
 # Claudio Rogerio Carvalho Filho <excriptbrasil@gmail.com>, 2021
 # i17obot <i17obot@rougeth.com>, 2021
 # Adorilson Bezerra <adorilson@gmail.com>, 2024
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 # Marco Rougeth <marco@rougeth.com>, 2024
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2024
 #
 #, fuzzy
 msgid ""
@@ -17,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-01 14:17+0000\n"
 "PO-Revision-Date: 2021-06-28 00:57+0000\n"
-"Last-Translator: Marco Rougeth <marco@rougeth.com>, 2024\n"
+"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/python-doc/"
 "teams/5390/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -51,6 +51,9 @@ msgid ""
 "func:`threading.local` to prevent their state from bleeding to other code "
 "unexpectedly, when used in concurrent code."
 msgstr ""
+"Os gerenciadores de contexto que possuem estado devem usar Variáveis de "
+"Contexto ao invés de :func:`threading.local` para evitar que seu estado vaze "
+"para outro código inesperadamente, quando usado em código concorrente."
 
 #: ../../library/contextvars.rst:21
 msgid "See also :pep:`567` for additional details."
@@ -68,7 +71,7 @@ msgstr ""
 
 #: ../../library/contextvars.rst:33
 msgid "var: ContextVar[int] = ContextVar('var', default=42)"
-msgstr ""
+msgstr "var: ContextVar[int] = ContextVar('var', default=42)"
 
 #: ../../library/contextvars.rst:35
 msgid ""
@@ -174,6 +177,14 @@ msgid ""
 "# After the reset call the var has no value again, so\n"
 "# var.get() would raise a LookupError."
 msgstr ""
+"var = ContextVar('var')\n"
+"\n"
+"token = var.set('novo valor')\n"
+"# código que usa 'var'; var.get() retorna 'novo valor'.\n"
+"var.reset(token)\n"
+"\n"
+"# Após uma chamada de redefinição, var não tem mais valor,\n"
+"# então var.get() levantaria uma exceção LookupError."
 
 #: ../../library/contextvars.rst:99
 msgid ""
@@ -228,6 +239,8 @@ msgid ""
 "ctx: Context = copy_context()\n"
 "print(list(ctx.items()))"
 msgstr ""
+"ctx: Context = copy_context()\n"
+"print(list(ctx.items()))"
 
 #: ../../library/contextvars.rst:134
 msgid ""
@@ -258,6 +271,10 @@ msgid ""
 "current thread's stack.  All :class:`!Context` objects in the stacks are "
 "considered to be *entered*."
 msgstr ""
+"Cada thread tem sua própria pilha efetiva de objetos :class:`!Context`. O :"
+"term:`contexto atual` é o objeto :class:`!Context` no topo da pilha da "
+"thread atual. Todos os objetos :class:`!Context` nas pilhas são considerados "
+"como *inseridos*."
 
 #: ../../library/contextvars.rst:152
 msgid ""
@@ -265,6 +282,9 @@ msgid ""
 "method, makes the context the current context by pushing it onto the top of "
 "the current thread's context stack."
 msgstr ""
+"*Inserir* um contexto, o que pode ser feito chamando seu método :meth:"
+"`~Context.run`, torna o contexto o contexto atual, colocando-o no topo da "
+"pilha de contexto da thread atual."
 
 #: ../../library/contextvars.rst:156
 msgid ""
@@ -273,6 +293,10 @@ msgid ""
 "context to what it was before the context was entered by popping the context "
 "off the top of the context stack."
 msgstr ""
+"*Sair* do contexto atual, o que pode ser feito retornando do retorno de "
+"chamada passado para o método :meth:`~Context.run`, restaura o contexto "
+"atual para o que era antes de o contexto ser inserido, retirando o contexto "
+"do topo da pilha de contextos."
 
 #: ../../library/contextvars.rst:161
 msgid ""
@@ -280,16 +304,23 @@ msgid ""
 "behave in a similar fashion to :func:`threading.local` when values are "
 "assigned in different threads."
 msgstr ""
+"Como cada thread tem sua própria pilha de contexto, os objetos :class:"
+"`ContextVar` se comportam de maneira semelhante a :func:`threading.local` "
+"quando valores são atribuídos em threads diferentes."
 
 #: ../../library/contextvars.rst:165
 msgid ""
 "Attempting to enter an already entered context, including contexts entered "
 "in other threads, raises a :exc:`RuntimeError`."
 msgstr ""
+"Tentar entrar em um contexto já inserido, incluindo contextos inseridos em "
+"outras threads, levanta uma exceção :exc:`RuntimeError`."
 
 #: ../../library/contextvars.rst:168
 msgid "After exiting a context, it can later be re-entered (from any thread)."
 msgstr ""
+"Após sair de um contexto, ele pode ser acessado novamente (de qualquer "
+"thread)."
 
 #: ../../library/contextvars.rst:170
 msgid ""
@@ -300,6 +331,12 @@ msgid ""
 "context was entered (if needed, the values can be restored by re-entering "
 "the context)."
 msgstr ""
+"Quaisquer alterações nos valores de :class:`ContextVar` por meio do método :"
+"meth:`ContextVar.set` são registradas no contexto atual. O método :meth:"
+"`ContextVar.get` retorna o valor associado ao contexto atual. Sair de um "
+"contexto efetivamente reverte quaisquer alterações feitas nas variáveis de "
+"contexto enquanto o contexto foi inserido (se necessário, os valores podem "
+"ser restaurados ao inserir novamente o contexto)."
 
 #: ../../library/contextvars.rst:177
 msgid "Context implements the :class:`collections.abc.Mapping` interface."
@@ -311,6 +348,9 @@ msgid ""
 "Context.  Returns *callable*'s return value, or propagates an exception if "
 "one occurred."
 msgstr ""
+"Entra no Context, executa ``callable(*args, **kwargs)`` e sai do Context. "
+"Retorna o valor de retorno de *callable* ou propaga uma exceção, se ocorrer "
+"uma."
 
 #: ../../library/contextvars.rst:185
 msgid "Example:"
