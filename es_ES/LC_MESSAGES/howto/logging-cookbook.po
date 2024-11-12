@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-03 16:27+0000\n"
+"POT-Creation-Date: 2024-11-12 09:45+0000\n"
 "PO-Revision-Date: 2023-05-24 02:11+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -25,7 +25,7 @@ msgstr ""
 
 #: ../../howto/logging-cookbook.rst:5
 msgid "Logging Cookbook"
-msgstr ""
+msgstr "Libro de recetas de registro"
 
 #: ../../howto/logging-cookbook.rst:0
 msgid "Author"
@@ -33,7 +33,7 @@ msgstr "Autor"
 
 #: ../../howto/logging-cookbook.rst:7
 msgid "Vinay Sajip <vinay_sajip at red-dove dot com>"
-msgstr ""
+msgstr "Vinay Sajip <vinay_sajip at red-dove dot com>"
 
 #: ../../howto/logging-cookbook.rst:9
 msgid ""
@@ -41,10 +41,13 @@ msgid ""
 "found useful in the past. For links to tutorial and reference information, "
 "please see :ref:`cookbook-ref-links`."
 msgstr ""
+"Esta página contiene una serie de recetas relacionadas con el registro, que "
+"han resultado útiles en el pasado. Para obtener enlaces a tutoriales e "
+"información de referencia, consulte :ref:`cookbook-ref-links`."
 
 #: ../../howto/logging-cookbook.rst:16
 msgid "Using logging in multiple modules"
-msgstr ""
+msgstr "Uso del registro en varios módulos"
 
 #: ../../howto/logging-cookbook.rst:18
 msgid ""
@@ -57,38 +60,51 @@ msgid ""
 "logger calls to the child will pass up to the parent.  Here is a main "
 "module::"
 msgstr ""
+"Múltiples llamadas a ``logging.getLogger('someLogger')`` devuelven una "
+"referencia al mismo objeto logger.  Esto es cierto no sólo dentro del mismo "
+"módulo, sino también a través de los módulos, siempre y cuando esté en el "
+"mismo proceso de intérprete de Python.  Es cierto para referencias al mismo "
+"objeto; además, el código de la aplicación puede definir y configurar un "
+"logger padre en un módulo y crear (pero no configurar) un logger hijo en un "
+"módulo separado, y todas las llamadas al logger hijo pasarán al padre.  He "
+"aquí un módulo principal::"
 
 #: ../../howto/logging-cookbook.rst:56
 msgid "Here is the auxiliary module::"
-msgstr ""
+msgstr "Aquí está el módulo auxiliar::"
 
 #: ../../howto/logging-cookbook.rst:76
 msgid "The output looks like this:"
-msgstr ""
+msgstr "El resultado es el siguiente:"
 
 #: ../../howto/logging-cookbook.rst:102
 msgid "Logging from multiple threads"
-msgstr ""
+msgstr "Registro desde varios hilos"
 
 #: ../../howto/logging-cookbook.rst:104
 msgid ""
 "Logging from multiple threads requires no special effort. The following "
 "example shows logging from the main (initial) thread and another thread::"
 msgstr ""
+"El registro desde varios subprocesos no requiere ningún esfuerzo especial. "
+"El siguiente ejemplo muestra el registro desde el hilo principal (inicial) y "
+"otro hilo::"
 
 #: ../../howto/logging-cookbook.rst:133
 msgid "When run, the script should print something like the following:"
-msgstr ""
+msgstr "Cuando se ejecuta, el script debe imprimir algo como lo siguiente:"
 
 #: ../../howto/logging-cookbook.rst:155
 msgid ""
 "This shows the logging output interspersed as one might expect. This "
 "approach works for more threads than shown here, of course."
 msgstr ""
+"Esto muestra la salida de registro intercalada como cabría esperar. Este "
+"enfoque funciona para más hilos que los mostrados aquí, por supuesto."
 
 #: ../../howto/logging-cookbook.rst:159
 msgid "Multiple handlers and formatters"
-msgstr ""
+msgstr "Múltiples manipuladores y formateadores"
 
 #: ../../howto/logging-cookbook.rst:161
 msgid ""
@@ -101,6 +117,15 @@ msgid ""
 "slight modification to the previous simple module-based configuration "
 "example::"
 msgstr ""
+"Los registradores son objetos Python planos.  El método :meth:`~Logger."
+"addHandler` no tiene una cuota mínima o máxima para el número de manejadores "
+"que puede añadir.  A veces será beneficioso para una aplicación registrar "
+"todos los mensajes de todas las severidades en un archivo de texto mientras "
+"que simultáneamente se registran los errores o lo anterior en la consola.  "
+"Para configurar esto, simplemente configure los manejadores apropiados.  Las "
+"llamadas de registro en el código de la aplicación permanecerán sin "
+"cambios.  He aquí una ligera modificación del ejemplo anterior de "
+"configuración simple basada en módulos::"
 
 #: ../../howto/logging-cookbook.rst:194
 msgid ""
@@ -108,6 +133,9 @@ msgid ""
 "All that changed was the addition and configuration of a new handler named "
 "*fh*."
 msgstr ""
+"Observe que el código de la 'aplicación' no se preocupa por los múltiples "
+"manejadores.  Todo lo que cambió fue la adición y configuración de un nuevo "
+"manejador llamado *fh*."
 
 #: ../../howto/logging-cookbook.rst:197
 msgid ""
@@ -120,10 +148,18 @@ msgid ""
 "to happen is to modify the severity level of the logger and/or handler to "
 "debug."
 msgstr ""
+"La posibilidad de crear nuevos manejadores con filtros de mayor o menor "
+"gravedad puede ser muy útil a la hora de escribir y probar una aplicación.  "
+"En lugar de utilizar muchas sentencias ``print`` para depurar, utilice "
+"``logger.debug``: A diferencia de las sentencias print, que tendrá que "
+"borrar o comentar más tarde, las sentencias logger.debug pueden permanecer "
+"intactas en el código fuente y permanecer inactivas hasta que vuelva a "
+"necesitarlas.  En ese momento, el único cambio que hay que hacer es "
+"modificar el nivel de gravedad del logger y/o handler a debug."
 
 #: ../../howto/logging-cookbook.rst:208
 msgid "Logging to multiple destinations"
-msgstr ""
+msgstr "Registro en varios destinos"
 
 #: ../../howto/logging-cookbook.rst:210
 msgid ""
@@ -133,26 +169,36 @@ msgid ""
 "console. Let's also assume that the file should contain timestamps, but the "
 "console messages should not. Here's how you can achieve this::"
 msgstr ""
+"Digamos que se quiere registrar en consola y fichero con diferentes formatos "
+"de mensaje y en diferentes circunstancias. Digamos que se quiere registrar "
+"los mensajes con niveles de DEBUG y superiores en el fichero, y los mensajes "
+"con nivel INFO y superiores en la consola. Supongamos también que el fichero "
+"debe contener marcas de tiempo, pero los mensajes de la consola no. He aquí "
+"cómo se puede lograr esto::"
 
 #: ../../howto/logging-cookbook.rst:248
 msgid "When you run this, on the console you will see"
-msgstr ""
+msgstr "Cuando ejecutes esto, en la consola verás"
 
 #: ../../howto/logging-cookbook.rst:257
 msgid "and in the file you will see something like"
-msgstr ""
+msgstr "y en el archivo se verá algo como"
 
 #: ../../howto/logging-cookbook.rst:267
 msgid ""
 "As you can see, the DEBUG message only shows up in the file. The other "
 "messages are sent to both destinations."
 msgstr ""
+"Como se puede ver, el mensaje DEBUG sólo aparece en el archivo. Los demás "
+"mensajes se envían a ambos destinos."
 
 #: ../../howto/logging-cookbook.rst:270
 msgid ""
 "This example uses console and file handlers, but you can use any number and "
 "combination of handlers you choose."
 msgstr ""
+"Este ejemplo utiliza manejadores de consola y archivo, pero puede utilizar "
+"cualquier número y combinación de manejadores que se elija."
 
 #: ../../howto/logging-cookbook.rst:273
 msgid ""
@@ -162,10 +208,16 @@ msgid ""
 "the directory exists and that you have the permissions to create and update "
 "files in it."
 msgstr ""
+"Tener en cuenta que la elección anterior del nombre del archivo de registro "
+"``/tmp/myapp.log`` implica el uso de una ubicación estándar para archivos "
+"temporales en sistemas POSIX. En Windows, es posible que se  tenga que "
+"elegir un nombre de directorio diferente para el registro - asegurarse sólo "
+"de que el directorio exista y que se tienen los permisos para crear y "
+"actualizar archivos en él."
 
 #: ../../howto/logging-cookbook.rst:282
 msgid "Custom handling of levels"
-msgstr ""
+msgstr "Gestión personalizada de niveles"
 
 #: ../../howto/logging-cookbook.rst:284
 msgid ""
@@ -174,22 +226,28 @@ msgid ""
 "get processed by a handler. To do this, you need to use filters. Let's look "
 "at a scenario where you want to arrange things as follows:"
 msgstr ""
+"A veces, es posible que se desee hacer algo distinto del manejo estándar de "
+"los niveles en los manejadores, donde todos los niveles por encima de un "
+"umbral son procesados por un manejador. Para ello, es necesario utilizar "
+"filtros. Veamos un escenario en el que se desea organizar las cosas de la "
+"siguiente manera:"
 
 #: ../../howto/logging-cookbook.rst:289
 msgid "Send messages of severity ``INFO`` and ``WARNING`` to ``sys.stdout``"
-msgstr ""
+msgstr "Enviar mensajes de gravedad ``INFO`` y ``WARNING`` a ``sys.stdout``"
 
 #: ../../howto/logging-cookbook.rst:290
 msgid "Send messages of severity ``ERROR`` and above to ``sys.stderr``"
-msgstr ""
+msgstr "Enviar mensajes de gravedad ``ERROR`` y superiores a ``sys.stderr``"
 
 #: ../../howto/logging-cookbook.rst:291
 msgid "Send messages of severity ``DEBUG`` and above to file ``app.log``"
 msgstr ""
+"Enviar mensajes de gravedad ``DEBUG`` y superiores al archivo ``app.log``"
 
 #: ../../howto/logging-cookbook.rst:293
 msgid "Suppose you configure logging with the following JSON:"
-msgstr ""
+msgstr "Suponga que se configura el registro con el siguiente JSON:"
 
 #: ../../howto/logging-cookbook.rst:335
 msgid ""
@@ -2068,31 +2126,31 @@ msgstr ""
 
 #: ../../howto/logging-cookbook.rst:4080
 msgid "Other resources"
-msgstr ""
+msgstr "Otros recursos"
 
 #: ../../howto/logging-cookbook.rst:4085
 msgid "Module :mod:`logging`"
-msgstr ""
+msgstr "Módulo :mod:`logging`"
 
 #: ../../howto/logging-cookbook.rst:4085
 msgid "API reference for the logging module."
-msgstr ""
+msgstr "Referencia API para el módulo de registro."
 
 #: ../../howto/logging-cookbook.rst:4088
 msgid "Module :mod:`logging.config`"
-msgstr ""
+msgstr "Módulo :mod:`logging.config`"
 
 #: ../../howto/logging-cookbook.rst:4088
 msgid "Configuration API for the logging module."
-msgstr ""
+msgstr "API de configuración del módulo de registro."
 
 #: ../../howto/logging-cookbook.rst:4091
 msgid "Module :mod:`logging.handlers`"
-msgstr ""
+msgstr "Módulo :mod:`logging.handlers`"
 
 #: ../../howto/logging-cookbook.rst:4091
 msgid "Useful handlers included with the logging module."
-msgstr ""
+msgstr "Manejadores útiles incluidos con el módulo de registro."
 
 #: ../../howto/logging-cookbook.rst:4093
 msgid ":ref:`Basic Tutorial <logging-basic-tutorial>`"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-08 15:21+0000\n"
+"POT-Creation-Date: 2024-11-12 09:45+0000\n"
 "PO-Revision-Date: 2023-05-24 02:11+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -994,6 +994,8 @@ msgid ""
 ":meth:`~Handler.addFilter` and :meth:`~Handler.removeFilter` respectively "
 "configure and deconfigure filter objects on handlers."
 msgstr ""
+":meth:`~Handler.addFilter` y :meth:`~Handler.removeFilter` configuran y "
+"desconfiguran respectivamente objetos de filtro en los manejadores."
 
 #: ../../howto/logging.rst:495
 msgid ""
@@ -1002,10 +1004,15 @@ msgid ""
 "the interface that all handlers should have and establishes some default "
 "behavior that child classes can use (or override)."
 msgstr ""
+"El código de la aplicación no debe instanciar y utilizar directamente "
+"instancias de :class:`Handler`. En su lugar, la clase :class:`Handler` es "
+"una clase base que define la interfaz que deben tener todos los manejadores "
+"y establece algún comportamiento predeterminado que las clases hijas pueden "
+"utilizar (o sobrescribir)."
 
 #: ../../howto/logging.rst:502
 msgid "Formatters"
-msgstr ""
+msgstr "Formateadores"
 
 #: ../../howto/logging.rst:504
 msgid ""
@@ -1016,12 +1023,22 @@ msgid ""
 "takes three optional arguments -- a message format string, a date format "
 "string and a style indicator."
 msgstr ""
+"Los objetos formateadores configuran el orden final, la estructura y el "
+"contenido del mensaje de registro.  A diferencia de la clase base :class:"
+"`logging.Handler`, el código de la aplicación puede instanciar clases de "
+"formateador, aunque probablemente podría subclasificar el formateador si su "
+"aplicación necesita un comportamiento especial.  El constructor toma tres "
+"argumentos opcionales -- una cadena de formato de mensaje, una cadena de "
+"formato de fecha y un indicador de estilo."
 
 #: ../../howto/logging.rst:513
 msgid ""
 "If there is no message format string, the default is to use the raw "
 "message.  If there is no date format string, the default date format is:"
 msgstr ""
+"Si no hay cadena de formato de mensaje, por defecto se utiliza el mensaje "
+"sin procesar.  Si no hay cadena de formato de fecha, el formato de fecha por "
+"defecto es:"
 
 #: ../../howto/logging.rst:520
 msgid ""
@@ -1029,6 +1046,9 @@ msgid ""
 "``'{'``, or ``'$'``. If one of these is not specified, then ``'%'`` will be "
 "used."
 msgstr ""
+"con los milisegundos añadidos al final. ``style`` es uno de los siguientes: "
+"``'%'``, ``'{'`` o ``'$'``. Si no se especifica uno de ellos, se utilizará "
+"``'%'``."
 
 #: ../../howto/logging.rst:523
 msgid ""
@@ -1039,10 +1059,17 @@ msgid ""
 "arguments), while if the style is ``'$'`` then the message format string "
 "should conform to what is expected by :meth:`string.Template.substitute`."
 msgstr ""
+"Si el ``style`` es ``'%'``, la cadena de formato de mensaje utiliza la "
+"sustitución de cadenas con estilo ``%(<dictionary key>)s``; las posibles "
+"claves están documentadas en :ref:`logrecord-attributes`. Si el estilo es "
+"``'{'``, se asume que la cadena de formato de mensaje es compatible con :"
+"meth:`str.format` (utilizando argumentos de palabra clave), mientras que si "
+"el estilo es ``'$'``, entonces la cadena de formato de mensaje debe "
+"ajustarse a lo esperado por :meth:`string.Template.substitute`."
 
 #: ../../howto/logging.rst:530
 msgid "Added the ``style`` parameter."
-msgstr ""
+msgstr "Se ha añadido el parámetro ``style``."
 
 #: ../../howto/logging.rst:533
 msgid ""
@@ -1050,6 +1077,9 @@ msgid ""
 "format, the severity of the message, and the contents of the message, in "
 "that order::"
 msgstr ""
+"La siguiente cadena de formato de mensaje registrará la hora en un formato "
+"legible por humanos, la gravedad del mensaje y el contenido del mensaje, en "
+"ese orden::"
 
 #: ../../howto/logging.rst:539
 msgid ""
@@ -1061,32 +1091,47 @@ msgid ""
 "want all logging times to be shown in GMT, set the ``converter`` attribute "
 "in the Formatter class (to ``time.gmtime`` for GMT display)."
 msgstr ""
+"Los formateadores utilizan una función configurable por el usuario para "
+"convertir la hora de creación de un registro en una tupla. Por defecto, se "
+"utiliza :func:`time.localtime`; para cambiar esto para una instancia de "
+"formateador en particular, establezca el atributo ``converter`` de la "
+"instancia a una función con la misma firma que :func:`time.localtime` o :"
+"func:`time.gmtime`. Para cambiarlo para todos los formateadores, por "
+"ejemplo, si desea que todos los tiempos de registro se muestren en GMT, "
+"establezca el atributo ``converter`` en la clase Formateador (a ``time."
+"gmtime`` para la visualización GMT)."
 
 #: ../../howto/logging.rst:549
 msgid "Configuring Logging"
-msgstr ""
+msgstr "Configuración del registro"
 
 #: ../../howto/logging.rst:553
 msgid "Programmers can configure logging in three ways:"
-msgstr ""
+msgstr "Los programadores pueden configurar el registro de tres maneras:"
 
 #: ../../howto/logging.rst:555
 msgid ""
 "Creating loggers, handlers, and formatters explicitly using Python code that "
 "calls the configuration methods listed above."
 msgstr ""
+"Crear loggers, handlers y formatters explícitamente usando código Python que "
+"llame a los métodos de configuración listados arriba."
 
 #: ../../howto/logging.rst:557
 msgid ""
 "Creating a logging config file and reading it using the :func:`fileConfig` "
 "function."
 msgstr ""
+"Creación de un archivo de configuración de registro y lectura del mismo "
+"mediante la función :func:`fileConfig`."
 
 #: ../../howto/logging.rst:559
 msgid ""
 "Creating a dictionary of configuration information and passing it to the :"
 "func:`dictConfig` function."
 msgstr ""
+"Crear un diccionario de información de configuración y pasarlo a la función :"
+"func:`dictConfig`."
 
 #: ../../howto/logging.rst:562
 msgid ""
@@ -1094,11 +1139,17 @@ msgid ""
 "config-api`.  The following example configures a very simple logger, a "
 "console handler, and a simple formatter using Python code::"
 msgstr ""
+"Para la documentación de referencia sobre las dos últimas opciones, véase :"
+"ref:`logging-config-api`.  El siguiente ejemplo configura un logger muy "
+"simple, un manejador de consola, y un formateador simple usando código "
+"Python::"
 
 #: ../../howto/logging.rst:592
 msgid ""
 "Running this module from the command line produces the following output:"
 msgstr ""
+"La ejecución de este módulo desde la línea de comandos produce la siguiente "
+"salida:"
 
 #: ../../howto/logging.rst:603
 msgid ""
@@ -1106,15 +1157,19 @@ msgid ""
 "identical to those in the example listed above, with the only difference "
 "being the names of the objects::"
 msgstr ""
+"El siguiente módulo de Python crea un registrador, un manejador y un "
+"formateador casi idénticos a los del ejemplo anterior, con la única "
+"diferencia de los nombres de los objetos::"
 
 #: ../../howto/logging.rst:622
 msgid "Here is the logging.conf file:"
-msgstr ""
+msgstr "Este es el archivo logging.conf:"
 
 #: ../../howto/logging.rst:654
 msgid ""
 "The output is nearly identical to that of the non-config-file-based example:"
 msgstr ""
+"La salida es casi idéntica a la del ejemplo sin archivo de configuración:"
 
 #: ../../howto/logging.rst:665
 msgid ""
@@ -1122,6 +1177,10 @@ msgid ""
 "Python code approach, mainly separation of configuration and code and the "
 "ability of noncoders to easily modify the logging properties."
 msgstr ""
+"Puedes ver que el enfoque del archivo de configuración tiene algunas "
+"ventajas sobre el enfoque del código Python, principalmente la separación de "
+"la configuración y el código y la capacidad de los no codificadores para "
+"modificar fácilmente las propiedades de registro."
 
 #: ../../howto/logging.rst:669
 msgid ""
@@ -1133,6 +1192,14 @@ msgid ""
 "configuration. Please refer to the reference documentation for more "
 "information, and specify ``False`` for this parameter if you wish."
 msgstr ""
+"La función :func:`fileConfig` toma un parámetro por defecto, "
+"``disable_existing_loggers``, que por defecto es ``True`` por razones de "
+"compatibilidad con versiones anteriores. Esto puede o no ser lo que usted "
+"desea, ya que causará que cualquier registrador no-root existente antes de "
+"la llamada a :func:`fileConfig` sea deshabilitado a menos que ellos (o un "
+"ancestro) sean explícitamente nombrados en la configuración. Consulte la "
+"documentación de referencia para obtener más información y especifique "
+"``False`` para este parámetro si lo desea."
 
 #: ../../howto/logging.rst:677
 msgid ""
@@ -1142,6 +1209,12 @@ msgid ""
 "the logger-disabling behaviour described above, which may not be what you "
 "want - in which case, provide the key explicitly with a value of ``False``."
 msgstr ""
+"El diccionario pasado a :func:`dictConfig` también puede especificar un "
+"valor booleano con la clave ``disable_existing_loggers``, que si no se "
+"especifica explícitamente en el diccionario también se interpreta por "
+"defecto como ``True``. Esto conduce al comportamiento de desactivación del "
+"registrador descrito anteriormente, que puede no ser lo que usted desea - en "
+"cuyo caso, proporcione la clave explícitamente con un valor de ``False``."
 
 #: ../../howto/logging.rst:687
 msgid ""
@@ -1153,6 +1226,14 @@ msgid ""
 "module ``mymodule``, where ``mypackage`` is available on the Python import "
 "path)."
 msgstr ""
+"Ten en cuenta que los nombres de clase a los que se hace referencia en los "
+"archivos de configuración deben ser o bien relativos al módulo de registro, "
+"o bien valores absolutos que puedan resolverse utilizando los mecanismos "
+"normales de importación. Por lo tanto, puede utilizar :class:`~logging."
+"handlers.WatchedFileHandler` (relativo al módulo de registro) o ``mypackage."
+"mymodule.MyHandler`` (para una clase definida en el paquete ``mypackage`` y "
+"el módulo ``mymodule``, donde ``mypackage`` está disponible en la ruta de "
+"importación de Python)."
 
 #: ../../howto/logging.rst:695
 msgid ""
@@ -1168,22 +1249,39 @@ msgid ""
 "can construct the dictionary in Python code, receive it in pickled form over "
 "a socket, or use whatever approach makes sense for your application."
 msgstr ""
+"En Python 3.2, se ha introducido una nueva forma de configurar el registro, "
+"utilizando diccionarios para mantener la información de configuración. Esto "
+"proporciona un superconjunto de la funcionalidad del enfoque basado en "
+"archivos de configuración descrito anteriormente, y es el método de "
+"configuración recomendado para nuevas aplicaciones y despliegues. Dado que "
+"se utiliza un diccionario Python para guardar la información de "
+"configuración, y dado que puedes rellenar ese diccionario utilizando "
+"diferentes medios, tienes más opciones para la configuración. Por ejemplo, "
+"puedes usar un archivo de configuración en formato JSON, o, si tienes acceso "
+"a la funcionalidad de procesamiento YAML, un archivo en formato YAML, para "
+"rellenar el diccionario de configuración. O, por supuesto, puedes construir "
+"el diccionario en código Python, recibirlo en forma de decapado a través de "
+"un socket, o utilizar cualquier enfoque que tenga sentido para tu aplicación."
 
 #: ../../howto/logging.rst:707
 msgid ""
 "Here's an example of the same configuration as above, in YAML format for the "
 "new dictionary-based approach:"
 msgstr ""
+"He aquí un ejemplo de la misma configuración que la anterior, en formato "
+"YAML para el nuevo enfoque basado en diccionarios:"
 
 #: ../../howto/logging.rst:731
 msgid ""
 "For more information about logging using a dictionary, see :ref:`logging-"
 "config-api`."
 msgstr ""
+"Para obtener más información sobre el registro mediante un diccionario, "
+"consulte :ref:`logging-config-api`."
 
 #: ../../howto/logging.rst:735
 msgid "What happens if no configuration is provided"
-msgstr ""
+msgstr "¿Qué ocurre si no se proporciona ninguna configuración?"
 
 #: ../../howto/logging.rst:737
 msgid ""
@@ -1191,6 +1289,9 @@ msgid ""
 "where a logging event needs to be output, but no handlers can be found to "
 "output the event."
 msgstr ""
+"Si no se proporciona ninguna configuración de registro, es posible que se "
+"produzca una situación en la que se necesite dar salida a un evento de "
+"registro, pero no se puedan encontrar manejadores para dar salida al evento."
 
 #: ../../howto/logging.rst:741
 msgid ""
@@ -1203,31 +1304,48 @@ msgid ""
 "handler's level is set to ``WARNING``, so all events at this and greater "
 "severities will be output."
 msgstr ""
+"Lo sucedido se emite utilizando un \"manejador de último recurso\", "
+"almacenado en :data:`lastResort`. Este manejador interno no está asociado "
+"con ningún registrador, y actúa como un :class:`~logging.StreamHandler` que "
+"escribe el mensaje de descripción del evento en el valor actual de ``sys."
+"stderr`` (por lo tanto respetando cualquier redirección que pueda estar en "
+"efecto). No se aplica ningún formato al mensaje, sólo se imprime el mensaje "
+"de descripción del evento. El nivel del manejador se establece en "
+"``WARNING``, por lo que todos los eventos de esta y mayores severidades "
+"serán emitidos."
 
 #: ../../howto/logging.rst:752
 msgid "For versions of Python prior to 3.2, the behaviour is as follows:"
 msgstr ""
+"Para versiones de Python anteriores a la 3.2, el comportamiento es el "
+"siguiente:"
 
 #: ../../howto/logging.rst:754
 msgid ""
 "If :data:`raiseExceptions` is ``False`` (production mode), the event is "
 "silently dropped."
 msgstr ""
+"Si :data:`raiseExceptions` es ``False`` (modo de producción), lo sucedido se "
+"abandona silenciosamente."
 
 #: ../../howto/logging.rst:757
 msgid ""
 "If :data:`raiseExceptions` is ``True`` (development mode), a message 'No "
 "handlers could be found for logger X.Y.Z' is printed once."
 msgstr ""
+"Si :data:`raiseExceptions` es ``True`` (modo de desarrollo), se imprime una "
+"vez el mensaje 'No se han encontrado manejadores para el registrador X.Y.Z'."
 
 #: ../../howto/logging.rst:760
 msgid ""
 "To obtain the pre-3.2 behaviour, :data:`lastResort` can be set to ``None``."
 msgstr ""
+"Para obtener el comportamiento anterior a -3.2, :data:`lastResort` puede ."
+"fijarse en ``None``."
 
 #: ../../howto/logging.rst:766
 msgid "Configuring Logging for a Library"
-msgstr ""
+msgstr "Configuración del registro de una biblioteca"
 
 #: ../../howto/logging.rst:768
 msgid ""
@@ -1239,6 +1357,14 @@ msgid ""
 "of severity ``WARNING`` and greater will be printed to ``sys.stderr``. This "
 "is regarded as the best default behaviour."
 msgstr ""
+"Cuando se desarrolla una biblioteca que utiliza el registro, se debe tener "
+"cuidado de documentar cómo la biblioteca utiliza el registro - por ejemplo, "
+"los nombres de los registradores utilizados. También hay que tener en cuenta "
+"la configuración del registro. Si la aplicación no utiliza logging, y el "
+"código de la librería hace llamadas a logging, entonces (como se describe en "
+"la sección anterior) los eventos de severidad ``WARNING`` y superior se "
+"imprimirán en ``sys.stderr``. Esto se considera el mejor comportamiento por "
+"defecto."
 
 #: ../../howto/logging.rst:776
 msgid ""
@@ -1251,6 +1377,16 @@ msgid ""
 "suitably configured then logging calls made in library code will send output "
 "to those handlers, as normal."
 msgstr ""
+"Si por alguna razón *no* quieres que se impriman estos mensajes en ausencia "
+"de cualquier configuración de registro, puedes adjuntar un manejador de no "
+"hacer nada al registrador de nivel superior de tu biblioteca. Esto evita que "
+"se imprima el mensaje, ya que siempre se encontrará un manejador para los "
+"eventos de la biblioteca: simplemente no produce ninguna salida. Si el "
+"usuario de la librería configura el registro para el uso de la aplicación, "
+"presumiblemente esa configuración añadirá algunos manejadores, y si los "
+"niveles están configurados adecuadamente entonces las llamadas de registro "
+"hechas en el código de la librería enviarán la salida a esos manejadores, "
+"como es normal."
 
 #: ../../howto/logging.rst:785
 msgid ""
@@ -1262,6 +1398,14 @@ msgid ""
 "library *foo* is done using loggers with names matching 'foo.x', 'foo.x.y', "
 "etc. then the code::"
 msgstr ""
+"En el paquete de registro se incluye un manejador de no hacer nada: :class:"
+"`~logging.NullHandler` (desde Python 3.1). Se puede añadir una instancia de "
+"este manejador al registrador de nivel superior del espacio de nombres de "
+"registro usado por la biblioteca (*si* quieres evitar que los eventos "
+"registrados de tu biblioteca se envíen a ``sys.stderr`` en ausencia de una "
+"configuración de registro). Si todo el registro de una biblioteca *foo* se "
+"hace usando registradores con nombres que coinciden con 'foo.x', 'foo.x.y', "
+"etc. entonces el código::"
 
 #: ../../howto/logging.rst:796
 msgid ""
@@ -1269,6 +1413,9 @@ msgid ""
 "libraries, then the logger name specified can be 'orgname.foo' rather than "
 "just 'foo'."
 msgstr ""
+"debería tener el efecto deseado. Si una organización produce varias "
+"bibliotecas, el nombre del registrador especificado puede ser 'orgname.foo' "
+"en lugar de simplemente 'foo'."
 
 #: ../../howto/logging.rst:800
 msgid ""
@@ -1279,6 +1426,12 @@ msgid ""
 "application developer to configure the logging verbosity or handlers of your "
 "library as they wish."
 msgstr ""
+"Se recomienda encarecidamente que no *registre en el logger raíz* de su "
+"biblioteca. En su lugar, utilice un registrador con un nombre único y "
+"fácilmente identificable, como ``__name__`` para el paquete o módulo de "
+"nivel superior de su biblioteca. Registrar en el logger raíz dificultará o "
+"imposibilitará al desarrollador de la aplicación configurar la verbosidad de "
+"registro o los manejadores de tu librería como desee."
 
 #: ../../howto/logging.rst:807
 msgid ""
@@ -1290,10 +1443,18 @@ msgid ""
 "handlers 'under the hood', you might well interfere with their ability to "
 "carry out unit tests and deliver logs which suit their requirements."
 msgstr ""
+"Se recomienda encarecidamente que *no añada ningún manejador que no sea* :"
+"class:`~logging.NullHandler` *a los registradores de su biblioteca*. Esto se "
+"debe a que la configuración de los manejadores es prerrogativa del "
+"desarrollador de la aplicación que utiliza su biblioteca. El desarrollador "
+"de la aplicación conoce su público objetivo y qué manejadores son los más "
+"apropiados para su aplicación: si añades manejadores \"bajo el capó\", "
+"podrías interferir con su capacidad para llevar a cabo pruebas unitarias y "
+"entregar registros que se ajusten a sus necesidades."
 
 #: ../../howto/logging.rst:818
 msgid "Logging Levels"
-msgstr ""
+msgstr "Niveles de registro"
 
 #: ../../howto/logging.rst:820
 msgid ""
@@ -1303,34 +1464,39 @@ msgid ""
 "define a level with the same numeric value, it overwrites the predefined "
 "value; the predefined name is lost."
 msgstr ""
+"Los valores numéricos de los niveles de registro se indican en la siguiente "
+"tabla. Son de interés principalmente si desea definir sus propios niveles y "
+"necesita que tengan valores específicos en relación con los niveles "
+"predefinidos. Si define un nivel con el mismo valor numérico, éste "
+"sobrescribe el valor predefinido; el nombre predefinido se pierde."
 
 #: ../../howto/logging.rst:827
 msgid "Numeric value"
-msgstr ""
+msgstr "Valor numérico"
 
 #: ../../howto/logging.rst:829
 msgid "50"
-msgstr ""
+msgstr "50"
 
 #: ../../howto/logging.rst:831
 msgid "40"
-msgstr ""
+msgstr "40"
 
 #: ../../howto/logging.rst:833
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: ../../howto/logging.rst:835
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../../howto/logging.rst:837
 msgid "10"
-msgstr ""
+msgstr "10"
 
 #: ../../howto/logging.rst:839
 msgid "``NOTSET``"
-msgstr ""
+msgstr "``NOTSET``"
 
 #: ../../howto/logging.rst:839
 msgid "0"
@@ -1345,6 +1511,13 @@ msgid ""
 "the method call's, no logging message is actually generated. This is the "
 "basic mechanism controlling the verbosity of logging output."
 msgstr ""
+"Los niveles también se pueden asociar a los registradores, ya sea por el "
+"desarrollador o mediante la carga de una configuración de registro guardada. "
+"Cuando se llama a un método de registro en un registrador, el registrador "
+"compara su propio nivel con el nivel asociado con la llamada al método. Si "
+"el nivel del registrador es superior al de la llamada al método, no se "
+"genera ningún mensaje de registro. Este es el mecanismo básico de control de "
+"la verbosidad de la salida de registro."
 
 #: ../../howto/logging.rst:849
 msgid ""
@@ -1352,6 +1525,10 @@ msgid ""
 "class. When a logger decides to actually log an event, a :class:`~logging."
 "LogRecord` instance is created from the logging message."
 msgstr ""
+"Los mensajes de registro se codifican como instancias de la clase :class:"
+"`~logging.LogRecord`. Cuando un registrador decide registrar un evento, se "
+"crea una instancia :class:`~logging.LogRecord` a partir del mensaje de "
+"registro."
 
 #: ../../howto/logging.rst:853
 msgid ""
@@ -1369,6 +1546,21 @@ msgid ""
 "message (unless the *propagate* flag for a logger is set to a false value, "
 "at which point the passing to ancestor handlers stops)."
 msgstr ""
+"Los mensajes de registro se someten a un mecanismo de envío mediante el uso "
+"de :dfn:`handlers`, que son instancias de subclases de la clase :class:"
+"`Handler`. Los manejadores son responsables de garantizar que un mensaje "
+"registrado (en forma de :class:`LogRecord`) termine en una ubicación "
+"concreta (o conjunto de ubicaciones) que sea útil para el público al que va "
+"dirigido (usuarios finales, personal de soporte, administradores de "
+"sistemas, desarrolladores, etc.). A los manejadores se les pasan instancias "
+"de :class:`LogRecord` destinadas a destinos concretos. Cada registrador "
+"puede tener cero, uno o más manejadores asociados (a través del método :meth:"
+"`~Logger.addHandler` de :class:`Logger`). Además de cualquier manejador "
+"directamente asociado con un registrador, *todos los manejadores asociados "
+"con todos los ancestros del registrador* son llamados para despachar el "
+"mensaje (a menos que la bandera *propagate* para un registrador se "
+"establezca a un valor falso, en cuyo punto el paso a manejadores ancestros "
+"se detiene)."
 
 #: ../../howto/logging.rst:867
 msgid ""
@@ -1379,10 +1571,16 @@ msgid ""
 "defined subclasses of :class:`Handler` will need to override this :meth:"
 "`~Handler.emit`."
 msgstr ""
+"Al igual que los loggers, los handlers pueden tener niveles asociados. El "
+"nivel de un manejador actúa como un filtro de la misma manera que lo hace el "
+"nivel de un registrador. Si un manejador decide realmente enviar un evento, "
+"se utiliza el método :meth:`~Handler.emit` para enviar el mensaje a su "
+"destino. La mayoría de las subclases definidas por el usuario de :class:"
+"`Handler` necesitarán sobrescribir este :meth:`~Handler.emit`."
 
 #: ../../howto/logging.rst:876
 msgid "Custom Levels"
-msgstr ""
+msgstr "Niveles personalizados"
 
 #: ../../howto/logging.rst:878
 msgid ""
@@ -1396,26 +1594,41 @@ msgid ""
 "difficult for the using developer to control and/or interpret, because a "
 "given numeric value might mean different things for different libraries."
 msgstr ""
+"Definir tus propios niveles es posible, pero no debería ser necesario, ya "
+"que los niveles existentes se han elegido en base a la experiencia práctica. "
+"Sin embargo, si está convencido de que necesita niveles personalizados, debe "
+"tener mucho cuidado al hacerlo, y posiblemente sea *una muy mala idea "
+"definir niveles personalizados si está desarrollando una biblioteca*. Esto "
+"se debe a que si múltiples autores de librerías definen sus propios niveles "
+"personalizados, existe la posibilidad de que la salida de registro de tales "
+"librerías múltiples usadas juntas sea difícil de controlar y/o interpretar "
+"para el desarrollador que las usa, porque un valor numérico dado puede "
+"significar cosas diferentes para diferentes librerías."
 
 #: ../../howto/logging.rst:891
 msgid "Useful Handlers"
-msgstr ""
+msgstr "Manejadores útiles"
 
 #: ../../howto/logging.rst:893
 msgid ""
 "In addition to the base :class:`Handler` class, many useful subclasses are "
 "provided:"
 msgstr ""
+"Además de la clase base :class:`Handler`, se proporcionan muchas subclases "
+"útiles:"
 
 #: ../../howto/logging.rst:896
 msgid ""
 ":class:`StreamHandler` instances send messages to streams (file-like "
 "objects)."
 msgstr ""
+":class:`StreamHandler` envían mensajes a flujos (objetos similares a "
+"archivos)."
 
 #: ../../howto/logging.rst:899
 msgid ":class:`FileHandler` instances send messages to disk files."
 msgstr ""
+":class:`FileHandler` Las instancias envían mensajes a archivos de disco."
 
 #: ../../howto/logging.rst:901
 msgid ""
@@ -1424,60 +1637,83 @@ msgid ""
 "directly. Instead, use :class:`~handlers.RotatingFileHandler` or :class:"
 "`~handlers.TimedRotatingFileHandler`."
 msgstr ""
+":class:`~handlers.BaseRotatingHandler` es la clase base para los manejadores "
+"que rotan los archivos de registro en un punto determinado. No está pensada "
+"para ser instanciada directamente. En su lugar, utilice :class:`~handlers."
+"RotatingFileHandler` o :class:`~handlers.TimedRotatingFileHandler`."
 
 #: ../../howto/logging.rst:906
 msgid ""
 ":class:`~handlers.RotatingFileHandler` instances send messages to disk "
 "files, with support for maximum log file sizes and log file rotation."
 msgstr ""
+":class:`~handlers.RotatingFileHandler` Las instancias envían mensajes a "
+"archivos de disco, con soporte para tamaños máximos de archivos de registro "
+"y rotación de archivos de registro."
 
 #: ../../howto/logging.rst:909
 msgid ""
 ":class:`~handlers.TimedRotatingFileHandler` instances send messages to disk "
 "files, rotating the log file at certain timed intervals."
 msgstr ""
+":class:`~handlers.TimedRotatingFileHandler` envían mensajes a archivos de "
+"disco, rotando el archivo de registro a determinados intervalos de tiempo."
 
 #: ../../howto/logging.rst:912
 msgid ""
 ":class:`~handlers.SocketHandler` instances send messages to TCP/IP sockets. "
 "Since 3.4, Unix domain sockets are also supported."
 msgstr ""
+":class:`~handlers.SocketHandler` envían mensajes a sockets TCP/IP. Desde la "
+"versión 3.4, también se admiten sockets de dominio Unix."
 
 #: ../../howto/logging.rst:915
 msgid ""
 ":class:`~handlers.DatagramHandler` instances send messages to UDP sockets. "
 "Since 3.4, Unix domain sockets are also supported."
 msgstr ""
+":class:`~handlers.DatagramHandler` envían mensajes a sockets UDP. Desde la "
+"versión 3.4, también se admiten sockets de dominio Unix."
 
 #: ../../howto/logging.rst:918
 msgid ""
 ":class:`~handlers.SMTPHandler` instances send messages to a designated email "
 "address."
 msgstr ""
+":class:`~handlers.SMTPHandler` instancias envían mensajes a una dirección de "
+"correo electrónico designada."
 
 #: ../../howto/logging.rst:921
 msgid ""
 ":class:`~handlers.SysLogHandler` instances send messages to a Unix syslog "
 "daemon, possibly on a remote machine."
 msgstr ""
+":class:`~handlers.SysLogHandler` envían mensajes a un demonio syslog Unix, "
+"posiblemente en una máquina remota."
 
 #: ../../howto/logging.rst:924
 msgid ""
 ":class:`~handlers.NTEventLogHandler` instances send messages to a Windows "
 "NT/2000/XP event log."
 msgstr ""
+":class:`~handlers.NTEventLogHandler` envían mensajes a un registro de "
+"eventos de Windows NT/2000/XP."
 
 #: ../../howto/logging.rst:927
 msgid ""
 ":class:`~handlers.MemoryHandler` instances send messages to a buffer in "
 "memory, which is flushed whenever specific criteria are met."
 msgstr ""
+":class:`~handlers.MemoryHandler` envían mensajes a un búfer en memoria, que "
+"se vacía cuando se cumplen determinados criterios."
 
 #: ../../howto/logging.rst:930
 msgid ""
 ":class:`~handlers.HTTPHandler` instances send messages to an HTTP server "
 "using either ``GET`` or ``POST`` semantics."
 msgstr ""
+":class:`~handlers.HTTPHandler` envían mensajes a un servidor HTTP utilizando "
+"la semántica ``GET`` o ``POST``."
 
 #: ../../howto/logging.rst:933
 msgid ""
@@ -1486,12 +1722,18 @@ msgid ""
 "name. This handler is only useful on Unix-like systems; Windows does not "
 "support the underlying mechanism used."
 msgstr ""
+":class:`~handlers.WatchedFileHandler` Las instancias vigilan el archivo en "
+"el que se registran. Si el archivo cambia, se cierra y se vuelve a abrir "
+"utilizando el nombre del archivo. Este manejador sólo es útil en sistemas "
+"tipo Unix; Windows no soporta el mecanismo subyacente utilizado."
 
 #: ../../howto/logging.rst:938
 msgid ""
 ":class:`~handlers.QueueHandler` instances send messages to a queue, such as "
 "those implemented in the :mod:`queue` or :mod:`multiprocessing` modules."
 msgstr ""
+":class:`~handlers.QueueHandler` envían mensajes a una cola, como las "
+"implementadas en los módulos :mod:`queue` o :mod:`multiprocessing`."
 
 #: ../../howto/logging.rst:941
 msgid ""
@@ -1501,14 +1743,20 @@ msgid ""
 "the library user has not configured logging. See :ref:`library-config` for "
 "more information."
 msgstr ""
+":class:`NullHandler` no hacen nada con los mensajes de error. Las utilizan "
+"los desarrolladores de bibliotecas que desean utilizar el registro, pero "
+"quieren evitar el mensaje 'No se han encontrado manejadores para el "
+"registrador *XXX*' que puede aparecer si el usuario de la biblioteca no ha "
+"configurado el registro. Consulte :ref:`library-config` para obtener más "
+"información."
 
 #: ../../howto/logging.rst:947
 msgid "The :class:`NullHandler` class."
-msgstr ""
+msgstr "La clase :class:`NullHandler`."
 
 #: ../../howto/logging.rst:950
 msgid "The :class:`~handlers.QueueHandler` class."
-msgstr ""
+msgstr "La clase :class:`~handlers.QueueHandler`."
 
 #: ../../howto/logging.rst:953
 msgid ""
@@ -1517,6 +1765,11 @@ msgid ""
 "defined in a sub-module, :mod:`logging.handlers`. (There is also another sub-"
 "module, :mod:`logging.config`, for configuration functionality.)"
 msgstr ""
+"Las clases :class:`NullHandler`, :class:`StreamHandler` y :class:"
+"`FileHandler` están definidas en el núcleo del paquete de registro. Los "
+"demás manejadores se definen en un submódulo, :mod:`logging.handlers`. "
+"(También hay otro submódulo, :mod:`logging.config`, para la funcionalidad de "
+"configuración)."
 
 #: ../../howto/logging.rst:958
 msgid ""
@@ -1524,6 +1777,9 @@ msgid ""
 "class:`Formatter` class. They are initialized with a format string suitable "
 "for use with the % operator and a dictionary."
 msgstr ""
+"Los mensajes registrados se formatean para su presentación mediante "
+"instancias de la clase :class:`Formatter`. Se inicializan con una cadena de "
+"formato adecuada para su uso con el operador % y un diccionario."
 
 #: ../../howto/logging.rst:962
 msgid ""
@@ -1532,6 +1788,10 @@ msgid ""
 "applied to each message in the batch), there is provision for header and "
 "trailer format strings."
 msgstr ""
+"Para dar formato a varios mensajes de un lote, pueden utilizarse instancias "
+"de :class:`BufferingFormatter`. Además de la cadena de formato (que se "
+"aplica a cada mensaje del lote), se prevén cadenas de formato de cabecera y "
+"de tráiler."
 
 #: ../../howto/logging.rst:967
 msgid ""
@@ -1542,6 +1802,12 @@ msgid ""
 "consult all their filters for permission. If any filter returns a false "
 "value, the message is not processed further."
 msgstr ""
+"Cuando el filtrado basado en el nivel del logger y/o el nivel del handler no "
+"es suficiente, se pueden añadir instancias de :class:`Filter` tanto a :class:"
+"`Logger` como a :class:`Handler` (a través de su método :meth:`~Handler."
+"addFilter` ). Antes de decidir seguir procesando un mensaje, tanto los "
+"loggers como los handlers consultan todos sus filtros en busca de permisos. "
+"Si algún filtro devuelve un valor falso, el mensaje no se sigue procesando."
 
 #: ../../howto/logging.rst:974
 msgid ""
@@ -1549,10 +1815,14 @@ msgid ""
 "name. If this feature is used, messages sent to the named logger and its "
 "children are allowed through the filter, and all others dropped."
 msgstr ""
+"La funcionalidad básica de :class:`Filter` permite filtrar por nombre de "
+"registrador específico. Si se utiliza esta función, los mensajes enviados al "
+"registrador nombrado y sus hijos se permiten a través del filtro, y todos "
+"los demás se descartan."
 
 #: ../../howto/logging.rst:982
 msgid "Exceptions raised during logging"
-msgstr ""
+msgstr "Excepciones durante el registro"
 
 #: ../../howto/logging.rst:984
 msgid ""
@@ -1561,6 +1831,11 @@ msgid ""
 "logging events - such as logging misconfiguration, network or other similar "
 "errors - do not cause the application using logging to terminate prematurely."
 msgstr ""
+"El paquete de registro está diseñado para aceptar excepciones que se "
+"produzcan durante el registro en producción. Esto es para que los errores "
+"que ocurren mientras se manejan los eventos de registro - tales como errores "
+"de configuración de registro, de red u otros similares - no causen que la "
+"aplicación que utiliza el registro termine prematuramente."
 
 #: ../../howto/logging.rst:989
 msgid ""
@@ -1569,6 +1844,10 @@ msgid ""
 "method of a :class:`Handler` subclass are passed to its :meth:`~Handler."
 "handleError` method."
 msgstr ""
+":class:`SystemExit` y las excepciones de :class:`KeyboardInterrupt` nunca se "
+"tragan. Otras excepciones que se producen durante el método :meth:`~Handler."
+"emit` de una subclase :class:`Handler` se pasan a su método :meth:`~Handler."
+"handleError`."
 
 #: ../../howto/logging.rst:994
 msgid ""
@@ -1577,6 +1856,10 @@ msgid ""
 "is set. If set, a traceback is printed to :data:`sys.stderr`. If not set, "
 "the exception is swallowed."
 msgstr ""
+"La implementación por defecto de :meth:`~Handler.handleError` en :class:"
+"`Handler` comprueba si una variable a nivel de módulo, :data:"
+"`raiseExceptions`, está activada. Si lo está, se imprime un rastreo en :data:"
+"`sys.stderr`. Si no lo está, la excepción es ignorada."
 
 #: ../../howto/logging.rst:1000
 msgid ""
@@ -1585,10 +1868,14 @@ msgid ""
 "occur. It's advised that you set :data:`raiseExceptions` to ``False`` for "
 "production usage."
 msgstr ""
+"El valor por defecto de :data:`raiseExceptions` es ``True``. Esto se debe a "
+"que durante el desarrollo, normalmente quieres ser notificado de cualquier "
+"excepción que ocurra. Se aconseja establecer :data:`raiseExceptions` en "
+"``False`` para el uso en producción."
 
 #: ../../howto/logging.rst:1010
 msgid "Using arbitrary objects as messages"
-msgstr ""
+msgstr "Utilización de objetos arbitrarios como mensajes"
 
 #: ../../howto/logging.rst:1012
 msgid ""
@@ -1601,10 +1888,18 @@ msgid ""
 "`~handlers.SocketHandler` emits an event by pickling it and sending it over "
 "the wire."
 msgstr ""
+"En las secciones y ejemplos anteriores, se ha supuesto que el mensaje pasado "
+"al registrar el evento es una cadena. Sin embargo, ésta no es la única "
+"posibilidad. Puedes pasar un objeto arbitrario como mensaje, y su método :"
+"meth:`~object.__str__` será llamado cuando el sistema de registro necesite "
+"convertirlo a una representación de cadena. De hecho, si lo deseas, puedes "
+"evitar por completo el cómputo de una representación de cadena - por "
+"ejemplo, el :class:`~handlers.SocketHandler` emite un evento decapándolo y "
+"enviándolo a través del cable."
 
 #: ../../howto/logging.rst:1023
 msgid "Optimization"
-msgstr ""
+msgstr "Optimización"
 
 #: ../../howto/logging.rst:1025
 msgid ""
@@ -1616,12 +1911,22 @@ msgid ""
 "event would be created by the Logger for that level of call. You can write "
 "code like this::"
 msgstr ""
+"El formateo de los argumentos de los mensajes se aplaza hasta que no pueda "
+"evitarse. Sin embargo, computar los argumentos pasados al método de registro "
+"también puede ser costoso, y puede que quieras evitar hacerlo si el "
+"registrador simplemente desechará tu evento. Para decidir qué hacer, puedes "
+"llamar al método :meth:`~Logger.isEnabledFor` que toma un argumento de nivel "
+"y devuelve true si el evento sería creado por el Logger para ese nivel de "
+"llamada. Puedes escribir código como este::"
 
 #: ../../howto/logging.rst:1037
 msgid ""
 "so that if the logger's threshold is set above ``DEBUG``, the calls to "
 "``expensive_func1`` and ``expensive_func2`` are never made."
 msgstr ""
+"de modo que si el umbral del registrador se establece por encima de "
+"``DEBUG``, las llamadas a ``expensive_func1`` y ``expensive_func2`` nunca se "
+"realizan."
 
 #: ../../howto/logging.rst:1040
 msgid ""
@@ -1634,6 +1939,16 @@ msgid ""
 "need to be recomputed when the logging configuration changes dynamically "
 "while the application is running (which is not all that common)."
 msgstr ""
+"En algunos casos, :meth:`~Logger.isEnabledFor` puede ser más costoso de lo "
+"que te gustaría (por ejemplo, para registradores profundamente anidados "
+"donde un nivel explícito sólo se establece en lo alto de la jerarquía del "
+"registrador). En tales casos (o si quieres evitar llamar a un método en "
+"bucles cerrados), puedes almacenar en caché el resultado de una llamada a :"
+"meth:`~Logger.isEnabledFor` en una variable local o de instancia, y "
+"utilizarla en lugar de llamar al método cada vez. Este valor almacenado en "
+"caché sólo tendría que volver a calcularse cuando la configuración de "
+"registro cambie dinámicamente mientras se ejecuta la aplicación (lo que no "
+"es muy habitual)."
 
 #: ../../howto/logging.rst:1049
 msgid ""
@@ -1642,18 +1957,22 @@ msgid ""
 "Here's a list of things you can do to avoid processing during logging which "
 "you don't need:"
 msgstr ""
+"Hay otras optimizaciones que se pueden hacer para aplicaciones específicas "
+"que necesitan un control más preciso sobre qué información de registro se "
+"recoge. Aquí tienes una lista de cosas que puedes hacer para evitar procesar "
+"durante el registro lo que no necesitas:"
 
 #: ../../howto/logging.rst:1055
 msgid "What you don't want to collect"
-msgstr ""
+msgstr "Lo que no quiere coleccionar"
 
 #: ../../howto/logging.rst:1055
 msgid "How to avoid collecting it"
-msgstr ""
+msgstr "Cómo evitar su recogida"
 
 #: ../../howto/logging.rst:1057
 msgid "Information about where calls were made from."
-msgstr ""
+msgstr "Información sobre el origen de las llamadas."
 
 #: ../../howto/logging.rst:1057
 msgid ""
@@ -1661,32 +1980,37 @@ msgid ""
 "_getframe`, which may help to speed up your code in environments like PyPy "
 "(which can't speed up code that uses :func:`sys._getframe`)."
 msgstr ""
+"Establezca ``logging._srcfile`` en ``None``. Esto evita llamar a :func:`sys."
+"_getframe`, lo que puede ayudar a acelerar su código en entornos como PyPy "
+"(que no puede acelerar el código que utiliza :func:`sys._getframe`)."
 
 #: ../../howto/logging.rst:1063
 msgid "Threading information."
-msgstr ""
+msgstr "Información de enhebrado."
 
 #: ../../howto/logging.rst:1063
 msgid "Set ``logging.logThreads`` to ``False``."
-msgstr ""
+msgstr "Configura ``logging.logThreads`` en ``False``."
 
 #: ../../howto/logging.rst:1065
 msgid "Current process ID (:func:`os.getpid`)"
-msgstr ""
+msgstr "ID del proceso actual (:func:`os.getpid`)"
 
 #: ../../howto/logging.rst:1065
 msgid "Set ``logging.logProcesses`` to ``False``."
-msgstr ""
+msgstr "Configura ``logging.logProcesses`` en ``False``."
 
 #: ../../howto/logging.rst:1067
 msgid ""
 "Current process name when using ``multiprocessing`` to manage multiple "
 "processes."
 msgstr ""
+"Nombre del proceso actual cuando se utiliza ``multiprocessing`` para "
+"gestionar varios procesos."
 
 #: ../../howto/logging.rst:1067
 msgid "Set ``logging.logMultiprocessing`` to ``False``."
-msgstr ""
+msgstr "Configura ``logging.logMultiprocessing`` en ``False``."
 
 #: ../../howto/logging.rst:1071
 msgid ""
@@ -1694,31 +2018,34 @@ msgid ""
 "you don't import :mod:`logging.handlers` and :mod:`logging.config`, they "
 "won't take up any memory."
 msgstr ""
+"Ten en cuenta también que el módulo principal de registro sólo incluye los "
+"manejadores básicos. Si no importas :mod:`logging.handlers` y :mod:`logging."
+"config`, no ocuparán memoria."
 
 #: ../../howto/logging.rst:1078
 msgid "Module :mod:`logging`"
-msgstr ""
+msgstr "Módulo :mod:`logging`"
 
 #: ../../howto/logging.rst:1078
 msgid "API reference for the logging module."
-msgstr ""
+msgstr "Referencia API para el módulo de registro."
 
 #: ../../howto/logging.rst:1081
 msgid "Module :mod:`logging.config`"
-msgstr ""
+msgstr "Módulo :mod:`logging.config`"
 
 #: ../../howto/logging.rst:1081
 msgid "Configuration API for the logging module."
-msgstr ""
+msgstr "API de configuración del módulo de registro."
 
 #: ../../howto/logging.rst:1084
 msgid "Module :mod:`logging.handlers`"
-msgstr ""
+msgstr "Módulo :mod:`logging.handlers`"
 
 #: ../../howto/logging.rst:1084
 msgid "Useful handlers included with the logging module."
-msgstr ""
+msgstr "Manejadores útiles incluidos con el módulo de registro."
 
 #: ../../howto/logging.rst:1086
 msgid ":ref:`A logging cookbook <logging-cookbook>`"
-msgstr ""
+msgstr ":ref:`A logging cookbook <logging-cookbook>`"
