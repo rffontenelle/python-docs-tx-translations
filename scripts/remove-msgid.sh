@@ -1,6 +1,5 @@
 #!/bin/bash
-# Patch POT files to solve incompatibilities with Transifex
-# - \\N is treated as new line in Transifex, so it is an ilegal source string
+# Patch POT to solve issues with source messages
 
 set -euo pipefail
 IFS=$'\n\t'
@@ -19,6 +18,8 @@ else
     if [[ ! -d $1 || "$(basename $1)" != "pot" ]]; then
         echo "'$1' is not a valid directory. Expected a directory named 'pot'."
     fi
+
+    # Enter the given directory
     cd $1
 fi
 
@@ -28,18 +29,26 @@ tmp2=$(mktemp --suffix='.po')
 trap 'rm -f $tmp $tmp2' EXIT
 
 
-# Remove '\\N', an ilegal string in Transifex, otherwise uplading POT fails
-remove_slash_n() {
+# Usage: remove_msgid </path/to/pot> <source message text>
+remove_msgid() {
     pot=$1
-    msggrep -Ke '^\\N$' $pot > $tmp
+    shift
+    msgid=$@
+    msggrep -Ke "$msgid" $pot > $tmp
     msgcomm --no-wrap --less-than=2 $pot $tmp > $tmp2
     mv $tmp2 $pot
-    echo "Removing '\\N' from: $pot"
-    powrap $pot
+    echo "Stripping from '$pot': $msgid"
+    powrap -q $pot
 }
 
 
-# Run patches in POT files known to need them
-remove_slash_n library/codecs.pot
-remove_slash_n library/re.pot
-remove_slash_n reference/lexical_analysis.pot
+# \\N is treated as new line in Transifex, so it is an illegal source string
+# https://github.com/rffontenelle/python-docs-tx-translations/issues/15
+remove_msgid  library/codecs.pot '^\\N$'
+remove_msgid  library/re.pot  '^\\N$'
+remove_msgid  reference/lexical_analysis.pot  '^\\N$'
+
+# This string should not be translated, otherwise sphinx-build give warnings
+# Fixed via https://github.com/python/cpython/pull/19470
+remove_msgid  c-api/sys.pot '^Raises an :ref:`auditing event <auditing>` ``sys.addaudithook`` with no arguments.$'
+remove_msgid  library/sys.pot '^Raises an :ref:`auditing event <auditing>` ``sys.addaudithook`` with no arguments.$'
