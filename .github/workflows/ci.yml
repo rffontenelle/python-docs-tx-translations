@@ -150,10 +150,10 @@ jobs:
           deleted_files=$(git status -s | grep ^' D' | cut -d' ' -f3)
           if [ -n "$deleted_files" ]; then git rm -v $deleted_files; else echo "no POT files to remove"; fi
         
-        # See issue #15
-      - name: Patch POT files
+        
+      - name: Remove problematic source messages from POT files
         run: |
-          scripts/remove-ilegal-strings.sh cpython/Doc/locales/pot
+          scripts/remove-msgid.sh cpython/Doc/locales/pot
 
       - name: Generate Transifex configuration file (.tx/config)
         working-directory: cpython/Doc/locales
