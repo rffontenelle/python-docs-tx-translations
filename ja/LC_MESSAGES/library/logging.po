@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-25 14:54+0000\n"
+"POT-Creation-Date: 2024-11-15 14:53+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Japanese (https://app.transifex.com/python-doc/teams/5390/"
@@ -1475,6 +1475,10 @@ msgid ""
 "different record instance which will replace the original log record in any "
 "future processing of the event."
 msgstr ""
+"指定されたログレコードは記録されるでしょうか？答えが「いいえ」なら false を、"
+"「はい」なら true を返します。フィルタは受け取ったログレコードそのものを編集"
+"したり、その後のイベント処理において元のログレコードに取って代わる、まったく"
+"異なるログレコードインスタンスを返す可能性があります。"
 
 #: ../../library/logging.rst:833
 msgid ""
@@ -1526,6 +1530,10 @@ msgid ""
 "to a :class:`Handler` to modify the log record before it is emitted, without "
 "having side effects on other handlers."
 msgstr ""
+"受け取ったログレコード自体を編集する代わりに、元のログレコードに取って代わる"
+"別の :class:`LogRecord` インスタンスを返すことができるようになりました。これ"
+"により、 :class:`Handler` にアタッチされたフィルタが、他のハンドラへの副作用"
+"を伴うことなく、発行前にログレコードを編集することが可能になります。"
 
 #: ../../library/logging.rst:859
 msgid ""
@@ -1690,6 +1698,14 @@ msgid ""
 "\n"
 "logging.setLogRecordFactory(record_factory)"
 msgstr ""
+"old_factory = logging.getLogRecordFactory()\n"
+"\n"
+"def record_factory(*args, **kwargs):\n"
+"    record = old_factory(*args, **kwargs)\n"
+"    record.custom_attribute = 0xdecafbad\n"
+"    return record\n"
+"\n"
+"logging.setLogRecordFactory(record_factory)"
 
 #: ../../library/logging.rst:961
 msgid ""
@@ -2105,11 +2121,11 @@ msgstr ""
 
 #: ../../library/logging.rst:1098
 msgid "Delegates to the underlying :attr:`!manager` on *logger*."
-msgstr ""
+msgstr "背後にある *logger* の :attr:`!manager` メソッドを代理で呼び出します。"
 
 #: ../../library/logging.rst:1102
 msgid "Delegates to the underlying :meth:`!_log` method on *logger*."
-msgstr ""
+msgstr "背後にある *logger* の :meth:`!_log` メソッドを代理で呼び出します。"
 
 #: ../../library/logging.rst:1104
 msgid ""
