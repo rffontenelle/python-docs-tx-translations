@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-15 16:02+0000\n"
+"POT-Creation-Date: 2024-11-19 02:38+0000\n"
 "PO-Revision-Date: 2022-11-05 17:21+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Spanish (Spain) (https://app.transifex.com/python-doc/"
@@ -258,16 +258,24 @@ msgid ""
 "those messages and add it to the relevant handler. This can be configured by "
 "adding a ``filters`` section parallel to ``formatters`` and ``handlers``:"
 msgstr ""
+"Esta configuración hace *casi* lo que queremos, excepto que ``sys.stdout`` "
+"mostraría los mensajes de gravedad ``ERROR`` y superior, así como los "
+"mensajes ``INFO`` y ``WARNING``. Para evitarlo, podemos configurar un filtro "
+"que excluya esos mensajes y añadirlo al manejador correspondiente. Esto "
+"puede configurarse añadiendo una sección ``filters`` paralela a "
+"``formatters`` y ``handlers``:"
 
 #: ../../howto/logging-cookbook.rst:352
 msgid "and changing the section on the ``stdout`` handler to add it:"
-msgstr ""
+msgstr "y cambiando la sección del manejador ``stdout`` para añadirlo:"
 
 #: ../../howto/logging-cookbook.rst:366
 msgid ""
 "A filter is just a function, so we can define the ``filter_maker`` (a "
 "factory function) as follows:"
 msgstr ""
+"Un filtro no es más que una función, por lo que podemos definir el "
+"``filter_maker`` (una función de fábrica) de la siguiente manera:"
 
 #: ../../howto/logging-cookbook.rst:379
 msgid ""
@@ -279,26 +287,36 @@ msgid ""
 "filter_maker`` in the filter configuration. You will need to change that if "
 "you define it in a different module."
 msgstr ""
+"Convierte el argumento de cadena introducido en un nivel numérico y devuelve "
+"una función que sólo devuelve ``True`` si el nivel del registro introducido "
+"es igual o inferior al nivel especificado. Tenga en cuenta que en este "
+"ejemplo he definido ``filter_maker`` en un script de prueba ``main.py`` que "
+"ejecuto desde la línea de comandos, por lo que su módulo será ``__main__`` - "
+"de ahí ``__main__.filter_maker`` en la configuración del filtro. Habrá que "
+"cambiar esto si se define en un módulo diferente."
 
 #: ../../howto/logging-cookbook.rst:387
 msgid "With the filter added, we can run ``main.py``, which in full is:"
 msgstr ""
+"Con el filtro añadido, podemos ejecutar ``main.py``, que en su totalidad es:"
 
 #: ../../howto/logging-cookbook.rst:457
 msgid "And after running it like this:"
-msgstr ""
+msgstr "Y después de ejecutarlo así:"
 
 #: ../../howto/logging-cookbook.rst:463
 msgid "We can see the results are as expected:"
-msgstr ""
+msgstr "Podemos ver que los resultados son los esperados:"
 
 #: ../../howto/logging-cookbook.rst:489
 msgid "Configuration server example"
-msgstr ""
+msgstr "Ejemplo de servidor de configuración"
 
 #: ../../howto/logging-cookbook.rst:491
 msgid "Here is an example of a module using the logging configuration server::"
 msgstr ""
+"He aquí un ejemplo de un módulo que utiliza el servidor de configuración de "
+"registro::"
 
 #: ../../howto/logging-cookbook.rst:522
 msgid ""
@@ -306,10 +324,13 @@ msgid ""
 "server, properly preceded with the binary-encoded length, as the new logging "
 "configuration::"
 msgstr ""
+"Y aquí hay un script que toma un nombre de archivo y envía ese archivo al "
+"servidor, debidamente precedido con la longitud de codificación binaria, "
+"como la nueva configuración de registro::"
 
 #: ../../howto/logging-cookbook.rst:547
 msgid "Dealing with handlers that block"
-msgstr ""
+msgstr "Manipuladores que se bloquean"
 
 #: ../../howto/logging-cookbook.rst:551
 msgid ""
@@ -317,6 +338,9 @@ msgid ""
 "blocking the thread you're logging from. This is common in web applications, "
 "though of course it also occurs in other scenarios."
 msgstr ""
+"A veces se tiene que conseguir que los manejadores de registro hagan su "
+"trabajo sin bloquear el hilo desde el que se está registrando. Esto es común "
+"en aplicaciones web, aunque por supuesto también ocurre en otros escenarios."
 
 #: ../../howto/logging-cookbook.rst:555
 msgid ""
@@ -328,6 +352,15 @@ msgid ""
 "which is too slow (and this query can be deep in the socket library code, "
 "below the Python layer, and outside your control)."
 msgstr ""
+"Un culpable común que demuestra un comportamiento lento es :class:"
+"`SMTPHandler`: el envío de correos electrónicos puede tardar mucho tiempo, "
+"por una serie de razones que escapan al control del desarrollador (por "
+"ejemplo, un mal funcionamiento de la infraestructura de correo o de red). "
+"Pero casi cualquier manejador basado en la red puede bloquearse: Incluso una "
+"operación de :class:`SocketHandler` puede hacer una consulta DNS bajo el "
+"capó que sea demasiado lenta (y esta consulta puede estar en lo más profundo "
+"del código de la biblioteca de sockets, por debajo de la capa de Python, y "
+"fuera de tu control)."
 
 #: ../../howto/logging-cookbook.rst:563
 msgid ""
@@ -342,6 +375,17 @@ msgid ""
 "to attach only ``QueueHandlers`` to your loggers) for the benefit of other "
 "developers who will use your code."
 msgstr ""
+"Una solución es utilizar un enfoque en dos partes. Para la primera parte, "
+"adjunte sólo un :class:`QueueHandler` a aquellos registradores a los que se "
+"accede desde subprocesos críticos para el rendimiento. Simplemente escriben "
+"en su cola, que puede ser de un tamaño suficientemente grande o inicializada "
+"sin límite superior a su tamaño. La escritura en la cola suele ser aceptada "
+"rápidamente, aunque es probable que tenga que capturar la excepción :exc:"
+"`queue.Full` como precaución en su código. Si eres un desarrollador de "
+"bibliotecas que tiene hilos críticos para el rendimiento en su código, "
+"asegúrate de documentar esto (junto con una sugerencia de adjuntar sólo "
+"``QueueHandlers`` a tus registradores) en beneficio de otros desarrolladores "
+"que vayan a utilizar tu código."
 
 #: ../../howto/logging-cookbook.rst:574
 msgid ""
@@ -353,6 +397,13 @@ msgid ""
 "matter). The ``LogRecords`` are removed from the queue and passed to the "
 "handlers for processing."
 msgstr ""
+"La segunda parte de la solución es :class:`QueueListener`, que se ha "
+"diseñado como contrapartida de :class:`QueueHandler`.  Un :class:"
+"`QueueListener` es muy simple: se le pasa una cola y algunos manejadores, y "
+"se inicia un hilo interno que escucha en su cola los LogRecords enviados "
+"desde ``QueueHandlers`` (o cualquier otra fuente de ``LogRecords``, para el "
+"caso). Los ``LogRecords`` se retiran de la cola y se pasan a los manejadores "
+"para su procesamiento."
 
 #: ../../howto/logging-cookbook.rst:582
 msgid ""
@@ -362,14 +413,21 @@ msgid ""
 "handler classes, which would eat up one thread per handler for no particular "
 "benefit."
 msgstr ""
+"La ventaja de tener una clase :class:`QueueListener` separada es que puedes "
+"usar la misma instancia para dar servicio a múltiples ``QueueHandlers``. "
+"Esto es más respetuoso con los recursos que, por ejemplo, tener versiones "
+"con subprocesos de las clases manejadoras existentes, que consumirían un "
+"subproceso por manejador sin ningún beneficio particular."
 
 #: ../../howto/logging-cookbook.rst:587
 msgid "An example of using these two classes follows (imports omitted)::"
 msgstr ""
+"A continuación se muestra un ejemplo de uso de estas dos clases (se omiten "
+"las importaciones)::"
 
 #: ../../howto/logging-cookbook.rst:605
 msgid "which, when run, will produce:"
-msgstr ""
+msgstr "que, cuando se ejecute, producirá:"
 
 #: ../../howto/logging-cookbook.rst:611
 msgid ""
@@ -381,6 +439,14 @@ msgid ""
 "application, to use the above approach for logging, so that any blocking "
 "code runs only in the ``QueueListener`` thread."
 msgstr ""
+"Aunque la discusión anterior no se refería específicamente al código "
+"asíncrono, sino más bien a los lentos manejadores de registro, debe tenerse "
+"en cuenta que cuando se realiza el registro desde código asíncrono, los "
+"manejadores de red e incluso de archivos podrían dar problemas (bloqueando "
+"el bucle de eventos) porque parte del registro se realiza desde los internos "
+"de :mod:`asyncio`. Sería mejor, si se utiliza código asíncrono en una "
+"aplicación, utilizar el enfoque anterior para el registro, de modo que "
+"cualquier código de bloqueo se ejecute sólo en el hilo ``QueueListener``."
 
 #: ../../howto/logging-cookbook.rst:619
 msgid ""
@@ -393,10 +459,18 @@ msgid ""
 "of each message with the handler's level, and only passes a message to a "
 "handler if it's appropriate to do so."
 msgstr ""
+"Antes de Python 3.5, :class:`QueueListener` siempre pasaba cada mensaje "
+"recibido de la cola a cada manejador con el que se inicializaba. (Esto se "
+"debía a que se asumía que el filtrado de nivel se hacía todo en el otro "
+"lado, donde se llena la cola). A partir de la versión 3.5, este "
+"comportamiento puede cambiarse pasando un argumento de palabra clave "
+"``respect_handler_level=True`` al constructor del receptor. Cuando se hace "
+"esto, el receptor compara el nivel de cada mensaje con el nivel del "
+"manejador, y sólo pasa un mensaje a un manejador si es apropiado hacerlo."
 
 #: ../../howto/logging-cookbook.rst:632
 msgid "Sending and receiving logging events across a network"
-msgstr ""
+msgstr "Envío y recepción de eventos de registro a través de una red"
 
 #: ../../howto/logging-cookbook.rst:634
 msgid ""
@@ -404,18 +478,27 @@ msgid ""
 "at the receiving end. A simple way of doing this is attaching a :class:"
 "`SocketHandler` instance to the root logger at the sending end::"
 msgstr ""
+"Digamos que quieres enviar eventos de registro a través de una red, y "
+"manejarlos en el extremo receptor. Una forma sencilla de hacerlo es adjuntar "
+"una instancia de :class:`SocketHandler` al registrador raíz en el extremo "
+"emisor::"
 
 #: ../../howto/logging-cookbook.rst:662
 msgid ""
 "At the receiving end, you can set up a receiver using the :mod:"
 "`socketserver` module. Here is a basic working example::"
 msgstr ""
+"En el extremo receptor, puede configurar un receptor utilizando el módulo :"
+"mod:`socketserver`. He aquí un ejemplo de funcionamiento básico::"
 
 #: ../../howto/logging-cookbook.rst:750
 msgid ""
 "First run the server, and then the client. On the client side, nothing is "
 "printed on the console; on the server side, you should see something like:"
 msgstr ""
+"Primero se ejecuta el servidor y luego el cliente. En el lado del cliente, "
+"nada se imprime en la consola; en el lado del servidor, se debería ver algo "
+"como:"
 
 #: ../../howto/logging-cookbook.rst:762
 msgid ""
@@ -428,7 +511,7 @@ msgstr ""
 
 #: ../../howto/logging-cookbook.rst:770
 msgid "Running a logging socket listener in production"
-msgstr ""
+msgstr "Ejecutar un receptor de socket de registro en producción"
 
 #: ../../howto/logging-cookbook.rst:774
 msgid ""
@@ -437,78 +520,91 @@ msgid ""
 "Gist <socket-listener-gist_>`__ which provides the bare-bones files to run "
 "the above functionality using Supervisor. It consists of the following files:"
 msgstr ""
+"Para ejecutar un logging listener en producción, puede que necesite utilizar "
+"una herramienta de gestión de procesos como `Supervisor <http://supervisord."
+"org/>`_. Aquí hay un Gist <socket-listener-gist_>`__ que proporciona los "
+"archivos básicos para ejecutar la funcionalidad anterior utilizando "
+"Supervisor. Consiste en los siguientes archivos:"
 
 #: ../../howto/logging-cookbook.rst:781
 msgid "File"
-msgstr ""
+msgstr "Archivo"
 
 #: ../../howto/logging-cookbook.rst:781
 msgid "Purpose"
-msgstr ""
+msgstr "Propósito"
 
 #: ../../howto/logging-cookbook.rst:783
 msgid ":file:`prepare.sh`"
-msgstr ""
+msgstr ":file:`prepare.sh`"
 
 #: ../../howto/logging-cookbook.rst:783
 msgid "A Bash script to prepare the environment for testing"
-msgstr ""
+msgstr "Un script Bash para preparar el entorno de pruebas"
 
 #: ../../howto/logging-cookbook.rst:786
 msgid ":file:`supervisor.conf`"
-msgstr ""
+msgstr ":file:`supervisor.conf`"
 
 #: ../../howto/logging-cookbook.rst:786
 msgid ""
 "The Supervisor configuration file, which has entries for the listener and a "
 "multi-process web application"
 msgstr ""
+"El archivo de configuración del Supervisor, que contiene entradas para el "
+"listener y una aplicación web multiproceso"
 
 #: ../../howto/logging-cookbook.rst:790
 msgid ":file:`ensure_app.sh`"
-msgstr ""
+msgstr ":file:`ensure_app.sh`"
 
 #: ../../howto/logging-cookbook.rst:790
 msgid ""
 "A Bash script to ensure that Supervisor is running with the above "
 "configuration"
 msgstr ""
+"Un script Bash para asegurar que Supervisor se ejecuta con la configuración "
+"anterior"
 
 #: ../../howto/logging-cookbook.rst:793
 msgid ":file:`log_listener.py`"
-msgstr ""
+msgstr ":file:`log_listener.py`"
 
 #: ../../howto/logging-cookbook.rst:793
 msgid ""
 "The socket listener program which receives log events and records them to a "
 "file"
 msgstr ""
+"El programa de escucha de sockets que recibe los eventos de registro y los "
+"graba en un archivo"
 
 #: ../../howto/logging-cookbook.rst:796
 msgid ":file:`main.py`"
-msgstr ""
+msgstr ":file:`main.py`"
 
 #: ../../howto/logging-cookbook.rst:796
 msgid ""
 "A simple web application which performs logging via a socket connected to "
 "the listener"
 msgstr ""
+"Una aplicación web sencilla que realiza el registro a través de un socket "
+"conectado al listener"
 
 #: ../../howto/logging-cookbook.rst:799
 msgid ":file:`webapp.json`"
-msgstr ""
+msgstr ":file:`webapp.json`"
 
 #: ../../howto/logging-cookbook.rst:799
 msgid "A JSON configuration file for the web application"
-msgstr ""
+msgstr "Un archivo de configuración JSON para la aplicación web"
 
 #: ../../howto/logging-cookbook.rst:801
 msgid ":file:`client.py`"
-msgstr ""
+msgstr ":file:`client.py`"
 
 #: ../../howto/logging-cookbook.rst:801
 msgid "A Python script to exercise the web application"
-msgstr ""
+msgstr "Un script en Python para ejercitar la aplicación web"
 
 #: ../../howto/logging-cookbook.rst:804
 msgid ""
@@ -518,20 +614,28 @@ msgid ""
 "same log file without conflicting with one another --- they all go through "
 "the socket listener."
 msgstr ""
+"La aplicación web utiliza `Gunicorn <https://gunicorn.org/>`_, que es un "
+"popular servidor de aplicaciones web que inicia múltiples procesos worker "
+"para manejar las peticiones. Este ejemplo de configuración muestra cómo los "
+"trabajadores pueden escribir en el mismo archivo de registro sin entrar en "
+"conflicto unos con otros --- todos van a través del socket listener."
 
 #: ../../howto/logging-cookbook.rst:809
 msgid "To test these files, do the following in a POSIX environment:"
-msgstr ""
+msgstr "Para probar estos archivos, haga lo siguiente en un entorno POSIX:"
 
 #: ../../howto/logging-cookbook.rst:811
 msgid ""
 "Download `the Gist <socket-listener-gist_>`__ as a ZIP archive using the :"
 "guilabel:`Download ZIP` button."
 msgstr ""
+"Descargue `the Gist <socket-listener-gist_>`__ como archivo ZIP utilizando "
+"el botón :guilabel:`Download ZIP`."
 
 #: ../../howto/logging-cookbook.rst:814
 msgid "Unzip the above files from the archive into a scratch directory."
 msgstr ""
+"Descomprima los archivos anteriores del archivo en un directorio de inicio."
 
 #: ../../howto/logging-cookbook.rst:816
 msgid ""
@@ -540,18 +644,27 @@ msgid ""
 "files, and a :file:`venv` subdirectory to contain a virtual environment into "
 "which ``bottle``, ``gunicorn`` and ``supervisor`` are installed."
 msgstr ""
+"En el directorio scratch, ejecute ``bash prepare.sh`` para preparar las "
+"cosas. Esto crea un subdirectorio :file:`run` para contener los archivos "
+"relacionados con el Supervisor y los archivos de registro, y un "
+"subdirectorio :file:`venv` para contener un entorno virtual en el que se "
+"instalan ``bottle``, ``gunicorn`` y ``supervisor``."
 
 #: ../../howto/logging-cookbook.rst:821
 msgid ""
 "Run ``bash ensure_app.sh`` to ensure that Supervisor is running with the "
 "above configuration."
 msgstr ""
+"Ejecute ``bash ensure_app.sh`` para asegurarse de que el Supervisor funciona "
+"con la configuración anterior."
 
 #: ../../howto/logging-cookbook.rst:824
 msgid ""
 "Run ``venv/bin/python client.py`` to exercise the web application, which "
 "will lead to records being written to the log."
 msgstr ""
+"Ejecute ``venv/bin/python client.py`` para ejercitar la aplicación web, lo "
+"que hará que se escriban registros en el log."
 
 #: ../../howto/logging-cookbook.rst:827
 msgid ""
@@ -560,22 +673,32 @@ msgid ""
 "won't be in any particular order, since they have been handled concurrently "
 "by different worker processes in a non-deterministic way."
 msgstr ""
+"Inspeccione los archivos de registro en el subdirectorio :file:`run`. "
+"Debería ver las líneas de registro más recientes en archivos que coincidan "
+"con el patrón :file:`app.log*`. No estarán en ningún orden en particular, ya "
+"que han sido manejados concurrentemente por diferentes procesos de trabajo "
+"de una manera no determinista."
 
 #: ../../howto/logging-cookbook.rst:832
 msgid ""
 "You can shut down the listener and the web application by running ``venv/bin/"
 "supervisorctl -c supervisor.conf shutdown``."
 msgstr ""
+"Puede cerrar el listener y la aplicación web ejecutando ``venv/bin/"
+"supervisorctl -c supervisor.conf shutdown``."
 
 #: ../../howto/logging-cookbook.rst:835
 msgid ""
 "You may need to tweak the configuration files in the unlikely event that the "
 "configured ports clash with something else in your test environment."
 msgstr ""
+"Es posible que tenga que modificar los archivos de configuración en el "
+"improbable caso de que los puertos configurados choquen con alguna otra cosa "
+"en su entorno de pruebas."
 
 #: ../../howto/logging-cookbook.rst:841
 msgid "Adding contextual information to your logging output"
-msgstr ""
+msgstr "Añadir información contextual a la salida de registro"
 
 #: ../../howto/logging-cookbook.rst:843
 msgid ""
@@ -592,10 +715,22 @@ msgid ""
 "logging an application, it could be hard to manage if the number of :class:"
 "`Logger` instances becomes effectively unbounded."
 msgstr ""
+"A veces se desea que la salida de registro contenga información contextual "
+"además de los parámetros pasados a la llamada de registro. Por ejemplo, en "
+"una aplicación en red, puede ser deseable registrar información específica "
+"del cliente en el registro (por ejemplo, el nombre de usuario del cliente "
+"remoto, o la dirección IP). Aunque podría utilizar el parámetro *extra* para "
+"conseguirlo, no siempre es conveniente pasar la información de esta forma. "
+"Aunque puede ser tentador crear instancias de :class:`Logger` por conexión, "
+"no es una buena idea porque estas instancias no se recogen de la basura. Si "
+"bien esto no es un problema en la práctica, cuando el número de instancias :"
+"class:`Logger` depende del nivel de granularidad que se desea utilizar en el "
+"registro de una aplicación, podría ser difícil de gestionar si el número de "
+"instancias :class:`Logger` se vuelve efectivamente ilimitado."
 
 #: ../../howto/logging-cookbook.rst:858
 msgid "Using LoggerAdapters to impart contextual information"
-msgstr ""
+msgstr "Uso de LoggerAdapters para transmitir información contextual"
 
 #: ../../howto/logging-cookbook.rst:860
 msgid ""
@@ -607,6 +742,13 @@ msgid ""
 "signatures as their counterparts in :class:`Logger`, so you can use the two "
 "types of instances interchangeably."
 msgstr ""
+"Una forma sencilla de pasar información contextual a la salida junto con la "
+"información de eventos de registro es utilizar la clase :class:"
+"`LoggerAdapter`. Esta clase está diseñada para parecerse a :class:`Logger`, "
+"de modo que puede llamar a :meth:`debug`, :meth:`info`, :meth:`warning`, :"
+"meth:`error`, :meth:`exception`, :meth:`critical` y :meth:`log`. Estos "
+"métodos tienen las mismas firmas que sus homólogos en :class:`Logger`, por "
+"lo que puede utilizar los dos tipos de instancias indistintamente."
 
 #: ../../howto/logging-cookbook.rst:868
 msgid ""
@@ -618,6 +760,13 @@ msgid ""
 "contextual information in the delegated call. Here's a snippet from the code "
 "of :class:`LoggerAdapter`::"
 msgstr ""
+"Cuando creas una instancia de :class:`LoggerAdapter`, le pasas una instancia "
+"de :class:`Logger` y un objeto tipo dict que contiene tu información "
+"contextual. Cuando se llama a uno de los métodos de registro en una "
+"instancia de :class:`LoggerAdapter`, se delega la llamada a la instancia "
+"subyacente de :class:`Logger` pasada a su constructor, y se arregla para "
+"pasar la información contextual en la llamada delegada. He aquí un fragmento "
+"del código de :class:`LoggerAdapter`::"
 
 #: ../../howto/logging-cookbook.rst:884
 msgid ""
@@ -631,6 +780,15 @@ msgid ""
 "had passed an 'extra' keyword argument in the call to the adapter, it will "
 "be silently overwritten."
 msgstr ""
+"El método :meth:`~LoggerAdapter.process` de :class:`LoggerAdapter` es donde "
+"se añade la información contextual a la salida de registro. Se le pasan los "
+"argumentos de mensaje y palabra clave de la llamada de registro, y devuelve "
+"versiones (potencialmente) modificadas de éstos para usarlas en la llamada "
+"al registrador subyacente. La implementación por defecto de este método deja "
+"el mensaje como está, pero inserta una clave 'extra' en el argumento de la "
+"palabra clave cuyo valor es el objeto tipo dict pasado al constructor. Por "
+"supuesto, si has pasado un argumento de palabra clave 'extra' en la llamada "
+"al adaptador, se sobrescribirá silenciosamente."
 
 #: ../../howto/logging-cookbook.rst:893
 msgid ""
@@ -642,20 +800,31 @@ msgid ""
 "string, you just need to subclass :class:`LoggerAdapter` and override :meth:"
 "`~LoggerAdapter.process` to do what you need. Here is a simple example::"
 msgstr ""
+"La ventaja de usar 'extra' es que los valores del objeto dict-like se "
+"fusionan en el __dict__ de la instancia :class:`LogRecord`, permitiendo usar "
+"cadenas personalizadas con tus instancias :class:`Formatter` que conocen las "
+"claves del objeto dict-like. Si necesita un método diferente, por ejemplo, "
+"si se desea añadir :class:`LoggerAdapter`la información contextual a la "
+"cadena de mensaje, sólo tiene que subdividir  y anular :meth:`~LoggerAdapter."
+"process` para hacer lo que necesita. He aquí un ejemplo sencillo::"
 
 #: ../../howto/logging-cookbook.rst:909
 msgid "which you can use like this::"
-msgstr ""
+msgstr "que puedes usar así::"
 
 #: ../../howto/logging-cookbook.rst:914
 msgid ""
 "Then any events that you log to the adapter will have the value of "
 "``some_conn_id`` prepended to the log messages."
 msgstr ""
+"Entonces, cualquier hecho que registre en el adaptador tendrá el valor de "
+"``some_conn_id`` añadido a los mensajes de registro."
 
 #: ../../howto/logging-cookbook.rst:918
 msgid "Using objects other than dicts to pass contextual information"
 msgstr ""
+"Utilización de objetos distintos de los dicts para transmitir información "
+"contextual"
 
 #: ../../howto/logging-cookbook.rst:920
 msgid ""
@@ -665,10 +834,15 @@ msgid ""
 "if you want to generate values dynamically (whereas the values in a dict "
 "would be constant)."
 msgstr ""
+"No se necesita pasar un dict real a :class:`LoggerAdapter` - se puede pasar "
+"una instancia de una clase que implemente ``__getitem__`` y ``__iter__`` "
+"para que parezca un dict en el registro. Esto sería útil si se quiere "
+"generar valores dinámicamente (mientras que los valores en un dict serían "
+"constantes)."
 
 #: ../../howto/logging-cookbook.rst:929
 msgid "Using Filters to impart contextual information"
-msgstr ""
+msgstr "Filtros para dar información contextual"
 
 #: ../../howto/logging-cookbook.rst:931
 msgid ""
@@ -678,6 +852,12 @@ msgid ""
 "can then be output using a suitable format string, or if needed a custom :"
 "class:`Formatter`."
 msgstr ""
+"También se puede añadir información contextual a la salida del registro "
+"utilizando un :class:`Filter` definido por el usuario. Las instancias de "
+"``Filter`` pueden modificar el ``LogRecords`` que se les pasa, incluyendo la "
+"adición de atributos adicionales que luego pueden ser emitidos utilizando "
+"una cadena de formato adecuada o, si es necesario, un :class:`Formatter` "
+"personalizado."
 
 #: ../../howto/logging-cookbook.rst:936
 msgid ""
@@ -690,14 +870,23 @@ msgid ""
 "format string can be used to get similar output to that shown above. Here's "
 "an example script::"
 msgstr ""
+"Por ejemplo, en una aplicación web, la petición que está siendo procesada (o "
+"al menos, las partes interesantes de la misma) se pueden almacenar en una "
+"variable threadlocal (:class:`threading.local`), y luego accedida desde "
+"``Filter`` para añadir, digamos, información de la petición - digamos, la "
+"dirección IP remota y el nombre de usuario del usuario remoto - a "
+"``LogRecord``, usando los nombres de atributo 'ip' y 'user' como en el "
+"ejemplo ``LoggerAdapter`` anterior. En ese caso, se puede utilizar la misma "
+"cadena de formato para obtener una salida similar a la mostrada "
+"anteriormente. He aquí un script de ejemplo::"
 
 #: ../../howto/logging-cookbook.rst:982
 msgid "which, when run, produces something like:"
-msgstr ""
+msgstr "que, cuando se ejecuta, produce algo como:"
 
 #: ../../howto/logging-cookbook.rst:1000
 msgid "Use of ``contextvars``"
-msgstr ""
+msgstr "Uso de ``contextvars``"
 
 #: ../../howto/logging-cookbook.rst:1002
 msgid ""
@@ -708,6 +897,13 @@ msgid ""
 "logs can populated with contextual information such as, for example, request "
 "attributes handled by web applications."
 msgstr ""
+"Desde Python 3.7, el módulo :mod:`contextvars` ha proporcionado "
+"almacenamiento local de contexto que funciona tanto para las necesidades de "
+"procesamiento de :mod:`threading` como de :mod:`asyncio`. Por lo tanto, este "
+"tipo de almacenamiento puede ser generalmente preferible a los thread-"
+"locals. El siguiente ejemplo muestra cómo, en un entorno multihilo, los "
+"registros pueden rellenarse con información contextual como, por ejemplo, "
+"atributos de petición manejados por aplicaciones web."
 
 #: ../../howto/logging-cookbook.rst:1008
 msgid ""
@@ -719,10 +915,19 @@ msgid ""
 "application's log file, while including in the log additional contextual "
 "information such as client IP, HTTP request method and client username?"
 msgstr ""
+"A efectos ilustrativos, supongamos que tenemos diferentes aplicaciones web, "
+"cada una independiente de la otra pero ejecutándose en el mismo proceso "
+"Python y utilizando una librería común a todas ellas. ¿Cómo puede cada una "
+"de estas aplicaciones tener su propio registro, donde todos los mensajes de "
+"registro de la biblioteca (y otro código de procesamiento de peticiones) se "
+"dirijan al archivo de registro de la aplicación apropiada, incluyendo al "
+"mismo tiempo en el registro información contextual adicional como la IP del "
+"cliente, el método de petición HTTP y el nombre de usuario del cliente?"
 
 #: ../../howto/logging-cookbook.rst:1015
 msgid "Let's assume that the library can be simulated by the following code:"
 msgstr ""
+"Supongamos que la biblioteca puede simularse mediante el siguiente código:"
 
 #: ../../howto/logging-cookbook.rst:1031
 msgid ""
