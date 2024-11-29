@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Roustam Khamidoulline, 2024
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Roustam Khamidoulline, 2024
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-22 14:56+0000\n"
+"POT-Creation-Date: 2024-11-29 14:50+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
-"Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
+"Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
 "ru/)\n"
 "MIME-Version: 1.0\n"
@@ -1611,6 +1611,12 @@ msgid ""
 "using the :meth:`~ArgumentParser.register` method and reference them by "
 "their registered name."
 msgstr ""
+"Рекомендуемый способ создания специального действия — расширить :class:"
+"`Action`, переопределив метод :meth:`!__call__` и, при необходимости, "
+"методы :meth:`!__init__` и :meth:`!format_usage`. Вы также можете "
+"зарегистрировать пользовательские действия с помощью метода :meth:"
+"`~ArgumentParser.register` и ссылаться на них по их зарегистрированному "
+"имени."
 
 #: ../../library/argparse.rst:756
 msgid "An example of a custom action::"
@@ -2082,6 +2088,12 @@ msgid ""
 "`ValueError`, the exception is caught and a nicely formatted error message "
 "is displayed. Other exception types are not handled."
 msgstr ""
+"Аргументом ``type`` может быть вызываемый объект, который принимает одну "
+"строку или имя зарегистрированного типа (см. :meth:`~ArgumentParser."
+"register`). Если функция вызывает :exc:`ArgumentTypeError`, :exc: "
+"`TypeError` или :exc:`ValueError`, исключение перехватывается и отображается "
+"красиво отформатированное сообщение об ошибке. Другие типы исключений не "
+"обрабатываются."
 
 #: ../../library/argparse.rst:981
 msgid "Common built-in types and functions can be used as type converters:"
@@ -4318,7 +4330,7 @@ msgstr ""
 
 #: ../../library/argparse.rst:2064
 msgid "Registering custom types or actions"
-msgstr ""
+msgstr "Регистрация пользовательских типов или действий"
 
 #: ../../library/argparse.rst:2068
 msgid ""
@@ -4327,6 +4339,11 @@ msgid ""
 "register custom actions or types with a parser and allow you to reference "
 "the type by their registered name instead of their callable name."
 msgstr ""
+"Иногда желательно использовать специальную строку в сообщениях об ошибках, "
+"чтобы обеспечить более удобный вывод. В этих случаях :meth:`!register` может "
+"использоваться для регистрации пользовательских действий или типов с помощью "
+"синтаксического анализатора и позволяет вам ссылаться на тип по его "
+"зарегистрированному имени, а не по вызываемому имени."
 
 #: ../../library/argparse.rst:2073
 msgid ""
@@ -4335,11 +4352,18 @@ msgid ""
 "``action``, ``type``), *value*, which is the key under which the object will "
 "be registered, and object, the callable to be registered."
 msgstr ""
+"Метод :meth:`!register` принимает три аргумента - *имя_регистра*, "
+"определяющее внутренний реестр, в котором будет храниться объект (например, "
+"``действие``, ``тип``), *значение*, которое ключ, под которым будет "
+"зарегистрирован объект, и объект, вызываемый объект, который необходимо "
+"зарегистрировать."
 
 #: ../../library/argparse.rst:2078
 msgid ""
 "The following example shows how to register a custom type with a parser::"
 msgstr ""
+"В следующем примере показано, как зарегистрировать пользовательский тип с "
+"помощью анализатора:"
 
 #: ../../library/argparse.rst:2080
 msgid ""
@@ -4356,6 +4380,18 @@ msgid ""
 "usage: PROG [-h] [--foo FOO]\n"
 "PROG: error: argument --foo: invalid 'hexadecimal integer' value: '1.2'"
 msgstr ""
+">>> import argparse\n"
+">>> parser = argparse.ArgumentParser()\n"
+">>> parser.register('type', 'hexadecimal integer', lambda s: int(s, 16))\n"
+">>> parser.add_argument('--foo', type='hexadecimal integer')\n"
+"_StoreAction(option_strings=['--foo'], dest='foo', nargs=None, const=None, "
+"default=None, type='hexadecimal integer', choices=None, required=False, "
+"help=None, metavar=None, deprecated=False)\n"
+">>> parser.parse_args(['--foo', '0xFA'])\n"
+"Namespace(foo=250)\n"
+">>> parser.parse_args(['--foo', '1.2'])\n"
+"usage: PROG [-h] [--foo FOO]\n"
+"PROG: error: argument --foo: invalid 'hexadecimal integer' value: '1.2'"
 
 #: ../../library/argparse.rst:2092
 msgid "Exceptions"
