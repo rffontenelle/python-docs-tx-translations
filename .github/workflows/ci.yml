@@ -143,13 +143,13 @@ jobs:
         working-directory: cpython/Doc
         run: |
           (cd locales; rm -r pot;)
-          sphinx-build -E -b gettext -D gettext_compact=0 -d build/.doctrees . locales/pot
+          make SPHINXOPT='-E -b gettext -D gettext_compact=0 -d build/.doctrees-gettext' build
+          mv build/gettext locales/pot
 
       - name: Include obsolete catalog templates (pot files) for removal
         run: |
           deleted_files=$(git status -s | grep ^' D' | cut -d' ' -f3)
           if [ -n "$deleted_files" ]; then git rm -v $deleted_files; else echo "no POT files to remove"; fi
-        
         
       - name: Remove problematic source messages from POT files
         run: |
