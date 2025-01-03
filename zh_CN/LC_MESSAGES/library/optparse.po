@@ -11,6 +11,7 @@
 # ppcfish <ppcfish@gmail.com>, 2021
 # ww song <sww4718168@gmail.com>, 2023
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2024
+# Kevin Deng <kevindeng55+transifex@gmail.com>, 2024
 # Freesand Leo <yuqinju@163.com>, 2024
 #
 #, fuzzy
@@ -51,6 +52,8 @@ msgid ""
 "API. Included in the standard library since before the initial Python 1.0 "
 "release."
 msgstr ""
+":mod:`getopt`: 一个忠实地复刻过程式 C ``getopt`` API 的模块。 在最初的 "
+"Python 1.0 发布版之前就已包括在标准库中。"
 
 #: ../../library/optparse.rst:23
 msgid ""
@@ -59,6 +62,9 @@ msgid ""
 "own procedural option parsing logic. Included in the standard library since "
 "the Python 2.3 release."
 msgstr ""
+":mod:`optparse`: 一个 ``getopt`` 的声明式替代物，提供了等价的功能而不要求每个"
+"应用程序实现它自己的过程式选项解析逻辑。 自 Python 2.3 发布版起即包括在标准库"
+"中。"
 
 #: ../../library/optparse.rst:27
 msgid ""
@@ -68,6 +74,9 @@ msgid ""
 "Included in the standard library since the Python 2.7 and Python 3.2 "
 "releases."
 msgstr ""
+":mod:`argparse`: 一个更有针对性的 ``optparse`` 替代物，默认提供了更多功能，代"
+"价是降低了应用程序在具体如何控制参数处理时的灵活性。 自 Python 2.7 和 Python "
+"3.2 发布版起被包括在标准库中。"
 
 #: ../../library/optparse.rst:32
 msgid ""
@@ -76,6 +85,8 @@ msgid ""
 "applications, as it offers the highest level of baseline functionality with "
 "the least application level code."
 msgstr ""
+"在缺少更具体的参数解析设计约束的情况下，:mod:`argparse` 是实现命令行应用程序"
+"的推荐选择，因为它能以最少的程用程序层级代码提供最高层级的基本功能。"
 
 #: ../../library/optparse.rst:36
 msgid ""
@@ -84,18 +95,22 @@ msgid ""
 "and testing command line argument handling in ``getopt``-based C "
 "applications."
 msgstr ""
+":mod:`getopt` 被保留几乎完全是出于向下兼容性理由。 不过，它也适合在基于 "
+"``getopt`` 的 C 应用程序中作为命令行参数处理原型搭建和测试场景中的工具。"
 
 #: ../../library/optparse.rst:40
 msgid ""
 ":mod:`optparse` should be considered as an alternative to :mod:`argparse` in "
 "the following cases:"
-msgstr ""
+msgstr ":mod:`optparse` 应当在下列场景中被作为 :mod:`argparse` 的替代物："
 
 #: ../../library/optparse.rst:43
 msgid ""
 "an application is already using :mod:`optparse` and doesn't want to risk the "
 "subtle behavioural changes that may arise when migrating to :mod:`argparse`"
 msgstr ""
+"一个应用程序已在使用 :mod:`optparse` 并且不想再冒当迁移至 :mod:`argparse` 时"
+"可能引发的微妙行为改变的风险。"
 
 #: ../../library/optparse.rst:45
 msgid ""
@@ -103,6 +118,8 @@ msgid ""
 "positional parameters are interleaved on the command line (including the "
 "ability to disable the interleaving feature completely)"
 msgstr ""
+"这个应用程序需要对命令行中选项和位置形参的交错方式进行额外的控制（包括完全禁"
+"用交错特性的能力）"
 
 #: ../../library/optparse.rst:48
 msgid ""
@@ -110,6 +127,8 @@ msgid ""
 "command line elements (while ``argparse`` does support this, the exact way "
 "it works in practice is undesirable for some use cases)"
 msgstr ""
+"这个应用程序需要对命令行元素进行渐进式解析的过程施加更多控制（虽然 "
+"``argparse`` 确实支持这个功能，但实际运作的方式在某些情况下并非理想）"
 
 #: ../../library/optparse.rst:51
 msgid ""
@@ -117,6 +136,8 @@ msgid ""
 "which accept parameter values that may start with ``-`` (such as delegated "
 "options to be passed to invoked subprocesses)"
 msgstr ""
+"这个应用程序需要对某些可能接受以 ``-`` 开头的参数值的命令行选项施行特殊的控制"
+"（例如程序本身调用另一个程序，而这些选项是要原样传给被调用的子程序的）"
 
 #: ../../library/optparse.rst:54
 msgid ""
@@ -124,6 +145,8 @@ msgid ""
 "behavior which ``argparse`` does not support, but which can be implemented "
 "in terms of the lower level interface offered by ``optparse``"
 msgstr ""
+"这个应用程序需要其他一些 ``argparse`` 不支持，但是可利用 ``optparse`` 提供之"
+"底层接口实现的特殊的命令行参数处理行为"
 
 #: ../../library/optparse.rst:58
 msgid ""
@@ -131,6 +154,8 @@ msgid ""
 "better foundation for library authors writing third party command line "
 "argument processing libraries."
 msgstr ""
+"这些考量也意味着 :mod:`optparse` 或可为代码库编写者撰写第三方命令行参数解析库"
+"时提供更好的基础。"
 
 #: ../../library/optparse.rst:62
 msgid ""
@@ -138,6 +163,8 @@ msgid ""
 "parsing configurations, the first using ``optparse``, and the second using "
 "``argparse``:"
 msgstr ""
+"以下提供一个具体的例子。请见下方两段命令行参数解析代码，其中第一段使用 "
+"``optparse`` 实现；第二段使用 ``argparse`` 实现："
 
 #: ../../library/optparse.rst:66
 msgid ""
@@ -150,6 +177,14 @@ msgid ""
 "    opts, args = parser.parse_args()\n"
 "    process(args, output=opts.output, verbose=opts.verbose)"
 msgstr ""
+"import optparse\n"
+"\n"
+"if __name__ == '__main__':\n"
+"    parser = optparse.OptionParser()\n"
+"    parser.add_option('-o', '--output')\n"
+"    parser.add_option('-v', dest='verbose', action='store_true')\n"
+"    opts, args = parser.parse_args()\n"
+"    process(args, output=opts.output, verbose=opts.verbose)"
 
 #: ../../library/optparse.rst:77
 msgid ""
@@ -163,6 +198,15 @@ msgid ""
 "    args = parser.parse_args()\n"
 "    process(args.rest, output=args.output, verbose=args.verbose)"
 msgstr ""
+"import argparse\n"
+"\n"
+"if __name__ == '__main__':\n"
+"    parser = argparse.ArgumentParser()\n"
+"    parser.add_argument('-o', '--output')\n"
+"    parser.add_argument('-v', dest='verbose', action='store_true')\n"
+"    parser.add_argument('rest', nargs='*')\n"
+"    args = parser.parse_args()\n"
+"    process(args.rest, output=args.output, verbose=args.verbose)"
 
 #: ../../library/optparse.rst:89
 msgid ""
@@ -171,6 +215,9 @@ msgid ""
 "option processing is complete. In the ``argparse`` version, positional "
 "arguments are declared and processed in the same way as the named options."
 msgstr ""
+"最明显的差异就是在 ``optparse`` 版本中，无选项参数是在选项处理完成后由应用程"
+"序单独处理的。 在 ``argparse`` 版本中，位置参数则是以与带名称的选项相同的方式"
+"声明和处理的。"
 
 #: ../../library/optparse.rst:94
 msgid ""
@@ -178,6 +225,8 @@ msgid ""
 "combination differently from the way the ``optparse`` version would handle "
 "them. For example (amongst other differences):"
 msgstr ""
+"不过，``argparse`` 版本还会以与 ``optparse`` 版本不同的方式处理某些形参组"
+"合。 例如（除其他差异之外）："
 
 #: ../../library/optparse.rst:98
 msgid ""
@@ -186,6 +235,9 @@ msgid ""
 "has been supplied for ``-o/--output``, since ``-v`` is interpreted as "
 "meaning the verbosity flag)"
 msgstr ""
+"当使用 ``optparse`` 时 ``-o -v`` 是指定 ``output=\"-v\"`` 和 "
+"``verbose=False``，但对于 ``argparse`` 则为错误用法（将报告没有为 ``-o/--"
+"output`` 提供值，因为 ``-v`` 会被解读为代表 verbosity 旗标）"
 
 #: ../../library/optparse.rst:102
 msgid ""
@@ -195,6 +247,10 @@ msgid ""
 "interpreted as terminating the option processing and treating all remaining "
 "values as positional arguments)"
 msgstr ""
+"类似地，当使用 ``optparse`` 时提供 ``-o --`` 是指定 ``output=\"--\"`` 和 "
+"``args=()``，但对于 ``argparse`` 则为错误用法（同样将报告没有为 ``-o/--"
+"output`` 提供值，因为 ``--`` 会被解读为结束选项处理并将所有剩余的值视为位置参"
+"数）"
 
 #: ../../library/optparse.rst:107
 msgid ""
@@ -202,6 +258,9 @@ msgid ""
 "gives ``output=\"foo\"`` with ``argparse`` (since ``=`` is special cased as "
 "an alternative separator for option parameter values)"
 msgstr ""
+"当使用 ``optparse`` 时提供 ``-o=foo`` 是指定 ``output=\"=foo\"``，但对于 "
+"``argparse`` 则为 ``output=\"foo\"`` (因为 ``=`` 是被作为选项形参值的替代分隔"
+"符的特例)。"
 
 #: ../../library/optparse.rst:111
 msgid ""
@@ -209,6 +268,8 @@ msgid ""
 "desirable or a problem will depend on the specific command line application "
 "use case."
 msgstr ""
+"这些在 ``argparse`` 版本中存在差异的行为是有必要的还是有问题的将取决于特定命"
+"令行应用程序的使用场景。"
 
 #: ../../library/optparse.rst:117
 msgid ""
@@ -216,6 +277,8 @@ msgid ""
 "on ``optparse``), which allows command line applications to be developed as "
 "a set of decorated command implementation functions."
 msgstr ""
+":pypi:`click` 是一个第三方参数处理库（最初是以 ``optparse`` 为基础），它允许"
+"命令行应用程序以一组被装饰的命令实现函数的方式来开发。"
 
 #: ../../library/optparse.rst:121
 msgid ""
@@ -223,6 +286,8 @@ msgid ""
 "allow command line interfaces to be specified in ways that more effectively "
 "integrate with static checking of Python type annotations."
 msgstr ""
+"其他的第三方库，例如 :pypi:`typer` 或 :pypi:`msgspec-click`，允许命令行界面以"
+"更有效率地集成 Python 类型标注静态检查的方式来指定。"
 
 #: ../../library/optparse.rst:127
 msgid "Introduction"
@@ -238,6 +303,11 @@ msgid ""
 "conventional GNU/POSIX syntax, and additionally generates usage and help "
 "messages for you."
 msgstr ""
+":mod:`optparse` 是一个相比极简风格的 :mod:`getopt` 模块更为方便、灵活和强大的"
+"命令行选项解析库。 :mod:`optparse` 使用更趋声明式的命令行解析风格：创建一个 :"
+"class:`OptionParser` 的实例，使用选项来填充它，然后解析命令行。 :mod:"
+"`optparse` 允许用户以传统的 GNU/POSIX 语法来指定选项，并会为你生成额外的用法"
+"和帮助消息。"
 
 #: ../../library/optparse.rst:137
 msgid "Here's an example of using :mod:`optparse` in a simple script::"
@@ -361,6 +431,10 @@ msgid ""
 "are unfamiliar with these conventions, reading this section will allow you "
 "to acquaint yourself with them."
 msgstr ""
+":mod:`optparse` 被显式地设计为鼓励创建带有遵循 C 开发者所用的 :c:func:`!"
+"getopt` 函数族的惯例的简明直观的命令行接口的程序。 为了这个目标，它仅支持最常"
+"见的命令行语法和在 Unix 下使用的规范语义。 如果你不熟悉这些惯例，阅读本章节将"
+"使你开始了解它们。"
 
 #: ../../library/optparse.rst:205
 msgid "Terminology"
