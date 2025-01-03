@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-20 14:50+0000\n"
+"POT-Creation-Date: 2024-12-27 14:52+0000\n"
 "PO-Revision-Date: 2024-05-11 00:33+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -1842,6 +1842,11 @@ msgid ""
 "array instances instead of pointer types.  So, for ``POINTER(c_int)``, "
 "ctypes accepts an array of c_int::"
 msgstr ""
+"通常，ctypes 会进行严格的类型检查。 这意味着，如果在某个函数的 :attr:"
+"`~_CFuncPtr.argtypes` 列表中有 ``POINTER(c_int)`` 或在结构体定义中将其用作成"
+"员字段的类型，则只接受完全相同类型的实例。 此规则也有一些例外情况，在这些情况"
+"下 ctypes 可以接受其他对象。 例如，你可以传入兼容的数组实例而不是指针类型。 "
+"因此，对于 ``POINTER(c_int)``，ctypes 接受一个 c_int 数组::"
 
 #: ../../library/ctypes.rst:864
 msgid ""
@@ -1881,6 +1886,10 @@ msgid ""
 "ctypes will apply the required :func:`byref` conversion in this case "
 "automatically."
 msgstr ""
+"此外，如果一个函数参数在 :attr:`~_CFuncPtr.argtypes` 中显式地声明为指针类型 "
+"(如 ``POINTER(c_int)``)，则可以向该函数传递所指向的类型的对象 (在本例 中为 "
+"``c_int``)。 在这种情况下，ctypes 将自动应用所需的 :func:`byref` 转换。"
+"conversion in this case automatically."
 
 #: ../../library/ctypes.rst:883
 msgid "To set a POINTER type field to ``NULL``, you can assign ``None``::"
@@ -2912,6 +2921,10 @@ msgid ""
 "succeeded, together with additional error code.  If the return value signals "
 "a failure, an :class:`OSError` is automatically raised."
 msgstr ""
+"这个类的实例代表已加载的共享库，这些库中的函数使用 ``stdcall`` 调用约定，并且"
+"预期返回 Windows 专属的 :class:`HRESULT` 代码。 :class:`HRESULT` 值包含指明函"
+"数调用是失败还是成功的信息，并带有额外的错误码。 如果返回值是提示失败，则会自"
+"动引发 :class:`OSError`。"
 
 #: ../../library/ctypes.rst:1400 ../../library/ctypes.rst:1417
 #: ../../library/ctypes.rst:1561 ../../library/ctypes.rst:1569
@@ -2935,6 +2948,8 @@ msgid ""
 "these libraries use the ``stdcall`` calling convention, and are assumed to "
 "return :c:expr:`int` by default."
 msgstr ""
+"这个类的实例代表已加载的共享库，这些库中的函数使用 ``stdcall`` 调用约定，并且"
+"默认预期返回 :c:expr:`int`。"
 
 #: ../../library/ctypes.rst:1424
 msgid ""
@@ -3212,12 +3227,17 @@ msgid ""
 "instances as arguments, and return the default result type specified by the "
 "library loader."
 msgstr ""
+"正如前一节的说明，外部函数可作为已加载共享库的属性来访问。 用此方式创建的函数"
+"对象默认接受任意数量的参数，接受任意 ctypes 数据实例作为参数，并且返回库加载"
+"器所指定的默认结果类型。"
 
 #: ../../library/ctypes.rst:1617
 msgid ""
 "They are instances of a private local class :class:`!_FuncPtr` (not exposed "
 "in :mod:`!ctypes`) which inherits from the private :class:`_CFuncPtr` class:"
 msgstr ""
+"它们是私有局部类 :class:`!_FuncPtr` 的实例（未在 :mod:`!ctypes` 中暴露），该"
+"类继承自私有的 :class:`_CFuncPtr` 类："
 
 #: ../../library/ctypes.rst:1620
 msgid ""
@@ -3417,6 +3437,8 @@ msgid ""
 "calling convention.  The function will release the GIL during the call.  "
 "*use_errno* and *use_last_error* have the same meaning as above."
 msgstr ""
+"返回的函数原型会创建使用 ``stdcall`` 调用约定的函数。 该函数在调用过程中将会"
+"释放 GIL。 *use_errno* 和 *use_last_error* 具有与上文相同的含义。"
 
 #: ../../library/ctypes.rst:1751
 msgid ""
@@ -3488,6 +3510,7 @@ msgid ""
 "*paramflags* must be a tuple of the same length as :attr:`~_CFuncPtr."
 "argtypes`."
 msgstr ""
+"*paramflags* 必须为一个与 :attr:`~_CFuncPtr.argtypes` 长度相同的元组。."
 
 #: ../../library/ctypes.rst:1799
 msgid ""
@@ -3657,6 +3680,9 @@ msgid ""
 "failure, so this function could do the error checking, and raises an "
 "exception when the api call failed::"
 msgstr ""
+"输出形参可以与 :attr:`~_CFuncPtr.errcheck` 协议相结合以执行进一步的输出处理和"
+"错误检查。 Win32 ``GetWindowRect`` API 函数返回一个 ``BOOL`` 来表示成功或失"
+"败，因此该函数可以执行错误检查，并在 API 调用失败时引发异常::"
 
 #: ../../library/ctypes.rst:1873
 msgid ""
@@ -3684,6 +3710,9 @@ msgid ""
 "instead of a ``RECT`` instance, you can retrieve the fields in the function "
 "and return them instead, the normal processing will no longer take place::"
 msgstr ""
+"如果 :attr:`~_CFuncPtr.errcheck` 函数原封不动地返回它所接收的参数元组，则 :"
+"mod:`ctypes` 会继续对输出形参执行正常处理。 如果你希望返回一个窗口坐标的元组"
+"而非 ``RECT`` 实例，你可以在函数中检索字段并返回它们，正常处理将不会再执行::"
 
 #: ../../library/ctypes.rst:1887
 msgid ""
@@ -3843,6 +3872,8 @@ msgid ""
 "with ctypes.  It is called from the DllCanUnloadNow function that the "
 "_ctypes extension dll exports."
 msgstr ""
+"此函数是一个允许使用 ctypes 实现进程内 COM 服务器的钩子。 它将由 _ctypes 扩展"
+"所导出的 DllCanUnloadNow 函数来调用。"
 
 #: ../../library/ctypes.rst:1982
 msgid ""
@@ -3850,6 +3881,8 @@ msgid ""
 "with ctypes.  It is called from the DllGetClassObject function that the "
 "``_ctypes`` extension dll exports."
 msgstr ""
+"此函数是一个允许使用 ctypes 实现进程内 COM 服务器的钩子。 它将由 ``_ctypes`` "
+"扩展 DLL 所导出的 DllGetClassObject 函数来调用。"
 
 #: ../../library/ctypes.rst:1992
 msgid ""
@@ -3868,6 +3901,8 @@ msgid ""
 "extension modules.  If the name of the library cannot be determined, "
 "``None`` is returned."
 msgstr ""
+"返回 Python 以及扩展模块所使用的 VC 运行时库的文件名。 如果库名称无法确定，则"
+"返回 ``None``。"
 
 #: ../../library/ctypes.rst:2007
 msgid ""
@@ -3884,6 +3919,8 @@ msgid ""
 "specified, the last error code is used by calling the Windows api function "
 "GetLastError."
 msgstr ""
+"返回错误码 *code* 的文本描述。 如果未指定错误码，则会通过调用 Windows API 函"
+"数 GetLastError 来获取最近的错误码。"
 
 #: ../../library/ctypes.rst:2025
 msgid ""
@@ -3891,6 +3928,8 @@ msgid ""
 "function calls the Windows ``GetLastError()`` function directly, it does not "
 "return the ctypes-private copy of the error code."
 msgstr ""
+"返回 Windows 在调用线程中设置的最近的错误码。 此函数会直接调用 Windows "
+"``GetLastError()`` 函数，它并不返回错误码的 ctypes 私有副本。"
 
 #: ../../library/ctypes.rst:2034
 msgid ""
@@ -3908,7 +3947,7 @@ msgstr "引发一个不带参数的 :ref:`审计事件 <auditing>` ``ctypes.get_
 msgid ""
 "Returns the current value of the ctypes-private copy of the system :data:`!"
 "LastError` variable in the calling thread."
-msgstr ""
+msgstr "返回调用线程中系统 :data:`!LastError` 变量的 ctypes 私有副本的当前值。"
 
 #: ../../library/ctypes.rst:2046
 msgid ""
@@ -3992,6 +4031,8 @@ msgid ""
 "LastError` variable in the calling thread to *value* and return the previous "
 "value."
 msgstr ""
+"在调用线程中将系统 :data:`!LastError` 变量的 ctypes 私有副本的当前值设为 "
+"*value* 并返回之前的值。"
 
 #: ../../library/ctypes.rst:2103
 msgid ""
@@ -4032,6 +4073,10 @@ msgid ""
 "called to determine the error code. If *descr* is not specified, :func:"
 "`FormatError` is called to get a textual description of the error."
 msgstr ""
+"此函数可能是 ctypes 中命名得最糟糕的。 它会创建一个 :exc:`OSError` 的实例。 "
+"如果未指定 *code*，则会调用 ``GetLastError`` 来确定错误码。 如果未指定 "
+"*descr*，则会调用 :func:`FormatError` 来获取错误的文本描述。is called to get "
+"a textual description of the error."
 
 #: ../../library/ctypes.rst:2131
 msgid ""
@@ -4137,6 +4182,9 @@ msgid ""
 "foreign function's :attr:`~_CFuncPtr.argtypes` tuple; it must return an "
 "object that can be used as a function call parameter."
 msgstr ""
+"此方法会将 *obj* 适配为一个 ctypes 类型。 当该类型出现在外部函数的 :attr:"
+"`~_CFuncPtr.argtypes` 元组中时它将会被调用并传入在外部函数中使用的实际对象；"
+"它必须返回一个可被用作函数调用形参的对象。"
 
 #: ../../library/ctypes.rst:2202
 msgid ""
@@ -4235,6 +4283,10 @@ msgid ""
 "will always receive a Python bytes object, *not* a :class:`c_char_p` "
 "instance."
 msgstr ""
+"当作为外部函数调用结果，或者举例来说，作为结构字段成员或数组条目被提取时，基"
+"本数据类型会被透明与转换为原生 Python 类型。 换句话说，如果某个外部函数的 :"
+"attr:`~_CFuncPtr.restype` 是 :class:`c_char_p`，那么你将总是得到一个 Python "
+"字节串对象，而 *不是* 一个 :class:`c_char_p` 实例。"
 
 #: ../../library/ctypes.rst:2270
 msgid ""

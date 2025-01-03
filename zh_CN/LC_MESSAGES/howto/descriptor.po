@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-06 14:52+0000\n"
+"POT-Creation-Date: 2024-12-27 14:52+0000\n"
 "PO-Revision-Date: 2024-05-11 00:32+0000\n"
 "Last-Translator: Rafael Fontenelle <rffontenelle@gmail.com>, 2024\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
@@ -1117,6 +1117,14 @@ msgid ""
 "            raise\n"
 "    return type(obj).__getattr__(obj, name)             # __getattr__"
 msgstr ""
+"def getattr_hook(obj, name):\n"
+"    \"Emulate slot_tp_getattr_hook() in Objects/typeobject.c\"\n"
+"    try:\n"
+"        return obj.__getattribute__(name)\n"
+"    except AttributeError:\n"
+"        if not hasattr(type(obj), '__getattr__'):\n"
+"            raise\n"
+"    return type(obj).__getattr__(obj, name)             # __getattr__"
 
 #: ../../howto/descriptor.rst:773
 msgid "Invocation from a class"
@@ -1129,6 +1137,9 @@ msgid ""
 "__getattribute__` but the instance dictionary lookup is replaced by a search "
 "through the class's :term:`method resolution order`."
 msgstr ""
+"像 ``A.x`` 这样的点操作符查找的逻辑在 :meth:`!type.__getattribute__` 中。 其"
+"步骤与 :meth:`!object.__getattribute__` 相似，但是实例字典查找被替换为搜索类"
+"的 :term:`method resolution order`。"
 
 #: ../../howto/descriptor.rst:780
 msgid "If a descriptor is found, it is invoked with ``desc.__get__(None, A)``."
@@ -1151,6 +1162,8 @@ msgid ""
 "The logic for super's dotted lookup is in the :meth:`~object."
 "__getattribute__` method for object returned by :func:`super`."
 msgstr ""
+"super 的点操作符查找的逻辑在 :func:`super` 所返回对象的 :meth:`~object."
+"__getattribute__` 方法中。"
 
 #: ../../howto/descriptor.rst:792
 msgid ""
@@ -1184,6 +1197,8 @@ msgid ""
 "__getattribute__` methods for :class:`object`, :class:`type`, and :func:"
 "`super`."
 msgstr ""
+"描述器的机制嵌入在 :class:`object`, :class:`type` 和 :func:`super` 的 :meth:"
+"`~object.__getattribute__` 方法中。"
 
 #: ../../howto/descriptor.rst:809
 msgid "The important points to remember are:"
@@ -1191,7 +1206,7 @@ msgstr "要记住的重要点是："
 
 #: ../../howto/descriptor.rst:811
 msgid "Descriptors are invoked by the :meth:`~object.__getattribute__` method."
-msgstr ""
+msgstr "描述器将由 :meth:`~object.__getattribute__` 方法发起调用。"
 
 #: ../../howto/descriptor.rst:813
 msgid ""
@@ -1204,6 +1219,8 @@ msgid ""
 "Overriding :meth:`~object.__getattribute__` prevents automatic descriptor "
 "calls because all the descriptor logic is in that method."
 msgstr ""
+"重写 :meth:`~object.__getattribute__` 将阻止自动的描述器调用因为所有描述器逻"
+"辑都在该方法中。"
 
 #: ../../howto/descriptor.rst:819
 msgid ""
@@ -1212,6 +1229,9 @@ msgid ""
 "and may include the class.  The second puts in ``None`` for the instance and "
 "always includes the class."
 msgstr ""
+":meth:`!object.__getattribute__` 和 :meth:`!type.__getattribute__` 会用不同方"
+"式调用 :meth:`~object.__get__`。 第一个会包括实例并可能包括类 。第二个会将 "
+"``None`` 作为实例并且总是包括类。"
 
 #: ../../howto/descriptor.rst:824
 msgid "Data descriptors always override instance dictionaries."
@@ -1563,6 +1583,8 @@ msgid ""
 "Either the built-in :func:`property` or our :func:`!Property` equivalent "
 "would work in this example."
 msgstr ""
+"在这个例子中内置的 :func:`property` 或我们的 :func:`!Property` 等价实现都是可"
+"以的。"
 
 #: ../../howto/descriptor.rst:1158
 msgid "Functions and methods"
