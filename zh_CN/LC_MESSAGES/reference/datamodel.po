@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2001-2024, Python Software Foundation
+# Copyright (C) 2001-2025, Python Software Foundation
 # This file is distributed under the same license as the Python package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -26,16 +26,16 @@
 # LeeWendao <LeeWendao@outlook.com>, 2023
 # Alpha Du <alphanow@gmail.com>, 2024
 # lqks, 2024
-# Freesand Leo <yuqinju@163.com>, 2024
+# Freesand Leo <yuqinju@163.com>, 2025
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-12 08:36+0000\n"
+"POT-Creation-Date: 2025-01-03 14:16+0000\n"
 "PO-Revision-Date: 2021-06-28 01:19+0000\n"
-"Last-Translator: Freesand Leo <yuqinju@163.com>, 2024\n"
+"Last-Translator: Freesand Leo <yuqinju@163.com>, 2025\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/python-doc/"
 "teams/5390/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -1692,17 +1692,17 @@ msgstr ""
 msgid ""
 "The :class:`tuple` of classes that are considered when looking for base "
 "classes during method resolution."
-msgstr ""
+msgstr "由在方法解析期间当查找基类时将被纳入考虑的类组成的 :class:`tuple`。"
 
 #: ../../reference/datamodel.rst:1238
 msgid "Special methods"
-msgstr ""
+msgstr "特殊方法"
 
 #: ../../reference/datamodel.rst:1240
 msgid ""
 "In addition to the special attributes described above, all Python classes "
 "also have the following two methods available:"
-msgstr ""
+msgstr "除了上面介绍的特殊属性，所有的 Python 类还具有以下两个方法："
 
 #: ../../reference/datamodel.rst:1245
 msgid ""
@@ -1710,6 +1710,8 @@ msgid ""
 "resolution order for its instances.  It is called at class instantiation, "
 "and its result is stored in :attr:`~type.__mro__`."
 msgstr ""
+"此方法可由一个元类来重写以便为其实例定制方法解析顺序。 它会在类实例化时被调"
+"用，其结果将存储在 :attr:`~type.__mro__` 中。"
 
 #: ../../reference/datamodel.rst:1251
 msgid ""
@@ -1717,6 +1719,8 @@ msgid ""
 "method returns a list of all those references still alive. The list is in "
 "definition order. Example:"
 msgstr ""
+"每个类都会保存一个由指向其直接子类的弱引用组成的列表。 此方法将返回一个由所有"
+"仍然存在的这种引用组成的列表。 列表项将按定义顺序排列。 例如："
 
 #: ../../reference/datamodel.rst:1255
 msgid ""
@@ -1911,10 +1915,13 @@ msgid ""
 "<closure variable>` that a :term:`nested scope` references in an outer "
 "scope. See also :attr:`function.__closure__`."
 msgstr ""
+"一个 :class:`tuple`，其中包含某个 :term:`nested scope` 引用在外部作用域中引用"
+"的 containing the names of :term:`自由（闭包）变量 <closure variable>` 的名"
+"称。 另请参阅 :attr:`function.__closure__`。"
 
 #: ../../reference/datamodel.rst:1437
 msgid "Note: references to global and builtin names are *not* included."
-msgstr ""
+msgstr "注意：对全局和内置名称的引用 *不会* 被包括在内。"
 
 #: ../../reference/datamodel.rst:1440
 msgid ""
@@ -1954,7 +1961,7 @@ msgstr ""
 msgid ""
 "This attribute of code objects is deprecated, and may be removed in Python "
 "3.15."
-msgstr ""
+msgstr "代码对象的这个属性已被弃用，并可能在 Python 3.15 中移除。"
 
 #: ../../reference/datamodel.rst:1466
 msgid "The required stack size of the code object"
@@ -5203,6 +5210,27 @@ msgid ""
 ">>> len(c)                      # Implicit lookup\n"
 "10"
 msgstr ""
+">>> class Meta(type):\n"
+"...     def __getattribute__(*args):\n"
+"...         print(\"Metaclass getattribute invoked\")\n"
+"...         return type.__getattribute__(*args)\n"
+"...\n"
+">>> class C(object, metaclass=Meta):\n"
+"...     def __len__(self):\n"
+"...         return 10\n"
+"...     def __getattribute__(*args):\n"
+"...         print(\"Class getattribute invoked\")\n"
+"...         return object.__getattribute__(*args)\n"
+"...\n"
+">>> c = C()\n"
+">>> c.__len__()                 # 通过实例的显式查找\n"
+"Class getattribute invoked\n"
+"10\n"
+">>> type(c).__len__(c)          # 通过类型的显式查找\n"
+"Metaclass getattribute invoked\n"
+"10\n"
+">>> len(c)                      # 隐式查找\n"
+"10"
 
 #: ../../reference/datamodel.rst:3606
 msgid ""
@@ -6022,7 +6050,7 @@ msgstr "__file__ (模块属性)"
 
 #: ../../reference/datamodel.rst:879
 msgid "__cached__ (module attribute)"
-msgstr ""
+msgstr "__cached__ (模块属性)"
 
 #: ../../reference/datamodel.rst:879
 msgid "__doc__ (module attribute)"
