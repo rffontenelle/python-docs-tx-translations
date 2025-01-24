@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Python 3.13\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-10 14:17+0000\n"
+"POT-Creation-Date: 2025-01-24 14:16+0000\n"
 "PO-Revision-Date: 2021-06-28 00:50+0000\n"
 "Last-Translator: Roustam Khamidoulline, 2024\n"
 "Language-Team: Russian (https://app.transifex.com/python-doc/teams/5390/"
@@ -1668,7 +1668,7 @@ msgstr ""
 "указатели на него становятся недействительными, когда объект Unicode "
 "очищается от мусора."
 
-#: ../../c-api/unicode.rst:1046 ../../c-api/unicode.rst:1059
+#: ../../c-api/unicode.rst:1046 ../../c-api/unicode.rst:1068
 msgid "The return type is now ``const char *`` rather of ``char *``."
 msgstr "Тип возвращаемого значения теперь ``const char *``, а не ``char *``."
 
@@ -1680,15 +1680,25 @@ msgstr "Эта функция является частью :ref:`limited API <l
 msgid "As :c:func:`PyUnicode_AsUTF8AndSize`, but does not store the size."
 msgstr "Как :c:func:`PyUnicode_AsUTF8AndSize`, но размер не сохраняется."
 
-#: ../../c-api/unicode.rst:1064
+#: ../../c-api/unicode.rst:1059
+msgid ""
+"This function does not have any special behavior for `null characters "
+"<https://en.wikipedia.org/wiki/Null_character>`_ embedded within *unicode*. "
+"As a result, strings containing null characters will remain in the returned "
+"string, which some C functions might interpret as the end of the string, "
+"leading to truncation. If truncation is an issue, it is recommended to use :"
+"c:func:`PyUnicode_AsUTF8AndSize` instead."
+msgstr ""
+
+#: ../../c-api/unicode.rst:1073
 msgid "UTF-32 Codecs"
 msgstr "Кодеки UTF-32"
 
-#: ../../c-api/unicode.rst:1066
+#: ../../c-api/unicode.rst:1075
 msgid "These are the UTF-32 codec APIs:"
 msgstr "Это API-интерфейсы кодека UTF-32:"
 
-#: ../../c-api/unicode.rst:1072
+#: ../../c-api/unicode.rst:1081
 msgid ""
 "Decode *size* bytes from a UTF-32 encoded buffer string and return the "
 "corresponding Unicode object.  *errors* (if non-``NULL``) defines the error "
@@ -1698,7 +1708,7 @@ msgstr ""
 "соответствующий объект Unicode. *errors* (если не NULL) определяет обработку "
 "ошибок. По умолчанию установлено значение «строгое»."
 
-#: ../../c-api/unicode.rst:1076 ../../c-api/unicode.rst:1126
+#: ../../c-api/unicode.rst:1085 ../../c-api/unicode.rst:1135
 msgid ""
 "If *byteorder* is non-``NULL``, the decoder starts decoding using the given "
 "byte order::"
@@ -1706,7 +1716,7 @@ msgstr ""
 "Если *byteorder* не равен NULL, декодер начинает декодирование, используя "
 "заданный порядок байтов:"
 
-#: ../../c-api/unicode.rst:1079 ../../c-api/unicode.rst:1129
+#: ../../c-api/unicode.rst:1088 ../../c-api/unicode.rst:1138
 msgid ""
 "*byteorder == -1: little endian\n"
 "*byteorder == 0:  native order\n"
@@ -1716,7 +1726,7 @@ msgstr ""
 "*byteorder == 0:  native order\n"
 "*byteorder == 1:  big endian"
 
-#: ../../c-api/unicode.rst:1083
+#: ../../c-api/unicode.rst:1092
 msgid ""
 "If ``*byteorder`` is zero, and the first four bytes of the input data are a "
 "byte order mark (BOM), the decoder switches to this byte order and the BOM "
@@ -1729,7 +1739,7 @@ msgstr ""
 "``*byteorder`` равен ``-1`` или ``1``, любая метка порядка байтов копируется "
 "на выход."
 
-#: ../../c-api/unicode.rst:1088
+#: ../../c-api/unicode.rst:1097
 msgid ""
 "After completion, *\\*byteorder* is set to the current byte order at the end "
 "of input data."
@@ -1737,17 +1747,17 @@ msgstr ""
 "После завершения *\\*byteorder* устанавливается на текущий порядок байтов в "
 "конце входных данных."
 
-#: ../../c-api/unicode.rst:1091 ../../c-api/unicode.rst:1142
+#: ../../c-api/unicode.rst:1100 ../../c-api/unicode.rst:1151
 msgid "If *byteorder* is ``NULL``, the codec starts in native order mode."
 msgstr ""
 "Если *byteorder* имеет значение ``NULL``, кодек запускается в собственном "
 "режиме порядка."
 
-#: ../../c-api/unicode.rst:1093 ../../c-api/unicode.rst:1144
+#: ../../c-api/unicode.rst:1102 ../../c-api/unicode.rst:1153
 msgid "Return ``NULL`` if an exception was raised by the codec."
 msgstr "Верните NULL, если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1099
+#: ../../c-api/unicode.rst:1108
 msgid ""
 "If *consumed* is ``NULL``, behave like :c:func:`PyUnicode_DecodeUTF32`. If "
 "*consumed* is not ``NULL``, :c:func:`PyUnicode_DecodeUTF32Stateful` will not "
@@ -1762,7 +1772,7 @@ msgstr ""
 "не будут декодированы, а количество декодированных байтов будет сохранено в "
 "*consumed*."
 
-#: ../../c-api/unicode.rst:1108
+#: ../../c-api/unicode.rst:1117
 msgid ""
 "Return a Python byte string using the UTF-32 encoding in native byte order. "
 "The string always starts with a BOM mark.  Error handling is \"strict\". "
@@ -1772,15 +1782,15 @@ msgstr ""
 "порядке байтов. Строка всегда начинается с метки спецификации. Обработка "
 "ошибок является «строгой». Верните NULL, если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1114
+#: ../../c-api/unicode.rst:1123
 msgid "UTF-16 Codecs"
 msgstr "Кодеки UTF-16"
 
-#: ../../c-api/unicode.rst:1116
+#: ../../c-api/unicode.rst:1125
 msgid "These are the UTF-16 codec APIs:"
 msgstr "Это API-интерфейсы кодека UTF-16:"
 
-#: ../../c-api/unicode.rst:1122
+#: ../../c-api/unicode.rst:1131
 msgid ""
 "Decode *size* bytes from a UTF-16 encoded buffer string and return the "
 "corresponding Unicode object.  *errors* (if non-``NULL``) defines the error "
@@ -1790,7 +1800,7 @@ msgstr ""
 "соответствующий объект Unicode. *errors* (если не NULL) определяет обработку "
 "ошибок. По умолчанию установлено значение «строгое»."
 
-#: ../../c-api/unicode.rst:1133
+#: ../../c-api/unicode.rst:1142
 msgid ""
 "If ``*byteorder`` is zero, and the first two bytes of the input data are a "
 "byte order mark (BOM), the decoder switches to this byte order and the BOM "
@@ -1804,7 +1814,7 @@ msgstr ""
 "``*byteorder`` равен ``-1`` или ``1``, любая метка порядка байтов копируется "
 "на выход (где это приведет либо к ``\\ufeff``, либо к ``\\ufffe `` персонаж)."
 
-#: ../../c-api/unicode.rst:1139
+#: ../../c-api/unicode.rst:1148
 msgid ""
 "After completion, ``*byteorder`` is set to the current byte order at the end "
 "of input data."
@@ -1812,7 +1822,7 @@ msgstr ""
 "После завершения ``*byteorder`` устанавливается на текущий порядок байтов в "
 "конце входных данных."
 
-#: ../../c-api/unicode.rst:1150
+#: ../../c-api/unicode.rst:1159
 msgid ""
 "If *consumed* is ``NULL``, behave like :c:func:`PyUnicode_DecodeUTF16`. If "
 "*consumed* is not ``NULL``, :c:func:`PyUnicode_DecodeUTF16Stateful` will not "
@@ -1828,7 +1838,7 @@ msgstr ""
 "ошибку. Эти байты не будут декодированы, а количество декодированных байтов "
 "будет сохранено в *consumed*."
 
-#: ../../c-api/unicode.rst:1159
+#: ../../c-api/unicode.rst:1168
 msgid ""
 "Return a Python byte string using the UTF-16 encoding in native byte order. "
 "The string always starts with a BOM mark.  Error handling is \"strict\". "
@@ -1838,15 +1848,15 @@ msgstr ""
 "порядке байтов. Строка всегда начинается с метки спецификации. Обработка "
 "ошибок является «строгой». Верните NULL, если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1165
+#: ../../c-api/unicode.rst:1174
 msgid "UTF-7 Codecs"
 msgstr "Кодеки UTF-7"
 
-#: ../../c-api/unicode.rst:1167
+#: ../../c-api/unicode.rst:1176
 msgid "These are the UTF-7 codec APIs:"
 msgstr "Это API-интерфейсы кодека UTF-7:"
 
-#: ../../c-api/unicode.rst:1172
+#: ../../c-api/unicode.rst:1181
 msgid ""
 "Create a Unicode object by decoding *size* bytes of the UTF-7 encoded string "
 "*str*.  Return ``NULL`` if an exception was raised by the codec."
@@ -1854,7 +1864,7 @@ msgstr ""
 "Создайте объект Unicode, декодировав *size* байты строки *str* в кодировке "
 "UTF-7. Верните NULL, если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1179
+#: ../../c-api/unicode.rst:1188
 msgid ""
 "If *consumed* is ``NULL``, behave like :c:func:`PyUnicode_DecodeUTF7`.  If "
 "*consumed* is not ``NULL``, trailing incomplete UTF-7 base-64 sections will "
@@ -1866,15 +1876,15 @@ msgstr ""
 "будут рассматриваться как ошибка. Эти байты не будут декодированы, а "
 "количество декодированных байтов будет сохранено в *consumed*."
 
-#: ../../c-api/unicode.rst:1186
+#: ../../c-api/unicode.rst:1195
 msgid "Unicode-Escape Codecs"
 msgstr "Кодеки Unicode-Escape"
 
-#: ../../c-api/unicode.rst:1188
+#: ../../c-api/unicode.rst:1197
 msgid "These are the \"Unicode Escape\" codec APIs:"
 msgstr "Это API-интерфейсы кодека Unicode Escape:"
 
-#: ../../c-api/unicode.rst:1194
+#: ../../c-api/unicode.rst:1203
 msgid ""
 "Create a Unicode object by decoding *size* bytes of the Unicode-Escape "
 "encoded string *str*.  Return ``NULL`` if an exception was raised by the "
@@ -1883,7 +1893,7 @@ msgstr ""
 "Создайте объект Unicode, декодировав *size* байты строки *str* в кодировке "
 "Unicode-Escape. Верните NULL, если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1200
+#: ../../c-api/unicode.rst:1209
 msgid ""
 "Encode a Unicode object using Unicode-Escape and return the result as a "
 "bytes object.  Error handling is \"strict\".  Return ``NULL`` if an "
@@ -1893,15 +1903,15 @@ msgstr ""
 "виде байтового объекта. Обработка ошибок является «строгой». Верните NULL, "
 "если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1206
+#: ../../c-api/unicode.rst:1215
 msgid "Raw-Unicode-Escape Codecs"
 msgstr "Кодеки Raw-Unicode-Escape"
 
-#: ../../c-api/unicode.rst:1208
+#: ../../c-api/unicode.rst:1217
 msgid "These are the \"Raw Unicode Escape\" codec APIs:"
 msgstr "Это API-интерфейсы кодека Raw Unicode Escape:"
 
-#: ../../c-api/unicode.rst:1214
+#: ../../c-api/unicode.rst:1223
 msgid ""
 "Create a Unicode object by decoding *size* bytes of the Raw-Unicode-Escape "
 "encoded string *str*.  Return ``NULL`` if an exception was raised by the "
@@ -1910,7 +1920,7 @@ msgstr ""
 "Создайте объект Unicode, декодировав *size* байты строки *str* в кодировке "
 "Raw-Unicode-Escape. Верните NULL, если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1220
+#: ../../c-api/unicode.rst:1229
 msgid ""
 "Encode a Unicode object using Raw-Unicode-Escape and return the result as a "
 "bytes object.  Error handling is \"strict\".  Return ``NULL`` if an "
@@ -1920,11 +1930,11 @@ msgstr ""
 "в виде байтового объекта. Обработка ошибок является «строгой». Верните NULL, "
 "если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1226
+#: ../../c-api/unicode.rst:1235
 msgid "Latin-1 Codecs"
 msgstr "Кодеки Latin-1"
 
-#: ../../c-api/unicode.rst:1228
+#: ../../c-api/unicode.rst:1237
 msgid ""
 "These are the Latin-1 codec APIs: Latin-1 corresponds to the first 256 "
 "Unicode ordinals and only these are accepted by the codecs during encoding."
@@ -1933,7 +1943,7 @@ msgstr ""
 "порядковым номерам Unicode, и только они принимаются кодеками во время "
 "кодирования."
 
-#: ../../c-api/unicode.rst:1234
+#: ../../c-api/unicode.rst:1243
 msgid ""
 "Create a Unicode object by decoding *size* bytes of the Latin-1 encoded "
 "string *str*.  Return ``NULL`` if an exception was raised by the codec."
@@ -1941,7 +1951,7 @@ msgstr ""
 "Создайте объект Unicode, декодировав *size* байты строки *str* в кодировке "
 "Latin-1. Верните NULL, если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1240
+#: ../../c-api/unicode.rst:1249
 msgid ""
 "Encode a Unicode object using Latin-1 and return the result as Python bytes "
 "object.  Error handling is \"strict\".  Return ``NULL`` if an exception was "
@@ -1951,11 +1961,11 @@ msgstr ""
 "объект байтов Python. Обработка ошибок является «строгой». Верните NULL, "
 "если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1246
+#: ../../c-api/unicode.rst:1255
 msgid "ASCII Codecs"
 msgstr "Кодеки ASCII"
 
-#: ../../c-api/unicode.rst:1248
+#: ../../c-api/unicode.rst:1257
 msgid ""
 "These are the ASCII codec APIs.  Only 7-bit ASCII data is accepted. All "
 "other codes generate errors."
@@ -1963,7 +1973,7 @@ msgstr ""
 "Это API-интерфейсы кодека ASCII. Принимаются только 7-битные данные ASCII. "
 "Все остальные коды выдают ошибки."
 
-#: ../../c-api/unicode.rst:1254
+#: ../../c-api/unicode.rst:1263
 msgid ""
 "Create a Unicode object by decoding *size* bytes of the ASCII encoded string "
 "*str*.  Return ``NULL`` if an exception was raised by the codec."
@@ -1971,7 +1981,7 @@ msgstr ""
 "Создайте объект Unicode, декодировав *size* байты строки *str* в кодировке "
 "ASCII. Верните NULL, если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1260
+#: ../../c-api/unicode.rst:1269
 msgid ""
 "Encode a Unicode object using ASCII and return the result as Python bytes "
 "object.  Error handling is \"strict\".  Return ``NULL`` if an exception was "
@@ -1981,11 +1991,11 @@ msgstr ""
 "байтов Python. Обработка ошибок является «строгой». Верните NULL, если кодек "
 "вызвал исключение."
 
-#: ../../c-api/unicode.rst:1266
+#: ../../c-api/unicode.rst:1275
 msgid "Character Map Codecs"
 msgstr "Кодеки карты символов"
 
-#: ../../c-api/unicode.rst:1268
+#: ../../c-api/unicode.rst:1277
 msgid ""
 "This codec is special in that it can be used to implement many different "
 "codecs (and this is in fact what was done to obtain most of the standard "
@@ -2001,11 +2011,11 @@ msgstr ""
 "объекты сопоставления должны поддерживать интерфейс сопоставления :meth:"
 "`~object.__getitem__`; словари и последовательности работают хорошо."
 
-#: ../../c-api/unicode.rst:1274
+#: ../../c-api/unicode.rst:1283
 msgid "These are the mapping codec APIs:"
 msgstr "Это API-интерфейсы кодеков сопоставления:"
 
-#: ../../c-api/unicode.rst:1279
+#: ../../c-api/unicode.rst:1288
 msgid ""
 "Create a Unicode object by decoding *size* bytes of the encoded string *str* "
 "using the given *mapping* object.  Return ``NULL`` if an exception was "
@@ -2015,7 +2025,7 @@ msgstr ""
 "*str*, используя данный объект *mapping*. Верните NULL, если кодек вызвал "
 "исключение."
 
-#: ../../c-api/unicode.rst:1283
+#: ../../c-api/unicode.rst:1292
 msgid ""
 "If *mapping* is ``NULL``, Latin-1 decoding will be applied.  Else *mapping* "
 "must map bytes ordinals (integers in the range from 0 to 255) to Unicode "
@@ -2033,7 +2043,7 @@ msgstr ""
 "``'\\ufffe'``, рассматриваются как неопределенные сопоставления. и вызвать "
 "ошибку."
 
-#: ../../c-api/unicode.rst:1294
+#: ../../c-api/unicode.rst:1303
 msgid ""
 "Encode a Unicode object using the given *mapping* object and return the "
 "result as a bytes object.  Error handling is \"strict\".  Return ``NULL`` if "
@@ -2043,7 +2053,7 @@ msgstr ""
 "результат в виде байтового объекта. Обработка ошибок является «строгой». "
 "Верните NULL, если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1298
+#: ../../c-api/unicode.rst:1307
 msgid ""
 "The *mapping* object must map Unicode ordinal integers to bytes objects, "
 "integers in the range from 0 to 255 or ``None``.  Unmapped character "
@@ -2056,11 +2066,11 @@ msgstr ""
 "также сопоставленные с ``None``, рассматриваются как «неопределенное "
 "сопоставление» и вызывают ошибку."
 
-#: ../../c-api/unicode.rst:1304
+#: ../../c-api/unicode.rst:1313
 msgid "The following codec API is special in that maps Unicode to Unicode."
 msgstr "Следующий API кодека уникален тем, что сопоставляет Unicode с Unicode."
 
-#: ../../c-api/unicode.rst:1308
+#: ../../c-api/unicode.rst:1317
 msgid ""
 "Translate a string by applying a character mapping table to it and return "
 "the resulting Unicode object. Return ``NULL`` if an exception was raised by "
@@ -2069,7 +2079,7 @@ msgstr ""
 "Переведите строку, применив к ней таблицу сопоставления символов, и верните "
 "полученный объект Unicode. Верните NULL, если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1312
+#: ../../c-api/unicode.rst:1321
 msgid ""
 "The mapping table must map Unicode ordinal integers to Unicode ordinal "
 "integers or ``None`` (causing deletion of the character)."
@@ -2078,7 +2088,7 @@ msgstr ""
 "порядковыми целыми числами Юникода или «Нет» (что приводит к удалению "
 "символа)."
 
-#: ../../c-api/unicode.rst:1315
+#: ../../c-api/unicode.rst:1324
 msgid ""
 "Mapping tables need only provide the :meth:`~object.__getitem__` interface; "
 "dictionaries and sequences work well.  Unmapped character ordinals (ones "
@@ -2089,7 +2099,7 @@ msgstr ""
 "порядковые номера символов (те, которые вызывают ошибку :exc:`LookupError`) "
 "остаются нетронутыми и копируются как есть."
 
-#: ../../c-api/unicode.rst:1319
+#: ../../c-api/unicode.rst:1328
 msgid ""
 "*errors* has the usual meaning for codecs. It may be ``NULL`` which "
 "indicates to use the default error handling."
@@ -2097,11 +2107,11 @@ msgstr ""
 "*errors* имеет обычное значение для кодеков. Это может быть ``NULL``, что "
 "указывает на использование обработки ошибок по умолчанию."
 
-#: ../../c-api/unicode.rst:1324
+#: ../../c-api/unicode.rst:1333
 msgid "MBCS codecs for Windows"
 msgstr "Кодеки MBCS для Windows"
 
-#: ../../c-api/unicode.rst:1326
+#: ../../c-api/unicode.rst:1335
 msgid ""
 "These are the MBCS codec APIs. They are currently only available on Windows "
 "and use the Win32 MBCS converters to implement the conversions.  Note that "
@@ -2114,7 +2124,7 @@ msgstr ""
 "Целевая кодировка определяется пользовательскими настройками на компьютере, "
 "на котором работает кодек."
 
-#: ../../c-api/unicode.rst:1333
+#: ../../c-api/unicode.rst:1342
 msgid ""
 "Create a Unicode object by decoding *size* bytes of the MBCS encoded string "
 "*str*. Return ``NULL`` if an exception was raised by the codec."
@@ -2122,7 +2132,7 @@ msgstr ""
 "Создайте объект Unicode, декодировав *size* байты строки в кодировке MBCS "
 "*str*. Верните NULL, если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1340
+#: ../../c-api/unicode.rst:1349
 msgid ""
 "If *consumed* is ``NULL``, behave like :c:func:`PyUnicode_DecodeMBCS`. If "
 "*consumed* is not ``NULL``, :c:func:`PyUnicode_DecodeMBCSStateful` will not "
@@ -2134,7 +2144,7 @@ msgstr ""
 "будет декодировать конечный ведущий байт, а количество декодированных байтов "
 "будет сохранено в *consumed*."
 
-#: ../../c-api/unicode.rst:1348
+#: ../../c-api/unicode.rst:1357
 msgid ""
 "Encode a Unicode object using MBCS and return the result as Python bytes "
 "object.  Error handling is \"strict\".  Return ``NULL`` if an exception was "
@@ -2144,7 +2154,7 @@ msgstr ""
 "байтового объекта Python. Обработка ошибок является «строгой». Верните NULL, "
 "если кодек вызвал исключение."
 
-#: ../../c-api/unicode.rst:1355
+#: ../../c-api/unicode.rst:1364
 msgid ""
 "Encode the Unicode object using the specified code page and return a Python "
 "bytes object.  Return ``NULL`` if an exception was raised by the codec. Use :"
@@ -2155,15 +2165,15 @@ msgstr ""
 "Используйте кодовую страницу :c:macro:`!CP_ACP`, чтобы получить кодировщик "
 "MBCS."
 
-#: ../../c-api/unicode.rst:1363
+#: ../../c-api/unicode.rst:1372
 msgid "Methods & Slots"
 msgstr "Методы и слоты"
 
-#: ../../c-api/unicode.rst:1369
+#: ../../c-api/unicode.rst:1378
 msgid "Methods and Slot Functions"
 msgstr "Методы и функции слотов"
 
-#: ../../c-api/unicode.rst:1371
+#: ../../c-api/unicode.rst:1380
 msgid ""
 "The following APIs are capable of handling Unicode objects and strings on "
 "input (we refer to them as strings in the descriptions) and return Unicode "
@@ -2173,16 +2183,16 @@ msgstr ""
 "входе (в описаниях мы называем их строками) и возвращать объекты или целые "
 "числа Unicode в зависимости от ситуации."
 
-#: ../../c-api/unicode.rst:1375
+#: ../../c-api/unicode.rst:1384
 msgid "They all return ``NULL`` or ``-1`` if an exception occurs."
 msgstr ""
 "Все они возвращают ``NULL`` или ``-1`` в случае возникновения исключения."
 
-#: ../../c-api/unicode.rst:1380
+#: ../../c-api/unicode.rst:1389
 msgid "Concat two strings giving a new Unicode string."
 msgstr "Объедините две строки, давая новую строку Unicode."
 
-#: ../../c-api/unicode.rst:1385
+#: ../../c-api/unicode.rst:1394
 msgid ""
 "Split a string giving a list of Unicode strings.  If *sep* is ``NULL``, "
 "splitting will be done at all whitespace substrings.  Otherwise, splits "
@@ -2196,7 +2206,7 @@ msgstr ""
 "выполнено не более *maxsplit* разделения. Если оно отрицательное, предел не "
 "устанавливается. Разделители не включаются в результирующий список."
 
-#: ../../c-api/unicode.rst:1393
+#: ../../c-api/unicode.rst:1402
 msgid ""
 "Split a Unicode string at line breaks, returning a list of Unicode strings. "
 "CRLF is considered to be one line break.  If *keepends* is ``0``, the Line "
@@ -2206,7 +2216,7 @@ msgstr ""
 "CRLF считается разрывом одной строки. Если *keepends* имеет значение ``0``, "
 "символы разрыва строки не включаются в результирующие строки."
 
-#: ../../c-api/unicode.rst:1400
+#: ../../c-api/unicode.rst:1409
 msgid ""
 "Join a sequence of strings using the given *separator* and return the "
 "resulting Unicode string."
@@ -2214,7 +2224,7 @@ msgstr ""
 "Соедините последовательность строк, используя заданный *разделитель*, и "
 "верните полученную строку в Юникоде."
 
-#: ../../c-api/unicode.rst:1407
+#: ../../c-api/unicode.rst:1416
 msgid ""
 "Return ``1`` if *substr* matches ``unicode[start:end]`` at the given tail "
 "end (*direction* == ``-1`` means to do a prefix match, *direction* == ``1`` "
@@ -2225,7 +2235,7 @@ msgstr ""
 "*direction* == ``1`` соответствует суффиксу), ``0`` в противном случае. "
 "Верните ``-1``, если произошла ошибка."
 
-#: ../../c-api/unicode.rst:1415
+#: ../../c-api/unicode.rst:1424
 msgid ""
 "Return the first position of *substr* in ``unicode[start:end]`` using the "
 "given *direction* (*direction* == ``1`` means to do a forward search, "
@@ -2239,7 +2249,7 @@ msgstr ""
 "значение ``-1`` указывает, что совпадение не найдено, а ``-2`` указывает, "
 "что произошла ошибка и было установлено исключение."
 
-#: ../../c-api/unicode.rst:1425
+#: ../../c-api/unicode.rst:1434
 msgid ""
 "Return the first position of the character *ch* in ``unicode[start:end]`` "
 "using the given *direction* (*direction* == ``1`` means to do a forward "
@@ -2254,14 +2264,14 @@ msgstr ""
 "первого совпадения; значение ``-1`` указывает, что совпадение не найдено, а "
 "``-2`` указывает, что произошла ошибка и было установлено исключение."
 
-#: ../../c-api/unicode.rst:1433
+#: ../../c-api/unicode.rst:1442
 msgid ""
 "*start* and *end* are now adjusted to behave like ``unicode[start:end]``."
 msgstr ""
 "*start* и *end* теперь настроены так, чтобы вести себя как ``unicode[start:"
 "end]``."
 
-#: ../../c-api/unicode.rst:1440
+#: ../../c-api/unicode.rst:1449
 msgid ""
 "Return the number of non-overlapping occurrences of *substr* in "
 "``unicode[start:end]``.  Return ``-1`` if an error occurred."
@@ -2269,7 +2279,7 @@ msgstr ""
 "Возвращает количество непересекающихся вхождений *substr* в ``unicode[start:"
 "end]``. Верните ``-1``, если произошла ошибка."
 
-#: ../../c-api/unicode.rst:1447
+#: ../../c-api/unicode.rst:1456
 msgid ""
 "Replace at most *maxcount* occurrences of *substr* in *unicode* with "
 "*replstr* and return the resulting Unicode object. *maxcount* == ``-1`` "
@@ -2279,7 +2289,7 @@ msgstr ""
 "верните полученный объект Unicode. *maxcount* == ``-1`` означает замену всех "
 "вхождений."
 
-#: ../../c-api/unicode.rst:1454
+#: ../../c-api/unicode.rst:1463
 msgid ""
 "Compare two strings and return ``-1``, ``0``, ``1`` for less than, equal, "
 "and greater than, respectively."
@@ -2287,7 +2297,7 @@ msgstr ""
 "Сравните две строки и верните ``-1``, ``0``, ``1`` для значений меньше, "
 "равно и больше соответственно."
 
-#: ../../c-api/unicode.rst:1457
+#: ../../c-api/unicode.rst:1466
 msgid ""
 "This function returns ``-1`` upon failure, so one should call :c:func:"
 "`PyErr_Occurred` to check for errors."
@@ -2295,7 +2305,7 @@ msgstr ""
 "Эта функция возвращает ``-1`` в случае сбоя, поэтому следует вызвать :c:func:"
 "`PyErr_Occurred` для проверки ошибок."
 
-#: ../../c-api/unicode.rst:1463
+#: ../../c-api/unicode.rst:1472
 msgid ""
 "Compare a Unicode object with a char buffer which is interpreted as being "
 "UTF-8 or ASCII encoded and return true (``1``) if they are equal, or false "
@@ -2309,11 +2319,11 @@ msgstr ""
 "кодовые точки (``U+D800`` - ``U+DFFF``) или строка C недействительна в "
 "формате UTF-8, возвращается false (``0``)."
 
-#: ../../c-api/unicode.rst:1470 ../../c-api/unicode.rst:1491
+#: ../../c-api/unicode.rst:1479 ../../c-api/unicode.rst:1500
 msgid "This function does not raise exceptions."
 msgstr "Эта функция не вызывает исключений."
 
-#: ../../c-api/unicode.rst:1477
+#: ../../c-api/unicode.rst:1486
 msgid ""
 "Similar to :c:func:`PyUnicode_EqualToUTF8AndSize`, but compute *string* "
 "length using :c:func:`!strlen`. If the Unicode object contains null "
@@ -2323,7 +2333,7 @@ msgstr ""
 "вычисляйте, используя :c:func:`!strlen`. Если объект Unicode содержит "
 "нулевые символы, возвращается false («0»)."
 
-#: ../../c-api/unicode.rst:1486
+#: ../../c-api/unicode.rst:1495
 msgid ""
 "Compare a Unicode object, *unicode*, with *string* and return ``-1``, ``0``, "
 "``1`` for less than, equal, and greater than, respectively. It is best to "
@@ -2335,24 +2345,24 @@ msgstr ""
 "только строки в кодировке ASCII, но функция интерпретирует входную строку "
 "как ISO-8859-1, если она содержит символы, отличные от ASCII."
 
-#: ../../c-api/unicode.rst:1496
+#: ../../c-api/unicode.rst:1505
 msgid "Rich compare two Unicode strings and return one of the following:"
 msgstr ""
 "Rich сравнивает две строки Юникода и возвращает одно из следующих значений:"
 
-#: ../../c-api/unicode.rst:1498
+#: ../../c-api/unicode.rst:1507
 msgid "``NULL`` in case an exception was raised"
 msgstr "``NULL`` в случае возникновения исключения"
 
-#: ../../c-api/unicode.rst:1499
+#: ../../c-api/unicode.rst:1508
 msgid ":c:data:`Py_True` or :c:data:`Py_False` for successful comparisons"
 msgstr ":c:data:`Py_True` или :c:data:`Py_False` для успешного сравнения."
 
-#: ../../c-api/unicode.rst:1500
+#: ../../c-api/unicode.rst:1509
 msgid ":c:data:`Py_NotImplemented` in case the type combination is unknown"
 msgstr ":c:data:`Py_NotImplemented` в случае, если комбинация типов неизвестна"
 
-#: ../../c-api/unicode.rst:1502
+#: ../../c-api/unicode.rst:1511
 msgid ""
 "Possible values for *op* are :c:macro:`Py_GT`, :c:macro:`Py_GE`, :c:macro:"
 "`Py_EQ`, :c:macro:`Py_NE`, :c:macro:`Py_LT`, and :c:macro:`Py_LE`."
@@ -2360,7 +2370,7 @@ msgstr ""
 "Возможные значения для *op*: :c:macro:`Py_GT`, :c:macro:`Py_GE`, :c:macro:"
 "`Py_EQ`, :c:macro:`Py_NE`, :c:macro:`Py_LT ` и :c:macro:`Py_LE`."
 
-#: ../../c-api/unicode.rst:1508
+#: ../../c-api/unicode.rst:1517
 msgid ""
 "Return a new string object from *format* and *args*; this is analogous to "
 "``format % args``."
@@ -2368,7 +2378,7 @@ msgstr ""
 "Вернуть новый строковый объект из *format* и *args*; это аналогично ``format "
 "% args``."
 
-#: ../../c-api/unicode.rst:1514
+#: ../../c-api/unicode.rst:1523
 msgid ""
 "Check whether *substr* is contained in *unicode* and return true or false "
 "accordingly."
@@ -2376,7 +2386,7 @@ msgstr ""
 "Проверьте, содержится ли *substr* в *unicode*, и верните true или false "
 "соответственно."
 
-#: ../../c-api/unicode.rst:1517
+#: ../../c-api/unicode.rst:1526
 msgid ""
 "*substr* has to coerce to a one element Unicode string. ``-1`` is returned "
 "if there was an error."
@@ -2384,7 +2394,7 @@ msgstr ""
 "*substr* должен привести к одноэлементной строке Unicode. ``-1`` "
 "возвращается, если произошла ошибка."
 
-#: ../../c-api/unicode.rst:1523
+#: ../../c-api/unicode.rst:1532
 msgid ""
 "Intern the argument :c:expr:`*p_unicode` in place.  The argument must be the "
 "address of a pointer variable pointing to a Python Unicode string object.  "
@@ -2402,7 +2412,7 @@ msgstr ""
 "`strong reference` на интернированный строковый объект), в противном случае "
 "он оставляет :c:expr:`*p_unicode` в покое и интернирует его."
 
-#: ../../c-api/unicode.rst:1530
+#: ../../c-api/unicode.rst:1539
 msgid ""
 "(Clarification: even though there is a lot of talk about references, think "
 "of this function as reference-neutral. You must own the object you pass in; "
@@ -2414,7 +2424,7 @@ msgstr ""
 "вызова вы больше не владеете переданной ссылкой, но вы вновь владеете "
 "результат.)"
 
-#: ../../c-api/unicode.rst:1535
+#: ../../c-api/unicode.rst:1544
 msgid ""
 "This function never raises an exception. On error, it leaves its argument "
 "unchanged without interning it."
@@ -2422,7 +2432,7 @@ msgstr ""
 "Эта функция никогда не вызывает исключения. В случае ошибки он оставляет "
 "свой аргумент неизменным, не интернируя его."
 
-#: ../../c-api/unicode.rst:1538
+#: ../../c-api/unicode.rst:1547
 msgid ""
 "Instances of subclasses of :py:class:`str` may not be interned, that is, :c:"
 "expr:`PyUnicode_CheckExact(*p_unicode)` must be true. If it is not, then -- "
@@ -2432,7 +2442,7 @@ msgstr ""
 "c:expr:`PyUnicode_CheckExact(*p_unicode)` должно иметь значение true. Если "
 "это не так, то, как и при любой другой ошибке, аргумент остается неизменным."
 
-#: ../../c-api/unicode.rst:1542
+#: ../../c-api/unicode.rst:1551
 msgid ""
 "Note that interned strings are not “immortal”. You must keep a reference to "
 "the result to benefit from interning."
@@ -2440,7 +2450,7 @@ msgstr ""
 "Обратите внимание, что интернированные строки не являются «бессмертными». Вы "
 "должны сохранить ссылку на результат, чтобы получить выгоду от стажировки."
 
-#: ../../c-api/unicode.rst:1548
+#: ../../c-api/unicode.rst:1557
 msgid ""
 "A combination of :c:func:`PyUnicode_FromString` and :c:func:"
 "`PyUnicode_InternInPlace`, meant for statically allocated strings."
@@ -2448,7 +2458,7 @@ msgstr ""
 "Комбинация :c:func:`PyUnicode_FromString` и :c:func:"
 "`PyUnicode_InternInPlace`, предназначенная для статически выделенных строк."
 
-#: ../../c-api/unicode.rst:1551
+#: ../../c-api/unicode.rst:1560
 msgid ""
 "Return a new (\"owned\") reference to either a new Unicode string object "
 "that has been interned, or an earlier interned string object with the same "
@@ -2458,7 +2468,7 @@ msgstr ""
 "Юникода, который был интернирован, либо на ранее интернированный строковый "
 "объект с тем же значением."
 
-#: ../../c-api/unicode.rst:1555
+#: ../../c-api/unicode.rst:1564
 msgid ""
 "Python may keep a reference to the result, or make it :term:`immortal`, "
 "preventing it from being garbage-collected promptly. For interning an "
@@ -2472,7 +2482,7 @@ msgstr ""
 "ввода, предпочтительнее вызывать :c:func:`PyUnicode_FromString` и :c:func:"
 "`PyUnicode_InternInPlace` напрямую."
 
-#: ../../c-api/unicode.rst:1563
+#: ../../c-api/unicode.rst:1572
 msgid "Strings interned this way are made :term:`immortal`."
 msgstr ""
 "Строки, интернированные таким образом, становятся :term:`бессмертными`."

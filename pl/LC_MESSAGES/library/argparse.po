@@ -6,7 +6,7 @@
 # Translators:
 # Igor Zubrycki <igorzubrycki@gmail.com>, 2023
 # Maciej Olko <maciej.olko@gmail.com>, 2023
-# Stanislaw Ulbrych, 2024
+# Stan Ulbrych, 2025
 #
 #, fuzzy
 msgid ""
@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-17 14:16+0000\n"
 "PO-Revision-Date: 2021-06-28 00:54+0000\n"
-"Last-Translator: Stanislaw Ulbrych, 2024\n"
+"Last-Translator: Stan Ulbrych, 2025\n"
 "Language-Team: Polish (https://app.transifex.com/python-doc/teams/5390/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -905,7 +905,7 @@ msgstr ""
 
 #: ../../library/argparse.rst:626
 msgid ">>> parser.add_argument('-f', '--foo')"
-msgstr ""
+msgstr ">>> parser.add_argument('-f', '--foo')"
 
 #: ../../library/argparse.rst:628
 msgid "while a positional argument could be created like::"
@@ -913,7 +913,7 @@ msgstr ""
 
 #: ../../library/argparse.rst:630
 msgid ">>> parser.add_argument('bar')"
-msgstr ""
+msgstr ">>> parser.add_argument('bar')"
 
 #: ../../library/argparse.rst:632
 msgid ""
@@ -971,6 +971,10 @@ msgid ""
 ">>> parser.parse_args(['--foo'])\n"
 "Namespace(foo=42)"
 msgstr ""
+">>> parser = argparse.ArgumentParser()\n"
+">>> parser.add_argument('--foo', action='store_const', const=42)\n"
+">>> parser.parse_args(['--foo'])\n"
+"Namespace(foo=42)"
 
 #: ../../library/argparse.rst:672
 msgid ""
@@ -1059,6 +1063,10 @@ msgid ""
 ">>> parser.parse_args(['-vvv'])\n"
 "Namespace(verbose=3)"
 msgstr ""
+">>> parser = argparse.ArgumentParser()\n"
+">>> parser.add_argument('--verbose', '-v', action='count', default=0)\n"
+">>> parser.parse_args(['-vvv'])\n"
+"Namespace(verbose=3)"
 
 #: ../../library/argparse.rst:730
 msgid "Note, the *default* will be ``None`` unless explicitly set to *0*."
@@ -1111,6 +1119,11 @@ msgid ""
 ">>> parser.parse_args(['--no-foo'])\n"
 "Namespace(foo=False)"
 msgstr ""
+">>> import argparse\n"
+">>> parser = argparse.ArgumentParser()\n"
+">>> parser.add_argument('--foo', action=argparse.BooleanOptionalAction)\n"
+">>> parser.parse_args(['--no-foo'])\n"
+"Namespace(foo=False)"
 
 #: ../../library/argparse.rst:765
 msgid ""
@@ -1348,6 +1361,10 @@ msgid ""
 ">>> parser.parse_args([], namespace=argparse.Namespace(foo=101))\n"
 "Namespace(foo=101)"
 msgstr ""
+">>> parser = argparse.ArgumentParser()\n"
+">>> parser.add_argument('--foo', default=42)\n"
+">>> parser.parse_args([], namespace=argparse.Namespace(foo=101))\n"
+"Namespace(foo=101)"
 
 #: ../../library/argparse.rst:939
 msgid ""
@@ -1758,6 +1775,10 @@ msgid ""
 ">>> parser.parse_args(['XXX'])\n"
 "Namespace(bar='XXX')"
 msgstr ""
+">>> parser = argparse.ArgumentParser()\n"
+">>> parser.add_argument('bar')\n"
+">>> parser.parse_args(['XXX'])\n"
+"Namespace(bar='XXX')"
 
 #: ../../library/argparse.rst:1236
 msgid ""
@@ -1793,6 +1814,10 @@ msgid ""
 ">>> parser.parse_args('--foo XXX'.split())\n"
 "Namespace(bar='XXX')"
 msgstr ""
+">>> parser = argparse.ArgumentParser()\n"
+">>> parser.add_argument('--foo', dest='bar')\n"
+">>> parser.parse_args('--foo XXX'.split())\n"
+"Namespace(bar='XXX')"
 
 #: ../../library/argparse.rst:1264
 msgid "deprecated"
@@ -1961,6 +1986,8 @@ msgid ""
 ">>> parser.parse_args(['--foo=FOO'])\n"
 "Namespace(foo='FOO', x=None)"
 msgstr ""
+">>> parser.parse_args(['--foo=FOO'])\n"
+"Namespace(foo='FOO', x=None)"
 
 #: ../../library/argparse.rst:1382
 msgid ""
@@ -1973,6 +2000,8 @@ msgid ""
 ">>> parser.parse_args(['-xX'])\n"
 "Namespace(foo=None, x='X')"
 msgstr ""
+">>> parser.parse_args(['-xX'])\n"
+"Namespace(foo=None, x='X')"
 
 #: ../../library/argparse.rst:1388
 msgid ""
@@ -2086,6 +2115,8 @@ msgid ""
 ">>> parser.parse_args(['--', '-f'])\n"
 "Namespace(foo='-f', one=None)"
 msgstr ""
+">>> parser.parse_args(['--', '-f'])\n"
+"Namespace(foo='-f', one=None)"
 
 #: ../../library/argparse.rst:1476
 msgid ""
@@ -2513,6 +2544,10 @@ msgid ""
 ">>> parser.parse_args(['-'])\n"
 "Namespace(infile=<_io.TextIOWrapper name='<stdin>' encoding='UTF-8'>)"
 msgstr ""
+">>> parser = argparse.ArgumentParser()\n"
+">>> parser.add_argument('infile', type=argparse.FileType('r'))\n"
+">>> parser.parse_args(['-'])\n"
+"Namespace(infile=<_io.TextIOWrapper name='<stdin>' encoding='UTF-8'>)"
 
 #: ../../library/argparse.rst:1806
 msgid "Added the *encodings* and *errors* parameters."
@@ -2715,6 +2750,11 @@ msgid ""
 ">>> parser.parse_args([])\n"
 "Namespace(foo='spam')"
 msgstr ""
+">>> parser = argparse.ArgumentParser()\n"
+">>> parser.add_argument('--foo', default='bar')\n"
+">>> parser.set_defaults(foo='spam')\n"
+">>> parser.parse_args([])\n"
+"Namespace(foo='spam')"
 
 #: ../../library/argparse.rst:1962
 msgid ""
@@ -2736,6 +2776,10 @@ msgid ""
 ">>> parser.get_default('foo')\n"
 "'badger'"
 msgstr ""
+">>> parser = argparse.ArgumentParser()\n"
+">>> parser.add_argument('--foo', default='badger')\n"
+">>> parser.get_default('foo')\n"
+"'badger'"
 
 #: ../../library/argparse.rst:1979
 msgid "Printing help"
