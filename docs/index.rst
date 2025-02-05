@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Python Docs Transifex Translations documentation
+Python Docs Transifex Automations documentation
 ================================================
 
 Scripts and procedures for maintaining Python_ documentation translation infrastructure under python-doc_ organization in Transifex_.
