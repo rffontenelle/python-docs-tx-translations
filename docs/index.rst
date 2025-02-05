@@ -1,9 +1,9 @@
-.. Python Docs Transifex Translations documentation master file, created by
+.. Python Docs Transifex Automations documentation master file, created by
    sphinx-quickstart on Sun Jan 26 11:03:05 2025.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Python Docs Transifex Translations documentation
+Python Docs Transifex Automations documentation
 ================================================
 
 Scripts and procedures for maintaining Python_ documentation translation infrastructure under python-doc_ organization in Transifex_.
@@ -21,7 +21,7 @@ See Translating_ in Python Developer's Guide for more information.
 .. _Python: https://www.python.org
 .. _python-doc: https://app.transifex.com/python-doc/
 .. _Transifex: https://www.transifex.com
-.. _docs: https://github.com/rffontenelle/docspush-transifex/blob/main/docs/
+.. _docs: https://github.com/python-docs-translations/transifex-automations/blob/main/docs/
 .. _Translating: https://devguide.python.org/documentation/translating/
 
 .. toctree::
